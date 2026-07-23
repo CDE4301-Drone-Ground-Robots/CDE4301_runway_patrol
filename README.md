@@ -30,7 +30,7 @@ DRAFT REPORT FOR CDE 4301
         </tr>
         <tr style="border: none;">
           <td width="70%" style="border: none; padding: 6px 0;"><strong>Gabriel Tan</strong></td>
-          <td width="30%" align="right" style="border: none; padding: 6px 0; text-align: right;"><strong>[add ID]</strong></td>
+          <td width="30%" align="right" style="border: none; padding: 6px 0; text-align: right;"><strong>A0308452H</strong></td>
         </tr>
         <tr style="border: none;">
           <td width="70%" style="border: none; padding: 6px 0;"><strong>Zacarias Ng</strong></td>
