@@ -1,0 +1,324 @@
+{"0": {
+    "doc": "1. Introduction",
+    "title": "1. Introduction",
+    "content": "Autonomous Airfield Safety &amp; Foreign Object Debris (FOD) Remediation . CDE 4301 NUS &amp; Defense Stakeholders . ",
+    "url": "/1-introduction.html",
+    
+    "relUrl": "/1-introduction.html"
+  },"1": {
+    "doc": "1. Introduction",
+    "title": "⚠️ Operational Threat &amp; Mission Context",
+    "content": "Airfield operational readiness depends heavily on maintaining pristine, hazard-free runway surfaces. Foreign Object Debris (FOD)—encompassing metallic jet engine fasteners, asphalt chips, tool components, and tire fragments—poses a severe threat to military and commercial aviation. Critical Operational Risks: . | Catastrophic Ingestion: Small particle intake into high-speed jet turbine blades leads to total engine failure. | High-Speed Punctures: Tire blowouts during takeoff/landing rollouts jeopardize aircraft stability. | Sortie Compromise: Runway closures for sweeps severely reduce airbase flight availability. | . ",
+    "url": "/1-introduction.html#%EF%B8%8F-operational-threat--mission-context",
+    
+    "relUrl": "/1-introduction.html#️-operational-threat--mission-context"
+  },"2": {
+    "doc": "1. Introduction",
+    "title": "📉 Limitations of Conventional Methods",
+    "content": "Current operational workflows rely on methods that introduce significant operational friction: . 🚶 Manual FOD Walks . | Inherently slow and labor-intensive | Highly susceptible to human operator fatigue | Requires extensive runway downtime | . 📡 Fixed Camera Towers . | High capital expenditure (e.g., iFerret 2.0™) | Provides surveillance only; zero physical remediation | Still requires manual dispatch for retrieval | . ",
+    "url": "/1-introduction.html#-limitations-of-conventional-methods",
+    
+    "relUrl": "/1-introduction.html#-limitations-of-conventional-methods"
+  },"3": {
+    "doc": "1. Introduction",
+    "title": "🚀 The Runway Patrol Solution",
+    "content": "Project Runway Patrol introduces a Heterogeneous Multi-Agent Autonomous Architecture (UAV + UGV) engineered for rapid airfield inspection and targeted hazard remediation at locations such as Singapore Changi Airport Terminal 5 (5 km runway length × 60 m width). Developed under CDE 4301 at the National University of Singapore (NUS) in collaboration with defense stakeholders (RSAF and RAiD), this system pairs an Unmanned Aerial Vehicle with an Unmanned Ground Vehicle: . 🛸 Aerial Scout Platform (UAV) . Conducts high-velocity aerial grid sweeps across vast surface areas to rapidly scan and detect candidate debris anomalies using macro computer vision. 🤖 Ground Remediation Platform (UGV) — Primary Report Focus . Acts as a targeted ground asset, receiving real-time coordinates over a secure network to perform close-range multimodal verification and physical debris extraction. ",
+    "url": "/1-introduction.html#-the-runway-patrol-solution",
+    
+    "relUrl": "/1-introduction.html#-the-runway-patrol-solution"
+  },"4": {
+    "doc": "2. Problem Statement",
+    "title": "2. Problem Statement",
+    "content": "Key Operational Bottlenecks in Airfield Inspection Protocols . Current military and commercial airfield inspection protocols rely on legacy workflows or single-agent systems that create three primary operational bottlenecks: . ",
+    "url": "/2-problem-statement.html",
+    
+    "relUrl": "/2-problem-statement.html"
+  },"5": {
+    "doc": "2. Problem Statement",
+    "title": "🛑 Operational Bottlenecks",
+    "content": "1. Excessive Runway Occupancy Time (ROT) . HIGH IMPACT Manual visual sweeps (\"FOD walks\") or slow ground-only vehicle sweeps take too long to cover vast airfield expanses—such as the 5 km × 60 m runway strip at Changi Airport Terminal 5. This extended occupancy directly conflicts with high-density flight operations, causing severe scheduling delays and restricting sortie generation rates. 2. The \"Detect-to-Clear\" Latency Gap . PROCESS BOTTLENECK Existing automated optical camera systems (e.g., iFerret 2.0™) can alert operators to potential debris, but they cannot physically remove it. Human ground crews are still required to receive the alert, drive out to the runway, visually locate the item, and manually retrieve it—creating significant operational latency and requiring additional runway downtime. 3. Environmental &amp; Payload Trade-offs . HARDWARE LIMITATION Single-agent robotic systems fail to balance speed and physical capacity: . | Aerial Drones (UAV Only): Possess high speed and wide field-of-view, but lack payload capacity for heavy extraction tooling (vacuums, containment boxes). | Ground Rovers (UGV Only): Possess high payload capacity for extraction, but lack high-altitude line-of-sight required for rapid macro-sweeps. | . Summary Goal . To overcome these bottlenecks, a solution must decouple macro-scanning speed (handled by an airborne platform) from micro-verification and physical extraction (handled by a targeted ground platform). ",
+    "url": "/2-problem-statement.html#-operational-bottlenecks",
+    
+    "relUrl": "/2-problem-statement.html#-operational-bottlenecks"
+  },"6": {
+    "doc": "3. Multi-Agent System Architecture",
+    "title": "3. Multi-Agent System Architecture &amp; Rationale",
+    "content": "Heterogeneous Collaborative Framework for “Find-and-Fix” Airfield Operations . Project Runway Patrol utilizes a Heterogeneous Collaborative Framework to combine the unique physical strengths of aerial and ground robotics into a unified operational loop. ",
+    "url": "/3-system-architecture.html#3-multi-agent-system-architecture--rationale",
+    
+    "relUrl": "/3-system-architecture.html#3-multi-agent-system-architecture--rationale"
+  },"7": {
+    "doc": "3. Multi-Agent System Architecture",
+    "title": "🏗️ System Architecture Workflow",
+    "content": "Heterogeneous Multi-Agent Loop . Deployment Target: Singapore Changi Airport Terminal 5 Runway (5 km length × 60 m width) . 1. UAV (Aerial Scout Platform) . MACRO SCANNING . | Executes high-velocity aerial grid sweeps across the 5 km × 60 m runway strip. | Detects candidate Foreign Object Debris (FOD) anomalies using macro computer vision. | Zero ground footprint during sweep phase to keep active flight lanes completely clear. | . ▼ Secure Encrypted C2 Link (GPS Coordinates &amp; JSON Target Telemetry) 2. UGV (Ground Remediation Platform) . PRIMARY REPORT FOCUS . | Precision Waypoint Routing: Autonomous routing dispatched directly to cued drone coordinates. | Multi-Modal Target Verification: Centimeter-accurate local identification using onboard 3D LiDAR &amp; camera suite. | Physical Debris Extraction: Heavy payload collection via localized vacuum and magnetic clearance modules. | . ",
+    "url": "/3-system-architecture.html#%EF%B8%8F-system-architecture-workflow",
+    
+    "relUrl": "/3-system-architecture.html#️-system-architecture-workflow"
+  },"8": {
+    "doc": "3. Multi-Agent System Architecture",
+    "title": "📊 Operational &amp; Engineering System Justifications",
+    "content": "Evaluating architecture options highlights why a joint heterogeneous team outperforms single-agent alternatives across all key mission criteria: . | Mission Metric | UAV Only | UGV Only | Joint UAV + UGV (Selected) | . | Area Sweep Velocity | ⚡ Fastest (High altitude coverage) | 🐢 Slow (Limited ground line-of-sight) | ⚡ Fastest (UAV handles macro grid scan) | . | Physical Clearance | ❌ Impossible (Weight/thrust limits) | 🟩 High (Carries heavy vacuum/payloads) | 🟩 High (UGV dispatched only when cued) | . | Runway Occupancy | 🟩 Minimal (Airborne) | ❌ High (Occupies lane continuously) | 🟩 Optimized (UGV targets specific coordinates) | . | Verification Accuracy | ⚠️ Moderate (Heat haze / altitude) | 🟩 Precision (Centimeter-range LiDAR/RGB) | 🟩 Precision (UGV verifies before extraction) | . Key Engineering Takeaway: By decoupling high-speed macro scouting from heavy physical extraction, the system minimizes overall Runway Occupancy Time (ROT) while retaining 100% physical clearance capability. ",
+    "url": "/3-system-architecture.html#-operational--engineering-system-justifications",
+    
+    "relUrl": "/3-system-architecture.html#-operational--engineering-system-justifications"
+  },"9": {
+    "doc": "3. Multi-Agent System Architecture",
+    "title": "3. Multi-Agent System Architecture",
+    "content": " ",
+    "url": "/3-system-architecture.html",
+    
+    "relUrl": "/3-system-architecture.html"
+  },"10": {
+    "doc": "4.2 Asuka",
+    "title": "4.2 Asuka: [Scope Title]",
+    "content": "… . ",
+    "url": "/individual-scope/asuka.html#42-asuka-scope-title",
+    
+    "relUrl": "/individual-scope/asuka.html#42-asuka-scope-title"
+  },"11": {
+    "doc": "4.2 Asuka",
+    "title": "4.2 Asuka: [Scope Title]",
+    "content": " ",
+    "url": "/individual-scope/asuka.html#42-asuka-scope-title-1",
+    
+    "relUrl": "/individual-scope/asuka.html#42-asuka-scope-title-1"
+  },"12": {
+    "doc": "4.2 Asuka",
+    "title": "Objectives",
+    "content": ". | (Add detailed scope objectives here) | . ",
+    "url": "/individual-scope/asuka.html#objectives",
+    
+    "relUrl": "/individual-scope/asuka.html#objectives"
+  },"13": {
+    "doc": "4.2 Asuka",
+    "title": "Key Responsibilities",
+    "content": ". | (Add detailed responsibilities here) | . ",
+    "url": "/individual-scope/asuka.html#key-responsibilities",
+    
+    "relUrl": "/individual-scope/asuka.html#key-responsibilities"
+  },"14": {
+    "doc": "4.2 Asuka",
+    "title": "Hardware/Software Components",
+    "content": ". | (Add components used) | . ",
+    "url": "/individual-scope/asuka.html#hardwaresoftware-components",
+    
+    "relUrl": "/individual-scope/asuka.html#hardwaresoftware-components"
+  },"15": {
+    "doc": "4.2 Asuka",
+    "title": "Expected Deliverables",
+    "content": ". | (Add deliverables) | . ",
+    "url": "/individual-scope/asuka.html#expected-deliverables",
+    
+    "relUrl": "/individual-scope/asuka.html#expected-deliverables"
+  },"16": {
+    "doc": "4.2 Asuka",
+    "title": "4.2 Asuka",
+    "content": " ",
+    "url": "/individual-scope/asuka.html",
+    
+    "relUrl": "/individual-scope/asuka.html"
+  },"17": {
+    "doc": "4.5 Bryan Ng",
+    "title": "4.5 Bryan Ng: [Scope Title]",
+    "content": " ",
+    "url": "/individual-scope/bryan-ng.html#45-bryan-ng-scope-title",
+    
+    "relUrl": "/individual-scope/bryan-ng.html#45-bryan-ng-scope-title"
+  },"18": {
+    "doc": "4.5 Bryan Ng",
+    "title": "Objectives",
+    "content": ". | (Add detailed scope objectives here) | . ",
+    "url": "/individual-scope/bryan-ng.html#objectives",
+    
+    "relUrl": "/individual-scope/bryan-ng.html#objectives"
+  },"19": {
+    "doc": "4.5 Bryan Ng",
+    "title": "Key Responsibilities",
+    "content": ". | (Add detailed responsibilities here) | . ",
+    "url": "/individual-scope/bryan-ng.html#key-responsibilities",
+    
+    "relUrl": "/individual-scope/bryan-ng.html#key-responsibilities"
+  },"20": {
+    "doc": "4.5 Bryan Ng",
+    "title": "Hardware/Software Components",
+    "content": ". | (Add components used) | . ",
+    "url": "/individual-scope/bryan-ng.html#hardwaresoftware-components",
+    
+    "relUrl": "/individual-scope/bryan-ng.html#hardwaresoftware-components"
+  },"21": {
+    "doc": "4.5 Bryan Ng",
+    "title": "Expected Deliverables",
+    "content": ". | (Add deliverables) | . ",
+    "url": "/individual-scope/bryan-ng.html#expected-deliverables",
+    
+    "relUrl": "/individual-scope/bryan-ng.html#expected-deliverables"
+  },"22": {
+    "doc": "4.5 Bryan Ng",
+    "title": "4.5 Bryan Ng",
+    "content": " ",
+    "url": "/individual-scope/bryan-ng.html",
+    
+    "relUrl": "/individual-scope/bryan-ng.html"
+  },"23": {
+    "doc": "4.3 Gabriel Tan",
+    "title": "4.3 Gabriel Tan: [Scope Title]",
+    "content": " ",
+    "url": "/individual-scope/gabriel-tan.html#43-gabriel-tan-scope-title",
+    
+    "relUrl": "/individual-scope/gabriel-tan.html#43-gabriel-tan-scope-title"
+  },"24": {
+    "doc": "4.3 Gabriel Tan",
+    "title": "Objectives",
+    "content": ". | (Add detailed scope objectives here) | . ",
+    "url": "/individual-scope/gabriel-tan.html#objectives",
+    
+    "relUrl": "/individual-scope/gabriel-tan.html#objectives"
+  },"25": {
+    "doc": "4.3 Gabriel Tan",
+    "title": "Key Responsibilities",
+    "content": ". | (Add detailed responsibilities here) | . ",
+    "url": "/individual-scope/gabriel-tan.html#key-responsibilities",
+    
+    "relUrl": "/individual-scope/gabriel-tan.html#key-responsibilities"
+  },"26": {
+    "doc": "4.3 Gabriel Tan",
+    "title": "Hardware/Software Components",
+    "content": ". | (Add components used) | . ",
+    "url": "/individual-scope/gabriel-tan.html#hardwaresoftware-components",
+    
+    "relUrl": "/individual-scope/gabriel-tan.html#hardwaresoftware-components"
+  },"27": {
+    "doc": "4.3 Gabriel Tan",
+    "title": "Expected Deliverables",
+    "content": ". | (Add deliverables) | . ",
+    "url": "/individual-scope/gabriel-tan.html#expected-deliverables",
+    
+    "relUrl": "/individual-scope/gabriel-tan.html#expected-deliverables"
+  },"28": {
+    "doc": "4.3 Gabriel Tan",
+    "title": "4.3 Gabriel Tan",
+    "content": " ",
+    "url": "/individual-scope/gabriel-tan.html",
+    
+    "relUrl": "/individual-scope/gabriel-tan.html"
+  },"29": {
+    "doc": "4.1 Hilbert Soh",
+    "title": "4.1 Hilbert Soh",
+    "content": "Drone-Guided Autonomous Navigation and Obstacle Avoidance for UGV . CDE 4301 A0308263H . ",
+    "url": "/individual-scope/hilbert-soh.html",
+    
+    "relUrl": "/individual-scope/hilbert-soh.html"
+  },"30": {
+    "doc": "4.1 Hilbert Soh",
+    "title": "🎯 Objectives",
+    "content": ". | Establish Link: Receive dynamic aerial target waypoints over secure telemetry radio from the UAV platform. | Autonomous Routing: Execute high-precision path planning and trajectory following to reach goal locations. | Dynamic Avoidance: Real-time local obstacle detection and re-routing in unstructured outdoor airbase environments. | . ",
+    "url": "/individual-scope/hilbert-soh.html#-objectives",
+    
+    "relUrl": "/individual-scope/hilbert-soh.html#-objectives"
+  },"31": {
+    "doc": "4.1 Hilbert Soh",
+    "title": "🛠️ Key Responsibilities",
+    "content": ". | Messaging Architecture: Design and deploy a custom ROS 2 message parser/validator to process incoming UAV coordinate streams. | SLAM &amp; Localization: Configure and fine-tune SLAM Toolbox for 2D/3D map generation in sparse airfield landscapes. | Path Planning: Implement Nav2 controller and planner plugins for waypoint execution with dynamic obstacle clearance. | Fail-safe Protocols: Implement heartbeat monitors and automated emergency stop logic triggered upon signal loss. | . ",
+    "url": "/individual-scope/hilbert-soh.html#%EF%B8%8F-key-responsibilities",
+    
+    "relUrl": "/individual-scope/hilbert-soh.html#️-key-responsibilities"
+  },"32": {
+    "doc": "4.1 Hilbert Soh",
+    "title": "💻 Tech Stack &amp; Hardware Components",
+    "content": "| Category | Component / Library | Operational Function | . | Communication | MAVLink, ROS 2 Topics/Services, Wi-Fi | Telemetry &amp; C2 coordinate transfer | . | Sensors | 3D LiDAR, Depth Camera, IMU, GPS/RTK | Centimeter-level positioning &amp; point-cloud generation | . | Software Stack | ROS 2 (Nav2), SLAM Toolbox | Autonomous motion planning &amp; map construction | . | Onboard Compute | NVIDIA Jetson / Intel NUC | Edge AI processing &amp; real-time point-cloud evaluation | . ",
+    "url": "/individual-scope/hilbert-soh.html#-tech-stack--hardware-components",
+    
+    "relUrl": "/individual-scope/hilbert-soh.html#-tech-stack--hardware-components"
+  },"33": {
+    "doc": "4.1 Hilbert Soh",
+    "title": "📦 Expected Deliverables",
+    "content": "Key Project Milestones: . | Drone-to-UGV Bridge: Fully integrated waypoint parsing communication module. | Navigation Stack: Tested ROS 2 autonomous mapping &amp; navigation pipeline. | Field Demonstration: Live dynamic obstacle avoidance trial using cued coordinates. | Telemetry Report: Performance analytics on navigation drift, latency, and avoidance reaction times. | . ",
+    "url": "/individual-scope/hilbert-soh.html#-expected-deliverables",
+    
+    "relUrl": "/individual-scope/hilbert-soh.html#-expected-deliverables"
+  },"34": {
+    "doc": "4. Individual Scope",
+    "title": "4. Individual Scope Overview",
+    "content": "Subsystem Deliverables &amp; Engineering Ownership . Each member of the project team leads a distinct engineering scope covering navigation, detection, payload manipulation, and system control. ",
+    "url": "/individual-scope/#4-individual-scope-overview",
+    
+    "relUrl": "/individual-scope/#4-individual-scope-overview"
+  },"35": {
+    "doc": "4. Individual Scope",
+    "title": "👥 Team Member Scopes",
+    "content": "Hilbert Soh . NAVIGATION &amp; C2 Drone-Guided Autonomous Navigation and Obstacle Avoidance . | Build a messaging module to parse and validate incoming UAV target waypoints. | Implement SLAM Toolbox for real-time localization and map building in outdoor airfields. | Integrate Nav2 path planning algorithms for dynamic obstacle avoidance. | Validate telemetry radio reliability, waypoint precision, and fail-safe safety stops. | . View Full Scope → Asuka . SUBSYSTEM OWNER [Insert Scope Title] . [Insert brief summary of key responsibilities and subsystem deliverables] . View Full Scope → Gabriel Tan . SUBSYSTEM OWNER [Insert Scope Title] . [Insert brief summary of key responsibilities and subsystem deliverables] . View Full Scope → Zacarias Ng . SUBSYSTEM OWNER [Insert Scope Title] . [Insert brief summary of key responsibilities and subsystem deliverables] . View Full Scope → Bryan Ng . SUBSYSTEM OWNER [Insert Scope Title] . [Insert brief summary of key responsibilities and subsystem deliverables] . View Full Scope → . Click on any team member’s button or left sidebar link to view their detailed technical specifications, hardware/software stack, and progress deliverables. ",
+    "url": "/individual-scope/#-team-member-scopes",
+    
+    "relUrl": "/individual-scope/#-team-member-scopes"
+  },"36": {
+    "doc": "4. Individual Scope",
+    "title": "4. Individual Scope",
+    "content": " ",
+    "url": "/individual-scope/",
+    
+    "relUrl": "/individual-scope/"
+  },"37": {
+    "doc": "Home",
+    "title": "Runway Patrol",
+    "content": " ",
+    "url": "/",
+    
+    "relUrl": "/"
+  },"38": {
+    "doc": "Home",
+    "title": "Autonomous runway inspection robot",
+    "content": "DRAFT REPORT FOR CDE 4301 . PROJECT TEAM . Hilbert Soh A0308263H Asuka [add ID] Gabriel Tan A0308452H Zacarias Ng [add ID] Bryan Ng [add ID] SUPERVISION &amp; FACULTY . Dr Tang Kok Zuea . Innovation &amp; Design Programme College of Design and Engineering National University of Singapore . Getting Started To begin, click on 1. Introduction from the Navigation Bar on your left. ",
+    "url": "/",
+    
+    "relUrl": "/"
+  },"39": {
+    "doc": "Home",
+    "title": "Home",
+    "content": ". ",
+    "url": "/",
+    
+    "relUrl": "/"
+  },"40": {
+    "doc": "4.4 Zacarias Ng",
+    "title": "4.4 Zacarias Ng: [Scope Title]",
+    "content": " ",
+    "url": "/individual-scope/zacarias-ng.html#44-zacarias-ng-scope-title",
+    
+    "relUrl": "/individual-scope/zacarias-ng.html#44-zacarias-ng-scope-title"
+  },"41": {
+    "doc": "4.4 Zacarias Ng",
+    "title": "Objectives",
+    "content": ". | (Add detailed scope objectives here) | . ",
+    "url": "/individual-scope/zacarias-ng.html#objectives",
+    
+    "relUrl": "/individual-scope/zacarias-ng.html#objectives"
+  },"42": {
+    "doc": "4.4 Zacarias Ng",
+    "title": "Key Responsibilities",
+    "content": ". | (Add detailed responsibilities here) | . ",
+    "url": "/individual-scope/zacarias-ng.html#key-responsibilities",
+    
+    "relUrl": "/individual-scope/zacarias-ng.html#key-responsibilities"
+  },"43": {
+    "doc": "4.4 Zacarias Ng",
+    "title": "Hardware/Software Components",
+    "content": ". | (Add components used) | . ",
+    "url": "/individual-scope/zacarias-ng.html#hardwaresoftware-components",
+    
+    "relUrl": "/individual-scope/zacarias-ng.html#hardwaresoftware-components"
+  },"44": {
+    "doc": "4.4 Zacarias Ng",
+    "title": "Expected Deliverables",
+    "content": ". | (Add deliverables) | . ",
+    "url": "/individual-scope/zacarias-ng.html#expected-deliverables",
+    
+    "relUrl": "/individual-scope/zacarias-ng.html#expected-deliverables"
+  },"45": {
+    "doc": "4.4 Zacarias Ng",
+    "title": "4.4 Zacarias Ng",
+    "content": " ",
+    "url": "/individual-scope/zacarias-ng.html",
+    
+    "relUrl": "/individual-scope/zacarias-ng.html"
+  }
+}
