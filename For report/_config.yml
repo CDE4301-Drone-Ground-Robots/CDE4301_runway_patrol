@@ -1,0 +1,22 @@
+title: Runway Patrol Documentation
+description: "Autonomous Runway Inspection & Debris Remediation Robot"
+theme: just-the-docs
+
+# URL settings for local development
+url: "http://localhost:4000"
+
+# Enable local search box
+search_enabled: true
+
+# Auxiliary links (Top right header links)
+aux_links:
+  "GitHub Repo": "https://github.com/CDE4301-Drone-Ground-Robots/CDE4301_runway_patrol"
+
+# Enables navigation sorting on the left panel
+nav_sort: nav_order
+
+# Color scheme configuration (Options: light, dark, dimmed)
+color_scheme: light
+
+# Callout styling density
+callouts_level: quiet
