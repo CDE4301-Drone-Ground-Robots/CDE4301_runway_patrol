@@ -21,7 +21,7 @@ _Table 0.1: Project Team and Faculty Supervision Details_
 | **Hilbert Soh**          | `A0308263H` |     | **Dr Tang Kok Zuea**              |
 | **Asuka**                | `[add ID]`  |     | Innovation & Design Programme     |
 | **Gabriel Tan**          | `A0308452H` |     | College of Design and Engineering |
-| **Zacarias Ng**          | `[add ID]`  |     | National University of Singapore  |
+| **Zacarias Ng**          | `A0306899H`  |     | National University of Singapore  |
 | **Bryan Ng**             | `[add ID]`  |     |                                   |
 
 ---
