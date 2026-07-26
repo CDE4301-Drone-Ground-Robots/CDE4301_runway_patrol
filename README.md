@@ -19,7 +19,7 @@ _Table 0.1: Project Team and Faculty Supervision Details_
 | Project Team (UGV Focus) | Student ID  |     | Supervision & Faculty             |
 | :----------------------- | :---------- | :-- | :-------------------------------- |
 | **Hilbert Soh**          | `A0308263H` |     | **Dr Tang Kok Zuea**              |
-| **Asuka**                | `[add ID]`  |     | Innovation & Design Programme     |
+| **Asuka**                | `A0308285Y`  |     | Innovation & Design Programme     |
 | **Gabriel Tan**          | `A0308452H` |     | College of Design and Engineering |
 | **Zacarias Ng**          | `A0306899H`  |     | National University of Singapore  |
 | **Bryan Ng**             | `[add ID]`  |     |                                   |
