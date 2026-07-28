@@ -17,7 +17,6 @@ _Innovation & Design Programme | College of Design and Engineering | National Un
 ### Project Details
 
 _Table 0.1: Project Team and Faculty Supervision Details_
-
 | Project Team (UGV Focus) | Student ID | Supervision & Faculty |
 | :--- | :--- | :--- |
 | **Hilbert Soh** | `A0308263H` | **Dr Tang Kok Zuea** |
@@ -55,14 +54,14 @@ _Table 0.1: Project Team and Faculty Supervision Details_
 
 ## 1. Introduction
 
-Airfield operational readiness depends heavily on maintaining pristine, hazard-free runway surfaces. Foreign Object Debris (FOD)—encompassing metallic jet engine fasteners, asphalt spalls, maintenance tool components, and tire rubber fragments—poses a constant risk to military fighter jets and commercial transport aircraft[cite: 2]. The ingestion of small debris into turbofan intakes or high-speed tire blowouts during takeoff roll can result in structural airframe destruction, engine failure, or catastrophic loss of life[cite: 2].
+Airfield operational readiness depends heavily on maintaining pristine, hazard-free runway surfaces. Foreign Object Debris (FOD)—encompassing metallic jet engine fasteners, asphalt spalls, maintenance tool components, and tire rubber fragments—poses a constant risk to military fighter jets and commercial transport aircraft. The ingestion of small debris into turbofan intakes or high-speed tire blowouts during takeoff roll can result in structural airframe destruction, engine failure, or catastrophic loss of life.
 
 <div align="center">
   <img src="assets/Example_of_FOD.jpg" alt="Airfield Foreign Object Debris Hazard Example" width="650" />
   <p><em>Figure 1.1: Typical Foreign Object Debris (FOD) items found on operational runways, demonstrating the scale and variety of physical hazards.</em></p>
 </div>
 
-Traditional manual sweeps ("FOD walks") or manned vehicle patrols are inherently slow, labor-intensive, subject to human operator fatigue, and require extended runway closures that directly restrict operational sortie generation[cite: 2]. While commercial stationary camera towers (such as iFerret™ 2.0) provide automated visual alerts, they require significant capital infrastructure investment and lack physical remediation capabilities[cite: 2].
+Traditional manual sweeps ("FOD walks") or manned vehicle patrols are inherently slow, labor-intensive, subject to human operator fatigue, and require extended runway closures that directly restrict operational sortie generation. While commercial stationary camera towers (such as iFerret™ 2.0) provide automated visual alerts, they require significant capital infrastructure investment and lack physical remediation capabilities.
 
 Project **Runway Patrol** introduces a **Heterogeneous Multi-Agent Autonomous Architecture (UAV + UGV)** engineered for rapid airfield inspection and target hazard remediation at large operational airbases and commercial airports, such as Singapore Changi Airport Terminal 5 (5 km length × 60 m width). Developed under CDE 4301 at the National University of Singapore (NUS) in collaboration with defense and technical partners (**RSAF** and **RAiD**), this system pairs an Unmanned Aerial Vehicle (UAV) with an Unmanned Ground Vehicle (UGV).
 
@@ -72,37 +71,37 @@ While the overall project establishes a collaborative framework between two sub-
 
 ## 2. Problem Statement & Operational Rationale
 
-Foreign Object Debris (FOD) on airport movement areas such as runways, taxiways, aprons, and gate areas poses severe structural, operational, and safety risks to commercial and military aircraft[cite: 2]. FOD items range from loose hardware (nuts, bolts, safety wires) and pavement fragments to tools, tire rubber, and luggage components[cite: 2]. When ingested into jet engines or struck by aircraft tires at high speeds, FOD can cause catastrophic engine failure, tire blowouts, rejected takeoffs, or structural airframe damage[cite: 2].
+Foreign Object Debris (FOD) on airport movement areas such as runways, taxiways, aprons, and gate areas poses severe structural, operational, and safety risks to commercial and military aircraft. FOD items range from loose hardware (nuts, bolts, safety wires) and pavement fragments to tools, tire rubber, and luggage components. When ingested into jet engines or struck by aircraft tires at high speeds, FOD can cause catastrophic engine failure, tire blowouts, rejected takeoffs, or structural airframe damage.
 
-Beyond immediate safety threats, the economic impact on the global aviation industry is substantial[cite: 2]. Direct damage repairs, flight delays, diversions, schedule disruptions, fuel burn during ground holds, and lost revenue collectively cost the commercial aviation sector billions of dollars annually[cite: 2].
+Beyond immediate safety threats, the economic impact on the global aviation industry is substantial. Direct damage repairs, flight delays, diversions, schedule disruptions, fuel burn during ground holds, and lost revenue collectively cost the commercial aviation sector billions of dollars annually.
 
 Current military and commercial airfield surface management protocols present three major operational bottlenecks:
 
-1. **Excessive Runway Occupancy Time (ROT):** Traditional manual airfield inspections rely on personnel physically driving or walking along movement areas to visually scan for debris[cite: 2]. This approach is labor-intensive, subject to human error/fatigue, and creates operational bottlenecks due to prolonged runway closures (~5 km at Changi T5)[cite: 2].
-2. **The "Detect-to-Clear" Latency Gap:** Fixed infrastructure networks (e.g., stationary tower cameras or millimeter-wave radars) can flag debris locations, but they are passive in nature[cite: 2]. They cannot physically inspect or clear the debris, still requiring human dispatch onto active runways[cite: 2].
-3. **Environmental & Range Limitations:** Fixed cameras degrade in rain, fog, snow, and darkness, while long-range radar face resolution limits when detecting sub-centimeter targets against ground clutter[cite: 2]. Standalone aerial drones lack the battery capacity and structure to transport heavy physical clearance tools (high-power magnets, industrial vacuums), while standalone ground vehicles lack the high-altitude, wide field-of-view line of sight to rapidly scan multi-kilometer asphalt strips.
+1. **Excessive Runway Occupancy Time (ROT):** Traditional manual airfield inspections rely on personnel physically driving or walking along movement areas to visually scan for debris. This approach is labor-intensive, subject to human error/fatigue, and creates operational bottlenecks due to prolonged runway closures (~5 km at Changi T5).
+2. **The "Detect-to-Clear" Latency Gap:** Fixed infrastructure networks (e.g., stationary tower cameras or millimeter-wave radars) can flag debris locations, but they are passive in nature. They cannot physically inspect or clear the debris, still requiring human dispatch onto active runways.
+3. **Environmental & Range Limitations:** Fixed cameras degrade in rain, fog, snow, and darkness, while long-range radar face resolution limits when detecting sub-centimeter targets against ground clutter. Standalone aerial drones lack the battery capacity and structure to transport heavy physical clearance tools (high-power magnets, industrial vacuums), while standalone ground vehicles lack the high-altitude, wide field-of-view line of sight to rapidly scan multi-kilometer asphalt strips.
 
-An autonomous Unmanned Ground Vehicle (UGV) bridges these gaps by offering close-proximity ground scanning, all-weather multi-sensor perception, spatial mobility, and active physical FOD retrieval[cite: 2].
+An autonomous Unmanned Ground Vehicle (UGV) bridges these gaps by offering close-proximity ground scanning, all-weather multi-sensor perception, spatial mobility, and active physical FOD retrieval.
 
 ---
 
 ## 3. Existing Systems & Commercial Overview
 
-Existing runway inspection and FOD detection solutions across international commercial and military airfields fall into distinct technology categories[cite: 2].
+Existing runway inspection and FOD detection solutions across international commercial and military airfields fall into distinct technology categories.
 
 ### 3.1 The 4 Main Automated Detection Categories
 
-- **Stationary Millimeter-Wave (MMW) Radar:** Fixed radar installations operating in the 71–100 GHz band that continuously scan runways to detect debris at long ranges in all weather conditions[cite: 2].
-- **Stationary Electro-Optical (Camera-Based):** Fixed high-resolution visible-light or infrared/thermal cameras mounted along the runway that use computer vision algorithms to visually identify surface debris[cite: 2].
-- **Hybrid Radar-Plus-Electro-Optical Fusion:** Systems combining MMW radar and electro-optical cameras to pair long-range all-weather target detection with visual identification, minimizing false alarm rates[cite: 2].
-- **Mobile Radar Systems:** Vehicle-mounted radar units that scan airport movement areas while driving at operational speeds[cite: 2].
+- **Stationary Millimeter-Wave (MMW) Radar:** Fixed radar installations operating in the 71–100 GHz band that continuously scan runways to detect debris at long ranges in all weather conditions.
+- **Stationary Electro-Optical (Camera-Based):** Fixed high-resolution visible-light or infrared/thermal cameras mounted along the runway that use computer vision algorithms to visually identify surface debris.
+- **Hybrid Radar-Plus-Electro-Optical Fusion:** Systems combining MMW radar and electro-optical cameras to pair long-range all-weather target detection with visual identification, minimizing false alarm rates.
+- **Mobile Radar Systems:** Vehicle-mounted radar units that scan airport movement areas while driving at operational speeds.
 
 #### Performance Specifications (FAA AC 150/5220-24 Benchmark)
 
-- **Stationary Radar:** Must detect a standard metal cylinder (38 mm diameter × 31 mm height) at a range of 1,000 m with location accuracy within 5 m[cite: 2].
-- **Stationary Electro-Optical:** Must detect a 20 mm object at a range of 300 m under ambient lighting conditions[cite: 2].
-- **Stationary Hybrid:** Must detect 20 mm objects across the full width of the runway[cite: 2].
-- **Mobile Radar:** Must detect the reference metal cylinder across a 183 m × 183 m scan area while moving at speeds up to 48 km/h[cite: 2].
+- **Stationary Radar:** Must detect a standard metal cylinder (38 mm diameter × 31 mm height) at a range of 1,000 m with location accuracy within 5 m.
+- **Stationary Electro-Optical:** Must detect a 20 mm object at a range of 300 m under ambient lighting conditions.
+- **Stationary Hybrid:** Must detect 20 mm objects across the full width of the runway.
+- **Mobile Radar:** Must detect the reference metal cylinder across a 183 m × 183 m scan area while moving at speeds up to 48 km/h.
 
 ---
 
@@ -111,35 +110,35 @@ Existing runway inspection and FOD detection solutions across international comm
 #### A. Stationary Millimeter-Wave Radar
 
 - **Specifications:**
-  - **Operating Frequency:** E-band (71–86 GHz) or W-band (92–100 GHz); 76 GHz is an FCC unlicensed band (Part 15)[cite: 2].
-  - **Wavelength:** Short wavelength of 3.0–3.9 mm enables detection of tiny targets[cite: 2].
-  - **Range Resolution:** 5–30 cm proportional to available bandwidth[cite: 2].
-  - **Detection Range & Accuracy:** Detects standard FAA reference target at $\ge 1,000\text{ m}$ with $\le 5\text{ m}$ position accuracy[cite: 2].
-  - **Scanning Parameters:** Azimuth scan angle of 180–200° using motorized positioners; full runway sweep in 60–90 seconds[cite: 2].
-  - **Deployment Geometry:** Optimal grazing angle $\approx 2^\circ$; mounted $\ge 50\text{ m}$ (125 m recommended at 8 m height) from runway centerline[cite: 2].
-- **Features:** Safe milliwatt power emissions; all-weather penetration (fog, rain, snow, darkness); FMCW radar provides simultaneous range and velocity measurement to filter dynamic clutter (wildlife, vehicles)[cite: 2].
-- **Primary Challenges:** Distinguishing tiny FOD items from pavement ground clutter (texture, markings, splice joints); requires dynamic Clutter Map Constant False Alarm Rate (CM-CFAR) thresholding[cite: 2].
+  - **Operating Frequency:** E-band (71–86 GHz) or W-band (92–100 GHz); 76 GHz is an FCC unlicensed band (Part 15).
+  - **Wavelength:** Short wavelength of 3.0–3.9 mm enables detection of tiny targets.
+  - **Range Resolution:** 5–30 cm proportional to available bandwidth.
+  - **Detection Range & Accuracy:** Detects standard FAA reference target at $\ge 1,000\text{ m}$ with $\le 5\text{ m}$ position accuracy.
+  - **Scanning Parameters:** Azimuth scan angle of 180–200° using motorized positioners; full runway sweep in 60–90 seconds.
+  - **Deployment Geometry:** Optimal grazing angle $\approx 2^\circ$; mounted $\ge 50\text{ m}$ (125 m recommended at 8 m height) from runway centerline.
+- **Features:** Safe milliwatt power emissions; all-weather penetration (fog, rain, snow, darkness); FMCW radar provides simultaneous range and velocity measurement to filter dynamic clutter (wildlife, vehicles).
+- **Primary Challenges:** Distinguishing tiny FOD items from pavement ground clutter (texture, markings, splice joints); requires dynamic Clutter Map Constant False Alarm Rate (CM-CFAR) thresholding.
 
 #### B. Stationary Electro-Optical (Camera-Based) Systems
 
 - **Specifications:**
-  - **Sensor Resolution:** Multi-megapixel sensors ($1920\times 1080+$) with telephoto optics operating at 30+ fps[cite: 2].
-  - **Infrared Capability:** LWIR band (8–14 μm) for thermal contrast; NIR systems with active illumination for zero light pollution[cite: 2].
-  - **Deployment:** Placed $\ge 150\text{ m}$ from centerline; typical runway requires 5–8 sensors for continuous coverage[cite: 2].
-- **Features:** Uses CNNs, semantic segmentation, and background subtraction for pixel-level visual identification and object classification; LWIR cameras operate independent of shadows[cite: 2].
-- **Primary Challenges:** High environmental degradation in rain, fog, and snow; visual false alarms triggered by tire marks, splice joints, and shadows; difficulty detecting objects $< 5\text{ cm} \times 5\text{ cm}$ at extended ranges[cite: 2].
+  - **Sensor Resolution:** Multi-megapixel sensors ($1920\times 1080+$) with telephoto optics operating at 30+ fps.
+  - **Infrared Capability:** LWIR band (8–14 μm) for thermal contrast; NIR systems with active illumination for zero light pollution.
+  - **Deployment:** Placed $\ge 150\text{ m}$ from centerline; typical runway requires 5–8 sensors for continuous coverage.
+- **Features:** Uses CNNs, semantic segmentation, and background subtraction for pixel-level visual identification and object classification; LWIR cameras operate independent of shadows.
+- **Primary Challenges:** High environmental degradation in rain, fog, and snow; visual false alarms triggered by tire marks, splice joints, and shadows; difficulty detecting objects $< 5\text{ cm} \times 5\text{ cm}$ at extended ranges.
 
 #### C. Hybrid Radar-Plus-Electro-Optical Fusion Systems
 
-- **Specifications:** Combined MMW radar and camera sensor hardware in a fused architecture satisfying full runway width 20 mm object detection[cite: 2].
-- **Features:** Pairs radar's all-weather, day/night long-range detection with optical visual identification to overcome individual system drawbacks[cite: 2].
-- **Primary Challenges:** While radar penetrates severe weather, optical feeds still experience visibility degradation, limiting visual target confirmation during heavy storms[cite: 2].
+- **Specifications:** Combined MMW radar and camera sensor hardware in a fused architecture satisfying full runway width 20 mm object detection.
+- **Features:** Pairs radar's all-weather, day/night long-range detection with optical visual identification to overcome individual system drawbacks.
+- **Primary Challenges:** While radar penetrates severe weather, optical feeds still experience visibility degradation, limiting visual target confirmation during heavy storms.
 
 #### D. Mobile Radar Systems
 
-- **Specifications:** Mounted on airfield patrol vehicles operating at speeds up to 48 km/h; scans $183\text{ m} \times 183\text{ m}$ areas[cite: 2].
-- **Features:** Dynamic coverage across runways, taxiways, and aprons; dramatically cuts inspection time compared to walking sweeps[cite: 2].
-- **Primary Challenges:** Intermittent monitoring leaving temporal gaps between patrol runs; requires continuous human driving[cite: 2].
+- **Specifications:** Mounted on airfield patrol vehicles operating at speeds up to 48 km/h; scans $183\text{ m} \times 183\text{ m}$ areas.
+- **Features:** Dynamic coverage across runways, taxiways, and aprons; dramatically cuts inspection time compared to walking sweeps.
+- **Primary Challenges:** Intermittent monitoring leaving temporal gaps between patrol runs; requires continuous human driving.
 
 ---
 
@@ -304,8 +303,8 @@ The end-to-end operational pipeline links the UAV and UGV platforms via an autom
 1. **Macro Aerial Scouting (UAV Phase):** The UAV flies a lawnmower grid pattern over the runway strip at a set altitude, utilizing high-resolution RGB imagery and onboard semantic segmentation to detect surface anomalies and pavement cracks.
 2. **Target Cuing & C2 Handshake:** Upon detecting candidate FOD or pavement distress, the UAV tags the location using RTK-GPS coordinates and sends a structured JSON payload over a secure wireless telemetry link.
 3. **Precision Transit (UGV Phase):** The UGV receives the goal waypoint via ROS 2 Nav2, plans an obstacle-free ground path, and travels directly to the target zone.
-4. **Close-Range Verification:** Operating within a 2-meter radius of the target, the UGV fuses mmW radar, 3D LiDAR, and RGB/Infrared vision to confirm the anomaly, filtering out false positives such as shadows or painted pavement markings[cite: 2].
-5. **Active Collection & Discharge:** The UGV drives over the verified object, activating its electromagnetic bar for metallic debris or its suction mechanism for non-ferrous objects[cite: 2]. Once collected, the UGV updates the central database and returns to its station or proceeds to the next waypoint.
+4. **Close-Range Verification:** Operating within a 2-meter radius of the target, the UGV fuses mmW radar, 3D LiDAR, and RGB/Infrared vision to confirm the anomaly, filtering out false positives such as shadows or painted pavement markings.
+5. **Active Collection & Discharge:** The UGV drives over the verified object, activating its electromagnetic bar for metallic debris or its suction mechanism for non-ferrous objects. Once collected, the UGV updates the central database and returns to its station or proceeds to the next waypoint.
 
 ---
 
@@ -330,8 +329,8 @@ The UGV ground platform is engineered specifically for high-speed transit and ac
 
 - **High-Mobility Differential Drive Chassis:** Constructed from lightweight aluminum alloy with all-terrain rubber tires, providing zero-turn-radius maneuvering and stability at operational speeds.
 - **Dual Active Clearance Payloads:**
-  - _Front Electromagnetic Bar:_ A switchable high-power electromagnet array mounted on the front bumper to instantly attract and collect ferrous metal hazards prior to tire contact[cite: 2].
-  - _Underbody Friction & Vacuum Intake Module:_ A high-flow suction nozzle paired with trailing polymer friction mats to capture non-metallic debris, gravel, and rubber fragments[cite: 2].
+  - _Front Electromagnetic Bar:_ A switchable high-power electromagnet array mounted on the front bumper to instantly attract and collect ferrous metal hazards prior to tire contact.
+  - _Underbody Friction & Vacuum Intake Module:_ A high-flow suction nozzle paired with trailing polymer friction mats to capture non-metallic debris, gravel, and rubber fragments.
 - **Onboard Industrial Edge AI Compute:** Features an embedded AI processing unit (NVIDIA Jetson Orin series) executing real-time deep learning inference, sensor fusion, and local SLAM mapping.
 - **Fail-Safe Airside Safety Mechanisms:** Includes automatic Return-To-Base (RTB) protocols triggered by low battery levels or telemetry link loss, software-level hard stops, and active dynamic obstacle avoidance to prevent collision with airfield assets.
 
@@ -345,10 +344,10 @@ _Table 8.1: UGV Multi-Modal Sensor Payload Specifications_
 
 | Sensor Modality             | Primary Hardware / Specifications            | Operational Function on UGV                                                             | Primary Advantage / Mitigation                                              |
 | :-------------------------- | :------------------------------------------- | :-------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
-| **Short-Range mmW Radar**   | 77–79 GHz FMCW Radar                         | Close-range target cueing and metallic object confirmation                              | Penetrates heavy fog, rain, dust, and nighttime darkness[cite: 2].          |
+| **Short-Range mmW Radar**   | 77–79 GHz FMCW Radar                         | Close-range target cueing and metallic object confirmation                              | Penetrates heavy fog, rain, dust, and nighttime darkness.                   |
 | **3D Solid-State LiDAR**    | 32-Channel 3D LiDAR                          | High-density point cloud generation for surface anomaly height mapping ($>2\text{ cm}$) | Precise centimeter-level 3D spatial mapping and dynamic obstacle avoidance. |
 | **Stereo RGB Camera Array** | Stereo CMOS Optical Cameras ($1080\text{p}$) | Pixel-level visual classification using YOLOv8 / U-Net models                           | High spatial resolution for small object classification ($<2\text{ cm}$).   |
-| **Infrared (Thermal) LWIR** | Long-Wave Infrared (8–14 μm) Sensor          | Thermal contrast detection between objects and sun-heated asphalt                       | Operates reliably at night and in shadowy environments[cite: 2].            |
+| **Infrared (Thermal) LWIR** | Long-Wave Infrared (8–14 μm) Sensor          | Thermal contrast detection between objects and sun-heated asphalt                       | Operates reliably at night and in shadowy environments.                     |
 | **GNSS-RTK + IMU Stack**    | Dual-Frequency RTK-GPS + High-Grade IMU      | Centimeter-level absolute global positioning and dead reckoning                         | Guarantees sub-5 cm waypoint navigation accuracy.                           |
 
 ---
@@ -357,10 +356,10 @@ _Table 8.1: UGV Multi-Modal Sensor Payload Specifications_
 
 To overcome the limitations identified in commercial stationary systems and existing airside UGVs, our UGV design introduces four major technical innovations:
 
-1. **Closed-Loop "Find-and-Fix" Remediation:** Unlike stationary systems (iFerret, Tarsier) or diagnostic UGVs (Airtrek, Guimu) that only flag debris, our UGV pairs sensor fusion with real-time active physical clearance payloads (electromagnetic bar + high-flow vacuum intake)[cite: 2].
+1. **Closed-Loop "Find-and-Fix" Remediation:** Unlike stationary systems (iFerret, Tarsier) or diagnostic UGVs (Airtrek, Guimu) that only flag debris, our UGV pairs sensor fusion with real-time active physical clearance payloads (electromagnetic bar + high-flow vacuum intake).
 2. **Selective Dual-Payload Activation:** To optimize energy consumption and battery endurance, the UGV uses its multi-sensor perception to selectively activate payload modules—engaging the front electromagnetic bar for metallic items, or the underbody vacuum for non-metallic debris.
-3. **Multi-Modal False Alarm Suppression:** By fusing mmW radar, 3D LiDAR, and thermal imaging at ground level, the UGV eliminates false positives caused by painted pavement markings, tire skid marks, and shadows that commonly trigger false alarms in optical-only systems (iFerret 2.0)[cite: 2].
-4. **Aerial-Guided C2 Handshake:** Rather than performing slow, continuous ground sweeps across the entire airfield, the UGV relies on high-altitude UAV target cueing, traveling directly to target coordinates to minimize Runway Occupancy Time (ROT)[cite: 2].
+3. **Multi-Modal False Alarm Suppression:** By fusing mmW radar, 3D LiDAR, and thermal imaging at ground level, the UGV eliminates false positives caused by painted pavement markings, tire skid marks, and shadows that commonly trigger false alarms in optical-only systems (iFerret 2.0).
+4. **Aerial-Guided C2 Handshake:** Rather than performing slow, continuous ground sweeps across the entire airfield, the UGV relies on high-altitude UAV target cueing, traveling directly to target coordinates to minimize Runway Occupancy Time (ROT).
 
 ---
 
