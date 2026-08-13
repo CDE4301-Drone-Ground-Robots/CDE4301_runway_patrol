@@ -408,7 +408,7 @@ _Table 10.1: Individual Team Member Scope Summary_
 
 ---
 
-### 10.2 Asuka: [Scope Title]
+### 10.2 Asuka: [Computer Vision and FOD Picking Subsystem]
 
 _[Add detailed scope breakdown here]_
 
