@@ -24,12 +24,12 @@
 ## 🎥 Simulation Demo Showcase
 
 <div align="center">
-  <video src="assets/simulation_demo.mp4" poster="assets/demo_poster.jpg" controls autoplay loop muted width="100%" style="max-width: 850px; border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);">
-    <source src="assets/simulation_demo.mp4" type="video/mp4">
-    Your browser does not support the video tag. <a href="assets/simulation_demo.mp4">Click here to download the video demo.</a>
-  </video>
-  <br>
-  <sub><i>Autonomous Patrol & Navigation Simulation at Aarhus Airport (EKAH)</i></sub>
+  <a href="assets/simulation_demo.mp4">
+    <img src="assets/simulation_demo.gif" alt="Simulation Navigation Demo" width="850" style="border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
+  </a>
+  <br><br>
+  <sub><i>🎥 Autonomous Patrol, Nav2 Path Planning & Obstacle Avoidance Demo at Aarhus Airport (EKAH)</i></sub><br>
+  <sub><a href="assets/simulation_demo.mp4"><b>▶ Click here to view / download full 60 FPS HD Video (assets/simulation_demo.mp4)</b></a></sub>
 </div>
 
 ---
@@ -83,7 +83,8 @@ The **Runway Patrol UGV** is an autonomous airfield surface inspection vehicle d
 ```text
 runway_sim_ws/
 ├── assets/                   # Simulation demo video recordings, snapshots, & poster previews
-│   ├── simulation_demo.mp4   # Full simulation demonstration video
+│   ├── simulation_demo.mp4   # Full simulation demonstration video (HD 60fps)
+│   ├── simulation_demo.gif   # Animated simulation demo preview (auto-plays on GitHub)
 │   ├── demo_poster.jpg       # Video preview poster
 │   ├── gazebo_runway_world.png # Gazebo 3D simulation runway world snapshot
 │   ├── runway_ground_plane.png # Airport runway surface terrain model
