@@ -4,7 +4,7 @@
   <name>runway_vision</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="oliver@todo.todo">oliver</maintainer>
+  <maintainer email="hilbertsoh@gmail.com">Hilbert Soh</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>

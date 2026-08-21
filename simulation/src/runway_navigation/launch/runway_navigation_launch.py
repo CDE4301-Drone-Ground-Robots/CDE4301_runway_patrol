@@ -1,7 +1,6 @@
 # Custom navigation launch for the Runway UGV.
 # Based on nav2_bringup/launch/navigation_launch.py (ROS 2 Jazzy),
-# with route_server and docking_server removed — they are not needed
-# for runway inspection and require complex configs to avoid crashing.
+# with route_server, docking_server, and collision_monitor removed for robust performance.
 
 import os
 
@@ -35,7 +34,6 @@ def generate_launch_description():
         'bt_navigator',
         'waypoint_follower',
         'velocity_smoother',
-        'collision_monitor',
     ]
 
     remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
@@ -165,18 +163,7 @@ def generate_launch_description():
                 respawn_delay=2.0,
                 parameters=[configured_params],
                 arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings + [('cmd_vel', 'cmd_vel_nav')],
-            ),
-            Node(
-                package='nav2_collision_monitor',
-                executable='collision_monitor',
-                name='collision_monitor',
-                output='screen',
-                respawn=use_respawn,
-                respawn_delay=2.0,
-                parameters=[configured_params],
-                arguments=['--ros-args', '--log-level', log_level],
-                remappings=remappings,
+                remappings=remappings + [('cmd_vel', 'cmd_vel_nav'), ('cmd_vel_smoothed', 'cmd_vel')],
             ),
             Node(
                 package='nav2_lifecycle_manager',
@@ -184,7 +171,11 @@ def generate_launch_description():
                 name='lifecycle_manager_navigation',
                 output='screen',
                 arguments=['--ros-args', '--log-level', log_level],
-                parameters=[{'autostart': autostart}, {'node_names': lifecycle_nodes}],
+                parameters=[
+                    {'autostart': autostart},
+                    {'node_names': lifecycle_nodes},
+                    {'bond_timeout': 0.0}
+                ],
             ),
         ],
     )

@@ -4,11 +4,12 @@
   <name>runway_navigation</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="oliver@todo.todo">oliver</maintainer>
+  <maintainer email="hilbertsoh@gmail.com">Hilbert Soh</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
   <depend>nav2_bringup</depend>
+  <depend>nav2_smac_planner</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

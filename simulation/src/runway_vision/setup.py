@@ -13,8 +13,8 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='oliver',
-    maintainer_email='oliver@todo.todo',
+    maintainer='Hilbert Soh',
+    maintainer_email='hilbertsoh@gmail.com',
     description='YOLO Computer Vision node for Runway FOD Inspection',
     license='Apache-2.0',
     extras_require={
