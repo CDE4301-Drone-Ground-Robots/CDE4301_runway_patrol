@@ -24,12 +24,26 @@
 ## 🎥 Simulation Demo Showcase
 
 <div align="center">
-  <a href="assets/simulation_demo.mp4">
-    <img src="assets/simulation_demo.gif" alt="Simulation Navigation Demo" width="850" style="border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
-  </a>
-  <br><br>
-  <sub><i>🎥 Autonomous Patrol, Nav2 Path Planning & Obstacle Avoidance Demo at Aarhus Airport (EKAH)</i></sub><br>
-  <sub><a href="assets/simulation_demo.mp4"><b>▶ Click here to view / download full 60 FPS HD Video (assets/simulation_demo.mp4)</b></a></sub>
+  <table>
+    <tr>
+      <td align="center" width="50%">
+        <b>🛫 Aarhus Airport Runway Navigation & Patrol</b><br><br>
+        <a href="assets/simulation_demo.mp4">
+          <img src="assets/simulation_demo.gif" alt="Simulation Navigation Demo - Aarhus Airport" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
+        </a>
+        <br><br>
+        <sub><a href="assets/simulation_demo.mp4"><b>▶ Download / Watch Full HD Video (assets/simulation_demo.mp4)</b></a></sub>
+      </td>
+      <td align="center" width="50%">
+        <b>📍 NUS EA Field Autonomous Navigation & Avoidance</b><br><br>
+        <a href="assets/nus_ea_simulation_demo.mp4">
+          <img src="assets/nus_ea_simulation_poster.png" alt="NUS EA Field Simulation Demo Poster" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
+        </a>
+        <br><br>
+        <sub><a href="assets/nus_ea_simulation_demo.mp4"><b>▶ Download / Watch Full 60 FPS Video (assets/nus_ea_simulation_demo.mp4)</b></a></sub>
+      </td>
+    </tr>
+  </table>
 </div>
 
 ---
