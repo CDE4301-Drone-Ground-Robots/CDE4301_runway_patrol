@@ -207,7 +207,27 @@ ros2 launch runway_navigation bringup_nav2.launch.py world_name:=nus_ea_field
 
 #### **Terminal 3 (Optional): Spawn people on Walkways & Courtyard**
 ```bash
-python3 -c "import os; [os.system(f'ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_{i+1} -x {x} -y {y} -z 0.0') for i, (x, y) in enumerate([(-1.95, 10.32), (4.39, 8.48), (4.24, 7.52), (7.59, 10.24), (10.71, 9.51), (10.57, 7.11), (14.56, 8.61), (17.84, 9.78), (-5.13, 5.14), (-5.85, 4.59), (-12.62, 2.65), (-13.04, 1.90), (-19.93, 2.28), (-17.67, 0.23), (-10.32, -0.28), (-5.43, -0.36), (-20.63, -3.27), (-14.62, -2.43), (-9.53, -3.50), (-7.45, -7.32), (-9.38, -9.60)])]"
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_1 -x -1.95 -y 10.32 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_2 -x 4.39 -y 8.48 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_3 -x 4.24 -y 7.52 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_4 -x 7.59 -y 10.24 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_5 -x 10.71 -y 9.51 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_6 -x 10.57 -y 7.11 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_7 -x 14.56 -y 8.61 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_8 -x 17.84 -y 9.78 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_9 -x -5.13 -y 5.14 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_10 -x -5.85 -y 4.59 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_11 -x -12.62 -y 2.65 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_12 -x -13.04 -y 1.90 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_13 -x -19.93 -y 2.28 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_14 -x -17.67 -y 0.23 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_15 -x -10.32 -y -0.28 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_16 -x -5.43 -y -0.36 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_17 -x -20.63 -y -3.27 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_18 -x -14.62 -y -2.43 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_19 -x -9.53 -y -3.50 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_20 -x -7.45 -y -7.32 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_21 -x -9.38 -y -9.60 -z 0.0
 ```
 
 ---
