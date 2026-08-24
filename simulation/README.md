@@ -34,11 +34,28 @@
 
 ---
 
-## 📖 Overview & Simulation Environment
+## 📖 Overview & Simulation Environments
 
-The **Runway Patrol UGV** is an autonomous airfield surface inspection vehicle designed to traverse runway centrelines at **Aarhus Airport (Denmark, ICAO: EKAH / IATA: AAR)**. The system autonomously plans paths, avoids static/dynamic obstacles on the tarmac, and navigates with high precision along the airfield.
+The system supports two distinct outdoor simulation environments:
+1. **Aarhus Airport Runway (EKAH)**: A 100m high-fidelity asphalt runway for centerline inspection, high-speed patrol, and dynamic FOD obstacle avoidance.
+2. **NUS EA Field**: An outdoor campus courtyard featuring intricate concrete walkways, open grass areas, buildings, and custom pedestrian obstacle layouts.
 
 <div align="center">
+  <h3>📍 1. NUS EA Field Environment</h3>
+  <table>
+    <tr>
+      <td align="center" width="50%">
+        <b>🗺️ NUS EA Field Aerial Satellite Model</b><br><br>
+        <img src="assets/nus_ea_field_texture.png" alt="NUS EA Field Aerial Satellite Model" width="100%" style="border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
+      </td>
+      <td align="center" width="50%">
+        <b>📐 NUS EA Field Dimensions & Boundaries</b><br><br>
+        <img src="assets/nus_ea_field_dimensions.png" alt="NUS EA Field Dimension Model" width="100%" style="border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
+      </td>
+    </tr>
+  </table>
+
+  <h3>📍 2. Aarhus Airport Runway (EKAH) Environment</h3>
   <table>
     <tr>
       <td align="center" width="50%">
@@ -155,35 +172,54 @@ source install/setup.bash
 
 ## 🚀 Step-by-Step Running Guide
 
-Running the simulation requires **2 separate terminal windows** (or 2 tabs).
-
-### 🟢 Step 1: Start Gazebo Simulation
-Open your **1st Terminal** (<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>) and paste:
-
-```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
-ros2 launch runway_description sim.launch.py
-```
-
-**What you will see:**
-- A 3D **Gazebo window** will open showing an airport runway.
-- The 4-wheeled **Scout UGV** will spawn on the runway centerline at `(0,0)`.
-- *Wait ~5–10 seconds until Gazebo is fully loaded before going to Step 2.*
+Running the simulation requires **2 separate terminal windows** (or 2 tabs). You can run either the **NUS EA Field** or the **Aarhus Airport Runway** environment.
 
 ---
 
-### 🔵 Step 2: Start Nav2 Autonomous Navigation & RViz2
-Open a **2nd Terminal** (press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>T</kbd> for a new tab or <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>) and paste:
+### 🟢 Environment 1: NUS EA Field (Courtyard & Walkways)
 
+#### **Terminal 1: Start Gazebo Simulation**
+```bash
+source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
+ros2 launch runway_description sim_nus_ea.launch.py
+```
+*(Wait ~5 seconds for Gazebo to load and the UGV to spawn at `X = -25.0, Y = 0.0`)*
+
+#### **Terminal 2: Start Nav2 & RViz2**
+```bash
+source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
+ros2 launch runway_navigation bringup_nav2.launch.py world_name:=nus_ea_field
+```
+
+#### **Terminal 3 (Optional): Spawn People on Walkways & Courtyard**
+```bash
+python3 -c "import os; [os.system(f'ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_{i+1} -x {x} -y {y} -z 0.0') for i, (x, y) in enumerate([(-1.95, 10.32), (4.39, 8.48), (4.24, 7.52), (7.59, 10.24), (10.71, 9.51), (10.57, 7.11), (14.56, 8.61), (17.84, 9.78), (-5.13, 5.14), (-5.85, 4.59), (-12.62, 2.65), (-13.04, 1.90), (-19.93, 2.28), (-17.67, 0.23), (-10.32, -0.28), (-5.43, -0.36), (-20.63, -3.27), (-14.62, -2.43), (-9.53, -3.50), (-7.45, -7.32), (-9.38, -9.60)])]"
+```
+
+---
+
+### 🟢 Environment 2: Aarhus Airport Runway (EKAH)
+
+#### **Terminal 1: Start Gazebo Simulation**
+```bash
+source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
+ros2 launch runway_description sim_airport.launch.py
+```
+
+#### **Terminal 2: Start Nav2 & RViz2**
 ```bash
 source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
 ros2 launch runway_navigation bringup_nav2.launch.py
 ```
 
-**What you will see:**
-- An **RViz2 window** will automatically open.
-- You will see the runway map, the 3D robot model, the red laser scan points, and the colored costmaps.
-- In Terminal 2, you will see `[lifecycle_manager_navigation]: Managed nodes are active` when everything is ready.
+#### **Terminal 3 (Optional): Spawn Runway Slalom Course**
+```bash
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_1 -x 4.0 -y 0.5 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_2 -x 5.5 -y -1.0 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_3 -x 7.0 -y 0.0 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_4 -x 8.5 -y 1.5 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_5 -x 10.0 -y -0.5 -z 0.0
+```
 
 ---
 
@@ -196,48 +232,14 @@ ros2 launch runway_navigation bringup_nav2.launch.py
 Follow these simple mouse actions in the **RViz2 window**:
 
 1. Look at the top toolbar in RViz2 and click the **`Nav2 Goal`** button (or press the <kbd>g</kbd> key on your keyboard).
-2. Move your cursor onto the runway ahead of the robot.
+2. Move your cursor to the desired destination on the map.
 3. **Left-click and hold** at your desired destination point.
-4. **Drag the mouse** in the direction you want the robot to face when it arrives (pointing forward down the runway).
+4. **Drag the mouse** in the direction you want the robot to face when it arrives.
 5. **Release the mouse button**.
 
 **Result:**
 - A **green line** (global path) will appear connecting the robot to the goal.
-- The robot will immediately start driving autonomously in both Gazebo and RViz2 to reach the destination!
-
----
-
-## 🚶 Testing Obstacle Avoidance
-
-While the simulation and RViz2 are running, open a **3rd Terminal** to spawn test obstacles on the runway and see how the robot dodges them:
-
-<details open>
-<summary><b>Option A: Spawn a Single Person (5m in front of the robot)</b></summary>
-
-```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_1 -x 5.0 -y 0.0 -z 0.0
-```
-> *Now send a `Nav2 Goal` past the person (e.g. at `x=10.0`). The robot's LiDAR will detect the person and steer around them.*
-</details>
-
-<details>
-<summary><b>Option B: Spawn a Full Crowd Slalom Course (8 People)</b></summary>
-
-```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
-
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_1 -x 4.0 -y 0.5 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_2 -x 5.5 -y -1.0 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_3 -x 7.0 -y 0.0 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_4 -x 8.5 -y 1.5 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_5 -x 10.0 -y -0.5 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_6 -x 12.0 -y 1.0 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_7 -x 14.0 -y -1.5 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_8 -x 16.0 -y 0.3 -z 0.0
-```
-> *Set a `Nav2 Goal` at `(x=20.0, y=0.0)` to watch the robot dynamically slalom around all 8 people.*
-</details>
+- The robot will immediately start driving autonomously in both Gazebo and RViz2 while dynamically avoiding any spawned obstacles!
 
 ---
 
@@ -254,5 +256,7 @@ pkill -9 -f "gz sim|gzserver" 2>/dev/null; pkill -9 -f "ros2" 2>/dev/null; pkill
 ---
 
 <div align="center">
-  <sub>Runway Patrol & Autonomous Inspection System • ROS 2 Jazzy & Gazebo Harmonic</sub>
+  <sub>Runway & Outdoor Patrol Autonomous Inspection System • ROS 2 Jazzy & Gazebo Harmonic</sub>
 </div>
+
+

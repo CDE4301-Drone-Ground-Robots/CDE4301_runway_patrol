@@ -10,13 +10,23 @@ from launch_ros.actions import Node
 def generate_launch_description():
     pkg_nav = get_package_share_directory('runway_navigation')
 
+    world_name = LaunchConfiguration('world_name', default='airport_runway')
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
-    map_yaml_file = LaunchConfiguration('map', default=os.path.join(pkg_nav, 'maps', 'runway_map.yaml'))
+    map_yaml_file = LaunchConfiguration(
+        'map',
+        default=PythonExpression([
+            "'", pkg_nav, "/maps/nus_ea_field.yaml' if '", world_name, "' == 'nus_ea_field' else '", pkg_nav, "/maps/runway_map.yaml'"
+        ])
+    )
     params_file = LaunchConfiguration('params_file', default=os.path.join(pkg_nav, 'config', 'nav2_params.yaml'))
     use_rviz = LaunchConfiguration('use_rviz', default='true')
     rviz_config_file = LaunchConfiguration('rviz_config', default=os.path.join(pkg_nav, 'rviz', 'runway_nav2.rviz'))
     autostart = LaunchConfiguration('autostart', default='true')
     use_amcl = LaunchConfiguration('use_amcl', default='false')
+
+    tf_x = PythonExpression(["'-25.0' if '", world_name, "' == 'nus_ea_field' else '0'"])
+    tf_y = PythonExpression(["'0.0' if '", world_name, "' == 'nus_ea_field' else '0'"])
+    tf_yaw = PythonExpression(["'0.0' if '", world_name, "' == 'nus_ea_field' else '2.9142'"])
 
     remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
 
@@ -33,13 +43,13 @@ def generate_launch_description():
         remappings=remappings
     )
 
-    # 2a. Static Transform Publisher (map -> odom) for reliable outdoor runway navigation
+    # 2a. Static Transform Publisher (map -> odom) for outdoor navigation
     static_tf_map_odom = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
         name='map_to_odom_publisher',
-        arguments=['--x', '0', '--y', '0', '--z', '0',
-                   '--yaw', '2.9142', '--pitch', '0', '--roll', '0',
+        arguments=['--x', tf_x, '--y', tf_y, '--z', '0',
+                   '--yaw', tf_yaw, '--pitch', '0', '--roll', '0',
                    '--frame-id', 'map',
                    '--child-frame-id', 'odom'],
         parameters=[{'use_sim_time': use_sim_time}],
@@ -118,6 +128,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        DeclareLaunchArgument('world_name', default_value='airport_runway', description='World name: airport_runway or nus_ea_field'),
         DeclareLaunchArgument('use_sim_time', default_value='true', description='Use simulation clock'),
         DeclareLaunchArgument('map', default_value=map_yaml_file, description='Full path to map yaml file'),
         DeclareLaunchArgument('params_file', default_value=params_file, description='Full path to nav2 param file'),

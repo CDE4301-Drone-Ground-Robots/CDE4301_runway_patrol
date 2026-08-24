@@ -2,7 +2,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess, DeclareLaunchArgument, AppendEnvironmentVariable
-from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution, PythonExpression
 from launch_ros.actions import Node
 
 def generate_launch_description():
@@ -10,22 +10,25 @@ def generate_launch_description():
     pkg_share_parent = os.path.dirname(pkg_dir)
     models_dir = os.path.join(pkg_dir, 'models')
     xacro_file = os.path.join(pkg_dir, 'urdf', 'ugv.urdf.xacro')
-    default_world_file = os.path.join(pkg_dir, 'worlds', 'airport_runway.sdf')
-
+    world_name_arg = DeclareLaunchArgument(
+        'world_name',
+        default_value='airport_runway',
+        description='World name: "airport_runway" or "nus_ea_field"'
+    )
     world_arg = DeclareLaunchArgument(
         'world',
-        default_value=default_world_file,
+        default_value=PythonExpression(["'", pkg_dir, "/worlds/", LaunchConfiguration('world_name'), ".sdf'"]),
         description='Full path to Gazebo world SDF file'
     )
     spawn_x_arg = DeclareLaunchArgument(
         'spawn_x',
-        default_value='0.0',
+        default_value=PythonExpression(["'-25.0' if '", LaunchConfiguration('world_name'), "' == 'nus_ea_field' else '0.0'"]),
         description='Robot spawn X coordinate'
     )
     spawn_y_arg = DeclareLaunchArgument(
         'spawn_y',
         default_value='0.0',
-        description='Robot spawn Y coordinate (Runway centerline is Y=0.0)'
+        description='Robot spawn Y coordinate'
     )
     spawn_z_arg = DeclareLaunchArgument(
         'spawn_z',
@@ -34,8 +37,8 @@ def generate_launch_description():
     )
     spawn_yaw_arg = DeclareLaunchArgument(
         'spawn_yaw',
-        default_value='-0.2274',
-        description='Robot spawn Yaw angle (aligned with runway heading)'
+        default_value=PythonExpression(["'0.0' if '", LaunchConfiguration('world_name'), "' == 'nus_ea_field' else '-0.2274'"]),
+        description='Robot spawn Yaw angle'
     )
 
     world_file = LaunchConfiguration('world')
@@ -105,6 +108,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        world_name_arg,
         world_arg,
         spawn_x_arg,
         spawn_y_arg,
