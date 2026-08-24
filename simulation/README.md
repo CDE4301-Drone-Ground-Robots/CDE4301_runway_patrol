@@ -197,7 +197,7 @@ Running the simulation requires **2 separate terminal windows** (or 2 tabs). You
 source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
 ros2 launch runway_description sim_nus_ea.launch.py
 ```
-*(Wait ~5 seconds for Gazebo to load and the UGV to spawn at `X = -25.0, Y = 0.0`)*
+*(Wait ~5 seconds for Gazebo to load)*
 
 #### **Terminal 2: Start Nav2 & RViz2**
 ```bash
@@ -205,7 +205,7 @@ source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
 ros2 launch runway_navigation bringup_nav2.launch.py world_name:=nus_ea_field
 ```
 
-#### **Terminal 3 (Optional): Spawn People on Walkways & Courtyard**
+#### **Terminal 3 (Optional): Spawn people on Walkways & Courtyard**
 ```bash
 python3 -c "import os; [os.system(f'ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_{i+1} -x {x} -y {y} -z 0.0') for i, (x, y) in enumerate([(-1.95, 10.32), (4.39, 8.48), (4.24, 7.52), (7.59, 10.24), (10.71, 9.51), (10.57, 7.11), (14.56, 8.61), (17.84, 9.78), (-5.13, 5.14), (-5.85, 4.59), (-12.62, 2.65), (-13.04, 1.90), (-19.93, 2.28), (-17.67, 0.23), (-10.32, -0.28), (-5.43, -0.36), (-20.63, -3.27), (-14.62, -2.43), (-9.53, -3.50), (-7.45, -7.32), (-9.38, -9.60)])]"
 ```
@@ -226,7 +226,7 @@ source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
 ros2 launch runway_navigation bringup_nav2.launch.py
 ```
 
-#### **Terminal 3 (Optional): Spawn Runway Slalom Course**
+#### **Terminal 3 (Optional): Spawn people on runway**
 ```bash
 ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_1 -x 4.0 -y 0.5 -z 0.0 && \
 ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_2 -x 5.5 -y -1.0 -z 0.0 && \
