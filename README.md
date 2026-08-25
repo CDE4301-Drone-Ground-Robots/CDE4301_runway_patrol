@@ -44,10 +44,10 @@ _Table 0.1: Project Team and Faculty Supervision Details_
 9. [Key Technical Improvements for Our UGV Platform](#9-key-technical-improvements-for-our-ugv-platform)
 10. [Individual Scope](#10-individual-scope)
     - [10.1 Hilbert Soh: Drone-Guided Autonomous Navigation and Obstacle Avoidance](#101-hilbert-soh-drone-guided-autonomous-navigation-and-obstacle-avoidance)
-    - [10.2 Asuka: [Scope Title]](#102-asuka-scope-title)
-    - [10.3 Gabriel Tan: [Scope Title]](#103-gabriel-tan-scope-title)
-    - [10.4 Zacarias Ng: [Scope Title]](#104-zacarias-ng-scope-title)
-    - [10.5 Bryan Ng: [Scope Title]](#105-bryan-ng-scope-title)
+    - [10.2 Asuka: FOD Physical Remediation and Mechanical Intake Subsystem](#102-asuka-fod-physical-remediation-and-mechanical-intake-subsystem)
+    - [10.3 Gabriel Tan: Computer Vision and Multi-Modal Perception](#103-gabriel-tan-computer-vision-and-multi-modal-perception)
+    - [10.4 Zacarias Ng: UGV Structural Chassis, Kinematics Sizing, Suspension, and Weatherproof Enclosure](#104-zacarias-ng-ugv-structural-chassis-kinematics-sizing-suspension-and-weatherproof-enclosure)
+    - [10.5 Bryan Ng: Integrated Power, Low-Level Control, and Diagnostics](#105-bryan-ng-integrated-power-low-level-control-and-diagnostics)
 11. [References](#11-references)
 
 ---
@@ -369,11 +369,11 @@ _Table 10.1: Individual Team Member Scope Summary_
 
 | Member Name     | Scope Title                                                             | Key Responsibilities & Summary                                                                                                                                                                                                                                                                    |
 | :-------------- | :---------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Hilbert Soh** | **Drone-Guided Autonomous Navigation and Obstacle Avoidance for a UGV** | Build a messaging module to parse/validate incoming drone waypoints; implement SLAM for real-time localization and map building; integrate path planning algorithms for waypoint navigation and obstacle avoidance; test wireless communication reliability, waypoint accuracy, and safety stops. |
-| **Asuka**       | _[Insert Scope Title]_                                                  | _[Insert brief summary of key responsibilities]_                                                                                                                                                                                                                                                  |
-| **Gabriel Tan** | _[Insert Scope Title]_                                                  | _[Insert brief summary of key responsibilities]_                                                                                                                                                                                                                                                  |
-| **Zacarias Ng** | _[Insert Scope Title]_                                                  | _[Insert brief summary of key responsibilities]_                                                                                                                                                                                                                                                  |
-| **Bryan Ng**    | _[Insert Scope Title]_                                                  | _[Insert brief summary of key responsibilities]_                                                                                                                                                                                                                                                  |
+| **Hilbert Soh** | **Drone-Guided Autonomous Navigation and Obstacle Avoidance** | Build a messaging module to parse/validate incoming drone waypoints; implement SLAM for real-time localization and map building; integrate path planning algorithms for waypoint navigation and obstacle avoidance; test wireless communication reliability, waypoint accuracy, and safety stops. |
+| **Asuka**       | **FOD Physical Remediation and Mechanical Intake Subsystem** | Benchmark FOD remediation methods via capture testing; design CAD & fabricate mechanical intake hood, ducting, and debris bin; build motorized lift mechanism with ground rollers; perform clearance trials across debris types to record pickup efficiency. |
+| **Gabriel Tan** | **Computer Vision and Multi-Modal Perception** | Curate/annotate airfield datasets; train deep-learning vision models (YOLO variants) for sub-3cm FOD detection; integrate LiDAR/thermal multi-modal false-positive suppression; deploy TensorRT INT8 inference pipeline on NVIDIA Jetson with ROS 2 integration. |
+| **Zacarias Ng** | **UGV Structural Chassis, Kinematics Sizing, Suspension, and Weatherproof Enclosure** | Perform drivetrain kinematics & structural load sizing; design & fabricate aluminum chassis frame and coil-spring suspension mechanism; build vibration-isolated sensor mounts and IP-rated weatherproof canopy. |
+| **Bryan Ng**    | **Integrated Power, Low-Level Control, and Diagnostics** | Design power budget, LiFePO4 battery & BMS integration, multi-rail PDB; develop autonomous contact-charging dock interface; write deterministic STM32/micro-ROS firmware for 4WD PID motor control; implement hardware E-Stop circuit & telemetry GUI. |
 
 ### Detailed Individual Scopes
 
@@ -408,27 +408,127 @@ _Table 10.1: Individual Team Member Scope Summary_
 
 ---
 
-### 10.2 Asuka: [Computer Vision and FOD Picking Subsystem]
+### 10.2 Asuka: FOD Physical Remediation and Mechanical Intake Subsystem
 
-_[Add detailed scope breakdown here]_
+#### Objectives
+
+- Evaluate, benchmark, and validate multiple physical FOD remediation mechanisms through physical experimentation.
+- Design and fabricate a functional mechanical clearance subsystem to collect loose runway debris.
+- Implement a mechanical deployment mechanism to adjust intake clearance height between transit and collection modes.
+
+#### Key Responsibilities
+
+- Conduct benchtop trade-off studies and physical capture testing across different remediation methods (e.g., suction intake, magnetic pickup, mechanical sweeping/drag).
+- Design CAD models and build the mechanical intake hood, ducting, and debris collection container.
+- Design and assemble a motorized lift mechanism with compliant ground contact rollers to maintain consistent intake ride height.
+- Perform systematic clearance trials across diverse airfield debris categories (e.g., loose metallic fasteners, rubber spalls, aggregate stones) and compile empirical performance metrics.
+
+#### Hardware & Mechanical Components
+
+- **Remediation & Testing Payloads:** Multi-Method Prototype Fixtures (Suction Intake Hood, Magnetic Bar, Mechanical Drag/Sweeper Elements), Debris Collection Bin
+- **Actuation & Motion:** Blower/Suction Motor, Linear Actuator / Lift Linkage, Guide Rails, Ground Castor Rollers
+- **Design & Prototyping Tools:** CAD Software, 3D Printing / Rapid Prototyping Tools
+
+#### Expected Deliverables (Individual)
+
+- Comparative evaluation and benchmarking report analyzing the pickup efficiency of different FOD retrieval methods
+- CAD models, structural drawings, and physical build of the selected intake assembly and collection container
+- Functional motorized deployment mechanism for active intake height adjustment
+- Debris clearance validation report documenting collection success rates across various hazard materials and sizes
 
 ---
 
-### 10.3 Gabriel Tan: [Scope Title]
+### 10.3 Gabriel Tan: Computer Vision and Multi-Modal Perception
 
-_[Add detailed scope breakdown here]_
+#### Objectives
+
+- Develop and deploy real-time deep-learning vision models to detect, classify, and localize small Foreign Object Debris (FOD) on runway surfaces.
+- Implement multi-modal false-positive suppression to filter out benign surface features like tyre skid marks, paint markings, and shadows.
+- Optimize neural network inference pipelines on edge hardware for integration with navigation and payload-triggering nodes.
+
+#### Key Responsibilities
+
+- Curate, annotate, and augment custom airfield datasets encompassing diverse lighting, weather, and debris types.
+- Train and benchmark object detection and instance segmentation models (e.g., YOLO variants) for sub-$3\text{ cm}$ debris detection.
+- Integrate LiDAR height profiling or thermal contrast to verify true positive physical obstacles and eliminate flat visual artifacts.
+- Deploy optimized models via TensorRT INT8 quantization and wrap inference outputs into standardized ROS 2 vision topics.
+
+#### Hardware & Software Components
+
+- **Cameras & Optics:** High-Resolution Global Shutter RGB Camera, Thermal/LWIR Camera, Depth Sensor
+- **Compute Platform:** NVIDIA Jetson Edge AI Platform (e.g., Jetson Orin)
+- **AI & Acceleration Frameworks:** PyTorch, ONNX, NVIDIA TensorRT, DeepStream SDK, OpenCV
+- **Protocols & Middleware:** ROS 2 (`sensor_msgs/Image`, `vision_msgs/Detection2DArray`)
+
+#### Expected Deliverables (Individual)
+
+- Trained and evaluated deep-learning model suite for small airfield FOD detection and classification
+- TensorRT-accelerated edge inference pipeline achieving real-time throughput ($\ge 30\text{ FPS}$)
+- Multi-modal false-positive suppression module for surface clutter discrimination
+- Comprehensive computer vision benchmarking report analyzing mAP, latency, and detection performance across environmental conditions
 
 ---
 
-### 10.4 Zacarias Ng: [Scope Title]
+### 10.4 Zacarias Ng: UGV Structural Chassis, Kinematics Sizing, Suspension, and Weatherproof Enclosure
 
-_[Add detailed scope breakdown here]_
+#### Objectives
+
+- Design and fabricate the structural UGV chassis frame to package power, compute, sensing, and payload bays within vehicle mass and payload limits.
+- Design and fabricate an independent compliant suspension system and drivetrain mounts to maintain 4-wheel ground contact and tire traction across textured runway surfaces.
+- Develop an IP-rated environmental enclosure and vibration-isolated sensor mounting architecture to shield electronics and sensors from high-speed tremors and weather.
+
+#### Key Responsibilities
+
+- Perform drivetrain kinematics and structural sizing calculations (chassis loading, motor torque sizing, lateral tire scrubbing resistance) for a 4WD differential-drive platform.
+- Design, calculate, and fabricate an independent coil-spring suspension mechanism (spring rate, travel, lateral shear resistance) to absorb pavement expansion joints while mitigating linear guide binding during skid-turns.
+- Generate CAD assemblies and build the chassis frame, drivetrain mounts, suspension uprights, and wheel hub adapters.
+- Develop rigid, vibration-isolated mounting structures for the 3D LiDAR, camera suite, GNSS antenna, and compute bay to eliminate optical distortion and IMU drift.
+- Design an IP-rated weather-resistant service canopy featuring passive heatsinks, thermal ventilation, and quick-access maintenance hatches.
+
+#### Hardware & Mechanical Components
+
+- **Chassis & Structural Materials:** Aluminum Extrusion Profiles ($30\times30\text{ mm}$ / $40\times40\text{ mm}$ / $40\times20\text{ mm}$), Aluminum/Carbon Fiber Base Plates, M8 Gusset Brackets, Hardware Fasteners
+- **Suspension & Drivetrain:** Independent Coilover/Spring Dampers, Precision Linear rails/Double wishbone, Wheel Hub Axles/Adapters, Airfield Turf Tires
+- **Enclosure & Dampening:** Weatherproof Polycarbonate/Aluminum Canopy Shell, Silicone Gaskets, Wire-Rope Isolators, Ventilation Vents
+- **Design & Analysis Tools:** CAD Software, Finite Element Analysis (FEA)
+
+#### Expected Deliverables (Individual)
+
+- Complete 3D CAD assembly, structural fabrication drawings, and bill of materials for the UGV chassis and suspension system
+- Kinematics sizing, suspension dynamics, and structural load calculations report
+- Physical fabricated chassis frame fully integrated with independent suspension, wheel assemblies, and sensor masts
+- Experimental mechanical validation report evaluating chassis structural rigidity, suspension compliance/travel, vibration isolation damping, and drivetrain mobility
 
 ---
 
-### 10.5 Bryan Ng: [Scope Title]
+### 10.5 Bryan Ng: Integrated Power, Low-Level Control, and Diagnostics
 
-_[Add detailed scope breakdown here]_
+#### Objectives
+
+- Develop an onboard power management and distribution system to supply and monitor all robot subsystems.
+- Develop an autonomous contact-charging interface for safe docking and recharge sequencing.
+- Implement the embedded microcontroller architecture and firmware for motor control, payload triggering, and safety interlocks.
+
+#### Key Responsibilities
+
+- Design the system power budget, integrate the LiFePO4 battery and BMS, and build the multi-rail PDB with branch fusing.
+- Develop the autonomous docking mechanism, contact plates, and charge-state detection logic.
+- Write deterministic MCU firmware (e.g., STM32/micro-ROS) for 4WD PID motor control and relay actuation.
+- Implement the hardware E-Stop contactor safety circuit, current/voltage sensing, and a telemetry GUI.
+
+#### Hardware & Software Components
+
+- **Power & Charging:** 24V LiFePO4 Battery, BMS, Buck Converters, Blade Fuse Box, Docking Contacts
+- **Embedded & Safety:** Microcontroller (STM32), Safety Contactor, Physical E-Stop, SSR, INA226 Sensor
+- **Communication & Protocols:** micro-ROS, UART/USB VCP, CAN Bus, `sensor_msgs/msg/BatteryState`
+- **Software & GUI:** STM32CubeIDE, FreeRTOS / C++, Foxglove Studio / Web Dashboard
+
+#### Expected Deliverables (Individual)
+
+- UGV electrical wiring schematic
+- Low-level firmware for 4WD motor actuation, sensor acquisition, and payload triggering
+- Functional autonomous contact-charging dock interface
+- Real-time telemetry and diagnostics dashboard for system health monitoring
 
 ---
 
