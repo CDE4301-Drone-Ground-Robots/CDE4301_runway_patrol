@@ -71,7 +71,7 @@ While the overall project establishes a collaborative framework between two sub-
 
 ## 2. Problem Statement & Operational Rationale
 
-Foreign Object Debris (FOD) on airport movement areas such as runways, taxiways, aprons, and gate areas poses severe structural, operational, and safety risks to commercial and military aircraft. FOD items range from loose hardware (nuts, bolts, safety wires) and pavement fragments to tools, tire rubber, and luggage components. When ingested into jet engines or struck by aircraft tires at high speeds, FOD can cause catastrophic engine failure, tire blowouts, rejected takeoffs, or structural airframe damage.
+Foreign Object Debris(FOD) on airport movement areas such as runways, taxiways, aprons, and gate areas poses severe structural, operational, and safety risks to commercial and military aircraft. FOD items range from loose hardware (nuts, bolts, safety wires) and pavement fragments to tools, tire rubber, and luggage components. When ingested into jet engines or struck by aircraft tires at high speeds, FOD can cause catastrophic engine failure, tire blowouts, rejected takeoffs, or structural airframe damage.
 
 Beyond immediate safety threats, the economic impact on the global aviation industry is substantial. Direct damage repairs, flight delays, diversions, schedule disruptions, fuel burn during ground holds, and lost revenue collectively cost the commercial aviation sector billions of dollars annually.
 
