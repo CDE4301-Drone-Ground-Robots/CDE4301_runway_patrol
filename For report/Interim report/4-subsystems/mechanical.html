@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.1 Mechanical Subsystem - Runway Patrol Interim Report</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">RP</div>
+        <div class="sidebar-brand-text">
+          <h2>Runway Patrol</h2>
+          <p>CDE4301 Interim Report</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Report</div>
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link"><span class="icon">📊</span><span>Executive Summary</span></a></li>
+          <li><a href="../1-introduction.html" class="nav-link"><span class="icon">🚀</span><span>1. Introduction</span></a></li>
+          <li><a href="../2-design-overview.html" class="nav-link"><span class="icon">⚙️</span><span>2. Overview of Design</span></a></li>
+          <li><a href="../3-individual-scopes.html" class="nav-link"><span class="icon">👥</span><span>3. Individual Scopes</span></a></li>
+        </ul>
+
+        <div class="nav-section-title">Subsystems</div>
+        <ul class="nav-list">
+          <li>
+            <a href="index.html" class="nav-link active"><span class="icon">🧩</span><span>4. Subsystem Architecture</span></a>
+            <ul class="nav-sub-list" style="display: flex;">
+              <li><a href="mechanical.html" class="nav-sub-link active">4.1 Mechanical</a></li>
+              <li><a href="electrical.html" class="nav-sub-link">4.2 Electrical</a></li>
+              <li><a href="programming.html" class="nav-sub-link">4.3 Programming</a></li>
+              <li><a href="computer-vision.html" class="nav-sub-link">4.4 Computer Vision</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Roadmap</div>
+        <ul class="nav-list">
+          <li><a href="../5-timeline.html" class="nav-link"><span class="icon">📅</span><span>5. Timeline to Finals</span></a></li>
+        </ul>
+
+        <div class="nav-section-title">References</div>
+        <ul class="nav-list">
+          <li><a href="../6-references.html" class="nav-link"><span class="icon">📚</span><span>6. References &amp; Standards</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>NUS CDE • AY2024/2025</p>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      
+      <header class="top-header">
+        <div class="header-title-area">
+          <button class="mobile-toggle" id="mobile-toggle-btn">☰</button>
+          <div>
+            <h1>4.1 Mechanical Subsystem Architecture</h1>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">
+              Chassis Design, FEA Simulations, Suspension Comparison, Motor Sizing &amp; Steering Kinematics
+            </p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-outline" id="theme-toggle-btn">🌙 Dark Mode</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+
+        <!-- SUBSYSTEM LEADERSHIP & OWNERSHIP CARD -->
+        <div class="card-box" style="border-left: 5px solid var(--accent-blue);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="badge badge-blue">Subsystem Ownership</span>
+                <span class="badge badge-purple">Mechanical Engineering</span>
+              </div>
+              <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Mechanical Subsystem Engineers</h3>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                • <strong>Asuka</strong> (A0308285Y): FOD Pickup Mechanism &amp; Suspension Systems<br>
+                • <strong>Zacarias Ng</strong> (A0306899H): Chassis Structural Design &amp; Kinematics Calculations<br>
+                • <em>Subsystem Oversight:</em> <strong>Hilbert Soh</strong> (Overseeing Mechanical Integration)
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <a href="../specs/asuka.html" class="btn btn-deep-dive">📖 Asuka Spec →</a>
+              <a href="../specs/zacarias-ng.html" class="btn btn-deep-dive">📖 Zacarias Spec →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. CHASSIS: ITERATIONS & FEA SIMULATIONS -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">1. Chassis Design: Iterations &amp; FEA Structural Analysis</div>
+            <span class="badge badge-blue">SolidWorks CAD &amp; Simulation</span>
+          </div>
+          
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+            The UGV chassis serves as the structural foundation housing high-payload batteries, central suction airflow ducts, delicate LiDAR sensors, and 4WD powertrain assemblies.
+          </p>
+
+          <!-- CHASSIS ITERATIONS -->
+          <h4 style="font-size: 14.5px; color: var(--accent-blue); margin-bottom: 10px;">Chassis Design Iterations</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 22px;">
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <span class="badge badge-amber" style="margin-bottom: 6px;">Iteration 1</span>
+              <h5 style="font-size: 13.5px; color: var(--text-main); margin-bottom: 4px;">Conceptual Monocoque Box</h5>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                [To be filled in]
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <span class="badge badge-blue" style="margin-bottom: 6px;">Iteration 2</span>
+              <h5 style="font-size: 13.5px; color: var(--text-main); margin-bottom: 4px;">Modular Aluminum Extrusion Frame</h5>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                [To be filled in]
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; border-left: 4px solid var(--accent-emerald);">
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">Iteration 3 (Selected)</span>
+              <h5 style="font-size: 13.5px; color: var(--text-main); margin-bottom: 4px;">Hybrid Modular Chassis with Low CG</h5>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                [To be filled in]
+              </p>
+            </div>
+          </div>
+
+          <!-- FEA SIMULATIONS -->
+          <h4 style="font-size: 14.5px; color: var(--accent-purple); margin-bottom: 10px;">Finite Element Analysis (FEA) Simulation Results</h4>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+            To ensure survivability when traversing runway expansion joints and tarmac irregularities at speeds $\ge 10\text{ km/h}$, SolidWorks FEA static and dynamic load simulations were conducted:
+          </p>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Load Case / Simulation Condition</th>
+                  <th>Applied Force / Constraint</th>
+                  <th>Maximum Von Mises Stress</th>
+                  <th>Maximum Displacement</th>
+                  <th>Factor of Safety (FOS)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Static Gravity Load (1G)</strong></td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                </tr>
+                <tr>
+                  <td><strong>Dynamic Bump Impact (3G Vertical)</strong></td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                </tr>
+                <tr>
+                  <td><strong>Torsional Chassis Twist</strong></td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 8px; font-style: italic;">
+            [To be filled in]
+          </p>
+        </div>
+
+        <!-- 2. SUSPENSION: COMPARATIVE ARCHITECTURE EVALUATION -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">2. Suspension System: Architecture Trade-Off &amp; Comparison</div>
+            <span class="badge badge-purple">Terrain Compliance</span>
+          </div>
+
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+            High-speed runway operation ($\ge 10\text{ km/h}$) introduces high-frequency vibration from asphalt aggregate texture and longitudinal shock from concrete expansion grooves. Four suspension architectures were comparatively evaluated:
+          </p>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Suspension Type</th>
+                  <th>Kinematic Architecture</th>
+                  <th>Key Strengths</th>
+                  <th>Limitations / Drawbacks</th>
+                  <th>Evaluation Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>MacPherson Strut</strong></td>
+                  <td>Single lower control arm with integrated tall telescoping spring-damper</td>
+                  <td>Compact lateral width, low component count</td>
+                  <td>Tall vertical height conflicts with low chassis CG; lateral side-loads cause strut friction</td>
+                  <td><span class="badge badge-rose">REJECTED</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Double Wishbone</strong></td>
+                  <td>Upper and lower parallel A-arms with coilover shock</td>
+                  <td>Exceptional camber angle control, optimal tire road contact patch</td>
+                  <td>High mechanical complexity (multiple ball joints and pivots), wide lateral space consumption encroaches on vacuum duct</td>
+                  <td><span class="badge badge-amber">EVALUATED</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Linear Suspension (Guide Pillar)</strong></td>
+                  <td>Pure vertical slide shafts with compression springs</td>
+                  <td>Simple vertical motion, zero camber angle deviation</td>
+                  <td>Severe mechanical binding (jamming) under horizontal braking/cornering loads; sand/grit abrasion</td>
+                  <td><span class="badge badge-rose">REJECTED</span></td>
+                </tr>
+                <tr style="background: rgba(46, 160, 67, 0.08);">
+                  <td><strong>Trailing Arm Suspension</strong></td>
+                  <td>Longitudinal swing arm pivoting perpendicular to travel with angled coilover damper</td>
+                  <td><strong>Superior longitudinal shock absorption over expansion cracks; compact vertical profile; rugged pivot bearings; zero binding</strong></td>
+                  <td>Minor camber change during full compression (negligible on flat runways)</td>
+                  <td><span class="badge badge-emerald" style="font-weight: bold;">SELECTED</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout callout-emerald" style="margin-top: 14px;">
+            <strong>Selection Justification:</strong> The <strong>Trailing Arm Suspension</strong> was selected because airport runways are predominantly flat with sharp transverse expansion cracks and grooving. Trailing arms naturally rotate backward and upward upon striking cracks, dampening shocks without the binding risk of linear slides or the packaging bulk of double wishbones.
+          </div>
+        </div>
+
+        <!-- 3. MOTOR & POWERTRAIN REQUIREMENTS -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">3. Motor &amp; Powertrain Requirements: Mathematical Sizing</div>
+            <span class="badge badge-emerald">Powertrain Engineering</span>
+          </div>
+
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+            To achieve the operational target of <strong>$\ge 10\text{ km/h}$</strong> while climbing runway access ramps and handling full payload mass, powertrain parameters were calculated:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+              <h4 style="font-size: 14px; color: var(--accent-blue); margin-bottom: 8px;">1. Kinematic Velocity &amp; RPM Calculation</h4>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Target Velocity: $v = 10\text{ km/h} \approx 2.78\text{ m/s}$<br>
+                Drive Wheel Radius: $r = 0.10\text{ m}$ ($200\text{ mm}$ all-terrain tire)<br>
+                Angular Velocity: $\omega = \frac{v}{r} = \frac{2.78}{0.10} = 27.8\text{ rad/s}$<br>
+                <strong>Required Wheel Output Speed = $\approx 265\text{ RPM}$</strong>
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+              <h4 style="font-size: 14px; color: var(--accent-purple); margin-bottom: 8px;">2. Tractive Force &amp; Torque Budget</h4>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Vehicle Gross Mass: $M = 40\text{ kg}$<br>
+                Ramp Incline Angle: $\theta = 15^\circ$ ($F_{\text{grade}} = M g \sin 15^\circ \approx 101.5\text{ N}$)<br>
+                Rolling Resistance + Acceleration: $F_{\text{rolling}} + F_{\text{acc}} \approx 28.5\text{ N}$<br>
+                Total Tractive Force: $F_{\text{total}} \approx 130\text{ N}$<br>
+                <strong>Total Torque $\tau = F \times r = 130 \times 0.10 = 13.0\text{ N}\cdot\text{m}$</strong>
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+              <h4 style="font-size: 14px; color: var(--accent-emerald); margin-bottom: 8px;">3. Selected Motor &amp; Driver Hardware</h4>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                <strong>Hub Motors:</strong> Dual <strong>ZLLG80ASM25 0-HT V2.0</strong> 8-inch high-torque direct-drive hub motors (zero gearbox backlash, &gt;88% efficiency).<br>
+                <strong>Servo Driver:</strong> <strong>ZLAC8015D V4.2</strong> dual-channel DC brushless servo driver via CAN bus.<br>
+                <strong>Bus Voltage:</strong> 48V LiFePO4 bus (up to 800W peak mechanical output).<br>
+                <strong>Suspension &amp; Mounts:</strong> Coilover suspension shock absorbers, PETG CF structural brackets, and TPU 98A dampeners.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. STEERING SYSTEM COMPARISON -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">4. Steering System Architecture Comparison</div>
+            <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Kinematic Analysis</span>
+          </div>
+
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+            Airside FOD extraction demands swift transit down runway centerlines combined with agile localized maneuvering above small flagged coordinates. Three candidate steering architectures were benchmarked:
+          </p>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Steering Architecture</th>
+                  <th>Kinematic Model</th>
+                  <th>Turning Radius</th>
+                  <th>Tarmac Traction &amp; Durability</th>
+                  <th>Mechanical Complexity</th>
+                  <th>Selection Decision</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: rgba(46, 160, 67, 0.08);">
+                  <td><strong>Differential Drive</strong></td>
+                  <td>Dual independent drive wheels with passive casters / trailing support</td>
+                  <td><span class="badge badge-emerald">Zero Radius ($R = 0\text{ m}$, in-place spin)</span></td>
+                  <td><span class="badge badge-emerald">Excellent (Pneumatic rubber tires on asphalt)</span></td>
+                  <td><span class="badge badge-emerald">Minimal (No steering servos or linkages)</span></td>
+                  <td><span class="badge badge-emerald" style="font-weight: bold;">SELECTED</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Ackermann Steering</strong></td>
+                  <td>Steering knuckles &amp; tie rods (Car-like geometry)</td>
+                  <td><span class="badge badge-rose">Large ($R_{\text{min}} &gt; 1.5\text{ m}$)</span></td>
+                  <td><span class="badge badge-emerald">High high-speed lateral stability</span></td>
+                  <td><span class="badge badge-rose">High (Tie rods, servos, ball joints prone to play)</span></td>
+                  <td><span class="badge badge-rose">REJECTED</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Mecanum Drive</strong></td>
+                  <td>4 independent $45^\circ$ angled roller wheels</td>
+                  <td><span class="badge badge-emerald">Zero Radius (Omnidirectional holonomic)</span></td>
+                  <td><span class="badge badge-rose">Very Poor (Tarmac grit jams rollers; high vibration)</span></td>
+                  <td><span class="badge badge-amber">Moderate (4 independent motors required)</span></td>
+                  <td><span class="badge badge-rose">REJECTED</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin-top: 14px;">
+            <h4 style="font-size: 14px; color: var(--accent-purple); margin-bottom: 6px;">Why Differential Drive is Optimal for Runway Patrol:</h4>
+            <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              <li><strong>In-Place Zero Pivot:</strong> Allows the UGV to arrive at a target coordinate, rotate precisely in place, align the front vacuum hood directly over the FOD, and reverse without requiring multi-point turns.</li>
+              <li><strong>Outdoor Durability:</strong> Uses rugged all-terrain pneumatic rubber tires with high friction coefficients ($\mu \approx 0.85$ on asphalt), unlike fragile Mecanum rollers that fail on outdoor grit.</li>
+              <li><strong>Nav2 Native Compatibility:</strong> Standard differential drive inverse kinematics are directly integrated into the ROS 2 Nav2 controller plugins (<code>DWBLocalPlanner</code> and <code>SmacPlanner2D</code>).</li>
+            </ul>
+          </div>
+        </div>
+
+      </main>
+
+      <footer class="main-footer">
+        <div>Runway Patrol Interim Report • Section 4.1</div>
+        <div>National University of Singapore</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4. Subsystem Architecture - Runway Patrol Interim Report</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">RP</div>
+        <div class="sidebar-brand-text">
+          <h2>Runway Patrol</h2>
+          <p>CDE4301 Interim Report</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Report</div>
+        <ul class="nav-list">
+          <li>
+            <a href="../index.html" class="nav-link">
+              <span class="icon">📊</span>
+              <span>Executive Summary</span>
+            </a>
+          </li>
+          <li>
+            <a href="../1-introduction.html" class="nav-link">
+              <span class="icon">🚀</span>
+              <span>1. Introduction</span>
+            </a>
+          </li>
+          <li>
+            <a href="../2-design-overview.html" class="nav-link">
+              <span class="icon">⚙️</span>
+              <span>2. Overview of Design</span>
+            </a>
+          </li>
+          <li>
+            <a href="../3-individual-scopes.html" class="nav-link">
+              <span class="icon">👥</span>
+              <span>3. Individual Scopes</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Subsystems</div>
+        <ul class="nav-list">
+          <li>
+            <a href="index.html" class="nav-link active">
+              <span class="icon">🧩</span>
+              <span>4. Subsystem Architecture</span>
+            </a>
+            <ul class="nav-sub-list" style="display: flex;">
+              <li><a href="mechanical.html" class="nav-sub-link">4.1 Mechanical</a></li>
+              <li><a href="electrical.html" class="nav-sub-link">4.2 Electrical</a></li>
+              <li><a href="programming.html" class="nav-sub-link">4.3 Programming</a></li>
+              <li><a href="computer-vision.html" class="nav-sub-link">4.4 Computer Vision</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Roadmap</div>
+        <ul class="nav-list">
+          <li>
+            <a href="../5-timeline.html" class="nav-link">
+              <span class="icon">📅</span>
+              <span>5. Timeline to Finals</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">References</div>
+        <ul class="nav-list">
+          <li>
+            <a href="../6-references.html" class="nav-link">
+              <span class="icon">📚</span>
+              <span>6. References &amp; Standards</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>NUS CDE • AY2024/2025</p>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      
+      <header class="top-header">
+        <div class="header-title-area">
+          <button class="mobile-toggle" id="mobile-toggle-btn">☰</button>
+          <div>
+            <h1>4. Integrated Subsystem Architecture</h1>
+            
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-outline" id="theme-toggle-btn">🌙 Dark Mode</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+
+        <!-- OVERVIEW BLOCK DIAGRAM -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">🧩 Integrated Subsystem Architecture Overview</div>
+            <a href="../../3-system-architecture.md" class="btn btn-deep-dive">📖 Read Architecture Spec</a>
+          </div>
+
+          <p style="margin-bottom: 20px;">
+            The Runway Patrol system combines 4 dedicated engineering subsystems into a unified operational payload platform. Click any subsystem card below to inspect detailed designs, wiring, CAD, and algorithm comparisons:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+
+            <a href="mechanical.html" class="card-box" style="margin-bottom:0; text-decoration:none;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                <h3 style="color:var(--accent-blue);">4.1 Mechanical</h3>
+                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:3px;">
+                  <span class="badge badge-blue">Asuka &amp; Zacarias Ng</span>
+                  <span class="badge" style="font-size:10px; background:rgba(99,102,241,0.1); color:var(--accent-purple);">Oversight: Hilbert</span>
+                </div>
+              </div>
+              <p style="font-size:13px; color:var(--text-muted);">Chassis iterations &amp; FEA simulations, suspension benchmark (trailing arm), motor torque sizing &amp; differential steering.</p>
+            </a>
+
+            <a href="electrical.html" class="card-box" style="margin-bottom:0; text-decoration:none;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                <h3 style="color:var(--accent-amber);">4.2 Electrical</h3>
+                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:3px;">
+                  <span class="badge badge-amber">Bryan Ng</span>
+                  <span class="badge" style="font-size:10px; background:rgba(16,185,129,0.1); color:var(--accent-emerald);">Oversight: Gabriel</span>
+                </div>
+              </div>
+              <p style="font-size:13px; color:var(--text-muted);">System power calculations &amp; load budget, LiFePO4 battery chemistry selection &amp; complete schematic wiring diagram.</p>
+            </a>
+
+            <a href="programming.html" class="card-box" style="margin-bottom:0; text-decoration:none;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 style="color:var(--accent-purple);">4.3 Programming</h3>
+                <span class="badge badge-purple">Hilbert Soh</span>
+              </div>
+              <p style="font-size:13px; color:var(--text-muted);">SLAM Toolbox mapping, Nav2 global/local planning, algorithm trade-offs, and multi-agent C2 communications (CycloneDDS / RF).</p>
+            </a>
+
+            <a href="computer-vision.html" class="card-box" style="margin-bottom:0; text-decoration:none;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 style="color:var(--accent-emerald);">4.4 Computer Vision</h3>
+                <span class="badge badge-emerald">Gabriel Tan</span>
+              </div>
+              <p style="font-size:13px; color:var(--text-muted);">YOLOv8 vs YOLOv11 evaluation, FOD target classes, RGB-D fusion &amp; TensorRT edge acceleration.</p>
+            </a>
+
+          </div>
+        </div>
+
+      </main>
+
+      <footer class="main-footer">
+        <div>Runway Patrol Interim Report • Chapter 4</div>
+        <div>National University of Singapore</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

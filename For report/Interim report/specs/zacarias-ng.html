@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zacarias Ng - Chassis Design & Kinematics Calculations Spec</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">RP</div>
+        <div class="sidebar-brand-text">
+          <h2>Runway Patrol</h2>
+          <p>CDE4301 Interim Report</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Report</div>
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link"><span class="icon">📊</span><span>Executive Summary</span></a></li>
+          <li><a href="../1-introduction.html" class="nav-link"><span class="icon">🚀</span><span>1. Introduction</span></a></li>
+          <li><a href="../2-design-overview.html" class="nav-link"><span class="icon">⚙️</span><span>2. Overview of Design</span></a></li>
+          <li><a href="../3-individual-scopes.html" class="nav-link active"><span class="icon">👥</span><span>3. Individual Scopes</span></a></li>
+          <li><a href="../4-subsystems/index.html" class="nav-link"><span class="icon">🧩</span><span>4. Subsystem Architecture</span></a></li>
+          <li><a href="../5-timeline.html" class="nav-link"><span class="icon">📅</span><span>5. Timeline to Finals</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>NUS CDE • AY2024/2025</p>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP HEADER BAR -->
+      <header class="top-header">
+        <div class="header-title-area">
+          <button class="mobile-toggle" id="mobile-toggle-btn">☰</button>
+          <div>
+            <h1>Zacarias Ng — Chassis Design & Kinematics Calculations</h1>
+            
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-outline" onclick="window.location.href='../3-individual-scopes.html'">← Back to Scopes</button>
+          <button class="btn btn-outline" id="theme-toggle-btn">🌙 Dark Mode</button>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <main class="page-content">
+
+        <!-- HEADER OVERVIEW CARD -->
+        <div class="card-box" style="border-left: 5px solid var(--accent-rose);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <h2 style="font-size: 22px; color: var(--text-main); margin-bottom: 6px;">Zacarias Ng</h2>
+              <p style="font-size: 14px; font-weight: 700; color: var(--accent-rose);">Subsystem Scope: Chassis Design & Kinematics Calculations</p>
+            </div>
+            <span class="badge badge-rose" style="font-size: 12px; padding: 6px 14px;">Matric: A0306899H</span>
+          </div>
+          <p style="margin-top: 14px; font-size: 14.5px; color: var(--text-muted); line-height: 1.6;">
+            Zacarias Ng is responsible for the overall UGV chassis structural frame sizing, differential drive kinematics mathematical modeling, wheel odometry equations, and IP65 weatherproof enclosure design.
+          </p>
+        </div>
+
+        <!-- 1. KEY OBJECTIVES -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">🎯 Engineering Scope Objectives</div>
+          </div>
+          <ul style="padding-left: 20px; font-size: 14px; color: var(--text-main); line-height: 1.8;">
+            <li><strong>Differential Drive Kinematics:</strong> Derive forward and inverse kinematics matrix equations for 4WD differential drive velocity control.</li><li><strong>Chassis Frame Sizing:</strong> Calculate center-of-mass dynamics, slope stability, and ground clearance optimization.</li><li><strong>IP65 Weatherproof Enclosure:</strong> Design dust-tight and rain-resistant housing for onboard compute and motor controllers.</li><li><strong>Wheel Odometry Dynamics:</strong> Formulate encoder pulse-to-distance mathematical transformation equations for navigation.</li>
+          </ul>
+        </div>
+
+        <!-- 2. RESPONSIBILITIES & TECHNICAL EXECUTION -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">🛠️ Technical Execution &amp; Responsibilities</div>
+          </div>
+          <ul style="padding-left: 20px; font-size: 14px; color: var(--text-muted); line-height: 1.8;">
+            <li>Calculated differential drive kinematics matrices linking wheel angular velocity to linear robot velocity (v, w).</li><li>Designed structural aluminum extrusion layout, motor mounting plates, and wheel hubs.</li><li>Engineered IP65 sealed electronics enclosure with heat-sink ventilation passages.</li><li>Validated chassis ground clearance dynamics across curb obstacles and uneven pavement.</li>
+          </ul>
+        </div>
+
+        <!-- 3. HARDWARE & SOFTWARE TECH STACK TABLE -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">💻 Tech Stack &amp; Hardware Components</div>
+          </div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Component / Library</th>
+                  <th>Operational Function</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Kinematics Modeling</strong></td><td><code>Python / MATLAB Matrix Solver</code></td><td>Forward & inverse differential drive kinematics</td></tr><tr><td><strong>Structural CAD</strong></td><td><code>SolidWorks Extrusion Sizing</code></td><td>Frame geometric layout & sensor mast positioning</td></tr><tr><td><strong>Enclosure Rating</strong></td><td><code>IP65 Sealed Housing</code></td><td>Protection against dust ingress and tropical rainfall</td></tr><tr><td><strong>Odometry Model</strong></td><td><code>Encoder Wheel Equations</code></td><td>Real-time pulse integration for ROS 2 odometry</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4. EXPECTED DELIVERABLES -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">📦 Subsystem Expected Deliverables</div>
+          </div>
+          <ul style="padding-left: 20px; font-size: 14px; color: var(--text-main); line-height: 1.8; list-style: none;">
+            <li><span class="badge badge-emerald">Deliverable</span> <strong>Chassis Sizing & Kinematics Derivation:</strong> Complete mathematical report on differential drive kinematics and stability.</li><li><span class="badge badge-emerald">Deliverable</span> <strong>IP65 Electronics Enclosure:</strong> Weatherproof chassis housing for onboard electronics.</li><li><span class="badge badge-emerald">Deliverable</span> <strong>Wheel Odometry Publisher Spec:</strong> Mathematical specification for wheel encoder velocity feedback.</li>
+          </ul>
+        </div>
+
+      </main>
+
+      <footer class="main-footer">
+        <div>Runway Patrol Interim Report • Detailed Technical Spec</div>
+        <div>National University of Singapore</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

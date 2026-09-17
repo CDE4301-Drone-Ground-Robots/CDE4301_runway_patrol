@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5. Timeline &amp; Master Gantt Chart - Runway Patrol Interim Report</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">RP</div>
+        <div class="sidebar-brand-text">
+          <h2>Runway Patrol</h2>
+          <p>CDE4301 Interim Report</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Report</div>
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link"><span class="icon">📊</span><span>Executive Summary</span></a></li>
+          <li><a href="1-introduction.html" class="nav-link"><span class="icon">🚀</span><span>1. Introduction</span></a></li>
+          <li><a href="2-design-overview.html" class="nav-link"><span class="icon">⚙️</span><span>2. Overview of Design</span></a></li>
+          <li><a href="3-individual-scopes.html" class="nav-link"><span class="icon">👥</span><span>3. Individual Scopes</span></a></li>
+        </ul>
+
+        <div class="nav-section-title">Subsystems</div>
+        <ul class="nav-list">
+          <li>
+            <a href="4-subsystems/index.html" class="nav-link"><span class="icon">🧩</span><span>4. Subsystem Architecture</span></a>
+            <ul class="nav-sub-list">
+              <li><a href="4-subsystems/mechanical.html" class="nav-sub-link">4.1 Mechanical</a></li>
+              <li><a href="4-subsystems/electrical.html" class="nav-sub-link">4.2 Electrical</a></li>
+              <li><a href="4-subsystems/programming.html" class="nav-sub-link">4.3 Programming</a></li>
+              <li><a href="4-subsystems/computer-vision.html" class="nav-sub-link">4.4 Computer Vision</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Roadmap</div>
+        <ul class="nav-list">
+          <li><a href="5-timeline.html" class="nav-link active"><span class="icon">📅</span><span>5. Timeline to Finals</span></a></li>
+        </ul>
+
+        <div class="nav-section-title">References</div>
+        <ul class="nav-list">
+          <li><a href="6-references.html" class="nav-link"><span class="icon">📚</span><span>6. References &amp; Standards</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>NUS CDE • AY2024/2025</p>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      
+      <header class="top-header">
+        <div class="header-title-area">
+          <button class="mobile-toggle" id="mobile-toggle-btn">☰</button>
+          <div>
+            <h1>5. Capstone Master Gantt Chart &amp; Roadmap</h1>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Chronological tracking of task progress across Semester 1 and Semester 2 (August 2026 &ndash; April 2027)</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-outline" id="theme-toggle-btn">🌙 Dark Mode</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">📅 CDE4301 Capstone Year-Long Gantt Chart &amp; Interactive Schedule</div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-outline view-toggle-btn active" id="btn-view-matrix">📊 Matrix View</button>
+              <button class="btn btn-outline view-toggle-btn" id="btn-view-cards">📋 Roadmap Cards</button>
+            </div>
+          </div>
+
+          <!-- INTERACTIVE FILTER BAR -->
+          <div class="gantt-filter-bar">
+            <div class="gantt-btn-group">
+              <span class="filter-label">Semester:</span>
+              <button class="gantt-filter-btn active" data-sem="all">📅 All Semesters</button>
+              <button class="gantt-filter-btn" data-sem="1">🍂 Semester 1 (S1 Wk1 &ndash; S1 Wk13)</button>
+              <button class="gantt-filter-btn" data-sem="2">🌱 Semester 2 (S2 Wk1 &ndash; S2 Wk13)</button>
+            </div>
+
+            <div class="gantt-btn-group">
+              <span class="filter-label">Team Member:</span>
+              <button class="owner-filter-btn active" data-owner="all">All Members</button>
+              <button class="owner-filter-btn" data-owner="Asuka">Asuka (Mechanical - FOD)</button>
+              <button class="owner-filter-btn" data-owner="Zacarias">Zacarias (Chassis &amp; Drive)</button>
+              <button class="owner-filter-btn" data-owner="Hilbert">Hilbert (Nav &amp; Comms)</button>
+              <button class="owner-filter-btn" data-owner="Bryan">Bryan (Power &amp; Circuit)</button>
+              <button class="owner-filter-btn" data-owner="Gabriel">Gabriel (CV &amp; Vision)</button>
+            </div>
+
+            <div>
+              <input type="text" id="gantt-search-input" placeholder="🔍 Search tasks or deliverables..." class="gantt-search-box">
+            </div>
+          </div>
+
+          <!-- HOVER TASK INSPECTOR HUD -->
+          <div id="gantt-hover-inspector" class="gantt-inspector-bar">
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <span style="font-size: 18px;">📌</span>
+              <div>
+                <span style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: var(--text-muted); display: block;">Task Inspector (Hover over any progress box):</span>
+                <span id="inspector-task-title" style="font-size: 13.5px; font-weight: 700; color: var(--text-main);">Hover over any progress box in the chart below to inspect full title &amp; period</span>
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              <span id="inspector-task-owner" class="badge badge-purple" style="display: none;"></span>
+              <span id="inspector-task-period" class="badge badge-blue" style="display: none;"></span>
+            </div>
+          </div>
+
+          <!-- MATRIX VIEW -->
+          <div id="view-container-matrix" class="gantt-table-container">
+            <table class="gantt-matrix" id="gantt-table">
+              <thead>
+                <tr>
+                  <th rowspan="2" class="th-sticky-owner" style="min-width: 150px;">Student In Charge</th>
+                  <th rowspan="2" class="th-sticky-cat" style="min-width: 180px;">Subsystem / Category</th>
+                  <th colspan="14" class="th-sem-group hdr-sem-1" data-sem="1" style="background: rgba(99, 102, 241, 0.12); color: var(--accent-purple); text-align: center; border-bottom: 2px solid var(--accent-purple);">🍂 Semester 1 (S1 Wk1 &ndash; S1 Wk13)</th>
+                  <th colspan="7" class="th-sem-group hdr-sem-vac" data-sem="vac" style="background: rgba(100, 116, 139, 0.12); color: var(--text-muted); text-align: center; border-bottom: 2px solid var(--border-color);">❄️ Break &amp; Recess Period</th>
+                  <th colspan="14" class="th-sem-group hdr-sem-2" data-sem="2" style="background: rgba(16, 185, 129, 0.12); color: var(--accent-emerald); text-align: center; border-bottom: 2px solid var(--accent-emerald);">🌱 Semester 2 (S2 Wk1 &ndash; S2 Wk13)</th>
+                </tr>
+                <tr>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk1">S1 Wk1</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk2">S1 Wk2</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk3">S1 Wk3</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk4">S1 Wk4</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk5">S1 Wk5</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk6">S1 Wk6</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Recess">S1 Recess</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk7">S1 Wk7</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk8">S1 Wk8</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk9">S1 Wk9</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk10">S1 Wk10</th>
+                  <th class="col-week col-sem-1" data-sem="1" title="S1 Wk11">S1 Wk11</th>
+                  <th class="col-week col-sem-1 th-milestone" data-sem="1" title="S1 Wk12">⭐ S1 W12<br><span style="font-size:9px;font-weight:normal;opacity:0.8;">CFP Demo</span></th>
+                  <th class="col-week col-sem-1 th-milestone" data-sem="1" title="S1 Wk13">📝 S1 W13<br><span style="font-size:9px;font-weight:normal;opacity:0.8;">Interim Doc</span></th>
+                  <th class="col-week col-sem-vac" data-sem="vac" title="Reading Wk">Reading Wk</th>
+                  <th class="col-week col-sem-vac" data-sem="vac" title="Exam Wk 1">Exam Wk 1</th>
+                  <th class="col-week col-sem-vac" data-sem="vac" title="Exam Wk 2">Exam Wk 2</th>
+                  <th class="col-week col-sem-vac" data-sem="vac" title="Vac Wk 1">Vac Wk 1</th>
+                  <th class="col-week col-sem-vac" data-sem="vac" title="Vac Wk 2">Vac Wk 2</th>
+                  <th class="col-week col-sem-vac" data-sem="vac" title="Vac Wk 3">Vac Wk 3</th>
+                  <th class="col-week col-sem-vac" data-sem="vac" title="Vac Wk 4">Vac Wk 4</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk1">S2 Wk1</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk2">S2 Wk2</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk3">S2 Wk3</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk4">S2 Wk4</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk5">S2 Wk5</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk6">S2 Wk6</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Recess">S2 Recess</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk7">S2 Wk7</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk8">S2 Wk8</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk9">S2 Wk9</th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk10">S2 Wk10</th>
+                  <th class="col-week col-sem-2 th-milestone" data-sem="2" title="S2 Wk11">📑 S2 W11<br><span style="font-size:9px;font-weight:normal;opacity:0.8;">Final Doc</span></th>
+                  <th class="col-week col-sem-2" data-sem="2" title="S2 Wk12">S2 Wk12</th>
+                  <th class="col-week col-sem-2 th-milestone" data-sem="2" title="S2 Wk13">🏆 S2 W13<br><span style="font-size:9px;font-weight:normal;opacity:0.8;">Final Demo</span></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr class="gantt-row" data-owner="asuka">
+                  <td rowspan="5" class="gantt-owner-cell">
+                    <span class="owner-badge badge-purple">Asuka</span>
+                    <strong style="display:block; margin-top: 6px; font-size: 13px; color: var(--text-main);">Asuka (A0308285Y)</strong>
+                    <span style="font-size: 11.5px; color: var(--text-muted); display:block; margin-top:2px;">Mechanical Design</span>
+                  </td>
+                  <td class="gantt-cat-cell">Problem Finding & Definition</td>
+                  <td colspan="4" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Secondary research on problem (S1 Wk1 &ndash; S1 Wk4)" data-task="Secondary research on problem" data-owner="Asuka" data-period="S1 Wk1 &ndash; S1 Wk4">
+                      <span class="gantt-task-text">Secondary research on problem</span>
+                    </div>
+                  </td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Primary Research on Problem (S1 Wk5 &ndash; S1 Wk6)" data-task="Primary Research on Problem" data-owner="Asuka" data-period="S1 Wk5 &ndash; S1 Wk6">
+                      <span class="gantt-task-text">Primary Research on Problem</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Finalise Problem Insight report and problem definition (S1 Recess)" data-task="Finalise Problem Insight report and problem definition" data-owner="Asuka" data-period="S1 Recess">
+                      <span class="gantt-task-text">Finalise Problem Insight report and problem definition</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka gantt-task-milestone" title="INTERRIM PRESENTATION: Critical Function Prototype (S1 Wk12)" data-task="INTERRIM PRESENTATION: Critical Function Prototype" data-owner="Asuka" data-period="S1 Wk12">
+                      <span class="gantt-task-text">INTERRIM PRESENTATION: Critical Function Prototype</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka gantt-task-milestone" title="DOCCUMENTATION DUE ON THIS WEEK (S1 Wk13)" data-task="DOCCUMENTATION DUE ON THIS WEEK" data-owner="Asuka" data-period="S1 Wk13">
+                      <span class="gantt-task-text">DOCCUMENTATION DUE ON THIS WEEK</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-vac" data-sem="vac">
+                    <div class="gantt-task-box gantt-task-reservist" title="RESERVIST (Vac Wk 1 &ndash; Vac Wk 2)" data-task="RESERVIST" data-owner="Asuka" data-period="Vac Wk 1 &ndash; Vac Wk 2">
+                      <span class="gantt-task-text">RESERVIST</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-task-cell col-sem-2" data-sem="2">
+                    <div class="gantt-task-box gantt-task-asuka gantt-task-milestone" title="FINAL DOCCUMENTATION DUE ON WEEK 11 (S2 Wk11)" data-task="FINAL DOCCUMENTATION DUE ON WEEK 11" data-owner="Asuka" data-period="S2 Wk11">
+                      <span class="gantt-task-text">FINAL DOCCUMENTATION DUE ON WEEK 11</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-task-cell col-sem-2" data-sem="2">
+                    <div class="gantt-task-box gantt-task-asuka gantt-task-milestone" title="FINAL PRESENTATION (S2 Wk13)" data-task="FINAL PRESENTATION" data-owner="Asuka" data-period="S2 Wk13">
+                      <span class="gantt-task-text">FINAL PRESENTATION</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="gantt-row" data-owner="asuka">
+                  <td class="gantt-cat-cell">Needs Definition & Procurement</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="3" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Generation of List of Requirements and list of specifications (S1 Wk2 &ndash; S1 Wk4)" data-task="Generation of List of Requirements and list of specifications" data-owner="Asuka" data-period="S1 Wk2 &ndash; S1 Wk4">
+                      <span class="gantt-task-text">Generation of List of Requirements and list of specifications</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Purchase of items needed for CFP (S1 Wk5)" data-task="Purchase of items needed for CFP" data-owner="Asuka" data-period="S1 Wk5">
+                      <span class="gantt-task-text">Purchase of items needed for CFP</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="asuka">
+                  <td class="gantt-cat-cell">Vacuum Subsystem Design & Testing</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="4" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Calculations and design for Vacuum Subsystem (S1 Wk2 &ndash; S1 Wk5)" data-task="Calculations and design for Vacuum Subsystem" data-owner="Asuka" data-period="S1 Wk2 &ndash; S1 Wk5">
+                      <span class="gantt-task-text">Calculations and design for Vacuum Subsystem</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Development of second design iteration (S1 Wk6)" data-task="Development of second design iteration" data-owner="Asuka" data-period="S1 Wk6">
+                      <span class="gantt-task-text">Development of second design iteration</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Fabrication of Vacuum Head (S1 Recess)" data-task="Fabrication of Vacuum Head" data-owner="Asuka" data-period="S1 Recess">
+                      <span class="gantt-task-text">Fabrication of Vacuum Head</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Testing of Vacuumm Subsystem (S1 Wk7)" data-task="Testing of Vacuumm Subsystem" data-owner="Asuka" data-period="S1 Wk7">
+                      <span class="gantt-task-text">Testing of Vacuumm Subsystem</span>
+                    </div>
+                  </td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Improvement on Vacuum Susbsystem (S1 Wk8 &ndash; S1 Wk9)" data-task="Improvement on Vacuum Susbsystem" data-owner="Asuka" data-period="S1 Wk8 &ndash; S1 Wk9">
+                      <span class="gantt-task-text">Improvement on Vacuum Susbsystem</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Finalise Design for Vacuum subsystem (S1 Wk10)" data-task="Finalise Design for Vacuum subsystem" data-owner="Asuka" data-period="S1 Wk10">
+                      <span class="gantt-task-text">Finalise Design for Vacuum subsystem</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="asuka">
+                  <td class="gantt-cat-cell">Suspension Subsystem Design & Testing</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="4" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Calculations and design for Suspension Subsytem (S1 Wk2 &ndash; S1 Wk5)" data-task="Calculations and design for Suspension Subsytem" data-owner="Asuka" data-period="S1 Wk2 &ndash; S1 Wk5">
+                      <span class="gantt-task-text">Calculations and design for Suspension Subsytem</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Waiting on component arrival (S1 Wk6)" data-task="Waiting on component arrival" data-owner="Asuka" data-period="S1 Wk6">
+                      <span class="gantt-task-text">Waiting on component arrival</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Fabrication of Suspension Brackets (S1 Recess)" data-task="Fabrication of Suspension Brackets" data-owner="Asuka" data-period="S1 Recess">
+                      <span class="gantt-task-text">Fabrication of Suspension Brackets</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Testing of Suspension subsystem (S1 Wk7)" data-task="Testing of Suspension subsystem" data-owner="Asuka" data-period="S1 Wk7">
+                      <span class="gantt-task-text">Testing of Suspension subsystem</span>
+                    </div>
+                  </td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Improvement on Suspension Subsystem (S1 Wk8 &ndash; S1 Wk9)" data-task="Improvement on Suspension Subsystem" data-owner="Asuka" data-period="S1 Wk8 &ndash; S1 Wk9">
+                      <span class="gantt-task-text">Improvement on Suspension Subsystem</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Finalise design for suspension subsystem (S1 Wk10)" data-task="Finalise design for suspension subsystem" data-owner="Asuka" data-period="S1 Wk10">
+                      <span class="gantt-task-text">Finalise design for suspension subsystem</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="asuka">
+                  <td class="gantt-cat-cell">Documentation & Administration</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka gantt-task-milestone" title="Doccumentation (S1 Recess)" data-task="Doccumentation" data-owner="Asuka" data-period="S1 Recess">
+                      <span class="gantt-task-text">Doccumentation</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-asuka" title="Prepare doccumention and complile all results (S1 Wk11)" data-task="Prepare doccumention and complile all results" data-owner="Asuka" data-period="S1 Wk11">
+                      <span class="gantt-task-text">Prepare doccumention and complile all results</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="zacarias">
+                  <td rowspan="3" class="gantt-owner-cell">
+                    <span class="owner-badge badge-blue">Zacarias</span>
+                    <strong style="display:block; margin-top: 6px; font-size: 13px; color: var(--text-main);">Zacarias (A0308272M)</strong>
+                    <span style="font-size: 11.5px; color: var(--text-muted); display:block; margin-top:2px;">Chassis & Powertrain</span>
+                  </td>
+                  <td class="gantt-cat-cell">Chassis Design & Assembly</td>
+                  <td colspan="5" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-zac" title="Chassis Design (S1 Wk1 &ndash; S1 Wk5)" data-task="Chassis Design" data-owner="Zacarias" data-period="S1 Wk1 &ndash; S1 Wk5">
+                      <span class="gantt-task-text">Chassis Design</span>
+                    </div>
+                  </td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-zac" title="Fabrication of chassis (S1 Wk6 &ndash; S1 Recess)" data-task="Fabrication of chassis" data-owner="Zacarias" data-period="S1 Wk6 &ndash; S1 Recess">
+                      <span class="gantt-task-text">Fabrication of chassis</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-zac" title="Assembly of chassis (S1 Wk7)" data-task="Assembly of chassis" data-owner="Zacarias" data-period="S1 Wk7">
+                      <span class="gantt-task-text">Assembly of chassis</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="zacarias">
+                  <td class="gantt-cat-cell">Mounting Plates & Brackets</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="5" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-zac" title="Design of Plate (S1 Wk2 &ndash; S1 Wk6)" data-task="Design of Plate" data-owner="Zacarias" data-period="S1 Wk2 &ndash; S1 Wk6">
+                      <span class="gantt-task-text">Design of Plate</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-zac" title="Fabrication of Plate (S1 Recess)" data-task="Fabrication of Plate" data-owner="Zacarias" data-period="S1 Recess">
+                      <span class="gantt-task-text">Fabrication of Plate</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="zacarias">
+                  <td class="gantt-cat-cell">Motor Sizing & Optimization</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="3" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-zac" title="Motor Calculations (S1 Wk2 &ndash; S1 Wk4)" data-task="Motor Calculations" data-owner="Zacarias" data-period="S1 Wk2 &ndash; S1 Wk4">
+                      <span class="gantt-task-text">Motor Calculations</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="3" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-zac" title="Improve on suspension and chassis (S1 Wk8 &ndash; S1 Wk10)" data-task="Improve on suspension and chassis" data-owner="Zacarias" data-period="S1 Wk8 &ndash; S1 Wk10">
+                      <span class="gantt-task-text">Improve on suspension and chassis</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="hilbert">
+                  <td rowspan="5" class="gantt-owner-cell">
+                    <span class="owner-badge badge-purple">Hilbert</span>
+                    <strong style="display:block; margin-top: 6px; font-size: 13px; color: var(--text-main);">Hilbert Soh (A0308263H)</strong>
+                    <span style="font-size: 11.5px; color: var(--text-muted); display:block; margin-top:2px;">Programming & Comms</span>
+                  </td>
+                  <td class="gantt-cat-cell">Research & Sensor Exploration</td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Secondary research on problem (S1 Wk1 &ndash; S1 Wk2)" data-task="Secondary research on problem" data-owner="Hilbert" data-period="S1 Wk1 &ndash; S1 Wk2">
+                      <span class="gantt-task-text">Secondary research on problem</span>
+                    </div>
+                  </td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="CV Camera Research (S1 Wk3 &ndash; S1 Wk4)" data-task="CV Camera Research" data-owner="Hilbert" data-period="S1 Wk3 &ndash; S1 Wk4">
+                      <span class="gantt-task-text">CV Camera Research</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-vac" data-sem="vac">
+                    <div class="gantt-task-box gantt-task-reservist" title="RESERVIST (Vac Wk 1 &ndash; Vac Wk 2)" data-task="RESERVIST" data-owner="Hilbert" data-period="Vac Wk 1 &ndash; Vac Wk 2">
+                      <span class="gantt-task-text">RESERVIST</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="hilbert">
+                  <td class="gantt-cat-cell">Autonomous Navigation & SLAM</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="ROS Installation and getting familiar (S1 Wk2 &ndash; S1 Wk3)" data-task="ROS Installation and getting familiar" data-owner="Hilbert" data-period="S1 Wk2 &ndash; S1 Wk3">
+                      <span class="gantt-task-text">ROS Installation and getting familiar</span>
+                    </div>
+                  </td>
+                  <td colspan="3" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="ROS Simulation on obstacle avoidance (S1 Wk4 &ndash; S1 Wk6)" data-task="ROS Simulation on obstacle avoidance" data-owner="Hilbert" data-period="S1 Wk4 &ndash; S1 Wk6">
+                      <span class="gantt-task-text">ROS Simulation on obstacle avoidance</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Integrating UGV model into ROS Simulation (S1 Recess)" data-task="Integrating UGV model into ROS Simulation" data-owner="Hilbert" data-period="S1 Recess">
+                      <span class="gantt-task-text">Integrating UGV model into ROS Simulation</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Mapping and Integrating to ROS Simulation (S1 Wk7)" data-task="Mapping and Integrating to ROS Simulation" data-owner="Hilbert" data-period="S1 Wk7">
+                      <span class="gantt-task-text">Mapping and Integrating to ROS Simulation</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-vac" data-sem="vac">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Integrating ROS2 packages into physical UGV (Vac Wk 3 &ndash; Vac Wk 4)" data-task="Integrating ROS2 packages into physical UGV" data-owner="Hilbert" data-period="Vac Wk 3 &ndash; Vac Wk 4">
+                      <span class="gantt-task-text">Integrating ROS2 packages into physical UGV</span>
+                    </div>
+                  </td>
+                  <td colspan="3" class="gantt-task-cell col-sem-2" data-sem="2">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Tuning and testing of UGV navigation (S2 Wk1 &ndash; S2 Wk3)" data-task="Tuning and testing of UGV navigation" data-owner="Hilbert" data-period="S2 Wk1 &ndash; S2 Wk3">
+                      <span class="gantt-task-text">Tuning and testing of UGV navigation</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="hilbert">
+                  <td class="gantt-cat-cell">Multi-Agent UAV Communications</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Communication research (S1 Wk5)" data-task="Communication research" data-owner="Hilbert" data-period="S1 Wk5">
+                      <span class="gantt-task-text">Communication research</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Component Selection (S1 Wk6)" data-task="Component Selection" data-owner="Hilbert" data-period="S1 Wk6">
+                      <span class="gantt-task-text">Component Selection</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Delivery of Components (S1 Recess)" data-task="Delivery of Components" data-owner="Hilbert" data-period="S1 Recess">
+                      <span class="gantt-task-text">Delivery of Components</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Testing Communication between UGV and UAV computer (S1 Wk7)" data-task="Testing Communication between UGV and UAV computer" data-owner="Hilbert" data-period="S1 Wk7">
+                      <span class="gantt-task-text">Testing Communication between UGV and UAV computer</span>
+                    </div>
+                  </td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Simulation for communication link between UGV and UAV (S1 Wk8 &ndash; S1 Wk9)" data-task="Simulation for communication link between UGV and UAV" data-owner="Hilbert" data-period="S1 Wk8 &ndash; S1 Wk9">
+                      <span class="gantt-task-text">Simulation for communication link between UGV and UAV</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-2" data-sem="2">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Integrating communication package with UAV (S2 Wk3 &ndash; S2 Wk4)" data-task="Integrating communication package with UAV" data-owner="Hilbert" data-period="S2 Wk3 &ndash; S2 Wk4">
+                      <span class="gantt-task-text">Integrating communication package with UAV</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="hilbert">
+                  <td class="gantt-cat-cell">Motor Sizing & Final Chassis</td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Calculations for motor and components (S1 Wk1 &ndash; S1 Wk2)" data-task="Calculations for motor and components" data-owner="Hilbert" data-period="S1 Wk1 &ndash; S1 Wk2">
+                      <span class="gantt-task-text">Calculations for motor and components</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-vac" data-sem="vac">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Designing final Chassis (Vac Wk 1 &ndash; Vac Wk 2)" data-task="Designing final Chassis" data-owner="Hilbert" data-period="Vac Wk 1 &ndash; Vac Wk 2">
+                      <span class="gantt-task-text">Designing final Chassis</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="hilbert">
+                  <td class="gantt-cat-cell">Documentation & Compilations</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Prepare doccumention and complile all results (S1 Wk11)" data-task="Prepare doccumention and complile all results" data-owner="Hilbert" data-period="S1 Wk11">
+                      <span class="gantt-task-text">Prepare doccumention and complile all results</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td colspan="3" class="gantt-task-cell col-sem-2" data-sem="2">
+                    <div class="gantt-task-box gantt-task-hilbert" title="Prepare doccumention and complile all results (S2 Wk8 &ndash; S2 Wk10)" data-task="Prepare doccumention and complile all results" data-owner="Hilbert" data-period="S2 Wk8 &ndash; S2 Wk10">
+                      <span class="gantt-task-text">Prepare doccumention and complile all results</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="bryan">
+                  <td rowspan="4" class="gantt-owner-cell">
+                    <span class="owner-badge badge-amber">Bryan</span>
+                    <strong style="display:block; margin-top: 6px; font-size: 13px; color: var(--text-main);">Bryan Ng (A0308298E)</strong>
+                    <span style="font-size: 11.5px; color: var(--text-muted); display:block; margin-top:2px;">Electrical & Power</span>
+                  </td>
+                  <td class="gantt-cat-cell">Power System & Selection</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="4" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-bryan" title="Component calculations and selection (S1 Wk2 &ndash; S1 Wk5)" data-task="Component calculations and selection" data-owner="Bryan" data-period="S1 Wk2 &ndash; S1 Wk5">
+                      <span class="gantt-task-text">Component calculations and selection</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-bryan" title="Delivery of Components (S1 Wk6)" data-task="Delivery of Components" data-owner="Bryan" data-period="S1 Wk6">
+                      <span class="gantt-task-text">Delivery of Components</span>
+                    </div>
+                  </td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-bryan" title="Electrical Assembly/Soldering (S1 Recess &ndash; S1 Wk7)" data-task="Electrical Assembly/Soldering" data-owner="Bryan" data-period="S1 Recess &ndash; S1 Wk7">
+                      <span class="gantt-task-text">Electrical Assembly/Soldering</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-vac" data-sem="vac">
+                    <div class="gantt-task-box gantt-task-reservist" title="RESERVIST (Vac Wk 1 &ndash; Vac Wk 2)" data-task="RESERVIST" data-owner="Bryan" data-period="Vac Wk 1 &ndash; Vac Wk 2">
+                      <span class="gantt-task-text">RESERVIST</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="bryan">
+                  <td class="gantt-cat-cell">Wiring & Battery Testing</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-bryan" title="Wiring Diagram (S1 Wk4 &ndash; S1 Wk5)" data-task="Wiring Diagram" data-owner="Bryan" data-period="S1 Wk4 &ndash; S1 Wk5">
+                      <span class="gantt-task-text">Wiring Diagram</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-bryan" title="Testing Power/Battery (S1 Recess &ndash; S1 Wk7)" data-task="Testing Power/Battery" data-owner="Bryan" data-period="S1 Recess &ndash; S1 Wk7">
+                      <span class="gantt-task-text">Testing Power/Battery</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="bryan">
+                  <td class="gantt-cat-cell">Power Architecture & MCU Integration</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-bryan" title="Communication chart and Power budget diagram (S1 Wk4 &ndash; S1 Wk5)" data-task="Communication chart and Power budget diagram" data-owner="Bryan" data-period="S1 Wk4 &ndash; S1 Wk5">
+                      <span class="gantt-task-text">Communication chart and Power budget diagram</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-bryan" title="Programming of STM32 (S1 Recess)" data-task="Programming of STM32" data-owner="Bryan" data-period="S1 Recess">
+                      <span class="gantt-task-text">Programming of STM32</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="bryan">
+                  <td class="gantt-cat-cell">Circuit Testing & Validation</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="4" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-bryan" title="Testing Circuits (S1 Wk7 &ndash; S1 Wk10)" data-task="Testing Circuits" data-owner="Bryan" data-period="S1 Wk7 &ndash; S1 Wk10">
+                      <span class="gantt-task-text">Testing Circuits</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="gabriel">
+                  <td rowspan="3" class="gantt-owner-cell">
+                    <span class="owner-badge badge-emerald">Gabriel</span>
+                    <strong style="display:block; margin-top: 6px; font-size: 13px; color: var(--text-main);">Gabriel (A0308280H)</strong>
+                    <span style="font-size: 11.5px; color: var(--text-muted); display:block; margin-top:2px;">Computer Vision</span>
+                  </td>
+                  <td class="gantt-cat-cell">YOLO Computer Vision Pipeline</td>
+                  <td colspan="5" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-gabriel" title="Yolo - CV (S1 Wk1 &ndash; S1 Wk5)" data-task="Yolo - CV" data-owner="Gabriel" data-period="S1 Wk1 &ndash; S1 Wk5">
+                      <span class="gantt-task-text">Yolo - CV</span>
+                    </div>
+                  </td>
+                  <td class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-gabriel" title="Delivery of Components (S1 Wk6)" data-task="Delivery of Components" data-owner="Gabriel" data-period="S1 Wk6">
+                      <span class="gantt-task-text">Delivery of Components</span>
+                    </div>
+                  </td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-gabriel" title="Electrical Assembly/Soldering (S1 Recess &ndash; S1 Wk7)" data-task="Electrical Assembly/Soldering" data-owner="Gabriel" data-period="S1 Recess &ndash; S1 Wk7">
+                      <span class="gantt-task-text">Electrical Assembly/Soldering</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="gabriel">
+                  <td class="gantt-cat-cell">Dataset Annotation & Training</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="4" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-gabriel" title="Component calculations and selection (S1 Wk2 &ndash; S1 Wk5)" data-task="Component calculations and selection" data-owner="Gabriel" data-period="S1 Wk2 &ndash; S1 Wk5">
+                      <span class="gantt-task-text">Component calculations and selection</span>
+                    </div>
+                  </td>
+                  <td colspan="5" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-gabriel" title="CV Data and Training (S1 Wk6 &ndash; S1 Wk9)" data-task="CV Data and Training" data-owner="Gabriel" data-period="S1 Wk6 &ndash; S1 Wk9">
+                      <span class="gantt-task-text">CV Data and Training</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+                <tr class="gantt-row" data-owner="gabriel">
+                  <td class="gantt-cat-cell">CV Edge Deployment & ROS 2 Bridge</td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-gabriel" title="Communication chart and Power budget diagram (S1 Wk4 &ndash; S1 Wk5)" data-task="Communication chart and Power budget diagram" data-owner="Gabriel" data-period="S1 Wk4 &ndash; S1 Wk5">
+                      <span class="gantt-task-text">Communication chart and Power budget diagram</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td colspan="4" class="gantt-task-cell col-sem-1" data-sem="1">
+                    <div class="gantt-task-box gantt-task-gabriel" title="Development of CV Proof of concept (S1 Wk8 &ndash; S1 Wk11)" data-task="Development of CV Proof of concept" data-owner="Gabriel" data-period="S1 Wk8 &ndash; S1 Wk11">
+                      <span class="gantt-task-text">Development of CV Proof of concept</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-1" data-sem="1"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td class="gantt-cell-empty col-sem-vac" data-sem="vac"></td>
+                  <td colspan="2" class="gantt-task-cell col-sem-vac" data-sem="vac">
+                    <div class="gantt-task-box gantt-task-gabriel" title="Integrating CV with ROS2 (Vac Wk 3 &ndash; Vac Wk 4)" data-task="Integrating CV with ROS2" data-owner="Gabriel" data-period="Vac Wk 3 &ndash; Vac Wk 4">
+                      <span class="gantt-task-text">Integrating CV with ROS2</span>
+                    </div>
+                  </td>
+                  <td colspan="2" class="gantt-task-cell col-sem-2" data-sem="2">
+                    <div class="gantt-task-box gantt-task-gabriel" title="Tuning and testing of UGV CV (S2 Wk1 &ndash; S2 Wk2)" data-task="Tuning and testing of UGV CV" data-owner="Gabriel" data-period="S2 Wk1 &ndash; S2 Wk2">
+                      <span class="gantt-task-text">Tuning and testing of UGV CV</span>
+                    </div>
+                  </td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                  <td class="gantt-cell-empty col-sem-2" data-sem="2"></td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+
+          <!-- ROADMAP CARDS VIEW (ALTERNATIVE VIEW) -->
+          <div id="view-container-cards" style="display: none; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; margin-top: 14px;">
+            <div class="card-box gantt-card-block" data-owner="asuka" style="border-left: 4px solid var(--accent-purple);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div>
+                  <h3 style="margin: 0; font-size: 16px; color: var(--text-main);">Asuka</h3>
+                  <p style="margin: 2px 0 0 0; font-size: 12px; color: var(--text-muted);">Asuka (A0308285Y) &bull; Mechanical Design</p>
+                </div>
+                <span class="badge badge-purple">Mechanical Design</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Problem Finding & Definition</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk1 &ndash; S1 Wk4</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Secondary research on problem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Problem Finding & Definition</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk5 &ndash; S1 Wk6</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Primary Research on Problem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Problem Finding & Definition</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Finalise Problem Insight report and problem definition</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Problem Finding & Definition</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk12</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">INTERRIM PRESENTATION: Critical Function Prototype</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Problem Finding & Definition</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk13</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">DOCCUMENTATION DUE ON THIS WEEK</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="false" style="background: rgba(239, 68, 68, 0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: #ef4444; text-transform: uppercase;">Problem Finding &amp; Definition</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: #f87171;">Vac Wk 1 &ndash; Vac Wk 2</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 700; color: #ef4444;">🪖 RESERVIST</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Problem Finding & Definition</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk11</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">FINAL DOCCUMENTATION DUE ON WEEK 11</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Problem Finding & Definition</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk13</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">FINAL PRESENTATION</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Needs Definition & Procurement</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 &ndash; S1 Wk4</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Generation of List of Requirements and list of specifications</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Needs Definition & Procurement</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Purchase of items needed for CFP</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Vacuum Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 &ndash; S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Calculations and design for Vacuum Subsystem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Vacuum Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk6</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Development of second design iteration</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Vacuum Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Fabrication of Vacuum Head</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Vacuum Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk7</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Testing of Vacuumm Subsystem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Vacuum Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk8 &ndash; S1 Wk9</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Improvement on Vacuum Susbsystem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Vacuum Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk10</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Finalise Design for Vacuum subsystem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Suspension Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 &ndash; S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Calculations and design for Suspension Subsytem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Suspension Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk6</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Waiting on component arrival</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Suspension Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Fabrication of Suspension Brackets</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Suspension Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk7</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Testing of Suspension subsystem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Suspension Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk8 &ndash; S1 Wk9</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Improvement on Suspension Subsystem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Suspension Subsystem Design & Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk10</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Finalise design for suspension subsystem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Documentation & Administration</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Doccumentation</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Documentation & Administration</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk11</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Prepare doccumention and complile all results</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-box gantt-card-block" data-owner="zacarias" style="border-left: 4px solid var(--accent-blue);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div>
+                  <h3 style="margin: 0; font-size: 16px; color: var(--text-main);">Zacarias</h3>
+                  <p style="margin: 2px 0 0 0; font-size: 12px; color: var(--text-muted);">Zacarias (A0308272M) &bull; Chassis & Powertrain</p>
+                </div>
+                <span class="badge badge-blue">Chassis & Powertrain</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Chassis Design & Assembly</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk1 &ndash; S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Chassis Design</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Chassis Design & Assembly</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk6 &ndash; S1 Recess</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Fabrication of chassis</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Chassis Design & Assembly</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk7</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Assembly of chassis</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Mounting Plates & Brackets</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 &ndash; S1 Wk6</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Design of Plate</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Mounting Plates & Brackets</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Fabrication of Plate</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Motor Sizing & Optimization</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 &ndash; S1 Wk4</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Motor Calculations</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Motor Sizing & Optimization</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk8 &ndash; S1 Wk10</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Improve on suspension and chassis</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-box gantt-card-block" data-owner="hilbert" style="border-left: 4px solid var(--accent-purple);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div>
+                  <h3 style="margin: 0; font-size: 16px; color: var(--text-main);">Hilbert</h3>
+                  <p style="margin: 2px 0 0 0; font-size: 12px; color: var(--text-muted);">Hilbert Soh (A0308263H) &bull; Programming & Comms</p>
+                </div>
+                <span class="badge badge-purple">Programming & Comms</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Research & Sensor Exploration</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk1 &ndash; S1 Wk2</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Secondary research on problem</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Research & Sensor Exploration</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk3 &ndash; S1 Wk4</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">CV Camera Research</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="false" style="background: rgba(239, 68, 68, 0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: #ef4444; text-transform: uppercase;">Research &amp; Sensor Exploration</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: #f87171;">Vac Wk 1 &ndash; Vac Wk 2</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 700; color: #ef4444;">🪖 RESERVIST</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 &ndash; S1 Wk3</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">ROS Installation and getting familiar</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk4 &ndash; S1 Wk6</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">ROS Simulation on obstacle avoidance</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Integrating UGV model into ROS Simulation</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk7</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Mapping and Integrating to ROS Simulation</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">Vac Wk 3 &ndash; Vac Wk 4</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Integrating ROS2 packages into physical UGV</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk1 &ndash; S2 Wk3</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Tuning and testing of UGV navigation</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Communication research</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk6</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Component Selection</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Delivery of Components</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk7</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Testing Communication between UGV and UAV computer</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk8 &ndash; S1 Wk9</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Simulation for communication link between UGV and UAV</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk3 &ndash; S2 Wk4</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Integrating communication package with UAV</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Motor Sizing & Final Chassis</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk1 &ndash; S1 Wk2</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Calculations for motor and components</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Motor Sizing & Final Chassis</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">Vac Wk 1 &ndash; Vac Wk 2</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Designing final Chassis</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Documentation & Compilations</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk11</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Prepare doccumention and complile all results</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Documentation & Compilations</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk8 &ndash; S2 Wk10</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Prepare doccumention and complile all results</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-box gantt-card-block" data-owner="bryan" style="border-left: 4px solid var(--accent-amber);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div>
+                  <h3 style="margin: 0; font-size: 16px; color: var(--text-main);">Bryan</h3>
+                  <p style="margin: 2px 0 0 0; font-size: 12px; color: var(--text-muted);">Bryan Ng (A0308298E) &bull; Electrical & Power</p>
+                </div>
+                <span class="badge badge-amber">Electrical & Power</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Power System & Selection</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 &ndash; S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Component calculations and selection</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Power System & Selection</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk6</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Delivery of Components</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Power System & Selection</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess &ndash; S1 Wk7</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Electrical Assembly/Soldering</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="false" style="background: rgba(239, 68, 68, 0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: #ef4444; text-transform: uppercase;">Power System &amp; Selection</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: #f87171;">Vac Wk 1 &ndash; Vac Wk 2</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 700; color: #ef4444;">🪖 RESERVIST</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Wiring & Battery Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk4 &ndash; S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Wiring Diagram</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Wiring & Battery Testing</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess &ndash; S1 Wk7</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Testing Power/Battery</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Power Architecture & MCU Integration</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk4 &ndash; S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Communication chart and Power budget diagram</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Power Architecture & MCU Integration</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Programming of STM32</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Circuit Testing & Validation</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk7 &ndash; S1 Wk10</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Testing Circuits</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-box gantt-card-block" data-owner="gabriel" style="border-left: 4px solid var(--accent-emerald);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div>
+                  <h3 style="margin: 0; font-size: 16px; color: var(--text-main);">Gabriel</h3>
+                  <p style="margin: 2px 0 0 0; font-size: 12px; color: var(--text-muted);">Gabriel (A0308280H) &bull; Computer Vision</p>
+                </div>
+                <span class="badge badge-emerald">Computer Vision</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">YOLO Computer Vision Pipeline</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk1 &ndash; S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Yolo - CV</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">YOLO Computer Vision Pipeline</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk6</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Delivery of Components</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">YOLO Computer Vision Pipeline</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess &ndash; S1 Wk7</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Electrical Assembly/Soldering</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Dataset Annotation & Training</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 &ndash; S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Component calculations and selection</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Dataset Annotation & Training</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk6 &ndash; S1 Wk9</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">CV Data and Training</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">CV Edge Deployment & ROS 2 Bridge</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk4 &ndash; S1 Wk5</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Communication chart and Power budget diagram</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">CV Edge Deployment & ROS 2 Bridge</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk8 &ndash; S1 Wk11</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Development of CV Proof of concept</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">CV Edge Deployment & ROS 2 Bridge</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">Vac Wk 3 &ndash; Vac Wk 4</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Integrating CV with ROS2</div>
+                </div>
+                <div class="gantt-task-item" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">CV Edge Deployment & ROS 2 Bridge</span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk1 &ndash; S2 Wk2</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Tuning and testing of UGV CV</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEMESTER PROGRESS MILESTONES SUMMARY -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 24px;">
+          <div class="card-box">
+            <div class="card-title" style="color: var(--accent-purple); margin-bottom: 12px;">🍂 Semester 1 Focus &amp; Milestones (Aug &ndash; Dec 2026)</div>
+            <ul style="padding-left: 20px; line-height: 1.8; font-size: 13.5px; color: var(--text-main);">
+              <li><strong>Problem &amp; Requirements Definition (Wk1&ndash;Wk4):</strong> Primary &amp; secondary airfield research, stakeholder operational needs.</li>
+              <li><strong>Subsystem Calculations (Wk2&ndash;Wk5):</strong> Hub motor torque, vacuum CFM suction flow, MacPherson/trailing suspension geometry, power budget.</li>
+              <li><strong>Critical Function Prototypes (CFP) (Wk6&ndash;Wk11):</strong> ROS 2 simulation &amp; SLAM Toolbox mapping, YOLOv8 dataset annotations, vacuum hood fabrication.</li>
+              <li><strong>⭐ Interim Presentation &amp; Documentation (Wk12&ndash;Wk13):</strong> Critical Function Prototype demonstration and interim report submission.</li>
+            </ul>
+          </div>
+
+          <div class="card-box">
+            <div class="card-title" style="color: var(--accent-emerald); margin-bottom: 12px;">🌱 Semester 2 Focus &amp; Milestones (Jan &ndash; Apr 2027)</div>
+            <ul style="padding-left: 20px; line-height: 1.8; font-size: 13.5px; color: var(--text-main);">
+              <li><strong>Hardware Assembly &amp; Wiring (Wk1&ndash;Wk4):</strong> Physical UGV chassis assembly, STM32 F446RE motor interfacing, PDB soldering.</li>
+              <li><strong>Full Stack Integration (Wk3&ndash;Wk7):</strong> Nav2 autonomous navigation tuning on physical UGV, multi-agent UAV-UGV telemetry bridge.</li>
+              <li><strong>Field Testing &amp; Tuning (Wk7&ndash;Wk10):</strong> Airfield obstacle avoidance sweeps, runway expansion joint clearance trials at &ge;10 km/h.</li>
+              <li><strong>🏆 Final Capstone Showcase (Wk11&ndash;Wk13):</strong> Final comprehensive documentation submission and live multi-agent operational demo.</li>
+            </ul>
+          </div>
+        </div>
+
+      </main>
+
+      <footer class="main-footer">
+        <p>&copy; 2026 CDE4301 Runway Patrol Team &bull; National University of Singapore</p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Primary Research &amp; Practitioner Interviews - Runway Patrol</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">RP</div>
+        <div class="sidebar-brand-text">
+          <h2>Runway Patrol</h2>
+          <p>CDE4301 Interim Report</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Report</div>
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link"><span class="icon">📊</span><span>Executive Summary</span></a></li>
+          <li><a href="../1-introduction.html" class="nav-link"><span class="icon">🚀</span><span>1. Introduction</span></a></li>
+          <li><a href="../2-design-overview.html" class="nav-link"><span class="icon">⚙️</span><span>2. Overview of Design</span></a></li>
+          <li><a href="../3-individual-scopes.html" class="nav-link"><span class="icon">👥</span><span>3. Individual Scopes</span></a></li>
+          <li><a href="../4-subsystems/index.html" class="nav-link"><span class="icon">🧩</span><span>4. Subsystem Architecture</span></a></li>
+          <li><a href="../5-timeline.html" class="nav-link"><span class="icon">📅</span><span>5. Timeline to Finals</span></a></li>
+          <li><a href="../6-references.html" class="nav-link"><span class="icon">📚</span><span>6. References &amp; Standards</span></a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <p>NUS CDE • AY2024/2025</p>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-title-area">
+          <button class="mobile-toggle" id="mobile-toggle-btn">☰</button>
+          <div>
+            <h1>🎙️ Primary Field Research: Practitioner Interviews</h1>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">
+              Operational context and empirical field insights gathered from military and airside ground operators
+            </p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <a href="../1-introduction.html" class="btn btn-outline">← Back to Introduction</a>
+          <button class="btn btn-outline" id="theme-toggle-btn">🌙 Dark Mode</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+
+        <!-- INTERVIEWEE PROFILES -->
+        <div class="card-box" style="border-top: 3px solid var(--accent-blue);">
+          <div class="card-header">
+            <div class="card-title">👥 Interviewees</div>
+            <span class="badge badge-blue">Primary Research</span>
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+            To ensure the engineering specifications of <strong>Project Runway Patrol</strong> are grounded in real operational constraints rather than theoretical assumptions, comprehensive primary interviews were conducted with three key airside stakeholders representing industry leadership, military maintenance technicians, and air traffic control:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <!-- Person 1 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <h4 style="font-size: 15px; margin: 0; color: var(--text-main);">Mr. Harry Lim</h4>
+                <span class="badge badge-purple">Industry Partner</span>
+              </div>
+              <p style="font-size: 12.5px; color: var(--accent-purple); font-weight: 600; margin-bottom: 8px;">IOI Inspire</p>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                Provides commercial airside automation perspectives, technology deployment viability, and operational economics for next-generation aerodrome expansions.
+              </p>
+            </div>
+
+            <!-- Person 2 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-emerald);">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <h4 style="font-size: 15px; margin: 0; color: var(--text-main);">3SG(NS) Prady</h4>
+                <span class="badge badge-emerald">Air Force Technician</span>
+              </div>
+              <p style="font-size: 12.5px; color: var(--accent-emerald); font-weight: 600; margin-bottom: 8px;">Paya Lebar Air Base (PLAB)</p>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                Frontline ground crew technician directly involved in manual runway sweep protocols, pickup truck patrols, sweeper coordination, and FOD hazard recovery.
+              </p>
+            </div>
+
+            <!-- Person 3 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-amber);">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <h4 style="font-size: 15px; margin: 0; color: var(--text-main);">LTA(NS) Elnathan</h4>
+                <span class="badge badge-amber">Air Traffic Controller</span>
+              </div>
+              <p style="font-size: 12.5px; color: var(--accent-amber); font-weight: 600; margin-bottom: 8px;">Tengah Air Base (TAB)</p>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                Aerodrome controller managing flight windows, runway clearance times, emergency closures, and airspace regulations governing drone/vehicle runway incursions.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 OPERATIONAL PILLARS -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">📋 Ground Research Findings Across 5 Operational Domains</div>
+            <span class="badge badge-emerald">Empirical Evidence</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 14px;">
+
+            <!-- Domain 1 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px;">
+              <h3 style="color: var(--accent-blue); font-size: 16px; margin: 0 0 10px 0;">1. Current Operational Workflow &amp; Inspection Protocols</h3>
+              <ul style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; padding-left: 20px;">
+                <li><strong>Vehicle Patrols:</strong> A two-man crew (driver + vehicle commander) patrols in a pickup truck or D-Max utility vehicle. One person drives while the other visually scans the asphalt. When debris is spotted, the vehicle stops, and the commander steps out onto the active strip to pick it up manually.</li>
+                <li><strong>Specialized Contractor Sweepers:</strong> Contracted sweeper trucks (road-sweeper style) operate for approximately 2 hours in the morning and 2 hours at night before and after active flight windows.</li>
+                <li><strong>Ad-hoc Manual FOD Sweeps:</strong> When sweeper contractors are off-duty, technicians walk behind utility vehicles or tow tractors with benched high-beam headlights to manually inspect and sweep the ~4 km runway with standard manual brooms.</li>
+                <li><strong>Base-Wide Sweeps:</strong> On monthly RSAF Safety Days, the entire airbase personnel lines up to walk the 4 km runway together, which still takes up to an hour to complete.</li>
+                <li><strong>Inspection Frequency &amp; Timing:</strong> Routine vehicle inspections occur 2 to 3 times a day (typically at 6:00/7:00 AM at first light, 2:00 PM midday, and after 6:00 PM). Midday checks exist specifically to enable additional flight sorties.</li>
+                <li><strong>Route Execution:</strong> There is no rigid track optimization during truck patrols; drivers navigate somewhat randomly across the left, center, and right sections of the strip at roughly 40 km/h.</li>
+              </ul>
+            </div>
+
+            <!-- Domain 2 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px;">
+              <h3 style="color: var(--accent-rose); font-size: 16px; margin: 0 0 10px 0;">2. Operational Inefficiencies &amp; Critical Pain Points</h3>
+              <ul style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; padding-left: 20px;">
+                <li><strong>Small Debris Ingestion Threat:</strong> Contracted sweeper vehicles clean larger debris but frequently miss sub-3 cm and small items (screws, aircraft rivets, nuts, washers). These small metallic pieces represent the single greatest engine ingestion hazard for fighter jet air intakes.</li>
+                <li><strong>Speed vs. Visual Accuracy Trade-off:</strong> Eyeballing the asphalt at 40 km/h introduces severe visual fatigue and human error. The current manual process has no verifiable logging or objective accuracy tracking.</li>
+                <li><strong>Counterproductive Tools:</strong> Technicians report that standard manual brooms often shed more bristles/debris than they clean, and using leaf blowers merely pushes FOD into adjacent grass patches where jet engine wash sucks it back onto the runway.</li>
+                <li><strong>Pavement Degradation:</strong> Older airbases (e.g., Paya Lebar) suffer from pavement cracking and spalling caused by heavy aircraft vibrations (e.g., C-17 landings), producing loose pavement chunks and aggregate rocks.</li>
+              </ul>
+            </div>
+
+            <!-- Domain 3 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px;">
+              <h3 style="color: var(--accent-amber); font-size: 16px; margin: 0 0 10px 0;">3. Debris Characteristics &amp; Baseline Metrics</h3>
+              <ul style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; padding-left: 20px;">
+                <li><strong>Commonly Encountered FOD Types:</strong> Small metallic fasteners (aircraft rivets, loose screws from arrestor gear servicing, nuts, washers); concrete spalls and asphalt gravel; shattered glass from cracked airfield edge/runway lights; animal carcasses/bones (roasted rats from engine heat, dead birds); windblown plastics, wood scrap, and loose nails.</li>
+                <li><strong>Target Detection Size:</strong> Objects recovered on-site are frequently around or smaller than 2 cm. A single 0.5 cm rivet or bolt can lead to catastrophic turbine blade failure requiring a multi-million dollar engine overhaul.</li>
+                <li><strong>Debris Volume:</strong> The typical collection volume per sweep is small—often under a single handful (palm-sized) across an entire 4–5 km runway.</li>
+                <li><strong>False-Positive Challenges:</strong> Bird droppings, rubber skid marks, and flat pavement oil stains must be differentiated to prevent unnecessary robot stops and false alarms.</li>
+              </ul>
+            </div>
+
+            <!-- Domain 4 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px;">
+              <h3 style="color: var(--accent-purple); font-size: 16px; margin: 0 0 10px 0;">4. Airspace Constraints for Drone (UAV) Deployment</h3>
+              <ul style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; padding-left: 20px;">
+                <li><strong>Strict Flight Clearances:</strong> Operating drones within active military aerodromes requires shutting down local airspace, leading to extensive regulatory paperwork that limits regular operational drone flights to once every couple of months or for scheduled maintenance windows.</li>
+                <li><strong>Civil Aviation Authority (CAAS) Restrictions:</strong> Drone tethering and altitude caps (under 50 m) apply around critical aerodrome zones.</li>
+                <li><strong>Geopolitical Hardware Constraints:</strong> RSAF strictly restricts Chinese-manufactured platforms (e.g., DJI), mandating compliant Western or locally built avionics.</li>
+                <li><strong>Existing Drone Roles:</strong> Current drone flights primarily perform basic high-level photographic inspection of potholes, cracks, and approach lights—without automated real-time FOD classification or physical collection.</li>
+              </ul>
+            </div>
+
+            <!-- Domain 5 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px;">
+              <h3 style="color: var(--accent-emerald); font-size: 16px; margin: 0 0 10px 0;">5. Stakeholder Requirements &amp; Strategic Value Proposition</h3>
+              <ul style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; padding-left: 20px;">
+                <li><strong>Manpower Reduction:</strong> With national service cohort sizes shrinking due to declining birth rates, automating repetitive airfield patrols frees critical maintenance technicians and NSFs for core mission-critical aircraft readiness.</li>
+                <li><strong>Runway Re-opening Latency (Crash/Emergency Scenarios):</strong> In the event of an incident (e.g., the recent F-16 crash incident), manual post-clearing of shattered debris delays runway operations. A rapid automated clearing cycle drastically reduces emergency runway downtime.</li>
+                <li><strong>Future Airbase Expansions:</strong> Upcoming relocations and expansions (such as the Changi East / Terminal 5 military runway expansion and Tengah Airbase expansion) present greenfield opportunities to integrate autonomous inspection stacks from day one.</li>
+                <li><strong>Budget vs. Technology Mindset:</strong> Air Force operational teams are less constrained by raw procurement budget and more focused on proven technological reliability, mission speed, and safety compliance.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- MAPPING TABLE: PRIMARY RESEARCH TO ENGINEERING SPECS -->
+        <div class="card-box" style="border-top: 3px solid var(--accent-purple);">
+          <div class="card-header">
+            <div>
+              <div class="card-title">⚙️ Engineering Implication &amp; Subsystem Specification Mapping</div>
+              <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">
+                Translating practitioner operational findings directly into functional engineering specifications for Project Runway Patrol:
+              </p>
+            </div>
+            <span class="badge badge-purple">Traceability Matrix</span>
+          </div>
+
+          <div class="admin-table-wrapper" style="margin-top: 14px;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Operational Finding from Primary Research</th>
+                  <th>Engineering Implication</th>
+                  <th>Subsystem Specification Target</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Small Debris Threat</strong><br/>
+                    <span style="font-size: 12px; color: var(--text-muted);">Fasteners, rivets, screws, washers, and glass fragments $<2\text{ cm}$ pose primary turbine ingestion risk and are missed by sweepers.</span>
+                  </td>
+                  <td>Macro aerial passes may miss sub-2 cm fasteners; UGV close-proximity sensors must provide high pixel density and surface height profiling.</td>
+                  <td>
+                    <span class="badge badge-blue">Target Detection Limit</span><br/>
+                    $\ge 5\text{ mm}$ height anomaly via 3D point cloud / 5.0 MP global-shutter camera segmentation.<br/>
+                    <strong>Minimum detectable footprint:</strong> $10\text{ mm} \times 10\text{ mm}$.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>Airspace Restrictions for UAVs</strong><br/>
+                    <span style="font-size: 12px; color: var(--text-muted);">Daily drone flights in active military aerodromes face severe airspace approval bottlenecks.</span>
+                  </td>
+                  <td>The UGV cannot depend strictly on continuous aerial cued dispatch; it must be capable of operating independently as a self-contained scanning unit.</td>
+                  <td>
+                    <span class="badge badge-purple">Autonomous Fallback Mode</span><br/>
+                    Pre-programmed geometric grid / lawnmower patrol when UAV clearance is unavailable.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>Manual Patrol Velocity (40 km/h) vs. Robot Bounds</strong><br/>
+                    <span style="font-size: 12px; color: var(--text-muted);">Current truck patrols drive at $\approx 40\text{ km/h}$ over 4–6 km strip, causing visual fatigue. Small robots cannot safely execute precision collection at 40 km/h.</span>
+                  </td>
+                  <td>Implement a dual-velocity state machine to balance rapid transit with precision collection.</td>
+                  <td>
+                    <span class="badge badge-emerald">Dual-Velocity Profile</span><br/>
+                    • <strong>Transit Mode:</strong> $10\text{--}15\text{ km/h}$ ($2.78\text{--}4.17\text{ m/s}$) over open asphalt.<br/>
+                    • <strong>Scan/Clearance Mode:</strong> $3\text{--}5\text{ km/h}$ ($0.83\text{--}1.39\text{ m/s}$) within $2\text{ m}$ of target.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>Small Collection Payload Volume</strong><br/>
+                    <span style="font-size: 12px; color: var(--text-muted);">Typical collection per sweep is minimal—less than a palm-sized handful across an entire runway.</span>
+                  </td>
+                  <td>A bulky, heavy hopper or industrial vacuum tank is unnecessary; prioritize localized suction and magnetic retention.</td>
+                  <td>
+                    <span class="badge badge-amber">Payload Hopper Capacity</span><br/>
+                    $2.0\text{--}5.0\text{ L}$ cyclonic container.<br/>
+                    <strong>Collection Tooling:</strong> Switchable front 24V/48V electromagnet bar ($40\text{--}60\text{ cm}$ span) + compliant underbody vacuum shroud.
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>False-Positive Hotspots</strong><br/>
+                    <span style="font-size: 12px; color: var(--text-muted);">Bird droppings, rubber tire skid marks, and oil stains cause false manual stops.</span>
+                  </td>
+                  <td>2D color bounding boxes are insufficient; height discrimination is essential.</td>
+                  <td>
+                    <span class="badge badge-rose">Sensor Fusion Rejection</span><br/>
+                    Spatial filtering fusing YOLO11-Seg pixel masks with 3D LiDAR elevation:<br/>
+                    • Elevation $\le 0\text{ mm} \rightarrow$ Surface stain (ignore)<br/>
+                    • Elevation $> 5\text{ mm} \rightarrow$ True FOD target (remediate).
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <strong>Pavement Degradation</strong><br/>
+                    <span style="font-size: 12px; color: var(--text-muted);">Pavement spalling and asphalt cracking from jet vibrations generate loose stones and fissures.</span>
+                  </td>
+                  <td>The robot must log surface damage without attempting to vacuum non-remediable static asphalt cracks.</td>
+                  <td>
+                    <span class="badge badge-blue">Pavement Inspection Protocol</span><br/>
+                    Multi-class classification separating loose debris from structural fissures.<br/>
+                    Automated GIS geotagging with $\pm 2\text{ cm}$ RTK-GNSS precision.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+
+      <footer class="main-footer">
+        <div>Runway Patrol Interim Report • Primary Research Appendix</div>
+        <div>National University of Singapore • College of Design and Engineering</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

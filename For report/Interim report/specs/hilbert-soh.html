@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hilbert Soh - Navigation (ROS 2) & Communications via Local Router Spec</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">RP</div>
+        <div class="sidebar-brand-text">
+          <h2>Runway Patrol</h2>
+          <p>CDE4301 Interim Report</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Report</div>
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link"><span class="icon">📊</span><span>Executive Summary</span></a></li>
+          <li><a href="../1-introduction.html" class="nav-link"><span class="icon">🚀</span><span>1. Introduction</span></a></li>
+          <li><a href="../2-design-overview.html" class="nav-link"><span class="icon">⚙️</span><span>2. Overview of Design</span></a></li>
+          <li><a href="../3-individual-scopes.html" class="nav-link active"><span class="icon">👥</span><span>3. Individual Scopes</span></a></li>
+          <li><a href="../4-subsystems/index.html" class="nav-link"><span class="icon">🧩</span><span>4. Subsystem Architecture</span></a></li>
+          <li><a href="../5-timeline.html" class="nav-link"><span class="icon">📅</span><span>5. Timeline to Finals</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>NUS CDE • AY2024/2025</p>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP HEADER BAR -->
+      <header class="top-header">
+        <div class="header-title-area">
+          <button class="mobile-toggle" id="mobile-toggle-btn">☰</button>
+          <div>
+            <h1>Hilbert Soh — Drone-Guided Autonomous Navigation &amp; Obstacle Avoidance</h1>
+            
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-outline" onclick="window.location.href='../3-individual-scopes.html'">← Back to Scopes</button>
+          <button class="btn btn-outline" id="theme-toggle-btn">🌙 Dark Mode</button>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <main class="page-content">
+
+        <!-- HEADER OVERVIEW CARD -->
+        <div class="card-box" style="border-left: 5px solid var(--accent-purple);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <h2 style="font-size: 22px; color: var(--text-main); margin-bottom: 6px;">Hilbert Soh</h2>
+              <p style="font-size: 14px; font-weight: 700; color: var(--accent-purple);">Drone-Guided Autonomous Navigation and Obstacle Avoidance for UGV</p>
+            </div>
+            <span class="badge badge-purple" style="font-size: 12px; padding: 6px 14px;">Matric: A0308263H</span>
+          </div>
+          <p style="margin-top: 14px; font-size: 14.5px; color: var(--text-muted); line-height: 1.6;">
+            Hilbert Soh is responsible for leading the autonomous navigation pipeline and communications infrastructure for the UGV platform. This includes establishing telemetry and command links with the UAV, deploying ROS 2 navigation and SLAM pipelines, executing high-precision path routing with real-time dynamic obstacle avoidance in unstructured airfield environments, and engineering automated fail-safe safety protocols.
+          </p>
+          <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="communications.html" class="btn btn-deep-dive">
+              📡 Read Hilbert's Deep-Dive Communication Spec (Microhard P900 V2) →
+            </a>
+          </div>
+        </div>
+
+        <!-- 1. KEY OBJECTIVES -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">🎯 Engineering Scope Objectives</div>
+          </div>
+          <ul style="padding-left: 20px; font-size: 14px; color: var(--text-main); line-height: 1.8;">
+            <li><strong>Establish Link:</strong> Receive dynamic aerial target waypoints over secure telemetry radio from the UAV platform.</li>
+            <li><strong>Autonomous Routing:</strong> Execute high-precision path planning and trajectory following to reach goal locations.</li>
+            <li><strong>Dynamic Avoidance:</strong> Real-time local obstacle detection and re-routing in unstructured outdoor airbase environments.</li>
+          </ul>
+        </div>
+
+        <!-- 2. RESPONSIBILITIES & TECHNICAL EXECUTION -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">🛠️ Technical Execution &amp; Responsibilities</div>
+          </div>
+          <ul style="padding-left: 20px; font-size: 14px; color: var(--text-muted); line-height: 1.8;">
+            <li><strong>Messaging Architecture:</strong> Design and deploy a custom ROS 2 message parser/validator to process incoming UAV coordinate streams.</li>
+            <li><strong>SLAM &amp; Localization:</strong> Configure and fine-tune <code>SLAM Toolbox</code> for 2D/3D map generation in sparse airfield landscapes.</li>
+            <li><strong>Path Planning:</strong> Implement <code>Nav2</code> controller and planner plugins for waypoint execution with dynamic obstacle clearance.</li>
+            <li><strong>Fail-safe Protocols:</strong> Implement heartbeat monitors and automated emergency stop logic triggered upon signal loss.</li>
+          </ul>
+        </div>
+
+        <!-- 3. HARDWARE & SOFTWARE TECH STACK TABLE -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">💻 Tech Stack &amp; Hardware Components</div>
+          </div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Component / Library</th>
+                  <th>Operational Function</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Communication</strong></td><td>CycloneDDS Unicast (UAV on RPI 5 / Charan's Laptop), Microhard P900 FHSS</td><td>Telemetry &amp; C2 coordinate transfer</td></tr>
+                <tr><td><strong>Sensors</strong></td><td>UM980 RTK GNSS, 3D LiDAR, LI-IMX568 GMSL2 Camera</td><td>Centimeter-level positioning &amp; point-cloud generation</td></tr>
+                <tr><td><strong>Software Stack</strong></td><td>ROS 2 Jazzy on Ubuntu 24.04 LTS (Nav2, SLAM Toolbox, RPP)</td><td>Autonomous motion planning &amp; map construction</td></tr>
+                <tr><td><strong>Simulation Software</strong></td><td>Gazebo Harmonic (Gz-Sim 8) &amp; RViz2</td><td>Kinematic digital twin, sensor plugins &amp; Nav2 path tuning</td></tr>
+                <tr><td><strong>Onboard Compute &amp; MCU</strong></td><td><code>Hilbert's Laptop</code> &rarr; <code>STM32 F446RE</code></td><td>Laptop on internal battery (not 48V); connects via USB to STM32 F446RE to control motors</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4. EXPECTED DELIVERABLES -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">📦 Expected Deliverables</div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <!-- PHASE 1 -->
+            <div style="background: rgba(147, 51, 234, 0.04); border: 1px solid rgba(147, 51, 234, 0.18); border-radius: 8px; padding: 16px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <span class="badge badge-purple" style="font-size: 11.5px; padding: 4px 10px;">Phase 1 Deliverables</span>
+              </div>
+              <ul style="padding-left: 18px; font-size: 13.5px; color: var(--text-main); line-height: 1.7; margin: 0;">
+                <li><strong>Autonomous UGV Navigation:</strong> Tested and validated in Gazebo and RViz2 simulation (ROS 2 Jazzy on Ubuntu 24.04).</li>
+                <li><strong>Simulated Communications:</strong> Reliable link and coordinate transmission with simulated UAV (running on Raspberry Pi 5 or Charan's Laptop) via local router CycloneDDS.</li>
+              </ul>
+            </div>
+
+            <!-- PHASE 2 -->
+            <div style="background: rgba(147, 51, 234, 0.04); border: 1px solid rgba(147, 51, 234, 0.18); border-radius: 8px; padding: 16px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <span class="badge badge-purple" style="font-size: 11.5px; padding: 4px 10px; background: rgba(147, 51, 234, 0.12);">Phase 2 Deliverables</span>
+              </div>
+              <ul style="padding-left: 18px; font-size: 13.5px; color: var(--text-main); line-height: 1.7; margin: 0;">
+                <li><strong>Physical Navigation Implementation:</strong> Full Nav2 deployment and motion control on actual physical UGV via STM32 F446RE.</li>
+                <li><strong>Long-Range RF Communications:</strong> Robust telemetry and coordinate relay with UAV using dedicated RF module.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid var(--border-color); padding-top: 14px;">
+            <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px;">Key Milestones &amp; Demonstration Targets</div>
+            <ul style="padding-left: 20px; font-size: 13.5px; color: var(--text-muted); line-height: 1.7; margin: 0;">
+              <li><strong>Drone-to-UGV Bridge:</strong> Fully integrated waypoint parsing communication module.</li>
+              <li><strong>Navigation Stack:</strong> Tested ROS 2 autonomous mapping &amp; navigation pipeline.</li>
+              <li><strong>Field Demonstration:</strong> Live dynamic obstacle avoidance trial using cued coordinates.</li>
+              <li><strong>Telemetry Report:</strong> Performance analytics on navigation drift, latency, and avoidance reaction times.</li>
+            </ul>
+          </div>
+        </div>
+
+      </main>
+
+      <footer class="main-footer">
+        <div>Runway Patrol Interim Report • Detailed Technical Spec</div>
+        <div>National University of Singapore</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

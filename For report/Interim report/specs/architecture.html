@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3. Multi-Agent Architecture Spec - Detailed Technical Spec</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">RP</div>
+        <div class="sidebar-brand-text">
+          <h2>Runway Patrol</h2>
+          <p>CDE4301 Interim Report</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Report</div>
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link"><span class="icon">📊</span><span>Executive Summary</span></a></li>
+          <li><a href="../1-introduction.html" class="nav-link"><span class="icon">🚀</span><span>1. Introduction</span></a></li>
+          <li><a href="../2-design-overview.html" class="nav-link"><span class="icon">⚙️</span><span>2. Overview of Design</span></a></li>
+          <li><a href="../3-individual-scopes.html" class="nav-link"><span class="icon">👥</span><span>3. Individual Scopes</span></a></li>
+          <li><a href="../4-subsystems/index.html" class="nav-link"><span class="icon">🧩</span><span>4. Subsystem Architecture</span></a></li>
+          <li><a href="../5-timeline.html" class="nav-link"><span class="icon">📅</span><span>5. Timeline to Finals</span></a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <p>NUS CDE • AY2024/2025</p>
+      </div>
+    </aside>
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-title-area">
+          <button class="mobile-toggle" id="mobile-toggle-btn">☰</button>
+          <div>
+            <h1>3. Multi-Agent Architecture Spec</h1>
+            
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-outline" onclick="history.back()">← Back to Report</button>
+          <button class="btn btn-outline" id="theme-toggle-btn">🌙 Dark Mode</button>
+        </div>
+      </header>
+      <main class="page-content">
+        <div class="card-box">
+          <h1>3. Multi-Agent System Architecture &amp; Rationale</h1>
+<p><strong>Heterogeneous Collaborative Framework for "Find-and-Fix" Airfield Operations</strong></p>
+<p>Project <strong>Runway Patrol</strong> utilizes a <strong>Heterogeneous Collaborative Framework</strong> to combine the unique physical strengths of aerial and ground robotics into a unified operational loop.</p>
+<hr />
+<h2>🏗️ System Architecture Workflow</h2>
+<!-- SYSTEM ARCHITECTURE DIAGRAM -->
+<div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; margin: 20px 0;">
+  <h3 align="center" style="margin-top: 0; color: var(--text-main); font-size: 1.25em;">Heterogeneous Multi-Agent Loop</h3>
+  <p align="center" style="color: var(--text-muted); font-size: 0.9em; margin-bottom: 24px;">
+    <strong>Deployment Target:</strong> Singapore Changi Airport Terminal 5 Runway (5 km length &times; 60 m width)
+  </p>
+
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+
+    <!-- UAV CARD -->
+    <div style="background: var(--bg-body); border-left: 5px solid #0066cc; border-top: 1px solid var(--border-color); border-right: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); border-radius: 6px; padding: 18px; width: 95%; box-shadow: var(--card-shadow);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h4 style="margin: 0; color: #0066cc; font-size: 1.1em;">1. UAV (Aerial Scout Platform)</h4>
+        <span style="background-color: rgba(0, 102, 204, 0.15); color: #0066cc; font-size: 0.75em; padding: 2px 8px; border-radius: 10px; font-weight: bold;">MACRO SCANNING</span>
+      </div>
+      <ul style="margin: 0; padding-left: 20px; font-size: 0.9em; color: var(--text-main); line-height: 1.5;">
+        <li>Executes high-velocity aerial grid sweeps across the 5 km &times; 60 m runway strip.</li>
+        <li>Detects candidate Foreign Object Debris (FOD) anomalies using macro computer vision.</li>
+        <li>Zero ground footprint during sweep phase to keep active flight lanes completely clear.</li>
+      </ul>
+    </div>
+
+    <!-- DATA LINK CONNECTOR -->
+    <div style="text-align: center; color: var(--accent-purple); font-weight: bold; font-size: 0.85em; padding: 6px 16px; background: rgba(147, 51, 234, 0.08); border: 1px dashed var(--accent-purple); border-radius: 20px;">
+      &darr; Secure Encrypted C2 Link (GPS Coordinates &amp; JSON Target Telemetry)
+    </div>
+
+    <!-- UGV CARD (PRIMARY TEAM FOCUS) -->
+    <div style="background: var(--bg-body); border-left: 6px solid var(--accent-purple); border-top: 2px solid var(--accent-purple); border-right: 2px solid var(--accent-purple); border-bottom: 2px solid var(--accent-purple); border-radius: 6px; padding: 20px; width: 95%; box-shadow: var(--card-shadow);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h4 style="margin: 0; color: var(--accent-purple); font-size: 1.15em;">2. UGV (Ground Remediation Platform)</h4>
+        <span style="background-color: var(--accent-purple); color: #ffffff; font-size: 0.75em; padding: 3px 10px; border-radius: 10px; font-weight: bold; letter-spacing: 0.5px;">PRIMARY REPORT FOCUS</span>
+      </div>
+      <ul style="margin: 0; padding-left: 20px; font-size: 0.95em; color: var(--text-main); line-height: 1.6;">
+        <li><strong>Precision Waypoint Routing:</strong> Autonomous routing dispatched directly to cued drone coordinates.</li>
+        <li><strong>Multi-Modal Target Verification:</strong> Centimeter-accurate local identification using onboard 3D LiDAR &amp; camera suite.</li>
+        <li><strong>Physical Debris Extraction:</strong> Heavy payload collection via localized vacuum and magnetic clearance modules.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<hr />
+<h2>📊 Operational &amp; Engineering System Justifications</h2>
+<p>Evaluating architecture options highlights why a joint heterogeneous team outperforms single-agent alternatives across all key mission criteria:</p>
+<div class="admin-table-wrapper">
+<table class="admin-table">
+<thead>
+<tr>
+<th style="text-align: left;">Mission Metric</th>
+<th style="text-align: left;">UAV Only</th>
+<th style="text-align: left;">UGV Only</th>
+<th style="text-align: left;">Joint UAV + UGV (Selected)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Area Sweep Velocity</strong></td>
+<td style="text-align: left;">⚡ Fastest <em>(High altitude coverage)</em></td>
+<td style="text-align: left;">🐢 Slow <em>(Limited ground line-of-sight)</em></td>
+<td style="text-align: left;">⚡ <strong>Fastest</strong> <em>(UAV handles macro grid scan)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Physical Clearance</strong></td>
+<td style="text-align: left;">❌ Impossible <em>(Weight/thrust limits)</em></td>
+<td style="text-align: left;">🟩 High <em>(Carries heavy vacuum/payloads)</em></td>
+<td style="text-align: left;">🟩 <strong>High</strong> <em>(UGV dispatched only when cued)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Runway Occupancy</strong></td>
+<td style="text-align: left;">🟩 Minimal <em>(Airborne)</em></td>
+<td style="text-align: left;">❌ High <em>(Occupies lane continuously)</em></td>
+<td style="text-align: left;">🟩 <strong>Optimized</strong> <em>(UGV targets specific coordinates)</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Verification Accuracy</strong></td>
+<td style="text-align: left;">⚠️ Moderate <em>(Heat haze / altitude)</em></td>
+<td style="text-align: left;">🟩 Precision <em>(Centimeter-range LiDAR/RGB)</em></td>
+<td style="text-align: left;">🟩 <strong>Precision</strong> <em>(UGV verifies before extraction)</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+        <div class="callout callout-purple" style="margin-top: 14px;">
+          <strong>Key Engineering Takeaway:</strong>
+          By decoupling high-speed macro scouting from heavy physical extraction, the system minimizes overall Runway Occupancy Time (ROT) while retaining 100% physical clearance capability.
+        </div>
+        </div>
+      </main>
+      <footer class="main-footer">
+        <div>Runway Patrol Interim Report • Technical Spec Appendix</div>
+        <div>National University of Singapore</div>
+      </footer>
+    </div>
+  </div>
+  <script src="../js/main.js"></script>
+</body>
+</html>

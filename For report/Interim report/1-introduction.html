@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1. Introduction - Runway Patrol Interim Report</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">RP</div>
+        <div class="sidebar-brand-text">
+          <h2>Runway Patrol</h2>
+          <p>CDE4301 Interim Report</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Report</div>
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link"><span class="icon">📊</span><span>Executive Summary</span></a></li>
+          <li><a href="1-introduction.html" class="nav-link active"><span class="icon">🚀</span><span>1. Introduction</span></a></li>
+          <li><a href="2-design-overview.html" class="nav-link"><span class="icon">⚙️</span><span>2. Overview of Design</span></a></li>
+          <li><a href="3-individual-scopes.html" class="nav-link"><span class="icon">👥</span><span>3. Individual Scopes</span></a></li>
+        </ul>
+
+        <div class="nav-section-title">Subsystems</div>
+        <ul class="nav-list">
+          <li>
+            <a href="4-subsystems/index.html" class="nav-link"><span class="icon">🧩</span><span>4. Subsystem Architecture</span></a>
+            <ul class="nav-sub-list">
+              <li><a href="4-subsystems/mechanical.html" class="nav-sub-link">4.1 Mechanical</a></li>
+              <li><a href="4-subsystems/electrical.html" class="nav-sub-link">4.2 Electrical</a></li>
+              <li><a href="4-subsystems/programming.html" class="nav-sub-link">4.3 Programming</a></li>
+              <li><a href="4-subsystems/computer-vision.html" class="nav-sub-link">4.4 Computer Vision</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="nav-section-title">Roadmap</div>
+        <ul class="nav-list">
+          <li><a href="5-timeline.html" class="nav-link"><span class="icon">📅</span><span>5. Timeline to Finals</span></a></li>
+        </ul>
+
+        <div class="nav-section-title">References</div>
+        <ul class="nav-list">
+          <li><a href="6-references.html" class="nav-link"><span class="icon">📚</span><span>6. References &amp; Standards</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>NUS CDE • AY2024/2025</p>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      
+      <header class="top-header">
+        <div class="header-title-area">
+          <button class="mobile-toggle" id="mobile-toggle-btn">☰</button>
+          <div>
+            <h1>1. Introduction &amp; Problem Definition</h1>
+            
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-outline" id="theme-toggle-btn">🌙 Dark Mode</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+
+        <!-- PRIMARY RESEARCH & PRACTITIONER INTERVIEWS CALLOUT -->
+        <div class="card-box" style="border-left: 4px solid var(--accent-purple); background: linear-gradient(180deg, var(--card-bg) 0%, rgba(163, 113, 247, 0.03) 100%); margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="badge badge-purple">Primary Research</span>
+              </div>
+              <h3 style="font-size: 16px; margin: 0 0 6px 0; color: var(--text-main);">
+                🎙️ Field Interview
+              </h3>
+              <p style="font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.5; max-width: 780px;">
+                Direct operational requirements and engineering trade-offs grounded through primary interviews with <strong>Mr. Harry Lim</strong> (IOI Inspire), <strong>3SG(NS) Prady</strong> (Air Force Technician, Paya Lebar Air Base), and <strong>LTA(NS) Elnathan</strong> (Air Traffic Controller, Tengah Air Base).
+              </p>
+            </div>
+            <div>
+              <a href="specs/primary-research.html" class="btn btn-deep-dive" style="padding: 10px 18px; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;">
+                <span>🎙️ View Primary Research &amp; Field Interviews</span>
+                <span style="font-size: 14px;">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 1.1: PROBLEM DEFINITION & LIT REVIEW -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">⚠️ Operational Threat &amp; Problem Definition</div>
+            <a href="specs/introduction.html" class="btn btn-deep-dive">📖 Read Full Introduction Spec </a>
+          </div>
+
+          <p style="margin-bottom: 16px;">
+            Airfield operational safety depends directly on maintaining clean runway surfaces. <strong>Foreign Object Debris (FOD)</strong>—encompassing loose jet engine fasteners, asphalt chips, tool components, and tire rubber fragments—poses a severe threat to military and commercial aviation worldwide.
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+            <div style="background: rgba(225, 29, 72, 0.05); border: 1px solid var(--accent-rose); border-radius: 8px; padding: 16px;">
+              <h4 style="color: var(--accent-rose); margin-bottom: 8px;">💥 Engine Ingestion Risk</h4>
+              <p style="font-size: 13.5px;">Small metallic particles or fasteners ingested into high-speed turbine blades cause catastrophic compressor blade destruction and engine failure during takeoff.</p>
+            </div>
+
+            <div style="background: rgba(217, 119, 6, 0.05); border: 1px solid var(--accent-amber); border-radius: 8px; padding: 16px;">
+              <h4 style="color: var(--accent-amber); margin-bottom: 8px;">🛞 High-Speed Punctures</h4>
+              <p style="font-size: 13.5px;">Sharp metallic fragments cause high-velocity tire blowouts during 250+ km/h rollout phases, compromising directional control and stability.</p>
+            </div>
+
+            <div style="background: rgba(76, 0, 253, 0.05); border: 1px solid var(--accent-purple); border-radius: 8px; padding: 16px;">
+              <h4 style="color: var(--accent-purple); margin-bottom: 8px;">⏱️ Sortie Rate Compromise</h4>
+              <p style="font-size: 13.5px;">Manual sweep closures restrict airbase runway availability, causing flight delays and restricting emergency military sortie generation.</p>
+            </div>
+          </div>
+
+    <div class="figure-card" style="margin-top: 16px;">
+      <img src="../../assets/Example_of_FOD.jpg" alt="Airfield Foreign Object Debris Hazard Example" class="img-zoomable" style="max-height: 380px;">
+      <div class="figure-caption">Figure 1: Typical Airfield Foreign Object Debris (FOD) Hazards (Loose Fasteners, Hardware, Asphalt &amp; Rubber Fragments)</div>
+    </div>
+    
+        </div>
+
+        <!-- SECTION 1.2: COMPETITOR ANALYSIS & VALUE PROP -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">🔍 Literature Review &amp; Competitor Analysis</div>
+            <a href="specs/problem-statement.html" class="btn btn-deep-dive">📖 Read Problem Bottlenecks Spec </a>
+          </div>
+
+          <p style="margin-bottom: 16px;">
+            Existing airfield inspection methods suffer from major operational trade-offs across speed, capital cost, and physical remediation capabilities:
+          </p>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Method / Technology</th>
+                  <th>Sweep Velocity</th>
+                  <th>Physical Remediation</th>
+                  <th>Runway Occupancy Time</th>
+                  <th>Capital Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Manual FOD Walks</strong></td>
+                  <td><span class="badge badge-amber">🐢 Very Slow</span></td>
+                  <td><span class="badge badge-emerald">🟩 Manual Pick</span></td>
+                  <td><span class="badge badge-amber">❌ High (Hours)</span></td>
+                  <td><span class="badge badge-emerald">🟩 Low Initial</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Fixed Camera Towers (e.g. iFerret™)</strong></td>
+                  <td><span class="badge badge-emerald">⚡ Real-time</span></td>
+                  <td><span class="badge badge-amber">❌ Zero Extraction</span></td>
+                  <td><span class="badge badge-purple">🟩 Zero (Airborne)</span></td>
+                  <td><span class="badge badge-amber">❌ High ($ Millions)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Single Ground Rover (UGV Only)</strong></td>
+                  <td><span class="badge badge-amber">🐢 Slow Sweep</span></td>
+                  <td><span class="badge badge-emerald">🟩 Local Vacuum</span></td>
+                  <td><span class="badge badge-amber">❌ High Ground Footprint</span></td>
+                  <td><span class="badge badge-blue">🟦 Moderate</span></td>
+                </tr>
+                <tr style="background: var(--accent-purple-light);">
+                  <td><strong>Runway Patrol (Joint UAV + UGV)</strong></td>
+                  <td><span class="badge badge-emerald">⚡ Fast Aerial Grid</span></td>
+                  <td><span class="badge badge-emerald">🟩 Cued Target Vacuum</span></td>
+                  <td><span class="badge badge-emerald">🟩 Optimized (-75%)</span></td>
+                  <td><span class="badge badge-blue">🟦 Cost-Effective</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout callout-info">
+            <strong>Unique Value Proposition:</strong> By combining an airborne high-velocity scanner (UAV) with an autonomous targeted extraction rover (UGV), Runway Patrol achieves rapid macro scanning while preserving 100% autonomous physical clearance capability.
+          </div>
+
+          <!-- UAV AND UGV COLLABORATION FIGURE -->
+          <div class="figure-card" style="margin: 20px 0 24px 0; text-align: center; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: var(--card-bg);">
+            <img src="../../assets/UAV_and_UGV_collab.png" alt="Collaborative UAV and UGV Multi-Agent Architecture" class="img-zoomable" style="max-height: 380px; width: 100%; object-fit: contain; display: block; margin: 0 auto; background: #0b0f19;">
+            <div class="figure-caption" style="padding: 10px 14px; border-top: 1px solid var(--border-color); font-size: 13px;">
+              <strong>Figure 1.1:</strong> Heterogeneous Multi-Agent Operations — Aerial Scout UAV provides macro runway sweep and cued coordinate transfer to the Ground Extraction UGV.
+            </div>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <h3 style="margin: 0; color: var(--accent-blue);">📸 State-of-the-Art Airfield Inspection Reference Systems</h3>
+              <span style="font-size: 12px; color: var(--text-muted);"><strong style="color: var(--accent-blue);">💡 Click any system card</strong> to view operational principle, tech specs, and limitations</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px;">
+              <!-- 1. Tarsier -->
+              <div class="reference-system-card card-box" data-system-id="tarsier" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
+                <div style="position: relative; overflow: hidden;">
+                  <img src="../../assets/Tarsier_System.jpg" alt="QinetiQ Tarsier Radar Tower" style="height: 150px; object-fit: cover; width: 100%; display: block;">
+                  <span class="badge badge-blue" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);">Stationary MMW</span>
+                </div>
+                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
+                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">QinetiQ Tarsier</h4>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">London Heathrow • Vancouver</p>
+                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11.5px; color: var(--accent-blue); font-weight: 600;">Technical Specs →</span>
+                    <span style="font-size: 12px;">🔍</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. FODetect -->
+              <div class="reference-system-card card-box" data-system-id="fodetect" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
+                <div style="position: relative; overflow: hidden;">
+                  <img src="../../assets/FODetect_Edge_Light.jpg" alt="Xsight FODetect Edge Light Unit" style="height: 150px; object-fit: cover; width: 100%; display: block;">
+                  <span class="badge badge-purple" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);">Edge-Light Hybrid</span>
+                </div>
+                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
+                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">Xsight FODetect</h4>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Radar + NIR Edge-Lights</p>
+                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11.5px; color: var(--accent-purple); font-weight: 600;">Technical Specs →</span>
+                    <span style="font-size: 12px;">🔍</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. iFerret -->
+              <div class="reference-system-card card-box" data-system-id="iferret" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
+                <div style="position: relative; overflow: hidden;">
+                  <img src="../../assets/iFerret2.0.webp" alt="NCS / CAG iFerret 2.0 System" style="height: 150px; object-fit: cover; width: 100%; display: block;">
+                  <span class="badge badge-emerald" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);">Electro-Optical AI</span>
+                </div>
+                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
+                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">iFerret™ 2.0</h4>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Singapore Changi Airport</p>
+                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11.5px; color: var(--accent-emerald); font-weight: 600;">Technical Specs →</span>
+                    <span style="font-size: 12px;">🔍</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 4. FOD Finder Mobile -->
+              <div class="reference-system-card card-box" data-system-id="fodfinder" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
+                <div style="position: relative; overflow: hidden;">
+                  <img src="../../assets/FOD_Finder_Mobile.png" alt="Trex FOD Finder Mobile" style="height: 150px; object-fit: cover; width: 100%; display: block;">
+                  <span class="badge badge-amber" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);">Mobile MMW Radar</span>
+                </div>
+                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
+                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">FOD Finder Mobile</h4>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Vehicle-Mounted 78–81 GHz</p>
+                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11.5px; color: var(--accent-amber); font-weight: 600;">Technical Specs →</span>
+                    <span style="font-size: 12px;">🔍</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 5. ELVA-1 -->
+              <div class="reference-system-card card-box" data-system-id="elva1" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
+                <div style="position: relative; overflow: hidden;">
+                  <img src="../../assets/ELVA_1_Radar.jpg" alt="ELVA 1 76GHz Radar" style="height: 150px; object-fit: cover; width: 100%; display: block;">
+                  <span class="badge badge-purple" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5); background: rgba(147, 51, 234, 0.15);">FMCW Radar</span>
+                </div>
+                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
+                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">ELVA-1 76GHz</h4>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Dual-Dish Scanning Radar</p>
+                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 11.5px; color: var(--accent-purple); font-weight: 600;">Technical Specs →</span>
+                    <span style="font-size: 12px;">🔍</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAA AC 150/5220-24 BENCHMARK STANDARDS -->
+          <div style="margin-top: 32px; border-top: 1px solid var(--border-color); padding-top: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <h3 style="margin: 0; color: var(--accent-blue);">📏 Performance Specifications (FAA AC 150/5220-24 Benchmark)</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">
+                  Regulatory operational performance requirements defined under Federal Aviation Administration Advisory Circular 150/5220-24 for automated FOD detection categories:
+                </p>
+              </div>
+              <span class="badge badge-purple">FAA Regulatory Standard</span>
+            </div>
+
+            <div class="admin-table-wrapper" style="margin-top: 12px;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Sensing Category</th>
+                    <th>Standard Reference Target</th>
+                    <th>Required Detection Range</th>
+                    <th>Required Accuracy / Operating Conditions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Stationary Radar</strong><br/><span style="font-size: 11.5px; color: var(--text-muted);">E-band (71–86 GHz) / W-band (92–100 GHz)</span></td>
+                    <td>Standard metal cylinder<br/><span class="badge badge-blue">$\varnothing 38\text{ mm} \times 31\text{ mm}$ height</span></td>
+                    <td>$\ge 1,000\text{ m}$</td>
+                    <td>Location accuracy within $\le 5\text{ m}$; all-weather penetration (rain, fog, darkness).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Stationary Electro-Optical</strong><br/><span style="font-size: 11.5px; color: var(--text-muted);">HD Multi-megapixel arrays + AI analytics</span></td>
+                    <td>Small optical object<br/><span class="badge badge-emerald">$20\text{ mm}$ dimension</span></td>
+                    <td>$\ge 300\text{ m}$</td>
+                    <td>Ambient daytime lighting; high-contrast visual identification.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Stationary Hybrid</strong><br/><span style="font-size: 11.5px; color: var(--text-muted);">Radar + Near-IR / PTZ Optical Co-location</span></td>
+                    <td>Small debris object<br/><span class="badge badge-purple">$20\text{ mm}$ dimension</span></td>
+                    <td>Full Runway Width<br/>($\approx 60\text{ m}$ span)</td>
+                    <td>Covers entire lateral runway cross-section with automated cross-sensor verification.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mobile Vehicle Radar</strong><br/><span style="font-size: 11.5px; color: var(--text-muted);">Vehicle-mounted FMCW / MMW radar</span></td>
+                    <td>Standard metal cylinder<br/><span class="badge badge-amber">$\varnothing 38\text{ mm} \times 31\text{ mm}$ height</span></td>
+                    <td>$183\text{ m} \times 183\text{ m}$ scan area</td>
+                    <td>Continuous scanning while vehicle travels at operational speeds up to $48\text{ km/h}$.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TABLE 3.2: ANALYSIS OF EXISTING AIRSIDE UGV SOLUTIONS -->
+          <div style="margin-top: 32px; border-top: 1px solid var(--border-color); padding-top: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <h3 style="margin: 0; color: var(--accent-purple);">🤖 Analysis of Existing Airside UGV Solutions</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">
+                  <em>Table 3.2:</em> Benchmarking current commercial and research autonomous ground vehicles deployed for airfield maintenance:
+                </p>
+              </div>
+              <span class="badge badge-emerald">UGV State of the Art</span>
+            </div>
+
+            <div class="admin-table-wrapper" style="margin-top: 12px;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Solution</th>
+                    <th>Primary Detection Technologies</th>
+                    <th>Key Features</th>
+                    <th>Limitations / Drawbacks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Airtrek Groundwatch</strong><br/><span style="font-size: 11.5px; color: var(--text-muted);">Autonomous Airfield Rover</span></td>
+                    <td>Multi-camera arrays, long-range LiDAR, Onboard Edge AI</td>
+                    <td>
+                      • Dual wingtip deployment configuration<br/>
+                      • Operator live view &amp; aircraft exterior inspection<br/>
+                      • High-accuracy GPS target tagging
+                    </td>
+                    <td>
+                      <span class="badge badge-rose" style="font-size: 11px;">❌ Lacks Physical Collection</span><br/>
+                      Diagnostic-only; cannot physically pick up or clear detected debris, still requiring human dispatch.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Roboxi</strong><br/><span style="font-size: 11.5px; color: var(--text-muted);">Multi-Purpose Airfield Patrol</span></td>
+                    <td>AI optical vision, multi-spectral thermal sensors, high-precision GNSS</td>
+                    <td>
+                      • Modular payload architecture<br/>
+                      • Acoustic bird deterrent capabilities<br/>
+                      • Runway edge-light bulb &amp; surface pavement inspection
+                    </td>
+                    <td>
+                      <span class="badge badge-amber" style="font-size: 11px;">⚠️ High Weight &amp; Cost</span><br/>
+                      Substantial payload mass and elevated capital cost; complex software stack with shorter battery runtime.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Guimu Robot</strong><br/><span style="font-size: 11.5px; color: var(--text-muted);">Subsurface Pavement Diagnostic</span></td>
+                    <td>High-frequency Ground-Penetrating Radar (GPR), 3D LiDAR, HD cameras</td>
+                    <td>
+                      • Deep sub-surface structural mapping (voids, moisture, base erosion)<br/>
+                      • Fast coverage: $7,500\text{ m}^2/\text{hr}$ at $20\text{ km/h}$<br/>
+                      • Long 8-hour operational battery runtime
+                    </td>
+                    <td>
+                      <span class="badge badge-rose" style="font-size: 11px;">❌ Zero FOD Retrieval</span><br/>
+                      Engineered strictly for subsurface civil pavement structural analysis; lacks any surface FOD remediation mechanism.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="callout callout-warning" style="margin-top: 16px;">
+              <strong>Key Research &amp; Engineering Gap:</strong> Existing airside UGVs fall into two extremes: either heavy, costly diagnostic inspection rovers (Airtrek, Roboxi) that only log coordinates without physical retrieval, or civil engineering machines (Guimu) built exclusively for sub-surface radar. <strong>Runway Patrol uniquely couples high-speed aerial cueing (UAV) with targeted, active physical extraction (UGV) to achieve true closed-loop "Find-and-Fix" airside remediation.</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 1.3: PROGRESS TO DATE -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">📈 Progress To Date</div>
+          </div>
+
+          <p style="margin-bottom: 20px;">
+            The progress chart below summarizes key Phase 1 milestones:
+          </p>
+
+          <div class="gantt-chart">
+            <div class="gantt-item">
+              <span class="gantt-label">Primary &amp; Secondary Research</span>
+              <div class="gantt-bar-bg">
+                <div class="gantt-bar-fill" style="width: 100%;"></div>
+              </div>
+              <span class="gantt-status-text" style="color: var(--accent-emerald);">100% Done</span>
+            </div>
+
+            <div class="gantt-item">
+              <span class="gantt-label">System Architecture Design</span>
+              <div class="gantt-bar-bg">
+                <div class="gantt-bar-fill" style="width: 100%;"></div>
+              </div>
+              <span class="gantt-status-text" style="color: var(--accent-emerald);">100% Done</span>
+            </div>
+
+            <div class="gantt-item">
+              <span class="gantt-label">Mechanical Design &amp; CAD Prototype</span>
+              <div class="gantt-bar-bg">
+                <div class="gantt-bar-fill" style="width: 100%;"></div>
+              </div>
+              <span class="gantt-status-text" style="color: var(--accent-emerald);">100% Done</span>
+            </div>
+
+            <div class="gantt-item">
+              <span class="gantt-label">Electrical Distribution &amp; Docking</span>
+              <div class="gantt-bar-bg">
+                <div class="gantt-bar-fill" style="width: 100%;"></div>
+              </div>
+              <span class="gantt-status-text" style="color: var(--accent-emerald);">100% Done</span>
+            </div>
+
+            <div class="gantt-item">
+              <span class="gantt-label">Autonomous Navigation (Nav2 &amp; SLAM)</span>
+              <div class="gantt-bar-bg">
+                <div class="gantt-bar-fill" style="width: 100%;"></div>
+              </div>
+              <span class="gantt-status-text" style="color: var(--accent-emerald);">100% Done</span>
+            </div>
+
+            <div class="gantt-item">
+              <span class="gantt-label">Communications via Local Router</span>
+              <div class="gantt-bar-bg">
+                <div class="gantt-bar-fill" style="width: 100%;"></div>
+              </div>
+              <span class="gantt-status-text" style="color: var(--accent-emerald);">100% Done</span>
+            </div>
+          </div>
+        </div>
+
+  <!-- REFERENCE SYSTEM DETAIL MODAL -->
+  <div id="system-detail-modal" class="lightbox-modal" style="z-index: 10000; overflow-y: auto;">
+    <div class="card-box" style="max-width: 740px; width: 92%; max-height: 90vh; overflow-y: auto; position: relative; margin: 40px auto; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6); border-top: 4px solid var(--accent-blue);">
+      <span class="modal-close" id="system-modal-close" style="position: absolute; top: 16px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-muted); line-height: 1; z-index: 10;">&times;</span>
+      
+      <!-- Modal Header -->
+      <div style="margin-bottom: 16px; padding-right: 32px;">
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 6px;">
+          <span id="sys-modal-badge" class="badge badge-blue">Technology</span>
+          <span id="sys-modal-maker" style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">Manufacturer</span>
+        </div>
+        <h2 id="sys-modal-title" style="font-size: 22px; color: var(--text-main); margin-bottom: 4px;">System Name</h2>
+        <p id="sys-modal-subtitle" style="font-size: 13.5px; color: var(--text-muted);">System Subtitle</p>
+      </div>
+
+      <!-- Modal Image -->
+      <div style="background: rgba(0,0,0,0.15); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-bottom: 18px; text-align: center;">
+        <img id="sys-modal-img" src="" alt="" style="max-height: 250px; width: 100%; object-fit: contain; background: #0b0f19; display: block;">
+        <div id="sys-modal-caption" style="padding: 8px 12px; font-size: 12px; font-style: italic; color: var(--text-muted); border-top: 1px solid var(--border-color);">Figure caption</div>
+      </div>
+
+      <!-- Content Sections -->
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <!-- Operational Principle -->
+        <div>
+          <h4 style="font-size: 13.5px; color: var(--accent-blue); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <span>⚙️</span> Operational Principle
+          </h4>
+          <p id="sys-modal-principle" style="font-size: 13px; line-height: 1.6; color: var(--text-main); margin: 0;"></p>
+        </div>
+
+        <!-- Detection Technologies -->
+        <div>
+          <h4 style="font-size: 13.5px; color: var(--accent-purple); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <span>📡</span> Primary Detection Technologies
+          </h4>
+          <p id="sys-modal-tech" style="font-size: 13px; line-height: 1.6; color: var(--text-main); margin: 0;"></p>
+        </div>
+
+        <!-- Two column for Features vs Limitations -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+          <!-- Key Features -->
+          <div style="background: rgba(46, 160, 67, 0.05); border: 1px solid rgba(46, 160, 67, 0.2); border-radius: 8px; padding: 12px;">
+            <h4 style="font-size: 13px; color: var(--accent-emerald); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <span>✅</span> Key Features &amp; Strengths
+            </h4>
+            <ul id="sys-modal-features" style="padding-left: 18px; font-size: 12.5px; line-height: 1.6; color: var(--text-muted); margin: 0;"></ul>
+          </div>
+
+          <!-- Limitations -->
+          <div style="background: rgba(248, 81, 73, 0.05); border: 1px solid rgba(248, 81, 73, 0.2); border-radius: 8px; padding: 12px;">
+            <h4 style="font-size: 13px; color: var(--accent-rose); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <span>⚠️</span> Primary Limitations &amp; Drawbacks
+            </h4>
+            <ul id="sys-modal-limitations" style="padding-left: 18px; font-size: 12.5px; line-height: 1.6; color: var(--text-muted); margin: 0;"></ul>
+          </div>
+        </div>
+
+        <!-- Runway Patrol Resolution -->
+        <div style="background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.2); border-radius: 8px; padding: 12px;">
+          <h4 style="font-size: 13px; color: var(--accent-purple); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+            <span>🚀</span> Runway Patrol Resolution &amp; Competitive Edge
+          </h4>
+          <p id="sys-modal-advantage" style="font-size: 12.5px; line-height: 1.5; color: var(--text-muted); margin: 0;"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+      </main>
+
+      <footer class="main-footer">
+        <div>Runway Patrol Interim Report • Chapter 1</div>
+        <div>National University of Singapore</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

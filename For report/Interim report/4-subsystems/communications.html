@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.3 C2 Communications Spec - Runway Patrol Interim Report</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-icon">RP</div>
+        <div class="sidebar-brand-text">
+          <h2>Runway Patrol</h2>
+          <p>CDE4301 Interim Report</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Main Report</div>
+        <ul class="nav-list">
+          <li><a href="../index.html" class="nav-link"><span class="icon">📊</span><span>Executive Summary</span></a></li>
+          <li><a href="../1-introduction.html" class="nav-link"><span class="icon">🚀</span><span>1. Introduction</span></a></li>
+          <li><a href="../2-design-overview.html" class="nav-link"><span class="icon">⚙️</span><span>2. Overview of Design</span></a></li>
+          <li><a href="../3-individual-scopes.html" class="nav-link"><span class="icon">👥</span><span>3. Individual Scopes</span></a></li>
+        </ul>
+        <div class="nav-section-title">Subsystems</div>
+        <ul class="nav-list">
+          <li>
+            <a href="index.html" class="nav-link active"><span class="icon">🧩</span><span>4. Subsystem Architecture</span></a>
+            <ul class="nav-sub-list">
+              <li><a href="mechanical.html" class="nav-sub-link">4.1 Mechanical</a></li>
+              <li><a href="electrical.html" class="nav-sub-link">4.2 Electrical</a></li>
+              <li><a href="programming.html" class="nav-sub-link active">4.3 Programming</a></li>
+              <li><a href="computer-vision.html" class="nav-sub-link">4.4 Computer Vision</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="nav-section-title">Roadmap</div>
+        <ul class="nav-list">
+          <li><a href="../5-timeline.html" class="nav-link"><span class="icon">📅</span><span>5. Timeline to Finals</span></a></li>
+        </ul>
+        <div class="nav-section-title">References</div>
+        <ul class="nav-list">
+          <li><a href="../6-references.html" class="nav-link"><span class="icon">📚</span><span>6. References &amp; Standards</span></a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <p>NUS CDE • AY2024/2025</p>
+        <p>Supervised by Dr Tang Kok Zuea</p>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP HEADER BAR -->
+      <header class="top-header">
+        <div class="header-title-area">
+          <button class="mobile-toggle" id="mobile-toggle-btn">☰</button>
+          <div>
+            <h1>4.3.4 Multi-Agent C2 Communications Specification</h1>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">
+              Subsystem Technical Report • Drone-Guided Autonomous Navigation &amp; Multi-Agent C2 Link
+            </p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <a href="programming.html" class="btn btn-outline">← Back to Programming</a>
+          <button class="btn btn-outline" id="theme-toggle-btn">🌙 Dark Mode</button>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <main class="page-content">
+
+        <!-- 1. AUTHORSHIP & SUBSYSTEM OWNERSHIP BANNER -->
+        <div class="card-box" style="border-left: 5px solid var(--accent-purple);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="badge badge-purple">Subsystem Ownership</span>
+                <span class="badge badge-emerald">Lead Author</span>
+              </div>
+              <h2 style="font-size: 22px; color: var(--text-main); margin-bottom: 4px;">Hilbert Soh (A0308263H)</h2>
+              <p style="font-size: 14px; font-weight: 700; color: var(--accent-purple);">
+                Subsystem Scope: Drone-Guided Autonomous Navigation &amp; Multi-Agent C2 Communications
+              </p>
+            </div>
+            <div style="text-align: right;">
+              <p style="font-size: 12px; font-family: var(--font-mono); color: var(--text-muted);">Collaborating Organizations</p>
+              <p style="font-size: 13px; font-weight: 600; color: var(--text-main);">NUS CDE • RSAF • RAiD</p>
+            </div>
+          </div>
+          
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-color);">
+            <span class="badge badge-purple">ROS 2 Jazzy (Ubuntu 24.04 LTS)</span>
+            <span class="badge badge-emerald">Datalink: Microhard P900 V2</span>
+            <span class="badge badge-blue">Middleware: CycloneDDS Unicast</span>
+            <span class="badge badge-rose" style="background: rgba(248, 81, 73, 0.1); color: var(--accent-rose);">Compliance: IMDA TS SRD (917–925 MHz)</span>
+            <span class="badge badge-purple" style="background: rgba(147, 51, 234, 0.12);">Security: AES-256 | FHSS</span>
+          </div>
+        </div>
+
+        <!-- 2. QUICK EXECUTIVE SUMMARY -->
+        <div class="callout callout-purple">
+          <strong>Subsystem Summary:</strong> The Runway Patrol multi-agent communication framework coordinates an aerial UAV scout with a ground UGV rover across a $5\text{ km} \times 60\text{ m}$ active airfield strip. To comply with military airbase security and overcome tarmac RF multipath fading, the architecture eliminates uncompressed video streaming and implements an <strong>air-gapped, asynchronous serial telemetry link</strong> powered by the <strong>Microhard P900 V2 (917–925 MHz FHSS)</strong>. This specification summarizes the operational workflow, comparative hardware evaluation, decision justifications, ROS 2 middleware bridging, and the phased implementation roadmap.
+        </div>
+
+        <!-- 3. MULTI-AGENT OPERATIONAL FLOW -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">1. Multi-Agent Operational Flow &amp; System Architecture</div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 18px;">
+            The heterogeneous multi-agent architecture executes four synchronized operational stages to rapidly detect and clear foreign object debris (FOD) with minimal runway disruption:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 16px;">
+            <!-- Stage 1 -->
+            <div style="background: var(--card-bg-subtle, rgba(0, 102, 204, 0.05)); border: 1px solid rgba(0, 102, 204, 0.25); border-radius: 8px; padding: 16px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span class="badge badge-blue" style="font-size: 11px;">Stage 1</span>
+                <strong style="font-size: 13.5px; color: var(--accent-blue);">UAV Aerial Scout (Macro)</strong>
+              </div>
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                <li>High-speed lawnmower sweep across the $5\text{ km}$ runway at $30\text{--}40\text{ km/h}$.</li>
+                <li>Onboard edge AI (YOLOv8/TensorRT) detects and classifies candidate FOD.</li>
+                <li>Multi-frequency RTK-GNSS logs geodetic WGS84 coordinates ($\pm 0.02\text{ m}$).</li>
+              </ul>
+            </div>
+
+            <!-- Stage 2 -->
+            <div style="background: var(--card-bg-subtle, rgba(147, 51, 234, 0.05)); border: 1px solid rgba(147, 51, 234, 0.25); border-radius: 8px; padding: 16px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span class="badge badge-purple" style="font-size: 11px;">Stage 2</span>
+                <strong style="font-size: 13.5px; color: var(--accent-purple);">Secure C2 Handshake</strong>
+              </div>
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                <li>Air-gapped non-internet RF link via <strong>Microhard P900 V2</strong>.</li>
+                <li>Serializes encrypted JSON metadata packets ($< 2\text{ KB}$) with target coordinates.</li>
+                <li>Bi-directional heartbeat and telemetry monitoring prevent link loss.</li>
+              </ul>
+            </div>
+
+            <!-- Stage 3 -->
+            <div style="background: var(--card-bg-subtle, rgba(147, 51, 234, 0.05)); border: 1px solid rgba(147, 51, 234, 0.25); border-radius: 8px; padding: 16px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span class="badge badge-purple" style="font-size: 11px;">Stage 3</span>
+                <strong style="font-size: 13.5px; color: var(--accent-purple);">UGV Precision Transit</strong>
+              </div>
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                <li><code>navsat_transform_node</code> converts WGS84 to local metric map coordinates.</li>
+                <li>ROS 2 Nav2 stack (<code>SmacPlannerHybrid</code>) computes kinematically compliant paths.</li>
+                <li>UGV sprints directly to cued coordinates at speeds up to $10\text{ km/h}$.</li>
+              </ul>
+            </div>
+
+            <!-- Stage 4 -->
+            <div style="background: var(--card-bg-subtle, rgba(46, 160, 67, 0.05)); border: 1px solid rgba(46, 160, 67, 0.25); border-radius: 8px; padding: 16px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span class="badge badge-emerald" style="font-size: 11px;">Stage 4</span>
+                <strong style="font-size: 13.5px; color: var(--accent-emerald);">Verification &amp; Remediation</strong>
+              </div>
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                <li>Co-axial 3D LiDAR (Livox Mid-360) and camera confirm object height profile.</li>
+                <li>Active remediation mechanism engages (vacuum hood &amp; pickup module).</li>
+                <li>Mission ledger update (<code>COLLECTED</code>) transmitted to Base Station C2.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. OPERATIONAL & ENVIRONMENTAL CONSTRAINTS -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">2. Operational &amp; Environmental Constraints</div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">
+            Deploying autonomous robotics across active military airbases and civil airport flight lines imposes four non-negotiable operational requirements:
+          </p>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Constraint Parameter</th>
+                  <th>Operational Specification</th>
+                  <th>Engineering Justification</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Wireless Mobility</strong></td>
+                  <td>Untethered peer-to-peer telemetry link</td>
+                  <td>Permits continuous, independent physical motion between aerial and surface robotic agents.</td>
+                </tr>
+                <tr>
+                  <td><strong>Long Operational Range</strong></td>
+                  <td>Line-of-Sight coverage of <strong>1 to 4 km</strong></td>
+                  <td>Must span the full length of military runways, blast pads, and surrounding taxiways.</td>
+                </tr>
+                <tr>
+                  <td><strong>Air-Gapped / Non-Internet</strong></td>
+                  <td>Zero reliance on commercial 4G/5G, clouds, or ISPs</td>
+                  <td>Enforces military OPSEC; eliminates electronic warfare risks, base tower dead zones, and IP hijacking.</td>
+                </tr>
+                <tr>
+                  <td><strong>Tarmac Hardening</strong></td>
+                  <td>Immunity to multipath fading &amp; tropical rain</td>
+                  <td>Must maintain SNR despite severe asphalt RF reflections and thermal tarmac shimmer.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 5. TELEMETRY & WAYPOINT PROTOCOL -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">3. Inter-Agent Telemetry Protocol: Why Asynchronous Packets?</div>
+          </div>
+          <div class="callout callout-blue" style="margin-top: 0; margin-bottom: 16px;">
+            <strong>Bandwidth Design Principle:</strong> Continuously streaming high-definition video over multi-kilometer RF saturates wireless link budgets, induces multi-second queue latency, and drains the aerial platform's battery. Instead, computer vision inference runs <em>locally at the edge</em> on the UAV's NVIDIA Jetson, transmitting only <strong>asynchronous, structured JSON C2 alerts (&lt; 2 KB)</strong>.
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+            <!-- Downlink -->
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <h4 style="font-size: 14px; color: var(--accent-purple); margin-bottom: 8px;">
+                🛰️ Downlink: UAV → UGV (Target Alert Payload)
+              </h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 10px;">
+                Dispatched immediately when the UAV companion computer flags an anomaly:
+              </p>
+              <pre style="background: #161b22; color: #e6edf3; padding: 12px; border-radius: 6px; font-size: 11.5px; line-height: 1.4; overflow-x: auto;"><code>{
+  "mission_id": "RUNWAY_PATROL_2026_09_15",
+  "source_agent_id": "UAV_ALPHA_01",
+  "threat_id": "FOD_TARGET_088",
+  "georeference": {
+    "latitude": 1.3592114,
+    "longitude": 103.9893128,
+    "altitude_msl_m": 0.15,
+    "rtk_status": "FIXED",
+    "horizontal_uncertainty_m": 0.02
+  },
+  "anomaly_metadata": {
+    "primary_class": "metallic_hardware",
+    "confidence_score": 0.93,
+    "estimated_size_cm": 3.8
+  },
+  "priority_level": "HIGH_ACTIVE_REMEDIATION",
+  "signature": "b94d27b9934d3e08...2efcde9"
+}</code></pre>
+            </div>
+
+            <!-- Uplink -->
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <h4 style="font-size: 14px; color: var(--accent-emerald); margin-bottom: 8px;">
+                📡 Uplink: UGV → UAV / Base C2 (State &amp; Task Ledger)
+              </h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 10px;">
+                Periodic telemetry and task progression closing the C2 loop:
+              </p>
+              <pre style="background: #161b22; color: #e6edf3; padding: 12px; border-radius: 6px; font-size: 11.5px; line-height: 1.4; overflow-x: auto;"><code>{
+  "mission_id": "RUNWAY_PATROL_2026_09_15",
+  "source_agent_id": "UGV_ROVER_01",
+  "target_ack": {
+    "threat_id": "FOD_TARGET_088",
+    "task_state": "EN_ROUTE",
+    "distance_to_target_m": 14.8,
+    "eta_seconds": 6.2
+  },
+  "vehicle_telemetry": {
+    "pose_wgs84": { "lat": 1.359195, "lon": 103.98929 },
+    "battery_pct": 88.4,
+    "vacuum_hood_status": "READY_STANDBY",
+    "mode": "AUTONOMOUS_NAV2"
+  },
+  "link_watchdog": {
+    "heartbeat_seq": 1402,
+    "rssi_dbm": -68
+  }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. COMPARATIVE EVALUATION OF WIRELESS DATA LINKS -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">4. Comparative Evaluation of Wireless Data Link Technologies</div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 14px;">
+            The engineering trade study benchmarked four communication modalities against airbase security, transmission range, throughput, and SWaP-C constraints:
+          </p>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Technology Category</th>
+                  <th>Frequency &amp; Standard</th>
+                  <th>Operational Range</th>
+                  <th>Bandwidth</th>
+                  <th>Airside Security &amp; Compliance</th>
+                  <th>Complexity &amp; SWaP-C</th>
+                  <th>Selection Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: rgba(147, 51, 234, 0.08);">
+                  <td><strong>Serial RF Telemetry (Microhard P900 V2)</strong></td>
+                  <td>917–925 MHz FHSS (Singapore SRD)</td>
+                  <td><span class="badge badge-emerald">> 5 km Line-of-Sight</span></td>
+                  <td>115.2 – 276 kbps</td>
+                  <td><span class="badge badge-emerald">Air-gapped, AES-256, IMDA compliant</span></td>
+                  <td><span class="badge badge-emerald">&lt; 2.5W, 18g, Direct USB/UART</span></td>
+                  <td><span class="badge badge-purple" style="font-weight: bold;">SELECTED</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Broadband IP Bridge (Microhard pMDDL2550)</strong></td>
+                  <td>2.4 GHz / 5.8 GHz OFDM Ethernet</td>
+                  <td><span class="badge badge-amber">1 – 3 km Line-of-Sight</span></td>
+                  <td>Up to 25 Mbps</td>
+                  <td><span class="badge badge-emerald">Air-gapped, AES-256</span></td>
+                  <td><span class="badge badge-rose">High cost (~4×), dual MIMO, Ethernet switch required</span></td>
+                  <td><span class="badge badge-blue">EVALUATED</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Commercial Cellular (4G LTE / 5G)</strong></td>
+                  <td>700 MHz – 3.5 GHz Mobile Networks</td>
+                  <td><span class="badge badge-emerald">Unlimited (Tower)</span></td>
+                  <td>50 – 300 Mbps</td>
+                  <td><span class="badge badge-rose">Non-compliant for military airbase C2</span></td>
+                  <td><span class="badge badge-rose">Dependent on public commercial telco base towers</span></td>
+                  <td><span class="badge badge-rose">REJECTED</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Industrial Wi-Fi (802.11ac)</strong></td>
+                  <td>2.4 GHz / 5 GHz Unlicensed</td>
+                  <td><span class="badge badge-rose">&lt; 80 m on outdoor asphalt</span></td>
+                  <td>100 – 433 Mbps</td>
+                  <td><span class="badge badge-amber">Severe multipath asphalt fading</span></td>
+                  <td><span class="badge badge-emerald">Low cost, off-the-shelf router</span></td>
+                  <td><span class="badge badge-purple" style="background: rgba(147, 51, 234, 0.12);">PHASE 1 ONLY</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 7. HARDWARE SELECTION & JUSTIFICATION -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">5. Hardware Selection Justification: Why Microhard P900 V2?</div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 18px;">
+            The project selected the <strong>Microhard P900 V2</strong> serial RF datalink over broadband IP alternatives (e.g. pMDDL2550) based on four critical technical justifications:
+          </p>
+
+          <!-- VISUAL HARDWARE COMPARISON CARDS -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 20px; margin-bottom: 24px;">
+            
+            <!-- SELECTED: P900 V2 -->
+            <div style="border: 2px solid var(--accent-purple); border-radius: 10px; padding: 20px; background: var(--card-bg); box-shadow: var(--card-shadow); text-align: center;">
+              <span class="badge badge-purple" style="font-size: 11px; padding: 4px 12px; margin-bottom: 8px;">SELECTED HARDWARE DATALINK</span>
+              <h3 style="margin: 10px 0 4px 0; font-size: 18px; color: var(--text-main);">Microhard P900 V2</h3>
+              <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 14px;">
+                Long-Range 900 MHz FHSS Serial Data Module
+              </p>
+              <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 14px; min-height: 180px; display: flex; align-items: center; justify-content: center;">
+                <img src="../../assets/images/Hilbert/Microhard p900 V2.png" alt="Microhard P900 V2 Module" style="max-height: 160px; max-width: 100%; object-fit: contain; border-radius: 4px;" onerror="this.onerror=null; this.src='../assets/images/Hilbert/Microhard p900 V2.png';" />
+              </div>
+              <ul style="text-align: left; font-size: 12.5px; color: var(--text-main); line-height: 1.6; padding-left: 18px; margin: 0;">
+                <li><strong>Band:</strong> 917–925 MHz (IMDA TS SRD Singapore Compliant)</li>
+                <li><strong>Power / Sensitivity:</strong> Up to 1W (+30 dBm) / -116 dBm</li>
+                <li><strong>Interface:</strong> Direct Point-to-Point UART Serial (`/dev/ttyUSB0`)</li>
+                <li><strong>Weight &amp; Power:</strong> Only <strong>18 g</strong> and <strong>&lt; 2.5 W</strong> draw</li>
+                <li><strong>Range:</strong> Exceeds <strong>5 km Line-of-Sight</strong> across open pavement</li>
+              </ul>
+            </div>
+
+            <!-- EVALUATED ALTERNATE: pMDDL2550 -->
+            <div style="border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); text-align: center;">
+              <span class="badge" style="font-size: 11px; padding: 4px 12px; margin-bottom: 8px; background: rgba(255, 255, 255, 0.1); color: var(--text-muted);">EVALUATED BROADBAND ALTERNATIVE</span>
+              <h3 style="margin: 10px 0 4px 0; font-size: 18px; color: var(--text-main);">Microhard pMDDL2550</h3>
+              <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 14px;">
+                Dual-Band 2.4 / 5.8 GHz OFDM Broadband IP Bridge
+              </p>
+              <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 14px; min-height: 180px; display: flex; align-items: center; justify-content: center;">
+                <img src="../../assets/images/Hilbert/Microhard pMMDL2550.jpg" alt="Microhard pMDDL2550 Module" style="max-height: 160px; max-width: 100%; object-fit: contain; border-radius: 4px;" onerror="this.onerror=null; this.src='../assets/images/Hilbert/Microhard pMMDL2550.jpg';" />
+              </div>
+              <ul style="text-align: left; font-size: 12.5px; color: var(--text-muted); line-height: 1.6; padding-left: 18px; margin: 0;">
+                <li><strong>Bandwidth:</strong> Up to 25 Mbps (supports streaming uncompressed video)</li>
+                <li><strong>System Overhead:</strong> Requires industrial Ethernet switch &amp; dual MIMO antennas</li>
+                <li><strong>RF Attenuation:</strong> High 2.4/5.8 GHz atmospheric &amp; wet asphalt absorption</li>
+                <li><strong>Weight &amp; Power:</strong> Heavy <strong>130 g</strong> module drawing <strong>> 10 W</strong></li>
+                <li><strong>Cost:</strong> Approx. <strong>4× higher capital cost</strong></li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- DETAILED DECISION REASONS -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+            <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <h4 style="font-size: 13.5px; color: var(--accent-purple); margin-bottom: 6px;">1. Bandwidth Sizing &amp; Transmission Latency</h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Because vision processing is localized at the edge, transmission is restricted to compact $1.5\text{ KB}$ JSON alerts. At standard $115.2\text{ kbps}$ baud rate:
+                <br/><strong style="color: var(--text-main);">Latency = (1.5 KB × 8 bits) / 115.2 kbps ≈ 104 ms</strong>.
+                Handoff completes in ~100 ms, providing real-time response without needing megabits of bandwidth.
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <h4 style="font-size: 13.5px; color: var(--accent-purple); margin-bottom: 6px;">2. Superior Sub-GHz RF Propagation</h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                The 900 MHz band offers much longer wavelengths (~33 cm) compared to 2.4 GHz (~12.5 cm) and 5.8 GHz (~5.2 cm). This minimizes signal attenuation through tropical downpours and significantly reduces destructive multipath reflection off flat asphalt surfaces.
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <h4 style="font-size: 13.5px; color: var(--accent-purple); margin-bottom: 6px;">3. SWaP-C Optimization (Size, Weight, Power, Cost)</h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                The P900 V2 weighs just 18 g and consumes &lt; 2.5 W, preserving UAV flight endurance. It eliminates the need for bulky $2\times 2\text{ MIMO}$ dual antenna separation, DC–DC buck converters, and onboard Ethernet network switches, saving substantial weight and cost.
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <h4 style="font-size: 13.5px; color: var(--accent-purple); margin-bottom: 6px;">4. Direct ROS 2 Node Serial Interfacing</h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Operating as a character serial device (UART / `/dev/ttyUSB0`), the P900 directly streams byte buffers through a lightweight ROS 2 Python serial node, avoiding PPP daemon encapsulation overhead, IP fragmentation, and multicast DDS discovery storms across the radio link.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. REGULATORY COMPLIANCE -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">6. Singapore RF Regulatory Compliance (IMDA TS SRD)</div>
+          </div>
+          <div class="callout callout-rose" style="margin-top: 0; margin-bottom: 16px;">
+            <strong>Statutory Spectrum Enforcement:</strong> Radio operations in Singapore must strictly adhere to statutory requirements governed by the Infocomm Media Development Authority (IMDA) under the <em>Telecommunications Act 1999</em>:
+          </div>
+          
+          <ul style="padding-left: 20px; font-size: 13.5px; color: var(--text-muted); line-height: 1.8;">
+            <li><strong>Authorized Frequency Band:</strong> While default P900 transceivers hop across the US FCC band (902–928 MHz), Singapore regulations strictly limit unlicensed Short Range Devices to <strong>917–925 MHz</strong>.</li>
+            <li><strong>Cellular Interference Prevention:</strong> Frequencies between 902–917 MHz overlap directly with licensed commercial cellular mobile operator uplinks. Transmitting in this band causes severe illegal out-of-band interference.</li>
+            <li><strong>Firmware Lock &amp; Power Throttling:</strong> P900 frequency-hopping tables are software-locked via AT commands strictly to the <strong>917–925 MHz sub-band</strong>. RF output power is throttled to ensure radiated power stays strictly within the statutory limit of <strong>$\le 100\text{ mW}$ ($+20\text{ dBm}$) EIRP</strong>.</li>
+          </ul>
+        </div>
+
+        <!-- 9. ROS 2 MIDDLEWARE & SOFTWARE BRIDGE ARCHITECTURE -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">7. ROS 2 Middleware &amp; Software Bridge Architecture</div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+            The system implements an <strong>architectural decoupling</strong> separating long-range inter-agent serial communications from intra-vehicle high-speed DDS middleware:
+          </p>
+
+          <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; margin-bottom: 16px;">
+            <h4 style="font-size: 14px; color: var(--accent-purple); margin-bottom: 10px;">
+              🔄 Decoupled Two-Layer Communication Model
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+              <div>
+                <strong style="font-size: 13px; color: var(--accent-blue);">1. Inter-Agent Air Link (UAV ↔ UGV)</strong>
+                <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+                  Operates via custom ROS 2 serial bridge nodes (<code>uav_serial_bridge_node</code> and <code>ugv_c2_receiver_node</code>) communicating over <code>/dev/ttyUSB0</code> using <code>pyserial</code>. Transmits encrypted JSON payloads with CRC-16 checksums over 917–925 MHz FHSS.
+                </p>
+              </div>
+              <div>
+                <strong style="font-size: 13px; color: var(--accent-emerald);">2. Intra-Vehicle Local Middleware</strong>
+                <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.6;">
+                  Onboard each robot, standard ROS 2 Data Distribution Service (<strong>CycloneDDS</strong>) operates over local loopback (<code>127.0.0.1</code>) and high-speed onboard Ethernet, seamlessly interconnecting Jetson Orin Nano, Livox Mid-360 LiDAR, microcontrollers, and Nav2 nodes.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h4 style="font-size: 14px; color: var(--text-main); margin-bottom: 8px;">
+            🗺️ Coordinate Transformation &amp; Nav2 Integration Pipeline
+          </h4>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
+            Global geodetic coordinates received from the UAV are automatically transformed into metric frames for autonomous ground navigation:
+          </p>
+          <div style="background: #161b22; color: #58a6ff; font-family: var(--font-mono); font-size: 12.5px; padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; overflow-x: auto;">
+            WGS84 (Lat, Lon, Alt) ➔ navsat_transform_node ➔ Metric Goal Pose (X, Y) map ➔ Nav2 SmacPlanner ➔ odom ➔ base_link
+          </div>
+          <ul style="padding-left: 20px; font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+            <li><code>navsat_transform_node</code> converts WGS84 coordinates into metric <code>geometry_msgs/PoseStamped</code> in the global ENU frame (<code>map</code>) and dispatches target goals to Nav2.</li>
+            <li><code>ekf_node_global</code> fuses wheel odometry, 9-DOF IMU data, and RTK-GNSS fixes to publish the dynamic <code>map ➔ odom</code> transform.</li>
+            <li><code>ekf_node_local</code> computes smooth, continuous <code>odom ➔ base_link</code> tracking at 50 Hz for local costmaps and velocity control (<code>cmd_vel</code>).</li>
+          </ul>
+        </div>
+
+        <!-- 10. PHASED IMPLEMENTATION ROADMAP -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">8. Phased Implementation &amp; Validation Roadmap</div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+            To eliminate project risk, Hilbert Soh has split the communication and navigation deliverables into two structured phases:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+            <!-- Phase 1 -->
+            <div style="background: rgba(0, 102, 204, 0.04); border: 1px solid rgba(0, 102, 204, 0.2); border-radius: 8px; padding: 16px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                <span class="badge badge-blue">Phase 1 Deliverables</span>
+                <strong style="color: var(--text-main); font-size: 14px;">Virtual Simulation &amp; Multi-PC Benchtop</strong>
+              </div>
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.7; margin: 0;">
+                <li><strong>Multi-PC Benchtop:</strong> Simulated UAV scout runs on a <strong>Raspberry Pi 5 or Charan's Laptop</strong> sending mock JSON targets; UGV digital twin and autonomy stack run on <strong>Hilbert's Laptop</strong> using <strong>ROS 2 Jazzy on Ubuntu 24.04 LTS</strong>.</li>
+                <li><strong>Local Wi-Fi Router:</strong> Operates on private subnet (<code>192.168.1.0/24</code>) using CycloneDDS explicit unicast peer discovery.</li>
+                <li><strong>Software Validation:</strong> Confirms JSON parser, <code>navsat_transform_node</code> coordinate conversion, and Nav2 path generation.</li>
+              </ul>
+            </div>
+
+            <!-- Phase 2 -->
+            <div style="background: rgba(147, 51, 234, 0.04); border: 1px solid rgba(147, 51, 234, 0.2); border-radius: 8px; padding: 16px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                <span class="badge badge-purple">Phase 2 Deliverables</span>
+                <strong style="color: var(--text-main); font-size: 14px;">Physical UGV &amp; Long-Range RF Integration</strong>
+              </div>
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.7; margin: 0;">
+                <li><strong>RF Module Deployment:</strong> Replaces Wi-Fi with physical <strong>Microhard P900 V2</strong> configured for Singapore 917–925 MHz band.</li>
+                <li><strong>Embedded Hardware:</strong> Software stack runs natively on onboard NVIDIA Jetson Orin Nano.</li>
+                <li><strong>Full Field Testing:</strong> Live multi-kilometer runway trials executing dynamic obstacle avoidance and active FOD pickup.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. FAIL-SAFE & SAFETY PROGRAM -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">9. Fail-Safe Protocols &amp; Cybersecurity Program</div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span class="badge badge-amber">Timeout > 5.0 s</span>
+                <strong style="font-size: 13px; color: var(--text-main);">Safety Standby</strong>
+              </div>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                If keep-alive heartbeat pulses lapse beyond 5.0 s, the UGV executes controlled deceleration to 0 RPM and holds position.
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span class="badge badge-purple">Shadowing Buffer</span>
+                <strong style="font-size: 13px; color: var(--text-main);">Task Retention</strong>
+              </div>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                Previously dispatched target waypoints remain buffered in local memory, enabling completion of active clearance during brief RF shadowing.
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span class="badge badge-rose">Timeout > 30.0 s</span>
+                <strong style="font-size: 13px; color: var(--text-main);">Autonomous RTB</strong>
+              </div>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                If link interruption persists beyond 30 s, the UGV cancels active mission queues and navigates autonomously to the designated airside staging lane.
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span class="badge badge-emerald">Crypto Security</span>
+                <strong style="font-size: 13px; color: var(--text-main);">AES-256 &amp; HMAC</strong>
+              </div>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
+                RF transmissions utilize AES-256 encryption, FHSS modulation, and SHA-256 signatures to reject rogue commands or electronic spoofing.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. REFERENCES -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">10. References &amp; Regulatory Standards (APA 7th)</div>
+          </div>
+          <ul style="padding-left: 20px; font-size: 12.5px; color: var(--text-muted); line-height: 1.8;">
+            <li>ASTM International. (2020). <em>Standard test method for airport pavement condition index surveys</em> (ASTM D5340-20). <a href="https://doi.org/10.1520/D5340-20" target="_blank">https://doi.org/10.1520/D5340-20</a></li>
+            <li>Federal Aviation Administration. (2014). <em>Airport foreign object debris (FOD) management equipment</em> (FAA AC 150/5220-24). U.S. Department of Transportation.</li>
+            <li>Infocomm Media Development Authority. (2021). <em>Technical specification for short range devices</em> (IMDA TS SRD Issue 1 Revision 2). Standards Department, IMDA Singapore.</li>
+            <li>International Civil Aviation Organization. (2018). <em>Handbook on radio frequency spectrum requirements for civil aviation</em> (Doc 9718, Vol. 1, 2nd ed.). ICAO.</li>
+            <li>Macenski, S., Foote, T., Gerkey, B., Lalancette, C., &amp; Woodall, W. (2022). Robot Operating System 2: Design, architecture, and uses in the wild. <em>Science Robotics</em>, 7(66), eabm6074.</li>
+            <li>Republic of Singapore. (1999). <em>Telecommunications Act 1999</em> (Cap. 323, 2020 Rev. Ed.). Singapore Statutes Online.</li>
+          </ul>
+        </div>
+
+      </main>
+
+      <footer class="main-footer">
+        <div>Runway Patrol Interim Report • Section 4.3.4 Subsystem Specification</div>
+        <div>National University of Singapore • AY2024/2025</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
