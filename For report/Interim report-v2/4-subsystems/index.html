@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4. Subsystem Architecture - FOD Hunter Interim Report</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- APPLE TOP NAVIGATION BAR -->
+  <header class="apple-nav">
+    <div class="apple-nav-container">
+      <a href="../index.html" class="apple-nav-brand">
+        <img src="../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+      </a>
+
+      <ul class="apple-nav-links">
+        <li><a href="../index.html" class="apple-nav-link">Overview</a></li>
+        <li><a href="../1-introduction.html" class="apple-nav-link">Introduction</a></li>
+        <li><a href="../2-design-overview.html" class="apple-nav-link">Design</a></li>
+        <li><a href="../3-individual-scopes.html" class="apple-nav-link">Scopes</a></li>
+        <li><a href="index.html" class="apple-nav-link active">Subsystems</a></li>
+        <li><a href="../5-timeline.html" class="apple-nav-link">Timeline</a></li>
+        <li><a href="../6-references.html" class="apple-nav-link">References</a></li>
+        <li><a href="../7-documentation.html" class="apple-nav-link">Documentation</a></li>
+      </ul>
+
+      <div class="apple-nav-actions">
+        <a href="../7-documentation/hilbert/simulation.html" class="apple-btn-pill">Simulation Spec →</a>
+        <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- APPLE STICKY SUB-NAVIGATION -->
+  <nav class="apple-subnav">
+    <div class="apple-subnav-container">
+      <div class="apple-subnav-title">Subsystem Architecture</div>
+      <ul class="apple-subnav-items">
+        <li class="apple-subnav-item"><a href="index.html" class="active">Overview</a></li>
+        <li class="apple-subnav-item"><a href="mechanical.html">Mechanical</a></li>
+        <li class="apple-subnav-item"><a href="electrical.html">4.2 Electrical</a></li>
+        <li class="apple-subnav-item"><a href="programming.html">4.3 Programming</a></li>
+        <li class="apple-subnav-item"><a href="computer-vision.html">4.4 Vision</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="apple-mobile-drawer" id="apple-mobile-drawer">
+    <a href="../index.html">Overview</a>
+    <a href="../1-introduction.html">Introduction</a>
+    <a href="../2-design-overview.html">Overview of Design</a>
+    <a href="../3-individual-scopes.html">Individual Scopes</a>
+    <a href="index.html">Subsystems Architecture</a>
+    <a href="../5-timeline.html">Timeline to Finals</a>
+    <a href="../6-references.html">References &amp; Standards</a>
+    <a href="../7-documentation/hilbert/simulation.html">Simulation Architecture &amp; Guide</a>
+  </div>
+
+  <!-- MAIN PAGE CONTENT -->
+  <main class="apple-main-content" style="padding-top: 20px;">
+    <div class="apple-container" style="padding-bottom: 60px;">
+      
+      <!-- Apple Section Header -->
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
+        <div class="apple-hero-badge">Section 4.0 • Modular Engineering</div>
+        <h1 class="apple-section-title" style="font-size: clamp(2.4rem, 5vw, 3.8rem);">
+          Subsystems Architecture.
+          <span class="apple-hero-gradient">Integrated Hardware. Deterministic Software.</span>
+        </h1>
+        <p class="apple-section-desc" style="margin: 0 auto;">
+          High-performance modular integration across structural mechanical CAD, multi-rail electrical distribution, ROS 2 Nav2 autonomy, and edge neural vision.
+        </p>
+      </div>
+
+        <!-- OVERVIEW BLOCK DIAGRAM -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">🧩 Integrated Subsystem Architecture Overview</div>
+            <a href="../2-design-overview.html" class="btn btn-deep-dive">📖 Read Architecture Spec</a>
+          </div>
+
+          <p style="margin-bottom: 20px;">
+            The FOD Hunter system combines 4 dedicated engineering subsystems into a unified operational payload platform. Click any subsystem card below to inspect detailed designs, wiring, CAD, and algorithm comparisons:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+
+            <a href="mechanical.html" class="card-box" style="margin-bottom:0; text-decoration:none;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                <h3 style="color:var(--accent-blue);">4.1 Mechanical</h3>
+                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:3px;">
+                  <span class="badge badge-blue">Asuka &amp; Zacarias Ng</span>
+                  <span class="badge" style="font-size:10px; background:rgba(99,102,241,0.1); color:var(--accent-purple);">Oversight: Hilbert</span>
+                </div>
+              </div>
+              <p style="font-size:13px; color:var(--text-muted);">Chassis iterations &amp; FEA simulations, suspension benchmark (trailing arm), motor torque sizing &amp; differential steering.</p>
+            </a>
+
+            <a href="electrical.html" class="card-box" style="margin-bottom:0; text-decoration:none;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                <h3 style="color:var(--accent-amber);">4.2 Electrical</h3>
+                <div style="display:flex; flex-direction:column; align-items:flex-end; gap:3px;">
+                  <span class="badge badge-amber">Bryan Ng</span>
+                  <span class="badge" style="font-size:10px; background:rgba(16,185,129,0.1); color:var(--accent-emerald);">Oversight: Gabriel</span>
+                </div>
+              </div>
+              <p style="font-size:13px; color:var(--text-muted);">System power calculations &amp; load budget, LiFePO4 battery chemistry selection &amp; complete schematic wiring diagram.</p>
+            </a>
+
+            <a href="programming.html" class="card-box" style="margin-bottom:0; text-decoration:none;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 style="color:var(--accent-purple);">4.3 Programming</h3>
+                <span class="badge badge-purple">Hilbert Soh</span>
+              </div>
+              <p style="font-size:13px; color:var(--text-muted);">SLAM Toolbox mapping, Nav2 global/local planning, algorithm trade-offs, and multi-agent C2 communications (CycloneDDS / RF).</p>
+            </a>
+
+            <a href="computer-vision.html" class="card-box" style="margin-bottom:0; text-decoration:none;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 style="color:var(--accent-emerald);">4.4 Computer Vision</h3>
+                <span class="badge badge-emerald">Gabriel Tan</span>
+              </div>
+              <p style="font-size:13px; color:var(--text-muted);">YOLOv8 vs YOLOv11 evaluation, FOD target classes, RGB-D fusion &amp; TensorRT edge acceleration.</p>
+            </a>
+
+          </div>
+        </div>
+
+      </div> <!-- end apple-container -->
+  </main>
+
+  <!-- APPLE FOOTER -->
+  <footer class="apple-footer">
+    <div class="apple-footer-inner">
+      <div>
+        © AY2627 FOD Hunter CDE4301 Team. National University of Singapore.
+      </div>
+      <ul class="apple-footer-links">
+        <li><a href="../index.html">Overview</a></li>
+        <li><a href="../1-introduction.html">Introduction</a></li>
+        <li><a href="../2-design-overview.html">Architecture</a></li>
+        <li><a href="index.html">Subsystems</a></li>
+        <li><a href="../7-documentation/hilbert/simulation.html">Simulation</a></li>
+        <li><a href="../5-timeline.html">Timeline</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

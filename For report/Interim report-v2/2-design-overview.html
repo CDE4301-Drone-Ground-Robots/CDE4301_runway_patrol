@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2. Overview of Design - FOD Hunter Interim Report</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- APPLE TOP NAVIGATION BAR -->
+  <header class="apple-nav">
+    <div class="apple-nav-container">
+      <a href="index.html" class="apple-nav-brand">
+        <img src="assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+      </a>
+
+      <ul class="apple-nav-links">
+        <li><a href="index.html" class="apple-nav-link">Overview</a></li>
+        <li><a href="1-introduction.html" class="apple-nav-link">Introduction</a></li>
+        <li><a href="2-design-overview.html" class="apple-nav-link active">Design</a></li>
+        <li><a href="3-individual-scopes.html" class="apple-nav-link">Scopes</a></li>
+        <li><a href="4-subsystems/index.html" class="apple-nav-link">Subsystems</a></li>
+        <li><a href="5-timeline.html" class="apple-nav-link">Timeline</a></li>
+        <li><a href="6-references.html" class="apple-nav-link">References</a></li>
+        <li><a href="7-documentation.html" class="apple-nav-link">Documentation</a></li>
+      </ul>
+
+      <div class="apple-nav-actions">
+        <a href="3-individual-scopes.html" class="apple-btn-pill">Architecture Spec →</a>
+        <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="apple-mobile-drawer" id="apple-mobile-drawer">
+    <a href="index.html">Overview</a>
+    <a href="1-introduction.html">Introduction</a>
+    <a href="2-design-overview.html">Overview of Design</a>
+    <a href="3-individual-scopes.html">Individual Scopes</a>
+    <a href="4-subsystems/index.html">Subsystems Architecture</a>
+    <a href="5-timeline.html">Timeline to Finals</a>
+    <a href="6-references.html">References &amp; Standards</a>
+    <a href="7-documentation.html">Documentation</a>
+  </div>
+
+  <!-- MAIN PAGE CONTENT -->
+  <main class="apple-main-content">
+    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
+      
+      <!-- Apple Section Header -->
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
+        <div class="apple-hero-badge">Section 2.0 • Collaborative Architecture</div>
+        <h1 class="apple-section-title" style="font-size: clamp(2.4rem, 5vw, 3.8rem);">
+          Overview of Design.
+          <span class="apple-hero-gradient">Multi-Agent Autonomy &amp; Operational Scheme.</span>
+        </h1>
+        <p class="apple-section-desc" style="margin: 0 auto;">
+          System Architecture, Stakeholder Needs, and Phase 1 Multi-Agent Collaborative Clearance Specifications.
+        </p>
+      </div>
+
+        <!-- COLLABORATIVE ARCHITECTURE HERO FIGURE -->
+        <div class="card-box" style="padding: 0; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 24px;">
+          <div style="background: #0b0f19; text-align: center; padding: 12px 0;">
+            <img src="assets/UAV_and_UGV_collab.png" alt="Collaborative UAV and UGV Multi-Agent Architecture" class="img-zoomable" style="max-height: 360px; width: 100%; object-fit: contain; display: block; margin: 0 auto;">
+          </div>
+          <div style="padding: 16px 20px; border-top: 1px solid var(--border-color); background: var(--card-bg);">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <span class="badge badge-purple" style="margin-bottom: 4px;">System Concept</span>
+                <h3 style="font-size: 17px; color: var(--text-main); margin: 2px 0;">Heterogeneous Multi-Agent Closed-Loop Collaboration</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
+                  Airborne UAV Scout (Macro Scanning) paired with Surface UGV Rover (Targeted Precision Transit &amp; Active Physical Extraction).
+                </p>
+              </div>
+              <a href="4-subsystems/index.html" class="btn btn-deep-dive">📖 System Architecture Spec →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. USER NEEDS & OPERATIONAL DRIVERS (FIRST) -->
+        <div class="card-box">
+          <div class="card-header">
+            <div>
+              <div class="card-title">💡 User Needs &amp; Operational Drivers</div>
+              <p style="font-size: 13px; color: var(--text-muted); margin: 3px 0 0 0;">
+                Derived from field interviews with Mr. Harry Lim, 3SG(NS) Prady, and LTA(NS) Elnathan
+              </p>
+            </div>
+            <a href="7-documentation/literature/primary-research.html" class="btn btn-deep-dive">🎙️ View Primary Field Research (3 Interviews) →</a>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.6;">
+            Based on direct stakeholder consultations with airfield operations personnel and operational airbase case studies, the FOD Hunter platform is engineered around five fundamental user needs:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;">
+            
+            <!-- Need 1: Operational Efficiency & ROT -->
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; border-left: 4px solid var(--accent-purple);">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span style="font-size: 18px;">⚡</span>
+                <h4 style="color: var(--accent-purple); font-size: 15px; margin: 0;">1. Operational Efficiency &amp; Reduced ROT</h4>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Runway Occupancy Time (ROT) is the single most critical constraint on commercial and military airfields. Instead of deploying slow, human-driven sweeping trucks across the full runway length, our joint system utilizes high-speed aerial scanning to cue targeted ground transit, <strong>slashing runway downtime by up to 75%</strong>.
+              </p>
+            </div>
+
+            <!-- Need 2: Autonomous Operation -->
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; border-left: 4px solid var(--accent-blue);">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span style="font-size: 18px;">🤖</span>
+                <h4 style="color: var(--accent-blue); font-size: 15px; margin: 0;">2. Full Autonomous Operation</h4>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Eliminates the continuous requirement for human drivers and airside ground escorts. The UGV autonomously computes collision-free trajectories using ROS 2 Nav2, executes waypoint navigation, engages active suction, and reports ledger updates back to the Base C2 with zero manual joystick teleoperation.
+              </p>
+            </div>
+
+            <!-- Need 3: Rapid Ground Transit >= 10 km/h -->
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; border-left: 4px solid var(--accent-emerald);">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span style="font-size: 18px;">🏎️</span>
+                <h4 style="color: var(--accent-emerald); font-size: 15px; margin: 0;">3. High Ground Transit Speed ($\ge 10\text{ km/h}$)</h4>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Airfield runways span 4 to 5 km in length. To rapidly reach flagged coordinates before the next scheduled aircraft departure, the UGV powertrain is geared to transit at <strong>operational speeds $\ge 10\text{ km/h}$</strong> across open asphalt, significantly outpacing standard indoor mobile robots.
+              </p>
+            </div>
+
+            <!-- Need 4: Multi-Agent Purpose -->
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; border-left: 4px solid var(--accent-amber);">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span style="font-size: 18px;">🔄</span>
+                <h4 style="color: var(--accent-amber); font-size: 15px; margin: 0;">4. Novel Purpose for Multi-Agent Task</h4>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Discovers an unprecedented synergy in airside autonomy: overcoming the speed-vs-payload trade-off. Drones fly fast ($30\text{--}40\text{ km/h}$) but cannot carry heavy vacuum tanks; ground rovers carry high-flow extraction payloads but are too slow to sweep 5 km blindly. The multi-agent collaboration bridges both domains seamlessly.
+              </p>
+            </div>
+
+            <!-- Need 5: Sensor Verification -->
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; border-left: 4px solid var(--accent-rose);">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span style="font-size: 18px;">🎯</span>
+                <h4 style="color: var(--accent-rose); font-size: 15px; margin: 0;">5. Multi-Modal Sensor Verification</h4>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Prevents false pickups and suction hood damage by executing close-range verification. Onboard co-axial 3D LiDAR (Livox Mid-360) and RGB camera corroborate target geometry and height profile before engaging the high-power centrifugal vacuum intake.
+              </p>
+            </div>
+
+            <!-- Need 6: Automated Docking -->
+            <div style="background: var(--card-bg-subtle, rgba(255, 255, 255, 0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; border-left: 4px solid var(--accent-blue);">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span style="font-size: 18px;">🔋</span>
+                <h4 style="color: var(--accent-blue); font-size: 15px; margin: 0;">6. Continuous Readiness &amp; Docking</h4>
+              </div>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                Enables persistent airside readiness through an autonomous contact-charging interface, safely recharging the 24V LiFePO4 battery distribution bus between scheduled inspection runs.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- KEY TECHNICAL INNOVATIONS OVER EXISTING SYSTEMS -->
+        <div class="card-box" style="border-top: 3px solid var(--accent-purple);">
+          <div class="card-header">
+            <div>
+              <div class="card-title">🚀 Key Technical Innovations for Our UGV Platform</div>
+              <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">
+                Core engineering advancements overcoming the limitations of fixed commercial systems and single-agent inspection rovers
+              </p>
+            </div>
+            <span class="badge badge-purple">Core Innovations</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 14px;">
+            
+            <!-- Innovation 1 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <span style="font-size: 24px;">🔄</span>
+                <span class="badge badge-purple">Innovation 1</span>
+              </div>
+              <h4 style="color: var(--accent-purple); font-size: 15px; margin: 0 0 8px 0;">1. Closed-Loop "Find-and-Fix" Remediation</h4>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0; flex-grow: 1;">
+                Unlike stationary systems (<em>iFerret, Tarsier</em>) or diagnostic UGVs (<em>Airtrek, Guimu</em>) that only flag debris locations, our UGV pairs close-range multi-sensor fusion with real-time active physical clearance payloads (electromagnetic bar + high-flow vacuum intake), directly removing debris in a single automated sortie.
+              </p>
+            </div>
+
+            <!-- Innovation 2 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <span style="font-size: 24px;">⚡</span>
+                <span class="badge badge-emerald">Innovation 2</span>
+              </div>
+              <h4 style="color: var(--accent-emerald); font-size: 15px; margin: 0 0 8px 0;">2. Selective Dual-Payload Activation</h4>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0; flex-grow: 1;">
+                To maximize energy efficiency and mission battery endurance, the UGV uses its multi-sensor perception stack to selectively activate remediation tools—engaging the front electromagnetic bar for ferrous metallic fasteners, or activating the high-power underbody centrifugal vacuum only when encountering non-metallic debris.
+              </p>
+            </div>
+
+            <!-- Innovation 3 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <span style="font-size: 24px;">🛡️</span>
+                <span class="badge badge-blue">Innovation 3</span>
+              </div>
+              <h4 style="color: var(--accent-blue); font-size: 15px; margin: 0 0 8px 0;">3. Multi-Modal False Alarm Suppression</h4>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0; flex-grow: 1;">
+                By fusing 3D LiDAR point cloud elevations, RGB imagery, and thermal contrast at ground level, the UGV rejects false alarms caused by flat pavement markings, rubber skid marks, and dynamic shadow edges that severely degrade pure optical camera arrays (e.g. <em>iFerret 2.0</em>).
+              </p>
+            </div>
+
+            <!-- Innovation 4 -->
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; display: flex; flex-direction: column;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <span style="font-size: 24px;">🛰️</span>
+                <span class="badge badge-amber">Innovation 4</span>
+              </div>
+              <h4 style="color: var(--accent-amber); font-size: 15px; margin: 0 0 8px 0;">4. Aerial-Guided C2 Handshake</h4>
+              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0; flex-grow: 1;">
+                Rather than performing slow, exhaustive lawn-mower sweeps across the entire multi-kilometer airfield, the UGV relies on high-altitude UAV macro-scouting cueing. It transits directly to designated target coordinates, slashing Runway Occupancy Time (ROT) by up to <strong>75%</strong>.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. OPERATIONAL CONSTRAINTS & ENGINEERING SPECS (PHASE 1) -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">📐 Operational Constraints &amp; Engineering Specifications (Phase 1)</div>
+            <span class="badge badge-emerald">Phase 1 Target</span>
+          </div>
+
+          <p style="margin-bottom: 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+            To achieve full Phase 1 validation and de-risk outdoor physical deployment, our project establishes strict engineering specifications benchmarked at the <strong>NUS SDE3</strong> testing site:
+          </p>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Design Requirement</th>
+                  <th>Engineering Specification (Phase 1 Target)</th>
+                  <th>Technical Justification &amp; Standard</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Testing Site</strong></td>
+                  <td>Phase 1 Proving Ground</td>
+                  <td><code>NUS SDE3</code> Test Corridor &amp; Outdoor Ramp Area</td>
+                  <td>Realistic tarmac roughness, concrete slopes, and structured obstacle corridors.</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Speed</strong></td>
+                  <td>Transit &amp; Macro Sweep</td>
+                  <td>UGV: $\ge 10\text{ km/h}$ | Simulated UAV: $30\text{--}40\text{ km/h}$</td>
+                  <td>Satisfies strict Runway Occupancy Time (ROT) reduction thresholds.</td>
+                </tr>
+                <tr>
+                  <td><strong>Communications</strong></td>
+                  <td>Local Network Datalink</td>
+                  <td>Private Wi-Fi Router Subnet (<code>192.168.1.0/24</code>) + CycloneDDS Unicast</td>
+                  <td>Simulated UAV on Raspberry Pi 5 / Charan's Laptop &rarr; UGV PC (Hilbert's Laptop); sub-15 ms latency.</td>
+                </tr>
+                <tr>
+                  <td><strong>Coordinate Systems</strong></td>
+                  <td>Georeferencing &amp; Transit</td>
+                  <td>WGS84 Geodetic $\rightarrow$ Local Metric (<code>map</code> / <code>odom</code> / <code>base_link</code>)</td>
+                  <td><code>navsat_transform_node</code> with dual EKF sensor fusion (Wheel Odometry + IMU).</td>
+                </tr>
+                <tr>
+                  <td><strong>Navigation Stack</strong></td>
+                  <td>Autonomous Path Planning</td>
+                  <td>ROS 2 Jazzy on Ubuntu 24.04 LTS, Nav2 (<code>SmacPlanner2D</code> + <code>RegulatedPurePursuit</code>)</td>
+                  <td>Deterministic runway path following &ge;10 km/h with dynamic obstacle clearance; executes on Hilbert's Laptop.</td>
+                </tr>
+                <tr>
+                  <td><strong>FOD Remediation</strong></td>
+                  <td>Extraction Capacity</td>
+                  <td>High-flow 2800W industrial vacuum suction system + intake nozzle</td>
+                  <td>Picks up fasteners, 580g steel bolts, rocks, and rubber debris at calculated clearance.</td>
+                </tr>
+                <tr>
+                  <td><strong>Power &amp; Control</strong></td>
+                  <td>Battery &amp; Voltage Bus</td>
+                  <td>48V 20Ah LiFePO4 primary bus; STM32 F446RE for motor actuation</td>
+                  <td>Powers ZLAC8015D driver &amp; 2800W vacuum. Hilbert's laptop operates on internal battery (isolated from 48V).</td>
+                </tr>
+                <tr>
+                  <td><strong>Safety System</strong></td>
+                  <td>Fail-Safe Loss Protocols</td>
+                  <td>Automated deceleration to 0 RPM upon 5.0 s heartbeat loss</td>
+                  <td>Prevents runaway vehicles; buffers active tasks during momentary shadowing.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. TEAM LEADERSHIP & SUBSYSTEM DIVISION -->
+        <div class="card-box" style="border-left: 5px solid var(--accent-purple);">
+          <div class="card-header">
+            <div class="card-title">👥 Subsystem Division &amp; Technical Leadership</div>
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+            To ensure rigorous technical accountability, engineering responsibilities are clearly partitioned with dedicated subsystem leadership:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <span class="badge badge-purple" style="margin-bottom: 6px;">Programming Subsystem Lead</span>
+              <h4 style="font-size: 14px; color: var(--text-main); margin-bottom: 4px;">Hilbert Soh (Overseeing Mechanical)</h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                Sole ownership of <strong>Programming Subsystem</strong> (SLAM Toolbox, Nav2 path planning, algorithm trade-offs, and multi-agent C2 communications datalinks), while overseeing mechanical system integration.
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">Computer Vision Subsystem Lead</span>
+              <h4 style="font-size: 14px; color: var(--text-main); margin-bottom: 4px;">Gabriel Tan (Overseeing Electrical)</h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                Sole ownership of <strong>Computer Vision Subsystem</strong> (YOLOv11 model benchmarking, FOD classification, and RGB-D/LiDAR sensor fusion), while overseeing electrical architecture.
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <span class="badge badge-blue" style="margin-bottom: 6px;">Mechanical Subsystem Engineers</span>
+              <h4 style="font-size: 14px; color: var(--text-main); margin-bottom: 4px;">Asuka &amp; Zacarias Ng</h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                Sole mechanical subsystem ownership: <strong>Asuka</strong> (FOD Pickup suction &amp; Trailing Arm Suspension) and <strong>Zacarias Ng</strong> (Chassis iterations, FEA simulations &amp; Differential Drive Kinematics).
+              </p>
+            </div>
+
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+              <span class="badge badge-amber" style="margin-bottom: 6px;">Electrical Subsystem Engineer</span>
+              <h4 style="font-size: 14px; color: var(--text-main); margin-bottom: 4px;">Bryan Ng</h4>
+              <p style="font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                Sole electrical subsystem ownership: 25.6V LiFePO4 battery selection, load budget calculations, multi-rail DC-DC power distribution, system wiring schematic, and contact-charging dock.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- end apple-container -->
+  </main>
+
+  <!-- APPLE FOOTER -->
+  <footer class="apple-footer">
+    <div class="apple-footer-inner">
+      <div>
+        © AY2627 FOD Hunter CDE4301 Team. National University of Singapore.
+      </div>
+      <ul class="apple-footer-links">
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="1-introduction.html">Introduction</a></li>
+        <li><a href="2-design-overview.html">Architecture</a></li>
+        <li><a href="4-subsystems/index.html">Subsystems</a></li>
+        <li><a href="7-documentation.html">Documentation</a></li>
+        <li><a href="5-timeline.html">Timeline</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

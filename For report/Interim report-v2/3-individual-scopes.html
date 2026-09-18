@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3. Individual Scopes - FOD Hunter Interim Report</title>
+  <link rel="stylesheet" href="css/styles.css?v=3.4">
+</head>
+<body>
+
+  <!-- APPLE TOP NAVIGATION BAR -->
+  <header class="apple-nav">
+    <div class="apple-nav-container">
+      <a href="index.html" class="apple-nav-brand">
+        <img src="assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+      </a>
+
+      <ul class="apple-nav-links">
+        <li><a href="index.html" class="apple-nav-link">Overview</a></li>
+        <li><a href="1-introduction.html" class="apple-nav-link">Introduction</a></li>
+        <li><a href="2-design-overview.html" class="apple-nav-link">Design</a></li>
+        <li><a href="3-individual-scopes.html" class="apple-nav-link active">Scopes</a></li>
+        <li><a href="4-subsystems/index.html" class="apple-nav-link">Subsystems</a></li>
+        <li><a href="5-timeline.html" class="apple-nav-link">Timeline</a></li>
+        <li><a href="6-references.html" class="apple-nav-link">References</a></li>
+        <li><a href="7-documentation.html" class="apple-nav-link">Documentation</a></li>
+      </ul>
+
+      <div class="apple-nav-actions">
+        <a href="5-timeline.html" class="apple-btn-pill">Project Timeline →</a>
+        <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="apple-mobile-drawer" id="apple-mobile-drawer">
+    <a href="index.html">Overview</a>
+    <a href="1-introduction.html">Introduction</a>
+    <a href="2-design-overview.html">Overview of Design</a>
+    <a href="3-individual-scopes.html">Individual Scopes</a>
+    <a href="4-subsystems/index.html">Subsystems Architecture</a>
+    <a href="5-timeline.html">Timeline to Finals</a>
+    <a href="6-references.html">References &amp; Standards</a>
+    <a href="7-documentation.html">Documentation</a>
+  </div>
+
+  <!-- MAIN PAGE CONTENT -->
+  <main class="apple-main-content">
+    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
+      
+      <!-- Apple Section Header -->
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 36px;">
+        <div class="apple-hero-badge">Section 3.0 • Engineering Ownership</div>
+        <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.4rem); margin-bottom: 12px;">
+          <span class="apple-hero-gradient">Get to know the team behind FOD Hunter.</span>
+        </h1>
+        <p class="apple-section-desc" style="margin: 0 auto;">
+          Comprehensive breakdown of engineering ownership across mechanical chassis, power electronics, drone platform, ROS 2 autonomy, and C2 ground telemetry.
+        </p>
+      </div>
+
+      <!-- TINDER-STYLE 3D STACKED SWIPE DECK -->
+      <div class="tinder-deck-container" id="tinder-deck-container">
+        
+        <!-- Stack Wrapper -->
+        <div class="tinder-cards-stack" id="tinder-cards-stack">
+
+          <!-- 1. HILBERT SOH YONG TAI -->
+          <div class="member-scope-card fan-center" id="card-hilbert" data-index="0" style="border-top: 4px solid var(--accent-purple);">
+            <!-- Card Face (Cover: Photo & Name) -->
+            <div class="member-card-face">
+              <div class="member-card-header">
+                <div class="member-header-top">
+                  <h3 class="member-card-name">Hilbert Soh Yong Tai</h3>
+                  <div class="member-badges-wrap">
+                    <span class="badge badge-purple">Programming (Nav &amp; Comms)</span>
+                    <span class="badge badge-blue" style="font-size: 10px; padding: 2px 6px;">Overseeing Mechanical</span>
+                  </div>
+                </div>
+                <div class="member-meta-row">
+                  <span class="member-major">🎓 Mechanical Engineering (Robotics Specialisation)</span>
+                  <span class="member-card-id">A0308263H</span>
+                </div>
+              </div>
+              
+              <!-- Member Portrait (Original Size) -->
+              <div class="member-portrait-frame">
+                <img src="assets/images/Hilbert/Hilbert.jpg" alt="Hilbert Soh Yong Tai">
+              </div>
+
+              <!-- Social Links -->
+              <div class="member-social-row">
+                <a href="https://www.linkedin.com/in/hilbert-soh" target="_blank" rel="noopener noreferrer" class="member-social-link linkedin" title="LinkedIn Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z"/></svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://www.instagram.com/ollie_soh?stkn=dGx0eWJyanhhcGN4" target="_blank" rel="noopener noreferrer" class="member-social-link instagram" title="Instagram Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
+
+              <!-- Swipe Down / Expand Trigger Button -->
+              <button class="swipe-down-pill" type="button" aria-expanded="false" title="Swipe down or click to view scope details">
+                <span>Scope Details</span>
+                <span class="swipe-chevron">↓</span>
+              </button>
+            </div>
+
+            <!-- Scope Details Drawer (Unfolds Downwards) -->
+            <div class="member-scope-details">
+              <p style="font-weight: 700; font-size: 13.5px; color: var(--accent-purple); margin-bottom: 10px;">
+                Programming Subsystem: Autonomous Navigation, SLAM &amp; C2 Communications
+              </p>
+              
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">
+                <li><strong>Messaging Architecture:</strong> Custom ROS 2 message parser/validator for incoming UAV coordinate streams.</li>
+                <li><strong>SLAM &amp; Localization:</strong> <code>SLAM Toolbox</code> tuning for 2D/3D airfield mapping &amp; pose tracking.</li>
+                <li><strong>Path Planning &amp; Avoidance:</strong> <code>Nav2</code> controller/planner plugins for waypoint execution with dynamic obstacle clearance.</li>
+                <li><strong>Fail-safe Protocols:</strong> Heartbeat monitors &amp; automated emergency stop logic upon signal loss.</li>
+              </ul>
+
+              <!-- PHASED DELIVERABLES -->
+              <div style="margin-bottom: 18px; background: rgba(147, 51, 234, 0.04); border: 1px solid rgba(147, 51, 234, 0.16); border-radius: 8px; padding: 12px;">
+                <div style="margin-bottom: 10px;">
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-purple" style="font-size: 10.5px; padding: 2px 8px;">Phase 1 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>Autonomous UGV Navigation on Gazebo Harmonic &amp; RViz2 (ROS 2 Jazzy on Ubuntu 24.04)</li>
+                    <li>Communications with simulated UAV (Raspberry Pi 5 / Charan's Laptop) via router</li>
+                  </ul>
+                </div>
+                <div>
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-purple" style="font-size: 10.5px; padding: 2px 8px; background: rgba(147, 51, 234, 0.12);">Phase 2 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>Navigation implementation on actual UGV via STM32 F446RE</li>
+                    <li>Communications with UAV using RF module</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <a href="7-documentation/hilbert/simulation.html" class="btn btn-deep-dive" style="width: 100%; justify-content: center;">
+                  📖 Hilbert's Documentation &amp; Spec  →
+                </a>
+              </div>
+
+              <button class="collapse-details-btn" type="button">
+                <span>↑ Collapse Details</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. TAKEUCHI ASUKA -->
+          <div class="member-scope-card fan-right" id="card-asuka" data-index="1" style="border-top: 4px solid var(--accent-blue);">
+            <!-- Card Face (Cover: Photo & Name) -->
+            <div class="member-card-face">
+              <div class="member-card-header">
+                <div class="member-header-top">
+                  <h3 class="member-card-name">Takeuchi Asuka</h3>
+                  <div class="member-badges-wrap">
+                    <span class="badge badge-blue">Mechanical</span>
+                  </div>
+                </div>
+                <div class="member-meta-row">
+                  <span class="member-major">🎓 Mechanical Engineering</span>
+                  <span class="member-card-id">A0308200R</span>
+                </div>
+              </div>
+              
+              <!-- Member Portrait (Original Size) -->
+              <div class="member-portrait-frame">
+                <img src="assets/images/Asuka/Asuka.jpg" alt="Takeuchi Asuka">
+              </div>
+
+              <!-- Social Links -->
+              <div class="member-social-row">
+                <a href="https://www.linkedin.com/in/takeuchiasuka" target="_blank" rel="noopener noreferrer" class="member-social-link linkedin" title="LinkedIn Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z"/></svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://www.instagram.com/akasu.jpg?stkn=anJpNHZ4b2Zxdnd0" target="_blank" rel="noopener noreferrer" class="member-social-link instagram" title="Instagram Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
+
+              <!-- Swipe Down / Expand Trigger Button -->
+              <button class="swipe-down-pill" type="button" aria-expanded="false" title="Swipe down or click to view scope details">
+                <span>Scope Details</span>
+                <span class="swipe-chevron">↓</span>
+              </button>
+            </div>
+
+            <!-- Scope Details Drawer (Unfolds Downwards) -->
+            <div class="member-scope-details">
+              <p style="font-weight: 700; font-size: 13.5px; color: var(--accent-blue); margin-bottom: 10px;">
+                FOD Pick Up &amp; Suspension Subsystem
+              </p>
+              
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">
+                <li>FOD physical remediation mechanism &amp; pickup suction/intake module.</li>
+                <li>Chassis independent suspension system design, compliance &amp; vibration isolation.</li>
+                <li>Mechanical hardware testing &amp; clearance verification.</li>
+              </ul>
+
+              <!-- PHASED DELIVERABLES -->
+              <div style="margin-bottom: 18px; background: rgba(0, 102, 204, 0.04); border: 1px solid rgba(0, 102, 204, 0.16); border-radius: 8px; padding: 12px;">
+                <div style="margin-bottom: 10px;">
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-blue" style="font-size: 10.5px; padding: 2px 8px;">Phase 1 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>[To be filled in]</li>
+                  </ul>
+                </div>
+                <div>
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-blue" style="font-size: 10.5px; padding: 2px 8px; background: rgba(0, 102, 204, 0.12);">Phase 2 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>[To be filled in]</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <a href="7-documentation/asuka/suspension.html" class="btn btn-deep-dive" style="width: 100%; justify-content: center;">
+                  📖 Asuka's Documentation &amp; Spec  →
+                </a>
+              </div>
+
+              <button class="collapse-details-btn" type="button">
+                <span>↑ Collapse Details</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. ZACARIAS ELEAZAR NG HAN EN -->
+          <div class="member-scope-card fan-hidden" id="card-zacarias" data-index="2" style="border-top: 4px solid var(--accent-rose);">
+            <!-- Card Face (Cover: Photo & Name) -->
+            <div class="member-card-face">
+              <div class="member-card-header">
+                <div class="member-header-top">
+                  <h3 class="member-card-name">Zacarias Eleazar Ng Han En</h3>
+                  <div class="member-badges-wrap">
+                    <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Mechanical</span>
+                  </div>
+                </div>
+                <div class="member-meta-row">
+                  <span class="member-major">🎓 Mechanical Engineering</span>
+                  <span class="member-card-id">A0308821B</span>
+                </div>
+              </div>
+              
+              <!-- Member Portrait (Original Size) -->
+              <div class="member-portrait-frame">
+                <img src="assets/images/Zacarias/Zacarias.jpg" alt="Zacarias Eleazar Ng Han En">
+              </div>
+
+              <!-- Social Links -->
+              <div class="member-social-row">
+                <a href="https://www.linkedin.com/in/hilbert-soh" target="_blank" rel="noopener noreferrer" class="member-social-link linkedin" title="LinkedIn Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z"/></svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://www.instagram.com/zacarias.eleazar?stkn=MWEzaTE4aWlmNGY4Mg==" target="_blank" rel="noopener noreferrer" class="member-social-link instagram" title="Instagram Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
+
+              <!-- Swipe Down / Expand Trigger Button -->
+              <button class="swipe-down-pill" type="button" aria-expanded="false" title="Swipe down or click to view scope details">
+                <span>Scope Details</span>
+                <span class="swipe-chevron">↓</span>
+              </button>
+            </div>
+
+            <!-- Scope Details Drawer (Unfolds Downwards) -->
+            <div class="member-scope-details">
+              <p style="font-weight: 700; font-size: 13.5px; color: var(--accent-rose); margin-bottom: 10px;">
+                Chassis Design &amp; Differential Drive Kinematics
+              </p>
+              
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">
+                <li>UGV structural chassis frame design, CAD sizing &amp; weatherproof enclosure.</li>
+                <li>Differential drive kinematics mathematical calculations &amp; wheel geometry modeling.</li>
+                <li>Structural load calculations &amp; ground clearance dynamics.</li>
+              </ul>
+
+              <!-- PHASED DELIVERABLES -->
+              <div style="margin-bottom: 18px; background: rgba(225, 29, 72, 0.04); border: 1px solid rgba(225, 29, 72, 0.16); border-radius: 8px; padding: 12px;">
+                <div style="margin-bottom: 10px;">
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-rose" style="font-size: 10.5px; padding: 2px 8px;">Phase 1 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>[To be filled in]</li>
+                  </ul>
+                </div>
+                <div>
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-rose" style="font-size: 10.5px; padding: 2px 8px; background: rgba(225, 29, 72, 0.12);">Phase 2 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>[To be filled in]</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <a href="7-documentation/zacarias/chassis-fea.html" class="btn btn-deep-dive" style="width: 100%; justify-content: center;">
+                  📖 Zacarias's Documentation &amp; Spec  →
+                </a>
+              </div>
+
+              <button class="collapse-details-btn" type="button">
+                <span>↑ Collapse Details</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. GABRIEL TAN KAI JIE -->
+          <div class="member-scope-card fan-hidden" id="card-gabriel" data-index="3" style="border-top: 4px solid var(--accent-emerald);">
+            <!-- Card Face (Cover: Photo & Name) -->
+            <div class="member-card-face">
+              <div class="member-card-header">
+                <div class="member-header-top">
+                  <h3 class="member-card-name">Gabriel Tan Kai Jie</h3>
+                  <div class="member-badges-wrap">
+                    <span class="badge badge-emerald">Computer Vision</span>
+                    <span class="badge badge-amber" style="font-size: 10px; padding: 2px 6px;">Overseeing Electrical</span>
+                  </div>
+                </div>
+                <div class="member-meta-row">
+                  <span class="member-major">🎓 Electrical Engineering</span>
+                  <span class="member-card-id">A0308452H</span>
+                </div>
+              </div>
+              
+              <!-- Member Portrait (Original Size) -->
+              <div class="member-portrait-frame">
+                <img src="assets/images/Gabriel/Gabriel.jpg" alt="Gabriel Tan Kai Jie">
+              </div>
+
+              <!-- Social Links -->
+              <div class="member-social-row">
+                <a href="https://www.linkedin.com/in/hilbert-soh" target="_blank" rel="noopener noreferrer" class="member-social-link linkedin" title="LinkedIn Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z"/></svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://www.instagram.com/disgusting_sparkling_water?stkn=MWFycnFtMW0wYnN4Mg==" target="_blank" rel="noopener noreferrer" class="member-social-link instagram" title="Instagram Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
+
+              <!-- Swipe Down / Expand Trigger Button -->
+              <button class="swipe-down-pill" type="button" aria-expanded="false" title="Swipe down or click to view scope details">
+                <span>Scope Details</span>
+                <span class="swipe-chevron">↓</span>
+              </button>
+            </div>
+
+            <!-- Scope Details Drawer (Unfolds Downwards) -->
+            <div class="member-scope-details">
+              <p style="font-weight: 700; font-size: 13.5px; color: var(--accent-emerald); margin-bottom: 10px;">
+                Computer Vision &amp; Sensor Fusion
+              </p>
+              
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">
+                <li>YOLO object detection model training, comparison &amp; FOD target classification.</li>
+                <li>Multi-modal perception combining camera streams &amp; sensor fusion.</li>
+                <li>Close-range target spatial detection &amp; bounding box evaluation.</li>
+              </ul>
+
+              <!-- PHASED DELIVERABLES -->
+              <div style="margin-bottom: 18px; background: rgba(16, 185, 129, 0.04); border: 1px solid rgba(16, 185, 129, 0.16); border-radius: 8px; padding: 12px;">
+                <div style="margin-bottom: 10px;">
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-emerald" style="font-size: 10.5px; padding: 2px 8px;">Phase 1 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>[To be filled in]</li>
+                  </ul>
+                </div>
+                <div>
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-emerald" style="font-size: 10.5px; padding: 2px 8px; background: rgba(16, 185, 129, 0.12);">Phase 2 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>[To be filled in]</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <a href="7-documentation/gabriel/yolo-comparison.html" class="btn btn-deep-dive" style="width: 100%; justify-content: center;">
+                  📖 Gabriel's Documentation &amp; Spec  →
+                </a>
+              </div>
+
+              <button class="collapse-details-btn" type="button">
+                <span>↑ Collapse Details</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 5. BRYAN NG RUI JIE -->
+          <div class="member-scope-card fan-left" id="card-bryan" data-index="4" style="border-top: 4px solid var(--accent-amber);">
+            <!-- Card Face (Cover: Photo & Name) -->
+            <div class="member-card-face">
+              <div class="member-card-header">
+                <div class="member-header-top">
+                  <h3 class="member-card-name">Bryan Ng Rui Jie</h3>
+                  <div class="member-badges-wrap">
+                    <span class="badge badge-amber">Electrical</span>
+                  </div>
+                </div>
+                <div class="member-meta-row">
+                  <span class="member-major">🎓 Mechanical Engineering (Robotics Specialisation)</span>
+                  <span class="member-card-id">A0308298E</span>
+                </div>
+              </div>
+              
+              <!-- Member Portrait (Original Size) -->
+              <div class="member-portrait-frame">
+                <img src="assets/images/Bryan/Bryan.jpg" alt="Bryan Ng Rui Jie">
+              </div>
+
+              <!-- Social Links -->
+              <div class="member-social-row">
+                <a href="https://www.linkedin.com/in/hilbert-soh" target="_blank" rel="noopener noreferrer" class="member-social-link linkedin" title="LinkedIn Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.64a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z"/></svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://www.instagram.com/bryann_nrj?stkn=NnY2YTJ1ZWJtbXpn" target="_blank" rel="noopener noreferrer" class="member-social-link instagram" title="Instagram Profile">
+                  <svg class="member-social-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  <span>Instagram</span>
+                </a>
+              </div>
+
+              <!-- Swipe Down / Expand Trigger Button -->
+              <button class="swipe-down-pill" type="button" aria-expanded="false" title="Swipe down or click to view scope details">
+                <span>Scope Details</span>
+                <span class="swipe-chevron">↓</span>
+              </button>
+            </div>
+
+            <!-- Scope Details Drawer (Unfolds Downwards) -->
+            <div class="member-scope-details">
+              <p style="font-weight: 700; font-size: 13.5px; color: var(--accent-amber); margin-bottom: 10px;">
+                Electrical System &amp; Charging Dock
+              </p>
+              
+              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">
+                <li>Electrical power distribution network, battery management &amp; wiring schematic.</li>
+                <li>Autonomous contact-charging dock interface &amp; safety interlocks.</li>
+                <li>STM32 embedded microcontroller coding for low-level motor actuation.</li>
+              </ul>
+
+              <!-- PHASED DELIVERABLES -->
+              <div style="margin-bottom: 18px; background: rgba(245, 158, 11, 0.04); border: 1px solid rgba(245, 158, 11, 0.16); border-radius: 8px; padding: 12px;">
+                <div style="margin-bottom: 10px;">
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-amber" style="font-size: 10.5px; padding: 2px 8px;">Phase 1 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>[To be filled in]</li>
+                  </ul>
+                </div>
+                <div>
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
+                    <span class="badge badge-amber" style="font-size: 10.5px; padding: 2px 8px; background: rgba(245, 158, 11, 0.12);">Phase 2 Deliverables</span>
+                  </div>
+                  <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); margin: 0; line-height: 1.5;">
+                    <li>[To be filled in]</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div>
+                <a href="7-documentation/bryan/components-bom.html" class="btn btn-deep-dive" style="width: 100%; justify-content: center;">
+                  📖 Bryan's Documentation &amp; Spec  →
+                </a>
+              </div>
+
+              <button class="collapse-details-btn" type="button">
+                <span>↑ Collapse Details</span>
+              </button>
+            </div>
+          </div>
+
+            </div> <!-- end tinder-cards-stack -->
+
+            <!-- Tinder Bottom Controls -->
+            <div class="tinder-controls">
+              <button class="tinder-btn" id="tinder-prev-btn" title="Previous member" aria-label="Previous member">
+                <span>‹</span>
+              </button>
+              <div class="tinder-counter" id="tinder-counter">
+                <span id="tinder-curr-num">1</span> of 5 • <strong id="tinder-curr-name">Hilbert Soh Yong Tai</strong>
+              </div>
+              <button class="tinder-btn" id="tinder-next-btn" title="Next member" aria-label="Next member">
+                <span>›</span>
+              </button>
+            </div>
+
+            <!-- Swipe Hints -->
+            <div class="tinder-hint">
+              <span>👈👉 <strong>Swipe left / right</strong> to browse team cards</span>
+              <span>•</span>
+              <span>👇 <strong>Swipe down or tap Scope Details</strong> to expand details</span>
+            </div>
+
+          </div> <!-- end tinder-deck-container -->
+
+      </div> <!-- end apple-container -->
+  </main>
+
+  <!-- APPLE FOOTER -->
+  <footer class="apple-footer">
+    <div class="apple-footer-inner">
+      <div>
+        © AY2627 FOD Hunter CDE4301 Team. National University of Singapore.
+      </div>
+      <ul class="apple-footer-links">
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="1-introduction.html">Introduction</a></li>
+        <li><a href="2-design-overview.html">Architecture</a></li>
+        <li><a href="4-subsystems/index.html">Subsystems</a></li>
+        <li><a href="7-documentation.html">Documentation</a></li>
+        <li><a href="5-timeline.html">Timeline</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=3.4"></script>
+</body>
+</html>

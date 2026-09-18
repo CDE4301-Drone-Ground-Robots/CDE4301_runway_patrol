@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autonomous Navigation &amp; SLAM - Hilbert Soh</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+  <!-- APPLE TOP NAVIGATION BAR -->
+  <header class="apple-nav">
+    <div class="apple-nav-container">
+      <a href="../../index.html" class="apple-nav-brand">
+        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+      </a>
+
+      <ul class="apple-nav-links">
+        <li><a href="../../index.html" class="apple-nav-link">Overview</a></li>
+        <li><a href="../../1-introduction.html" class="apple-nav-link">Introduction</a></li>
+        <li><a href="../../2-design-overview.html" class="apple-nav-link">Design</a></li>
+        <li><a href="../../3-individual-scopes.html" class="apple-nav-link">Scopes</a></li>
+        <li><a href="../../4-subsystems/index.html" class="apple-nav-link">Subsystems</a></li>
+        <li><a href="../../5-timeline.html" class="apple-nav-link">Timeline</a></li>
+        <li><a href="../../6-references.html" class="apple-nav-link">References</a></li>
+        <li><a href="../../7-documentation.html" class="apple-nav-link active">Documentation</a></li>
+      </ul>
+
+      <div class="apple-nav-actions">
+        <a href="../../7-documentation.html" class="apple-btn-pill">← Documentation Hub</a>
+        <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="apple-mobile-drawer" id="apple-mobile-drawer">
+    <a href="../../index.html">Overview</a>
+    <a href="../../1-introduction.html">Introduction</a>
+    <a href="../../2-design-overview.html">Overview of Design</a>
+    <a href="../../3-individual-scopes.html">Individual Scopes</a>
+    <a href="../../4-subsystems/index.html">Subsystems Architecture</a>
+    <a href="../../5-timeline.html">Timeline to Finals</a>
+    <a href="../../6-references.html">References &amp; Standards</a>
+    <a href="../../7-documentation.html">Documentation</a>
+  </div>
+
+  <!-- MAIN PAGE CONTENT -->
+  <main class="apple-main-content">
+    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
+      
+      <!-- HERO HEADER -->
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
+        <div class="apple-hero-badge">Software Autonomy &amp; Comms • Hilbert Soh</div>
+        <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem);">
+          Autonomous Navigation &amp; SLAM.
+          <span class="apple-hero-gradient">Nav2 Architecture &amp; Pure Pursuit.</span>
+        </h1>
+        <p class="apple-section-desc" style="margin: 0 auto;">
+          ROS 2 Jazzy Nav2 stack implementation, cost-aware Smac 2D global path planning, Regulated Pure Pursuit local controller, SLAM Toolbox mapping, and EKF sensor fusion.
+        </p>
+      </div>
+
+      <div class="page-content">
+
+        <!-- 1. NAV2 PIPELINE -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 1.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Nav2 Autonomy Stack Architecture</h2>
+            </div>
+            <a href="../../4-subsystems/programming.html#sec-4-3-3" class="apple-btn-pill" style="font-size: 12px; padding: 4px 12px;">View Navigation Section →</a>
+          </div>
+
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 18px;">
+            The autonomous navigation framework coordinates global sweep paths over 60-meter wide airfield tarmac corridors while executing real-time obstacle avoidance at 20 Hz.
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid var(--apple-border); border-radius: 10px; padding: 18px;">
+              <h4 style="font-size: 14.5px; color: #34d399; margin-bottom: 8px;">🧭 Global Path Planning (Smac 2D)</h4>
+              <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; margin: 0;">
+                A* search with Dubins path smoothing. Generates straight runway corridors and turnaround hairpin loops in &lt;8 ms, maintaining safe offset from runway taxiway edges.
+              </p>
+            </div>
+
+            <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid var(--apple-border); border-radius: 10px; padding: 18px;">
+              <h4 style="font-size: 14.5px; color: #60a5fa; margin-bottom: 8px;">⚡ Regulated Pure Pursuit Controller</h4>
+              <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; margin: 0;">
+                Calculates angular velocity $\omega$ at 20 Hz with dynamic lookahead distance ($0.6\text{--}1.8\text{ m}$). Enforces curvature-regulated deceleration during turnaround loops to prevent tire slippage.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. SENSOR FUSION & SLAM -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 2.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Sensor Fusion &amp; Pose Estimation</h2>
+            </div>
+            <span class="badge badge-blue">robot_localization EKF</span>
+          </div>
+
+          <div style="background: #0b1120; border: 1px solid var(--apple-border); border-radius: 10px; padding: 14px; margin-bottom: 16px; font-family: var(--font-mono); font-size: 12px; color: #a5b4fc; overflow-x: auto;">
+            # Launch Nav2 autonomous navigation with lifelong SLAM Toolbox<br>
+            ros2 launch runway_nav bringup_launch.py use_sim_time:=false autostart:=true
+          </div>
+
+          <ul style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.8; padding-left: 20px; margin: 0;">
+            <li><strong>Primary Odometry:</strong> Dual hub-motor optical encoders (4,096 PPR) publishing <code>/odom/wheel</code> at 50 Hz.</li>
+            <li><strong>Inertial Reference:</strong> 6-DOF IMU publishing orientation &amp; angular velocity at 100 Hz.</li>
+            <li><strong>Global Correction:</strong> RTK GNSS dual-antenna compass publishing centimeter-accurate global fix at 10 Hz.</li>
+            <li><strong>Fusion Method:</strong> Dual-tier Extended Kalman Filter (EKF) with continuous drift rejection.</li>
+          </ul>
+        </div>
+
+        <!-- 3. TEAM DOCUMENTATION & EDITING SPACE -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Team Documentation Space</h2>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+            This file (<code>7-documentation/hilbert/navigation.html</code>) is Hilbert's dedicated document. Add costmap inflation tuning logs, behavior tree XML configurations, and real-world airfield GPS tracking error plots below:
+          </p>
+          <div class="callout callout-purple" style="font-size: 13px;">
+            <strong>Editor Note for Hilbert:</strong> Type your Nav2 Behavior Tree custom recovery nodes, laser scanner filter configs, and outdoor RTK boundary test data here.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="apple-footer">
+    <div class="apple-footer-inner">
+      <div>© AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
+      <ul class="apple-footer-links">
+        <li><a href="../../index.html">Overview</a></li>
+        <li><a href="simulation.html">← Simulation Lab</a></li>
+        <li><a href="../../7-documentation.html">Documentation</a></li>
+        <li><a href="communications.html">UAV Communication →</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+
+  <!-- EXPORT PDF BUTTON -->
+  <style>
+    .pdf-export-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 980px;
+      background: linear-gradient(135deg, #2997ff 0%, #2563eb 100%);
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0,0,0,0.3);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      letter-spacing: 0.01em;
+    }
+    .pdf-export-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, #0a84ff 0%, #1d4ed8 100%);
+    }
+    .pdf-export-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+    .pdf-export-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+    @media print {
+      .pdf-export-btn,
+      .apple-nav,
+      .apple-mobile-drawer,
+      .apple-footer {
+        display: none !important;
+      }
+      body {
+        background: #fff !important;
+        color: #111 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .apple-main-content {
+        padding-top: 0 !important;
+      }
+    }
+  </style>
+  <button class="pdf-export-btn" onclick="window.print()" title="Export this page as PDF">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    Export PDF
+  </button>
+
+</body>
+</html>

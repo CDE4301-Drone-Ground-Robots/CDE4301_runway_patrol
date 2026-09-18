@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7. Documentation - FOD Hunter Interim Report</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- APPLE TOP NAVIGATION BAR -->
+  <header class="apple-nav">
+    <div class="apple-nav-container">
+      <a href="index.html" class="apple-nav-brand">
+        <img src="assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+      </a>
+
+      <ul class="apple-nav-links">
+        <li><a href="index.html" class="apple-nav-link">Overview</a></li>
+        <li><a href="1-introduction.html" class="apple-nav-link">Introduction</a></li>
+        <li><a href="2-design-overview.html" class="apple-nav-link">Design</a></li>
+        <li><a href="3-individual-scopes.html" class="apple-nav-link">Scopes</a></li>
+        <li><a href="4-subsystems/index.html" class="apple-nav-link">Subsystems</a></li>
+        <li><a href="5-timeline.html" class="apple-nav-link">Timeline</a></li>
+        <li><a href="6-references.html" class="apple-nav-link">References</a></li>
+        <li><a href="7-documentation.html" class="apple-nav-link active">Documentation</a></li>
+      </ul>
+
+      <div class="apple-nav-actions">
+        <a href="index.html" class="apple-btn-pill">Return to Overview ↗</a>
+        <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="apple-mobile-drawer" id="apple-mobile-drawer">
+    <a href="index.html">Overview</a>
+    <a href="1-introduction.html">Introduction</a>
+    <a href="2-design-overview.html">Overview of Design</a>
+    <a href="3-individual-scopes.html">Individual Scopes</a>
+    <a href="4-subsystems/index.html">Subsystems Architecture</a>
+    <a href="5-timeline.html">Timeline to Finals</a>
+    <a href="6-references.html">References &amp; Standards</a>
+    <a href="7-documentation.html">Documentation &amp; Detailed Specs</a>
+  </div>
+
+  <!-- MAIN PAGE CONTENT -->
+  <main class="apple-main-content">
+    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
+      
+      <!-- Apple Section Header -->
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
+        <div class="apple-hero-badge">Section 7.0 • Technical Documentation &amp; Deep Dives</div>
+        <h1 class="apple-section-title" style="font-size: clamp(2.4rem, 5vw, 3.8rem);">
+          Technical Documentation.
+          <span class="apple-hero-gradient">Architectural Blueprints. Digital Twin. Verification.</span>
+        </h1>
+        <p class="apple-section-desc" style="margin: 0 auto;">
+          Comprehensive engineering specifications, digital twin simulation guides, communication protocols, and individual member scope deliverables.
+        </p>
+      </div>
+
+      <div class="page-content">
+
+        <!-- 0. LITERATURE REVIEW (PRIMARY & SECONDARY RESEARCH) -->
+        <div style="margin-bottom: 40px;">
+          <div style="margin-bottom: 20px;">
+            <span class="badge badge-purple" style="margin-bottom: 6px;">RESEARCH FOUNDATION</span>
+            <h2 style="font-size: 22px; font-weight: 700; color: #ffffff; margin: 0;">Literature Review &amp; Background Research</h2>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+            
+            <!-- Primary Research Card -->
+            <div class="card-box" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                  <span style="font-size: 32px;">🔬</span>
+                  <span class="badge badge-blue">Empirical Investigation</span>
+                </div>
+                <h3 style="font-size: 18px; color: var(--apple-text-primary); margin-bottom: 8px;">Primary Research</h3>
+                <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 16px;">
+                  Direct empirical testing, stakeholder interviews with RSAF/RAiD operational personnel, Changi &amp; military airfield runway maintenance observations, and baseline benchtop vacuum &amp; drivetrain measurements.
+                </p>
+              </div>
+              <a href="7-documentation/literature/primary-research.html" class="apple-btn-pill" style="width: fit-content;">Read Primary Research →</a>
+            </div>
+
+            <!-- Secondary Research Card -->
+            <div class="card-box" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                  <span style="font-size: 32px;">📚</span>
+                  <span class="badge badge-purple">Published Literature</span>
+                </div>
+                <h3 style="font-size: 18px; color: var(--apple-text-primary); margin-bottom: 8px;">Secondary Research</h3>
+                <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 16px;">
+                  Comprehensive review of existing commercial solutions (Tarsier, iFerret, FODFinder), IEEE robotics papers on autonomous runway inspection, and formal airport safety standards (FAA AC 150/5210-24 &amp; ICAO Annex 14).
+                </p>
+              </div>
+              <a href="7-documentation/literature/problem-statement.html" class="apple-btn-pill" style="width: fit-content;">Read Problem Statement &amp; Literature →</a>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- 2. TEAM MEMBERS DETAILED DELIVERABLES -->
+        <div style="margin-bottom: 40px;">
+          <div style="margin-bottom: 20px;">
+            <span class="badge badge-purple" style="margin-bottom: 6px;">INDIVIDUAL SCOPES &amp; ENGINEERING DEEP DIVES</span>
+            <h2 style="font-size: 22px; font-weight: 700; color: #ffffff; margin: 0 0 6px 0;">Team Member Documentation Files</h2>
+            <p style="font-size: 13.5px; color: var(--apple-text-secondary); margin: 0;">
+              Every engineer has their own dedicated folder in <code style="font-family: var(--font-mono); color: #60a5fa;">7-documentation/&lt;name&gt;/</code> containing modular HTML documents for their assigned capstone scopes:
+            </p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;">
+            
+            <!-- Asuka -->
+            <div class="card-box" id="asuka" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span class="badge badge-blue">Mechanical</span>
+                  <span style="color: var(--apple-text-secondary); font-size: 12px; font-family: var(--font-mono);">7-documentation/asuka/</span>
+                </div>
+                <h3 style="font-size: 18px; color: #ffffff; margin-bottom: 12px;">Asuka</h3>
+                <ul style="list-style: none; padding: 0; margin: 0 0 16px 0; font-size: 13px; line-height: 1.8;">
+                  <li>
+                    <a href="7-documentation/asuka/suspension.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Suspension Design and Calculations
+                    </a>
+                  </li>
+                  <li>
+                    <a href="7-documentation/asuka/vacuum-module.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> FOD Remidation Vacuum module
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <a href="7-documentation/asuka/suspension.html" class="apple-btn-pill" style="font-size: 11.5px; padding: 4px 10px;">Suspension →</a>
+                <a href="7-documentation/asuka/vacuum-module.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11.5px; padding: 4px 10px;">Vacuum →</a>
+              </div>
+            </div>
+
+            <!-- Zacarias -->
+            <div class="card-box" id="zacarias" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span class="badge badge-blue">Mechanical</span>
+                  <span style="color: var(--apple-text-secondary); font-size: 12px; font-family: var(--font-mono);">7-documentation/zacarias/</span>
+                </div>
+                <h3 style="font-size: 18px; color: #ffffff; margin-bottom: 12px;">Zacarias</h3>
+                <ul style="list-style: none; padding: 0; margin: 0 0 16px 0; font-size: 13px; line-height: 1.8;">
+                  <li>
+                    <a href="7-documentation/zacarias/chassis-fea.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Chassis Design and FEA Analysis
+                    </a>
+                  </li>
+                  <li>
+                    <a href="7-documentation/zacarias/motor-calculations.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Motor Calculations
+                    </a>
+                  </li>
+                  <li>
+                    <a href="7-documentation/zacarias/drivetrain-kinematics.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Drivetrain Kinematics calculations
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <a href="7-documentation/zacarias/chassis-fea.html" class="apple-btn-pill" style="font-size: 11px; padding: 4px 8px;">Chassis FEA →</a>
+                <a href="7-documentation/zacarias/motor-calculations.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">Motors →</a>
+                <a href="7-documentation/zacarias/drivetrain-kinematics.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">Kinematics →</a>
+              </div>
+            </div>
+
+            <!-- Bryan -->
+            <div class="card-box" id="bryan" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span class="badge badge-amber">Electrical &amp; Power</span>
+                  <span style="color: var(--apple-text-secondary); font-size: 12px; font-family: var(--font-mono);">7-documentation/bryan/</span>
+                </div>
+                <h3 style="font-size: 18px; color: #ffffff; margin-bottom: 12px;">Bryan</h3>
+                <ul style="list-style: none; padding: 0; margin: 0 0 16px 0; font-size: 13px; line-height: 1.8;">
+                  <li>
+                    <a href="7-documentation/bryan/components-bom.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Components BOM
+                    </a>
+                  </li>
+                  <li>
+                    <a href="7-documentation/bryan/power-calculations.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Detailed Power Calculations
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <a href="7-documentation/bryan/components-bom.html" class="apple-btn-pill" style="font-size: 11.5px; padding: 4px 10px;">BOM →</a>
+                <a href="7-documentation/bryan/power-calculations.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11.5px; padding: 4px 10px;">Power Calcs →</a>
+              </div>
+            </div>
+
+            <!-- Gabriel -->
+            <div class="card-box" id="gabriel" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span class="badge badge-emerald">Drone &amp; Vision</span>
+                  <span style="color: var(--apple-text-secondary); font-size: 12px; font-family: var(--font-mono);">7-documentation/gabriel/</span>
+                </div>
+                <h3 style="font-size: 18px; color: #ffffff; margin-bottom: 12px;">Gabriel</h3>
+                <ul style="list-style: none; padding: 0; margin: 0 0 16px 0; font-size: 13px; line-height: 1.8;">
+                  <li>
+                    <a href="7-documentation/gabriel/yolo-comparison.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> YOLO model comparison
+                    </a>
+                  </li>
+                  <li>
+                    <a href="7-documentation/gabriel/vision-calculations.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Computer vison calculation
+                    </a>
+                  </li>
+                  <li>
+                    <a href="7-documentation/gabriel/vision-research.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Computer vison research
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <a href="7-documentation/gabriel/yolo-comparison.html" class="apple-btn-pill" style="font-size: 11px; padding: 4px 8px;">YOLO →</a>
+                <a href="7-documentation/gabriel/vision-calculations.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">Calculations →</a>
+                <a href="7-documentation/gabriel/vision-research.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">Research →</a>
+              </div>
+            </div>
+
+            <!-- Hilbert -->
+            <div class="card-box" id="hilbert" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span class="badge badge-purple">Software &amp; Nav</span>
+                  <span style="color: var(--apple-text-secondary); font-size: 12px; font-family: var(--font-mono);">7-documentation/hilbert/</span>
+                </div>
+                <h3 style="font-size: 18px; color: #ffffff; margin-bottom: 12px;">Hilbert</h3>
+                <ul style="list-style: none; padding: 0; margin: 0 0 16px 0; font-size: 13px; line-height: 1.8;">
+                  <li>
+                    <a href="7-documentation/hilbert/simulation.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Simulation
+                    </a>
+                  </li>
+                  <li>
+                    <a href="7-documentation/hilbert/navigation.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Navigation
+                    </a>
+                  </li>
+                  <li>
+                    <a href="7-documentation/hilbert/communications.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> UAV Communication
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <a href="7-documentation/hilbert/simulation.html" class="apple-btn-pill" style="font-size: 11px; padding: 4px 8px;">Simulation →</a>
+                <a href="7-documentation/hilbert/navigation.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">Navigation →</a>
+                <a href="7-documentation/hilbert/communications.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">C2 Comms →</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3. VISUAL FILE TREE GUIDE FOR TEAM MEMBERS -->
+        <div class="card-box" style="margin-bottom: 30px; border-left: 4px solid var(--apple-emerald);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div>
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">WORKSPACE STRUCTURE</span>
+              <h3 style="font-size: 18px; color: #ffffff; margin: 0;">📂 Interim Report V2 File Tree Map</h3>
+            </div>
+            <span style="font-size: 12px; color: var(--apple-text-secondary); font-family: var(--font-mono);">7-documentation/</span>
+          </div>
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
+            To keep documentation organized, each team member has their own dedicated subfolder under <code style="font-family: var(--font-mono); color: #60a5fa;">7-documentation/</code>. Team members should directly open and edit the HTML files in their personal folder:
+          </p>
+          <pre style="background: #090a0f; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 18px; font-family: var(--font-mono); font-size: 13px; color: #e2e8f0; line-height: 1.7; overflow-x: auto; margin: 0;"><code>For report/Interim report-v2/
+├── index.html                           <span style="color: #64748b;"># Project Overview</span>
+├── 1-introduction.html                  <span style="color: #64748b;"># 1. Introduction</span>
+├── 2-design-overview.html               <span style="color: #64748b;"># 2. Design Overview</span>
+├── 3-individual-scopes.html             <span style="color: #64748b;"># 3. Individual Scopes</span>
+├── 4-subsystems/                        <span style="color: #64748b;"># 4. Subsystems Architecture Pages</span>
+│   ├── index.html, mechanical.html, electrical.html, computer-vision.html, ros2-comms.html
+├── 5-timeline.html                      <span style="color: #64748b;"># 5. Timeline to Finals</span>
+├── 6-references.html                    <span style="color: #64748b;"># 6. References &amp; Standards</span>
+├── 7-documentation.html                 <span style="color: #64748b;"># 7. Documentation Hub (This Page)</span>
+└── 7-documentation/                               <span style="color: #10b981;"># All Documentation Files (Organized by Member)</span>
+    ├── literature/                      <span style="color: #818cf8;"># Literature Review &amp; Standards</span>
+    │   ├── primary-research.html
+    │   └── problem-statement.html
+    ├── asuka/                           <span style="color: #60a5fa;"># Asuka's Mechanical Documentation</span>
+    │   ├── suspension.html
+    │   └── vacuum-module.html
+    ├── zacarias/                        <span style="color: #60a5fa;"># Zacarias's Mechanical Documentation</span>
+    │   ├── chassis-fea.html
+    │   ├── motor-calculations.html
+    │   └── drivetrain-kinematics.html
+    ├── bryan/                           <span style="color: #fbbf24;"># Bryan's Electrical Documentation</span>
+    │   ├── components-bom.html
+    │   └── power-calculations.html
+    ├── gabriel/                         <span style="color: #34d399;"># Gabriel's Drone &amp; Vision Documentation</span>
+    │   ├── yolo-comparison.html
+    │   ├── vision-calculations.html
+    │   └── vision-research.html
+    └── hilbert/                         <span style="color: #c084fc;"># Hilbert's Software &amp; Navigation Documentation</span>
+        ├── simulation.html
+        ├── navigation.html
+        └── communications.html</code></pre>
+        </div>
+
+        <!-- 3. COMPLIANCE STANDARDS & AIRFIELD REFS -->
+        <div class="card-box" style="border-left: 4px solid var(--apple-blue); margin-bottom: 24px;">
+          <div class="card-header" style="margin-bottom: 8px;">
+            <div class="card-title">📖 Regulatory Compliance &amp; Standards</div>
+            <a href="6-references.html" class="apple-btn-pill" style="font-size: 11.5px; padding: 4px 10px;">View Section 6.0 References →</a>
+          </div>
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin: 0;">
+            All system specifications adhere to Singapore IMDA Technical Specifications for Short Range Devices (IMDA TS SRD), FAA Advisory Circular AC 150/5210-24 for Foreign Object Debris (FOD) Management Equipment, and ASTM D5340 Pavement Condition Index (PCI) standards.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- APPLE FOOTER -->
+  <footer class="apple-footer">
+    <div class="apple-footer-inner">
+      <div>
+        © AY2627 FOD Hunter CDE4301 Team. National University of Singapore.
+      </div>
+      <ul class="apple-footer-links">
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="1-introduction.html">Introduction</a></li>
+        <li><a href="2-design-overview.html">Architecture</a></li>
+        <li><a href="3-individual-scopes.html">Scopes</a></li>
+        <li><a href="4-subsystems/index.html">Subsystems</a></li>
+        <li><a href="5-timeline.html">Timeline</a></li>
+        <li><a href="6-references.html">References</a></li>
+        <li><a href="7-documentation.html">Documentation</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

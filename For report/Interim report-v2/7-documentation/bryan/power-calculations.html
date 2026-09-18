@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detailed Power Calculations - Bryan</title>
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+  <!-- APPLE TOP NAVIGATION BAR -->
+  <header class="apple-nav">
+    <div class="apple-nav-container">
+      <a href="../../index.html" class="apple-nav-brand">
+        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+      </a>
+
+      <ul class="apple-nav-links">
+        <li><a href="../../index.html" class="apple-nav-link">Overview</a></li>
+        <li><a href="../../1-introduction.html" class="apple-nav-link">Introduction</a></li>
+        <li><a href="../../2-design-overview.html" class="apple-nav-link">Design</a></li>
+        <li><a href="../../3-individual-scopes.html" class="apple-nav-link">Scopes</a></li>
+        <li><a href="../../4-subsystems/index.html" class="apple-nav-link">Subsystems</a></li>
+        <li><a href="../../5-timeline.html" class="apple-nav-link">Timeline</a></li>
+        <li><a href="../../6-references.html" class="apple-nav-link">References</a></li>
+        <li><a href="../../7-documentation.html" class="apple-nav-link active">Documentation</a></li>
+      </ul>
+
+      <div class="apple-nav-actions">
+        <a href="../../7-documentation.html" class="apple-btn-pill">← Documentation Hub</a>
+        <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="apple-mobile-drawer" id="apple-mobile-drawer">
+    <a href="../../index.html">Overview</a>
+    <a href="../../1-introduction.html">Introduction</a>
+    <a href="../../2-design-overview.html">Overview of Design</a>
+    <a href="../../3-individual-scopes.html">Individual Scopes</a>
+    <a href="../../4-subsystems/index.html">Subsystems Architecture</a>
+    <a href="../../5-timeline.html">Timeline to Finals</a>
+    <a href="../../6-references.html">References &amp; Standards</a>
+    <a href="../../7-documentation.html">Documentation</a>
+  </div>
+
+  <!-- MAIN PAGE CONTENT -->
+  <main class="apple-main-content">
+    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
+      
+      <!-- HERO HEADER -->
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
+        <div class="apple-hero-badge">Electrical Subsystem • Bryan</div>
+        <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 12px;">
+          Detailed Power Calculations
+        </h1>
+      </div>
+
+      <div class="page-content">
+
+        <!-- SECTION 1 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 1.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Subsystem Power Consumption Breakdown</h2>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
+            [To be filled]
+          </p>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 2.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">DC-DC Buck Regulation &amp; Thermal Loss</h2>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
+            [To be filled]
+          </p>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Battery Capacity &amp; Runtime Verification</h2>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
+            [To be filled]
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="apple-footer">
+    <div class="apple-footer-inner">
+      <div>© AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
+      <ul class="apple-footer-links">
+        <li><a href="../../index.html">Overview</a></li>
+        <li><a href="components-bom.html">← Components BOM</a></li>
+        <li><a href="../../7-documentation.html">Documentation</a></li>
+        <li><a href="yolo-comparison.html">Gabriel: YOLO model comparison →</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+
+  <!-- EXPORT PDF BUTTON -->
+  <style>
+    .pdf-export-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 980px;
+      background: linear-gradient(135deg, #2997ff 0%, #2563eb 100%);
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0,0,0,0.3);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      letter-spacing: 0.01em;
+    }
+    .pdf-export-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, #0a84ff 0%, #1d4ed8 100%);
+    }
+    .pdf-export-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+    .pdf-export-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+    @media print {
+      .pdf-export-btn,
+      .apple-nav,
+      .apple-mobile-drawer,
+      .apple-footer {
+        display: none !important;
+      }
+      body {
+        background: #fff !important;
+        color: #111 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .apple-main-content {
+        padding-top: 0 !important;
+      }
+    }
+  </style>
+  <button class="pdf-export-btn" onclick="window.print()" title="Export this page as PDF">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    Export PDF
+  </button>
+
+</body>
+</html>

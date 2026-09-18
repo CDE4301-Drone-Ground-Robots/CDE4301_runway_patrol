@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4.5 Computer Vision Subsystem - FOD Hunter Interim Report</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+  <!-- APPLE TOP NAVIGATION BAR -->
+  <header class="apple-nav">
+    <div class="apple-nav-container">
+      <a href="../index.html" class="apple-nav-brand">
+        <img src="../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+      </a>
+
+      <ul class="apple-nav-links">
+        <li><a href="../index.html" class="apple-nav-link">Overview</a></li>
+        <li><a href="../1-introduction.html" class="apple-nav-link">Introduction</a></li>
+        <li><a href="../2-design-overview.html" class="apple-nav-link">Design</a></li>
+        <li><a href="../3-individual-scopes.html" class="apple-nav-link">Scopes</a></li>
+        <li><a href="index.html" class="apple-nav-link active">Subsystems</a></li>
+        <li><a href="../5-timeline.html" class="apple-nav-link">Timeline</a></li>
+        <li><a href="../6-references.html" class="apple-nav-link">References</a></li>
+        <li><a href="../7-documentation/hilbert/simulation.html" class="apple-nav-link">Simulation</a></li>
+      </ul>
+
+      <div class="apple-nav-actions">
+        <a href="../7-documentation/gabriel/yolo-comparison.html" class="apple-btn-pill">Gabriel's Spec →</a>
+        <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- APPLE STICKY SUB-NAVIGATION -->
+  <nav class="apple-subnav">
+    <div class="apple-subnav-container">
+      <div class="apple-subnav-title">Subsystems</div>
+      <ul class="apple-subnav-items">
+        <li class="apple-subnav-item"><a href="index.html">Overview</a></li>
+        <li class="apple-subnav-item"><a href="mechanical.html">Mechanical</a></li>
+        <li class="apple-subnav-item"><a href="electrical.html">4.2 Electrical</a></li>
+        <li class="apple-subnav-item"><a href="programming.html">4.3 Programming</a></li>
+        <li class="apple-subnav-item"><a href="computer-vision.html" class="active">4.4 Vision</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="apple-mobile-drawer" id="apple-mobile-drawer">
+    <a href="../index.html">Overview</a>
+    <a href="../1-introduction.html">Introduction</a>
+    <a href="../2-design-overview.html">Overview of Design</a>
+    <a href="../3-individual-scopes.html">Individual Scopes</a>
+    <a href="index.html">Subsystems Architecture</a>
+    <a href="../5-timeline.html">Timeline to Finals</a>
+    <a href="../6-references.html">References &amp; Standards</a>
+    <a href="../7-documentation/hilbert/simulation.html">Simulation Architecture &amp; Guide</a>
+  </div>
+
+  <!-- MAIN PAGE CONTENT -->
+  <main class="apple-main-content" style="padding-top: 20px;">
+    <div class="apple-container" style="padding-bottom: 60px;">
+      
+      <!-- Apple Section Header -->
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
+        <div class="apple-hero-badge">Subsystem 4.4 • Perception &amp; AI Architecture</div>
+        <h1 class="apple-section-title" style="font-size: clamp(2.4rem, 5vw, 3.8rem);">
+          Computer Vision Subsystem.
+          <span class="apple-hero-gradient">YOLOv11 Inference. GMSL2 Cameras. Sensor Fusion.</span>
+        </h1>
+        <p class="apple-section-desc" style="margin: 0 auto;">
+          Real-time FOD target classification, dataset preparation, multi-modal LiDAR/camera sensor fusion, and low-latency edge inference.
+        </p>
+      </div>
+
+        <!-- SUBSYSTEM OWNER CARD -->
+        <div class="card-box" style="border-left: 5px solid var(--accent-emerald);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 style="font-size: 18px; color: var(--text-main);">Subsystem Ownership: Computer Vision &amp; Sensor Fusion</h3>
+              <p style="font-size: 13px; color: var(--text-muted);">Lead Vision Engineer: <strong>Gabriel Tan</strong> (A0308452H)</p>
+            </div>
+            <a href="../7-documentation/gabriel/yolo-comparison.html" class="btn btn-deep-dive">📖 Open Gabriel's Spec </a>
+          </div>
+        </div>
+
+        <!-- ONBOARD COMPUTE HARDWARE CONSTRAINTS NOTICE -->
+        <div class="callout callout-amber" style="margin-top: 0; border-left-width: 5px;">
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span style="font-size: 20px; line-height: 1;">💻</span>
+            <div>
+              <strong style="color: var(--accent-amber); font-size: 14.5px;">Vision Processing Hardware: Gabriel's Laptop &amp; USB Camera</strong>
+              <p style="margin: 6px 0 0 0; font-size: 13px; color: var(--text-main); line-height: 1.6;">
+                Computer vision and real-time YOLO object detection are executed on <strong>Gabriel's Laptop</strong> utilizing an optical USB web camera interface. This architecture is adopted due to capstone budget constraints precluding the purchase of a new NVIDIA Jetson platform, with all existing EDIC Jetson developer units currently committed to the CDE3301 module. High-throughput video streams into the laptop over a dedicated USB 3.2 connection to ensure low-latency frame acquisition and reliable real-time inference.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. MODEL & SENSOR FUSION -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">🧠 Computer Vision &amp; Sensor Fusion Suite</div>
+          </div>
+          <p style="margin-bottom: 14px;">
+            Gabriel Tan leads the computer vision and sensor fusion architecture, implementing YOLO target detection algorithms and multi-modal perception.
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px;">
+            <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px;">
+              <h4 style="color: var(--accent-rose);">1. Metallic Fasteners</h4>
+              <p style="font-size: 13px;">Bolts, safety wires, nuts, rivets.</p>
+            </div>
+            <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px;">
+              <h4 style="color: var(--accent-amber);">2. Asphalt Chips</h4>
+              <p style="font-size: 13px;">Loose pavement rocks &amp; spalls.</p>
+            </div>
+            <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px;">
+              <h4 style="color: var(--accent-blue);">3. Maintenance Tools</h4>
+              <p style="font-size: 13px;">Dropped wrenches &amp; screwdrivers.</p>
+            </div>
+            <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px;">
+              <h4 style="color: var(--accent-emerald);">4. Tire Rubber</h4>
+              <p style="font-size: 13px;">Shredded tire rubber fragments.</p>
+            </div>
+          </div>
+
+          <!-- VISION HARDWARE DETAILS -->
+          <h3 style="font-size: 16px; color: var(--text-main); margin-bottom: 10px;">Automotive Vision Hardware Stack</h3>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Model / Specification</th>
+                  <th>Operational Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Primary RGB Camera</strong></td>
+                  <td><code>LI-IMX568-GMSL2-050H</code></td>
+                  <td>Sony IMX568 global shutter sensor, IP67 enclosure, zero motion blur at &ge;10 km/h</td>
+                </tr>
+                <tr>
+                  <td><strong>Automotive RF Cabling</strong></td>
+                  <td><code>Fakra 1m Type 7</code></td>
+                  <td>Heavy-duty shielded coaxial cable delivering high-bandwidth serialized raw video</td>
+                </tr>
+                <tr>
+                  <td><strong>Video Deserializer</strong></td>
+                  <td><code>GMSL2 Deserialiser Board</code></td>
+                  <td>Converts Fakra serial link to USB 3.2 data feed into Hilbert's laptop</td>
+                </tr>
+                <tr>
+                  <td><strong>Active Illumination</strong></td>
+                  <td><code>Headlights for CV (12V)</code></td>
+                  <td>Wide-angle floodlighting to illuminate runway tarmac during low-light &amp; night trials</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 2. YOLO MODEL COMPARISON -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">🔍 YOLO Model Comparison &amp; Benchmarking</div>
+            <span class="badge badge-emerald">Model Evaluation</span>
+          </div>
+          <p style="margin-bottom: 14px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6;">
+            A comparative evaluation of candidate YOLO architectures across accuracy (mAP50-95), inference latency on target hardware, parameter size, and edge deployment feasibility:
+          </p>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Model Architecture</th>
+                  <th>mAP@50 (%)</th>
+                  <th>mAP@50-95 (%)</th>
+                  <th>Inference Latency (ms)</th>
+                  <th>Parameters (M)</th>
+                  <th>Model Size (MB)</th>
+                  <th>Selection Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>YOLOv8n (Nano)</strong></td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                </tr>
+                <tr>
+                  <td><strong>YOLOv8s (Small)</strong></td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                </tr>
+                <tr>
+                  <td><strong>YOLOv8m (Medium)</strong></td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                </tr>
+                <tr>
+                  <td><strong>YOLOv11n (Nano)</strong></td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                </tr>
+                <tr>
+                  <td><strong>YOLOv11s (Small)</strong></td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                  <td>[To be filled in]</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- GABRIEL'S DETAILED TECHNICAL DOCUMENTATION -->
+        <div class="card-box" style="margin-top: 24px; border-left: 5px solid var(--accent-emerald);">
+          <div class="card-header">
+            <div class="card-title">📚 Gabriel Tan's Detailed Technical Documentation</div>
+            <span class="badge badge-emerald">Lead Vision Engineer</span>
+          </div>
+          <p style="margin-bottom: 16px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6;">
+            Deep-dive specifications, optical lens calculations, real-time AI benchmarks, and airfield dataset research authored by Gabriel Tan:
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+            <a href="../7-documentation/gabriel/yolo-comparison.html" class="card-box" style="margin-bottom: 0; text-decoration: none; padding: 18px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); transition: all 0.25s ease;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                🚀 YOLO Model Benchmarking →
+              </div>
+              <div style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5;">
+                Inference latency, mAP50-95 accuracy, TensorRT vs. ONNX comparison on edge compute.
+              </div>
+            </a>
+            <a href="../7-documentation/gabriel/vision-calculations.html" class="card-box" style="margin-bottom: 0; text-decoration: none; padding: 18px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); transition: all 0.25s ease;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                📐 Ground Coverage &amp; Optics →
+              </div>
+              <div style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5;">
+                Lens focal length, Field of View (FOV), Ground Sampling Distance (GSD), and camera mounting height.
+              </div>
+            </a>
+            <a href="../7-documentation/gabriel/vision-research.html" class="card-box" style="margin-bottom: 0; text-decoration: none; padding: 18px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); transition: all 0.25s ease;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                🔬 Computer Vision Research →
+              </div>
+              <div style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5;">
+                Airfield FOD datasets, adverse weather data augmentation, and camera/LiDAR fusion strategies.
+              </div>
+            </a>
+          </div>
+        </div>
+
+    </div>
+  </main>
+
+  <!-- APPLE FOOTER -->
+  <footer class="apple-footer">
+    <div class="apple-footer-container">
+      <div class="apple-footer-legal">
+        <p>1. CDE4301 Innovation &amp; Design Capstone (Robotics) • Section 4.4 Computer Vision &amp; AI Subsystem.</p>
+        <p>2. Real-time inference benchmarks executed on TensorRT / ONNX Runtime edge pipelines.</p>
+        <p>3. Department of Electrical &amp; Computer Engineering, National University of Singapore.</p>
+      </div>
+      <div class="apple-footer-divider"></div>
+      <div class="apple-footer-bottom">
+        <div class="apple-footer-copyright">
+          Copyright &copy; 2024/2025 NUS CDE4301 FOD Hunter Team. All rights reserved.
+        </div>
+        <div class="apple-footer-links">
+          <a href="../index.html">Overview</a>
+          <a href="../1-introduction.html">Introduction</a>
+          <a href="../2-design-overview.html">Design</a>
+          <a href="index.html">Subsystems</a>
+          <a href="../5-timeline.html">Timeline</a>
+          <a href="../6-references.html">References</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
