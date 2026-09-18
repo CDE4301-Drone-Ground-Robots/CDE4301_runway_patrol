@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛩️ Aarhus Airport Runway Patrol & Autonomous Navigation UGV
+# 🛩️ Aarhus Airport FOD Hunter & Autonomous Navigation UGV
 
 <p align="center">
   <b>Autonomous Runway Inspection & Navigation System</b><br>

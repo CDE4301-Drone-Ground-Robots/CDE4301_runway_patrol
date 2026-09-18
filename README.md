@@ -1,55 +1,112 @@
-# Runway Patrol: Autonomous Airfield Inspection & FOD Remediation System
+# FOD Hunter: Autonomous Airfield Inspection & FOD Remediation System
 
-> **CDE4301 Innovation & Design Capstone Project (Robotics)**  
-> **National University of Singapore (NUS) &bull; College of Design and Engineering (CDE)**  
-> _In Collaboration with the Republic of Singapore Air Force (RSAF) &amp; RAiD_  
-> **Academic Supervisors:** Dr. Tang Kok Zuea
+### CDE4301 Innovation & Design Capstone Project (Robotics)
+
+**National University of Singapore (NUS) • College of Design and Engineering (CDE)**  
+_In Collaboration with the Republic of Singapore Air Force (RSAF) & RAiD_  
+**Academic Supervisors:** Dr. Tang Kok Zuea
 
 ---
 
-## 📢 Important Notice for Capstone Team Members
+## 👥 Project Team Roster
+
+| Member             | Matric No.  | Subsystem Scope                                                      |
+| :----------------- | :---------- | :------------------------------------------------------------------- |
+| **Hilbert Soh**    | `A0308263H` | Autonomous Navigation, SLAM & Path Planning, C2 Comms                |
+| **Takeuchi Asuka** | `A0308200R` | Project Manager, Vacuum & Magnetic Cleaning Module                   |
+| **Zacarias Ng**    | `A0308821B` | Chassis Mechanical Design, Differential Drive Kinematics & CAD       |
+| **Gabriel Tan**    | `A0308452H` | Computer Vision, YOLO Perception (Overseeing Electrical)             |
+| **Bryan Ng**       | `A0308298E` | Electrical Power Distribution, BMS, Docking Station & STM32 Firmware |
+
+---
+
+## 🌐 For Non-Team Members
+
+To view our live interactive capstone report dashboard, please visit:  
+👉 **[FOD Hunter Interim Report (GitHub Pages)](https://cde4301-drone-ground-robots.github.io/CDE4301_runway_patrol/)**
+
+---
+
+## 📢 For Team Members
 
 > [!IMPORTANT]
 >
 > ### 📁 Report Documentation Working Directory
 >
-> **All team members should edit, contribute, and add content inside the `For report/Interim report/` folder.**  
-> The previous Jekyll/Markdown build system has been retired. The interim report is now built as a responsive, standalone HTML/CSS/JS dashboard.
+> **All team members should edit, contribute, and add content inside the `For report/Interim report-v2/` folder.**  
+> The report is built as a responsive, standalone Apple Keynote-inspired HTML/CSS/JS dashboard.
 
-### 🗺️ File & Subsystem Map for Contributions
+### 🗺️ Interim Report File Tree
 
-When updating your individual scopes, hardware specifications, benchmark tables, or technical descriptions, locate your relevant file below:
+Below is the directory map of `For report/Interim report-v2/`. Locate your assigned HTML files to edit your technical content:
 
-| Page / Section                | File Path                                                     | Scope & Contribution Instructions                                                 |
-| :---------------------------- | :------------------------------------------------------------ | :-------------------------------------------------------------------------------- |
-| **Executive Dashboard**       | `For report/Interim report/index.html`                        | High-level KPIs, project summary cards, team overview.                            |
-| **1. Introduction**           | `For report/Interim report/1-introduction.html`               | Operational problem definition, FOD risk matrix, primary practitioner interviews. |
-| **2. Design Overview**        | `For report/Interim report/2-design-overview.html`            | Joint UAV-UGV concept of operations, airfield constraints, engineering targets.   |
-| **3. Individual Scopes**      | `For report/Interim report/3-individual-scopes.html`          | Phase 1 & Phase 2 deliverables for each team member.                              |
-| **4.1 Mechanical Subsystem**  | `For report/Interim report/4-subsystems/mechanical.html`      | Chassis iterations 1–3, kinematics calculations, FEA load case simulations.       |
-| **4.2 Electrical Subsystem**  | `For report/Interim report/4-subsystems/electrical.html`      | 48V power distribution, onboard compute architecture, system load table.          |
-| **Master Electrical BOM**     | `For report/Interim report/4-subsystems/electrical-bom.html`  | Full 35-item electrical Bill of Materials and hardware pricing.                   |
-| **4.3 Programming Subsystem** | `For report/Interim report/4-subsystems/programming.html`     | ROS 2 Jazzy autonomous navigation, Nav2 path planning, Gazebo simulation demo.    |
-| **C2 Communications Spec**    | `For report/Interim report/4-subsystems/communications.html`  | Telemetry link, MAVLink & CycloneDDS schemas, fail-safe protocols.                |
-| **4.4 Computer Vision**       | `For report/Interim report/4-subsystems/computer-vision.html` | YOLO model comparison, mAP benchmarking, camera sensor pipeline.                  |
-| **5. Timeline & Gantt**       | `For report/Interim report/5-timeline.html`                   | Interactive Gantt chart matrix, milestone weeks, individual task work packages.   |
-| **6. References & Standards** | `For report/Interim report/6-references.html`                 | Academic citations, FAA AC 150/5220-24, ASTM D5340-20 standards.                  |
+> [!TIP]
+> **Architecture Guideline:**
+>
+> - **`4-subsystems/`** is for **Summaries, short explanations, block diagrams, and key pointers**
+> - **`7-documentation/`** is where **members store their full technical documentations for their respective subsystems**
+
+```text
+For report/Interim report-v2/
+├── index.html                               # 🌟 Executive Summary Dashboard & 3D Model
+├── 1-introduction.html                      # Problem statement, threat matrix & progress
+├── 2-design-overview.html                   # UAV-UGV concept of operations & architecture
+├── 3-individual-scopes.html                 # 3D Stack Deck of team roles & deliverables
+├── 4-subsystems/                            # ⚙️ Subsystem Summaries (Short Explanations & Key Pointers)
+│   ├── index.html                           # ── Subsystems Landing Hub
+│   ├── mechanical.html                      # ── 4.1 Mechanical Summary & Key Pointers (Asuka & Zacarias)
+│   ├── electrical.html                      # ── 4.2 Electrical Summary & Key Pointers (Bryan & Gabriel)
+│   ├── programming.html                     # ── 4.3 Programming & Autonomy Summary (Hilbert)
+│   └── computer-vision.html                 # ── 4.4 Computer Vision & Perception Summary (Gabriel)
+├── 5-timeline.html                          # 📅 Gantt Matrix & Phased Milestone Roadmap
+├── 6-references.html                        # 📚 Consolidated References & FAA Standards
+├── 6-references/                            # 📚 Member Citation Files
+│   ├── asuka/references.html                # ── Asuka References
+│   ├── zacarias/references.html             # ── Zacarias References
+│   ├── bryan/references.html                # ── Bryan References
+│   ├── gabriel/references.html              # ── Gabriel References
+│   ├── hilbert/references.html              # ── Hilbert References
+│   └── literature/references.html           # ── Literature References
+├── 7-documentation.html                     # 📖 Central In-Depth Documentation Hub
+├── 7-documentation/                         # 📁 In-Depth Work Topics & Member Engineering Specifications
+│   ├── asuka/                               # ── Asuka's In-Depth Work Topics
+│   │   ├── suspension.html                  # ──── In-Depth Suspension & Vibration Isolation Spec
+│   │   └── vacuum-module.html               # ──── In-Depth Vacuum & Magnetic Cleaning Module Spec
+│   ├── zacarias/                            # ── Zacarias' In-Depth Work Topics
+│   │   ├── chassis-fea.html                 # ──── In-Depth Structural Chassis FEA & Load Analysis
+│   │   ├── drivetrain-kinematics.html       # ──── In-Depth Differential Drive Kinematics & Sizing
+│   │   └── motor-calculations.html          # ──── In-Depth Motor Torque & Battery Sizing Math
+│   ├── bryan/                               # ── Bryan's In-Depth Work Topics
+│   │   ├── components-bom.html              # ──── In-Depth 35-Item Master Component BOM & Wiring Specs
+│   │   └── power-calculations.html          # ──── In-Depth Power Consumption & Runtime Calculations
+│   ├── gabriel/                             # ── Gabriel's In-Depth Work Topics
+│   │   ├── vision-calculations.html         # ──── In-Depth Lens, FOV, GSD & Pixel Size Calculations
+│   │   ├── vision-research.html             # ──── In-Depth Lighting & Environmental Sensor Research
+│   │   └── yolo-comparison.html             # ──── In-Depth YOLO Model Benchmarks & Comparison
+│   ├── hilbert/                             # ── Hilbert's In-Depth Work Topics
+│   │   ├── communications.html              # ──── In-Depth UAV-UGV Telemetry & C2 Protocol Spec
+│   │   ├── navigation.html                  # ──── In-Depth Nav2 Controller, Costmaps & SLAM Tuning
+│   │   └── simulation.html                  # ──── In-Depth ROS 2 Jazzy & Gazebo Harmonic Simulation
+│   └── literature/                          # ── In-Depth Literature & Airfield Research
+│       ├── primary-research.html            # ──── In-Depth Airfield Practitioner Survey & Testing
+│       └── problem-statement.html           # ──── In-Depth Airfield FOD Economic & Safety Analysis
+├── css/styles.css                           # 🎨 Apple Design System Tokens & Animations
+└── js/main.js                               # ⚡ Interactive Mega Menus, Swipers & Video
+```
+
+---
 
 ### 🛠️ How to Preview & Edit Locally
 
-1. **Open directly in browser:** Double-click `index.html` at the repository root, or open `For report/Interim report/index.html` directly in Chrome, Firefox, or Edge.
-2. **Local HTTP Server (Recommended):**
+1. **Local HTTP Server:**
+
    ```bash
    # From repository root
-   npx serve .
-   # or with Python
    python -m http.server 8000
    ```
-   Navigate to `http://localhost:8000` to preview with full font and asset loading.
-3. **Styling Guidelines:**
-   - Global styles are located in `For report/Interim report/css/styles.css`.
-   - Use predefined card containers (`<div class="card-box">`), callouts (`callout callout-info`, `callout-amber`, `callout-rose`), and tables (`<div class="admin-table-wrapper"><table class="admin-table">`).
-   - Placeholder fields marked as `[To be filled in]` indicate pending content to update.
+
+2. **Local HTTP Server (Recommended):**
+   Navigate to [http://localhost:8000](http://localhost:8000) to preview with full font and asset loading.
 
 ---
 
@@ -64,37 +121,9 @@ CDE4301_runway_patrol/
 │   ├── 280726 README.md
 │   └── 250726 README (HTML).md
 ├── For report/
-│   └── Interim report/         # 🌟 ACTIVE INTERIM REPORT WEB APPLICATION
-│       ├── index.html          # Executive summary dashboard
-│       ├── 1-introduction.html # Threat modeling & primary research
-│       ├── 2-design-overview.html
-│       ├── 3-individual-scopes.html
-│       ├── 4-subsystems/       # Subsystem deep dives (Mech, Elec, Prog, CV)
-│       │   ├── mechanical.html
-│       │   ├── electrical.html
-│       │   ├── electrical-bom.html
-│       │   ├── programming.html
-│       │   ├── communications.html
-│       │   └── computer-vision.html
-│       ├── 5-timeline.html     # Gantt matrix & roadmap
-│       ├── 6-references.html   # Standards & citations
-│       ├── css/styles.css      # Core design system & theme variables
-│       ├── js/main.js          # Interactive dashboard logic & Gantt scanner
-│       └── specs/              # Detailed specification pages
+│   └── Interim report-v2/      # 🌟 ACTIVE INTERIM REPORT WEB APPLICATION (See file tree above)
 ├── simulation/                 # ROS 2 Jazzy & Gazebo Harmonic workspace
 │   ├── README.md               # Simulation setup, launch instructions & worlds
 │   └── src/                    # Scout V2 rover URDF, worlds & Nav2 configs
-└── index.html                  # Root landing page (redirects to Interim report)
+└── index.html                  # Root landing portal (redirects to Interim report-v2)
 ```
-
----
-
-## 👥 Project Team Roster
-
-| Member             | Matric No.  | Subsystem Scope                                                      |
-| :----------------- | :---------- | :------------------------------------------------------------------- |
-| **Hilbert Soh**    | `A0308263H` | Autonomous Navigation, SLAM & Path Planning, C2 Comms                |
-| **Takeuchi Asuka** | `A0308200R` | Project Manager, Vacuum & Magnetic Cleaning Module                   |
-| **Zacarias Ng**    | `A0308821B` | Chassis Mechanical Design, Differential Drive Kinematics & CAD       |
-| **Gabriel Tan**    | `A0308452H` | Computer Vision, YOLO Perception (Overseeing Electrical)             |
-| **Bryan Ng**       | `A0308298E` | Electrical Power Distribution, BMS, Docking Station & STM32 Firmware |
