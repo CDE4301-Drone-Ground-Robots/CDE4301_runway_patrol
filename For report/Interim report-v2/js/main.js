@@ -1159,9 +1159,9 @@ document.addEventListener('DOMContentLoaded', () => {
       docsMenu.className = 'apple-megamenu';
       docsMenu.innerHTML = `
         <div style="max-width: 1440px; margin: 0 auto; padding: 0 24px 14px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 20px;">
-          <span style="color: var(--apple-text-secondary); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">7.0 System Engineering Documentation &amp; Research</span>
-          <a href="${prefix}7-documentation.html" style="color: var(--apple-blue); font-size: 12.5px; text-decoration: none; font-weight: 500;">
-            Documentation Hub Overview →
+          <span style="color: var(--apple-text-secondary); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">EXPLORE DOCUMENTATION</span>
+          <a href="${prefix}7-documentation.html" style="color: var(--apple-blue); font-size: 12.5px; text-decoration: none; font-weight: 600;">
+            🌟 Open Document Hub →
           </a>
         </div>
 
@@ -1248,6 +1248,48 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.appendChild(docsMenu);
     }
 
+    // 4b. Create 6. References Mega Menu (Direct member names list with Explore References & Open Reference Hub)
+    let refsMenu = document.getElementById('apple-megamenu-references');
+    if (!refsMenu) {
+      refsMenu = document.createElement('div');
+      refsMenu.id = 'apple-megamenu-references';
+      refsMenu.className = 'apple-megamenu';
+      refsMenu.innerHTML = `
+        <div style="max-width: 500px; margin: 0 auto; padding: 0 24px 14px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 16px;">
+          <span style="color: var(--apple-text-secondary); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">EXPLORE REFERENCES</span>
+          <a href="${prefix}6-references.html" style="color: var(--apple-blue); font-size: 12.5px; text-decoration: none; font-weight: 600;">
+            🌟 Open Reference Hub →
+          </a>
+        </div>
+
+        <div style="max-width: 500px; margin: 0 auto; padding: 0 24px;">
+          <div class="apple-megamenu-col" style="width: 100%;">
+            <a href="${prefix}6-references/asuka/references.html" class="apple-megamenu-big-link">
+              <span>Asuka</span>
+              <span class="arrow">›</span>
+            </a>
+            <a href="${prefix}6-references/zacarias/references.html" class="apple-megamenu-big-link">
+              <span>Zacarias</span>
+              <span class="arrow">›</span>
+            </a>
+            <a href="${prefix}6-references/hilbert/references.html" class="apple-megamenu-big-link">
+              <span>Hilbert</span>
+              <span class="arrow">›</span>
+            </a>
+            <a href="${prefix}6-references/bryan/references.html" class="apple-megamenu-big-link">
+              <span>Bryan</span>
+              <span class="arrow">›</span>
+            </a>
+            <a href="${prefix}6-references/gabriel/references.html" class="apple-megamenu-big-link">
+              <span>Gabriel</span>
+              <span class="arrow">›</span>
+            </a>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(refsMenu);
+    }
+
     // 5. Interactive Flyout Hover Logic for Subsystems Menu
     const bigLinks = subsystemsMenu.querySelectorAll('.apple-megamenu-big-link');
     const flyouts = subsystemsMenu.querySelectorAll('.apple-megamenu-flyout');
@@ -1279,6 +1321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. Hook Triggers in Nav Bar
     let subsystemsTrigger = null;
     let docsTrigger = null;
+    let refsTrigger = null;
 
     appleNav.querySelectorAll('.apple-nav-link').forEach(link => {
       const text = link.textContent.trim();
@@ -1287,6 +1330,8 @@ document.addEventListener('DOMContentLoaded', () => {
         subsystemsTrigger = link;
       } else if (text.includes('7.') || text.includes('Documentation') || href.includes('7-documentation')) {
         docsTrigger = link;
+      } else if (text.includes('6.') || text.includes('References') || href.includes('6-references')) {
+        refsTrigger = link;
       }
     });
 
@@ -1295,9 +1340,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function openSubsystemsMenu() {
       if (closeTimer) clearTimeout(closeTimer);
       docsMenu.classList.remove('active');
+      refsMenu.classList.remove('active');
       subsystemsMenu.classList.add('active');
       overlay.classList.add('active');
-      // Initially clear active flyouts so only primary items are seen
       bigLinks.forEach(l => l.classList.remove('hovered'));
       flyouts.forEach(f => f.classList.remove('active'));
     }
@@ -1305,7 +1350,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function openDocsMenu() {
       if (closeTimer) clearTimeout(closeTimer);
       subsystemsMenu.classList.remove('active');
+      refsMenu.classList.remove('active');
       docsMenu.classList.add('active');
+      overlay.classList.add('active');
+    }
+
+    function openRefsMenu() {
+      if (closeTimer) clearTimeout(closeTimer);
+      subsystemsMenu.classList.remove('active');
+      docsMenu.classList.remove('active');
+      refsMenu.classList.add('active');
       overlay.classList.add('active');
     }
 
@@ -1314,6 +1368,7 @@ document.addEventListener('DOMContentLoaded', () => {
       closeTimer = setTimeout(() => {
         subsystemsMenu.classList.remove('active');
         docsMenu.classList.remove('active');
+        refsMenu.classList.remove('active');
         overlay.classList.remove('active');
         bigLinks.forEach(l => l.classList.remove('hovered'));
         flyouts.forEach(f => f.classList.remove('active'));
@@ -1330,6 +1385,11 @@ document.addEventListener('DOMContentLoaded', () => {
       docsTrigger.addEventListener('mouseleave', scheduleCloseAll);
     }
 
+    if (refsTrigger) {
+      refsTrigger.addEventListener('mouseenter', openRefsMenu);
+      refsTrigger.addEventListener('mouseleave', scheduleCloseAll);
+    }
+
     subsystemsMenu.addEventListener('mouseenter', () => {
       if (closeTimer) clearTimeout(closeTimer);
     });
@@ -1340,6 +1400,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     docsMenu.addEventListener('mouseleave', scheduleCloseAll);
 
+    refsMenu.addEventListener('mouseenter', () => {
+      if (closeTimer) clearTimeout(closeTimer);
+    });
+    refsMenu.addEventListener('mouseleave', scheduleCloseAll);
+
     overlay.addEventListener('mouseenter', scheduleCloseAll);
     overlay.addEventListener('click', scheduleCloseAll);
 
@@ -1348,6 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
       a.addEventListener('click', () => {
         subsystemsMenu.classList.remove('active');
         docsMenu.classList.remove('active');
+        if (refsMenu) refsMenu.classList.remove('active');
         overlay.classList.remove('active');
       });
     });
@@ -1361,9 +1427,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof sysModal !== 'undefined' && sysModal) sysModal.classList.remove('open');
       const mmSub = document.getElementById('apple-megamenu-subsystems');
       const mmDoc = document.getElementById('apple-megamenu-docs');
+      const mmRef = document.getElementById('apple-megamenu-references');
       const mo = document.getElementById('apple-megamenu-overlay');
       if (mmSub) mmSub.classList.remove('active');
       if (mmDoc) mmDoc.classList.remove('active');
+      if (mmRef) mmRef.classList.remove('active');
       if (mo) mo.classList.remove('active');
     }
   });

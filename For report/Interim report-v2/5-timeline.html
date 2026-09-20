@@ -16,6 +16,7 @@
     <div class="apple-nav-container">
       <a href="index.html" class="apple-nav-brand">
         <img src="assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+        <span class="nav-project-code">AIS-406</span>
       </a>
 
       <ul class="apple-nav-links">
@@ -50,7 +51,7 @@
 
   <!-- MAIN PAGE CONTENT -->
   <main class="apple-main-content">
-    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px; max-width: 1440px;">
+    <div class="apple-container timeline-fullwidth-container" style="padding-top: 24px; padding-bottom: 60px; max-width: 100% !important; width: 100% !important; box-sizing: border-box;">
       
       <!-- Apple Section Header -->
       <div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
@@ -66,7 +67,7 @@
 
         <div class="card-box" style="overflow: hidden; max-width: 100%; padding: 20px 16px;">
           <div class="card-header">
-            <div class="card-title">📅 CDE4301 Capstone Year-Long Gantt Chart &amp; Interactive Schedule</div>
+            <div class="card-title">📅 AIS-406 Gantt Chart</div>
             <div style="display: flex; gap: 8px;">
               <button class="btn btn-outline view-toggle-btn active" id="btn-view-matrix">📊 Matrix View</button>
               <button class="btn btn-outline view-toggle-btn" id="btn-view-cards">📋 Roadmap Cards</button>
@@ -75,12 +76,6 @@
 
           <!-- INTERACTIVE FILTER BAR -->
           <div class="gantt-filter-bar">
-            <div class="gantt-btn-group">
-              <span class="filter-label">Semester:</span>
-              <button class="gantt-filter-btn active" data-sem="all">📅 All Semesters</button>
-              <button class="gantt-filter-btn" data-sem="1">🍂 Semester 1 (S1 Wk1 &ndash; S1 Wk13)</button>
-              <button class="gantt-filter-btn" data-sem="2">🌱 Semester 2 (S2 Wk1 &ndash; S2 Wk13)</button>
-            </div>
 
             <div class="gantt-btn-group">
               <span class="filter-label">Team Member:</span>
@@ -94,21 +89,6 @@
 
             <div>
               <input type="text" id="gantt-search-input" placeholder="🔍 Search tasks or deliverables..." class="gantt-search-box">
-            </div>
-          </div>
-
-          <!-- HOVER TASK INSPECTOR HUD -->
-          <div id="gantt-hover-inspector" class="gantt-inspector-bar">
-            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-              <span style="font-size: 18px;">📌</span>
-              <div>
-                <span style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: var(--text-muted); display: block;">Task Inspector (Hover over any progress box):</span>
-                <span id="inspector-task-title" style="font-size: 13.5px; font-weight: 700; color: var(--text-main);">Hover over any progress box in the chart below to inspect full title &amp; period</span>
-              </div>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-              <span id="inspector-task-owner" class="badge badge-purple" style="display: none;"></span>
-              <span id="inspector-task-period" class="badge badge-blue" style="display: none;"></span>
             </div>
           </div>
 
@@ -1733,5 +1713,7 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/xlsx.full.min.js"></script>
+  <script src="js/timeline-manager.js?v=2.9"></script>
 </body>
 </html>
