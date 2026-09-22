@@ -55,15 +55,47 @@
       
       <!-- Apple Section Header -->
       <div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
-        <div class="apple-hero-badge">Section 1.0 • Threat &amp; Landscape</div>
+        <div class="apple-hero-badge">Section 1.0. Introduction and problem defintion</div>
         <h1 class="apple-section-title" style="font-size: clamp(2.4rem, 5vw, 3.8rem);">
-          The Airfield Threat.
-          <span class="apple-hero-gradient">Critical Hazards &amp; System Deficiencies.</span>
+          Foreign Object Debris,<br>
+          small objects that cause massive headaches.
         </h1>
         <p class="apple-section-desc" style="margin: 0 auto;">
-          Comprehensive operational analysis of foreign object debris, market benchmark comparison against multi-million dollar stationary radar towers, and practitioner interview findings.
+          in this section, we will discuss the problem on a macro level and analyse existing solutions
         </p>
       </div>
+
+        <!-- SECTION 1.1: PROBLEM DEFINITION & LIT REVIEW -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">What is the problem?</div>
+            <a href="7-documentation/literature/problem-statement.html" class="btn btn-deep-dive">📖 Read Full Introduction Spec </a>
+          </div>
+
+          <div class="figure-card" style="margin: 16px 0;">
+            <img src="assets/plane_on_fire.png" alt="Air France Flight 4590 aircraft on fire shortly after takeoff" class="img-zoomable" style="max-height: 380px;">
+            <div class="figure-caption">Air France Flight 4590 shortly after takeoff.</div>
+          </div>
+
+          <p style="margin-bottom: 16px;">
+            The imperative to transition from periodic manual sweeps to automated, real-time <strong>Foreign Object Debris (FOD) detection</strong> was dramatically catalyzed by the tragic loss of Air France Flight 4590 in July 2000 [1]. A titanium alloy strip that fell from an earlier flight cut the aircraft's tire and sent a large chunk of the tire into the underside of the aircraft's left wing. This punctured the fuel tank, shortly after which the engines caught fire and stalled. Finally, the aircraft crashed head-on into a nearby hotel two minutes after takeoff, killing all 109 people aboard and four people in the hotel [3].
+          </p>
+
+          <div class="figure-card" style="margin-top: 16px;">
+            <img src="assets/titanium_strip.png" alt="Titanium strip recovered from the runway after the Air France Flight 4590 accident" class="img-zoomable" style="max-height: 380px;">
+            <div class="figure-caption">Titanium strip that caused the tragic Airfrance accident</div>
+          </div>
+
+          <p style="margin-bottom: 16px;">
+            The financial penalty caused by FOD is estimated to cost the global aviation industry \$22 Billion USD [2]. This is an increase from an earlier estimate in 2022 at \$14 Billion [1] USD and \$4 Billion in 2015. The Federal Aviation Administration projects that investment in current FOD Technologies shows net financial benefit and a break-even potential in 1-9 years. These trends underscore the growing demand for an automated solution for this global aviation headache.
+          </p>
+
+    <div class="figure-card" style="margin-top: 16px;">
+      <img src="assets/Example_of_FOD.jpg" alt="Airfield Foreign Object Debris Hazard Example" class="img-zoomable" style="max-height: 380px;">
+      <div class="figure-caption">Figure 1: Typical Airfield Foreign Object Debris (FOD) Hazards (Loose Fasteners, Hardware, Asphalt &amp; Rubber Fragments)</div>
+    </div>
+    
+        </div>
 
         <!-- PRIMARY RESEARCH & PRACTITIONER INTERVIEWS CALLOUT -->
         <div class="card-box" style="border-left: 4px solid var(--accent-purple); background: linear-gradient(180deg, var(--card-bg) 0%, rgba(163, 113, 247, 0.03) 100%); margin-bottom: 24px;">
@@ -86,41 +118,6 @@
               </a>
             </div>
           </div>
-        </div>
-
-        <!-- SECTION 1.1: PROBLEM DEFINITION & LIT REVIEW -->
-        <div class="card-box">
-          <div class="card-header">
-            <div class="card-title">⚠️ Operational Threat &amp; Problem Definition</div>
-            <a href="7-documentation/literature/problem-statement.html" class="btn btn-deep-dive">📖 Read Full Introduction Spec </a>
-          </div>
-
-          <p style="margin-bottom: 16px;">
-            Airfield operational safety depends directly on maintaining clean runway surfaces. <strong>Foreign Object Debris (FOD)</strong>—encompassing loose jet engine fasteners, asphalt chips, tool components, and tire rubber fragments—poses a severe threat to military and commercial aviation worldwide.
-          </p>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
-            <div style="background: rgba(225, 29, 72, 0.05); border: 1px solid var(--accent-rose); border-radius: 8px; padding: 16px;">
-              <h4 style="color: var(--accent-rose); margin-bottom: 8px;">💥 Engine Ingestion Risk</h4>
-              <p style="font-size: 13.5px;">Small metallic particles or fasteners ingested into high-speed turbine blades cause catastrophic compressor blade destruction and engine failure during takeoff.</p>
-            </div>
-
-            <div style="background: rgba(217, 119, 6, 0.05); border: 1px solid var(--accent-amber); border-radius: 8px; padding: 16px;">
-              <h4 style="color: var(--accent-amber); margin-bottom: 8px;">🛞 High-Speed Punctures</h4>
-              <p style="font-size: 13.5px;">Sharp metallic fragments cause high-velocity tire blowouts during 250+ km/h rollout phases, compromising directional control and stability.</p>
-            </div>
-
-            <div style="background: rgba(76, 0, 253, 0.05); border: 1px solid var(--accent-purple); border-radius: 8px; padding: 16px;">
-              <h4 style="color: var(--accent-purple); margin-bottom: 8px;">⏱️ Sortie Rate Compromise</h4>
-              <p style="font-size: 13.5px;">Manual sweep closures restrict airbase runway availability, causing flight delays and restricting emergency military sortie generation.</p>
-            </div>
-          </div>
-
-    <div class="figure-card" style="margin-top: 16px;">
-      <img src="assets/Example_of_FOD.jpg" alt="Airfield Foreign Object Debris Hazard Example" class="img-zoomable" style="max-height: 380px;">
-      <div class="figure-caption">Figure 1: Typical Airfield Foreign Object Debris (FOD) Hazards (Loose Fasteners, Hardware, Asphalt &amp; Rubber Fragments)</div>
-    </div>
-    
         </div>
 
         <!-- SECTION 1.2: COMPETITOR ANALYSIS & VALUE PROP -->
