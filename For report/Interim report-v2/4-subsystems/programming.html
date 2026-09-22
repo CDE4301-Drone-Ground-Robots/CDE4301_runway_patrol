@@ -110,7 +110,7 @@
             <div>
               <strong style="color: var(--accent-amber); font-size: 14.5px;">Onboard UGV Compute Implementation: Hilbert's Laptop &amp; STM32 F446RE</strong>
               <p style="margin: 6px 0 0 0; font-size: 13px; color: var(--text-main); line-height: 1.6;">
-                The primary UGV onboard computer is Hilbert's Laptop, running Ubuntu 24.04 LTS with ROS 2 Jazzy. Hilbert's laptop operates on its own internal battery power. It connects via USB to an STM32 F446RE microcontroller, which executes real-time motor control loops and bridges command velocity (cmd_vel) instructions to the ZLAC8015D servo driver to drive the UGV hub motors. This architecture was adopted due to capstone budget limitations precluding the purchase of a new NVIDIA Jetson platform, while all available Jetson developer kits within the NUS Engineering Design and Innovation Centre (EDIC) are currently committed to the CDE3301 module.
+                The primary UGV onboard computer is Hilbert's Laptop, running Ubuntu 24.04 LTS with ROS 2 Jazzy. It connects via USB to an STM32 F446RE microcontroller, which executes real-time motor control loops and bridges command velocity (cmd_vel) instructions to the ZLAC8015D servo driver to drive the UGV hub motors. This architecture was adopted due to capstone budget limitations precluding the purchase of a new NVIDIA Jetson platform, while all available Jetson developer kits within the NUS Engineering Design and Innovation Centre (EDIC) are currently committed to CDE3301.
               </p>
             </div>
           </div>
@@ -122,68 +122,124 @@
             <div class="card-title">🤖 4.3.1 ROS 2 Distribution Evaluation &amp; Selection</div>
           </div>
           <p style="margin-bottom: 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6;">
-            Robot Operating System 2 (ROS 2) serves as the core computational middleware for the FOD Hunter UGV. ROS 2 provides an industrial-grade Data Distribution Service (DDS) abstraction layer, real-time deterministic executors, lifecycle node management, and an extensive ecosystem of production-grade autonomy libraries (specifically <code>Nav2</code> and <code>slam_toolbox</code>). A rigorous comparative trade-off was conducted across primary ROS 2 distributions to determine the optimal software platform for multi-year capstone longevity.
+            Robot Operating System 2 (ROS 2) serves as the core computational middleware for the runway Foreign Object Debris (FOD) inspection UGV. ROS 2 provides an industrial-grade Data Distribution Service (DDS) abstraction layer, real-time deterministic executors, lifecycle node management, and an extensive ecosystem of production autonomy libraries (Nav2, SLAM Toolbox, and robot_localization). A comparative evaluation across consecutive modern distributions&mdash;ordered from latest to oldest&mdash;was conducted to determine the optimal software platform for multi-year capstone longevity and hardware integration.
           </p>
 
           <div class="admin-table-wrapper" style="margin-bottom: 16px;">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>ROS 2 Distribution</th>
-                  <th>Target OS &amp; Kernel</th>
-                  <th>Release &amp; EOL Date</th>
-                  <th>C++ / Python Standards</th>
-                  <th>Nav2 &amp; Simulation Feature Parity</th>
-                  <th>Selection Status</th>
+                  <th style="min-width: 170px;">ROS 2 Distribution</th>
+                  <th style="min-width: 135px;">Release &amp; EOL Date</th>
+                  <th style="min-width: 155px;">Target OS &amp; Kernel</th>
+                  <th style="min-width: 140px;">C++ / Python Standards</th>
+                  <th>Nav2 &amp; Simulation Parity</th>
+                  <th style="min-width: 200px;">Selection Status</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid var(--accent-purple);">
-                  <td><strong style="color: var(--accent-purple);">ROS 2 Jazzy Jalisco (LTS)</strong></td>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img src="../assets/images/Hilbert/lyrical-small.png" alt="ROS 2 Lyrical Luth Logo" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; flex-shrink: 0; background: rgba(255, 255, 255, 0.05); padding: 2px;">
+                      <div>
+                        <strong>ROS 2 Lyrical Luth (LTS)</strong>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-purple">May 22, 2026 &ndash; May 2031<br><span style="font-size: 11px;">(5-Year LTS)</span></span></td>
+                  <td>Ubuntu 26.04 LTS (Resolute Raccoon)<br><span style="font-size: 11.5px; color: var(--text-muted);">Linux Kernel 6.14+</span></td>
+                  <td>C++20 / C++23 &bull; Python 3.13 &bull; GCC 14+</td>
+                  <td>Next-generation Gazebo Sim toolchain; updated Nav2 behavior trees.</td>
+                  <td>
+                    <span class="badge badge-amber" style="margin-bottom: 4px;">EVALUATED (Deferred LTS)</span>
+                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">
+                      Severe ecosystem lag; key third-party hardware drivers (<code>rplidar_ros</code>, RTK-GNSS, micro-ROS agents) lack stable upstream binary packages on Ubuntu 26.04.
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img src="../assets/images/Hilbert/kilted-small.png" alt="ROS 2 Kilted Kaiju Logo" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; flex-shrink: 0; background: rgba(255, 255, 255, 0.05); padding: 2px;">
+                      <div>
+                        <strong>ROS 2 Kilted Kaiju (STS)</strong>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-rose">May 23, 2025 &ndash; Dec 2026<br><span style="font-size: 11px;">(18-Month Non-LTS)</span></span></td>
                   <td>Ubuntu 24.04 LTS (Noble Numbat)<br><span style="font-size: 11.5px; color: var(--text-muted);">Linux Kernel 6.8+</span></td>
-                  <td><span class="badge badge-emerald">May 2024 &ndash; May 2029 (5-Year LTS)</span></td>
                   <td>C++20 &bull; Python 3.12 &bull; GCC 13</td>
-                  <td><strong>Native Gazebo Harmonic (Gz-Sim 8)</strong> pairing via <code>ros_gz_bridge</code>; latest Nav2 MPPI &amp; Smac Planner optimizations; enhanced Type Adaptation.</td>
-                  <td><strong style="color: var(--accent-emerald);">SELECTED (Capstone Baseline)</strong></td>
+                  <td>Gazebo Ionic pairing; interim API adjustments for trajectory smoothing and QoS policies.</td>
+                  <td>
+                    <span class="badge badge-rose" style="margin-bottom: 4px;">REJECTED (Short Lifespan)</span>
+                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">
+                      18-month non-LTS lifecycle reaches End-of-Life during active deployment; unsuitable for reproducible, long-term engineering milestones.
+                    </div>
+                  </td>
+                </tr>
+                <tr style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid var(--accent-purple);">
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img src="../assets/images/Hilbert/jazzy-small.png" alt="ROS 2 Jazzy Jalisco Logo" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; flex-shrink: 0; background: rgba(255, 255, 255, 0.05); padding: 2px;">
+                      <div>
+                        <strong style="color: var(--accent-purple);">ROS 2 Jazzy Jalisco (LTS)</strong>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-emerald">May 23, 2024 &ndash; May 2029<br><span style="font-size: 11px;">(5-Year LTS)</span></span></td>
+                  <td>Ubuntu 24.04 LTS (Noble Numbat)<br><span style="font-size: 11.5px; color: var(--text-muted);">Linux Kernel 6.8+</span></td>
+                  <td>C++20 &bull; Python 3.12 &bull; GCC 13</td>
+                  <td><strong>Native Gazebo Sim (Harmonic / GZ 8.x)</strong> pairing via <code>ros_gz_bridge</code>; out-of-the-box <code>nav2_collision_monitor</code> and MPPI/Smac planners.</td>
+                  <td>
+                    <span class="badge badge-emerald" style="margin-bottom: 4px;">SELECTED (Capstone Baseline)</span>
+                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">
+                      Native alignment with dev workstations (WSL2 / Ubuntu 24.04) and Jetson (JetPack 7.x) bare-metal environments.
+                    </div>
+                  </td>
                 </tr>
                 <tr>
-                  <td><strong>ROS 2 Humble Hawksbill (LTS)</strong></td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <img src="../assets/images/Hilbert/humble-small.png" alt="ROS 2 Humble Hawksbill Logo" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; flex-shrink: 0; background: rgba(255, 255, 255, 0.05); padding: 2px;">
+                      <div>
+                        <strong>ROS 2 Humble Hawksbill (LTS)</strong>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="badge badge-blue">May 23, 2022 &ndash; May 2027<br><span style="font-size: 11px;">(5-Year LTS)</span></span></td>
                   <td>Ubuntu 22.04 LTS (Jammy Jellyfish)<br><span style="font-size: 11.5px; color: var(--text-muted);">Linux Kernel 5.15</span></td>
-                  <td><span class="badge badge-blue">May 2022 &ndash; May 2027 (5-Year LTS)</span></td>
                   <td>C++17 &bull; Python 3.10 &bull; GCC 11</td>
-                  <td>Paired with older Ignition Fortress / Gazebo Classic 11; stable Nav2 baseline, but pinned to older toolchains and reaches EOL midway through extended deployment cycles.</td>
-                  <td><strong>EVALUATED (Legacy Baseline)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>ROS 2 Iron Irwini</strong></td>
-                  <td>Ubuntu 22.04 / 23.10<br><span style="font-size: 11.5px; color: var(--text-muted);">Linux Kernel 6.2+</span></td>
-                  <td><span class="badge badge-rose">May 2023 &ndash; Nov 2024 (Non-LTS)</span></td>
-                  <td>C++17 &bull; Python 3.10/3.11</td>
-                  <td>Short 18-month release cycle; already reached End-of-Life (EOL) in late 2024. Lacks long-term security backports.</td>
-                  <td><strong>REJECTED (EOL)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>ROS 2 Rolling Ridley</strong></td>
-                  <td>Continuously rolling target (Debian / Ubuntu)</td>
-                  <td><span class="badge badge-amber">Rolling / Unversioned</span></td>
-                  <td>Bleeding-edge C++ / Python</td>
-                  <td>Continual ABI breaking changes and nightly package rebuilds; unsuitable for reproducible capstone engineering milestones.</td>
-                  <td><strong>REJECTED (Unstable ABI)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>ROS 2 Foxy / Galactic</strong></td>
-                  <td>Ubuntu 20.04 LTS (Focal Fossa)</td>
-                  <td><span class="badge badge-rose">EOL May 2023 / Nov 2022</span></td>
-                  <td>C++14 &bull; Python 3.8</td>
-                  <td>Legacy distributions; obsolete DDS vendor implementations, no security updates, incompatible with modern 2024+ compute architectures.</td>
-                  <td><strong>REJECTED (Deprecated)</strong></td>
+                  <td>Paired with older Ignition Fortress / Gazebo Classic 11; standard Nav2 baseline.</td>
+                  <td>
+                    <span class="badge badge-blue" style="margin-bottom: 4px;">EVALUATED (Legacy Baseline)</span>
+                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">
+                      Reaches EOL midway through extended deployment cycles; running on Ubuntu 24.04 requires containerized virtualization that adds IPC latency.
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div class="callout callout-purple">
-            <strong>Engineering Justification for ROS 2 Jazzy:</strong> ROS 2 Jazzy Jalisco on Ubuntu 24.04 LTS was chosen because its 5-year support window (active until May 2029) guarantees software maintenance beyond the capstone timeline. Jazzy provides native integration with modern Gazebo Harmonic, up-to-date Nav2 algorithmic optimizations (improved MPPI vectorized rollouts and Smac smooth path generation), modern C++20 language features, and enhanced CycloneDDS unicast performance essential for multi-agent network isolation.
+          <div class="callout callout-purple" style="margin-top: 16px;">
+            <strong style="font-size: 14.5px; color: var(--accent-purple); display: block; margin-bottom: 8px;">
+              🎯 Engineering Justification for ROS 2 Jazzy Jalisco
+            </strong>
+            <p style="margin: 0 0 10px 0; font-size: 13.5px; line-height: 1.6; color: var(--text-main);">
+              ROS 2 Jazzy Jalisco on Ubuntu 24.04 LTS was chosen as the operational baseline because its 5-year support window (active until May 2029) guarantees software maintenance beyond the capstone delivery timeline.
+            </p>
+            <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+              <li style="margin-bottom: 6px;">
+                <strong style="color: var(--text-main);">Native OS &amp; Compute Acceleration Parity:</strong> Jazzy aligns natively with Ubuntu 24.04 LTS running across both developer laptops (WSL2) and the onboard NVIDIA Jetson AGX Orin running JetPack 7.x. This eliminates Docker virtualization overhead, allowing direct bare-metal access to CUDA, TensorRT, and hardware communication ports (<code>/dev/ttyACM0</code> for STM32 micro-ROS).
+              </li>
+              <li style="margin-bottom: 6px;">
+                <strong style="color: var(--text-main);">Mature Simulation &amp; Safety Interlocks:</strong> Jazzy provides native integration with modern Gazebo Sim (Harmonic / GZ 8.x) via <code>ros_gz_bridge</code> alongside modern Nav2 algorithmic features&mdash;notably dynamic <code>nav2_collision_monitor</code> safety polygons and Smac smooth path planning out-of-the-box.
+              </li>
+              <li>
+                <strong style="color: var(--text-main);">Driver Ecosystem Availability:</strong> Crucial hardware packages (including <code>rplidar_ros</code>, <code>nmea_navsat_driver</code>, <code>robot_localization</code>, and <code>micro_ros_agent</code>) offer verified, stable builds under Jazzy without the dependency breaks or source compilation overhead present in Lyrical Luth.
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -246,7 +302,7 @@
                   <td><span class="badge badge-rose">Deprecated (gazebo_ros_pkgs)</span></td>
                   <td><span class="badge badge-blue">Moderate</span></td>
                   <td>Standard: Extensive legacy sensor plugins.</td>
-                  <td>Open Source (Apache 2.0)<br><span style="font-size: 11.5px; color: var(--accent-rose);">EOL in January 2025; no Ubuntu 24.04 packages</span></td>
+                  <td>Open Source (Apache 2.0)<br><span style="font-size: 11.5px; color: var(--accent-rose);">Reached End-of-Life (EOL) in January 2025; no official Ubuntu 24.04 packages available</span></td>
                   <td><strong>REJECTED (Deprecated / EOL)</strong></td>
                 </tr>
               </tbody>
@@ -257,7 +313,7 @@
             <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-purple);">
               <h4 style="font-size: 14px; color: var(--accent-purple); margin-bottom: 8px;">Why Gazebo Harmonic Over NVIDIA Isaac Sim?</h4>
               <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                While NVIDIA Isaac Sim provides unmatched photorealism and GPU-accelerated synthetic training data, it imposes strict hardware prerequisites (dedicated desktop NVIDIA RTX 3070+ GPUs with 8&ndash;12 GB VRAM) and a &gt;50 GB software footprint. In contrast, <strong>Gazebo Harmonic</strong> runs fluidly on standard student and laptop hardware (including Hilbert's Laptop), has zero proprietary licensing restrictions, and integrates natively with ROS 2 Jazzy without fragile bridge layers.
+                While NVIDIA Isaac Sim provides unmatched photorealism and GPU-accelerated synthetic training data, it imposes strict hardware prerequisites (dedicated desktop NVIDIA RTX 3070+ GPUs with 8&ndash;12 GB VRAM) and a &gt;50 GB software footprint. In contrast, <strong>Gazebo Harmonic</strong> runs fluidly on standard student and developer laptop workstations, has zero proprietary licensing restrictions, and integrates natively with ROS 2 Jazzy without fragile bridge layers.
               </p>
             </div>
 
@@ -276,7 +332,7 @@
               <div>
                 <strong style="color: var(--accent-amber); font-size: 14px;">Simulation Robot Model: AgileX Scout V2 (Proxy Platform)</strong>
                 <p style="margin: 6px 0 0 0; font-size: 13px; color: var(--text-main); line-height: 1.6;">
-                  The Phase 1 Gazebo simulation uses the publicly available <strong>AgileX Scout V2</strong> URDF/Xacro model as a proxy differential-drive UGV, since the custom FOD Hunter UGV CAD and URDF model is not yet complete. The AgileX Scout V2 has a comparable differential drive kinematic structure, LiDAR mounting position, and wheelbase geometry to our intended physical UGV platform, making it a suitable placeholder for Nav2 and SLAM tuning.
+                  The Phase 1 Gazebo simulation uses the publicly available <strong>AgileX Scout V2</strong> URDF/Xacro model as a proxy platform (a 4WD skid-steer chassis modeled via differential-drive kinematics), since the custom FOD Hunter UGV CAD and URDF model is currently being finalized. The AgileX Scout V2 provides comparable kinematic control behavior (commanded via <code>geometry_msgs/msg/Twist</code> with linear $x$ and angular $z$), LiDAR mounting elevation, and wheelbase footprint to our intended physical UGV platform, making it a robust placeholder for Nav2 path planning, costmap inflation, and obstacle avoidance tuning.
                 </p>
               </div>
             </div>
@@ -311,13 +367,15 @@
                   </ul>
                 </div>
               </div>
-              <div style="text-align: center; background: var(--bg-terminal); border-radius: 6px; padding: 20px; border: 1px solid var(--border-color);">
-                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">📹 NUS EA Field Autonomous Navigation &amp; Avoidance Demo</p>
-                <video controls style="max-width: 100%; border-radius: 6px; max-height: 360px;" poster="../assets/simulation/nus_ea_simulation_poster.png" preload="metadata">
-                  <source src="../assets/simulation/nus_ea_simulation_demo.mp4" type="video/mp4">
-                  <p style="color: var(--text-muted); font-size: 12px;">Your browser does not support HTML5 video. <a href="../assets/simulation/nus_ea_simulation_demo.mp4" style="color: var(--accent-purple);">Download the video (MP4)</a>.</p>
-                </video>
-                <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 8px; font-style: italic;">AgileX Scout V2 proxy model navigating the NUS EA Field occupancy grid map with Nav2 and SLAM Toolbox.</p>
+              <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--bg-terminal); border-radius: 6px; padding: 20px; border: 1px solid var(--border-color);">
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; text-align: center;">📹 NUS EA Field Autonomous Navigation &amp; Avoidance Demo</p>
+                <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                  <video controls style="max-width: 100%; width: auto; height: auto; max-height: 400px; border-radius: 6px; margin: 0 auto; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);" poster="../assets/simulation/nus_ea_simulation_poster.png" preload="metadata">
+                    <source src="../assets/simulation/nus_ea_simulation_demo.mp4" type="video/mp4">
+                    <p style="color: var(--text-muted); font-size: 12px;">Your browser does not support HTML5 video. <a href="../assets/simulation/nus_ea_simulation_demo.mp4" style="color: var(--accent-purple);">Download the video (MP4)</a>.</p>
+                  </video>
+                </div>
+                <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 10px; font-style: italic; text-align: center;">AgileX Scout V2 proxy model navigating the NUS EA Field occupancy grid map with Nav2 and SLAM Toolbox.</p>
               </div>
             </div>
           </div>
@@ -656,9 +714,9 @@
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
             <div style="background: rgba(0, 102, 204, 0.05); border: 1px solid rgba(0, 102, 204, 0.2); border-radius: 8px; padding: 16px;">
               <span class="badge badge-blue" style="margin-bottom: 8px;">Phase 1: Benchtop &amp; Corridor Testing</span>
-              <h4 style="font-size: 15px; color: var(--text-main); margin-bottom: 8px;">Private Router &amp; CycloneDDS Unicast (RPI 5 / Charan's Laptop)</h4>
+              <h4 style="font-size: 15px; color: var(--text-main); margin-bottom: 8px;">Private Router &amp; CycloneDDS Unicast (Aerial Companion Computer &amp; UGV Controller)</h4>
               <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                Operates across a dedicated local Wi-Fi router subnet (<code>192.168.1.0/24</code>) at 5 GHz. The <strong>simulated UAV agent runs on a Raspberry Pi 5 or Charan's Laptop</strong> running ROS 2 Jazzy. Employs <strong>Eclipse CycloneDDS</strong> configured with unicast peer discovery to eliminate multicast network storms and guarantee deterministic, low-latency (&lt;15 ms) telemetry transfer to Hilbert's Laptop.
+                Operates across a dedicated local Wi-Fi router subnet (<code>192.168.1.0/24</code>) at 5 GHz. The <strong>Aerial Companion Computer / Simulated UAV Ground Station</strong> (Raspberry Pi 5 / Workstation) communicates with the <strong>UGV Main Compute Node / Navigation Controller</strong> over ROS 2 Jazzy. Employs <strong>Eclipse CycloneDDS</strong> with explicit unicast peer discovery configured via the <code>cyclonedds.xml</code> profile using <code>&lt;Peers&gt;</code> elements. This suppresses multicast traffic across subnets that block mDNS/multicast, eliminates network storms, and guarantees deterministic, low-latency (&lt;15 ms) telemetry transfer.
               </p>
             </div>
 
@@ -666,7 +724,7 @@
               <span class="badge badge-purple" style="margin-bottom: 8px;">Phase 2: Outdoor Physical Airfield</span>
               <h4 style="font-size: 15px; color: var(--text-main); margin-bottom: 8px;">Microhard P900 V2 Encrypted RF Datalink</h4>
               <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                Transitions to air-gapped 917–925 MHz Frequency Hopping Spread Spectrum (FHSS) serial transceivers with hardware AES-256 encryption. Delivers robust &gt;5 km Line-of-Sight telemetry across active airfield runways, fully compliant with Singapore IMDA TS SRD standards.
+                Transitions to air-gapped 917&ndash;925 MHz Frequency Hopping Spread Spectrum (FHSS) serial transceivers with hardware AES-256 encryption. Delivers robust &gt;5 km Line-of-Sight telemetry across active airfield runways, fully compliant with Singapore IMDA TS SRD standards.
               </p>
             </div>
           </div>
@@ -674,7 +732,7 @@
           <!-- Structured JSON Message Architecture -->
           <h3 style="font-size: 15px; color: var(--text-main); margin-bottom: 10px;">Structured C2 Telemetry Interfaces</h3>
           <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
-            To preserve wireless bandwidth and eliminate multi-second video streaming latency, all aerial computer vision inference runs <em>locally at the edge</em> on the UAV. Only compact, structured JSON telemetry packets (&lt; 2 KB) are transmitted across the datalink:
+            To preserve wireless bandwidth and eliminate multi-second video streaming latency, all aerial computer vision inference runs <em>locally at the edge</em> on the UAV. Only compact, structured JSON telemetry packets (&lt; 2 KB) are transmitted across the datalink with 7-decimal-place geodetic precision for centimeter-level RTK alignment:
           </p>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
@@ -684,13 +742,13 @@
               </div>
               <div class="code-block" style="font-size: 12px; line-height: 1.45; background: #0b1120; border-radius: 6px; padding: 12px; border: 1px solid var(--border-color); overflow-x: auto;">
                 <pre style="margin: 0; color: #cbd5e1;"><code>{
-  "header": { "msg_id": "FOD-2026-0042", "timestamp": 1726561800.12 },
+  "header": { "msg_id": "FOD-2026-0042", "timestamp": 1726561800.125 },
   "source": "UAV-ALPHA",
   "target": "UGV-BRAVO",
   "target_type": "METALLIC_FASTENER",
   "confidence": 0.942,
-  "wgs84_coords": { "lat": 1.300582, "lon": 103.771239, "alt_m": 18.5 },
-  "utm_coords": { "easting_m": 363241.18, "northing_m": 143789.24 },
+  "wgs84_coords": { "lat": 1.3005821, "lon": 103.7712394, "alt_m": 18.52 },
+  "utm_coords": { "easting_m": 363241.182, "northing_m": 143789.245 },
   "recommended_remediation": "VACUUM_AND_MAGNET",
   "priority": "HIGH"
 }</code></pre>
@@ -703,9 +761,9 @@
               </div>
               <div class="code-block" style="font-size: 12px; line-height: 1.45; background: #0b1120; border-radius: 6px; padding: 12px; border: 1px solid var(--border-color); overflow-x: auto;">
                 <pre style="margin: 0; color: #cbd5e1;"><code>{
-  "header": { "seq": 10842, "timestamp": 1726561802.45 },
+  "header": { "seq": 10842, "timestamp": 1726561802.450 },
   "vehicle_id": "UGV-BRAVO",
-  "current_pose": { "x": 124.5, "y": 8.2, "yaw_deg": 4.1 },
+  "current_pose": { "x": 124.52, "y": 8.21, "yaw_deg": 4.12 },
   "velocity_kmh": 10.4,
   "battery_state": { "voltage_v": 51.2, "soc_pct": 82.5 },
   "nav_mode": "NAVIGATING_TO_FOD",
@@ -718,7 +776,7 @@
 
           <!-- Fail-Safe Protocol Callout -->
           <div class="callout callout-rose" style="margin-top: 18px;">
-            <strong>Autonomous Safety Fail-Safe:</strong> An asynchronous heartbeat monitor operates at 0.5 Hz. If signal loss exceeds 2.0 seconds, the UGV automatically executes an immediate deceleration stop, safely clears the runway centerline, and activates hazard visual beacons until telemetry is re-established.
+            <strong>Autonomous Safety Fail-Safe:</strong> An asynchronous heartbeat monitor operates at $2.0\text{ Hz}$ (500 ms period). If signal loss exceeds $3.0\text{ seconds}$ (6 consecutive missed pings), the UGV automatically executes an immediate deceleration stop, safely clears the runway centerline, and activates hazard visual beacons until telemetry is re-established.
           </div>
 
           <!-- FULL COMMS DOCUMENTATION BUTTON -->

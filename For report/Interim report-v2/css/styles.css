@@ -1134,9 +1134,11 @@ img, video {
   margin-top: auto;
   background: #08080a;
   border-top: 1px solid var(--apple-border-light);
-  padding: 40px 0;
+  padding: 40px 0 44px 0;
   font-size: 12.5px;
   color: var(--apple-text-tertiary);
+  position: relative;
+  z-index: 10;
 }
 
 .apple-footer-inner {
@@ -1150,14 +1152,55 @@ img, video {
   gap: 16px;
 }
 
+.apple-footer-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.apple-footer-legal {
+  font-size: 11.5px;
+  color: var(--apple-text-tertiary, #86868b);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.apple-footer-legal p {
+  margin: 0 0 4px 0;
+}
+
+.apple-footer-divider {
+  height: 1px;
+  background: var(--apple-border-light, rgba(255, 255, 255, 0.1));
+  margin: 14px 0;
+}
+
+.apple-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+}
+
+.apple-footer-copyright {
+  color: var(--apple-text-tertiary, #86868b);
+}
+
 .apple-footer-links {
   display: flex;
   gap: 20px;
   list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
 }
 
 .apple-footer-links a {
   color: var(--apple-text-tertiary);
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .apple-footer-links a:hover {
@@ -1900,8 +1943,9 @@ tr.gantt-row-hidden {
 /* ── Apple-Style Return To Top Button ────────────────────────────── */
 .apple-back-to-top {
   position: fixed;
-  bottom: 26px;
-  right: 26px;
+  bottom: 26px !important;
+  left: 26px !important;
+  right: auto !important;
   z-index: 9999;
   display: inline-flex;
   align-items: center;
