@@ -20,17 +20,17 @@
 
       <ul class="apple-nav-links">
         <li><a href="../../index.html" class="apple-nav-link">Overview</a></li>
-        <li><a href="../../1-introduction.html" class="apple-nav-link">Introduction</a></li>
+        <li><a href="../../1-introduction.html" class="apple-nav-link active">Introduction</a></li>
         <li><a href="../../2-design-overview.html" class="apple-nav-link">Design</a></li>
         <li><a href="../../3-individual-scopes.html" class="apple-nav-link">Scopes</a></li>
         <li><a href="../../4-subsystems/index.html" class="apple-nav-link">Subsystems</a></li>
         <li><a href="../../5-timeline.html" class="apple-nav-link">Timeline</a></li>
         <li><a href="../../6-references.html" class="apple-nav-link">References</a></li>
-        <li><a href="../../7-documentation.html" class="apple-nav-link active">Documentation</a></li>
+        <li><a href="../../7-documentation.html" class="apple-nav-link">Documentation</a></li>
       </ul>
 
       <div class="apple-nav-actions">
-        <a href="../../7-documentation.html" class="apple-btn-pill">← Back to Documentation</a>
+        <a href="../../1-introduction.html" class="apple-btn-pill">← Back to Introduction</a>
         <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
       </div>
     </div>
@@ -52,52 +52,85 @@
   <main class="apple-main-content" style="padding-top: 40px;">
     <div class="apple-container" style="padding-bottom: 60px;">
 
-<!-- INTERVIEWEE PROFILES -->
+        <!-- INTERVIEWEE AVATARS & INSIGHTS -->
         <div class="card-box" style="border-top: 3px solid var(--accent-blue);">
           <div class="card-header">
-            <div class="card-title">👥 Interviewees</div>
+            <div class="card-title">👥 Three voices from the runway</div>
             <span class="badge badge-blue">Primary Research</span>
           </div>
-          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
-            To ensure the engineering specifications of <strong>Project FOD Hunter</strong> are grounded in real operational constraints rather than theoretical assumptions, comprehensive primary interviews were conducted with three key airside stakeholders representing industry leadership, military maintenance technicians, and air traffic control:
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Three perspectives shaped the project requirements: industry deployment, frontline maintenance, and airbase operations. Select an interviewee to read the key insight and open the complete interview record.
           </p>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-            <!-- Person 1 -->
-            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                <h4 style="font-size: 15px; margin: 0; color: var(--text-main);">Mr. Harry Lim</h4>
-                <span class="badge badge-purple">Industry Partner</span>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;">
+            <!-- Harry Lim -->
+            <article style="position: relative; overflow: hidden; background: linear-gradient(145deg, rgba(88, 166, 255, 0.12), var(--card-bg-subtle, rgba(255,255,255,0.02))); border: 1px solid var(--border-color); border-radius: 18px; padding: 20px;">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div aria-hidden="true" style="width: 62px; height: 62px; display: grid; place-items: center; flex: 0 0 62px; border-radius: 50%; background: linear-gradient(145deg, #dbeafe, #93c5fd); font-size: 34px; box-shadow: 0 8px 18px rgba(37, 99, 235, 0.18);">🧑🏻‍💼</div>
+                <div>
+                  <h3 style="font-size: 16px; margin: 0 0 3px; color: var(--text-main);">Mr. Harry Lim</h3>
+                  <p style="font-size: 12.5px; color: var(--accent-blue); font-weight: 600; margin: 0;">IOI Inspire · Industry Partner</p>
+                </div>
               </div>
-              <p style="font-size: 12.5px; color: var(--accent-purple); font-weight: 600; margin-bottom: 8px;">IOI Inspire</p>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                Provides commercial airside automation perspectives, technology deployment viability, and operational economics for next-generation aerodrome expansions.
-              </p>
-            </div>
+              <div style="position: relative; margin-bottom: 16px; padding: 14px 15px; border-radius: 14px; background: var(--card-bg); color: var(--text-main); font-size: 13px; line-height: 1.55; box-shadow: 0 5px 16px rgba(0,0,0,0.08);">
+                “An autonomous vehicle could inspect more frequently, follow an optimum path, and release servicemen for other critical roles.”
+              </div>
+              <details style="margin-top: 4px;">
+                <summary class="btn btn-deep-dive" style="display: inline-block; cursor: pointer;">Read Harry's interview text</summary>
+                <div style="margin-top: 12px; padding: 14px; border-left: 3px solid var(--accent-blue); background: var(--card-bg); color: var(--text-muted); font-size: 12.5px; line-height: 1.6;">
+                  <p><strong>10 September 2026 · Industry Partner</strong></p>
+                  <p><strong>Current process:</strong> “It's manual. They involve two staff, one of them driving a vehicle... One person drives; the vehicle commander will look out for FOD. When they detect FOD, they will stop the vehicle, and then the vehicle commander will step out of the car to pick up the FOD.”</p>
+                  <p><strong>Operational opportunity:</strong> “Autonomous vehicle can inspect the runway more frequently. Autonomous vehicle, if it has an optimum path, pre-designed path, then the inspection can be faster... Autonomous vehicle means servicemen can be released for other critical roles.”</p>
+                  <p><strong>Design implication:</strong> The solution should use a repeatable route, increase inspection frequency, and measure detection thoroughness against known test objects.</p>
+                </div>
+              </details>
+            </article>
 
-            <!-- Person 2 -->
-            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-emerald);">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                <h4 style="font-size: 15px; margin: 0; color: var(--text-main);">3SG(NS) Prady</h4>
-                <span class="badge badge-emerald">Air Force Technician</span>
+            <!-- Prady -->
+            <article style="position: relative; overflow: hidden; background: linear-gradient(145deg, rgba(46, 160, 67, 0.12), var(--card-bg-subtle, rgba(255,255,255,0.02))); border: 1px solid var(--border-color); border-radius: 18px; padding: 20px;">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div aria-hidden="true" style="width: 62px; height: 62px; display: grid; place-items: center; flex: 0 0 62px; border-radius: 50%; background: linear-gradient(145deg, #dcfce7, #86efac); font-size: 34px; box-shadow: 0 8px 18px rgba(22, 163, 74, 0.18);">🧑🏽‍🔧</div>
+                <div>
+                  <h3 style="font-size: 16px; margin: 0 0 3px; color: var(--text-main);">3SG(NS) Prady</h3>
+                  <p style="font-size: 12.5px; color: var(--accent-emerald); font-weight: 600; margin: 0;">Paya Lebar Air Base · Technician</p>
+                </div>
               </div>
-              <p style="font-size: 12.5px; color: var(--accent-emerald); font-weight: 600; margin-bottom: 8px;">Paya Lebar Air Base (PLAB)</p>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                Frontline ground crew technician directly involved in manual runway sweep protocols, pickup truck patrols, sweeper coordination, and FOD hazard recovery.
-              </p>
-            </div>
+              <div style="position: relative; margin-bottom: 16px; padding: 14px 15px; border-radius: 14px; background: var(--card-bg); color: var(--text-main); font-size: 13px; line-height: 1.55; box-shadow: 0 5px 16px rgba(0,0,0,0.08);">
+                “The smaller pieces are the ones we need help with. Rivets can cause damage, and sweepers sometimes miss them.”
+              </div>
+              <details style="margin-top: 4px;">
+                <summary class="btn btn-deep-dive" style="display: inline-block; cursor: pointer;">Read Prady's interview text</summary>
+                <div style="margin-top: 12px; padding: 14px; border-left: 3px solid var(--accent-emerald); background: var(--card-bg); color: var(--text-muted); font-size: 12.5px; line-height: 1.6;">
+                  <p><strong>16 September 2026 · Air Force Technician</strong></p>
+                  <p><strong>Manual burden:</strong> “Every day. Every day you need to do.” When contractors are off duty, personnel use a D-Max or tractor, high-beam lights, and a broom while walking alongside the vehicle.</p>
+                  <p><strong>Critical debris:</strong> “Screws, rivets are quite common. Rocks, screws, rivets... actually, bones are quite common.” The interview also describes shattered glass and pavement fragments.</p>
+                  <p><strong>Engineering need:</strong> “It’s the smaller pieces which we need help with... the ones that can actually cause damage, sometimes the sweeper will not pick it up.”</p>
+                </div>
+              </details>
+            </article>
 
-            <!-- Person 3 -->
-            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-amber);">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                <h4 style="font-size: 15px; margin: 0; color: var(--text-main);">LTA(NS) Elnathan</h4>
-                <span class="badge badge-amber">Air Traffic Controller</span>
+            <!-- Elnathan -->
+            <article style="position: relative; overflow: hidden; background: linear-gradient(145deg, rgba(217, 119, 6, 0.12), var(--card-bg-subtle, rgba(255,255,255,0.02))); border: 1px solid var(--border-color); border-radius: 18px; padding: 20px;">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div aria-hidden="true" style="width: 62px; height: 62px; display: grid; place-items: center; flex: 0 0 62px; border-radius: 50%; background: linear-gradient(145deg, #fef3c7, #fcd34d); font-size: 34px; box-shadow: 0 8px 18px rgba(217, 119, 6, 0.18);">🧑🏻‍✈️</div>
+                <div>
+                  <h3 style="font-size: 16px; margin: 0 0 3px; color: var(--text-main);">LTA(NS) Elnathan</h3>
+                  <p style="font-size: 12.5px; color: var(--accent-amber); font-weight: 600; margin: 0;">Tengah Air Base · Air Traffic Controller</p>
+                </div>
               </div>
-              <p style="font-size: 12.5px; color: var(--accent-amber); font-weight: 600; margin-bottom: 8px;">Tengah Air Base (TAB)</p>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                Aerodrome controller managing flight windows, runway clearance times, emergency closures, and airspace regulations governing drone/vehicle runway incursions.
-              </p>
-            </div>
+              <div style="position: relative; margin-bottom: 16px; padding: 14px 15px; border-radius: 14px; background: var(--card-bg); color: var(--text-main); font-size: 13px; line-height: 1.55; box-shadow: 0 5px 16px rgba(0,0,0,0.08);">
+                “A drone inspection follows a set course, but operators still have to visually spot everything. It is used only once or twice a month.”
+              </div>
+              <details style="margin-top: 4px;">
+                <summary class="btn btn-deep-dive" style="display: inline-block; cursor: pointer;">Read Elnathan's interview text</summary>
+                <div style="margin-top: 12px; padding: 14px; border-left: 3px solid var(--accent-amber); background: var(--card-bg); color: var(--text-muted); font-size: 12.5px; line-height: 1.6;">
+                  <p><strong>16 September 2026 · Air Traffic Controller</strong></p>
+                  <p><strong>Current drone use:</strong> “The drone has a set course plotted already... You have to see visually. There's no indicators that pop up.”</p>
+                  <p><strong>Frequency:</strong> “It’s probably used like once or twice a month. So, mostly it’s just the car, driver, a car and you, the officer are actually going up and down looking at the roads.”</p>
+                  <p><strong>Operational value:</strong> A system that automatically identifies runway debris and cues a ground robot could reduce dependence on visual inspection and support faster runway recovery after an incident.</p>
+                </div>
+              </details>
+            </article>
           </div>
         </div>
 
