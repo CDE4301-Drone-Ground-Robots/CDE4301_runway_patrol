@@ -965,7 +965,7 @@ document.addEventListener('DOMContentLoaded', () => {
       prefix = matches ? matches.join('') : '';
     }
 
-    // 1. Normalize Top Nav Links: Remove Simulation, Add 7. Documentation
+    // 1. Normalize Top Nav Links: Remove Simulation, Add Documentation
     const navLinksList = appleNav.querySelector('.apple-nav-links');
     if (navLinksList) {
       const isDocActive = window.location.pathname.includes('7-documentation.html') || window.location.pathname.includes('/7-documentation/');
@@ -980,18 +980,21 @@ document.addEventListener('DOMContentLoaded', () => {
         // Remove standalone "Simulation" link from top navbar
         if (text === 'Simulation' || href.includes('simulation.html')) {
           a.href = `${prefix}7-documentation.html`;
-          a.textContent = '7. Documentation';
+          a.textContent = 'Documentation';
           if (isDocActive) a.classList.add('active');
           hasDocsLink = true;
-        } else if (text.includes('7. Documentation') || href.includes('7-documentation.html')) {
+        } else if (text === 'Documentation' || text.includes('Documentation') || href.includes('7-documentation.html')) {
+          a.textContent = 'Documentation';
           hasDocsLink = true;
           if (isDocActive) a.classList.add('active');
+        } else if (isDocActive) {
+          a.classList.remove('active');
         }
       });
 
       if (!hasDocsLink) {
         const docLi = document.createElement('li');
-        docLi.innerHTML = `<a href="${prefix}7-documentation.html" class="apple-nav-link ${isDocActive ? 'active' : ''}">7. Documentation</a>`;
+        docLi.innerHTML = `<a href="${prefix}7-documentation.html" class="apple-nav-link ${isDocActive ? 'active' : ''}">Documentation</a>`;
         navLinksList.appendChild(docLi);
       }
     }
@@ -1002,7 +1005,9 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileDrawer.querySelectorAll('a').forEach(a => {
         if (a.textContent.includes('Simulation') || (a.getAttribute('href') || '').includes('simulation.html')) {
           a.href = `${prefix}7-documentation.html`;
-          a.textContent = '7. Documentation';
+          a.textContent = 'Documentation';
+        } else if (a.textContent.includes('Documentation') || (a.getAttribute('href') || '').includes('7-documentation.html')) {
+          a.textContent = 'Documentation';
         }
       });
     }
