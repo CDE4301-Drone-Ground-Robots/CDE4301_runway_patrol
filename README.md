@@ -16,7 +16,7 @@ _In Collaboration with the Republic of Singapore Air Force (RSAF) & RAiD_
 | **Takeuchi Asuka** | `A0308200R` | Project Manager, Vacuum FOD Picking Module and Suspension            |
 | **Zacarias Ng**    | `A0308821B` | Chassis Mechanical Design, Differential Drive Kinematics & CAD       |
 | **Gabriel Tan**    | `A0308452H` | Computer Vision, YOLO Perception (Overseeing Electrical)             |
-| **Bryan Ng**       | `A0308298E` | Electrical Power Distribution, BMS, Docking Station & STM32 Firmware |
+| **Bryan Ng**       | `A0301161R` | Electrical Power Distribution, BMS, Docking Station & STM32 Firmware |
 
 ---
 
