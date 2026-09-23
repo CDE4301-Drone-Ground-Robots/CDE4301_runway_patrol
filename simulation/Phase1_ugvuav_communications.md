@@ -11,33 +11,30 @@
   <table>
     <tr>
       <td colspan="2" align="center">
-        <b>🎬 Synchronized Dual-Agent Demonstration (Full System Sync)</b><br>
-        <sub><i>Real-time synchronized execution showing UAV C2 Tactical Ground Station dispatch (RPi5) and UGV Gazebo/Nav2 execution (Laptop) over direct Ethernet datalink.</i></sub><br><br>
+        <b>🎬 Synchronized Dual-Agent Demonstration (Full System Sync)</b><br><br>
         <a href="assets/UAV-UGV%20Communication%20video.mp4">
-          <img src="assets/uav_ugv_comms_poster.jpg" alt="Synchronized Dual-Agent Demonstration" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
+          <img src="assets/uav_ugv_comms_demo.gif" alt="Synchronized Dual-Agent Demonstration Demo" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
         </a>
         <br><br>
-        <sub><a href="assets/UAV-UGV%20Communication%20video.mp4"><b>▶ Click to Watch / Download Full 60 FPS Video (<code>assets/UAV-UGV Communication video.mp4</code>)</b></a></sub>
+        <sub><a href="assets/UAV-UGV%20Communication%20video.mp4"><b>▶ Download / Watch Full 60 FPS Video (assets/UAV-UGV Communication video.mp4)</b></a></sub>
       </td>
     </tr>
     <tr>
       <td align="center" width="50%">
-        <b>🍓 Machine 1: Raspberry Pi 5 (UAV C2 Station)</b><br>
-        <sub><i>Live 2D Tactical Map GUI, real-time <code>/map</code> stream ingestion, and telemetry uplink tracking.</i></sub><br><br>
+        <b>🍓 Machine 1: Raspberry Pi 5 (UAV C2 Station)</b><br><br>
         <a href="assets/230926%20UAVUGV%20comms%20Rpi5%20.mp4">
-          <img src="assets/rpi5_comms_poster.jpg" alt="Raspberry Pi 5 C2 Ground Station Screen Recording" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
+          <img src="assets/rpi5_comms_demo.gif" alt="Raspberry Pi 5 C2 Ground Station Screen Recording" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
         </a>
         <br><br>
-        <sub><a href="assets/230926%20UAVUGV%20comms%20Rpi5%20.mp4"><b>▶ Click to Watch / Download RPi5 Video (<code>assets/230926 UAVUGV comms Rpi5 .mp4</code>)</b></a></sub>
+        <sub><a href="assets/230926%20UAVUGV%20comms%20Rpi5%20.mp4"><b>▶ Download / Watch RPi5 Video (assets/230926 UAVUGV comms Rpi5 .mp4)</b></a></sub>
       </td>
       <td align="center" width="50%">
-        <b>💻 Machine 2: Laptop (Gazebo & Nav2 UGV)</b><br>
-        <sub><i>Gazebo Harmonic 3D Digital Twin, Nav2 autonomous path planner, RViz2, and telemetry bridge.</i></sub><br><br>
+        <b>💻 Machine 2: Laptop (Gazebo & Nav2 UGV)</b><br><br>
         <a href="assets/230926%20UAVUGV%20comms%20Laptop.mp4">
-          <img src="assets/laptop_comms_poster.jpg" alt="Laptop Gazebo & Nav2 Screen Recording" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
+          <img src="assets/laptop_comms_demo.gif" alt="Laptop Gazebo & Nav2 Screen Recording" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
         </a>
         <br><br>
-        <sub><a href="assets/230926%20UAVUGV%20comms%20Laptop.mp4"><b>▶ Click to Watch / Download Laptop Video (<code>assets/230926 UAVUGV comms Laptop.mp4</code>)</b></a></sub>
+        <sub><a href="assets/230926%20UAVUGV%20comms%20Laptop.mp4"><b>▶ Download / Watch Laptop Video (assets/230926 UAVUGV comms Laptop.mp4)</b></a></sub>
       </td>
     </tr>
   </table>
