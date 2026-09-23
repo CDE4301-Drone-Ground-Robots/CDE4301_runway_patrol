@@ -36,13 +36,11 @@
                 <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
             </geometry>
         </collision>
-        <collision>
-            <origin xyz="0 0 ${base_z_size/6}" rpy="0 0 0" />
-            <geometry>
-                <box size="${base_x_size/6} ${base_y_size*1.65} ${base_z_size/3}"/>
-            </geometry>
-        </collision>
     </link>
+
+    <gazebo reference="base_link">
+        <self_collide>false</self_collide>
+    </gazebo>
 
     <link name="base_footprint"/>
 
@@ -204,7 +202,7 @@
             <left_joint>rear_left_wheel</left_joint>
             <right_joint>front_right_wheel</right_joint>
             <right_joint>rear_right_wheel</right_joint>
-            <wheel_separation>${track}</wheel_separation>
+            <wheel_separation>0.68</wheel_separation>
             <wheel_radius>${wheel_radius}</wheel_radius>
             <max_linear_acceleration>4.0</max_linear_acceleration>
             <min_linear_acceleration>-4.0</min_linear_acceleration>

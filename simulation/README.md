@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛩️ Aarhus Airport FOD Hunter & Autonomous Navigation UGV
+# 🛩️ Aarhus Airport Runway Patrol & Autonomous Navigation UGV
 
 <p align="center">
   <b>Autonomous Runway Inspection & Navigation System</b><br>
@@ -98,9 +98,10 @@ The system supports two distinct outdoor simulation environments:
     <td width="50%">
       <h3>🧠 Autonomous Stack</h3>
       <ul>
-        <li><b>Global Planning:</b> Nav2 NavFn (A* algorithm) covering the full 100m runway</li>
-        <li><b>Local Controller:</b> DWB / Velocity smoother with collision avoidance</li>
-        <li><b>Obstacle Avoidance:</b> Real-time dynamic costmap inflation & obstacle avoidance</li>
+        <li><b>Global Planning:</b> Nav2 Smac Planner 2D (A*) for collision-free shortest paths with zero-radius pivot turn support</li>
+        <li><b>Local Controller:</b> Regulated Pure Pursuit (RPP) with curvature speed scaling & in-place rotation</li>
+        <li><b>Navigation Speed:</b> High-speed patrol up to <b>10 km/h</b> (2.78 m/s) with dynamic cornering regulation</li>
+        <li><b>Obstacle Avoidance:</b> Expanded 1.20m inflation safety boundary around obstacles & pedestrians</li>
         <li><b>Visualization:</b> Pre-configured RViz2 inspection interface</li>
       </ul>
     </td>
@@ -274,6 +275,40 @@ Follow these simple mouse actions in the **RViz2 window**:
 **Result:**
 - A **green line** (global path) will appear connecting the robot to the goal.
 - The robot will immediately start driving autonomously in both Gazebo and RViz2 while dynamically avoiding any spawned obstacles!
+
+---
+
+## ⚡ Nav2 Performance & Kinematics Configuration
+
+The autonomous navigation stack has been optimized for the AgileX Scout v2 4WD platform:
+
+| Parameter | Value | Description |
+| :--- | :--- | :--- |
+| **Global Planner** | `SmacPlanner2D` | 2D A* grid planner with full 0-radius pivot rotation support |
+| **Local Controller** | `RegulatedPurePursuitController` | Path tracking with lookahead regulation & collision detection |
+| **Max Linear Velocity** | **$2.78\text{ m/s}$ ($10.0\text{ km/h}$)** | High-speed runway & courtyard traverse |
+| **Min Lookahead Distance** | **$1.00\text{ m}$** (Max: $3.50\text{ m}$) | Lookahead dynamically scaled with vehicle speed |
+| **Rotate-to-Heading** | `True` ($\Delta\theta > 45^\circ$) | In-place zero-radius turns before setting off on new path segments |
+| **Curvature Speed Scaling** | $R_{\min} = 1.20\text{ m}$, $V_{\min} = 0.60\text{ m/s}$ | Automatically reduces speed on tight corners to prevent skid-steer drift |
+| **Inflation Radius** | **$1.20\text{ m}$** (`cost_scaling_factor: 2.0`) | Enhanced safety margin around dynamic pedestrian obstacles |
+
+---
+
+## 🚁 Raspberry Pi 5 (Simulated UAV) Waypoint Integration
+
+You can connect an external **Raspberry Pi 5** (or simulated UAV node) over your local network to:
+1. **View the live map** (NUS EA Field or Runway) and real-time UGV location.
+2. **Send navigation goals** (single clicks or multi-point patrol missions) directly from the RPi5 to the UGV in Gazebo.
+
+### Quick Start on RPi5:
+```bash
+# 1. Ensure matching ROS_DOMAIN_ID on both PC and RPi5:
+export ROS_DOMAIN_ID=0
+
+# 2. Launch interactive 2D map viewer & waypoint sender:
+ros2 run runway_navigation uav_waypoint_commander
+```
+> 📖 **Full Setup Instructions:** See the complete [Phase 1 UAV-UGV Communication Guide](file:///home/oliver/runway_sim_ws/Phase1_ugvuav_communications.md) for network setup, headless CLI mode, and Python script automation.
 
 ---
 

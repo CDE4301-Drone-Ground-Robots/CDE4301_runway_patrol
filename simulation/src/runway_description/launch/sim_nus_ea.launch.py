@@ -7,10 +7,15 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 def generate_launch_description():
     pkg_dir = get_package_share_directory('runway_description')
     sim_launch = os.path.join(pkg_dir, 'launch', 'sim.launch.py')
+    world_file = os.path.join(pkg_dir, 'worlds', 'nus_ea_field.sdf')
 
     return LaunchDescription([
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(sim_launch),
-            launch_arguments={'world_name': 'nus_ea_field'}.items()
+            launch_arguments={
+                'world_name': 'nus_ea_field',
+                'world': world_file,
+            }.items()
         )
     ])
+

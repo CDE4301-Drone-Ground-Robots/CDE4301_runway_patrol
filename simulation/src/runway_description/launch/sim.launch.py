@@ -1,7 +1,8 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, DeclareLaunchArgument, AppendEnvironmentVariable
+from launch.actions import ExecuteProcess, DeclareLaunchArgument, AppendEnvironmentVariable, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution, PythonExpression
 from launch_ros.actions import Node
 
@@ -17,7 +18,11 @@ def generate_launch_description():
     )
     world_arg = DeclareLaunchArgument(
         'world',
-        default_value=PythonExpression(["'", pkg_dir, "/worlds/", LaunchConfiguration('world_name'), ".sdf'"]),
+        default_value=PathJoinSubstitution([
+            pkg_dir,
+            'worlds',
+            PythonExpression(["'", LaunchConfiguration('world_name'), ".sdf'"])
+        ]),
         description='Full path to Gazebo world SDF file'
     )
     spawn_x_arg = DeclareLaunchArgument(
@@ -58,7 +63,6 @@ def generate_launch_description():
         name='GZ_FILE_PATH',
         value=gz_resource_paths
     )
-
     # Convert Xacro to Robot State Publisher
     robot_description = Command(['xacro ', xacro_file])
 
@@ -82,7 +86,7 @@ def generate_launch_description():
         executable='create',
         arguments=[
             '-name', 'runway_ugv',
-            '-topic', 'robot_description',
+            '-string', robot_description,
             '-x', LaunchConfiguration('spawn_x'),
             '-y', LaunchConfiguration('spawn_y'),
             '-z', LaunchConfiguration('spawn_z'),
@@ -96,6 +100,7 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
+            '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
             '/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist',
             '/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry',
             '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
