@@ -16,3 +16,7 @@ __pycache__/
 *.swp
 *~
 .DS_Store
+
+# Local helper scripts
+push_simulation.sh
+pull_simulation.sh
