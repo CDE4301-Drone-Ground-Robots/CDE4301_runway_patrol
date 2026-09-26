@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>4.1 Mechanical Subsystem - FOD Hunter Interim Report</title>
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/styles.css?v=4.2">
 </head>
 <body>
 
@@ -101,11 +101,17 @@
           </div>
         </div>
 
-        <!-- 1. CHASSIS: ITERATIONS & FEA SIMULATIONS -->
+        <!-- 1. CHASSIS DESIGN -->
+        <h2 style="font-size: 22px; color: var(--text-main); margin: 34px 0 14px;">1. Chassis Design</h2>
+
+        <!-- 1.1 STRUCTURAL DESIGN -->
         <div class="card-box">
           <div class="card-header">
-            <div class="card-title">1. Chassis Design: Iterations &amp; FEA Structural Analysis</div>
-            <span class="badge badge-blue">SolidWorks CAD &amp; Simulation</span>
+            <div class="card-title">1.1 Structural Design</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-blue">Zacarias</span>
+              <span class="badge badge-blue">SolidWorks CAD &amp; Simulation</span>
+            </div>
           </div>
           
           <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
@@ -502,11 +508,14 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
           </div>
         </div>
 
-        <!-- 3. MOTOR & POWERTRAIN REQUIREMENTS -->
+        <!-- 1.2 MOTOR & POWERTRAIN REQUIREMENTS -->
         <div class="card-box">
           <div class="card-header">
-            <div class="card-title">3. Motor &amp; Powertrain Requirements: Mathematical Sizing</div>
-            <span class="badge badge-emerald">Powertrain Engineering</span>
+            <div class="card-title">1.2 Motor &amp; Powertrain Requirements</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-blue">Hilbert</span>
+              <span class="badge badge-emerald">Powertrain Engineering</span>
+            </div>
           </div>
 
           <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
@@ -547,11 +556,14 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
           </div>
         </div>
 
-        <!-- 4. STEERING SYSTEM COMPARISON -->
+        <!-- 1.3 STEERING SYSTEM COMPARISON -->
         <div class="card-box">
           <div class="card-header">
-            <div class="card-title">4. Steering System Architecture Comparison</div>
-            <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Kinematic Analysis</span>
+            <div class="card-title">1.3 Steering System Architecture Comparison</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-blue">Hilbert</span>
+              <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Kinematic Analysis</span>
+            </div>
           </div>
 
           <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
@@ -609,6 +621,34 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
           </div>
         </div>
 
+        <!-- 2. SUSPENSION SUBSYSTEM -->
+        <h2 style="font-size: 22px; color: var(--text-main); margin: 34px 0 14px;">2. Suspension Subsystem</h2>
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">2. Suspension Subsystem</div>
+            <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Asuka</span>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            The suspension subsystem is designed for the 65 kg autonomous runway FOD patrol UGV. Its requirements include a 20 mm shock stroke, 40%-50% static sag to centre the piston, 10-15 km/h operating speed, and a 16.25 kg corner mass budget. The documentation explains how suspension compliance protects the camera, LiDAR, and IMU from vibration, preserves the vacuum intake seal, maintains tyre traction during differential skid steering, and dissipates impact energy. It develops a first-principles mass-spring-damper model, transfer function, natural and damped frequency calculations, motion-ratio and wheel-rate relationships, and a spring-rate comparison. The 100 lbs/in spring is selected for approximately 9.397 mm static sag, while the double-wishbone architecture is selected over trailing-arm and MacPherson-strut alternatives. <a href="../7-documentation/asuka/suspension.html" class="btn btn-deep-dive" style="display: inline-flex; margin-top: 12px;">Read Asuka's Suspension Documentation →</a>
+          </p>
+          <figure style="margin: 18px 0 0; text-align: center;">
+            <img src="../../assets/double-wishbone-on-chassis.jpg" alt="Double wishbone suspension mounted on the FOD Hunter chassis" style="width: min(100%, 760px); max-height: 420px; object-fit: contain; margin: 0 auto; border-radius: 8px;">
+            <figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Double wishbone suspension mounted on the chassis.</figcaption>
+          </figure>
+        </div>
+
+        <!-- 3. FOD PICKUP SUBSYSTEM -->
+        <h2 style="font-size: 22px; color: var(--text-main); margin: 34px 0 14px;">3. FOD Pickup Subsystem</h2>
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">3. FOD Pickup Subsystem</div>
+            <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Asuka</span>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            The FOD pickup subsystem addresses the limitations of manual runway FOD walks, sweepers, magnetic bars, and independent blowers by combining a ground-sealing intake interface with contained vacuum extraction. The design target covers ferrous and non-ferrous debris from approximately 4-20 cm and 4-300 g, including small fasteners through to a 300 g bird carcass. The documentation compares grippers, vacuum, magnetic bars, friction mats, and sweepers, then derives pickup velocity, duct flow rate, pressure losses, and estimated motor power for 25 g and 300 g cases. It also records two design iterations, side-entry and top-down testing, the observed blockage caused by corrugated hose, and the improved pickup achieved through a temporary nozzle seal and velocity surge. <a href="../7-documentation/asuka/vacuum-module.html" class="btn btn-deep-dive" style="display: inline-flex; margin-top: 12px;">Read Asuka's FOD Pickup Documentation →</a>
+          </p>
+        </div>
+
         <!-- 5. REFERENCES -->
         <div class="card-box">
           <div class="card-header">
@@ -656,6 +696,6 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
     </div>
   </footer>
 
-  <script src="../js/main.js?v=4.1"></script>
+  <script src="../js/main.js?v=4.2"></script>
 </body>
 </html>

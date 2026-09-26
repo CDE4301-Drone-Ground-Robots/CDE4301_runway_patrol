@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Suspension Design and Calculations - Asuka</title>
-  <link rel="stylesheet" href="../../css/styles.css">
+  <link rel="stylesheet" href="../../css/styles.css?v=4.2">
 </head>
 <body>
   <!-- APPLE TOP NAVIGATION BAR -->
@@ -48,44 +48,36 @@
     <a href="../../7-documentation.html">Documentation</a>
   </div>
 
-  <!-- MAIN PAGE CONTENT -->
-  <main class="apple-main-content">
-    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
-      
-      <!-- HERO HEADER -->
-      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
-        <div class="apple-hero-badge">Mechanical Subsystem • Asuka</div>
-        <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 12px;">
-          Suspension Design and Calculations
-        </h1>
-      </div>
-
-      <div class="page-content">
-
         <!-- SECTION 1 -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Suspension Design &amp; Calculations</h2>
-            </div>
-          </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
-          </p>
+          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 4.1.1</span><h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Requirements and Constraints Involved in Design</h2></div><span class="badge badge-rose">Asuka</span></div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">The suspension subsystem for the <strong>65 kg autonomous runway FOD patrol UGV</strong> is governed by five core engineering constraints:</p>
+          <ol style="padding-left: 22px; font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65;">
+            <li><strong>Natural frequency upper ceiling:</strong> Frequency &lt; 10 Hz. This project-advisor requirement ensures mechanical low-pass filtering and keeps suspension resonance well below optical sensor and LiDAR frame rates of 10-30 Hz.</li>
+            <li><strong>Stroke budget:</strong> Maximum 20 mm, set by the physical compression travel limit of the selected shock absorbers.</li>
+            <li><strong>Static operating sag:</strong> 40%-50% of stroke. Static deflection under gravity must sit near 8-10 mm to centre the shock piston and provide equal headroom for bump compression and droop travel.</li>
+            <li><strong>Operating speed:</strong> 10-15 km/h, or 2.8-4.2 m/s. Crossing asphalt expansion joints and runway seams at 4 m/s creates high-frequency impulses that must be dissipated without chassis bouncing.</li>
+            <li><strong>Corner mass budget:</strong> 16.25 kg per corner, calculated from the 65 kg UGV mass divided evenly across four wheels.</li>
+          </ol>
         </div>
 
         <!-- SECTION 2 -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 2.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Linkage Geometry &amp; Motion Ratio</h2>
-            </div>
+          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 4.1.2</span><h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Importance of the Suspension Subsystem</h2></div></div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">On an autonomous runway inspection robot, the suspension is a mission-enabling subsystem with four vital roles:</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 14px;">
+            <div class="callout callout-blue"><strong>Perception deck and sensor protection</strong><br>High-frequency frame chatter induces point-cloud jitter on 3D LiDARs and motion blur on optical-flow cameras. The suspension acts as a low-pass filter below 10 Hz.</div>
+            <div class="callout callout-purple"><strong>Vacuum intake hood and suction seal</strong><br>Vacuum retrieval depends on consistent ground clearance to preserve the high-speed air boundary layer. Chassis bounce breaks the seal and reduces debris-lifting capability.</div>
+            <div class="callout callout-emerald"><strong>Tire traction and skid-steer control</strong><br>A four-wheel differential-drive robot turns by forcing tires to slide laterally. Suspension maintains normal force F<sub>z</sub> &gt; 0 over bumps, preventing wheel lift, motor overspeed, and odometry slip.</div>
+            <div class="callout callout-amber"><strong>Structural fatigue and shock dissipation</strong><br>The suspension absorbs transient kinetic energy and protects battery packs, motor gearboxes, frame joints, and other internal components from impact spikes.</div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
-          </p>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 4.2.1</span><h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">First Principles Approach</h2></div></div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">Assuming rigid tire behaviour, the single-corner system reduces to a 1 Degree of Freedom mass-spring-damper system. The sprung mass is connected to the road profile through the spring k<sub>s</sub> and damper c<sub>s</sub>.</p>
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.03)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; margin-top: 14px; text-align: center; font-family: var(--font-mono); color: var(--text-main); white-space: pre-wrap;">        Sprung Mass (m)     x_s(t) output
         </div>
 
         <!-- SECTION 3 -->
@@ -93,12 +85,83 @@
           <div class="card-header">
             <div>
               <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Testing &amp; Verification</h2>
-            </div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">Applying Newton's Second Law:</p>
+          <div style="text-align: center; font-size: 16px; color: var(--accent-blue); margin: 12px 0;">$$m\ddot{x}_s(t)+c_s(\dot{x}_s(t)-\dot{r}(t))+k_s(x_s(t)-r(t))=0$$</div>
+          <div style="text-align: center; font-size: 16px; color: var(--accent-purple); margin: 12px 0;">$$(ms^2+c_ss+k_s)X(s)=(c_ss+k_s)R(s)$$</div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65;">The transfer function is:</p>
+          <div style="text-align: center; font-size: 16px; color: var(--accent-emerald); margin: 12px 0;">$$G(s)=\frac{X(s)}{R(s)}=\frac{c_ss+k_s}{ms^2+c_ss+k_s}=\frac{2\zeta\omega_ns+\omega_n^2}{s^2+2\zeta\omega_ns+\omega_n^2}$$</div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65;">Using the canonical parameters:</p>
+          <div style="text-align: center; font-size: 16px; color: var(--accent-blue); margin: 12px 0;">$$\omega_n=\sqrt{\frac{k_s}{m}},\qquad 2\zeta\omega_n=\frac{c_s}{m},\qquad f_d=f_n\sqrt{1-\zeta^2}$$</div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65;">The steady-state displacement is calculated from $x_{steady}=F_{corner}/k_{spring}$, with the corner force identified in the design notes as approximately <strong>154.42 N</strong>.</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 18px;">
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/suspension-first-principles.png" alt="Suspension first-principles mass spring damper model" style="width: 100%; height: 220px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">First-principles mass-spring-damper model.</figcaption></figure>
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/suspension-transfer-function.png" alt="Suspension transfer function derivation" style="width: 100%; height: 220px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Transfer-function derivation.</figcaption></figure>
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/suspension-natural-frequency.png" alt="Suspension natural frequency derivation" style="width: 100%; height: 220px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Natural and damped frequency derivation.</figcaption></figure>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
-          </p>
+        </div>
+
+        <!-- SECTION 4 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 4.2.2</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Motion Ratio and Wheel Rate</h2></div></div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 14px;">When the shock is installed at an angle $\theta$, the motion ratio relates spring displacement to wheel displacement. The wheel rate is reduced by the square of the motion ratio:</p>
+          <div style="text-align: center; font-size: 17px; color: var(--accent-purple); margin: 14px 0;">$$MR=\frac{\Delta z_{spring}}{\Delta z_{wheel}},\qquad k_w=k_s\cos^2\theta$$</div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">The project calculations use a motion ratio of <strong>0.95</strong>, giving:</p>
+          <div style="text-align: center; font-size: 17px; color: var(--accent-emerald); margin: 14px 0;">$$k_w=k_s\times MR^2$$</div>
+          <figure style="margin: 16px 0 0; text-align: center;"><img src="../../assets/motion-ratio.png" alt="Suspension motion ratio derivation" style="width: min(100%, 620px); height: 280px; object-fit: contain; border-radius: 8px; margin: auto;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Motion-ratio geometry and wheel-rate derivation.</figcaption></figure>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 4.2.3</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Spring Rate Selection</h2></div></div>
+          <div class="admin-table-wrapper" style="margin-top: 14px;"><table class="admin-table"><thead><tr><th>Spring rate (lbs/in)</th><th>K<sub>s</sub> (N/m)</th><th>Wheel rate K<sub>w</sub> (N/m)</th><th>K<sub>w</sub> (N/mm)</th><th>x steady state (mm)</th><th>Natural freq. (rad/s)</th><th>Natural freq. (Hz)</th><th>Damped freq. (Hz), eta 0.7</th></tr></thead><tbody>
+            <tr><td>30</td><td>5357.386</td><td>5089.517</td><td>5.090</td><td>31.322</td><td>17.697</td><td>2.817</td><td>2.011</td></tr>
+            <tr><td>50</td><td>8928.976</td><td>8482.528</td><td>8.483</td><td>18.793</td><td>22.847</td><td>3.636</td><td>2.597</td></tr>
+            <tr style="background: rgba(46,160,67,0.15);"><td><strong>100</strong></td><td>17857.953</td><td>16965.055</td><td>16.965</td><td><strong>9.397</strong></td><td>32.311</td><td><strong>5.142</strong></td><td>3.672</td></tr>
+            <tr><td>150</td><td>26786.929</td><td>25447.583</td><td>25.448</td><td>6.264</td><td>39.573</td><td>6.298</td><td>4.498</td></tr>
+            <tr><td>200</td><td>35715.906</td><td>33930.110</td><td>33.930</td><td>4.698</td><td>45.695</td><td>7.273</td><td>5.194</td></tr>
+            <tr><td>300</td><td>53573.858</td><td>50895.165</td><td>50.895</td><td>3.132</td><td>55.964</td><td>8.907</td><td>6.361</td></tr>
+            <tr><td>400</td><td>71431.811</td><td>67860.220</td><td>67.860</td><td>2.349</td><td>64.622</td><td>10.285</td><td>7.345</td></tr>
+            <tr><td>500</td><td>89289.764</td><td>84825.276</td><td>84.825</td><td>1.879</td><td>72.250</td><td>11.499</td><td>8.212</td></tr>
+            <tr><td>550</td><td>98218.740</td><td>93307.803</td><td>93.308</td><td>1.708</td><td>75.776</td><td>12.060</td><td>8.613</td></tr>
+            <tr><td>600</td><td>107147.717</td><td>101790.331</td><td>101.790</td><td>1.566</td><td>79.146</td><td>12.596</td><td>8.996</td></tr>
+            <tr><td>650</td><td>116076.693</td><td>110272.858</td><td>110.273</td><td>1.446</td><td>82.377</td><td>13.111</td><td>9.363</td></tr>
+            <tr><td>700</td><td>125005.669</td><td>118755.386</td><td>118.755</td><td>1.342</td><td>85.487</td><td>13.606</td><td>9.716</td></tr>
+            <tr><td>750</td><td>133934.646</td><td>127237.913</td><td>127.238</td><td>1.253</td><td>88.487</td><td>14.083</td><td>10.057</td></tr>
+          </tbody></table></div>
+          <figure style="margin: 18px 0 0; text-align: center;"><img src="../../assets/suspension-spring-rate-table.png" alt="Suspension spring rate comparison table" style="width: min(100%, 1000px); height: 300px; object-fit: contain; border-radius: 8px; margin: auto;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Original spring-rate comparison from the suspension calculations.</figcaption></figure>
+          <div class="callout callout-emerald" style="margin-top: 16px;"><strong>Selection:</strong> The 100 lbs/in spring gives a steady-state sag of 9.397 mm, close to the desired 40%-50% of the 20 mm stroke, while maintaining a 5.142 Hz natural frequency and 3.672 Hz damped natural frequency at eta = 0.7.</div>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 4.1.3</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Comparison of Suspensions</h2></div></div>
+          <div class="admin-table-wrapper" style="margin-top: 14px;"><table class="admin-table"><thead><tr><th>Suspension type</th><th>Advantages</th><th>Disadvantages</th><th>Remarks</th><th>Final score</th></tr></thead><tbody>
+            <tr><td><strong>Trailing arm</strong></td><td>Constant track width and zero camber change; maximum space efficiency; low vertical profile.</td><td>Traverse bending moments concentrate on the main pivot shaft during spot turns.</td><td>Used as rear suspension on vehicles; suitable for strict width constraints.</td><td>8/10<br><strong>Keep as backup plan if width is an issue.</strong></td></tr>
+            <tr><td><strong>MacPherson strut</strong></td><td>Leaves space for other parts at the upper arm assembly; lower part count.</td><td>Higher shock-absorber wear because skid steering exerts large stress.</td><td>Usually used on Ackermann-steering vehicles, which this robot does not use.</td><td>6/10<br><strong>Reject</strong></td></tr>
+            <tr style="background: rgba(46,160,67,0.15);"><td><strong>Double wishbone</strong></td><td>Dual arms absorb lateral bending moments during skid-steering turns and maintain a stable tyre contact patch over the full stroke.</td><td>Mechanically complex.</td><td>Typically used in performance vehicles; the available chassis width is sufficient.</td><td>9/10<br><strong>Chosen</strong></td></tr>
+          </tbody></table></div>
+          <figure style="margin: 18px 0 0; text-align: center;"><img src="../../assets/suspension-comparison.png" alt="Suspension architecture comparison" style="width: min(100%, 900px); height: 360px; object-fit: contain; border-radius: 8px; margin: auto;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Original suspension comparison matrix.</figcaption></figure>
+        </div>
+
+        <!-- SECTION 7: FIGURES -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 4.3</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Suspension Design Figures</h2></div></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 16px;">
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/suspension-trailing-arm.png" alt="Trailing Arm Suspension Design" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"><strong>Trailing Arm Suspension Design</strong></figcaption></figure>
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/suspension-macpherson-strut.png" alt="Design of MacPherson Strut" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"><strong>Design of MacPherson Strut</strong></figcaption></figure>
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/suspension-double-wishbone.png" alt="Double Wishbone Suspension Design" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"><strong>Double Wishbone Suspension Design</strong></figcaption></figure>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: 16px;">The PDF identifies the double wishbone as the selected suspension architecture. The trailing-arm figure is retained as a backup concept, while the MacPherson strut is rejected because of shock loading under skid steering.</p>
+        </div>
+
+        <!-- SECTION 8: COMPONENTS -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 4.4</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Components Required</h2></div></div>
+          <h3 style="font-size: 16px; color: var(--text-main); margin: 16px 0 8px;">Components Required for Double Wishbone</h3>
+          <div class="admin-table-wrapper"><table class="admin-table"><thead><tr><th>Description</th><th>Component</th><th>Link</th><th>Remarks</th></tr></thead><tbody><tr><td>Wheel hub and link arms</td><td>To be custom made</td><td>N.A.</td><td>CAD done, fabricated 1 assembly</td></tr><tr><td>Shock absorber</td><td>To be purchased</td><td>Link here</td><td>Purchased, not delivered</td></tr></tbody></table></div>
+          <h3 style="font-size: 16px; color: var(--text-main); margin: 18px 0 8px;">Components Required for Trailing Arm</h3>
+          <div class="admin-table-wrapper"><table class="admin-table"><thead><tr><th>Description</th><th>Component</th><th>Link</th><th>Remarks</th></tr></thead><tbody><tr><td>CNC wheel hub</td><td>To be custom made</td><td>N.A.</td><td>CAD done</td></tr><tr><td>Shock absorber</td><td>To be purchased</td><td>Link here</td><td>Purchased, not delivered</td></tr><tr><td>Clevis bracket / U bracket</td><td>Purchase</td><td>Link here</td><td>Yet to purchase</td></tr></tbody></table></div>
+          <figure style="margin: 18px 0 0; text-align: center;"><img src="../../assets/suspension-components.png" alt="Suspension components required" style="width: min(100%, 900px); height: 300px; object-fit: contain; border-radius: 8px; margin: auto;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Original component list figure.</figcaption></figure>
         </div>
 
       </div>
@@ -117,7 +180,7 @@
     </div>
   </footer>
 
-  <script src="../../js/main.js?v=4.1"></script>
+  <script src="../../js/main.js?v=4.2"></script>
 
   <!-- EXPORT PDF BUTTON -->
   <style>
