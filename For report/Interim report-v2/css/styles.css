@@ -94,6 +94,32 @@
   --font-body: var(--font-apple);
 }
 
+/* ── Light Theme ────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --apple-bg: #f5f5f7;
+  --apple-surface: #ffffff;
+  --apple-surface-card: #ffffff;
+  --apple-surface-card-hover: #f2f2f7;
+  --apple-surface-glass: rgba(255, 255, 255, 0.82);
+
+  --apple-text-primary: #1d1d1f;
+  --apple-text-secondary: #6e6e73;
+  --apple-text-tertiary: #86868b;
+  --apple-text-muted: #6e6e73;
+
+  --apple-border: rgba(0, 0, 0, 0.12);
+  --apple-border-light: rgba(0, 0, 0, 0.08);
+  --apple-border-highlight: rgba(0, 0, 0, 0.18);
+
+  --apple-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --apple-shadow-md: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --apple-shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.16);
+
+  --bg-header: rgba(255, 255, 255, 0.84);
+  --bg-terminal: #f2f2f7;
+  --text-terminal: #1d1d1f;
+}
+
 /* ── Reset & Global Typography ───────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -116,6 +142,100 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Apple-style compact slider placed at the top-left of every report page. */
+.apple-theme-toggle {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  width: 42px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: #3a3a3c;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+  z-index: 2;
+}
+
+.apple-theme-toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 21px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+  transition: transform 0.25s ease;
+}
+
+.apple-theme-toggle-icon::before {
+  content: '☾';
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  color: #d1d1d6;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.apple-theme-toggle[data-theme="light"] {
+  background: #e5e5ea;
+  border-color: rgba(0, 0, 0, 0.16);
+}
+
+.apple-theme-toggle[data-theme="light"] .apple-theme-toggle-knob {
+  transform: translateX(-18px);
+  background: #ffffff;
+}
+
+.apple-theme-toggle[data-theme="light"] .apple-theme-toggle-icon::before {
+  content: '☀';
+  left: 25px;
+  color: #6e6e73;
+}
+
+[data-theme="light"] .apple-nav {
+  background: rgba(255, 255, 255, 0.84);
+  border-bottom-color: var(--apple-border-light);
+}
+
+[data-theme="light"] .nav-project-code {
+  color: var(--apple-text-primary);
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+[data-theme="light"] .apple-btn-pill-secondary,
+[data-theme="light"] .apple-mobile-drawer,
+[data-theme="light"] .apple-megamenu {
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--apple-text-primary);
+  border-color: var(--apple-border);
+}
+
+[data-theme="light"] .apple-megamenu-overlay {
+  background: rgba(255, 255, 255, 0.48);
+}
+
+[data-theme="light"] .admin-table-wrapper {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+[data-theme="light"] .admin-table thead th {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .admin-table tbody td {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .admin-table tbody tr:hover td {
+  background: rgba(0, 0, 0, 0.035);
 }
 
 a {
@@ -3896,6 +4016,54 @@ tr.gantt-row-hidden {
 .week-all-milestone-banner:hover {
   transform: translateY(-1px);
   filter: brightness(1.2);
+}
+
+/* ── Light-mode readability and metallic hero treatment ─────────────── */
+[data-theme="light"] .apple-hero-title,
+[data-theme="light"] .apple-section-title,
+[data-theme="light"] .card-title,
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  color: var(--apple-text-primary);
+}
+
+[data-theme="light"] .apple-hero-gradient {
+  background: linear-gradient(180deg, #090a0c 0%, #3f454b 42%, #111318 58%, #707780 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .hero-chrome-text,
+[data-theme="light"] .hero-chrome-text::after {
+  background: linear-gradient(
+    180deg,
+    #08090a 0%,
+    #4c5359 18%,
+    #d9dde0 34%,
+    #ffffff 43%,
+    #8c949b 55%,
+    #20252a 72%,
+    #050607 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="light"] .apple-hero-badge {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.14);
+  color: #3f454b;
+}
+
+[data-theme="light"] .apple-video-frame {
+  background: #e5e7eb;
+  border-color: rgba(0, 0, 0, 0.14);
 }
 
 .th-milestone-red {

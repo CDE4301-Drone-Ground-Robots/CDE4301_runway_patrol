@@ -6,8 +6,8 @@
   <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FOD Remidation Vacuum module - Asuka</title>
-  <link rel="stylesheet" href="../../css/styles.css">
+  <title>FOD Remediation Vacuum Module - Asuka</title>
+  <link rel="stylesheet" href="../../css/styles.css?v=4.2">
 </head>
 <body>
   <!-- APPLE TOP NAVIGATION BAR -->
@@ -56,7 +56,7 @@
       <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
         <div class="apple-hero-badge">Mechanical Subsystem • Asuka</div>
         <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 12px;">
-          FOD Remidation Vacuum module
+          FOD Remediation Vacuum Module
         </h1>
       </div>
 
@@ -67,11 +67,30 @@
           <div class="card-header">
             <div>
               <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 1.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Intake Duct Aerodynamics &amp; Suction Velocity</h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Literature Review: Why Runway FOD Retrieval Needs a New Approach</h2>
             </div>
+            <span class="badge badge-rose">Asuka</span>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
+            Foreign Object Debris (FOD) on movement surfaces is an operational and financial hazard to commercial and military aviation. Existing detection systems can localise millimetre-scale debris, but physical retrieval remains dependent on manual intervention and legacy sweeping equipment. Annual direct and indirect FOD damage is estimated at <strong>$12-$14 billion</strong>, with severe single-engine ingestion events exceeding <strong>$1 million</strong> in direct repairs.
+          </p>
+          <div class="callout callout-amber" style="margin-top: 16px;">
+            <strong>Operational bottleneck:</strong> A detection system only protects the runway when the debris is physically contained and removed. Manual dispatch cycles can take 10-27 minutes for one incident, while reported airports experience 200-240 minutes of monthly runway downtime.
+          </div>
+          <h3 style="font-size: 16px; color: var(--apple-text-primary); margin: 20px 0 8px;">Limitations of conventional clearing methods</h3>
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead><tr><th>Method</th><th>Mechanical limitation</th><th>Operational constraint</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Rotary and vacuum sweepers</strong></td><td>High fuel or power draw; filters clog; leakage risk on tarmac.</td><td>Bulky footprint and slow active sweeping speed.</td></tr>
+                <tr><td><strong>Friction or mat sweepers</strong></td><td>Rubber squeegees wear rapidly and struggle with heavy or embedded items.</td><td>Requires towing and restricts manoeuvrability.</td></tr>
+                <tr><td><strong>Magnetic bars</strong></td><td>Cannot collect non-ferrous aluminium, titanium, rubber, plastic, or composite debris.</td><td>Cannot address biological hazards or non-magnetic hardware.</td></tr>
+                <tr><td><strong>Independent blowers</strong></td><td>Expel debris without containment.</td><td>Vortex, crosswinds, and jet blast can return debris to active pavement.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
+            Current detection deployments also leave an open-loop response: operators must notify ground teams and track vehicles across multi-kilometre paths. A coordinated multi-robot system can reduce this response bottleneck by allocating nearby tasks across localised debris clusters.
           </p>
         </div>
 
@@ -79,26 +98,180 @@
         <div class="card-box" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 2.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Debris Separation &amp; Ground Skirt Architecture</h2>
+              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 2.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">FOD Types, Design Selection, and Project Scope</h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
+            The pickup system is scoped to collect inanimate solid debris, including both ferrous and non-ferrous objects. The target range is approximately <strong>4 cm to 20 cm</strong> and <strong>4 g to 300 g</strong>, from a small screw or fastener through to a bird carcass.
           </p>
+          <div style="display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(220px, 0.75fr); gap: 18px; align-items: center; margin-top: 16px;">
+            <div class="admin-table-wrapper" style="margin: 0;">
+              <table class="admin-table">
+                <thead><tr><th>FOD type</th><th>Gripper</th><th>Vacuum</th><th>Magnet</th><th>Mat / sweeper</th></tr></thead>
+                <tbody>
+                  <tr><td>Inanimate solid</td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+                  <tr><td>Ferrous metal</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+                  <tr><td>Non-ferrous metal</td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+                  <tr><td>Animate object</td><td>No</td><td>No</td><td>No</td><td>No</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <figure style="margin: 0; text-align: center;">
+              <img src="../../assets/wetndryvacuum.png" alt="Wet and dry vacuum used as a pickup-system reference" style="width: min(100%, 240px); margin: 0 auto; object-fit: contain;">
+              <figcaption style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 8px;">Vacuum pickup reference used for the first concept.</figcaption>
+            </figure>
+          </div>
+          <div class="callout callout-emerald" style="margin-top: 16px;">
+            <strong>Selection decision:</strong> A vacuum is preferred because a sufficiently powerful motor can address different FOD sizes and material types. The first concept combines a sweeping or sealing interface with localised vacuum extraction rather than relying on a gripper, magnet, or passive mat alone.
+          </div>
         </div>
 
         <!-- SECTION 3 -->
         <div class="card-box" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Testing &amp; Verification</h2>
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 3.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">First-Principles Pickup and Intake Design</h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
+            The pickup concept is governed by the balance between aerodynamic drag and the weight of the debris. The air stream must generate enough force to overcome the object weight, with a safety factor applied during final sizing.
           </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px;">
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.03)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-family: var(--font-mono); color: var(--text-main);">
+              <strong>Pickup force</strong><br><br>
+              $$F_{drag}=\frac{1}{2}\rho_{air}v^2C_dA_{proj}$$<br><br>
+              $$F_{lift} = \Delta P \cdot A_{nozzle}$$
+            </div>
+            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.03)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-family: var(--font-mono); color: var(--text-main);">
+              <strong>Flow and power</strong><br><br>
+              $$v_{min}=\sqrt{\frac{2mg}{\rho_{air}C_dA_{proj}}}$$<br><br>
+              $$Q=A_{duct}v_{min}$$<br><br>
+              $$P_{elec}=\frac{Q\Delta P_{total}}{\eta_{mech}\eta_{motor}}$$
+            </div>
+          </div>
+          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; margin: 16px 0 0;">
+            The top-down intake approach is favoured because pressing the nozzle against the ground creates a temporary seal. When the nozzle lifts, ambient air rushing into the tube creates a short-duration velocity surge that helps launch debris through the corrugated hose and into the collection bin.
+          </p>
+        </div>
+
+        <!-- SECTION 4 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 4.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Quantitative Sizing and Pressure Losses</h2>
+            </div>
+          </div>
+          <div class="admin-table-wrapper" style="margin-top: 14px;">
+            <table class="admin-table">
+              <thead><tr><th>Parameter</th><th>Case A: Nut and bolts, 25 g</th><th>Case B: Bird carcass, 300 g</th><th>Units</th></tr></thead>
+              <tbody>
+                <tr><td>Mass</td><td>0.0025</td><td>0.3000</td><td>kg</td></tr>
+                <tr><td>Dimensions</td><td>D = 8 mm, L = 3 mm</td><td>150 mm x 80 mm x 60 mm</td><td>mm</td></tr>
+                <tr><td>Projected area</td><td>0.0002</td><td>0.0090</td><td>m2</td></tr>
+                <tr><td><strong>Minimum duct diameter</strong></td><td><strong>0.0300</strong></td><td><strong>0.1000</strong></td><td>m</td></tr>
+                <tr><td><strong>Required pickup velocity</strong></td><td><strong>14.5908</strong></td><td><strong>26.1008</strong></td><td>m/s</td></tr>
+                <tr><td>Duct area</td><td>0.0007</td><td>0.0079</td><td>m2</td></tr>
+                <tr><td><strong>Required flow rate Q</strong></td><td><strong>0.0103</strong></td><td><strong>0.2050</strong></td><td>m3/s</td></tr>
+                <tr><td>Flow rate</td><td>21.8533</td><td>434.3597</td><td>CFM</td></tr>
+                <tr><td>Required static pressure</td><td>2135.9414</td><td>2623.2225</td><td>Pa</td></tr>
+                <tr><td><strong>Estimated motor power</strong></td><td><strong>55.0732</strong></td><td><strong>1344.3683</strong></td><td>W</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="admin-table-wrapper" style="margin-top: 18px;">
+            <table class="admin-table">
+              <thead><tr><th>Pressure loss</th><th>Case A: Nut and bolts, 25 g</th><th>Case B: Bird carcass, 300 g</th></tr></thead>
+              <tbody>
+                <tr><td>Dynamic pressure</td><td>127.7344 Pa</td><td>408.7500 Pa</td></tr>
+                <tr><td>Nozzle entry</td><td>44.7070 Pa</td><td>143.0625 Pa</td></tr>
+                <tr><td>Duct friction</td><td>112.4063 Pa</td><td>107.9100 Pa</td></tr>
+                <tr><td>Elbow bend</td><td>51.0938 Pa</td><td>163.5000 Pa</td></tr>
+                <tr><td>Filter pressure drop</td><td>1800 Pa</td><td>1800 Pa</td></tr>
+                <tr><td><strong>Total pressure loss</strong></td><td><strong>2135.9414 Pa</strong></td><td><strong>2623.2225 Pa</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 5.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Design Iterations and Ground Interface</h2>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 14px;">
+            <figure style="margin: 0; text-align: center;">
+              <img src="../../assets/vacuum-design-iteration-1.png" alt="Design Iteration 1: side-mounted vacuum module concept" onerror="this.onerror=null; this.src='../../assets/wetndryvacuum.png';" style="width: 100%; height: 260px; object-fit: contain; margin: auto; border-radius: 8px;">
+              <figcaption style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 8px;"><strong>Design Iteration 1</strong><br>Side-mounted vacuum module concept.</figcaption>
+            </figure>
+            <figure style="margin: 0; text-align: center;">
+              <img src="../../assets/vacuum-design-iteration-2.png" alt="Design Iteration 2: front vacuum module concept" onerror="this.onerror=null; this.src='../../assets/FOD_drag_mat.jpg';" style="width: 100%; height: 260px; object-fit: contain; margin: auto; border-radius: 8px;">
+              <figcaption style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 8px;"><strong>Design Iteration 2</strong><br>Front vacuum module and ground-sealing concept.</figcaption>
+            </figure>
+          </div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin: 16px 0 0;">
+            The design evolved from a side-facing pickup concept toward a top-down, seal-assisted intake. The final direction places the nozzle close to the pavement, uses a compliant ground interface to improve negative pressure, and routes collected debris into a contained bin rather than displacing it onto the runway.
+          </p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 6.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Testing, Results, and Next Improvements</h2>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
+            Benchtop testing compared side-entry and top-down pickup. The side approach achieved a low success rate. The top-down approach produced enough air speed to lift screws, but the corrugation in the intake hose prevented some screws from travelling fully into the collection bin. This indicated a steady-state equilibrium between the screw and the air stream.
+          </p>
+          <div class="callout callout-emerald" style="margin-top: 16px;">
+            <strong>Observed improvement:</strong> Pressing the nozzle onto the floor created a seal and a high negative pressure region. Lifting the nozzle then allowed ambient air to rush into the tube, producing an instantaneous velocity surge that launched hovering screws into the bin.
+          </div>
+          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
+            The next iteration must integrate this sealing effect into the pickup head for every target. Priority improvements are a smoother internal duct path, a compliant skirt or sealing ring, reduced corrugation near the nozzle, and validation against the 300 g design case.
+          </p>
+        </div>
+
+        <!-- SECTION 7 -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 7.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Components Required</h2>
+            </div>
+          </div>
+          <div class="admin-table-wrapper" style="margin-top: 14px;">
+            <table class="admin-table">
+              <thead><tr><th>Component</th><th>Link</th><th>Remarks</th></tr></thead>
+              <tbody>
+                <tr><td>2800 W vacuum cleaner</td><td>Link here</td><td>Primary suction source.</td></tr>
+                <tr><td>NEMA17 stepper motor and controller</td><td>Link here</td><td>Actuates the pickup mechanism.</td></tr>
+                <tr><td>6 mm shaft, 330 mm long</td><td>Link here</td><td>Linear motion transmission.</td></tr>
+                <tr><td>Rack and pinion</td><td>To be fabricated</td><td>3D printed mechanism.</td></tr>
+                <tr><td>NEMA17 motor mount</td><td>To be fabricated</td><td>Custom sheet-metal mount.</td></tr>
+                <tr><td>Rack and pinion mount</td><td>To be fabricated</td><td>3D printed structural mount.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- REFERENCES -->
+        <div class="card-box">
+          <div class="card-header"><div class="card-title">References</div><span class="badge badge-blue">Literature Review</span></div>
+          <ol style="padding-left: 20px; font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
+            <li>Hilburn, B. G. and Pesmen, B. S., <em>Foreign Object Debris Detection System Cost-Benefit Analysis</em>, FAA Tech. Rep. DOT/FAA/TC-22/47, 2023.</li>
+            <li>El-Sayed, A. F., <em>Foreign Object Debris and Damage in Aviation</em>, CRC Press, 2022.</li>
+            <li>Jain, S., Prasad, M. S., and Gupta, R., “A Comparison of Manual and Automotive FOD Detection Systems at Airport Runways,” ICRITO, 2022.</li>
+            <li>Vidal, Y. L. S. et al., “A Systematic Review of Methods for Cleaning FOD on Runways,” EMES, 2023.</li>
+            <li>Yamamoto, H. et al., “Drone-enabled Foreign Object Debris Removal System in ad hoc Situations,” ACRP University Design Competition, 2016.</li>
+            <li>Ozturk, S. and Kuzucuoglu, A. E., “A multi-robot coordination approach for autonomous runway FOD clearance,” <em>Robotics and Autonomous Systems</em>, 2016.</li>
+          </ol>
         </div>
 
       </div>
@@ -117,7 +290,7 @@
     </div>
   </footer>
 
-  <script src="../../js/main.js?v=4.1"></script>
+  <script src="../../js/main.js?v=4.2"></script>
 
   <!-- EXPORT PDF BUTTON -->
   <style>

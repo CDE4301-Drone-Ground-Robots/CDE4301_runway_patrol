@@ -45,20 +45,44 @@ window.renderMath = function() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ── Theme Toggle ────────────────────────────────────────────────
-  const themeToggleBtn = document.getElementById('theme-toggle-btn');
-  const storedTheme = localStorage.getItem('theme') || 'light';
+  // ── Apple Light / Dark Theme Toggle ─────────────────────────────
+  const themeNav = document.querySelector('.apple-nav');
+  let themeToggleBtn = document.getElementById('theme-toggle-btn');
+  let storedTheme = 'dark';
+  try {
+    storedTheme = localStorage.getItem('theme') || 'dark';
+  } catch (error) {
+    storedTheme = 'dark';
+  }
 
-  document.documentElement.setAttribute('data-theme', storedTheme);
+  if (themeNav && !themeToggleBtn) {
+    themeToggleBtn = document.createElement('button');
+    themeToggleBtn.id = 'theme-toggle-btn';
+    themeToggleBtn.className = 'apple-theme-toggle';
+    themeToggleBtn.type = 'button';
+    themeToggleBtn.innerHTML = '<span class="apple-theme-toggle-icon" aria-hidden="true"></span><span class="apple-theme-toggle-knob" aria-hidden="true"></span>';
+    themeNav.appendChild(themeToggleBtn);
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    if (themeToggleBtn) {
+      themeToggleBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      themeToggleBtn.setAttribute('title', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      themeToggleBtn.dataset.theme = theme;
+    }
+  }
+
+  applyTheme(storedTheme === 'light' ? 'light' : 'dark');
   if (themeToggleBtn) {
-    themeToggleBtn.innerHTML = storedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
-
     themeToggleBtn.addEventListener('click', () => {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const next = isDark ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      themeToggleBtn.innerHTML = next === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      try {
+        localStorage.setItem('theme', next);
+      } catch (error) {
+        // Theme still applies for the current page when storage is unavailable.
+      }
     });
   }
 

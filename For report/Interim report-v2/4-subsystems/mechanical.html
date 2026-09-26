@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>4.1 Mechanical Subsystem - FOD Hunter Interim Report</title>
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/styles.css?v=4.2">
 </head>
 <body>
 
@@ -80,32 +80,38 @@
       </div>
 
         <!-- SUBSYSTEM LEADERSHIP & OWNERSHIP CARD -->
-        <div class="card-box" style="border-left: 5px solid var(--accent-purple);">
+        <div class="card-box" style="border-left: 5px solid var(--accent-blue);">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
             <div>
               <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
                 <span class="badge badge-blue">Subsystem Ownership</span>
-                <span class="badge badge-purple">Mechanical Engineering &amp; Kinematics</span>
+                <span class="badge badge-purple">Mechanical Engineering</span>
               </div>
-              <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Mechanical Subsystem Engineering Division</h3>
+              <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Mechanical Subsystem Engineers</h3>
               <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                • <strong>Hilbert Soh</strong> (A0308263H): <em>Section 4 Steering &amp; Drive Architecture Kinematic Analysis, Differential Inverse Kinematics &amp; System Integration</em><br>
-                • <strong>Asuka</strong> (A0308285Y): <em>Section 2 Vacuum Pickup Module &amp; Section 3 Suspension Architecture &amp; Calculations</em><br>
-                • <strong>Zacarias Ng</strong> (A0306899H): <em>Section 1 Chassis Structural Cadence</em>
+                • <strong>Asuka</strong> (A0308285Y): FOD Pickup Mechanism &amp; Suspension Systems<br>
+                • <strong>Zacarias Ng</strong> (A0306899H): Chassis Structural Design &amp; Kinematics Calculations<br>
+                • <em>Subsystem Oversight:</em> <strong>Hilbert Soh</strong> (Overseeing Mechanical Integration)
               </p>
             </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <a href="../7-documentation/hilbert/navigation.html" class="btn btn-deep-dive" style="border-color: rgba(147, 51, 234, 0.4); color: var(--accent-purple);">📖 Hilbert Nav &amp; Kinematics →</a>
-              <a href="../7-documentation/asuka/suspension.html" class="btn btn-deep-dive">📖 Asuka Suspension Spec →</a>
+              <a href="../7-documentation/asuka/suspension.html" class="btn btn-deep-dive">📖 Asuka Spec →</a>
+              <a href="../7-documentation/zacarias/chassis-fea.html" class="btn btn-deep-dive">📖 Zacarias Spec →</a>
             </div>
           </div>
         </div>
 
-        <!-- 1. CHASSIS: ITERATIONS & FEA SIMULATIONS -->
+        <!-- 1. CHASSIS DESIGN -->
+        <h2 style="font-size: 22px; color: var(--text-main); margin: 34px 0 14px;">1. Chassis Design</h2>
+
+        <!-- 1.1 STRUCTURAL DESIGN -->
         <div class="card-box">
           <div class="card-header">
-            <div class="card-title">1. Chassis Design: Iterations &amp; FEA Structural Analysis</div>
-            <span class="badge badge-blue">SolidWorks CAD &amp; Simulation</span>
+            <div class="card-title">1.1 Structural Design</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-blue">Zacarias</span>
+              <span class="badge badge-blue">SolidWorks CAD &amp; Simulation</span>
+            </div>
           </div>
           
           <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
@@ -502,11 +508,14 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
           </div>
         </div>
 
-        <!-- 3. MOTOR & POWERTRAIN REQUIREMENTS -->
+        <!-- 1.2 MOTOR & POWERTRAIN REQUIREMENTS -->
         <div class="card-box">
           <div class="card-header">
-            <div class="card-title">3. Motor &amp; Powertrain Requirements: Mathematical Sizing</div>
-            <span class="badge badge-emerald">Powertrain Engineering</span>
+            <div class="card-title">1.2 Motor &amp; Powertrain Requirements</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-blue">Hilbert</span>
+              <span class="badge badge-emerald">Powertrain Engineering</span>
+            </div>
           </div>
 
           <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
@@ -547,10 +556,10 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
           </div>
         </div>
 
-        <!-- 4. STEERING SYSTEM COMPARISON -->
+        <!-- 1.3 STEERING SYSTEM ARCHITECTURE COMPARISON -->
         <div class="card-box" id="steering-architecture-section" style="border-left: 4px solid var(--accent-purple);">
           <div class="card-header" style="flex-wrap: wrap; gap: 8px;">
-            <div class="card-title">4. Steering &amp; Drive Architecture: Kinematic Trade-Off Analysis</div>
+            <div class="card-title">1.3 Steering &amp; Drive Architecture: Kinematic Trade-Off Analysis</div>
             <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
               <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Kinematic Analysis</span>
               <span class="badge badge-purple" style="background: rgba(147, 51, 234, 0.15); color: var(--accent-purple); border: 1px solid rgba(147, 51, 234, 0.35); font-weight: 600;">👤 Lead Author: Hilbert Soh (A0308263H)</span>
@@ -559,7 +568,7 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
 
           <!-- DESIGN DECISION FRAMEWORK & OPERATIONAL REQUIREMENTS -->
           <div style="margin-bottom: 20px;">
-            <h4 style="font-size: 14.5px; color: var(--accent-blue); margin: 0 0 8px 0;">4.1 Design Decision Framework &amp; Operational Requirements</h4>
+            <h4 style="font-size: 14.5px; color: var(--accent-blue); margin: 0 0 8px 0;">1.3.1 Design Decision Framework &amp; Operational Requirements</h4>
             <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-bottom: 12px;">
               The steering architecture was not selected solely on manoeuvrability. Each candidate drivetrain was evaluated against the operational requirements of the airside FOD retrieval mission. The autonomous UGV must first traverse relatively long runway sections at a target forward speed of at least $10\text{ km/h}$, then transition to low-speed local manoeuvring when approaching a detected debris coordinate. The chosen drivetrain must therefore support both efficient straight-line transit and precise final positioning of the vacuum intake.
             </p>
@@ -1012,6 +1021,53 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
           </div>
         </div>
 
+        <!-- 2. SUSPENSION SUBSYSTEM -->
+        <h2 style="font-size: 22px; color: var(--text-main); margin: 34px 0 14px;">2. Suspension Subsystem</h2>
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">2. Suspension Subsystem</div>
+            <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Asuka</span>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            The suspension subsystem is designed for the 65 kg autonomous runway FOD patrol UGV. Its requirements include a 20 mm shock stroke, 40%-50% static sag to centre the piston, 10-15 km/h operating speed, and a 16.25 kg corner mass budget. The documentation explains how suspension compliance protects the camera, LiDAR, and IMU from vibration, preserves the vacuum intake seal, maintains tyre traction during differential skid steering, and dissipates impact energy. It develops a first-principles mass-spring-damper model, transfer function, natural and damped frequency calculations, motion-ratio and wheel-rate relationships, and a spring-rate comparison. The 100 lbs/in spring is selected for approximately 9.397 mm static sag, while the double-wishbone architecture is selected over trailing-arm and MacPherson-strut alternatives. <a href="../7-documentation/asuka/suspension.html" class="btn btn-deep-dive" style="display: inline-flex; margin-top: 12px;">Read Asuka's Suspension Documentation →</a>
+          </p>
+          <figure style="margin: 18px 0 0; text-align: center;">
+            <img src="../../assets/double-wishbone-on-chassis.jpg" alt="Double wishbone suspension mounted on the FOD Hunter chassis" style="width: min(100%, 760px); max-height: 420px; object-fit: contain; margin: 0 auto; border-radius: 8px;">
+            <figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Double wishbone suspension mounted on the chassis.</figcaption>
+          </figure>
+        </div>
+
+        <!-- 3. FOD PICKUP SUBSYSTEM -->
+        <h2 style="font-size: 22px; color: var(--text-main); margin: 34px 0 14px;">3. FOD Pickup Subsystem</h2>
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">3. FOD Pickup Subsystem</div>
+            <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Asuka</span>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            The FOD pickup subsystem addresses the limitations of manual runway FOD walks, sweepers, magnetic bars, and independent blowers by combining a ground-sealing intake interface with contained vacuum extraction. The design target covers ferrous and non-ferrous debris from approximately 4-20 cm and 4-300 g, including small fasteners through to a 300 g bird carcass. The documentation compares grippers, vacuum, magnetic bars, friction mats, and sweepers, then derives pickup velocity, duct flow rate, pressure losses, and estimated motor power for 25 g and 300 g cases. It also records two design iterations, side-entry and top-down testing, the observed blockage caused by corrugated hose, and the improved pickup achieved through a temporary nozzle seal and velocity surge. <a href="../7-documentation/asuka/vacuum-module.html" class="btn btn-deep-dive" style="display: inline-flex; margin-top: 12px;">Read Asuka's FOD Pickup Documentation →</a>
+          </p>
+        </div>
+
+        <!-- 5. REFERENCES -->
+        <div class="card-box">
+          <div class="card-header">
+            <div class="card-title">References &amp; Standards</div>
+            <span class="badge badge-blue">Academic Citations</span>
+          </div>
+          <ol style="padding-left: 20px; font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            <li>Gillespie, T. D. (1992). <em>Fundamentals of Vehicle Dynamics</em>. SAE International. [DOI: 10.4271/R-114]</li>
+            <li>El-Sayed, A. F. (2022). <em>Foreign Object Debris and Damage in Aviation</em>. Academic Press / Elsevier.</li>
+            <li>Lamerton Simulation Ltd. <em>Kinematic Modeling and Simulation of MacPherson Strut Suspensions</em>.</li>
+            <li>Kojima, M. (2012). <em>The Ultimate Guide to Suspension and Handling: Roll Center Geometry</em>. MotoIQ.</li>
+            <li>Siegwart, R., Nourbakhsh, I. R., &amp; Scaramuzza, D. (2011). <em>Introduction to Autonomous Mobile Robots</em> (2nd ed.). MIT Press. [DOI: 10.7551/mitpress/8971.001.0001]</li>
+            <li>NUS CDE4301 Project Group. (2026). <em>FOD Vacuum Motor Design &amp; Fluid Dynamics Calculations</em>. Technical Report.</li>
+            <li>Wikipedia. <em>Scrub Radius and Steering Axis Geometry</em>.</li>
+            <li>Rao, S. S. (2017). <em>Mechanical Vibrations</em> (6th ed.). Pearson.</li>
+            <li>Auto-Z. <em>Roll Centre and Roll Moment: How To Adjust and Tune Suspension Geometry</em>.</li>
+          </ol>
+        </div>
+
       </div>
   </main>
 
@@ -1040,7 +1096,8 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
     </div>
   </footer>
 
-  <!-- STYLES AND SCRIPT FOR INTERACTIVE STEERING KINEMATICS MODALS -->
+  <script src="../js/main.js?v=4.2"></script>
+<!-- STYLES AND SCRIPT FOR INTERACTIVE STEERING KINEMATICS MODALS -->
   <style>
     .steering-interactive-card:hover {
       transform: translateY(-4px);
@@ -1167,6 +1224,6 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
     });
   </script>
 
-  <script src="../js/main.js?v=4.1"></script>
+    <script src="../js/main.js?v=4.2"></script>
 </body>
 </html>
