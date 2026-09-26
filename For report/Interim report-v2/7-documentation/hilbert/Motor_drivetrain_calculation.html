@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motor Sizing &amp; Powertrain Drivetrain Calculations - Hilbert Soh | FOD Hunter</title>
+  <link rel="stylesheet" href="../../css/styles.css?v=4.2">
+  <script>
+    window.MathJax = {
+      tex: { 
+        inlineMath: [['$', '$'], ['\\(', '\\)']], 
+        displayMath: [['$$', '$$'], ['\\[', '\\]']] 
+      },
+      options: {
+        enableMenu: false
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    /* MATHJAX RESPONSIVE & HIGH-LEGIBILITY STYLING */
+    mjx-container {
+      max-width: 100% !important;
+      outline: none !important;
+    }
+    mjx-container:not([display="true"]) {
+      display: inline-block !important;
+      overflow: visible !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      font-size: 100% !important;
+      vertical-align: -0.1em !important;
+    }
+    mjx-container[display="true"] {
+      margin: 4px 0 !important;
+      display: block !important;
+      font-size: 105% !important;
+      overflow: visible !important;
+    }
+    .math-eq-box {
+      background: #0b1120;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: center;
+      font-size: 14px;
+      margin: 10px 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      box-sizing: border-box;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+    }
+    .math-eq-box::-webkit-scrollbar {
+      height: 4px;
+    }
+    .math-eq-box::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- APPLE TOP NAVIGATION BAR -->
+  <header class="apple-nav">
+    <div class="apple-nav-container">
+      <a href="../../index.html" class="apple-nav-brand">
+        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+        <span class="nav-project-code">AIS-406</span>
+      </a>
+
+      <ul class="apple-nav-links">
+        <li><a href="../../index.html" class="apple-nav-link">Overview</a></li>
+        <li><a href="../../1-introduction.html" class="apple-nav-link">Introduction</a></li>
+        <li><a href="../../2-design-overview.html" class="apple-nav-link">Design</a></li>
+        <li><a href="../../3-individual-scopes.html" class="apple-nav-link">Scopes</a></li>
+        <li><a href="../../4-subsystems/index.html" class="apple-nav-link">Subsystems</a></li>
+        <li><a href="../../5-timeline.html" class="apple-nav-link">Timeline</a></li>
+        <li><a href="../../6-references.html" class="apple-nav-link">References</a></li>
+        <li><a href="../../7-documentation.html" class="apple-nav-link active">Documentation</a></li>
+      </ul>
+
+      <div class="apple-nav-actions">
+        <a href="../../4-subsystems/mechanical.html#sec-4-1-8" class="apple-btn-pill">← Back to 4.1.8 Mechanical</a>
+        <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="apple-mobile-drawer" id="apple-mobile-drawer">
+    <a href="../../index.html">Overview</a>
+    <a href="../../1-introduction.html">Introduction</a>
+    <a href="../../2-design-overview.html">Overview of Design</a>
+    <a href="../../3-individual-scopes.html">Individual Scopes</a>
+    <a href="../../4-subsystems/index.html">Subsystems Architecture</a>
+    <a href="../../5-timeline.html">Timeline to Finals</a>
+    <a href="../../6-references.html">References &amp; Standards</a>
+    <a href="../../7-documentation.html">Documentation</a>
+  </div>
+
+  <!-- MAIN PAGE CONTENT -->
+  <main class="apple-main-content" style="padding-top: 40px;">
+    <div class="apple-container" style="padding-bottom: 60px;">
+      
+      <!-- Apple Section Header -->
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
+        <div class="apple-hero-badge">Powertrain Engineering • Technical Deep-Dive</div>
+        <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.4rem);">
+          Motor &amp; Drivetrain Sizing.
+          <span class="apple-hero-gradient">Tractive Effort. Torque Budget. Electrical Bus Sizing.</span>
+        </h1>
+        <p class="apple-section-desc" style="margin: 0 auto;">
+          First-principles mathematical formulation and hardware selection for the 4WD runway patrol UGV powertrain, authored by Hilbert Soh (A0308263H).
+        </p>
+      </div>
+
+      <!-- LEADERSHIP & METRICS BADGE CARD -->
+      <div class="card-box" style="margin-bottom: 24px; border-left: 5px solid var(--accent-emerald);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-blue">Hilbert</span>
+              <span class="badge badge-emerald">Powertrain Engineering</span>
+              <span class="badge badge-purple">Kinematic Analysis</span>
+            </div>
+            <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Powertrain Engineering Lead: Hilbert Soh (A0308263H)</h3>
+            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              Operational Target: $\ge 10\text{ km/h}$ forward velocity on grooved airfield asphalt • Traversing $15^\circ$ runway drainage cross-slopes • Handling $65\text{ kg}$ fully-laden gross vehicle mass with continuous suction airflow.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <a href="../../4-subsystems/mechanical.html#sec-4-1-8" class="btn btn-deep-dive">4.1.8 Overview Card →</a>
+            <a href="../../7-documentation.html" class="btn btn-deep-dive">Documentation Hub →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 1: OPERATIONAL REQUIREMENTS & VEHICLE SPECIFICATIONS -->
+      <div class="card-box" style="margin-bottom: 24px;">
+        <div class="card-header">
+          <div class="card-title">1. Operational Mission Profile &amp; Vehicle Boundary Parameters</div>
+          <span class="badge badge-blue">System Constraints</span>
+        </div>
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          The powertrain sizing derives directly from the operational requirements of airfield Foreign Object Debris (FOD) inspection. The UGV operates under stringent time windows between aircraft takeoffs and landings, requiring sustained transit speeds of at least $10\text{ km/h}$ ($2.78\text{ m/s}$), rapid acceleration, and steady torque up airport drainage perimeter ramps.
+        </p>
+
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 30%;">Parameter</th>
+                <th style="width: 25%;">Design Value</th>
+                <th>Engineering Justification &amp; Airfield Operating Context</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Gross Vehicle Mass ($M_{\text{gross}}$)</strong></td>
+                <td><span class="badge badge-emerald">$65.0\text{ kg}$</span></td>
+                <td>Includes structural 6061-T6 chassis ($18\text{ kg}$), 48V 20Ah LiFePO4 battery pack ($12\text{ kg}$), vacuum suction blower &amp; filter bin ($15\text{ kg}$), sensors &amp; computer stack ($5\text{ kg}$), and powertrain ($15\text{ kg}$).</td>
+              </tr>
+              <tr>
+                <td><strong>Nominal Dry Mass ($M_{\text{dry}}$)</strong></td>
+                <td><span class="badge badge-blue">$40.0\text{ kg}$</span></td>
+                <td>Baseline chassis with drive units before payload ballast integration.</td>
+              </tr>
+              <tr>
+                <td><strong>Target Cruise Velocity ($v_{\text{cruise}}$)</strong></td>
+                <td><span class="badge badge-emerald">$\ge 10\text{ km/h}$ ($2.78\text{ m/s}$)</span></td>
+                <td>Permits sweeping a $3,000\text{ m}$ runway in under $20\text{ minutes}$ during runway inspection inspection sweeps.</td>
+              </tr>
+              <tr>
+                <td><strong>Maximum Design Speed ($v_{\max}$)</strong></td>
+                <td><span class="badge badge-blue">$12\text{ km/h}$ ($3.33\text{ m/s}$)</span></td>
+                <td>Headroom limit to guarantee responsiveness under Headwind conditions ($v_{\text{wind}} \le 15\text{ m/s}$).</td>
+              </tr>
+              <tr>
+                <td><strong>Drive Wheel Nominal Radius ($r$)</strong></td>
+                <td><span class="badge badge-amber">$0.10\text{ m}$ ($200\text{ mm}$ outer diameter)</span></td>
+                <td>8-inch all-terrain tubeless pneumatic tire providing optimal obstacle clearance over tarmac expansion seams ($25\text{ mm}$).</td>
+              </tr>
+              <tr>
+                <td><strong>Maximum Gradient ($\theta_{\max}$)</strong></td>
+                <td><span class="badge badge-rose">$15^\circ$ ($26.8\%$ incline)</span></td>
+                <td>Worst-case drainage ramp and runway shoulder transition grade.</td>
+              </tr>
+              <tr>
+                <td><strong>Design Acceleration ($a_{\text{des}}$)</strong></td>
+                <td><span class="badge badge-blue">$0.80\text{ m/s}^2$</span></td>
+                <td>Accelerates from standstill to $10\text{ km/h}$ in $t = \frac{2.78}{0.80} \approx 3.47\text{ seconds}$.</td>
+              </tr>
+              <tr>
+                <td><strong>Rolling Resistance Coefficient ($C_{rr}$)</strong></td>
+                <td><span class="badge badge-amber">$0.025 - 0.035$</span></td>
+                <td>Rubber tire on coarse, grooved airfield asphalt at recommended inflation pressure ($2.5\text{ bar}$).</td>
+              </tr>
+              <tr>
+                <td><strong>Aerodynamic Drag Area ($C_d \cdot A$)</strong></td>
+                <td><span class="badge badge-blue">$0.28\text{ m}^2$ ($C_d \approx 0.8$, $A \approx 0.35\text{ m}^2$)</span></td>
+                <td>Blunt frontal profile including sensor mast, vacuum hood intake, and chassis envelope.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION 2: KINEMATICS & RPM SIZING -->
+      <div class="card-box" style="margin-bottom: 24px;">
+        <div class="card-header">
+          <div class="card-title">2. Kinematic Velocity &amp; Wheel Rotational Speed (RPM) Derivation</div>
+          <span class="badge badge-emerald">Kinematic Model</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+          For a drive wheel with radius $r = 0.10\text{ m}$ in pure rolling contact without excessive longitudinal slip ($\kappa \le 5\%$), the vehicle linear velocity $v$ and wheel rotational angular velocity $\omega$ are related by:
+        </p>
+
+        <div class="math-eq-box">
+          $$v = \omega \cdot r \implies \omega = \frac{v}{r}$$
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 12px 0 8px 0;">
+          At the target cruise speed of $10\text{ km/h} \approx 2.778\text{ m/s}$:
+        </p>
+
+        <div class="math-eq-box">
+          $$\omega_{\text{cruise}} = \frac{2.778\text{ m/s}}{0.10\text{ m}} = 27.78\text{ rad/s}$$
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 12px 0 8px 0;">
+          Converting angular velocity to revolutions per minute (RPM):
+        </p>
+
+        <div class="math-eq-box">
+          $$N_{\text{wheel}} = \frac{\omega \cdot 60}{2\pi} = \frac{27.78 \cdot 60}{2 \cdot 3.14159} = \frac{1666.8}{6.2832} \approx 265.28\text{ RPM}$$
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-top: 14px;">
+          At the peak design speed $v_{\max} = 12\text{ km/h} = 3.333\text{ m/s}$:
+        </p>
+
+        <div class="math-eq-box">
+          $$N_{\max} = \frac{3.333}{0.10} \cdot \frac{60}{2\pi} = 33.33 \cdot 9.5493 \approx 318.3\text{ RPM}$$
+        </div>
+
+        <div class="callout callout-emerald" style="margin-top: 14px;">
+          <strong>Motor RPM Specification:</strong> The selected hub motor must have a rated speed of at least $300\text{ RPM}$ and a peak no-load speed $\ge 350\text{ RPM}$ at nominal $48\text{V}$ bus voltage to maintain speed headroom under battery discharge down to $42.0\text{V}$.
+        </div>
+      </div>
+
+      <!-- SECTION 3: TRACTIVE EFFORT & TORQUE BUDGET -->
+      <div class="card-box" style="margin-bottom: 24px;">
+        <div class="card-header">
+          <div class="card-title">3. Longitudinal Tractive Effort &amp; Comprehensive Torque Budget</div>
+          <span class="badge badge-purple">Dynamic Force Analysis</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+          The total tractive force $F_{\text{tractive}}$ required at the wheel contact patch is governed by the longitudinal equation of motion:
+        </p>
+
+        <div class="math-eq-box">
+          $$F_{\text{tractive}} = F_{\text{grade}} + F_{\text{rolling}} + F_{\text{acc}} + F_{\text{aero}}$$
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 18px 0;">
+          <!-- Grade Force -->
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+            <h4 style="font-size: 14px; color: var(--accent-rose); margin-bottom: 6px;">1. Incline Grade Resistance ($F_{\text{grade}}$)</h4>
+            <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;">
+              Component of gravitational force acting parallel to the $15^\circ$ slope:
+            </p>
+            <div class="math-eq-box" style="font-size: 12.5px; padding: 6px 10px;">
+              $$F_{\text{grade}} = M \cdot g \cdot \sin(\theta)$$
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 6px 0 0 0;">
+              • Fully-Laden ($65\text{ kg}$): $65 \cdot 9.81 \cdot \sin(15^\circ) = \mathbf{165.0\text{ N}}$<br>
+              • Nominal ($40\text{ kg}$): $40 \cdot 9.81 \cdot \sin(15^\circ) = \mathbf{101.5\text{ N}}$
+            </p>
+          </div>
+
+          <!-- Rolling Resistance -->
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+            <h4 style="font-size: 14px; color: var(--accent-amber); margin-bottom: 6px;">2. Rolling Resistance ($F_{\text{rolling}}$)</h4>
+            <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;">
+              Hysteresis energy loss in pneumatic tire carcass on asphalt ($C_{rr} = 0.030$):
+            </p>
+            <div class="math-eq-box" style="font-size: 12.5px; padding: 6px 10px;">
+              $$F_{\text{rolling}} = C_{rr} \cdot M \cdot g \cdot \cos(\theta)$$
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 6px 0 0 0;">
+              • Fully-Laden On Slope: $0.03 \cdot 65 \cdot 9.81 \cdot \cos(15^\circ) = \mathbf{18.48\text{ N}}$<br>
+              • Flat Asphalt ($\theta=0^\circ$): $0.03 \cdot 65 \cdot 9.81 = \mathbf{19.13\text{ N}}$
+            </p>
+          </div>
+
+          <!-- Acceleration Force -->
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+            <h4 style="font-size: 14px; color: var(--accent-blue); margin-bottom: 6px;">3. Inertial Acceleration ($F_{\text{acc}}$)</h4>
+            <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;">
+              Overcoming linear and rotational wheel inertia ($a = 0.80\text{ m/s}^2$):
+            </p>
+            <div class="math-eq-box" style="font-size: 12.5px; padding: 6px 10px;">
+              $$F_{\text{acc}} = M_{\text{eff}} \cdot a \quad (M_{\text{eff}} \approx 1.05 M)$$
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 6px 0 0 0;">
+              • Fully-Laden: $1.05 \cdot 65 \cdot 0.80 = \mathbf{54.60\text{ N}}$<br>
+              • Nominal ($40\text{ kg}$): $1.05 \cdot 40 \cdot 0.80 = \mathbf{33.60\text{ N}}$
+            </p>
+          </div>
+
+          <!-- Aerodynamic Drag -->
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+            <h4 style="font-size: 14px; color: var(--accent-emerald); margin-bottom: 6px;">4. Aerodynamic Drag ($F_{\text{aero}}$)</h4>
+            <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 8px;">
+              Air resistance at cruise ($v = 2.78\text{ m/s}$, air density $\rho = 1.204\text{ kg/m}^3$):
+            </p>
+            <div class="math-eq-box" style="font-size: 12.5px; padding: 6px 10px;">
+              $$F_{\text{aero}} = \frac{1}{2} \rho \cdot (C_d A) \cdot (v + v_{\text{wind}})^2$$
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 6px 0 0 0;">
+              • Still air ($v=2.78\text{ m/s}$): $0.5 \cdot 1.204 \cdot 0.28 \cdot 2.78^2 = \mathbf{1.30\text{ N}}$<br>
+              • $5\text{ m/s}$ Headwind: $0.5 \cdot 1.204 \cdot 0.28 \cdot (7.78)^2 = \mathbf{10.20\text{ N}}$
+            </p>
+          </div>
+        </div>
+
+        <h4 style="font-size: 15px; color: var(--text-main); margin: 20px 0 10px 0;">Operating Regime Torque Synthesis</h4>
+
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Operational Load Case</th>
+                <th>Conditions &amp; Slope</th>
+                <th>Total Tractive Force ($F_{\text{total}}$)</th>
+                <th>Total Axle Torque ($\tau = F \cdot r$)</th>
+                <th>Torque Per Motor (2WD Hubs)</th>
+                <th>Torque Margin Factor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: rgba(46, 160, 67, 0.08);">
+                <td><strong>1. Nominal Flat Cruise</strong></td>
+                <td>Flat runway, $v = 10\text{ km/h}$, $a = 0\text{ m/s}^2$</td>
+                <td>$F_{\text{roll}} + F_{\text{aero}} = 19.1 + 1.3 = \mathbf{20.4\text{ N}}$</td>
+                <td>$\tau = 20.4 \times 0.10 = \mathbf{2.04\text{ N}\cdot\text{m}}$</td>
+                <td>$\tau_m = \mathbf{1.02\text{ N}\cdot\text{m}}$</td>
+                <td><span class="badge badge-emerald">Safe Cruise (Low Load)</span></td>
+              </tr>
+              <tr>
+                <td><strong>2. Rapid Flat Acceleration</strong></td>
+                <td>Flat tarmac, $0 \to 10\text{ km/h}$ at $0.80\text{ m/s}^2$</td>
+                <td>$F_{\text{roll}} + F_{\text{acc}} + F_{\text{aero}} = 19.1 + 54.6 + 1.3 = \mathbf{75.0\text{ N}}$</td>
+                <td>$\tau = 75.0 \times 0.10 = \mathbf{7.50\text{ N}\cdot\text{m}}$</td>
+                <td>$\tau_m = \mathbf{3.75\text{ N}\cdot\text{m}}$</td>
+                <td><span class="badge badge-blue">Linear Accel Transient</span></td>
+              </tr>
+              <tr style="background: rgba(225, 29, 72, 0.08);">
+                <td><strong>3. Worst-Case Incline Launch</strong></td>
+                <td>$15^\circ$ slope, full $65\text{ kg}$, $0.5\text{ m/s}^2$ accel</td>
+                <td>$165.0 + 18.5 + 34.1 + 1.3 = \mathbf{218.9\text{ N}}$</td>
+                <td>$\tau = 218.9 \times 0.10 = \mathbf{21.89\text{ N}\cdot\text{m}}$</td>
+                <td>$\tau_m = \mathbf{10.95\text{ N}\cdot\text{m}}$</td>
+                <td><span class="badge badge-rose">Peak Dynamic Target</span></td>
+              </tr>
+              <tr>
+                <td><strong>4. In-Place Zero-Radius Pivot</strong></td>
+                <td>Skid steer scrub on asphalt ($\mu = 0.80$)</td>
+                <td>Scrubbing Moment $M_s \approx \frac{\mu M g L}{4} \approx 68.7\text{ N}\cdot\text{m}$</td>
+                <td>Opposing Wheel Couple $\tau_{\text{scrub}} \approx \mathbf{24.0\text{ N}\cdot\text{m}}$</td>
+                <td>$\tau_m = \mathbf{12.0\text{ N}\cdot\text{m}}$</td>
+                <td><span class="badge badge-purple">FOD Centering Pivot</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECTION 4: ELECTRICAL BUS & POWER BUDGET -->
+      <div class="card-box" style="margin-bottom: 24px;">
+        <div class="card-header">
+          <div class="card-title">4. Electrical Power, Bus Voltage &amp; Battery Discharge Sizing</div>
+          <span class="badge badge-amber">48V LiFePO4 Bus</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+          The electrical input power $P_{\text{elec}}$ required from the 48V power bus is determined by mechanical power $P_{\text{mech}} = \tau \cdot \omega$ and powertrain system efficiency $\eta_{\text{system}} = \eta_{\text{inverter}} \cdot \eta_{\text{motor}} \approx 0.95 \times 0.90 = 0.855$:
+        </p>
+
+        <div class="math-eq-box">
+          $$P_{\text{elec}} = \frac{P_{\text{mech}}}{\eta_{\text{system}}} = \frac{\tau \cdot \omega}{\eta_{\text{system}}}$$
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+            <span class="badge badge-emerald" style="margin-bottom: 6px;">Continuous Cruise Power</span>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              $P_{\text{mech,cruise}} = 2.04\text{ N}\cdot\text{m} \times 27.78\text{ rad/s} = 56.67\text{ W}$<br>
+              <strong>Electrical Power $P_{\text{elec}} = \frac{56.67}{0.855} \approx 66.3\text{ W}$</strong><br>
+              Bus Current ($48\text{V}$): $I_{\text{bus}} = \frac{66.3}{48} = \mathbf{1.38\text{ A}}$
+            </p>
+          </div>
+
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+            <span class="badge badge-rose" style="margin-bottom: 6px;">Peak Dynamic Power ($15^\circ$ Ramp)</span>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              $P_{\text{mech,peak}} = 21.89\text{ N}\cdot\text{m} \times 27.78\text{ rad/s} = 608.1\text{ W}$<br>
+              <strong>Electrical Power $P_{\text{elec}} = \frac{608.1}{0.855} \approx 711.2\text{ W}$</strong><br>
+              Bus Current ($48\text{V}$): $I_{\text{bus,peak}} = \frac{711.2}{48} = \mathbf{14.82\text{ A}}$
+            </p>
+          </div>
+
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
+            <span class="badge badge-purple" style="margin-bottom: 6px;">Battery Pack Endurance</span>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              Pack Capacity: $48\text{V } 20\text{Ah} = 960\text{ W}\cdot\text{h}$<br>
+              Combined Payload (Motors + Vacuum + Compute $\approx 450\text{ W}$):<br>
+              <strong>Mission Endurance: $t_{\text{run}} = \frac{960\text{ Wh} \times 0.85}{450\text{ W}} \approx \mathbf{1.81\text{ hours}}$</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 5: HARDWARE SELECTION & ARCHITECTURE JUSTIFICATION -->
+      <div class="card-box" style="margin-bottom: 24px;">
+        <div class="card-header">
+          <div class="card-title">5. Selected Hardware Specifications &amp; Architectural Rationale</div>
+          <span class="badge badge-blue">Hardware Bill of Materials</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+          Rather than using traditional brushed DC or BLDC motors paired with planetary gearheads (which suffer from mechanical backlash, grease degradation, gear tooth shear under runway vibration, and lower efficiency), the platform adopts <strong>Direct-Drive High-Torque Hub Motors</strong>:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 18px;">
+          <!-- Motor Specs -->
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+            <h4 style="font-size: 15px; color: var(--accent-emerald); margin-bottom: 10px;">Dual ZLLG80ASM25 0-HT V2.0 Direct-Drive Hubs</h4>
+            <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.65; margin: 0;">
+              <li><strong>Rated Voltage:</strong> $48\text{V DC}$ (Operational range $36 - 60\text{V}$).</li>
+              <li><strong>Rated Speed:</strong> $300\text{ RPM}$ ($\approx 11.3\text{ km/h}$ on $200\text{ mm}$ tire).</li>
+              <li><strong>Rated Torque:</strong> $15.0\text{ N}\cdot\text{m}$ (continuous thermal rating).</li>
+              <li><strong>Peak Stall Torque:</strong> $28.0\text{ N}\cdot\text{m}$ ($>2.3\times$ safety margin over worst-case incline launch).</li>
+              <li><strong>Rated Power:</strong> $450\text{ W}$ per motor ($900\text{ W}$ combined dual drive).</li>
+              <li><strong>Encoder Feedback:</strong> Built-in 1024-line quadrature incremental optical encoder ($4096\text{ counts/rev}$ with $4\times$ decoding), yielding $0.153\text{ mm}$ position resolution at tire tread.</li>
+              <li><strong>Environmental Rating:</strong> IP65 sealed housing to prevent tarmac dust, water splash, and loose bitumen aggregate ingress.</li>
+            </ul>
+          </div>
+
+          <!-- Driver Specs -->
+          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+            <h4 style="font-size: 15px; color: var(--accent-blue); margin-bottom: 10px;">ZLAC8015D V4.2 Dual-Channel Servo Driver</h4>
+            <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.65; margin: 0;">
+              <li><strong>Architecture:</strong> Dual-channel synchronized Field-Oriented Control (FOC) sinusoidal vector drive.</li>
+              <li><strong>Continuous Output Current:</strong> $15\text{ A}$ continuous per channel ($30\text{ A}$ peak).</li>
+              <li><strong>Communications Protocol:</strong> CANopen (CiA 402 device profile, up to $1\text{ Mbps}$) with secondary RS485 Modbus RTU interface.</li>
+              <li><strong>ROS 2 Integration:</strong> Direct interface with ROS 2 <code>ros2_control</code> hardware driver publishing joint states at $50\text{ Hz}$ and subscribing to wheel velocity commands.</li>
+              <li><strong>Protection Features:</strong> Overvoltage, undervoltage, thermal foldback at $85^\circ\text{C}$, stator phase short protection, and regenerative braking voltage clamping.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout callout-blue">
+          <strong>Direct Drive Advantage:</strong> Zero gearbox backlash enables instantaneous speed and directional reversal without driveline slop, which is crucial for high-accuracy local SLAM odometry estimation and centimetre-level in-place turning over detected FOD targets.
+        </div>
+      </div>
+
+      <!-- SECTION 6: BRAKING & TIRE FRICTION VALIDATION -->
+      <div class="card-box">
+        <div class="card-header">
+          <div class="card-title">6. Emergency Braking Distance &amp; Tire Adhesion Limits</div>
+          <span class="badge badge-rose">Safety Verification</span>
+        </div>
+
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
+          To prevent collision with runway infrastructure or airside vehicles upon emergency obstacle detection by the 3D LiDAR, the braking distance must remain within $1.5\text{ m}$ from full cruise speed ($10\text{ km/h} = 2.78\text{ m/s}$).
+        </p>
+
+        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px;">
+          Assuming an asphalt friction coefficient $\mu = 0.75$ and maximum regenerative dynamic braking deceleration $a_{\text{brake}} = 3.5\text{ m/s}^2$ (well below the tire skid limit $\mu g \approx 7.35\text{ m/s}^2$):
+        </p>
+
+        <div class="math-eq-box">
+          $$d_{\text{stop}} = \frac{v^2}{2 \cdot a_{\text{brake}}} = \frac{(2.778)^2}{2 \cdot 3.5} = \frac{7.716}{7.0} = \mathbf{1.10\text{ metres}}$$
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-top: 12px;">
+          Accounting for a combined LiDAR detection cycle latency and ROS 2 emergency stop message broadcast delay of $t_{\text{react}} \approx 100\text{ ms}$:
+        </p>
+
+        <div class="math-eq-box">
+          $$d_{\text{total,stop}} = v \cdot t_{\text{react}} + d_{\text{stop}} = (2.778 \times 0.10) + 1.10 = 0.28 + 1.10 = \mathbf{1.38\text{ metres}}$$
+        </div>
+
+        <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 12px 0 0 0;">
+          The total emergency stop distance of $1.38\text{ m}$ comfortably satisfies the $2.0\text{ m}$ obstacle stop boundary maintained by the Nav2 costmap local obstacle safety layer.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- APPLE FOOTER -->
+  <footer class="apple-footer">
+    <div class="apple-footer-container">
+      <div class="apple-footer-legal">
+        <p>1. CDE4301 Innovation &amp; Design Capstone (Robotics) • Powertrain &amp; Motor Sizing Documentation.</p>
+        <p>2. Authored by Hilbert Soh (A0308263H). Dual direct-drive hub calculations and 48V power bus validation.</p>
+        <p>3. Department of Mechanical Engineering &amp; EDIC, College of Design and Engineering, National University of Singapore.</p>
+      </div>
+      <div class="apple-footer-divider"></div>
+      <div class="apple-footer-bottom">
+        <div class="apple-footer-copyright">
+          © AY2627 FOD Hunter CDE4301 Team. National University of Singapore.
+        </div>
+        <ul class="apple-footer-links">
+          <li><a href="../../index.html">Overview</a></li>
+          <li><a href="../../1-introduction.html">Introduction</a></li>
+          <li><a href="../../2-design-overview.html">Architecture</a></li>
+          <li><a href="../../4-subsystems/index.html">Subsystems</a></li>
+          <li><a href="../../5-timeline.html">Timeline</a></li>
+          <li><a href="../../6-references.html">References</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js?v=4.2"></script>
+</body>
+</html>

@@ -89,28 +89,29 @@
               </div>
               <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Mechanical Subsystem Engineers</h3>
               <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+                • <strong>Zacarias Ng</strong> (A0306899H): Chassis Structural Design, FEA, DFM &amp; Fabrication<br>
                 • <strong>Asuka</strong> (A0308285Y): FOD Pickup Mechanism &amp; Suspension Systems<br>
-                • <strong>Zacarias Ng</strong> (A0306899H): Chassis Structural Design &amp; Kinematics Calculations<br>
-                • <em>Subsystem Oversight:</em> <strong>Hilbert Soh</strong> (Overseeing Mechanical Integration)
+                • <strong>Hilbert Soh</strong> (A0308263H): Powertrain Motor Calculations &amp; Steering Kinematic Analysis
               </p>
             </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <a href="../7-documentation/asuka/suspension.html" class="btn btn-deep-dive">📖 Asuka Spec →</a>
               <a href="../7-documentation/zacarias/chassis-fea.html" class="btn btn-deep-dive">📖 Zacarias Spec →</a>
+              <a href="../7-documentation/asuka/suspension.html" class="btn btn-deep-dive">📖 Asuka Spec →</a>
+              <a href="../7-documentation/hilbert/Motor_drivetrain_calculation.html" class="btn btn-deep-dive">📖 Hilbert Motor Spec →</a>
+              <a href="../7-documentation/hilbert/steering-kinematics.html" class="btn btn-deep-dive">📖 Hilbert Steering Spec →</a>
             </div>
           </div>
         </div>
 
-        <!-- 1. CHASSIS DESIGN -->
-        <h2 style="font-size: 22px; color: var(--text-main); margin: 34px 0 14px;">1. Chassis Design</h2>
+        <!-- ==================== ZACARIAS SECTIONS (4.1.1 – 4.1.5) ==================== -->
 
-        <!-- 1.1 STRUCTURAL DESIGN -->
-        <div class="card-box">
+        <!-- 4.1.1 CHASSIS STRUCTURAL DESIGN & PHYSICAL CAD -->
+        <div class="card-box" id="sec-4-1-1">
           <div class="card-header">
-            <div class="card-title">1.1 Structural Design</div>
+            <div class="card-title">4.1.1 Chassis Structural Design &amp; Physical CAD</div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
               <span class="badge badge-blue">Zacarias</span>
-              <span class="badge badge-blue">SolidWorks CAD &amp; Simulation</span>
+              <span class="badge badge-blue">Chassis Engineering</span>
             </div>
           </div>
           
@@ -124,394 +125,119 @@
             <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
               <span class="badge badge-amber" style="margin-bottom: 6px;">Iteration 1</span>
               <h5 style="font-size: 13.5px; color: var(--text-main); margin-bottom: 4px;">Conceptual Monocoque Box</h5>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">[To be filled in]</p>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">[To be filled]</p>
             </div>
 
             <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
               <span class="badge badge-blue" style="margin-bottom: 6px;">Iteration 2</span>
               <h5 style="font-size: 13.5px; color: var(--text-main); margin-bottom: 4px;">Modular Aluminum Extrusion Frame</h5>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">[To be filled in]</p>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">[To be filled]</p>
             </div>
 
             <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; border-left: 4px solid var(--accent-emerald);">
               <span class="badge badge-emerald" style="margin-bottom: 6px;">Iteration 3 (Selected)</span>
               <h5 style="font-size: 13.5px; color: var(--text-main); margin-bottom: 4px;">Hybrid Modular Chassis with Low CG</h5>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">[To be filled in]</p>
+              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">[To be filled]</p>
             </div>
           </div>
 
-          <!-- FEA SIMULATIONS -->
-          <h4 style="font-size: 14.5px; color: var(--accent-purple); margin-bottom: 10px;">Finite Element Analysis (FEA) Simulation Results</h4>
-          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
-            To ensure survivability when traversing runway expansion joints and tarmac irregularities at speeds $\ge 10\text{ km/h}$, SolidWorks FEA static and dynamic load simulations were conducted:
-          </p>
+          <!-- MATERIAL SELECTION JUSTIFICATION -->
+          <h4 style="font-size: 14.5px; color: var(--accent-blue); margin-bottom: 8px;">Material Selection Justification</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0 0 20px 0; font-style: italic;">[To be filled]</p>
 
-          <div class="admin-table-wrapper">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Load Case / Simulation Condition</th>
-                  <th>Applied Force / Constraint</th>
-                  <th>Maximum Von Mises Stress</th>
-                  <th>Maximum Displacement</th>
-                  <th>Factor of Safety (FOS)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Static Gravity Load (1G)</strong></td>
-                  <td>[To be filled in]</td>
-                  <td>[To be filled in]</td>
-                  <td>[To be filled in]</td>
-                  <td>[To be filled in]</td>
-                </tr>
-                <tr>
-                  <td><strong>Dynamic Bump Impact (3G Vertical)</strong></td>
-                  <td>[To be filled in]</td>
-                  <td>[To be filled in]</td>
-                  <td>[To be filled in]</td>
-                  <td>[To be filled in]</td>
-                </tr>
-                <tr>
-                  <td><strong>Torsional Chassis Twist</strong></td>
-                  <td>[To be filled in]</td>
-                  <td>[To be filled in]</td>
-                  <td>[To be filled in]</td>
-                  <td>[To be filled in]</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 8px; font-style: italic;">[To be filled in]</p>
+          <!-- PHYSICAL CAD REALIZATION & COMPONENT PACKAGING -->
+          <h4 style="font-size: 14.5px; color: var(--accent-blue); margin-bottom: 8px;">Physical CAD Realization &amp; Component Packaging</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; font-style: italic;">[To be filled]</p>
         </div>
 
-        <!-- 2. SUSPENSION SYSTEM KINEMATICS, DYNAMICS, AND CONTROL -->
-        <div class="card-box" style="display: none;">
+        <!-- 4.1.2 STRUCTURAL STRESS ANALYSIS (SOLIDWORKS FEA) -->
+        <div class="card-box" id="sec-4-1-2">
           <div class="card-header">
-            <div class="card-title">2. Suspension System Kinematics, Dynamics, and Control</div>
-            <span class="badge badge-purple">Terrain Compliance &amp; Modeling</span>
+            <div class="card-title">4.1.2 Structural Stress Analysis (SolidWorks FEA)</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-blue">Zacarias</span>
+              <span class="badge badge-purple">SolidWorks Simulation</span>
+            </div>
           </div>
-
-          <div style="display: none;">
-          <!-- 3.1 Introduction & Problem Formulation -->
-          <h3 style="font-size: 16px; color: var(--accent-blue); margin-top: 16px; margin-bottom: 8px;">3.1 Introduction &amp; Problem Formulation</h3>
-          
-          <h4 style="font-size: 14.5px; color: var(--text-main); margin-top: 12px; margin-bottom: 6px;">3.1.1 The Operational Necessity of Chassis Compliance</h4>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
-            Autonomous Foreign Object Debris (FOD) inspection and retrieval on airport runways require mobile platforms to navigate rigid concrete expansion joints, asphalt grooving, and surface irregularities at operational speeds (1.5–3.0 m/s). On a rigid chassis lacking compliance, ground surface irregularities induce high-amplitude, high-g impulse forces directly into the aluminum structural frame. These shock loads lead to three operational failure modes:
-          </p>
-          <ul style="padding-left: 20px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-            <li><strong>Perception Degradation:</strong> High-frequency frame vibration introduces angular velocity chatter into IMUs, motion blur into optical flow cameras, and spatial distortion into 3D LiDAR point clouds.</li>
-            <li><strong>Vacuum Intake Seal Disruption:</strong> Unattenuated chassis bouncing causes vertical height fluctuations at the pickup hood, breaking the negative pressure boundary layer required to lift heavier debris (e.g., 300g bird carcasses or loose hardware).</li>
-            <li><strong>Loss of Tire Traction &amp; Steerability:</strong> Without compliance, ground impacts cause transient tire lift, compromising directional control during skid-steering maneuvers.</li>
-          </ul>
-          
-          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-family: monospace; font-size: 12.5px; color: var(--text-main); margin-bottom: 16px; white-space: pre-wrap;">
-Ground Impact (r(t)) ──&gt; [Rigid Chassis]  ──&gt; Frame Acceleration Spikes ──&gt; Sensor Blur &amp; Structural Fatigue
-Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (G(s))  ──&gt; Stable Perception &amp; Traction</div>
-
-          <h4 style="font-size: 14.5px; color: var(--text-main); margin-top: 12px; margin-bottom: 6px;">3.1.2 The $f_n &lt; 15\text{ Hz}$ Natural Frequency Constraint &amp; Boundary Analysis</h4>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
-            To ensure effective vibration isolation and payload stabilization, the chassis natural frequency ($f_n$) must be bounded by both upper and lower operational limits:
-          </p>
-          <div style="text-align: center; font-size: 15px; font-weight: bold; color: var(--accent-purple); margin: 12px 0;">
-            $$\mathbf{2.0\text{ Hz} &lt; f_n &lt; 15.0\text{ Hz}}$$
-          </div>
-
-          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px; text-align: center;">
-            <strong>&lt; 2.0 Hz (Lower Bound)</strong> [Excessive Pitch &amp; Roll: Vacuum hood scrapes/loses suction seal during accel.]<br>
-            <strong>↔ 3.0 Hz - 5.0 Hz (Selected)</strong> [Optimal Balance for UGV: 50% static stroke centering; filters high-frequency noise.]<br>
-            <strong>&gt; 15.0 Hz (Upper Ceiling)</strong> [Vibration Transmissibility Limit: Above 15 Hz, ground chatter passes unattenuated to sensors.]
-          </div>
-
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
-            <strong>Upper Bound ($f_n &lt; 15\text{ Hz}$) — Transmissibility &amp; Sensor Protection:</strong> Following classical vibration isolation theory, force transmission from the ground profile $R(s)$ to the chassis $X_s(s)$ is governed by the transmissibility ratio:
-          </p>
-          <div style="text-align: center; margin: 10px 0; font-size: 14px;">
-            $$T_r = \sqrt{\frac{1 + (2\zeta r)^2}{(1 - r^2)^2 + (2\zeta r)^2}} \quad \text{where } r = \frac{\omega_{\text{disturbance}}}{\omega_n}$$
-          </div>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-            Attenuating road chatter ($r &gt; \sqrt{2}$) requires the system's corner frequency ($\omega_n$) to sit significantly below ground excitation frequencies. Because optical sensors and spinning 3D LiDARs operate at frame/sampling rates of 10–30 Hz, capping $f_n &lt; 15\text{ Hz}$ guarantees that the mechanical low-pass filter rolls off well before the sensor sampling threshold, eliminating spatial aliasing.
-          </p>
-
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
-            <strong>Lower Bound ($f_n &gt; 2.0\text{ Hz}$) — Pitch Control &amp; Packaging Budget:</strong> Conversely, setting $f_n &lt; 2.0\text{ Hz}$ (standard for passenger cars) would require an excessive static compression sag:
-          </p>
-          <div style="text-align: center; margin: 10px 0; font-size: 14px;">
-            $$\delta_{\text{static}} = \frac{g}{(2\pi f_n)^2} = \frac{9.81}{(2\pi \times 1.5)^2} \approx 110\text{ mm}$$
-          </div>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-            On a compact 125 mm coilover assembly with only 20 mm of available piston stroke, a 110 mm sag would bottom out the spring under static weight. Furthermore, low spring stiffness leads to severe pitch during motor acceleration and roll during skid-steering, destabilizing the vacuum intake seal. Thus, $f_n \approx 3.5\text{--}5.5\text{ Hz}$ serves as the optimal design target within the $f_n &lt; 15\text{ Hz}$ upper ceiling.
-          </p>
-
-          <h4 style="font-size: 14.5px; color: var(--text-main); margin-top: 12px; margin-bottom: 6px;">3.1.3 Engineering Constraints and Selection Criteria</h4>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
-            The suspension design for the 65 kg patrol UGV is evaluated against five quantitative mechatronic criteria:
-          </p>
-          <div class="admin-table-wrapper" style="margin-bottom: 20px;">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Criterion</th>
-                  <th>Target Metric</th>
-                  <th>Engineering Justification</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Natural Frequency ($f_n$)</strong></td>
-                  <td>$f_n &lt; 15\text{ Hz}$ (Target: 3.5–5.5 Hz)</td>
-                  <td>Protects vision/LiDAR perception from high-frequency chatter.</td>
-                </tr>
-                <tr>
-                  <td><strong>Static Sag ($x_{\text{ss}}$)</strong></td>
-                  <td>40%–50% of available stroke (8–10 mm)</td>
-                  <td>Centers the shock piston symmetrically to prevent bump/droop saturation.</td>
-                </tr>
-                <tr>
-                  <td><strong>Kinematic Linearity</strong></td>
-                  <td>Constant Motion Ratio ($MR \approx \text{const}$)</td>
-                  <td>Maintains linear transfer function parameters across full travel.</td>
-                </tr>
-                <tr>
-                  <td><strong>Ground Clearance</strong></td>
-                  <td>Zero clearance loss during full compression</td>
-                  <td>Keeps intake nozzle clearance constant relative to pavement.</td>
-                </tr>
-                <tr>
-                  <td><strong>Payload Budget</strong></td>
-                  <td>Corner sprung mass $m_s = 14.25\text{ kg}$</td>
-                  <td>Derived from 65 kg total mass minus 2.0 kg unsprung assembly per wheel.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- 3.2 First-Principles Mechanical & Control Analysis -->
-          <h3 style="font-size: 16px; color: var(--accent-blue); margin-top: 20px; margin-bottom: 8px;">3.2 First-Principles Mechanical &amp; Control Analysis</h3>
-
-          <h4 style="font-size: 14.5px; color: var(--text-main); margin-top: 12px; margin-bottom: 6px;">3.2.1 Free Body Diagram &amp; Governing Differential Equations</h4>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
-            Assuming rigid tire behavior ($k_t \to \infty$)—a valid approximation for solid high-durometer UGV tires—the single-corner suspension reduces to a 1-DOF damped second-order system acting in parallel between the chassis mass ($m_s$) and road profile ($r(t)$).
-          </p>
-          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-family: monospace; font-size: 12px; color: var(--text-main); margin-bottom: 12px; white-space: pre-wrap;">
-                 +-----------------------+
-                 |  Sprung Mass (m_s)    |   &lt;-- Chassis Displacement x_s(t)
-                 +-----------------------+
-                    |                 |
-            +---------------+  +--------------+
-            |  Spring (k_s) |  | Damper (c_s) |  &lt;-- Working in Parallel
-            +---------------+  +--------------+
-                    |                 |
-              ================================= &lt;-- Ground Elevation Profile r(t)</div>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px;">
-            Applying Newton’s Second Law relative to static equilibrium:
-          </p>
-          <div style="text-align: center; margin: 8px 0; font-size: 14px;">
-            $$m_s \ddot{x}_s(t) + c_s (\dot{x}_s(t) - \dot{r}(t)) + k_s (x_s(t) - r(t)) = 0$$
-          </div>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-            Rearranging into input-output differential form:
-            $$m_s \ddot{x}_s(t) + c_s \dot{x}_s(t) + k_s x_s(t) = c_s \dot{r}(t) + k_s r(t)$$
-          </p>
-
-          <h4 style="font-size: 14.5px; color: var(--text-main); margin-top: 12px; margin-bottom: 6px;">3.2.2 Laplace Transform &amp; Closed-Loop Transfer Function</h4>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px;">
-            Taking the Laplace transform $\mathcal{L}\{\cdot\}$ under zero initial conditions:
-            $$(m_s s^2 + c_s s + k_s) X_s(s) = (c_s s + k_s) R(s)$$
-            Solving for the plant transfer function $G(s) = \frac{X_s(s)}{R(s)}$:
-            $$G(s) = \frac{c_s s + k_s}{m_s s^2 + c_s s + k_s} = \frac{\left(\frac{c_s}{m_s}\right) s + \left(\frac{k_s}{m_s}\right)}{s^2 + \left(\frac{c_s}{m_s}\right) s + \left(\frac{k_s}{m_s}\right)}$$
-            Substituting the canonical control parameters $\omega_n^2 = \frac{k_s}{m_s}$ and $2\zeta\omega_n = \frac{c_s}{m_s}$:
-          </p>
-          <div style="text-align: center; margin: 10px 0; font-size: 15px; font-weight: bold; color: var(--accent-emerald);">
-            $$\mathbf{G(s) = \frac{2\zeta\omega_n s + \omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}}$$
-          </div>
-          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-            Where:<br>
-            • Undamped Natural Frequency: $\omega_n = \sqrt{\frac{k_s}{m_s}}$ (rad/s) $\implies f_n = \frac{1}{2\pi}\sqrt{\frac{k_s}{m_s}}$ (Hz).<br>
-            • Damping Ratio: $\zeta = \frac{c_s}{2\sqrt{k_s m_s}}$ (dimensionless).
-          </p>
-
-          <h4 style="font-size: 14.5px; color: var(--text-main); margin-top: 12px; margin-bottom: 6px;">3.2.3 Motion Ratio ($MR$) &amp; Wheel Rate ($k_w$) Integration</h4>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px;">
-            When the shock absorber is installed at an angle $\theta$ or along a leverage arm, the effective stiffness at the tire contact patch (Wheel Rate, $k_w$) scales quadratically with the Motion Ratio ($MR = \frac{\Delta z_{\text{shock}}}{\Delta z_{\text{wheel}}}$):
-            $$k_w = k_s \cdot MR^2 = k_s \cdot \cos^2(\theta)$$
-            Incorporating $MR$ directly into the undamped natural frequency yields:
-            $$\omega_n = \sqrt{\frac{k_w}{m_s}} = \sqrt{\frac{k_s \cdot MR^2}{m_s}} = MR \cdot \sqrt{\frac{k_s}{m_s}}$$
-            For an underdamped shock absorber ($\zeta \approx 0.70$), viscous fluid resistance alters the physical oscillation speed, resulting in the Damped Natural Frequency ($f_d$):
-          </p>
-          <div style="text-align: center; margin: 10px 0; font-size: 15px; font-weight: bold; color: var(--accent-purple);">
-            $$\mathbf{f_d = f_n \sqrt{1 - \zeta^2} = MR \cdot \left(\frac{1}{2\pi}\sqrt{\frac{k_s}{m_s}}\right) \sqrt{1 - \zeta^2}}$$
-          </div>
-
-          <h4 style="font-size: 14.5px; color: var(--text-main); margin-top: 16px; margin-bottom: 6px;">3.2.4 Quantitative Spring Rate Selection (100 vs 150 vs 200 lbs/in)</h4>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
-            Evaluating three candidate springs for the 65 kg robot (sprung corner load $F_{\text{sprung}} = 14.25\text{ kg} \times 9.81 = 139.8\text{ N}$; shock stroke $S_{\text{max}} = 20\text{ mm}$; $MR = 0.95$):
-          </p>
-
-          <div class="admin-table-wrapper" style="margin-bottom: 14px;">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Candidate Spring</th>
-                  <th>Raw Rate ($k_s$)</th>
-                  <th>Wheel Rate ($k_w$)</th>
-                  <th>Static Sag ($x_{\text{ss}}$)</th>
-                  <th>Stroke Position (% of 20mm)</th>
-                  <th>Undamped $f_n$</th>
-                  <th>Damped $f_d$ ($\zeta=0.70$)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="background: rgba(46, 160, 67, 0.08);">
-                  <td><strong>100 lbs/in</strong></td>
-                  <td>17,513 N/m</td>
-                  <td>15,805 N/m</td>
-                  <td>8.84 mm</td>
-                  <td><strong>44.2% (Mid-Stroke)</strong></td>
-                  <td><strong>5.30 Hz</strong></td>
-                  <td><strong>3.78 Hz</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>150 lbs/in</strong></td>
-                  <td>26,269 N/m</td>
-                  <td>23,708 N/m</td>
-                  <td>5.90 mm</td>
-                  <td>29.5%</td>
-                  <td>6.49 Hz</td>
-                  <td>4.63 Hz</td>
-                </tr>
-                <tr>
-                  <td><strong>200 lbs/in</strong></td>
-                  <td>35,025 N/m</td>
-                  <td>31,610 N/m</td>
-                  <td>4.42 mm</td>
-                  <td>22.1%</td>
-                  <td>7.50 Hz</td>
-                  <td>5.35 Hz</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="callout callout-emerald" style="margin-bottom: 16px;">
-            <strong>Mathematical Conclusion:</strong> The <strong>100 lbs/in spring</strong> is selected because it places the static operating point at 44.2% of total travel, centering the shock piston symmetrically to maximize dynamic range (8.8 mm compression, 11.2 mm extension) while producing an undamped natural frequency of $f_n = 5.30\text{ Hz}$—well below the $15.0\text{ Hz}$ professor boundary.
-          </div>
-
-          <!-- 3.3 Comparative Analysis of Suspension Topologies -->
-          <h3 style="font-size: 16px; color: var(--accent-blue); margin-top: 20px; margin-bottom: 8px;">3.3 Comparative Analysis of Suspension Topologies</h3>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
-            To determine the ideal mechanism for integrating the 100 lbs/in coilover into the 65 kg UGV chassis, four suspension topologies were evaluated:
-          </p>
-
-          <div class="admin-table-wrapper" style="margin-bottom: 14px;">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Topology</th>
-                  <th>Kinematic Complexity</th>
-                  <th>Motion Ratio Linearity</th>
-                  <th>Packaging Volume</th>
-                  <th>Ground Clearance &amp; Camber Stability</th>
-                  <th>Engineering Trade-offs</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Trailing Arm</strong></td>
-                  <td>Low (Single pivot pin)</td>
-                  <td>Non-linear ($MR = \cos\theta$ changes with stroke)</td>
-                  <td>Long longitudinal footprint</td>
-                  <td>Constant camber; clearance loss during bump compression</td>
-                  <td>Simple fabrication, but longitudinal space conflicts with side battery bays.</td>
-                </tr>
-                <tr>
-                  <td><strong>Double Wishbone</strong></td>
-                  <td>High (8 ball joints, 4 A-arms)</td>
-                  <td>Highly linear ($MR \approx \text{const}$)</td>
-                  <td>Wide lateral width requirement</td>
-                  <td>Superior camber recovery; high lateral roll stiffness</td>
-                  <td>Excellent handling, but high parts count and complex mounting geometry.</td>
-                </tr>
-                <tr>
-                  <td><strong>MacPherson Strut</strong></td>
-                  <td>Moderate (3 joints, integrated shock strut)</td>
-                  <td>Linear axial compression</td>
-                  <td>Tall vertical height</td>
-                  <td>Significant camber change under bump travel</td>
-                  <td>Compact laterally, but tall strut towers invade central vacuum duct space.</td>
-                </tr>
-                <tr style="background: rgba(46, 160, 67, 0.08);">
-                  <td><strong>Custom Linear Guide</strong></td>
-                  <td>Lowest (Linear rail / linear bearing shaft)</td>
-                  <td>Perfectly Linear ($MR = 1.00$ constant)</td>
-                  <td>Ultra-Compact vertical footprint</td>
-                  <td>100% Constant Camber &amp; Track Width</td>
-                  <td><strong>Zero camber change, but requires low-friction bushings to prevent linear binding under lateral load.</strong></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-family: monospace; font-size: 11.5px; color: var(--text-main); margin-bottom: 16px; white-space: pre-wrap;">
-                       TOPOLOGY SCHEMATICS
-
-  A. TRAILING ARM                  B. DOUBLE WISHBONE
-      Pivot                             A-Arm (Upper)
-        O───────[Arm]─────[Wheel]         O───────O
-                 │                        O───────O──────[Wheel]
-              [Shock]                   A-Arm (Lower)
-
-  C. MACPHERSON STRUT              D. CUSTOM LINEAR GUIDE
-        [Top Mount]                     [Linear Rail / Shaft]
-             │                                   ║  (100% Vertical)
-          [Strut]                                ║
-             │                                ┌──╨──┐
-             └───[Lower Arm]───[Wheel]        │Wheel│
-                                              └─────┘</div>
-
-          <div class="callout callout-emerald" style="margin-bottom: 16px;">
-            <strong>Selection Decision:</strong> The <strong>Custom Linear Guide Suspension</strong> was selected. By constraining movement along precision vertical shafts, it guarantees a constant Motion Ratio ($MR = 1.00$), preserves camber angle under chassis roll, and avoids invading the central vacuum ducting volume.
-          </div>
-
-          <!-- 3.4 Detailed Mechanical Design and Fabrication -->
-          <h3 style="font-size: 16px; color: var(--accent-blue); margin-top: 20px; margin-bottom: 8px;">3.4 Detailed Mechanical Design and Fabrication ("Design and Make")</h3>
-
-          <h4 style="font-size: 14.5px; color: var(--text-main); margin-top: 12px; margin-bottom: 6px;">3.4.1 CAD Realization &amp; Component Hardpoints</h4>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px;">
-            The final mechanical assembly integrates four independent suspension modules at the chassis corners. Each module comprises:
-          </p>
-          <ul style="padding-left: 20px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-            <li><strong>Coilover Shock Absorber:</strong> 125 mm eye-to-eye length, 20 mm stroke, fitted with a 100 lbs/in (17.51 N/mm) steel coil spring and internal hydraulic damper.</li>
-            <li><strong>Linear Guidance Assembly:</strong> Twin hardened steel shafts guided by linear recirculating ball bushings, ensuring smooth vertical movement without angular binding under lateral drive torque.</li>
-            <li><strong>Chassis Mounting Brackets:</strong> CNC-milled 6061-T6 aluminum plates configured to transfer vertical shock loads directly into the main frame rails.</li>
-          </ul>
-
-          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-family: monospace; font-size: 11.5px; color: var(--text-main); margin-bottom: 16px; white-space: pre-wrap;">
-       +-------------------------------------------------+
-       |         CHASSIS FRAME RAIL (6061-T6)            |
-       +-------------------------------------------------+
-            │                                       │
-     [Upper Shock Mount]                   [Linear Guide Block]
-            │                                       ║
-    [125mm Coilover Shock]                 [Hardened Shaft]
-     (100 lbs/in Spring)                            ║
-            │                                       ║
-     [Lower Shock Mount] ─────────────────── [Wheel Hub Upright]
-                                                    │
-                                             [Drive Wheel]</div>
-
-          <h4 style="font-size: 14.5px; color: var(--text-main); margin-top: 12px; margin-bottom: 6px;">3.4.2 Physical Verification and Testing</h4>
-          <ul style="padding-left: 20px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
-            <li><strong>Static Sag Measurement:</strong> With the fully assembled 65 kg robot resting on level ground, static deflection measured 8.5 mm per corner, confirming the predicted theoretical sag of 8.84 mm (within 3.8% error).</li>
-            <li><strong>Transient Step Test:</strong> Dropping the chassis from a 20 mm step yielded a damped natural frequency of $f_d \approx 3.7\text{ Hz}$ with a settling time of $t_s &lt; 0.2\text{ s}$, verifying near-critical damping ($\zeta \approx 0.70$) and confirming complete compliance with the $f_n &lt; 15\text{ Hz}$ design criteria.</li>
-          </ul>
-          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; font-style: italic;">[To be filled]</p>
         </div>
 
-        <!-- 1.2 MOTOR & POWERTRAIN REQUIREMENTS -->
-        <div class="card-box">
+        <!-- 4.1.3 WHEEL DIAMETER JUSTIFICATION -->
+        <div class="card-box" id="sec-4-1-3">
           <div class="card-header">
-            <div class="card-title">1.2 Motor &amp; Powertrain Requirements</div>
+            <div class="card-title">4.1.3 Wheel Diameter Justification</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-blue">Zacarias</span>
+              <span class="badge badge-blue">Wheel &amp; Ground Clearance</span>
+            </div>
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; font-style: italic;">[To be filled]</p>
+        </div>
+
+        <!-- 4.1.4 DESIGN FOR MANUFACTURING (DFM) & SERVICEABILITY -->
+        <div class="card-box" id="sec-4-1-4">
+          <div class="card-header">
+            <div class="card-title">4.1.4 Design for Manufacturing (DFM) &amp; Serviceability</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-blue">Zacarias</span>
+              <span class="badge badge-amber">DFM &amp; Maintenance</span>
+            </div>
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; font-style: italic;">[To be filled]</p>
+        </div>
+
+        <!-- 4.1.5 PHYSICAL LOAD TESTING & STRUCTURAL VALIDATION -->
+        <div class="card-box" id="sec-4-1-5">
+          <div class="card-header">
+            <div class="card-title">4.1.5 Physical Load Testing &amp; Structural Validation</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-blue">Zacarias</span>
+              <span class="badge badge-emerald">Experimental Testing</span>
+            </div>
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0; font-style: italic;">[To be filled]</p>
+        </div>
+
+        <!-- ==================== ASUKA SECTIONS (4.1.6 – 4.1.7) ==================== -->
+
+        <!-- 4.1.6 SUSPENSION SUBSYSTEM ARCHITECTURE -->
+        <div class="card-box" id="sec-4-1-6">
+          <div class="card-header">
+            <div class="card-title">4.1.6 Suspension Subsystem Architecture</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Asuka</span>
+              <span class="badge badge-rose">Terrain Compliance &amp; Dynamics</span>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            The suspension subsystem is designed for the 65 kg autonomous runway FOD patrol UGV. Its requirements include a 20 mm shock stroke, 40%-50% static sag to centre the piston, 10-15 km/h operating speed, and a 16.25 kg corner mass budget. The documentation explains how suspension compliance protects the camera, LiDAR, and IMU from vibration, preserves the vacuum intake seal, maintains tyre traction during differential skid steering, and dissipates impact energy. It develops a first-principles mass-spring-damper model, transfer function, natural and damped frequency calculations, motion-ratio and wheel-rate relationships, and a spring-rate comparison. The 100 lbs/in spring is selected for approximately 9.397 mm static sag, while the double-wishbone architecture is selected over trailing-arm and MacPherson-strut alternatives. <a href="../7-documentation/asuka/suspension.html" class="btn btn-deep-dive" style="display: inline-flex; margin-top: 12px;">Read Asuka's Suspension Documentation →</a>
+          </p>
+          <figure style="margin: 18px 0 0; text-align: center;">
+            <img src="../assets/images/Asuka/double-wishbone-on-chassis.jpg" alt="Double wishbone suspension mounted on the FOD Hunter chassis" style="width: min(100%, 760px); max-height: 420px; object-fit: contain; margin: 0 auto; border-radius: 8px;">
+            <figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Double wishbone suspension mounted on the chassis.</figcaption>
+          </figure>
+        </div>
+
+        <!-- 4.1.7 HIGH-FLOW VACUUM FOD PICKUP SUBSYSTEM -->
+        <div class="card-box" id="sec-4-1-7">
+          <div class="card-header">
+            <div class="card-title">4.1.7 High-Flow Vacuum FOD Pickup Subsystem</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+              <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Asuka</span>
+              <span class="badge badge-rose">Aerodynamic Suction</span>
+            </div>
+          </div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+            The FOD pickup subsystem addresses the limitations of manual runway FOD walks, sweepers, magnetic bars, and independent blowers by combining a ground-sealing intake interface with contained vacuum extraction. The design target covers ferrous and non-ferrous debris from approximately 4-20 cm and 4-300 g, including small fasteners through to a 300 g bird carcass. The documentation compares grippers, vacuum, magnetic bars, friction mats, and sweepers, then derives pickup velocity, duct flow rate, pressure losses, and estimated motor power for 25 g and 300 g cases. It also records two design iterations, side-entry and top-down testing, the observed blockage caused by corrugated hose, and the improved pickup achieved through a temporary nozzle seal and velocity surge. <a href="../7-documentation/asuka/vacuum-module.html" class="btn btn-deep-dive" style="display: inline-flex; margin-top: 12px;">Read Asuka's FOD Pickup Documentation →</a>
+          </p>
+        </div>
+
+        <!-- ==================== HILBERT SECTIONS (4.1.8 – 4.1.9) ==================== -->
+
+        <!-- 4.1.8 MOTOR SELECTION AND CALCULATIONS -->
+        <div class="card-box" id="sec-4-1-8">
+          <div class="card-header">
+            <div class="card-title">4.1.8 Motor Selection and Calculations</div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
               <span class="badge badge-blue">Hilbert</span>
               <span class="badge badge-emerald">Powertrain Engineering</span>
@@ -554,158 +280,39 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
               </p>
             </div>
           </div>
+
+          <div style="margin-top: 16px; display: flex; justify-content: flex-start;">
+            <a href="../7-documentation/hilbert/Motor_drivetrain_calculation.html" class="btn btn-deep-dive" style="display: inline-flex; align-items: center; gap: 8px;">
+              📖 Read Hilbert's Motor &amp; Drivetrain Documentation →
+            </a>
+          </div>
         </div>
 
-        <!-- 1.3 STEERING SYSTEM ARCHITECTURE COMPARISON -->
-        <div class="card-box" id="steering-architecture-section" style="border-left: 4px solid var(--accent-purple);">
+        <!-- 4.1.9 STEERING & DRIVE ARCHITECTURE -->
+        <div class="card-box" id="sec-4-1-9">
+          <span id="steering-architecture-section"></span>
           <div class="card-header" style="flex-wrap: wrap; gap: 8px;">
-            <div class="card-title">1.3 Steering &amp; Drive Architecture: Kinematic Trade-Off Analysis</div>
+            <div class="card-title">4.1.9 Steering &amp; Drive Architecture Kinematics</div>
             <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-              <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Kinematic Analysis</span>
-              <span class="badge badge-purple" style="background: rgba(147, 51, 234, 0.15); color: var(--accent-purple); border: 1px solid rgba(147, 51, 234, 0.35); font-weight: 600;">👤 Lead Author: Hilbert Soh (A0308263H)</span>
+              <span class="badge badge-blue">Hilbert</span>
+              <span class="badge badge-purple">Kinematic Analysis</span>
             </div>
           </div>
 
-          <!-- DESIGN DECISION FRAMEWORK & OPERATIONAL REQUIREMENTS -->
-          <div style="margin-bottom: 20px;">
-            <h4 style="font-size: 14.5px; color: var(--accent-blue); margin: 0 0 8px 0;">1.3.1 Design Decision Framework &amp; Operational Requirements</h4>
-            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-bottom: 12px;">
-              The steering architecture was not selected solely on manoeuvrability. Each candidate drivetrain was evaluated against the operational requirements of the airside FOD retrieval mission. The autonomous UGV must first traverse relatively long runway sections at a target forward speed of at least $10\text{ km/h}$, then transition to low-speed local manoeuvring when approaching a detected debris coordinate. The chosen drivetrain must therefore support both efficient straight-line transit and precise final positioning of the vacuum intake.
-            </p>
-            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-bottom: 14px;">
-              Three candidate architectures were shortlisted for trade-off evaluation: <strong>Four-Wheel Differential / Skid Steering</strong>, <strong>Ackermann Steering</strong>, and <strong>Mecanum-Wheel Omnidirectional Drive</strong>. To ensure an objective and traceable decision process, the candidates were evaluated against seven predefined engineering criteria before making the architectural selection:
-            </p>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0 0 16px 0;">
+            The steering architecture was evaluated to balance rapid runway traversal ($\ge 10\text{ km/h}$) with precise low-speed positioning of the vacuum intake directly over detected FOD coordinates. Three candidate drivetrains were shortlisted and benchmarked across turning envelope, tarmac traction, outdoor debris tolerance, mechanical reliability, sensor platform stability, and ROS 2 Nav2 compatibility: <strong>4WD Differential / Skid Steering</strong>, <strong>Ackermann Steering</strong>, and <strong>Mecanum Wheel Omnidirectional Drive</strong>.
+          </p>
 
-            <div class="admin-table-wrapper" style="margin-bottom: 16px;">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th style="width: 25%;">Operational Requirement</th>
-                    <th style="width: 20%;">Target Metric</th>
-                    <th>Engineering Rationale &amp; Operational Impact</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Forward Traversal Speed</strong></td>
-                    <td><span class="badge badge-blue">$\ge 10\text{ km/h}$ ($2.78\text{ m/s}$)</span></td>
-                    <td>Minimises runway runway inspection cycle time to meet airside operational clearance windows between flight slots.</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Local Turning Envelope</strong></td>
-                    <td><span class="badge badge-emerald">In-place pivot ($R \to 0\text{ m}$)</span></td>
-                    <td>Enables rapid final repositioning of the vacuum suction hood directly over detected FOD coordinates without multi-point shunting.</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Outdoor &amp; FOD Tolerance</strong></td>
-                    <td><span class="badge badge-amber">Debris &amp; grit immune</span></td>
-                    <td>Airside asphalt contains loose bitumen aggregate, metal shavings, and gravel; drivetrain mechanisms must not jam or ingest particles.</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Longitudinal &amp; Lateral Traction</strong></td>
-                    <td><span class="badge badge-blue">$\mu \ge 0.70$ on asphalt</span></td>
-                    <td>Ensures reliable traction for acceleration, rapid emergency braking, and negotiating $15^\circ$ drainage cross-slopes under wet conditions.</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Mechanical Simplicity</strong></td>
-                    <td><span class="badge badge-purple">Minimal linkages</span></td>
-                    <td>Fewer articulated joints and steering actuators reduces mechanical backlash, maintenance overhead, and failure points under tarmac vibration.</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Sensor Platform Stability</strong></td>
-                    <td><span class="badge badge-blue">Low periodic vibration</span></td>
-                    <td>Minimises high-frequency drivetrain vibration transmission that could corrupt IMU state estimation and degrade 3D LiDAR point cloud SLAM.</td>
-                  </tr>
-                  <tr>
-                    <td><strong>ROS 2 Nav2 Compatibility</strong></td>
-                    <td><span class="badge badge-emerald">Direct $(v_x, \omega_z)$ mapping</span></td>
-                    <td>Provides direct mapping from standard Nav2 velocity commands (`cmd_vel`) to wheel velocity setpoints with robust EKF odometry fusion.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin-bottom: 4px;">
-              No architecture is optimal across all criteria. Ackermann steering offers efficient pure-rolling motion and excellent high-speed stability but introduces mechanical steering linkages and non-zero minimum turning radius. Mecanum drive provides an additional lateral degree of freedom ($v_y$) attractive for final FOD alignment, but achieves this through mechanically complex peripheral rollers whose durability on grit-laden outdoor pavement presents high reliability risks. Four-wheel skid steering provides a mechanically robust drivetrain and zero-radius turning, but requires lateral tire scrub during pivot maneuvers. <em>Click any candidate card below to inspect its mathematical formulation, kinematics matrix, and detailed trade study:</em>
-            </p>
-          </div>
-
-          <!-- VISUAL DRIVE ARCHITECTURE COMPARISON GALLERY (CLICKABLE CARDS) -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px;">
-            <!-- 1. Differential / Skid-Steer -->
-            <div class="steering-interactive-card" onclick="openSteeringModal('diff-drive')" role="button" tabindex="0" title="Click to view detailed kinematics and formulas for 4WD Differential Drive" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid rgba(46, 160, 67, 0.35); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; cursor: pointer; transition: all 0.25s ease; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-              <div style="position: absolute; top: 10px; right: 10px;">
-                <span class="badge badge-emerald" style="font-size: 11px; font-weight: 700;">SELECTED</span>
-              </div>
-              <div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; margin-bottom: 12px; text-align: center; display: flex; align-items: center; justify-content: center; min-height: 155px;">
-                <img src="../assets/images/Hilbert/Differential_Drive.png" alt="4WD Differential / Skid-Steer Drive Kinematic Model" style="max-height: 135px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));">
-              </div>
-              <h4 style="font-size: 14.5px; color: var(--accent-emerald); margin: 0 0 6px 0; display: flex; align-items: center; justify-content: space-between;">
-                <span>4WD Differential / Skid-Steer</span>
-                <span style="font-size: 12px; opacity: 0.8;">↗</span>
-              </h4>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0 0 10px 0;">
-                Independent dual-side velocity control ($v_L, v_R$). True zero-radius rotation ($R=0$) with high tractive torque and zero steering linkage play. Accepted trade-off: lateral tire scrub during pivots.
-              </p>
-              <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--accent-emerald);">
-                <span>Non-holonomic ($3\text{ DOF}\to 2$)</span>
-                <span style="font-weight: 600;">View Formulas →</span>
-              </div>
-            </div>
-
-            <!-- 2. Ackermann Steering -->
-            <div class="steering-interactive-card" onclick="openSteeringModal('ackermann')" role="button" tabindex="0" title="Click to view detailed kinematics and formulas for Ackermann Steering" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid rgba(225, 29, 72, 0.25); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; cursor: pointer; transition: all 0.25s ease; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-              <div style="position: absolute; top: 10px; right: 10px;">
-                <span class="badge badge-rose" style="font-size: 11px; font-weight: 700; background: rgba(225,29,72,0.15); color: var(--accent-rose);">NOT SELECTED</span>
-              </div>
-              <div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; margin-bottom: 12px; text-align: center; display: flex; align-items: center; justify-content: center; min-height: 155px;">
-                <img src="../assets/images/Hilbert/ackermann_steering.png" alt="Ackermann Steering Geometry" style="max-height: 135px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));">
-              </div>
-              <h4 style="font-size: 14.5px; color: var(--accent-rose); margin: 0 0 6px 0; display: flex; align-items: center; justify-content: space-between;">
-                <span>Ackermann Steering</span>
-                <span style="font-size: 12px; opacity: 0.8;">↗</span>
-              </h4>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0 0 10px 0;">
-                Pure rolling motion with articulated steering knuckles. High straight-line stability, but theoretical $R_{\text{min}} \ge 0.79\text{ m}$ (swept radius $\ge 1.2\text{ m}$) requires multi-point loops for debris capture.
-              </p>
-              <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--accent-rose);">
-                <span>Non-holonomic ($3\text{ DOF}\to 2$)</span>
-                <span style="font-weight: 600;">View Formulas →</span>
-              </div>
-            </div>
-
-            <!-- 3. Mecanum Drive -->
-            <div class="steering-interactive-card" onclick="openSteeringModal('mecanum')" role="button" tabindex="0" title="Click to view detailed kinematics and formulas for Mecanum Wheel Drive" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; cursor: pointer; transition: all 0.25s ease; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-              <div style="position: absolute; top: 10px; right: 10px;">
-                <span class="badge badge-rose" style="font-size: 11px; font-weight: 700; background: rgba(225,29,72,0.15); color: var(--accent-rose);">NOT SELECTED</span>
-              </div>
-              <div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 12px; margin-bottom: 12px; text-align: center; display: flex; align-items: center; justify-content: center; min-height: 155px;">
-                <img src="../assets/images/Hilbert/mecanum_drive.webp" alt="Mecanum Wheel Roller Configuration" style="max-height: 135px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));">
-              </div>
-              <h4 style="font-size: 14.5px; color: var(--accent-amber); margin: 0 0 6px 0; display: flex; align-items: center; justify-content: space-between;">
-                <span>Mecanum Wheel Drive</span>
-                <span style="font-size: 12px; opacity: 0.8;">↗</span>
-              </h4>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0 0 10px 0;">
-                $45^\circ$ peripheral sub-rollers enable holonomic translation ($v_y$). Attractive for lateral hood alignment, but exposed roller clearances pose reliability risks on debris-laden tarmac.
-              </p>
-              <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: var(--accent-amber);">
-                <span>Holonomic ($3\text{ DOF}\to 3$)</span>
-                <span style="font-weight: 600;">View Formulas →</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- COMPARISON MATRIX TABLE -->
-          <div class="admin-table-wrapper">
+          <!-- Candidate Comparison Matrix -->
+          <div class="admin-table-wrapper" style="margin-bottom: 16px;">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>Steering Type</th>
-                  <th>Min. Turning Radius</th>
+                  <th>Steering Architecture</th>
+                  <th>Kinematic Envelope</th>
                   <th>Speed Requirement ($\ge 10\text{ km/h}$)</th>
-                  <th>Runway Traction &amp; Durability</th>
-                  <th>Mechanical Simplicity</th>
+                  <th>Runway Traction &amp; Debris Immunity</th>
+                  <th>Mechanical Complexity</th>
                   <th>Selection Decision</th>
                 </tr>
               </thead>
@@ -714,7 +321,7 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
                   <td><strong>4WD Differential / Skid-Steer</strong></td>
                   <td><span class="badge badge-emerald">Zero Radius ($R = 0\text{ m}$, in-place pivot)</span></td>
                   <td><span class="badge badge-emerald">Met ($v \approx 10\text{--}12\text{ km/h}$ at nominal RPM)</span></td>
-                  <td><span class="badge badge-emerald">High (Pneumatic rubber on asphalt, $\mu \approx 0.80\text{--}0.85$)</span></td>
+                  <td><span class="badge badge-emerald">High (Pneumatic rubber on asphalt, $\mu \approx 0.85$)</span></td>
                   <td><span class="badge badge-emerald">High (Direct-drive hubs, zero tie-rod play)</span></td>
                   <td><span class="badge badge-emerald" style="font-weight: bold;">SELECTED</span></td>
                 </tr>
@@ -738,321 +345,23 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
             </table>
           </div>
 
-          <!-- TRADE-OFF ANALYSIS CARDS -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px;">
-            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
-              <h4 style="font-size: 14px; color: var(--accent-emerald); margin-bottom: 8px;">1. Drivetrain Trade Study &amp; Selection Rationale</h4>
-              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0 0 10px 0;">
-                <li><strong>In-Place Pure Pivot ($R = 0$):</strong> Eliminates multi-point turning when positioning the suction hood precisely over small debris coordinates ($v_x = 0$, $\omega_z \neq 0$).</li>
-                <li><strong>All-Weather Tarmac Traction ($\mu \approx 0.80\text{--}0.85$):</strong> High friction coefficient with pneumatic rubber tires on grooved runway asphalt ensures reliable ramp traversal ($15^\circ$) and emergency stopping distances.</li>
-                <li><strong>Direct Hub Reliability:</strong> Eliminates steering servos, tie-rod linkages, and kingpin bushings that are vulnerable to fatigue and mechanical backlash under runway surface vibration.</li>
-                <li><strong>ROS 2 Nav2 Command Integration:</strong> Maps directly to ROS 2 Nav2 body-velocity commands $(v_x, \omega_z)$, simplifying translation to left/right wheel velocity setpoints.</li>
-              </ul>
-              <div style="background: rgba(46, 160, 67, 0.08); border-left: 3px solid var(--accent-emerald); padding: 8px 12px; border-radius: 4px;">
-                <strong style="color: var(--accent-emerald); font-size: 12.5px;">Accepted Trade-Off — Lateral Tire Scrub:</strong>
-                <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 4px 0 0 0;">
-                  Four-wheel skid steering requires lateral tire slip during turning, particularly during zero-radius pivots. This increases turning resistance and causes the physical effective track width $W_{\text{eff}}$ to diverge from the geometric track width. Because precise in-place repositioning is required only during low-speed final FOD approach while runway traversal is predominantly straight-line transit, this limitation was considered acceptable and is managed via $W_{\text{eff}}$ experimental calibration and IMU/LiDAR sensor fusion.
-                </p>
-              </div>
-            </div>
-
-            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
-              <h4 style="font-size: 14px; color: var(--accent-rose); margin-bottom: 8px;">2. Analysis &amp; Limitations of Alternative Candidates</h4>
-              <ul style="padding-left: 18px; font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <li><strong>Ackermann Maneuvering Constraint:</strong> While Ackermann steering provides pure rolling with zero tire scrub at high speed, its non-zero minimum turning radius ($R_{\text{min,kinematic}} \approx 0.79\text{ m}$, outer swept radius $\approx 1.2\text{--}1.5\text{ m}$) mandates multi-point shunting maneuvers if a target debris coordinate is overshot.</li>
-                <li><strong>Mecanum Lateral Alignment Trade-Off:</strong> Mecanum was initially attractive because independent lateral translation ($v_y$) allows the vacuum intake to shift over debris without rotating the chassis. However, the exposed peripheral roller architecture introduces additional interfaces where runway grit and debris fragments may interfere with free roller rotation.</li>
-                <li><strong>Vibration Transmission Risk:</strong> Discontinuous roller contact transitions in Mecanum wheels generate high-frequency micro-vibrations ($30\text{--}80\text{ Hz}$ under load), which risks degrading IMU acceleration integration and blurring 3D LiDAR point cloud SLAM.</li>
-                <li><strong>Effective Traction Degradation:</strong> $45^\circ$ vector decomposition reduces effective tractive efficiency ($\mu_{\text{eff}} \approx 0.35\text{--}0.45$), increasing slip and power dissipation on wet or sloped runway asphalt.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- MODAL POPUP FOR KINEMATICS & DRIVE ARCHITECTURES -->
-        <div id="steering-modal-backdrop" class="steering-modal-backdrop" style="display:none;" onclick="closeSteeringModalOnBackdrop(event)">
-          <div class="steering-modal-dialog" role="dialog" aria-modal="true">
-            <button class="steering-modal-close" onclick="closeSteeringModal()" aria-label="Close modal">✕</button>
-            
-            <!-- PANEL 1: 4WD DIFFERENTIAL DRIVE -->
-            <div id="modal-panel-diff-drive" class="steering-modal-panel" style="display: none;">
-              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; padding-right: 36px;">
-                <div>
-                  <h2 style="font-size: 18px; margin: 0 0 4px 0; color: #fff;">4WD Independent Differential / Skid-Steer Drive</h2>
-                  <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Non-Holonomic 2-DOF Control ($v_x, \omega_z$) with Pure In-Place Zero-Radius Pivot</p>
-                </div>
-                <span class="badge badge-emerald" style="font-size: 11px; flex-shrink: 0;">SELECTED ARCHITECTURE</span>
-              </div>
-
-              <div style="display: grid; grid-template-columns: minmax(160px, 220px) 1fr; gap: 18px; margin-bottom: 18px; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
-                <div style="text-align: center; background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px;">
-                  <img src="../assets/images/Hilbert/Differential_Drive.png" alt="4WD Differential Drive Kinematics" style="max-height: 140px; max-width: 100%; object-fit: contain;">
-                </div>
-                <div>
-                  <table style="width: 100%; font-size: 12.5px; border-collapse: collapse;">
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Degrees of Freedom:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;">3 DOF (Planar) with 2 Controllable Inputs ($v_x, \omega_z$)</td>
-                    </tr>
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Turning Radius:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;"><span class="badge badge-emerald">Zero Radius ($R = 0\text{ m}$, Pure In-Place Pivot)</span></td>
-                    </tr>
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Runway Traction:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;"><span class="badge badge-emerald">High (Pneumatic rubber on tarmac, $\mu \approx 0.80\text{--}0.85$)</span></td>
-                    </tr>
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Drive Complexity:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;"><span class="badge badge-emerald">High Reliability (Direct-drive hubs, zero tie-rod play)</span></td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-
-              <h4 style="color: var(--accent-blue); font-size: 14.5px; margin: 16px 0 8px 0;">Mathematical &amp; Kinematic Formulation</h4>
-
-              <div class="steering-formula-box">
-                <h5 style="color: var(--accent-emerald); font-size: 13px; margin: 0 0 6px 0;">1. Ideal Differential-Drive Kinematic Model</h5>
-                <p style="font-size: 13px; margin: 0 0 6px 0; color: var(--text-muted);">
-                  For control setpoint generation and nominal odometry, the platform is modeled using the ideal differential-drive equations relating left and right wheel angular velocities ($\omega_L, \omega_R$), nominal wheel radius $r = 0.10\text{ m}$, and track width $W$:
-                </p>
-                <p style="font-size: 14px; margin: 0; text-align: center;">
-                  $$v_x = \frac{r}{2}(\omega_R + \omega_L), \qquad \omega_z = \dot{\theta} = \frac{r}{W}(\omega_R - \omega_L)$$
-                </p>
-                <p style="font-size: 13px; margin: 6px 0 0 0; text-align: center;">
-                  $$\begin{bmatrix} v_x \\ \omega_z \end{bmatrix} = \begin{bmatrix} \frac{r}{2} & \frac{r}{2} \\ -\frac{r}{W} & \frac{r}{W} \end{bmatrix} \begin{bmatrix} \omega_L \\ \omega_R \end{bmatrix}$$
-                </p>
-              </div>
-
-              <div class="steering-formula-box">
-                <h5 style="color: var(--accent-blue); font-size: 13px; margin: 0 0 6px 0;">2. Physical Skid-Steer Behavior &amp; Effective Track Width ($W_{\text{eff}}$)</h5>
-                <p style="font-size: 13px; margin: 0 0 6px 0; color: var(--text-muted);">
-                  In a physical four-wheel skid-steer chassis without steering knuckles, turning requires lateral tire scrubbing. Consequently, the Instantaneous Centers of Rotation (ICR) shift longitudinally, causing the physical effective track width $W_{\text{eff}}$ to exceed the geometric distance between wheels ($W_{\text{eff}} > W_{\text{geom}}$):
-                </p>
-                <p style="font-size: 14px; margin: 0; text-align: center;">
-                  $$\omega_z = \frac{r}{W_{\text{eff}}}(\omega_R - \omega_L), \qquad W_{\text{eff}} = \chi \cdot W_{\text{geom}} \quad (\chi \approx 1.15\text{--}1.30)$$
-                </p>
-                <p style="font-size: 12.5px; margin: 6px 0 0 0; color: var(--text-muted);">
-                  $W_{\text{eff}}$ is experimentally calibrated on runway asphalt via steady-state yaw rate benchmarking. Wheel odometry drift induced by scrub slip is actively corrected within the ROS 2 <code>robot_localization</code> EKF by fusing wheel velocities with the 6-DOF IMU and 3D LiDAR SLAM odometry.
-                </p>
-              </div>
-
-              <div class="steering-formula-box">
-                <h5 style="color: var(--accent-purple); font-size: 13px; margin: 0 0 6px 0;">3. Inverse Kinematics (Nav2 Velocity Commands to Motor Setpoints)</h5>
-                <p style="font-size: 13px; margin: 0 0 6px 0; color: var(--text-muted);">
-                  Given commanded linear velocity $v_x$ and yaw rate $\omega_z$ from the Nav2 controller plugin (e.g., <code>DWBLocalPlanner</code> / <code>RegulatedPurePursuit</code>):
-                </p>
-                <p style="font-size: 14px; margin: 0; text-align: center;">
-                  $$\omega_L = \frac{v_x - \frac{W_{\text{eff}}}{2}\omega_z}{r}, \qquad \omega_R = \frac{v_x + \frac{W_{\text{eff}}}{2}\omega_z}{r}$$
-                </p>
-              </div>
-
-              <div class="steering-formula-box">
-                <h5 style="color: var(--accent-emerald); font-size: 13px; margin: 0 0 6px 0;">4. Instantaneous Center of Rotation (ICR) &amp; In-Place Pivot</h5>
-                <p style="font-size: 13px; margin: 0 0 6px 0; color: var(--text-muted);">
-                  The Instantaneous Center of Rotation lies on the lateral axle line at signed radius $R$:
-                </p>
-                <p style="font-size: 14px; margin: 0; text-align: center;">
-                  $$(x_{\text{ICR}}, y_{\text{ICR}}) = \left(0, \frac{v_x}{\omega_z}\right) = (0, R)$$
-                </p>
-                <p style="font-size: 13px; margin: 6px 0 0 0; color: var(--text-muted);">
-                  Setting $v_x = 0$ with $\omega_R = -\omega_L$ yields $R = 0\text{ m}$, permitting the robot to rotate precisely around its geometric center to align the vacuum suction hood directly above target coordinates.
-                </p>
-              </div>
-
-              <h4 style="color: var(--accent-emerald); font-size: 14px; margin: 14px 0 8px 0;">Summary of Selection Rationale &amp; Trade-Off Management:</h4>
-              <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.6; padding-left: 20px; margin: 0;">
-                <li><strong>Centimeter-Level FOD Centering:</strong> In-place pivot capability ($R = 0\text{ m}$) enables the UGV to stop and orient its suction intake over small targets ($10\text{ mm}$ rivets/bolts) without executing orbital repositioning loops.</li>
-                <li><strong>Runway Ruggedness:</strong> High tire-to-pavement friction ($\mu \approx 0.80\text{--}0.85$ on asphalt) ensures robust torque delivery up $15^\circ$ drainage ramps.</li>
-                <li><strong>Direct-Drive Reliability:</strong> Direct brushless hub motors eliminate steering linkages, tie rods, and kingpin bushings vulnerable to tarmac vibration.</li>
-                <li><strong>Tire Scrub Trade-Off Mitigation:</strong> Turning scrub occurs only during localized low-speed pivots; odometric error is constrained via experimental $W_{\text{eff}}$ tuning and multi-sensor EKF fusion.</li>
-              </ul>
-            </div>
-
-            <!-- PANEL 2: ACKERMANN STEERING -->
-            <div id="modal-panel-ackermann" class="steering-modal-panel" style="display: none;">
-              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; padding-right: 36px;">
-                <div>
-                  <h2 style="font-size: 18px; margin: 0 0 4px 0; color: #fff;">Ackermann Steering Architecture</h2>
-                  <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Car-Like Steering Geometry with Non-Zero Minimum Turning Radius ($R_{\text{min}} \ge 0.79\text{ m}$)</p>
-                </div>
-                <span class="badge badge-rose" style="font-size: 11px; flex-shrink: 0; background: rgba(225,29,72,0.15); color: var(--accent-rose);">NOT SELECTED</span>
-              </div>
-
-              <div style="display: grid; grid-template-columns: minmax(160px, 220px) 1fr; gap: 18px; margin-bottom: 18px; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
-                <div style="text-align: center; background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px;">
-                  <img src="../assets/images/Hilbert/ackermann_steering.png" alt="Ackermann Steering Geometry" style="max-height: 140px; max-width: 100%; object-fit: contain;">
-                </div>
-                <div>
-                  <table style="width: 100%; font-size: 12.5px; border-collapse: collapse;">
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Degrees of Freedom:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;">3 DOF (Planar) with 2 Controllable Inputs ($v_x, \delta$)</td>
-                    </tr>
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Turning Radius:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;"><span class="badge badge-amber">Constrained ($R_{\text{kinematic}} \ge 0.79\text{ m}$, swept $\ge 1.2\text{ m}$)</span></td>
-                    </tr>
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Runway Traction:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;"><span class="badge badge-emerald">High Pure Rolling (Minimal scrub, high stability)</span></td>
-                    </tr>
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Drive Complexity:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;"><span class="badge badge-rose">Low Simplicity (Linkages, kingpins, servos, backlash)</span></td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-
-              <h4 style="color: var(--accent-blue); font-size: 14.5px; margin: 16px 0 8px 0;">Mathematical &amp; Kinematic Formulation</h4>
-
-              <div class="steering-formula-box">
-                <h5 style="color: var(--accent-rose); font-size: 13px; margin: 0 0 6px 0;">1. Geometric Ackermann Steering Condition</h5>
-                <p style="font-size: 13px; margin: 0 0 6px 0; color: var(--text-muted);">
-                  To ensure pure rolling during turns without lateral tire slip, the inner ($\delta_i$) and outer ($\delta_o$) front steering angles must intersect at a common Instantaneous Center of Rotation on the rear axle line:
-                </p>
-                <p style="font-size: 14px; margin: 0; text-align: center;">
-                  $$\cot \delta_o - \cot \delta_i = \frac{W}{L}$$
-                </p>
-                <p style="font-size: 12.5px; margin: 4px 0 0 0; color: var(--text-muted); text-align: center;">
-                  where wheelbase $L = 0.55\text{ m}$ and track width $W = 0.45\text{ m}$.
-                </p>
-              </div>
-
-              <div class="steering-formula-box">
-                <h5 style="color: var(--accent-amber); font-size: 13px; margin: 0 0 6px 0;">2. Turning Radius &amp; Non-Holonomic Kinematic Bounds</h5>
-                <p style="font-size: 13px; margin: 0 0 6px 0; color: var(--text-muted);">
-                  The theoretical kinematic turning radius $R$ measured from the rear axle midpoint is:
-                </p>
-                <p style="font-size: 14px; margin: 0; text-align: center;">
-                  $$R = \frac{L}{\tan \delta}, \qquad \omega_z = \dot{\theta} = \frac{v_x}{R} = \frac{v_x \tan \delta}{L}$$
-                </p>
-                <p style="font-size: 13px; margin: 6px 0 0 0; color: var(--text-muted);">
-                  Given physical tie-rod and knuckle packaging limits ($\delta_{\max} \approx 30^\circ\text{--}35^\circ$), the theoretical minimum kinematic turning radius is:
-                </p>
-                <p style="font-size: 13.5px; margin: 4px 0 0 0; text-align: center; color: var(--accent-blue);">
-                  $$R_{\min,\text{kinematic}} = \frac{0.55\text{ m}}{\tan 35^\circ} \approx 0.785\text{ m} \quad (\text{at } 30^\circ: R_{\min} \approx 0.953\text{ m})$$
-                </p>
-                <p style="font-size: 12.5px; margin: 6px 0 0 0; color: var(--text-muted);">
-                  When accounting for the vehicle's outer chassis bounding box ($W_{\text{body}} \approx 0.60\text{ m}$) and safety clearance to prevent tire rubbing, the effective swept operational turning circle diameter exceeds $2.4\text{--}3.0\text{ m}$ ($R_{\text{swept}} \approx 1.2\text{--}1.5\text{ m}$).
-                </p>
-              </div>
-
-              <h4 style="color: var(--accent-rose); font-size: 14px; margin: 14px 0 8px 0;">Trade-Off Evaluation &amp; Reason for Non-Selection:</h4>
-              <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.6; padding-left: 20px; margin: 0;">
-                <li><strong>Initial Appeal:</strong> Ackermann steering provides near-zero tire scrub and high energy efficiency during long straight-line runway transits at speeds $\ge 15\text{ km/h}$.</li>
-                <li><strong>Maneuvering Constraint for FOD Capture:</strong> The inability to execute an in-place zero-radius pivot ($R_{\min} \ge 0.79\text{ m}$) forces the UGV to execute multi-point forward/reverse shunting loops if a target debris coordinate is overshot or laterally offset, increasing airside clearance times.</li>
-                <li><strong>Mechanical Vulnerability:</strong> Dedicated steering linkages, tie-rod ball joints, kingpins, and steering servo gearboxes introduce backlash and fatigue failure points under high-frequency tarmac surface vibration.</li>
-              </ul>
-            </div>
-
-            <!-- PANEL 3: MECANUM DRIVE -->
-            <div id="modal-panel-mecanum" class="steering-modal-panel" style="display: none;">
-              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; padding-right: 36px;">
-                <div>
-                  <h2 style="font-size: 18px; margin: 0 0 4px 0; color: #fff;">Mecanum Wheel Omnidirectional Drive</h2>
-                  <p style="font-size: 13px; color: var(--text-muted); margin: 0;">Holonomic 3-DOF Motion ($v_x, v_y, \omega_z$) via $45^\circ$ Angled Peripheral Sub-Rollers</p>
-                </div>
-                <span class="badge badge-rose" style="font-size: 11px; flex-shrink: 0; background: rgba(225,29,72,0.15); color: var(--accent-rose);">NOT SELECTED</span>
-              </div>
-
-              <div style="display: grid; grid-template-columns: minmax(160px, 220px) 1fr; gap: 18px; margin-bottom: 18px; align-items: center; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 8px; padding: 14px;">
-                <div style="text-align: center; background: rgba(0,0,0,0.3); border-radius: 6px; padding: 10px;">
-                  <img src="../assets/images/Hilbert/mecanum_drive.webp" alt="Mecanum Wheel Drive Kinematics" style="max-height: 140px; max-width: 100%; object-fit: contain;">
-                </div>
-                <div>
-                  <table style="width: 100%; font-size: 12.5px; border-collapse: collapse;">
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Degrees of Freedom:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;">3 DOF (Planar) with 3 Independent Controllable Inputs ($v_x, v_y, \omega_z$)</td>
-                    </tr>
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Turning Radius:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;"><span class="badge badge-emerald">Zero Radius ($R = 0\text{ m}$, Omnidirectional Crabbing)</span></td>
-                    </tr>
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Runway Traction:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;"><span class="badge badge-rose">Poor (Split contact, $\mu_{\text{eff}} \approx 0.35\text{--}0.45$)</span></td>
-                    </tr>
-                    <tr>
-                      <td style="color: var(--text-muted); padding: 4px 0;"><strong>Drive Complexity:</strong></td>
-                      <td style="color: #fff; padding: 4px 0;"><span class="badge badge-amber">Moderate-High (4 independent motors, multi-roller assemblies)</span></td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-
-              <h4 style="color: var(--accent-blue); font-size: 14.5px; margin: 16px 0 8px 0;">Mathematical &amp; Kinematic Formulation</h4>
-
-              <div class="steering-formula-box">
-                <h5 style="color: var(--accent-amber); font-size: 13px; margin: 0 0 6px 0;">1. Forward Kinematics (4-Mecanum Wheel Formulation)</h5>
-                <p style="font-size: 13px; margin: 0 0 6px 0; color: var(--text-muted);">
-                  With $45^\circ$ angled rollers, half-wheelbase $L_x$ and half-track $L_y$:
-                </p>
-                <p style="font-size: 13.5px; margin: 0; text-align: center;">
-                  $$\begin{bmatrix} v_x \\ v_y \\ \omega_z \end{bmatrix} = \frac{r}{4} \begin{bmatrix} 1 & 1 & 1 & 1 \\ -1 & 1 & 1 & -1 \\ -\frac{1}{L_x + L_y} & \frac{1}{L_x + L_y} & -\frac{1}{L_x + L_y} & \frac{1}{L_x + L_y} \end{bmatrix} \begin{bmatrix} \omega_{FL} \\ \omega_{FR} \\ \omega_{RL} \\ \omega_{RR} \end{bmatrix}$$
-                </p>
-              </div>
-
-              <div class="steering-formula-box">
-                <h5 style="color: var(--accent-purple); font-size: 13px; margin: 0 0 6px 0;">2. Inverse Kinematics (Holonomic Crabbing Setpoints)</h5>
-                <p style="font-size: 13px; margin: 0 0 6px 0; color: var(--text-muted);">
-                  For any target translational velocity vector $(v_x, v_y)$ and rotational rate $\omega_z$:
-                </p>
-                <p style="font-size: 13px; margin: 0; text-align: center;">
-                  $$\begin{aligned}
-                  \omega_{FL} &= \frac{1}{r} [v_x - v_y - (L_x + L_y)\omega_z] \\
-                  \omega_{FR} &= \frac{1}{r} [v_x + v_y + (L_x + L_y)\omega_z] \\
-                  \omega_{RL} &= \frac{1}{r} [v_x + v_y - (L_x + L_y)\omega_z] \\
-                  \omega_{RR} &= \frac{1}{r} [v_x - v_y + (L_x + L_y)\omega_z]
-                  \end{aligned}$$
-                </p>
-              </div>
-
-              <h4 style="color: var(--accent-rose); font-size: 14px; margin: 14px 0 8px 0;">Trade-Off Evaluation &amp; Reason for Non-Selection:</h4>
-              <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.6; padding-left: 20px; margin: 0;">
-                <li><strong>Initial Appeal:</strong> Mecanum drive was initially attractive because independent lateral translation ($v_y$) would allow the vacuum inlet to align precisely with detected FOD coordinates without reorienting chassis heading.</li>
-                <li><strong>Outdoor Debris Reliability Risk:</strong> The exposed peripheral roller architecture introduces multiple interfaces and small needle bearings. In an airside environment where loose tarmac aggregate, gravel, and metal FOD are intrinsically present, debris ingestion risks jamming free roller rotation.</li>
-                <li><strong>Sensor Platform Vibration:</strong> Discontinuous contact transitions between consecutive sub-rollers introduce a periodic vibration spectrum (typically $30\text{--}80\text{ Hz}$ under payload load), which risks injecting high-frequency noise into IMU acceleration integration and degrading 3D LiDAR point cloud registration.</li>
-                <li><strong>Reduced Effective Traction:</strong> Force vector decomposition through the $45^\circ$ passive rollers reduces the effective traction coefficient on runway asphalt ($\mu_{\text{eff}} \approx 0.35\text{--}0.45$), increasing slippage and limiting high-speed transit efficiency.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2. SUSPENSION SUBSYSTEM -->
-        <h2 style="font-size: 22px; color: var(--text-main); margin: 34px 0 14px;">2. Suspension Subsystem</h2>
-        <div class="card-box">
-          <div class="card-header">
-            <div class="card-title">2. Suspension Subsystem</div>
-            <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Asuka</span>
-          </div>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-            The suspension subsystem is designed for the 65 kg autonomous runway FOD patrol UGV. Its requirements include a 20 mm shock stroke, 40%-50% static sag to centre the piston, 10-15 km/h operating speed, and a 16.25 kg corner mass budget. The documentation explains how suspension compliance protects the camera, LiDAR, and IMU from vibration, preserves the vacuum intake seal, maintains tyre traction during differential skid steering, and dissipates impact energy. It develops a first-principles mass-spring-damper model, transfer function, natural and damped frequency calculations, motion-ratio and wheel-rate relationships, and a spring-rate comparison. The 100 lbs/in spring is selected for approximately 9.397 mm static sag, while the double-wishbone architecture is selected over trailing-arm and MacPherson-strut alternatives. <a href="../7-documentation/asuka/suspension.html" class="btn btn-deep-dive" style="display: inline-flex; margin-top: 12px;">Read Asuka's Suspension Documentation →</a>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0 0 16px 0;">
+            <strong>4WD Differential / Skid Steering</strong> was selected because it enables true zero-radius in-place rotation ($R=0$) to eliminate multi-point repositioning over detected FOD, delivers robust rubber-on-asphalt traction ($\mu \approx 0.85$) for $15^\circ$ drainage slopes, eliminates delicate steering linkages prone to vibration fatigue, and directly maps body-velocity commands $(v_x, \omega_z)$ to ROS 2 Nav2. The accepted trade-off of lateral tire scrub during high-friction pivots is mitigated through calibrated effective track width ($W_{\text{eff}}$) parameterization and IMU/LiDAR EKF sensor fusion.
           </p>
-          <figure style="margin: 18px 0 0; text-align: center;">
-            <img src="../../assets/double-wishbone-on-chassis.jpg" alt="Double wishbone suspension mounted on the FOD Hunter chassis" style="width: min(100%, 760px); max-height: 420px; object-fit: contain; margin: 0 auto; border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Double wishbone suspension mounted on the chassis.</figcaption>
-          </figure>
-        </div>
 
-        <!-- 3. FOD PICKUP SUBSYSTEM -->
-        <h2 style="font-size: 22px; color: var(--text-main); margin: 34px 0 14px;">3. FOD Pickup Subsystem</h2>
-        <div class="card-box">
-          <div class="card-header">
-            <div class="card-title">3. FOD Pickup Subsystem</div>
-            <span class="badge badge-rose" style="background: rgba(225, 29, 72, 0.1); color: var(--accent-rose);">Asuka</span>
+          <div style="margin-top: 16px; display: flex; justify-content: flex-start;">
+            <a href="../7-documentation/hilbert/steering-kinematics.html" class="btn btn-deep-dive" style="display: inline-flex; align-items: center; gap: 8px;">
+              📖 Read Hilbert's Steering &amp; Kinematics Documentation →
+            </a>
           </div>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-            The FOD pickup subsystem addresses the limitations of manual runway FOD walks, sweepers, magnetic bars, and independent blowers by combining a ground-sealing intake interface with contained vacuum extraction. The design target covers ferrous and non-ferrous debris from approximately 4-20 cm and 4-300 g, including small fasteners through to a 300 g bird carcass. The documentation compares grippers, vacuum, magnetic bars, friction mats, and sweepers, then derives pickup velocity, duct flow rate, pressure losses, and estimated motor power for 25 g and 300 g cases. It also records two design iterations, side-entry and top-down testing, the observed blockage caused by corrugated hose, and the improved pickup achieved through a temporary nozzle seal and velocity surge. <a href="../7-documentation/asuka/vacuum-module.html" class="btn btn-deep-dive" style="display: inline-flex; margin-top: 12px;">Read Asuka's FOD Pickup Documentation →</a>
-          </p>
         </div>
 
-        <!-- 5. REFERENCES -->
-        <div class="card-box">
+        <!-- ==================== CITATIONS & STANDARDS (4.1.10) ==================== -->
+
+        <!-- 4.1.10 REFERENCES & STANDARDS -->
+        <div class="card-box" id="sec-4-1-10">
           <div class="card-header">
-            <div class="card-title">References &amp; Standards</div>
+            <div class="card-title">4.1.10 References &amp; Standards</div>
             <span class="badge badge-blue">Academic Citations</span>
           </div>
           <ol style="padding-left: 20px; font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
@@ -1097,133 +406,5 @@ Ground Impact (r(t)) ──&gt; [Suspended Chassis] ──&gt; Low-Pass Filter (
   </footer>
 
   <script src="../js/main.js?v=4.2"></script>
-<!-- STYLES AND SCRIPT FOR INTERACTIVE STEERING KINEMATICS MODALS -->
-  <style>
-    .steering-interactive-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35) !important;
-      border-color: rgba(255, 255, 255, 0.4) !important;
-    }
-    .steering-modal-backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 99999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      box-sizing: border-box;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-    .steering-modal-backdrop.show {
-      opacity: 1;
-    }
-    .steering-modal-dialog {
-      background: #11151f;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 14px;
-      max-width: 820px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 28px;
-      position: relative;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-      transform: scale(0.95);
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      color: #f5f5f7;
-      box-sizing: border-box;
-    }
-    .steering-modal-backdrop.show .steering-modal-dialog {
-      transform: scale(1);
-    }
-    .steering-modal-close {
-      position: absolute;
-      top: 16px;
-      right: 18px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      font-size: 16px;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      z-index: 10;
-    }
-    .steering-modal-close:hover {
-      background: rgba(225, 29, 72, 0.4);
-    }
-    .steering-formula-box {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
-      padding: 14px 18px;
-      margin: 12px 0;
-      overflow-x: auto;
-    }
-  </style>
-
-  <script>
-    function openSteeringModal(key) {
-      // Hide all panels first
-      document.querySelectorAll('.steering-modal-panel').forEach(function(panel) {
-        panel.style.display = 'none';
-      });
-
-      // Show the selected panel
-      var targetPanel = document.getElementById('modal-panel-' + key);
-      if (targetPanel) {
-        targetPanel.style.display = 'block';
-      }
-
-      // Show backdrop
-      var backdrop = document.getElementById('steering-modal-backdrop');
-      if (backdrop) {
-        backdrop.style.display = 'flex';
-        // Force reflow
-        void backdrop.offsetWidth;
-        backdrop.classList.add('show');
-        document.body.style.overflow = 'hidden';
-      }
-    }
-
-    function closeSteeringModal() {
-      var backdrop = document.getElementById('steering-modal-backdrop');
-      if (backdrop) {
-        backdrop.classList.remove('show');
-        setTimeout(function() {
-          backdrop.style.display = 'none';
-          document.body.style.overflow = '';
-        }, 200);
-      }
-    }
-
-    function closeSteeringModalOnBackdrop(e) {
-      if (e.target.id === 'steering-modal-backdrop') {
-        closeSteeringModal();
-      }
-    }
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closeSteeringModal();
-      }
-    });
-  </script>
-
-    <script src="../js/main.js?v=4.2"></script>
 </body>
 </html>

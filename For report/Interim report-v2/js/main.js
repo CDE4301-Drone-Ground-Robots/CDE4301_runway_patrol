@@ -1097,17 +1097,32 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- 4.1 Mechanical Flyout -->
             <div class="apple-megamenu-flyout" id="flyout-mech">
               <div class="apple-megamenu-heading">4.1 Mechanical Architecture</div>
-              <a href="${prefix}4-subsystems/mechanical.html" class="apple-megamenu-sublink">
-                <span class="num">4.1.1</span> 6061-T6 Aluminum Chassis Framing
+              <a href="${prefix}4-subsystems/mechanical.html#sec-4-1-1" class="apple-megamenu-sublink">
+                <span class="num">4.1.1</span> Chassis Design &amp; CAD
               </a>
-              <a href="${prefix}4-subsystems/mechanical.html" class="apple-megamenu-sublink">
-                <span class="num">4.1.2</span> High-Flow Intake Ground Effect Suction
+              <a href="${prefix}4-subsystems/mechanical.html#sec-4-1-2" class="apple-megamenu-sublink">
+                <span class="num">4.1.2</span> Structural FEA Analysis
               </a>
-              <a href="${prefix}4-subsystems/mechanical.html" class="apple-megamenu-sublink">
-                <span class="num">4.1.3</span> Differential Dual-Hub Motor Drive
+              <a href="${prefix}4-subsystems/mechanical.html#sec-4-1-3" class="apple-megamenu-sublink">
+                <span class="num">4.1.3</span> Wheel Diameter Justification
               </a>
-              <a href="${prefix}4-subsystems/mechanical.html" class="apple-megamenu-sublink">
-                <span class="num">4.1.4</span> SolidWorks FEA Structural Stress Analysis
+              <a href="${prefix}4-subsystems/mechanical.html#sec-4-1-4" class="apple-megamenu-sublink">
+                <span class="num">4.1.4</span> DFM &amp; Serviceability
+              </a>
+              <a href="${prefix}4-subsystems/mechanical.html#sec-4-1-5" class="apple-megamenu-sublink">
+                <span class="num">4.1.5</span> Physical Load Testing
+              </a>
+              <a href="${prefix}4-subsystems/mechanical.html#sec-4-1-6" class="apple-megamenu-sublink">
+                <span class="num">4.1.6</span> Suspension Subsystem
+              </a>
+              <a href="${prefix}4-subsystems/mechanical.html#sec-4-1-7" class="apple-megamenu-sublink">
+                <span class="num">4.1.7</span> Vacuum FOD Pickup
+              </a>
+              <a href="${prefix}4-subsystems/mechanical.html#sec-4-1-8" class="apple-megamenu-sublink">
+                <span class="num">4.1.8</span> Motor Selection &amp; Calculations
+              </a>
+              <a href="${prefix}4-subsystems/mechanical.html#sec-4-1-9" class="apple-megamenu-sublink">
+                <span class="num">4.1.9</span> Steering Kinematic Trade-Off
               </a>
             </div>
 
@@ -1262,6 +1277,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Col 6: Hilbert -->
           <div class="apple-megamenu-col">
             <div class="apple-megamenu-heading">Hilbert</div>
+            <a href="${prefix}7-documentation/hilbert/Motor_drivetrain_calculation.html" class="apple-megamenu-sublink">
+              Motor &amp; Drivetrain Sizing
+            </a>
+            <a href="${prefix}7-documentation/hilbert/steering-kinematics.html" class="apple-megamenu-sublink">
+              Steering &amp; Kinematics
+            </a>
             <a href="${prefix}7-documentation/hilbert/simulation.html" class="apple-megamenu-sublink">
               Simulation
             </a>
