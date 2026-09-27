@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -1383,140 +1395,194 @@
                 <span class="badge badge-purple">Programming & Comms</span>
               </div>
               <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-301" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Research & Sensor Exploration</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk1 &ndash; S1 Wk2</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Report 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk1 - S1 Wk2</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Secondary research on problem</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-302" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Research & Sensor Exploration</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk3 &ndash; S1 Wk4</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Extra 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk3 - S1 Wk4</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">CV Camera Research</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="false" data-sem2="false" style="background: rgba(239, 68, 68, 0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444;">
+                <div class="gantt-task-item" data-id="task-303" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: #ef4444; text-transform: uppercase;">Research &amp; Sensor Exploration</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: #f87171;">Vac Wk 1 &ndash; Vac Wk 2</span>
-                  </div>
-                  <div style="font-size: 12.5px; font-weight: 700; color: #ef4444;">🪖 RESERVIST</div>
-                </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 &ndash; S1 Wk3</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Navigation 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk2 - S1 Wk3</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">ROS Installation and getting familiar</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-304" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk4 &ndash; S1 Wk6</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Navigation 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk4 - S1 Wk6</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">ROS Simulation on obstacle avoidance</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-305" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Navigation 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess - S1 Wk8</span>
                   </div>
-                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Integrating UGV model into ROS Simulation</div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Use AgileX Scout V2.0 model into ROS Gazebo Simulation</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-306" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk7</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Navigation 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk9 - S1 Wk10</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Mapping and Integrating to ROS Simulation</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="false" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-307" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">Vac Wk 3 &ndash; Vac Wk 4</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Navigation 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk1 - S2 Wk2</span>
                   </div>
-                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Integrating ROS2 packages into physical UGV</div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Integrating ROS2 package into physical UGV</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-308" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Autonomous Navigation & SLAM</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk1 &ndash; S2 Wk3</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Navigation 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk3 - S2 Wk4</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Tuning and testing of UGV navigation</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-309" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk5</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      UAV Communication 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk8</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Communication research</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-310" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk6</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Extra 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk4 - S1 Wk5</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Component Selection</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-311" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Extra 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk6 - S1 Recess</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Delivery of Components</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-312" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk7</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      UAV Communication 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk9</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Testing Communication between UGV and UAV computer</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-313" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk8 &ndash; S1 Wk9</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      UAV Communication 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk10 - S1 Wk11</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Simulation for communication link between UGV and UAV</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-314" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Multi-Agent UAV Communications</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk3 &ndash; S2 Wk4</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      UAV Communication <span style="color:#ff453a;margin-left:6px;">⭐ Milestone</span>
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk5</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Integrating communication package with UAV</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-315" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Motor Sizing & Final Chassis</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk1 &ndash; S1 Wk2</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Extra 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk1 - S1 Wk2</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Calculations for motor and components</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="false" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-316" data-sem1="false" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Motor Sizing & Final Chassis</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">Vac Wk 1 &ndash; Vac Wk 2</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Extra 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">Vac Wk 1 - Vac Wk 2</span>
                   </div>
                   <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Designing final Chassis</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-317" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Documentation & Compilations</span>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Report <span style="color:#ff453a;margin-left:6px;">⭐ Milestone</span>
+                    </span>
                     <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk11</span>
                   </div>
-                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Prepare doccumention and complile all results</div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Prepare documentation and compile all results</div>
                 </div>
-                <div class="gantt-task-item" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                <div class="gantt-task-item" data-id="task-318" data-sem1="false" data-sem2="false" style="background: rgba(239, 68, 68, 0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444; margin-bottom:8px;">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">Documentation & Compilations</span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk8 &ndash; S2 Wk10</span>
+                    <span style="font-size: 11px; font-weight: 700; color: #ef4444; text-transform: uppercase;">Report </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: #f87171;">Vac Wk 2 - Vac Wk 3</span>
                   </div>
-                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Prepare doccumention and complile all results</div>
+                  <div style="font-size: 12.5px; font-weight: 700; color: #ef4444;">🪖 RESERVIST</div>
                 </div>
-              </div>
+                <div class="gantt-task-item" data-id="task-319" data-sem1="false" data-sem2="true" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Report <span style="color:#ff453a;margin-left:6px;">⭐ Milestone</span>
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S2 Wk10 - S2 Wk11</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Prepare documentation and compile all results</div>
+                </div>
+                <div class="gantt-task-item" data-id="task-9789-89" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Report 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Wk5 - S1 Wk6</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Report HTML building</div>
+                </div>
+                <div class="gantt-task-item" data-id="task-3988-11" data-sem1="true" data-sem2="false" style="background: var(--bg-hover); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-color); margin-bottom:8px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <span style="font-size: 11px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase;">
+                      Report 
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">S1 Recess - S1 Wk7</span>
+                  </div>
+                  <div style="font-size: 12.5px; font-weight: 600; color: var(--text-main);">Import word document into HTML format</div>
+                </div>
+</div>
             </div>
             <div class="card-box gantt-card-block" data-owner="bryan" style="border-left: 4px solid var(--accent-amber);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -1714,6 +1780,6 @@
 
   <script src="js/main.js?v=4.2"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/timeline-manager.js?v=2.9"></script>
+  <script src="js/timeline-manager.js?v=3.0"></script>
 </body>
 </html>

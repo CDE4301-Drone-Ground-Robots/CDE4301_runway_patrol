@@ -382,29 +382,31 @@
       "id": "task-301",
       "owner": "Hilbert",
       "ownerCode": "hilbert",
-      "category": "Research",
+      "category": "Report",
       "title": "Secondary research on problem",
       "period": "S1 Wk1 - S1 Wk2",
       "startWeekIdx": 0,
       "endWeekIdx": 1,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "Evaluation of RTK-GPS, LiDAR SLAM, and visual odometry algorithms."
+      "status": "Completed",
+      "notes": "Evaluation of RTK-GPS, LiDAR SLAM, and visual odometry algorithms.",
+      "isAllMembers": false
     },
     {
       "id": "task-302",
       "owner": "Hilbert",
       "ownerCode": "hilbert",
-      "category": "Research",
+      "category": "Extra",
       "title": "CV Camera Research",
       "period": "S1 Wk3 - S1 Wk4",
       "startWeekIdx": 2,
       "endWeekIdx": 3,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "Lens focal length, FOV, and global vs rolling shutter benchmark for high-speed tracking."
+      "status": "Completed",
+      "notes": "Lens focal length, FOV, and global vs rolling shutter benchmark for high-speed tracking.",
+      "isAllMembers": false
     },
     {
       "id": "task-303",
@@ -417,8 +419,9 @@
       "endWeekIdx": 2,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "Setting up Ubuntu 24.04, ROS 2 Jazzy/Iron, and micro-ROS toolchains."
+      "status": "Completed",
+      "notes": "Setting up Ubuntu 24.04, ROS 2 Jazzy/Iron, and micro-ROS toolchains.",
+      "isAllMembers": false
     },
     {
       "id": "task-304",
@@ -431,22 +434,24 @@
       "endWeekIdx": 5,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "Gazebo simulation environment with costmaps, Nav2, and DWA planner."
+      "status": "Completed",
+      "notes": "Gazebo simulation environment with costmaps, Nav2, and DWA planner.",
+      "isAllMembers": false
     },
     {
       "id": "task-305",
       "owner": "Hilbert",
       "ownerCode": "hilbert",
       "category": "Navigation",
-      "title": "Integrating UGV model into ROS Simulation",
+      "title": "Use AgileX Scout V2.0 model into ROS Gazebo Simulation",
       "period": "S1 Recess - S1 Wk8",
       "startWeekIdx": 6,
       "endWeekIdx": 8,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "URDF/Xacro robot description with accurate inertia, wheel physics, and sensors."
+      "status": "Completed",
+      "notes": "URDF/Xacro robot description with accurate inertia, wheel physics, and sensors.",
+      "isAllMembers": false
     },
     {
       "id": "task-306",
@@ -496,41 +501,44 @@
       "ownerCode": "hilbert",
       "category": "UAV Communication",
       "title": "Communication research",
-      "period": "S1 Wk5",
-      "startWeekIdx": 4,
-      "endWeekIdx": 4,
+      "period": "S1 Wk8",
+      "startWeekIdx": 8,
+      "endWeekIdx": 8,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "Wi-Fi 6 vs LoRa vs ESP-NOW telemetry protocols for UAV-UGV bridge."
+      "status": "Completed",
+      "notes": "Wi-Fi 6 vs LoRa vs ESP-NOW telemetry protocols for UAV-UGV bridge.",
+      "isAllMembers": false
     },
     {
       "id": "task-310",
       "owner": "Hilbert",
       "ownerCode": "hilbert",
-      "category": "UAV Communication",
+      "category": "Extra",
       "title": "Component Selection",
-      "period": "S1 Wk6",
-      "startWeekIdx": 5,
-      "endWeekIdx": 5,
+      "period": "S1 Wk4 - S1 Wk5",
+      "startWeekIdx": 3,
+      "endWeekIdx": 4,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "Transceiver module selection, high-gain antennas, and interface hardware."
+      "status": "Completed",
+      "notes": "Transceiver module selection, high-gain antennas, and interface hardware.",
+      "isAllMembers": false
     },
     {
       "id": "task-311",
       "owner": "Hilbert",
       "ownerCode": "hilbert",
-      "category": "UAV Communication",
+      "category": "Extra",
       "title": "Delivery of Components",
-      "period": "S1 Recess - S1 Wk8",
-      "startWeekIdx": 6,
-      "endWeekIdx": 8,
+      "period": "S1 Wk6 - S1 Recess",
+      "startWeekIdx": 5,
+      "endWeekIdx": 6,
       "semester": "1",
       "isMilestone": false,
       "status": "In Progress",
-      "notes": "Procuring RF modules and testing bench."
+      "notes": "Procuring RF modules and testing bench.",
+      "isAllMembers": false
     },
     {
       "id": "task-312",
@@ -585,8 +593,9 @@
       "endWeekIdx": 1,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "Power requirements and current draw sizing for navigation computers."
+      "status": "Completed",
+      "notes": "Power requirements and current draw sizing for navigation computers.",
+      "isAllMembers": false
     },
     {
       "id": "task-316",
@@ -955,6 +964,36 @@
       "status": "In Progress",
       "notes": "Final Capstone Live Demonstration and Presentation to Faculty.",
       "isAllMembers": true
+    },
+    {
+      "id": "task-9789-89",
+      "owner": "Hilbert",
+      "ownerCode": "hilbert",
+      "isAllMembers": false,
+      "category": "Report",
+      "title": "Report HTML building",
+      "period": "S1 Wk5 - S1 Wk6",
+      "startWeekIdx": 4,
+      "endWeekIdx": 5,
+      "semester": "1",
+      "isMilestone": false,
+      "status": "Completed",
+      "notes": ""
+    },
+    {
+      "id": "task-3988-11",
+      "owner": "Hilbert",
+      "ownerCode": "hilbert",
+      "isAllMembers": false,
+      "category": "Report",
+      "title": "Import word document into HTML format",
+      "period": "S1 Recess - S1 Wk7",
+      "startWeekIdx": 6,
+      "endWeekIdx": 7,
+      "semester": "1",
+      "isMilestone": false,
+      "status": "Completed",
+      "notes": ""
     }
   ],
   "subsystems": {
@@ -971,7 +1010,6 @@
       "Motor Calculations"
     ],
     "hilbert": [
-      "Research",
       "Navigation",
       "UAV Communication",
       "Extra",
@@ -987,5 +1025,5 @@
       "Hardware Procurement & Electrical"
     ]
   },
-  "lastUpdated": "2026-09-20T15:45:00Z"
+  "exportedAt": "2026-09-27T01:41:15.405Z"
 }

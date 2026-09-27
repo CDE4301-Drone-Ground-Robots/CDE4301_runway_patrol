@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -285,7 +297,7 @@
         <li><a href="../../index.html">Overview</a></li>
         <li><a href="suspension.html">← Suspension Design</a></li>
         <li><a href="../../7-documentation.html">Documentation</a></li>
-        <li><a href="chassis-fea.html">Zacarias: Chassis FEA →</a></li>
+        <li><a href="../zacarias/chassis-design.html">Zacarias: Chassis Design →</a></li>
       </ul>
     </div>
   </footer>

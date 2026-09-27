@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -95,7 +107,7 @@
               </p>
             </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <a href="../7-documentation/zacarias/chassis-fea.html" class="btn btn-deep-dive">📖 Zacarias Spec →</a>
+              <a href="../7-documentation/zacarias/chassis-design.html" class="btn btn-deep-dive">📖 Zacarias Spec →</a>
               <a href="../7-documentation/asuka/suspension.html" class="btn btn-deep-dive">📖 Asuka Spec →</a>
               <a href="../7-documentation/hilbert/Motor_drivetrain_calculation.html" class="btn btn-deep-dive">📖 Hilbert Motor Spec →</a>
               <a href="../7-documentation/hilbert/steering-kinematics.html" class="btn btn-deep-dive">📖 Hilbert Steering Spec →</a>

@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -159,26 +171,26 @@
                 <h3 style="font-size: 18px; color: #ffffff; margin-bottom: 12px;">Zacarias</h3>
                 <ul style="list-style: none; padding: 0; margin: 0 0 16px 0; font-size: 13px; line-height: 1.8;">
                   <li>
-                    <a href="7-documentation/zacarias/chassis-fea.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                      <span style="color: var(--apple-blue);">▸</span> Chassis Design and FEA Analysis
+                    <a href="7-documentation/zacarias/chassis-design.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Chassis Design
                     </a>
                   </li>
                   <li>
-                    <a href="7-documentation/zacarias/motor-calculations.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                      <span style="color: var(--apple-blue);">▸</span> Motor Calculations
+                    <a href="7-documentation/zacarias/materiel-selection.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> Material Selection
                     </a>
                   </li>
                   <li>
-                    <a href="7-documentation/zacarias/drivetrain-kinematics.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                      <span style="color: var(--apple-blue);">▸</span> Drivetrain Kinematics calculations
+                    <a href="7-documentation/zacarias/fea-simulation.html" style="color: var(--apple-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                      <span style="color: var(--apple-blue);">▸</span> FEA Simulation
                     </a>
                   </li>
                 </ul>
               </div>
               <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                <a href="7-documentation/zacarias/chassis-fea.html" class="apple-btn-pill" style="font-size: 11px; padding: 4px 8px;">Chassis FEA →</a>
-                <a href="7-documentation/zacarias/motor-calculations.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">Motors →</a>
-                <a href="7-documentation/zacarias/drivetrain-kinematics.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">Kinematics →</a>
+                <a href="7-documentation/zacarias/chassis-design.html" class="apple-btn-pill" style="font-size: 11px; padding: 4px 8px;">Chassis →</a>
+                <a href="7-documentation/zacarias/materiel-selection.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">Materials →</a>
+                <a href="7-documentation/zacarias/fea-simulation.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 11px; padding: 4px 8px;">FEA →</a>
               </div>
             </div>
 
@@ -320,9 +332,9 @@
     │   ├── suspension.html
     │   └── vacuum-module.html
     ├── zacarias/                        <span style="color: #60a5fa;"># Zacarias's Mechanical Documentation</span>
-    │   ├── chassis-fea.html
-    │   ├── motor-calculations.html
-    │   └── drivetrain-kinematics.html
+    │   ├── chassis-design.html
+    │   ├── materiel-selection.html
+    │   └── fea-simulation.html
     ├── bryan/                           <span style="color: #fbbf24;"># Bryan's Electrical Documentation</span>
     │   ├── components-bom.html
     │   └── power-calculations.html

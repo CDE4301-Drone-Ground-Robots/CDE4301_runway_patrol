@@ -2963,7 +2963,6 @@
     "Motor Calculations"
   ],
   "hilbert": [
-    "Research",
     "Navigation",
     "UAV Communication",
     "Extra",
@@ -3362,29 +3361,31 @@
     "id": "task-301",
     "owner": "Hilbert",
     "ownerCode": "hilbert",
-    "category": "Research",
+    "category": "Report",
     "title": "Secondary research on problem",
     "period": "S1 Wk1 - S1 Wk2",
     "startWeekIdx": 0,
     "endWeekIdx": 1,
     "semester": "1",
     "isMilestone": false,
-    "status": "In Progress",
-    "notes": "Evaluation of RTK-GPS, LiDAR SLAM, and visual odometry algorithms."
+    "status": "Completed",
+    "notes": "Evaluation of RTK-GPS, LiDAR SLAM, and visual odometry algorithms.",
+    "isAllMembers": false
   },
   {
     "id": "task-302",
     "owner": "Hilbert",
     "ownerCode": "hilbert",
-    "category": "Research",
+    "category": "Extra",
     "title": "CV Camera Research",
     "period": "S1 Wk3 - S1 Wk4",
     "startWeekIdx": 2,
     "endWeekIdx": 3,
     "semester": "1",
     "isMilestone": false,
-    "status": "In Progress",
-    "notes": "Lens focal length, FOV, and global vs rolling shutter benchmark for high-speed tracking."
+    "status": "Completed",
+    "notes": "Lens focal length, FOV, and global vs rolling shutter benchmark for high-speed tracking.",
+    "isAllMembers": false
   },
   {
     "id": "task-303",
@@ -3397,8 +3398,9 @@
     "endWeekIdx": 2,
     "semester": "1",
     "isMilestone": false,
-    "status": "In Progress",
-    "notes": "Setting up Ubuntu 24.04, ROS 2 Jazzy/Iron, and micro-ROS toolchains."
+    "status": "Completed",
+    "notes": "Setting up Ubuntu 24.04, ROS 2 Jazzy/Iron, and micro-ROS toolchains.",
+    "isAllMembers": false
   },
   {
     "id": "task-304",
@@ -3411,22 +3413,24 @@
     "endWeekIdx": 5,
     "semester": "1",
     "isMilestone": false,
-    "status": "In Progress",
-    "notes": "Gazebo simulation environment with costmaps, Nav2, and DWA planner."
+    "status": "Completed",
+    "notes": "Gazebo simulation environment with costmaps, Nav2, and DWA planner.",
+    "isAllMembers": false
   },
   {
     "id": "task-305",
     "owner": "Hilbert",
     "ownerCode": "hilbert",
     "category": "Navigation",
-    "title": "Integrating UGV model into ROS Simulation",
+    "title": "Use AgileX Scout V2.0 model into ROS Gazebo Simulation",
     "period": "S1 Recess - S1 Wk8",
     "startWeekIdx": 6,
     "endWeekIdx": 8,
     "semester": "1",
     "isMilestone": false,
-    "status": "In Progress",
-    "notes": "URDF/Xacro robot description with accurate inertia, wheel physics, and sensors."
+    "status": "Completed",
+    "notes": "URDF/Xacro robot description with accurate inertia, wheel physics, and sensors.",
+    "isAllMembers": false
   },
   {
     "id": "task-306",
@@ -3476,41 +3480,44 @@
     "ownerCode": "hilbert",
     "category": "UAV Communication",
     "title": "Communication research",
-    "period": "S1 Wk5",
-    "startWeekIdx": 4,
-    "endWeekIdx": 4,
+    "period": "S1 Wk8",
+    "startWeekIdx": 8,
+    "endWeekIdx": 8,
     "semester": "1",
     "isMilestone": false,
-    "status": "In Progress",
-    "notes": "Wi-Fi 6 vs LoRa vs ESP-NOW telemetry protocols for UAV-UGV bridge."
+    "status": "Completed",
+    "notes": "Wi-Fi 6 vs LoRa vs ESP-NOW telemetry protocols for UAV-UGV bridge.",
+    "isAllMembers": false
   },
   {
     "id": "task-310",
     "owner": "Hilbert",
     "ownerCode": "hilbert",
-    "category": "UAV Communication",
+    "category": "Extra",
     "title": "Component Selection",
-    "period": "S1 Wk6",
-    "startWeekIdx": 5,
-    "endWeekIdx": 5,
+    "period": "S1 Wk4 - S1 Wk5",
+    "startWeekIdx": 3,
+    "endWeekIdx": 4,
     "semester": "1",
     "isMilestone": false,
-    "status": "In Progress",
-    "notes": "Transceiver module selection, high-gain antennas, and interface hardware."
+    "status": "Completed",
+    "notes": "Transceiver module selection, high-gain antennas, and interface hardware.",
+    "isAllMembers": false
   },
   {
     "id": "task-311",
     "owner": "Hilbert",
     "ownerCode": "hilbert",
-    "category": "UAV Communication",
+    "category": "Extra",
     "title": "Delivery of Components",
-    "period": "S1 Recess - S1 Wk8",
-    "startWeekIdx": 6,
-    "endWeekIdx": 8,
+    "period": "S1 Wk6 - S1 Recess",
+    "startWeekIdx": 5,
+    "endWeekIdx": 6,
     "semester": "1",
     "isMilestone": false,
     "status": "In Progress",
-    "notes": "Procuring RF modules and testing bench."
+    "notes": "Procuring RF modules and testing bench.",
+    "isAllMembers": false
   },
   {
     "id": "task-312",
@@ -3565,8 +3572,9 @@
     "endWeekIdx": 1,
     "semester": "1",
     "isMilestone": false,
-    "status": "In Progress",
-    "notes": "Power requirements and current draw sizing for navigation computers."
+    "status": "Completed",
+    "notes": "Power requirements and current draw sizing for navigation computers.",
+    "isAllMembers": false
   },
   {
     "id": "task-316",
@@ -3935,17 +3943,126 @@
     "status": "In Progress",
     "notes": "Final Capstone Live Demonstration and Presentation to Faculty.",
     "isAllMembers": true
+  },
+  {
+    "id": "task-9789-89",
+    "owner": "Hilbert",
+    "ownerCode": "hilbert",
+    "isAllMembers": false,
+    "category": "Report",
+    "title": "Report HTML building",
+    "period": "S1 Wk5 - S1 Wk6",
+    "startWeekIdx": 4,
+    "endWeekIdx": 5,
+    "semester": "1",
+    "isMilestone": false,
+    "status": "Completed",
+    "notes": ""
+  },
+  {
+    "id": "task-3988-11",
+    "owner": "Hilbert",
+    "ownerCode": "hilbert",
+    "isAllMembers": false,
+    "category": "Report",
+    "title": "Import word document into HTML format",
+    "period": "S1 Recess - S1 Wk7",
+    "startWeekIdx": 6,
+    "endWeekIdx": 7,
+    "semester": "1",
+    "isMilestone": false,
+    "status": "Completed",
+    "notes": ""
   }
 ];
 
-  const STORAGE_KEY = 'cde4301_timeline_tasks_v6';
-  const SUBSYSTEMS_KEY = 'cde4301_timeline_subsystems_v6';
+  // ── 1.1 DYNAMIC TODAY COMPUTATION (BASED ON USER'S COMPUTER) ─────
+  function computeTodayContext() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const todayISO = `${year}-${month}-${day}`;
+
+    let matchedWeekIdx = -1;
+    let matchedDay = null;
+
+    // Reset all flags first
+    TIMELINE_WEEKS.forEach(w => {
+      w.isCurrent = false;
+      w.days.forEach(d => {
+        if (d.iso === todayISO) {
+          d.isToday = true;
+          w.isCurrent = true;
+          matchedWeekIdx = w.index;
+          matchedDay = d;
+        } else {
+          d.isToday = false;
+        }
+      });
+    });
+
+    let effectiveWeekIdx = matchedWeekIdx;
+    if (effectiveWeekIdx === -1) {
+      const firstISO = (TIMELINE_WEEKS[0] && TIMELINE_WEEKS[0].days[0]) ? TIMELINE_WEEKS[0].days[0].iso : '2026-08-10';
+      const lastWeek = TIMELINE_WEEKS[TIMELINE_WEEKS.length - 1];
+      const lastISO = (lastWeek && lastWeek.days[lastWeek.days.length - 1]) ? lastWeek.days[lastWeek.days.length - 1].iso : '2027-04-25';
+
+      if (todayISO < firstISO) {
+        effectiveWeekIdx = 0;
+      } else if (todayISO > lastISO) {
+        effectiveWeekIdx = TIMELINE_WEEKS.length - 1;
+      } else {
+        for (let i = 0; i < TIMELINE_WEEKS.length; i++) {
+          const wStart = TIMELINE_WEEKS[i].days[0].iso;
+          const wEnd = TIMELINE_WEEKS[i].days[TIMELINE_WEEKS[i].days.length - 1].iso;
+          if (todayISO >= wStart && todayISO <= wEnd) {
+            effectiveWeekIdx = i;
+            break;
+          }
+        }
+        if (effectiveWeekIdx === -1) effectiveWeekIdx = 0;
+      }
+      TIMELINE_WEEKS[effectiveWeekIdx].isCurrent = true;
+    }
+
+    let matchedMonthIdx = 0;
+    TIMELINE_MONTHS.forEach(m => {
+      if (effectiveWeekIdx >= m.startWeek && effectiveWeekIdx <= m.endWeek) {
+        m.isCurrent = true;
+        matchedMonthIdx = m.idx;
+      } else {
+        m.isCurrent = false;
+      }
+    });
+
+    const dateStr = matchedDay ? matchedDay.dateStr : now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    const fullDate = matchedDay ? matchedDay.fullDate : now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    const weekCode = TIMELINE_WEEKS[effectiveWeekIdx] ? TIMELINE_WEEKS[effectiveWeekIdx].code : '';
+
+    return {
+      todayISO,
+      matchedWeekIdx: effectiveWeekIdx,
+      matchedMonthIdx,
+      matchedDay,
+      dateStr,
+      fullDate,
+      weekCode,
+      now
+    };
+  }
+
+  // Pre-calculate today context dynamically from user's computer
+  const initialToday = computeTodayContext();
+
+  const STORAGE_KEY = 'cde4301_timeline_tasks_v7';
+  const SUBSYSTEMS_KEY = 'cde4301_timeline_subsystems_v7';
   const AUTH_KEY = 'cde4301_timeline_authenticated';
   const VALID_PASSCODES = ['cde4301', 'robotics2026', 'nusrobotics'];
 
-  // Current State
-  let activeWeekIndex = 5; // S1 Wk6 (14-20 Sep 2026)
-  let activeMonthIndex = 1; // September 2026
+  // Current State - dynamically defaults to Today based on user's computer
+  let activeWeekIndex = initialToday.matchedWeekIdx;
+  let activeMonthIndex = initialToday.matchedMonthIdx;
   let allTasks = loadTasks();
   let allSubsystems = loadSubsystems();
   let currentMode = 'week'; // 'week' | 'month'
@@ -4027,6 +4144,9 @@
     if (existingBanner) existingBanner.remove();
 
     // Inject New Action Bar
+    const todayCtx = computeTodayContext();
+    const todayBtnText = `Today (${todayCtx.dateStr})`;
+    const todayBtnTitle = `Jump to Today (${todayCtx.fullDate} • ${todayCtx.weekCode})`;
     const actionBar = document.createElement('div');
     actionBar.className = 'timeline-action-bar';
     actionBar.innerHTML = `
@@ -4040,8 +4160,8 @@
           <select id="timeline-period-select" class="timeline-period-select" title="Select Week or Month"></select>
         </div>
 
-        <button class="t-btn-today" id="btn-timeline-jump-today" title="Jump to Today (20 Sep 2026 • S1 Wk6)">
-          <span class="live-pulse"></span> Today (20 Sep)
+        <button class="t-btn-today" id="btn-timeline-jump-today" title="${todayBtnTitle}">
+          <span class="live-pulse"></span> <span id="today-btn-label">${todayBtnText}</span>
         </button>
       </div>
 
@@ -4510,10 +4630,12 @@ git push</pre>
 
     applyFilters();
     renderRoadmapCards();
+    updateTodayButtonUI();
   }
 
   // ── SHOW BY WEEK: 7 DAYS ACROSS ──────────────────────────────────
   function renderSingleWeekView(table) {
+    const todayCtx = computeTodayContext();
     const currentWk = TIMELINE_WEEKS[activeWeekIndex];
     if (!currentWk) return;
 
@@ -4539,7 +4661,7 @@ git push</pre>
               <span style="font-size: 13px; font-weight: 700; color: #ffffff;">
                 ${allMemberMilestone ? '⭐ ' : ''}${currentWk.code} • ${currentWk.dateRange} (Semester ${currentWk.sem === 'vac' ? 'Break' : currentWk.sem})
               </span>
-              ${currentWk.isCurrent ? '<span class="badge-current-week" style="margin:0;">CURRENT WEEK (TODAY: 20 SEP)</span>' : ''}
+              ${currentWk.isCurrent ? `<span class="badge-current-week" style="margin:0;">CURRENT WEEK (TODAY: ${todayCtx.dateStr.toUpperCase()})</span>` : ''}
             </div>
           </th>
         </tr>
@@ -5326,10 +5448,24 @@ git push</pre>
   }
 
   function jumpToToday() {
-    activeWeekIndex = 5; // S1 Wk6 (14-20 Sep 2026)
-    activeMonthIndex = 1; // September 2026
+    const todayCtx = computeTodayContext();
+    activeWeekIndex = todayCtx.matchedWeekIdx;
+    activeMonthIndex = todayCtx.matchedMonthIdx;
     renderTimeline();
-    showToast('📍 Jumped to Today: 20 September 2026 (S1 Wk6)');
+    updateTodayButtonUI(todayCtx);
+    showToast(`📍 Jumped to Today: ${todayCtx.fullDate} (${todayCtx.weekCode})`);
+  }
+
+  function updateTodayButtonUI(todayCtx = computeTodayContext()) {
+    const btn = document.getElementById('btn-timeline-jump-today');
+    if (!btn) return;
+    btn.title = `Jump to Today (${todayCtx.fullDate} • ${todayCtx.weekCode})`;
+    const lbl = document.getElementById('today-btn-label');
+    if (lbl) {
+      lbl.textContent = `Today (${todayCtx.dateStr})`;
+    } else {
+      btn.innerHTML = `<span class="live-pulse"></span> <span id="today-btn-label">Today (${todayCtx.dateStr})</span>`;
+    }
   }
 
   // ── 10. VIEW MODE TOGGLE ──────────────────────────────────────────
@@ -6230,7 +6366,10 @@ git push</pre>
     addSubsystem: (owner) => openSubsystemModal(owner),
     setWeek: (idx) => { activeWeekIndex = idx; renderTimeline(); },
     setMonth: (idx) => { activeMonthIndex = idx; renderTimeline(); },
-    jumpToday: () => jumpToToday()
+    jumpToday: () => jumpToToday(),
+    getActiveWeek: () => activeWeekIndex,
+    getActiveMonth: () => activeMonthIndex,
+    getTodayContext: () => computeTodayContext()
   };
 
 })();

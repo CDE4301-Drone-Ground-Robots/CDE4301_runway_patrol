@@ -45,7 +45,8 @@ window.renderMath = function() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ── Apple Light / Dark Theme Toggle ─────────────────────────────
+  // ── Apple Light / Dark Theme Toggle & Seamless Synchronization ──
+  const navActions = document.querySelector('.apple-nav-actions');
   const themeNav = document.querySelector('.apple-nav');
   let themeToggleBtn = document.getElementById('theme-toggle-btn');
   let storedTheme = 'dark';
@@ -55,36 +56,70 @@ document.addEventListener('DOMContentLoaded', () => {
     storedTheme = 'dark';
   }
 
-  if (themeNav && !themeToggleBtn) {
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch (error) {}
+
+    // Update all toggle buttons across header and mobile drawer
+    document.querySelectorAll('.apple-theme-toggle').forEach(btn => {
+      btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      btn.setAttribute('title', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      btn.dataset.theme = theme;
+    });
+  }
+
+  // Inject toggle button into header navigation actions
+  if (!themeToggleBtn) {
     themeToggleBtn = document.createElement('button');
     themeToggleBtn.id = 'theme-toggle-btn';
     themeToggleBtn.className = 'apple-theme-toggle';
     themeToggleBtn.type = 'button';
     themeToggleBtn.innerHTML = '<span class="apple-theme-toggle-icon" aria-hidden="true"></span><span class="apple-theme-toggle-knob" aria-hidden="true"></span>';
-    themeNav.appendChild(themeToggleBtn);
-  }
-
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    if (themeToggleBtn) {
-      themeToggleBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-      themeToggleBtn.setAttribute('title', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-      themeToggleBtn.dataset.theme = theme;
+    
+    if (navActions) {
+      navActions.insertBefore(themeToggleBtn, navActions.firstChild);
+    } else if (themeNav) {
+      themeNav.appendChild(themeToggleBtn);
     }
   }
 
-  applyTheme(storedTheme === 'light' ? 'light' : 'dark');
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      applyTheme(next);
-      try {
-        localStorage.setItem('theme', next);
-      } catch (error) {
-        // Theme still applies for the current page when storage is unavailable.
-      }
-    });
+  // Inject companion toggle into mobile drawer if drawer is present
+  const drawerEl = document.getElementById('apple-mobile-drawer') || document.querySelector('.apple-mobile-drawer');
+  if (drawerEl && !drawerEl.querySelector('.drawer-theme-toggle-row')) {
+    const drawerRow = document.createElement('div');
+    drawerRow.className = 'drawer-theme-toggle-row';
+    drawerRow.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:16px 0; margin-top:16px; border-top:1px solid var(--apple-border);';
+    drawerRow.innerHTML = `
+      <span style="font-size:16px; font-weight:600; color:var(--apple-text-primary);">Theme</span>
+      <button class="apple-theme-toggle" type="button" aria-label="Toggle theme">
+        <span class="apple-theme-toggle-icon" aria-hidden="true"></span>
+        <span class="apple-theme-toggle-knob" aria-hidden="true"></span>
+      </button>
+    `;
+    drawerEl.appendChild(drawerRow);
   }
+
+  // Apply current theme immediately
+  applyTheme(storedTheme === 'light' ? 'light' : 'dark');
+
+  // Bind click handlers to all toggles
+  document.querySelectorAll('.apple-theme-toggle').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    });
+  });
+
+  // Cross-tab / cross-window real-time synchronization
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'theme' && (e.newValue === 'light' || e.newValue === 'dark')) {
+      applyTheme(e.newValue);
+    }
+  });
 
   // ── Mobile Sidebar Drawer ───────────────────────────────────────
   const mobileToggleBtn = document.getElementById('mobile-toggle-btn');
@@ -1238,14 +1273,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Col 3: Zacarias -->
           <div class="apple-megamenu-col">
             <div class="apple-megamenu-heading">Zacarias</div>
-            <a href="${prefix}7-documentation/zacarias/chassis-fea.html" class="apple-megamenu-sublink">
-              Chassis Design and FEA Analysis
+            <a href="${prefix}7-documentation/zacarias/chassis-design.html" class="apple-megamenu-sublink">
+              Chassis Design
             </a>
-            <a href="${prefix}7-documentation/zacarias/motor-calculations.html" class="apple-megamenu-sublink">
-              Motor Calculations
+            <a href="${prefix}7-documentation/zacarias/materiel-selection.html" class="apple-megamenu-sublink">
+              Material Selection
             </a>
-            <a href="${prefix}7-documentation/zacarias/drivetrain-kinematics.html" class="apple-megamenu-sublink">
-              Drivetrain Kinematics calculations
+            <a href="${prefix}7-documentation/zacarias/fea-simulation.html" class="apple-megamenu-sublink">
+              FEA Simulation
             </a>
           </div>
 

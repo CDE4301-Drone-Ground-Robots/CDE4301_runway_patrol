@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Motor Calculations - Zacarias</title>
+  <title>Chassis Design - Zacarias</title>
   <link rel="stylesheet" href="../../css/styles.css?v=4.2">
 </head>
 <body>
@@ -56,8 +68,11 @@
       <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
         <div class="apple-hero-badge">Mechanical Subsystem • Zacarias</div>
         <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 12px;">
-          Motor Calculations
+          Chassis Design
         </h1>
+        <p class="apple-section-desc" style="max-width: 680px; margin: 0 auto; color: var(--apple-text-secondary);">
+          Structural chassis architecture, physical CAD layout, mounting points, and mechanical assembly specifications.
+        </p>
       </div>
 
       <div class="page-content">
@@ -66,12 +81,12 @@
         <div class="card-box" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 1.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Tractive Resistance &amp; Wheel Torque Calculations</h2>
+              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Chassis Architecture &amp; Mechanical Layout</h2>
             </div>
           </div>
           <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
+            [To Be Filled]
           </p>
         </div>
 
@@ -79,12 +94,12 @@
         <div class="card-box" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 2.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Motor &amp; Driver Specifications</h2>
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 2.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Modular Mounting &amp; Subsystem Integration</h2>
             </div>
           </div>
           <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
+            [To Be Filled]
           </p>
         </div>
 
@@ -93,11 +108,11 @@
           <div class="card-header">
             <div>
               <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Testing &amp; Verification</h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Manufacturing, Tolerances &amp; DFM</h2>
             </div>
           </div>
           <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
+            [To Be Filled]
           </p>
         </div>
 
@@ -110,9 +125,8 @@
       <div>© AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
       <ul class="apple-footer-links">
         <li><a href="../../index.html">Overview</a></li>
-        <li><a href="chassis-fea.html">← Chassis FEA</a></li>
-        <li><a href="../../7-documentation.html">Documentation</a></li>
-        <li><a href="drivetrain-kinematics.html">Drivetrain Kinematics →</a></li>
+        <li><a href="../../7-documentation.html">Documentation Hub</a></li>
+        <li><a href="materiel-selection.html">Material Selection →</a></li>
       </ul>
     </div>
   </footer>
@@ -168,15 +182,13 @@
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
-      .apple-main-content {
-        padding-top: 0 !important;
-      }
     }
   </style>
-  <button class="pdf-export-btn" onclick="window.print()" title="Export this page as PDF">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-    Export PDF
+  <button class="pdf-export-btn" id="print-report-btn" aria-label="Export or Print this report">
+    <svg viewBox="0 0 24 24">
+      <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+    </svg>
+    <span>Export PDF / Print</span>
   </button>
-
 </body>
 </html>

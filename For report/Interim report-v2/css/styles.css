@@ -147,56 +147,74 @@ body {
 
 /* Apple-style compact slider placed at the top-left of every report page. */
 .apple-theme-toggle {
-  position: absolute;
-  top: 14px;
-  left: 16px;
-  width: 42px;
+  position: relative;
+  width: 44px;
   height: 24px;
   padding: 0;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
-  background: #3a3a3c;
+  background: #2c2c2e;
   cursor: pointer;
-  transition: background 0.25s ease, border-color 0.25s ease;
+  transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.2s ease;
   z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  outline: none;
+  vertical-align: middle;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.apple-theme-toggle:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.12);
 }
 
 .apple-theme-toggle-knob {
   position: absolute;
   top: 3px;
-  left: 21px;
+  left: 23px;
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
-  transition: transform 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
 }
 
 .apple-theme-toggle-icon::before {
   content: '☾';
   position: absolute;
   top: 3px;
-  left: 5px;
-  color: #d1d1d6;
-  font-size: 13px;
+  left: 6px;
+  color: #a1a1aa;
+  font-size: 12px;
   line-height: 16px;
+  transition: color 0.2s ease, opacity 0.2s ease;
 }
 
 .apple-theme-toggle[data-theme="light"] {
   background: #e5e5ea;
-  border-color: rgba(0, 0, 0, 0.16);
+  border-color: rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.apple-theme-toggle[data-theme="light"]:hover {
+  border-color: rgba(0, 0, 0, 0.32);
 }
 
 .apple-theme-toggle[data-theme="light"] .apple-theme-toggle-knob {
-  transform: translateX(-18px);
+  transform: translateX(-19px);
   background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .apple-theme-toggle[data-theme="light"] .apple-theme-toggle-icon::before {
   content: '☀';
-  left: 25px;
-  color: #6e6e73;
+  left: 27px;
+  color: #f59e0b;
+  font-size: 13px;
 }
 
 [data-theme="light"] .apple-nav {
@@ -4111,4 +4129,315 @@ tr.gantt-row-hidden {
 
 .timeline-fullwidth-container .category-name-text {
   font-size: 12.5px;
+}
+
+
+/* ==========================================================================
+   COMPREHENSIVE LIGHT THEME RULES ACROSS ALL REPORT SUBPAGES
+   ========================================================================== */
+
+/* ── Navigation & Megamenu ───────────────────────────────────────────── */
+[data-theme="light"] .apple-nav {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .apple-nav-brand {
+  color: #1d1d1f !important;
+}
+
+[data-theme="light"] .apple-nav-links a {
+  color: #515154 !important;
+}
+
+[data-theme="light"] .apple-nav-links a:hover,
+[data-theme="light"] .apple-nav-links a.active {
+  color: #000000 !important;
+}
+
+[data-theme="light"] .apple-nav-links a.active::after {
+  background: #0071e3 !important;
+}
+
+[data-theme="light"] .apple-mobile-toggle {
+  color: #1d1d1f !important;
+}
+
+[data-theme="light"] .apple-mobile-drawer {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-right-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .apple-mobile-drawer a {
+  color: #1d1d1f !important;
+}
+
+[data-theme="light"] .apple-megamenu {
+  background: rgba(255, 255, 255, 0.97) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.14) !important;
+}
+
+[data-theme="light"] .apple-megamenu-col-title {
+  color: #1d1d1f !important;
+}
+
+[data-theme="light"] .apple-megamenu-item-title {
+  color: #1d1d1f !important;
+}
+
+[data-theme="light"] .apple-megamenu-item-desc {
+  color: #6e6e73 !important;
+}
+
+[data-theme="light"] .apple-megamenu-item:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+/* ── Content Cards & Surfaces ────────────────────────────────────────── */
+[data-theme="light"] .card-box {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .card-box:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .bento-card {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .kpi-card,
+[data-theme="light"] .figure-card,
+[data-theme="light"] .spec-card,
+[data-theme="light"] .trade-card {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Interactive Timeline & Master Gantt ──────────────────────────────── */
+[data-theme="light"] .timeline-action-bar {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .timeline-view-toggle {
+  background: #f2f2f7 !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .t-toggle-btn {
+  color: #6e6e73 !important;
+}
+
+[data-theme="light"] .t-toggle-btn.active {
+  background: var(--apple-blue) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .timeline-period-select {
+  background: #f2f2f7 !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0, 0, 0, 0.16) !important;
+}
+
+[data-theme="light"] .t-btn-scroll {
+  background: #f2f2f7 !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0, 0, 0, 0.14) !important;
+}
+
+[data-theme="light"] .t-btn-scroll:hover {
+  background: #e5e5ea !important;
+}
+
+[data-theme="light"] .t-btn-today {
+  background: rgba(99, 102, 241, 0.1) !important;
+  border-color: rgba(99, 102, 241, 0.4) !important;
+  color: #4f46e5 !important;
+}
+
+[data-theme="light"] .t-btn-today:hover {
+  background: rgba(99, 102, 241, 0.2) !important;
+  color: #3730a3 !important;
+}
+
+[data-theme="light"] .t-btn-edit {
+  background: #f2f2f7 !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0, 0, 0, 0.16) !important;
+}
+
+[data-theme="light"] .gantt-filter-bar {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .owner-filter-btn {
+  background: #f2f2f7 !important;
+  color: #4b4b50 !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+[data-theme="light"] .owner-filter-btn:hover {
+  color: #1d1d1f !important;
+  background: #e5e5ea !important;
+}
+
+[data-theme="light"] .owner-filter-btn.active {
+  background: var(--apple-blue) !important;
+  color: #ffffff !important;
+  border-color: var(--apple-blue) !important;
+}
+
+[data-theme="light"] .gantt-search-box {
+  background: #f2f2f7 !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0, 0, 0, 0.16) !important;
+}
+
+[data-theme="light"] .gantt-search-box::placeholder {
+  color: #8e8e93 !important;
+}
+
+[data-theme="light"] .gantt-matrix thead th {
+  background: #f5f5f7 !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .th-sticky-owner,
+[data-theme="light"] .th-sticky-cat {
+  background: #ffffff !important;
+  color: #1d1d1f !important;
+}
+
+[data-theme="light"] .gantt-owner-cell,
+[data-theme="light"] .gantt-cat-cell {
+  background: #ffffff !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .gantt-cell-empty {
+  background: rgba(0, 0, 0, 0.02) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .col-current-day {
+  background: rgba(99, 102, 241, 0.14) !important;
+  border-left: 2px solid #6366f1 !important;
+  border-right: 2px solid #6366f1 !important;
+}
+
+[data-theme="light"] .col-current-day-empty {
+  background: rgba(99, 102, 241, 0.05) !important;
+  border-left: 1px dashed rgba(99, 102, 241, 0.3) !important;
+  border-right: 1px dashed rgba(99, 102, 241, 0.3) !important;
+}
+
+[data-theme="light"] .gantt-task-item {
+  background: #f8f9fa !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+[data-theme="light"] .gantt-card-block {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .timeline-fullwidth-container .gantt-table-container {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+/* ── Modals & Popups ─────────────────────────────────────────────────── */
+[data-theme="light"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="light"] .modal-card,
+[data-theme="light"] .t-modal-box {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2) !important;
+  color: #1d1d1f !important;
+}
+
+[data-theme="light"] .modal-close-btn {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: #48484a !important;
+}
+
+[data-theme="light"] .modal-close-btn:hover {
+  background: rgba(0, 0, 0, 0.12) !important;
+  color: #1d1d1f !important;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+[data-theme="light"] .apple-footer {
+  background: #f0f0f3 !important;
+  border-top-color: rgba(0, 0, 0, 0.1) !important;
+  color: #6e6e73 !important;
+}
+
+[data-theme="light"] .apple-footer-legal,
+[data-theme="light"] .apple-footer-copyright {
+  color: #6e6e73 !important;
+}
+
+[data-theme="light"] .apple-footer-links a {
+  color: #6e6e73 !important;
+}
+
+[data-theme="light"] .apple-footer-links a:hover {
+  color: #1d1d1f !important;
+}
+
+/* ── Code, Equations & Mathematical Formulas ─────────────────────────── */
+[data-theme="light"] pre,
+[data-theme="light"] code {
+  background: #f2f2f7 !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .math-box,
+[data-theme="light"] .formula-box,
+[data-theme="light"] .equation-card {
+  background: #f8f9fa !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #111827 !important;
+}
+
+[data-theme="light"] mjx-container {
+  color: #111827 !important;
+}
+
+[data-theme="light"] mjx-container svg {
+  fill: #111827 !important;
+}
+
+/* ── Inputs & Selects ────────────────────────────────────────────────── */
+[data-theme="light"] input[type="text"],
+[data-theme="light"] input[type="password"],
+[data-theme="light"] input[type="number"],
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background: #ffffff !important;
+  color: #1d1d1f !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme="light"] input:focus,
+[data-theme="light"] select:focus,
+[data-theme="light"] textarea:focus {
+  border-color: var(--apple-blue) !important;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2) !important;
 }
