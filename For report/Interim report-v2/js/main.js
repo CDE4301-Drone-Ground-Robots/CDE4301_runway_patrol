@@ -68,6 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.setAttribute('title', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
       btn.dataset.theme = theme;
     });
+
+    if (window.renderNaturalHeatmap) {
+      window.renderNaturalHeatmap();
+    }
   }
 
   // Inject toggle button into header navigation actions
@@ -83,22 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (themeNav) {
       themeNav.appendChild(themeToggleBtn);
     }
-  }
-
-  // Inject companion toggle into mobile drawer if drawer is present
-  const drawerEl = document.getElementById('apple-mobile-drawer') || document.querySelector('.apple-mobile-drawer');
-  if (drawerEl && !drawerEl.querySelector('.drawer-theme-toggle-row')) {
-    const drawerRow = document.createElement('div');
-    drawerRow.className = 'drawer-theme-toggle-row';
-    drawerRow.style.cssText = 'display:flex; align-items:center; justify-content:space-between; padding:16px 0; margin-top:16px; border-top:1px solid var(--apple-border);';
-    drawerRow.innerHTML = `
-      <span style="font-size:16px; font-weight:600; color:var(--apple-text-primary);">Theme</span>
-      <button class="apple-theme-toggle" type="button" aria-label="Toggle theme">
-        <span class="apple-theme-toggle-icon" aria-hidden="true"></span>
-        <span class="apple-theme-toggle-knob" aria-hidden="true"></span>
-      </button>
-    `;
-    drawerEl.appendChild(drawerRow);
   }
 
   // Apply current theme immediately

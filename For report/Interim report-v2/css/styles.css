@@ -1400,6 +1400,10 @@ img, video {
   color: #ffffff;
 }
 
+.apple-mobile-drawer {
+  display: none;
+}
+
 /* ── Mobile Responsive Overrides ─────────────────────────────────────── */
 @media (max-width: 900px) {
   .apple-nav-links {
@@ -4441,3 +4445,207 @@ tr.gantt-row-hidden {
   border-color: var(--apple-blue) !important;
   box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2) !important;
 }
+
+/* ── Scientific Paper Fig. 24 Styling (Exact Reproduction) ───────────── */
+/* ==========================================================================
+   SCENARIO COMPARISON TABLE (EXECUTIVE STYLE)
+   ========================================================================== */
+
+.scenario-table-card {
+  margin: 16px 0 22px;
+  background: var(--card-bg, #16161a);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.12));
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.scenario-scroll-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scenario-table {
+  width: 100%;
+  min-width: 960px;
+  border-collapse: collapse;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 11.5px;
+  text-align: center;
+  color: var(--text-main, #f8fafc);
+  background: var(--card-bg, #0f172a);
+}
+
+[data-theme="light"] .scenario-table {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+/* Th & Td common */
+.scenario-table th,
+.scenario-table td {
+  padding: 8px 6px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  vertical-align: middle;
+}
+
+[data-theme="light"] .scenario-table th,
+[data-theme="light"] .scenario-table td {
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* Strong vertical group divider lines between ASP3, ASP2, ASP1, and MS */
+.scenario-sep-right {
+  border-right: 2.5px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-theme="light"] .scenario-sep-right {
+  border-right: 2.5px solid rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Group Headers: ASP3, ASP2, ASP1, MS */
+.scenario-group-cell {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 10px 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="light"] .scenario-group-cell {
+  background: #f1f5f9;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.3);
+}
+
+.scenario-group-cell.asp3 {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+[data-theme="light"] .scenario-group-cell.asp3 {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.scenario-group-cell.ms {
+  background: rgba(239, 68, 68, 0.08);
+  color: #f87171;
+}
+
+[data-theme="light"] .scenario-group-cell.ms {
+  background: rgba(239, 68, 68, 0.08);
+  color: #dc2626;
+}
+
+/* Sub-headers: fleet sizes */
+.scenario-sub-cell {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-muted, #94a3b8);
+  background: rgba(0, 0, 0, 0.18);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25) !important;
+  white-space: nowrap;
+  padding: 8px 4px;
+}
+
+[data-theme="light"] .scenario-sub-cell {
+  background: #f8fafc;
+  color: #475569;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+.scenario-sub-cell.optimal {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  font-weight: 700;
+}
+
+/* Left Metric Column (Sticky) */
+.scenario-metric-cell {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  text-align: left !important;
+  padding: 10px 14px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--text-main, #f8fafc);
+  background: var(--card-bg, #0f172a);
+  border-right: 2.5px solid rgba(255, 255, 255, 0.3) !important;
+  line-height: 1.35;
+  width: 220px;
+  max-width: 240px;
+}
+
+[data-theme="light"] .scenario-metric-cell {
+  background: #f8fafc;
+  color: #0f172a;
+  border-right: 2.5px solid rgba(0, 0, 0, 0.4) !important;
+}
+
+.scenario-metric-hdr-cell {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: var(--card-bg, #0f172a);
+  border-right: 2.5px solid rgba(255, 255, 255, 0.3) !important;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+[data-theme="light"] .scenario-metric-hdr-cell {
+  background: #f1f5f9;
+  border-right: 2.5px solid rgba(0, 0, 0, 0.4) !important;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Data value cells */
+.scenario-val {
+  font-family: var(--font-mono, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-main, #f8fafc);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  padding: 10px 6px;
+  transition: background 0.15s ease;
+}
+
+[data-theme="light"] .scenario-val {
+  color: #0f172a;
+}
+
+.scenario-val.optimal {
+  background: rgba(16, 185, 129, 0.09);
+  color: #10b981;
+  font-weight: 700;
+}
+
+.scenario-val.worst {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+/* Row hover highlight */
+.scenario-table tbody tr:hover .scenario-val:not(.optimal) {
+  background: rgba(255, 255, 255, 0.035);
+}
+
+[data-theme="light"] .scenario-table tbody tr:hover .scenario-val:not(.optimal) {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* AnyChart Heatmap integration */
+.anychart-credits {
+  display: none !important;
+}
+
+#anychart-heatmap-container {
+  width: 100%;
+  min-height: 580px;
+  height: 600px;
+}
+
