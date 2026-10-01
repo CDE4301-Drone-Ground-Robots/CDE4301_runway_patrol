@@ -25,8 +25,6 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'uav_waypoint_commander = runway_navigation.uav_waypoint_commander:main',
-            'ugv_c2_bridge_node = runway_navigation.ugv_c2_bridge_node:main',
         ],
     },
 )

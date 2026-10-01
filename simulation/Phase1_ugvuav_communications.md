@@ -44,25 +44,145 @@
 
 ## 📌 Architecture & System Topology
 
-This document provides complete instructions to operate and demonstrate the **Phase 1 Inter-Agent Communication Datalink** between:
 - **Machine 1 (Raspberry Pi 5):** UAV Aerial Scout & C2 Tactical Ground Station GUI (`uav-sim@uavsim-desktop.local`).
 - **Machine 2 (Laptop / PC):** UGV Gazebo Harmonic Digital Twin (`AgileX Scout V2`), Nav2 Autonomy Stack & C2 Telemetry Bridge.
 
-```text
-┌──────────────────────────────────────────────┐                ┌──────────────────────────────────────────────┐
-│             MACHINE 1: RASPBERRY PI 5        │                │             MACHINE 2: LAPTOP / PC           │
-│     (UAV Aerial Scout & C2 Ground Station)   │                │     (Gazebo Simulation & Nav2 UGV Rover)     │
-│             IP: 192.168.137.233              │  Direct RJ45   │              IP: 192.168.137.1               │
-│                                              │ Ethernet Cable │                                              │
-│  • Tactical HUD & Live Telemetry Console     │ ◄────────────► │  • Gazebo Harmonic 3D Digital Twin           │
-│  • Live /map Stream (RViz2 Grey/Black Theme) │                │  • Nav2 Autonomous Path Planner & Controller │
-│  • Dispatches C2 FOD Target Alerts (JSON)    │ ─────────────► │  • Ingests Target Alerts & Drives Rover      │
-│    (Topic: /c2/target_alert - Downlink)      │                │  • Remediates Target (Vacuum Suction Module) │
-│  • Ingests UGV Telemetry Ledger (JSON)       │ ◄───────────── │  • Broadcasts Live Telemetry & Task Ledger   │
-│    (Topic: /c2/ugv_telemetry - Uplink)       │  CycloneDDS    │    (ACKNOWLEDGED -> EN_ROUTE -> COLLECTED)   │
-│  • Auto-Reverse Home Charging Dock Procedure │                │  • Static Base Dock at (-25.0, 0.0)          │
-└──────────────────────────────────────────────┘                └──────────────────────────────────────────────┘
-```
+<div align="center" style="margin: 24px 0;">
+<table style="border-collapse: separate; border-spacing: 0; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 18px; max-width: 760px; width: 100%; font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;">
+<tr>
+<td align="center" colspan="3" style="padding-bottom: 6px; border: none;">
+<div style="display: inline-block; background: #161b22; border: 1px solid #484f58; border-radius: 6px; padding: 8px 16px;">
+<b style="color: #f0f6fc; font-size: 13px;">uav_waypoint_commander.py</b>
+<span style="color: #8b949e; font-size: 12px; margin-left: 8px;">(Tactical GUI / CLI)</span>
+</div>
+<div style="margin: 8px 0 4px 0; color: #8b949e; font-size: 12px; line-height: 1.4;">
+│ &nbsp; /c2/target_alert (JSON)<br>▼
+</div>
+</td>
+</tr>
+<tr>
+<td width="30%" align="right" valign="middle" style="padding: 6px; border: none;">
+<div style="display: inline-block; background: #161b22; border: 1px solid #484f58; border-radius: 6px; padding: 8px 14px; text-align: center;">
+<b style="color: #f0f6fc; font-size: 12px;">DemoComs_C2.py</b>
+<div style="color: #8b949e; font-size: 11px; margin-top: 2px;">(Teammate mock)</div>
+</div>
+</td>
+<td width="8%" align="center" valign="middle" style="padding: 6px; border: none; font-size: 16px; color: #8b949e;">
+──►
+</td>
+<td width="62%" align="left" valign="middle" style="padding: 6px; border: none;">
+<div style="display: inline-block; background: #161b22; border: 1px solid #484f58; border-radius: 6px; padding: 8px 16px;">
+<b style="color: #f0f6fc; font-size: 13px;">ugv_c2_bridge_node.py</b>
+<span style="color: #8b949e; font-size: 12px; margin-left: 8px;">◄── Ingests target (x, y, yaw)</span>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan="3" align="center" style="padding: 12px 14px 4px 14px; border: none;">
+<div style="max-width: 580px; background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 12px 16px; text-align: left; font-size: 12px; color: #c9d1d9; line-height: 1.8;">
+<div>├──► <b>Nav2</b> (<code>/navigate_to_pose</code> Action) ──► Drives Rover in Gazebo</div>
+<div>├──► <code>/goal_pose</code> (RViz Fallback)</div>
+<div>└──► <code>/c2/ugv_telemetry</code> (2 Hz Uplink back to C2 GUI)</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+
+<!-- ========================================================= -->
+<!-- 📦 TELEMETRY & DATALINK PAYLOAD SPECIFICATION -->
+<!-- ========================================================= -->
+
+### 📦 Datalink Message Specifications
+
+<table width="100%">
+  <thead>
+    <tr style="background: #161b22;">
+      <th width="50%">📥 Downlink Alert (<code>/c2/target_alert</code>)</th>
+      <th width="50%">📤 Uplink Telemetry (<code>/c2/ugv_telemetry</code>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td valign="top">
+        <b>Transport:</b> <code>std_msgs/String</code> (JSON serialized)<br/>
+        <b>QoS Policy:</b> <code>RELIABLE</code> + <code>TRANSIENT_LOCAL</code><br/>
+        <b>Payload Schema:</b>
+<pre><code class="language-json">{
+  "target_id": "FOD_001",
+  "threat_type": "metal_debris",
+  "priority": 1,
+  "x": -15.0,
+  "y": 5.0,
+  "yaw": 0.0,
+  "source": "uav_scout_alpha"
+}</code></pre>
+      </td>
+      <td valign="top">
+        <b>Transport:</b> <code>std_msgs/String</code> (JSON serialized)<br/>
+        <b>Publish Rate:</b> <code>2.0 Hz</code> periodic timer<br/>
+        <b>Payload Schema:</b>
+<pre><code class="language-json">{
+  "task_state": "EN_ROUTE",
+  "active_target_id": "FOD_001",
+  "queue_depth": 2,
+  "ugv_x": -12.45,
+  "ugv_y": 4.10,
+  "battery_pct": 94.2,
+  "vacuum_active": false
+}</code></pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br/>
+
+<!-- ========================================================= -->
+<!-- 🔄 5-STAGE MISSION LIFECYCLE & EXECUTION TIMELINE -->
+<!-- ========================================================= -->
+
+### 🔄 End-to-End Mission Workflow
+
+<table width="100%" style="border-collapse: separate; border-spacing: 8px;">
+  <tr align="center">
+    <td width="20%" style="background: #161b22; border-top: 3px solid #58a6ff; border-radius: 8px; padding: 14px;">
+      <div style="font-size: 22px;">🤝</div>
+      <b style="color: #58a6ff; font-size: 13px;">1. Handshake</b>
+      <div style="font-size: 11px; color: #8b949e; margin-top: 6px; line-height: 1.4;">
+        Direct cable automatically pairs both systems without requiring external internet.
+      </div>
+    </td>
+    <td width="20%" style="background: #161b22; border-top: 3px solid #bc8cff; border-radius: 8px; padding: 14px;">
+      <div style="font-size: 22px;">🎯</div>
+      <b style="color: #bc8cff; font-size: 13px;">2. Debris Alert</b>
+      <div style="font-size: 11px; color: #8b949e; margin-top: 6px; line-height: 1.4;">
+        UAV detects runway debris and beams the location down to the rover.
+      </div>
+    </td>
+    <td width="20%" style="background: #161b22; border-top: 3px solid #e3b341; border-radius: 8px; padding: 14px;">
+      <div style="font-size: 22px;">📋</div>
+      <b style="color: #e3b341; font-size: 13px;">3. Queue & Drive</b>
+      <div style="font-size: 11px; color: #8b949e; margin-top: 6px; line-height: 1.4;">
+        Rover queues the task, plans an obstacle-free path, and drives to the target.
+      </div>
+    </td>
+    <td width="20%" style="background: #161b22; border-top: 3px solid #7ee787; border-radius: 8px; padding: 14px;">
+      <div style="font-size: 22px;">🧹</div>
+      <b style="color: #7ee787; font-size: 13px;">4. Suction Clear</b>
+      <div style="font-size: 11px; color: #8b949e; margin-top: 6px; line-height: 1.4;">
+        Rover verifies arrival, activates its vacuum, and collects the debris.
+      </div>
+    </td>
+    <td width="20%" style="background: #161b22; border-top: 3px solid #f0883e; border-radius: 8px; padding: 14px;">
+      <div style="font-size: 22px;">⏩</div>
+      <b style="color: #f0883e; font-size: 13px;">5. Next Target</b>
+      <div style="font-size: 11px; color: #8b949e; margin-top: 6px; line-height: 1.4;">
+        Rover automatically advances to the next queued waypoint until all debris is cleared.
+      </div>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -114,7 +234,7 @@ On the Raspberry Pi 5, the entire C2 Ground Station is self-contained in `~/phas
 ### Sync Files to Raspberry Pi 5 (from Laptop)
 ```bash
 scp \
-  ~/runway_sim_ws/src/runway_navigation/runway_navigation/uav_waypoint_commander.py \
+  ~/runway_sim_ws/src/runway_communication/runway_communication/uav_waypoint_commander.py \
   ~/runway_sim_ws/cyclonedds.xml \
   ~/runway_sim_ws/run_uav_gui.sh \
   ~/runway_sim_ws/run_uav_headless.sh \

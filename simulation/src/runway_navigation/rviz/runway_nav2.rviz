@@ -392,6 +392,22 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /goal_pose
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Queued Waypoints (C2)
+      Namespaces:
+        active_label: true
+        active_target: true
+        queue_breadcrumbs: true
+        queued_labels: true
+        queued_targets: true
+      Topic:
+        Depth: 10
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /c2/queued_waypoints_markers
+      Value: true
   Transformation:
     Current:
       Class: rviz_default_plugins/TF

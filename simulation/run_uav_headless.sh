@@ -27,7 +27,10 @@ else
 fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCRIPT_PATH="${SCRIPT_DIR}/uav_waypoint_commander.py"
+SCRIPT_PATH="${SCRIPT_DIR}/src/runway_communication/runway_communication/uav_waypoint_commander.py"
+if [ ! -f "$SCRIPT_PATH" ]; then
+    SCRIPT_PATH="${SCRIPT_DIR}/uav_waypoint_commander.py"
+fi
 if [ ! -f "$SCRIPT_PATH" ]; then
     SCRIPT_PATH="$HOME/phase1_uav/uav_waypoint_commander.py"
 fi

@@ -134,7 +134,7 @@ def generate_launch_description():
 
     # 6. UGV C2 Telemetry Bridge Node
     ugv_c2_bridge_node = Node(
-        package='runway_navigation',
+        package='runway_communication',
         executable='ugv_c2_bridge_node',
         name='ugv_c2_bridge_node',
         output='screen',
