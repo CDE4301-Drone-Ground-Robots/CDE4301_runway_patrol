@@ -1169,34 +1169,37 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- 4.3 Programming Flyout -->
             <div class="apple-megamenu-flyout" id="flyout-prog">
               <div class="apple-megamenu-heading">4.3 Programming Architecture</div>
-              <a href="${prefix}4-subsystems/programming.html#sec-4-3-1" class="apple-megamenu-sublink">
-                <span class="num">4.3.1</span> ROS 2 Jazzy &amp; Compute Stack
+              <a href="${prefix}4-subsystems/programming.html#sec-1-middleware" class="apple-megamenu-sublink">
+                <span class="num">4.3.1</span> ROS 2 Jazzy &amp; Middleware Baseline
               </a>
-              <a href="${prefix}4-subsystems/programming.html#sec-4-3-2" class="apple-megamenu-sublink">
-                <span class="num">4.3.2</span> Gazebo Simulation Benchmarking
+              <a href="${prefix}4-subsystems/programming.html#sec-2-pipeline" class="apple-megamenu-sublink">
+                <span class="num">4.3.2</span> "Detect-to-Clear" Autonomy Pipeline
               </a>
-              <a href="${prefix}4-subsystems/programming.html#sec-4-3-3" class="apple-megamenu-sublink">
-                <span class="num">4.3.3</span> Autonomous Navigation, SLAM &amp; Path Planning
+              <a href="${prefix}4-subsystems/programming.html#sec-3-autonomy" class="apple-megamenu-sublink">
+                <span class="num">4.3.3</span> Autonomous Navigation &amp; Scrub Physics
               </a>
-              <a href="${prefix}4-subsystems/programming.html#sec-4-3-4" class="apple-megamenu-sublink">
-                <span class="num">4.3.4</span> Multi-Agent C2 Communications
+              <a href="${prefix}4-subsystems/programming.html#sec-5-demonstration" class="apple-megamenu-sublink">
+                <span class="num">4.3.4</span> Gazebo Harmonic Digital Twin Simulation
               </a>
-              <a href="${prefix}4-subsystems/programming.html#interactive-pathfinding" class="apple-megamenu-sublink highlight">
-                <span class="num">⚡</span> Interactive A* / Dijkstra Benchmark
+              <a href="${prefix}4-subsystems/programming.html#sec-6-roadmap" class="apple-megamenu-sublink">
+                <span class="num">4.3.5</span> Phase 2 Tasks &amp; Physical Implementation
+              </a>
+              <a href="${prefix}4-subsystems/programming.html#sec-4-visualizer" class="apple-megamenu-sublink highlight">
+                <span class="num">⚡</span> Interactive Pathfinding Visualizer &amp; Benchmark
               </a>
             </div>
 
             <!-- 4.4 Vision Flyout -->
             <div class="apple-megamenu-flyout" id="flyout-vis">
               <div class="apple-megamenu-heading">4.4 Drone &amp; Computer Vision</div>
-              <a href="${prefix}4-subsystems/computer-vision.html" class="apple-megamenu-sublink">
-                <span class="num">4.4.1</span> Heavy-Lift Scout Quadrotor Airframe
+              <a href="${prefix}4-subsystems/computer-vision.html#sec-4-4-1" class="apple-megamenu-sublink">
+                <span class="num">4.4.1</span> Computer Vision &amp; Sensor Fusion Suite
               </a>
-              <a href="${prefix}4-subsystems/computer-vision.html" class="apple-megamenu-sublink">
-                <span class="num">4.4.2</span> Edge YOLOv8 Real-Time Detection
+              <a href="${prefix}4-subsystems/computer-vision.html#sec-4-4-2" class="apple-megamenu-sublink">
+                <span class="num">4.4.2</span> YOLO Model Benchmarking &amp; Edge Inference
               </a>
-              <a href="${prefix}4-subsystems/computer-vision.html" class="apple-megamenu-sublink">
-                <span class="num">4.4.3</span> Multi-Band RTK Georeferencing Pipeline
+              <a href="${prefix}4-subsystems/computer-vision.html#sec-4-4-3" class="apple-megamenu-sublink">
+                <span class="num">4.4.3</span> Technical Documentation &amp; Optics Specs
               </a>
             </div>
           </div>
@@ -1294,6 +1297,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </a>
             <a href="${prefix}7-documentation/gabriel/vision-research.html" class="apple-megamenu-sublink">
               Computer vison research
+            </a>
+            <a href="${prefix}7-documentation/gabriel/stm32.html" class="apple-megamenu-sublink">
+              STM32 Microcontroller &amp; Firmware
             </a>
           </div>
 
@@ -1506,6 +1512,615 @@ document.addEventListener('DOMContentLoaded', () => {
       if (mmDoc) mmDoc.classList.remove('active');
       if (mmRef) mmRef.classList.remove('active');
       if (mo) mo.classList.remove('active');
+      // Also close search modal
+      if (typeof window._closeSearchModal === 'function') window._closeSearchModal();
     }
   });
+
+  // ── UX Enhancement: Reading Progress Bar ─────────────────────────────
+  (function initReadingProgress() {
+    const bar = document.createElement('div');
+    bar.className = 'reading-progress-bar';
+    bar.id = 'reading-progress-bar';
+    document.body.appendChild(bar);
+
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+      bar.style.width = pct + '%';
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  })();
+
+  // ── UX Enhancement: Back-to-Top Button ───────────────────────────────
+  (function initBackToTop() {
+    const btn = document.createElement('button');
+    btn.id = 'back-to-top';
+    btn.className = 'back-to-top-btn';
+    btn.setAttribute('aria-label', 'Back to top');
+    btn.setAttribute('title', 'Back to top');
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6"/>
+    </svg>`;
+    document.body.appendChild(btn);
+
+    window.addEventListener('scroll', () => {
+      btn.classList.toggle('visible', window.scrollY > 420);
+    }, { passive: true });
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  })();
+
+  // ── UX Enhancement: Auto Breadcrumbs ─────────────────────────────────
+  (function initBreadcrumbs() {
+    const path = window.location.pathname;
+    // Don't show on root index
+    if (path.endsWith('index.html') || path.endsWith('/') || path === '' || !path.includes('.html')) return;
+
+    // Path → label mapping
+    const LABELS = {
+      '1-introduction':      { label: 'Introduction', icon: '📖' },
+      '2-design-overview':   { label: 'Design Overview', icon: '🎨' },
+      '3-individual-scopes': { label: 'Individual Scopes', icon: '👥' },
+      '4-subsystems':        { label: 'Subsystems', icon: '⚙️' },
+      '5-timeline':          { label: 'Timeline', icon: '⏱️' },
+      '6-references':        { label: 'References', icon: '📚' },
+      '7-documentation':     { label: 'Documentation', icon: '📂' },
+      'index':               { label: 'Overview', icon: '🤖' },
+      'mechanical':          { label: 'Mechanical', icon: '⚙️' },
+      'electrical':          { label: 'Electrical', icon: '⚡' },
+      'programming':         { label: 'Programming', icon: '💻' },
+      'computer-vision':     { label: 'Computer Vision', icon: '👁️' },
+      'asuka':               { label: 'Asuka', icon: '🔩' },
+      'bryan':               { label: 'Bryan', icon: '🔋' },
+      'gabriel':             { label: 'Gabriel', icon: '👁️' },
+      'hilbert':             { label: 'Hilbert', icon: '🗺️' },
+      'zacarias':            { label: 'Zacarias', icon: '🏗️' },
+      'literature':          { label: 'Literature', icon: '📄' },
+      'suspension':          { label: 'Suspension Analysis', icon: '🔩' },
+      'vacuum-module':       { label: 'Vacuum Module', icon: '🌀' },
+      'components-bom':      { label: 'Components BOM', icon: '📋' },
+      'power-calculations':  { label: 'Power Calculations', icon: '🔋' },
+      'yolo-comparison':     { label: 'YOLO Comparison', icon: '🚀' },
+      'vision-calculations': { label: 'Vision Calculations', icon: '📐' },
+      'vision-research':     { label: 'Vision Research', icon: '🔬' },
+      'stm32':               { label: 'STM32 & Firmware', icon: '⚡' },
+      'Motor_drivetrain_calculation': { label: 'Motor & Drivetrain', icon: '🛞' },
+      'steering-kinematics': { label: 'Steering & Kinematics', icon: '↔️' },
+      'simulation':          { label: 'Simulation', icon: '🤖' },
+      'navigation':          { label: 'Navigation', icon: '🗺️' },
+      'communications':      { label: 'UAV Communication', icon: '📡' },
+      'chassis-design':      { label: 'Chassis Design', icon: '🏗️' },
+      'fea-simulation':      { label: 'FEA Simulation', icon: '🧪' },
+      'materiel-selection':  { label: 'Material Selection', icon: '🪨' },
+      'primary-research':    { label: 'Primary Research', icon: '📖' },
+      'problem-statement':   { label: 'Problem Statement', icon: '📄' },
+      'references':          { label: 'References', icon: '📄' },
+    };
+
+    // Calculate prefix to root
+    const styleLink = document.querySelector('link[href*="css/styles.css"]');
+    let pfx = '';
+    if (styleLink) {
+      const href = styleLink.getAttribute('href') || '';
+      const m = href.match(/\.\.\//g);
+      pfx = m ? m.join('') : '';
+    }
+
+    // Parse segments
+    const segments = path.split('/').filter(s => s && s !== '');
+    const crumbs = [];
+
+    // Always start with Home
+    crumbs.push({ label: 'FOD Hunter', icon: '🏠', url: pfx + 'index.html' });
+
+    let accPath = pfx;
+    segments.forEach((seg, idx) => {
+      const cleanSeg = seg.replace('.html', '');
+      const info = LABELS[cleanSeg] || { label: cleanSeg.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()), icon: '📄' };
+      const isLast = idx === segments.length - 1;
+
+      if (!isLast) {
+        accPath += seg + '/';
+        // Only add a crumb for known directory segments
+        if (LABELS[cleanSeg]) {
+          crumbs.push({ label: info.label, icon: info.icon, url: accPath + 'index.html' });
+        }
+      } else {
+        crumbs.push({ label: info.label, icon: info.icon, url: null });
+      }
+    });
+
+    if (crumbs.length <= 1) return; // Nothing interesting to show
+
+    // Build DOM
+    const bar = document.createElement('nav');
+    bar.className = 'apple-breadcrumb-bar';
+    bar.setAttribute('aria-label', 'Breadcrumb');
+
+    const inner = document.createElement('div');
+    inner.className = 'apple-breadcrumb';
+
+    crumbs.forEach((crumb, idx) => {
+      const isLast = idx === crumbs.length - 1;
+      if (idx > 0) {
+        const sep = document.createElement('span');
+        sep.className = 'apple-breadcrumb-sep';
+        sep.textContent = '›';
+        inner.appendChild(sep);
+      }
+      if (isLast) {
+        const cur = document.createElement('span');
+        cur.className = 'apple-breadcrumb-current';
+        cur.textContent = `${crumb.icon} ${crumb.label}`;
+        inner.appendChild(cur);
+      } else {
+        const a = document.createElement('a');
+        a.href = crumb.url;
+        a.textContent = `${crumb.icon} ${crumb.label}`;
+        inner.appendChild(a);
+      }
+    });
+
+    bar.appendChild(inner);
+
+    // Insert after <header>
+    const header = document.querySelector('header.apple-nav');
+    if (header && header.nextSibling) {
+      header.parentNode.insertBefore(bar, header.nextSibling);
+    }
+  })();
+
+  // ── UX Enhancement: Section Heading Anchor Links ──────────────────────
+  (function initSectionAnchors() {
+    const selectors = ['h2[id]', 'h3[id]', 'h4[id]', '.card-title[id]'];
+    // Also find parent elements with id containing headings
+    document.querySelectorAll('[id]').forEach(el => {
+      const tag = el.tagName.toLowerCase();
+      if (['h2','h3','h4'].includes(tag)) {
+        if (!el.querySelector('.section-anchor')) {
+          const anchor = document.createElement('a');
+          anchor.href = '#' + el.id;
+          anchor.className = 'section-anchor';
+          anchor.setAttribute('aria-label', 'Link to section');
+          anchor.setAttribute('title', 'Copy link to section');
+          anchor.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>`;
+          anchor.addEventListener('click', (e) => {
+            e.preventDefault();
+            const url = window.location.href.split('#')[0] + '#' + el.id;
+            navigator.clipboard?.writeText(url).catch(() => {});
+            window.history.pushState(null, '', '#' + el.id);
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Brief visual feedback
+            anchor.style.color = 'var(--apple-blue)';
+            anchor.style.opacity = '1';
+            setTimeout(() => {
+              anchor.style.color = '';
+              anchor.style.opacity = '';
+            }, 1500);
+          });
+          el.appendChild(anchor);
+        }
+      }
+    });
+  })();
+
+  // ── UX Enhancement: Search Icon Tooltip ──────────────────────────────
+  (function initSearchTooltip() {
+    const searchWrapper = document.getElementById('apple-nav-search-wrapper');
+    if (!searchWrapper) return;
+    const tip = document.createElement('div');
+    tip.className = 'apple-search-tooltip';
+    tip.innerHTML = `Search report <kbd>⌘K</kbd>`;
+    searchWrapper.appendChild(tip);
+  })();
+
+  // ── UX Enhancement: Mobile Drawer Icons ──────────────────────────────
+  (function initDrawerIcons() {
+    const ICON_MAP = {
+      'Overview':       '🏠',
+      'Introduction':   '📖',
+      'Design':         '🎨',
+      'Scopes':         '👥',
+      'Subsystems':     '⚙️',
+      'Timeline':       '⏱️',
+      'References':     '📚',
+      'Documentation':  '📂',
+    };
+    const drawer = document.getElementById('apple-mobile-drawer');
+    if (!drawer) return;
+    drawer.querySelectorAll('a').forEach(a => {
+      const text = a.textContent.trim();
+      // Find matching icon
+      const icon = Object.entries(ICON_MAP).find(([key]) => text.includes(key));
+      if (icon && !a.querySelector('.apple-drawer-icon')) {
+        const iconEl = document.createElement('span');
+        iconEl.className = 'apple-drawer-icon';
+        iconEl.textContent = icon[1];
+        a.insertBefore(iconEl, a.firstChild);
+      }
+    });
+  })();
+
+  // ── Site-Wide Search Bar ─────────────────────────────────────────────
+  (function initSiteSearch() {
+    // Determine if this is index (root page)
+    const pathParts = window.location.pathname;
+    const isIndex = pathParts.endsWith('index.html') ||
+                    pathParts.endsWith('/') ||
+                    pathParts === '' ||
+                    (!pathParts.includes('.html'));
+
+    // ── Search Index ──────────────────────────────────────────────────
+    const SEARCH_INDEX = [
+      // Main pages
+      { icon: '🏠', title: 'Overview', badge: 'Home', desc: 'FOD Hunter UGV System — Autonomous Multi-Agent Airfield Clearance', url: 'index.html', group: 'Main Pages' },
+      { icon: '📖', title: '1. Introduction & Problem Statement', badge: 'Intro', desc: 'FOD hazard context, ICAO standards, project motivation and goals', url: '1-introduction.html', group: 'Main Pages' },
+      { icon: '🎨', title: '2. Design Overview', badge: 'Design', desc: 'System architecture, design constraints, high-level concept overview', url: '2-design-overview.html', group: 'Main Pages' },
+      { icon: '👥', title: '3. Individual Scopes', badge: 'Scopes', desc: 'Team member roles, individual engineering scopes and responsibilities', url: '3-individual-scopes.html', group: 'Main Pages' },
+      { icon: '⏱️', title: '5. Project Timeline', badge: 'Timeline', desc: 'Gantt chart, milestones, semester task breakdown', url: '5-timeline.html', group: 'Main Pages' },
+      { icon: '📚', title: '6. References', badge: 'Refs', desc: 'All references, standards, papers and citations used in this report', url: '6-references.html', group: 'Main Pages' },
+      { icon: '📂', title: '7. Documentation Hub', badge: 'Docs', desc: 'Team member detailed technical documentation and specifications', url: '7-documentation.html', group: 'Main Pages' },
+
+      // Subsystems
+      { icon: '🤖', title: '4. Subsystems Overview', badge: 'Subsystems', desc: 'Mechanical, Electrical, Programming, and Vision subsystem summary', url: '4-subsystems/index.html', group: 'Subsystems' },
+      { icon: '⚙️', title: '4.1 Mechanical Subsystem', badge: 'Mechanical', desc: 'Chassis design, drivetrain, vacuum FOD pickup, material selection', url: '4-subsystems/mechanical.html', group: 'Subsystems' },
+      { icon: '4.1.1', title: 'Platform Architecture & Layout', badge: 'Mechanical', desc: 'UGV platform footprint, component layout and structural design', url: '4-subsystems/mechanical.html#sec-4-1-1', group: 'Mechanical' },
+      { icon: '4.1.2', title: 'Chassis Frame Analysis', badge: 'Mechanical', desc: 'Structural analysis of the UGV chassis frame under load', url: '4-subsystems/mechanical.html#sec-4-1-2', group: 'Mechanical' },
+      { icon: '4.1.3', title: 'Wheel & Ground Pressure', badge: 'Mechanical', desc: 'Wheel selection, contact pressure and ground clearance analysis', url: '4-subsystems/mechanical.html#sec-4-1-3', group: 'Mechanical' },
+      { icon: '4.1.4', title: 'Differential Drive Kinematics', badge: 'Mechanical', desc: 'Ackermann/differential steering kinematics and turning radius', url: '4-subsystems/mechanical.html#sec-4-1-4', group: 'Mechanical' },
+      { icon: '4.1.5', title: 'Suspension Design', badge: 'Mechanical', desc: 'Passive suspension system, shock isolation and asphalt compliance', url: '4-subsystems/mechanical.html#sec-4-1-5', group: 'Mechanical' },
+      { icon: '4.1.6', title: 'CAD Assembly & BOM', badge: 'Mechanical', desc: 'SolidWorks assembly model and full bill of materials', url: '4-subsystems/mechanical.html#sec-4-1-6', group: 'Mechanical' },
+      { icon: '4.1.7', title: 'Vacuum FOD Pickup', badge: 'Mechanical', desc: 'Motorised vacuum pickup system for debris collection', url: '4-subsystems/mechanical.html#sec-4-1-7', group: 'Mechanical' },
+      { icon: '4.1.8', title: 'Motor Selection & Calculations', badge: 'Mechanical', desc: 'BLDC motor torque, power, and speed calculations', url: '4-subsystems/mechanical.html#sec-4-1-8', group: 'Mechanical' },
+      { icon: '4.1.9', title: 'Steering Kinematic Trade-Off', badge: 'Mechanical', desc: 'Comparison of Ackermann vs. differential vs. 4WS steering', url: '4-subsystems/mechanical.html#sec-4-1-9', group: 'Mechanical' },
+
+      { icon: '⚡', title: '4.2 Electrical Subsystem', badge: 'Electrical', desc: '48V bus, ZLAC8015D servo driver, E-Stop, power distribution', url: '4-subsystems/electrical.html', group: 'Subsystems' },
+      { icon: '💻', title: '4.3 Programming Subsystem', badge: 'Programming', desc: 'ROS 2 Jazzy, Nav2, Gazebo Harmonic simulation, autonomy pipeline', url: '4-subsystems/programming.html', group: 'Subsystems' },
+      { icon: '4.3.1', title: 'ROS 2 Jazzy & Middleware Baseline', badge: 'Programming', desc: 'ROS 2 Jazzy on Ubuntu 24.04 LTS, middleware justification', url: '4-subsystems/programming.html#sec-1-middleware', group: 'Programming' },
+      { icon: '4.3.2', title: '"Detect-to-Clear" Autonomy Pipeline', badge: 'Programming', desc: 'Multi-agent heterogeneous autonomy architecture overview', url: '4-subsystems/programming.html#sec-2-pipeline', group: 'Programming' },
+      { icon: '4.3.3', title: 'Autonomous Navigation & Scrub Physics', badge: 'Programming', desc: 'Nav2 stack, SmacPlanner2D, Regulated Pure Pursuit, MPPI', url: '4-subsystems/programming.html#sec-3-autonomy', group: 'Programming' },
+      { icon: '4.3.4', title: 'Gazebo Harmonic Digital Twin', badge: 'Programming', desc: 'Simulation environment, SDF model, sensor plugins', url: '4-subsystems/programming.html#sec-5-demonstration', group: 'Programming' },
+      { icon: '4.3.5', title: 'Phase 2 Tasks & Physical Implementation', badge: 'Programming', desc: 'Phase 2 roadmap: hardware bring-up, real-world navigation testing', url: '4-subsystems/programming.html#sec-6-roadmap', group: 'Programming' },
+      { icon: '🔬', title: 'Interactive Pathfinding Visualizer', badge: 'Programming', desc: 'A* / Dijkstra / Dubins interactive benchmark demo', url: '4-subsystems/programming.html#sec-4-visualizer', group: 'Programming' },
+
+      { icon: '👁️', title: '4.4 Computer Vision & Drone', badge: 'Vision', desc: 'YOLO inference, sensor fusion, aerial macro-scout, optics specs', url: '4-subsystems/computer-vision.html', group: 'Subsystems' },
+      { icon: '4.4.1', title: 'Computer Vision & Sensor Fusion Suite', badge: 'Vision', desc: 'Drone CV pipeline, LiDAR-camera fusion strategy', url: '4-subsystems/computer-vision.html#sec-4-4-1', group: 'Vision' },
+      { icon: '4.4.2', title: 'YOLO Model Benchmarking & Edge Inference', badge: 'Vision', desc: 'YOLOv8/v11 mAP50-95 on TensorRT vs ONNX, Jetson Orin NX', url: '4-subsystems/computer-vision.html#sec-4-4-2', group: 'Vision' },
+      { icon: '4.4.3', title: 'Technical Documentation & Optics Specs', badge: 'Vision', desc: 'Gabriel\'s deep-dive specs: lens, FOV, GSD calculations', url: '4-subsystems/computer-vision.html#sec-4-4-3', group: 'Vision' },
+
+      // Documentation
+      { icon: '🔩', title: 'Asuka — Suspension Analysis', badge: 'Asuka', desc: 'Coil spring, damper selection, FEA suspension load analysis', url: '7-documentation/asuka/suspension.html', group: 'Documentation' },
+      { icon: '🌀', title: 'Asuka — Vacuum Module Design', badge: 'Asuka', desc: 'Centrifugal fan sizing, pickup head geometry, debris containment', url: '7-documentation/asuka/vacuum-module.html', group: 'Documentation' },
+      { icon: '🏗️', title: 'Zacarias — Chassis Design', badge: 'Zacarias', desc: 'Welded frame topology, cross-member layout, load path analysis', url: '7-documentation/zacarias/chassis-design.html', group: 'Documentation' },
+      { icon: '🧪', title: 'Zacarias — FEA Simulation', badge: 'Zacarias', desc: 'ANSYS static structural FEA on chassis frame under worst-case loading', url: '7-documentation/zacarias/fea-simulation.html', group: 'Documentation' },
+      { icon: '🪨', title: 'Zacarias — Material Selection', badge: 'Zacarias', desc: 'Material trade-off matrix: Al6061-T6 vs. steel vs. CFRP', url: '7-documentation/zacarias/materiel-selection.html', group: 'Documentation' },
+      { icon: '📋', title: 'Bryan — Components BOM', badge: 'Bryan', desc: 'Full bill of materials: part numbers, costs, suppliers, lead times', url: '7-documentation/bryan/components-bom.html', group: 'Documentation' },
+      { icon: '🔋', title: 'Bryan — Power Calculations', badge: 'Bryan', desc: 'Detailed 48V bus power budget, run-time estimation, wiring sizing', url: '7-documentation/bryan/power-calculations.html', group: 'Documentation' },
+      { icon: '🚀', title: 'Gabriel — YOLO Model Comparison', badge: 'Gabriel', desc: 'YOLOv8n/s/m/l/x vs YOLOv11: latency, mAP, deployment benchmarks', url: '7-documentation/gabriel/yolo-comparison.html', group: 'Documentation' },
+      { icon: '📐', title: 'Gabriel — Vision Calculations', badge: 'Gabriel', desc: 'Camera focal length, FOV, Ground Sampling Distance (GSD)', url: '7-documentation/gabriel/vision-calculations.html', group: 'Documentation' },
+      { icon: '🔬', title: 'Gabriel — Computer Vision Research', badge: 'Gabriel', desc: 'Airfield FOD datasets, adverse weather augmentation, LiDAR fusion', url: '7-documentation/gabriel/vision-research.html', group: 'Documentation' },
+      { icon: '⚡', title: 'Gabriel — STM32 Microcontroller & Firmware', badge: 'Gabriel', desc: 'STM32 F446RE micro-ROS firmware, CAN bus, PID, E-Stop', url: '7-documentation/gabriel/stm32.html', group: 'Documentation' },
+      { icon: '🛞', title: 'Hilbert — Motor & Drivetrain Sizing', badge: 'Hilbert', desc: 'BLDC motor torque/speed curves, drivetrain gear ratio calculations', url: '7-documentation/hilbert/Motor_drivetrain_calculation.html', group: 'Documentation' },
+      { icon: '↔️', title: 'Hilbert — Steering & Kinematics', badge: 'Hilbert', desc: 'Ackermann geometry, turning circle, encoder odometry calibration', url: '7-documentation/hilbert/steering-kinematics.html', group: 'Documentation' },
+      { icon: '🤖', title: 'Hilbert — Simulation (Gazebo)', badge: 'Hilbert', desc: 'Gazebo Harmonic SDF model, Nav2 SLAM, sensor plugin configuration', url: '7-documentation/hilbert/simulation.html', group: 'Documentation' },
+      { icon: '🗺️', title: 'Hilbert — Navigation', badge: 'Hilbert', desc: 'Nav2 planner benchmarks, SmacPlanner2D, Pure Pursuit, MPPI results', url: '7-documentation/hilbert/navigation.html', group: 'Documentation' },
+      { icon: '📡', title: 'Hilbert — UAV Communication', badge: 'Hilbert', desc: 'ROS 2 bridge, MAVLink, C2 alert ingestion from drone to UGV Nav2', url: '7-documentation/hilbert/communications.html', group: 'Documentation' },
+
+      // References
+      { icon: '📖', title: 'Literature References', badge: 'References', desc: 'Primary and secondary literature sources for problem context', url: '7-documentation/literature/primary-research.html', group: 'References' },
+      { icon: '📄', title: 'Asuka\'s References', badge: 'References', desc: 'Mechanical subsystem design references and standards', url: '6-references/asuka/references.html', group: 'References' },
+      { icon: '📄', title: 'Bryan\'s References', badge: 'References', desc: 'Electrical component datasheets and power system standards', url: '6-references/bryan/references.html', group: 'References' },
+      { icon: '📄', title: 'Gabriel\'s References', badge: 'References', desc: 'Computer vision papers, YOLO models, airfield FOD datasets', url: '6-references/gabriel/references.html', group: 'References' },
+      { icon: '📄', title: 'Hilbert\'s References', badge: 'References', desc: 'ROS 2 Nav2 papers, navigation algorithms, simulation references', url: '6-references/hilbert/references.html', group: 'References' },
+      { icon: '📄', title: 'Zacarias\'s References', badge: 'References', desc: 'FEA simulation, material science, structural design references', url: '6-references/zacarias/references.html', group: 'References' },
+    ];
+
+    // ── Build Absolute URLs using the same prefix logic ──────────────
+    const styleLink = document.querySelector('link[href*="css/styles.css"]');
+    let pfx = '';
+    if (styleLink) {
+      const href = styleLink.getAttribute('href') || '';
+      const m = href.match(/\.\.\//g);
+      pfx = m ? m.join('') : '';
+    }
+
+    SEARCH_INDEX.forEach(item => {
+      item.absUrl = pfx + item.url;
+    });
+
+    // ── Inject search icon button ─────────────────────────────────────
+    const navActionsEl = document.querySelector('.apple-nav-actions');
+    if (navActionsEl && !document.getElementById('apple-nav-search-wrapper')) {
+      const searchWrapper = document.createElement('div');
+      searchWrapper.className = 'apple-nav-search';
+      searchWrapper.id = 'apple-nav-search-wrapper';
+      searchWrapper.innerHTML = `
+        <button class="apple-search-trigger" id="apple-search-open-btn" title="Search report (⌘K)" aria-label="Open site search">
+          <svg class="apple-search-icon" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="9" r="7"/><path d="M14.5 14.5l4 4"/>
+          </svg>
+        </button>`;
+
+      if (isIndex) {
+        // On index: insert BEFORE the hamburger toggle, keep existing pill
+        const mobileToggle = navActionsEl.querySelector('.apple-mobile-toggle');
+        if (mobileToggle) {
+          navActionsEl.insertBefore(searchWrapper, mobileToggle);
+        } else {
+          navActionsEl.appendChild(searchWrapper);
+        }
+      } else {
+        // On other pages: replace the existing .apple-btn-pill with search icon
+        const existingPill = navActionsEl.querySelector('.apple-btn-pill');
+        if (existingPill) {
+          existingPill.replaceWith(searchWrapper);
+        } else {
+          const mobileToggle = navActionsEl.querySelector('.apple-mobile-toggle');
+          if (mobileToggle) {
+            navActionsEl.insertBefore(searchWrapper, mobileToggle);
+          } else {
+            navActionsEl.appendChild(searchWrapper);
+          }
+        }
+      }
+    }
+
+    // ── Build Modal DOM ───────────────────────────────────────────────
+    let searchModal = document.getElementById('apple-site-search-modal');
+    if (!searchModal) {
+      searchModal = document.createElement('div');
+      searchModal.id = 'apple-site-search-modal';
+      searchModal.className = 'apple-search-modal-backdrop';
+      searchModal.setAttribute('role', 'dialog');
+      searchModal.setAttribute('aria-modal', 'true');
+      searchModal.setAttribute('aria-label', 'Site Search');
+      searchModal.innerHTML = `
+        <div class="apple-search-modal-window" id="apple-search-modal-window">
+          <div class="apple-search-header">
+            <svg class="apple-search-modal-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="9" r="7"/><path d="M14.5 14.5l4 4"/>
+            </svg>
+            <input
+              type="search"
+              id="apple-search-modal-input"
+              class="apple-search-modal-input"
+              placeholder="Search pages, sections, topics…"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button class="apple-search-clear-btn" id="apple-search-clear" aria-label="Clear search" title="Clear">✕</button>
+            <span class="apple-search-esc-hint">ESC</span>
+          </div>
+          <div class="apple-search-results-list" id="apple-search-results-list" role="listbox"></div>
+          <div class="apple-search-footer">
+            <div class="apple-search-footer-shortcuts">
+              <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+              <span><kbd>↵</kbd> Open</span>
+              <span><kbd>ESC</kbd> Close</span>
+            </div>
+            <span id="apple-search-result-count" style="opacity:0.6;"></span>
+          </div>
+        </div>`;
+      document.body.appendChild(searchModal);
+    }
+
+    const modalInput = document.getElementById('apple-search-modal-input');
+    const resultsList = document.getElementById('apple-search-results-list');
+    const clearBtn = document.getElementById('apple-search-clear');
+    const resultCount = document.getElementById('apple-search-result-count');
+    let selectedIdx = -1;
+    let currentResults = [];
+
+    function openSearchModal() {
+      searchModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => {
+        if (modalInput) modalInput.focus();
+      });
+      renderResults('');
+    }
+
+    function closeSearchModal() {
+      if (!searchModal) return;
+      searchModal.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (modalInput) {
+        modalInput.value = '';
+        clearBtn.style.display = 'none';
+      }
+      selectedIdx = -1;
+    }
+    // Expose so outer ESC handler can call it
+    window._closeSearchModal = closeSearchModal;
+
+    // ── Fuzzy Highlight helper ────────────────────────────────────────
+    function highlight(text, query) {
+      if (!query.trim()) return text;
+      const esc = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return text.replace(new RegExp(`(${esc})`, 'gi'), '<span class="apple-search-highlight">$1</span>');
+    }
+
+    // ── Fuzzy score helper ────────────────────────────────────────────
+    function score(item, q) {
+      const haystack = (item.title + ' ' + item.desc + ' ' + item.badge + ' ' + item.group).toLowerCase();
+      const needle = q.toLowerCase();
+      if (haystack.includes(needle)) {
+        if (item.title.toLowerCase().startsWith(needle)) return 4;
+        if (item.title.toLowerCase().includes(needle)) return 3;
+        if (item.badge.toLowerCase().includes(needle)) return 2;
+        return 1;
+      }
+      // Split query into words for partial match
+      const words = needle.split(/\s+/);
+      if (words.every(w => haystack.includes(w))) return 0.5;
+      return 0;
+    }
+
+    function renderResults(query) {
+      resultsList.innerHTML = '';
+      selectedIdx = -1;
+
+      let results;
+      if (!query.trim()) {
+        // Show default top-level pages
+        results = SEARCH_INDEX.filter(item => item.group === 'Main Pages' || item.group === 'Subsystems');
+      } else {
+        results = SEARCH_INDEX
+          .map(item => ({ item, s: score(item, query) }))
+          .filter(({ s }) => s > 0)
+          .sort((a, b) => b.s - a.s)
+          .map(({ item }) => item);
+      }
+
+      currentResults = results;
+
+      if (results.length === 0) {
+        resultsList.innerHTML = `
+          <div class="apple-search-empty-state">
+            <div class="apple-search-empty-icon">🔍</div>
+            <div>No results for "<strong>${query}</strong>"</div>
+            <div style="margin-top:6px;font-size:12px;opacity:0.6;">Try different keywords</div>
+          </div>`;
+        resultCount.textContent = '';
+        return;
+      }
+
+      // Group results
+      const grouped = {};
+      results.forEach(item => {
+        if (!grouped[item.group]) grouped[item.group] = [];
+        grouped[item.group].push(item);
+      });
+
+      const groupOrder = ['Main Pages', 'Subsystems', 'Mechanical', 'Electrical', 'Programming', 'Vision', 'Documentation', 'References'];
+      let flatIndex = 0;
+
+      groupOrder.forEach(groupName => {
+        if (!grouped[groupName] || grouped[groupName].length === 0) return;
+        const gTitle = document.createElement('div');
+        gTitle.className = 'apple-search-group-title';
+        gTitle.textContent = groupName;
+        resultsList.appendChild(gTitle);
+
+        grouped[groupName].forEach(item => {
+          const a = document.createElement('a');
+          a.className = 'apple-search-item';
+          a.href = item.absUrl;
+          a.setAttribute('role', 'option');
+          a.dataset.index = flatIndex++;
+          const q = query.trim();
+          a.innerHTML = `
+            <div class="apple-search-item-icon">${item.icon}</div>
+            <div class="apple-search-item-content">
+              <div class="apple-search-item-title">
+                ${highlight(item.title, q)}
+                <span class="apple-search-item-badge">${item.badge}</span>
+              </div>
+              <div class="apple-search-item-desc">${highlight(item.desc, q)}</div>
+            </div>
+            <div class="apple-search-item-enter">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 6v4a2 2 0 01-2 2H3m0 0l3-3M3 12l3 3"/>
+              </svg>
+            </div>`;
+          a.addEventListener('click', () => closeSearchModal());
+          resultsList.appendChild(a);
+        });
+      });
+
+      resultCount.textContent = `${results.length} result${results.length !== 1 ? 's' : ''}`;
+    }
+
+    // ── Wire up events ────────────────────────────────────────────────
+    const openBtn = document.getElementById('apple-search-open-btn');
+    if (openBtn) openBtn.addEventListener('click', openSearchModal);
+
+    // Click backdrop to close
+    searchModal.addEventListener('click', (e) => {
+      if (e.target === searchModal) closeSearchModal();
+    });
+
+    // Input events
+    if (modalInput) {
+      modalInput.addEventListener('input', (e) => {
+        const q = e.target.value;
+        clearBtn.style.display = q ? 'flex' : 'none';
+        renderResults(q);
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        modalInput.value = '';
+        clearBtn.style.display = 'none';
+        renderResults('');
+        modalInput.focus();
+      });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      // ⌘K or Ctrl+K to open
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (searchModal.classList.contains('is-open')) {
+          closeSearchModal();
+        } else {
+          openSearchModal();
+        }
+        return;
+      }
+
+      if (!searchModal.classList.contains('is-open')) return;
+
+      const items = resultsList.querySelectorAll('.apple-search-item');
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedIdx = Math.min(selectedIdx + 1, items.length - 1);
+        updateSelection(items);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectedIdx = Math.max(selectedIdx - 1, -1);
+        updateSelection(items);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (selectedIdx >= 0 && items[selectedIdx]) {
+          closeSearchModal();
+          window.location.href = items[selectedIdx].href;
+        }
+      }
+    });
+
+    function updateSelection(items) {
+      items.forEach((el, i) => {
+        el.classList.toggle('is-selected', i === selectedIdx);
+        if (i === selectedIdx) el.scrollIntoView({ block: 'nearest' });
+      });
+    }
+
+    // ── Mobile drawer: add search button ─────────────────────────────
+    const mobileDrawer = document.getElementById('apple-mobile-drawer');
+    if (mobileDrawer && !mobileDrawer.querySelector('.apple-mobile-search-btn')) {
+      const mobileSearchBtn = document.createElement('button');
+      mobileSearchBtn.className = 'apple-mobile-search-btn';
+      mobileSearchBtn.innerHTML = `<span>🔍 Search report...</span><kbd style="font-size:11px;padding:2px 6px;border-radius:4px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);">⌘K</kbd>`;
+      mobileSearchBtn.addEventListener('click', () => {
+        // Close drawer first
+        mobileDrawer.classList.remove('active');
+        openSearchModal();
+      });
+      mobileDrawer.insertBefore(mobileSearchBtn, mobileDrawer.firstChild);
+    }
+  })();
+
 });
+

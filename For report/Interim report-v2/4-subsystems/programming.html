@@ -18,8 +18,118 @@
   <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>4.3 Programming Subsystem - FOD Hunter Interim Report</title>
+  <title>4.3 Programming Subsystem &amp; Autonomy Architecture - FOD Hunter Interim Report</title>
   <link rel="stylesheet" href="../css/styles.css?v=4.2">
+  <script>
+    window.MathJax = {
+      tex: { 
+        inlineMath: [['$', '$'], ['\\(', '\\)']], 
+        displayMath: [['$$', '$$'], ['\\[', '\\]']] 
+      },
+      options: {
+        enableMenu: false
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    /* MATHJAX RESPONSIVE & HIGH-LEGIBILITY STYLING */
+    .MathJax {
+      max-width: 100% !important;
+      outline: none !important;
+    }
+    .MathJax:not([display="true"]) {
+      display: inline-block !important;
+      overflow: visible !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      font-size: 100% !important;
+      vertical-align: -0.1em !important;
+    }
+    .MathJax[display="true"] {
+      margin: 6px 0 !important;
+      display: block !important;
+      font-size: 105% !important;
+      overflow: visible !important;
+    }
+    .math-eq-hero {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--apple-border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      text-align: center;
+      margin: 14px 0;
+      overflow-x: auto;
+    }
+    /* APPLE DARK-MODE METRIC CARD */
+    .metric-card {
+      background: var(--apple-surface-card);
+      border: 1px solid var(--apple-border);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      transition: border-color 0.2s ease;
+    }
+    .metric-card:hover {
+      border-color: rgba(41, 151, 255, 0.4);
+    }
+    .metric-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #86868b;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .metric-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: #f5f5f7;
+      margin-top: 4px;
+    }
+    /* INTERACTIVE CONTROL PANELS */
+    .interactive-panel {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 16px;
+      margin-bottom: 20px;
+    }
+    .slider-control {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .slider-control label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      color: #86868b;
+      font-weight: 500;
+    }
+    .slider-control input[type="range"] {
+      width: 100%;
+      accent-color: #2997ff;
+      cursor: pointer;
+    }
+    /* STEPPER BUTTONS */
+    .step-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--apple-border);
+      color: #86868b;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .step-pill.active {
+      background: rgba(41, 151, 255, 0.15);
+      border-color: #2997ff;
+      color: #2997ff;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
 
@@ -80,733 +190,818 @@
     <div class="apple-container" style="padding-bottom: 60px;">
       
       <!-- Apple Section Header -->
-      <div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
-        <div class="apple-hero-badge">Subsystem 4.3 • Autonomy &amp; Nav2</div>
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
+        <div class="apple-hero-badge">Subsystem 4.3 &bull; Autonomy, Navigation &amp; C2 Middleware</div>
         <h1 class="apple-section-title" style="font-size: clamp(2.4rem, 5vw, 3.8rem);">
           Programming &amp; Autonomy.
           <span class="apple-hero-gradient">ROS 2 Jazzy. Nav2 Smac. Real-Time C2.</span>
         </h1>
-        <p class="apple-section-desc" style="margin: 0 auto;">
-          Integrated software intelligence encompassing airfield SLAM mapping, global path planning, local obstacle avoidance, multi-agent C2 datalinks, and Gazebo Harmonic simulation.
+        <p class="apple-section-desc" style="margin: 0 auto; max-width: 860px;">
+          Integrated software architecture encompassing autonomous runway navigation, asphalt scrub physics, orthophoto costmap generation, secure UAV-to-UGV command and control (C2), and Gazebo Harmonic digital twin simulation.
         </p>
       </div>
 
-        <!-- SUBSYSTEM OWNER CARD -->
-        <div class="card-box" style="border-left: 5px solid var(--accent-purple);">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span class="badge badge-purple">Subsystem Ownership</span>
-                <span class="badge badge-blue">Overseeing Mechanical</span>
-              </div>
-              <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Programming: Autonomous Navigation &amp; C2 Communications</h3>
-              <p style="font-size: 13.5px; color: var(--text-muted);">
-                Lead Programming Engineer: <strong>Hilbert Soh</strong> (A0308263H) &bull; ROS 2 Architecture &amp; Datalink Integration
-              </p>
+      <!-- SUBSYSTEM OWNER CARD -->
+      <div class="card-box" style="border-left: 5px solid #2997ff; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-blue">Subsystem Ownership</span>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25);">Software &amp; Autonomy</span>
             </div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <a href="../7-documentation/hilbert/simulation.html" class="btn btn-deep-dive">📖 Simulation Guide →</a>
-              <a href="../7-documentation/hilbert/navigation.html" class="btn btn-deep-dive">🧭 Navigation Spec →</a>
-              <a href="../7-documentation/hilbert/communications.html" class="btn btn-deep-dive">📡 C2 Comms Spec →</a>
-            </div>
-          </div>
-          <p style="margin-top: 12px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6;">
-            The Programming subsystem consolidates the entire software intelligence of the UGV, encompassing high-speed autonomous navigation, airfield SLAM mapping, global/local path trajectory planning, multi-robot coordination, and secure UAV-to-UGV command and control (C2) datalinks.
-          </p>
-        </div>
-
-        <!-- ONBOARD COMPUTE HARDWARE CONSTRAINTS NOTICE -->
-        <div class="callout callout-amber" style="margin-top: 0; border-left-width: 5px;">
-          <div style="display: flex; align-items: flex-start; gap: 10px;">
-            <span style="font-size: 20px; line-height: 1;">💻</span>
-            <div>
-              <strong style="color: var(--accent-amber); font-size: 14.5px;">Onboard UGV Compute Implementation: Hilbert's Laptop &amp; STM32 F446RE</strong>
-              <p style="margin: 6px 0 0 0; font-size: 13px; color: var(--text-main); line-height: 1.6;">
-                The primary UGV onboard computer is Hilbert's Laptop, running Ubuntu 24.04 LTS with ROS 2 Jazzy. It connects via USB to an STM32 F446RE microcontroller, which executes real-time motor control loops and bridges command velocity (cmd_vel) instructions to the ZLAC8015D servo driver to drive the UGV hub motors. This architecture was adopted due to capstone budget limitations precluding the purchase of a new NVIDIA Jetson platform, while all available Jetson developer kits within the NUS Engineering Design and Innovation Centre (EDIC) are currently committed to CDE3301.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4.3.1 ROS 2 DISTRIBUTION EVALUATION & SELECTION -->
-        <div class="card-box" id="sec-4-3-1">
-          <div class="card-header">
-            <div class="card-title">🤖 4.3.1 ROS 2 Distribution Evaluation &amp; Selection</div>
-          </div>
-          <p style="margin-bottom: 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6;">
-            Robot Operating System 2 (ROS 2) serves as the core computational middleware for the runway Foreign Object Debris (FOD) inspection UGV. ROS 2 provides an industrial-grade Data Distribution Service (DDS) abstraction layer, real-time deterministic executors, lifecycle node management, and an extensive ecosystem of production autonomy libraries (Nav2, SLAM Toolbox, and robot_localization). A comparative evaluation across consecutive modern distributions&mdash;ordered from latest to oldest&mdash;was conducted to determine the optimal software platform for multi-year capstone longevity and hardware integration.
-          </p>
-
-          <div class="admin-table-wrapper" style="margin-bottom: 16px;">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th style="min-width: 170px;">ROS 2 Distribution</th>
-                  <th style="min-width: 135px;">Release &amp; EOL Date</th>
-                  <th style="min-width: 155px;">Target OS &amp; Kernel</th>
-                  <th style="min-width: 140px;">C++ / Python Standards</th>
-                  <th>Nav2 &amp; Simulation Parity</th>
-                  <th style="min-width: 200px;">Selection Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <img src="../assets/images/Hilbert/lyrical-small.png" alt="ROS 2 Lyrical Luth Logo" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; flex-shrink: 0; background: rgba(255, 255, 255, 0.05); padding: 2px;">
-                      <div>
-                        <strong>ROS 2 Lyrical Luth (LTS)</strong>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-purple">May 22, 2026 &ndash; May 2031<br><span style="font-size: 11px;">(5-Year LTS)</span></span></td>
-                  <td>Ubuntu 26.04 LTS (Resolute Raccoon)<br><span style="font-size: 11.5px; color: var(--text-muted);">Linux Kernel 6.14+</span></td>
-                  <td>C++20 / C++23 &bull; Python 3.13 &bull; GCC 14+</td>
-                  <td>Next-generation Gazebo Sim toolchain; updated Nav2 behavior trees.</td>
-                  <td>
-                    <span class="badge badge-amber" style="margin-bottom: 4px;">EVALUATED (Deferred LTS)</span>
-                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">
-                      Severe ecosystem lag; key third-party hardware drivers (<code>rplidar_ros</code>, RTK-GNSS, micro-ROS agents) lack stable upstream binary packages on Ubuntu 26.04.
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <img src="../assets/images/Hilbert/kilted-small.png" alt="ROS 2 Kilted Kaiju Logo" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; flex-shrink: 0; background: rgba(255, 255, 255, 0.05); padding: 2px;">
-                      <div>
-                        <strong>ROS 2 Kilted Kaiju (STS)</strong>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-rose">May 23, 2025 &ndash; Dec 2026<br><span style="font-size: 11px;">(18-Month Non-LTS)</span></span></td>
-                  <td>Ubuntu 24.04 LTS (Noble Numbat)<br><span style="font-size: 11.5px; color: var(--text-muted);">Linux Kernel 6.8+</span></td>
-                  <td>C++20 &bull; Python 3.12 &bull; GCC 13</td>
-                  <td>Gazebo Ionic pairing; interim API adjustments for trajectory smoothing and QoS policies.</td>
-                  <td>
-                    <span class="badge badge-rose" style="margin-bottom: 4px;">REJECTED (Short Lifespan)</span>
-                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">
-                      18-month non-LTS lifecycle reaches End-of-Life during active deployment; unsuitable for reproducible, long-term engineering milestones.
-                    </div>
-                  </td>
-                </tr>
-                <tr style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid var(--accent-purple);">
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <img src="../assets/images/Hilbert/jazzy-small.png" alt="ROS 2 Jazzy Jalisco Logo" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; flex-shrink: 0; background: rgba(255, 255, 255, 0.05); padding: 2px;">
-                      <div>
-                        <strong style="color: var(--accent-purple);">ROS 2 Jazzy Jalisco (LTS)</strong>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-emerald">May 23, 2024 &ndash; May 2029<br><span style="font-size: 11px;">(5-Year LTS)</span></span></td>
-                  <td>Ubuntu 24.04 LTS (Noble Numbat)<br><span style="font-size: 11.5px; color: var(--text-muted);">Linux Kernel 6.8+</span></td>
-                  <td>C++20 &bull; Python 3.12 &bull; GCC 13</td>
-                  <td><strong>Native Gazebo Sim (Harmonic / GZ 8.x)</strong> pairing via <code>ros_gz_bridge</code>; out-of-the-box <code>nav2_collision_monitor</code> and MPPI/Smac planners.</td>
-                  <td>
-                    <span class="badge badge-emerald" style="margin-bottom: 4px;">SELECTED (Capstone Baseline)</span>
-                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">
-                      Native alignment with dev workstations (WSL2 / Ubuntu 24.04) and Jetson (JetPack 7.x) bare-metal environments.
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <img src="../assets/images/Hilbert/humble-small.png" alt="ROS 2 Humble Hawksbill Logo" style="width: 44px; height: 44px; object-fit: contain; border-radius: 8px; flex-shrink: 0; background: rgba(255, 255, 255, 0.05); padding: 2px;">
-                      <div>
-                        <strong>ROS 2 Humble Hawksbill (LTS)</strong>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="badge badge-blue">May 23, 2022 &ndash; May 2027<br><span style="font-size: 11px;">(5-Year LTS)</span></span></td>
-                  <td>Ubuntu 22.04 LTS (Jammy Jellyfish)<br><span style="font-size: 11.5px; color: var(--text-muted);">Linux Kernel 5.15</span></td>
-                  <td>C++17 &bull; Python 3.10 &bull; GCC 11</td>
-                  <td>Paired with older Ignition Fortress / Gazebo Classic 11; standard Nav2 baseline.</td>
-                  <td>
-                    <span class="badge badge-blue" style="margin-bottom: 4px;">EVALUATED (Legacy Baseline)</span>
-                    <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">
-                      Reaches EOL midway through extended deployment cycles; running on Ubuntu 24.04 requires containerized virtualization that adds IPC latency.
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="callout callout-purple" style="margin-top: 16px;">
-            <strong style="font-size: 14.5px; color: var(--accent-purple); display: block; margin-bottom: 8px;">
-              🎯 Engineering Justification for ROS 2 Jazzy Jalisco
-            </strong>
-            <p style="margin: 0 0 10px 0; font-size: 13.5px; line-height: 1.6; color: var(--text-main);">
-              ROS 2 Jazzy Jalisco on Ubuntu 24.04 LTS was chosen as the operational baseline because its 5-year support window (active until May 2029) guarantees software maintenance beyond the capstone delivery timeline.
+            <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Programming: Autonomous Navigation &amp; C2 Communications</h3>
+            <p style="font-size: 13.5px; color: var(--text-muted); margin: 0;">
+              Lead Programming Engineer: <strong>Hilbert Soh</strong> (A0308263H) &bull; ROS 2 Architecture &amp; Datalink Integration
             </p>
-            <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: var(--text-muted); line-height: 1.6;">
-              <li style="margin-bottom: 6px;">
-                <strong style="color: var(--text-main);">Native OS &amp; Compute Acceleration Parity:</strong> Jazzy aligns natively with Ubuntu 24.04 LTS running across both developer laptops (WSL2) and the onboard NVIDIA Jetson AGX Orin running JetPack 7.x. This eliminates Docker virtualization overhead, allowing direct bare-metal access to CUDA, TensorRT, and hardware communication ports (<code>/dev/ttyACM0</code> for STM32 micro-ROS).
-              </li>
-              <li style="margin-bottom: 6px;">
-                <strong style="color: var(--text-main);">Mature Simulation &amp; Safety Interlocks:</strong> Jazzy provides native integration with modern Gazebo Sim (Harmonic / GZ 8.x) via <code>ros_gz_bridge</code> alongside modern Nav2 algorithmic features&mdash;notably dynamic <code>nav2_collision_monitor</code> safety polygons and Smac smooth path planning out-of-the-box.
-              </li>
-              <li>
-                <strong style="color: var(--text-main);">Driver Ecosystem Availability:</strong> Crucial hardware packages (including <code>rplidar_ros</code>, <code>nmea_navsat_driver</code>, <code>robot_localization</code>, and <code>micro_ros_agent</code>) offer verified, stable builds under Jazzy without the dependency breaks or source compilation overhead present in Lyrical Luth.
-              </li>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <a href="../7-documentation/hilbert/navigation.html" class="btn btn-deep-dive">📖 Navigation Spec &rarr;</a>
+            <a href="../7-documentation/hilbert/communications.html" class="btn btn-deep-dive">📖 C2 Comms Spec &rarr;</a>
+            <a href="../7-documentation/hilbert/simulation.html" class="btn btn-deep-dive">📖 Simulation Guide &rarr;</a>
+          </div>
+        </div>
+        <p style="margin-top: 12px; font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 0;">
+          The Programming subsystem consolidates the entire software intelligence of the UGV, encompassing high-speed autonomous navigation, airfield SLAM mapping, global/local path trajectory planning, multi-robot coordination, and secure UAV-to-UGV command and control (C2) datalinks.
+        </p>
+        
+        <!-- HARMONIZED ARCHITECTURAL BADGES -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--apple-border);">
+          <span class="badge" style="background: rgba(41, 151, 255, 0.08); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.2);">ROS 2 Jazzy (Ubuntu 24.04 LTS)</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">Phase 1 Planner: SmacPlanner2D (Cost-Aware Smoothed) &bull; Phase 2: SmacPlannerHybrid</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">Local Controller: Regulated Pure Pursuit (RPP)</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">Chassis Proxy: AgileX Scout 2.0 4WD Skid-Steer (65.0 kg)</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #f5f5f7; border: 1px solid var(--apple-border);">Costmap: 0.05 m/px Orthophoto Georeferenced Grid</span>
+        </div>
+      </div>
+
+      <!-- 4-METRIC PLATFORM SNAPSHOT -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 24px;">
+        <div class="metric-card">
+          <div class="metric-title">Operating Sprint Velocity</div>
+          <div class="metric-val" style="color: #2997ff;">&ge; 10.0 km/h <span style="font-size: 13px; font-weight: 400; color: #86868b;">(2.78 m/s)</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Min Turning Radius ($R_{\min}$)</div>
+          <div class="metric-val">1.50 m <span style="font-size: 13px; font-weight: 400; color: #86868b;">(Smoothed 2D &bull; Phase 2 Dubins)</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">Real-Time Factor (RTF)</div>
+          <div class="metric-val" style="color: #2997ff;">0.98 &plusmn; 0.02 <span style="font-size: 13px; font-weight: 400; color: #86868b;">(Gazebo Harmonic)</span></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">C2 Datalink Peer Latency</div>
+          <div class="metric-val">&lt; 15.0 ms <span style="font-size: 13px; font-weight: 400; color: #86868b;">(CycloneDDS Unicast)</span></div>
+        </div>
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- 1.0 COMPUTATIONAL ARCHITECTURE & MIDDLEWARE BASELINE (A1, A2)              -->
+      <!-- ========================================================================= -->
+      <div class="card-box" id="sec-1-middleware" style="margin-bottom: 24px;">
+        <a id="sec-4-3-1"></a>
+        <div class="card-header">
+          <div>
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">1.0 Middleware Baseline (A1, A2)</span>
+            <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
+              1.0 Computational Architecture &amp; Middleware Baseline
+            </h2>
+          </div>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Jazzy Jalisco &bull; Ubuntu 24.04 LTS</span>
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+          Robot Operating System 2 (ROS 2) serves as the core computational middleware for the runway inspection robot. A multi-criteria evaluation of consecutive LTS distributions was performed to determine the optimal software baseline for multi-year capstone longevity, Gazebo Harmonic pairing, and edge compute execution:
+        </p>
+
+        <!-- ROS 2 DISTRIBUTION COMPARISON TABLE -->
+        <div style="overflow-x: auto; margin-bottom: 16px;">
+          <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--apple-border); background: rgba(255, 255, 255, 0.03);">
+                <th style="padding: 10px 12px;">ROS 2 Distribution</th>
+                <th style="padding: 10px 12px;">Support Window</th>
+                <th style="padding: 10px 12px;">Target OS &amp; Kernel</th>
+                <th style="padding: 10px 12px;">Simulation &amp; Nav2 Integration</th>
+                <th style="padding: 10px 12px;">Selection Evaluation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--apple-border);">
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="../assets/images/Hilbert/lyrical-small.png" alt="Lyrical Luth" style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px; background: rgba(255,255,255,0.04); padding: 2px;">
+                    <div>
+                      <div>Lyrical Luth (LTS)</div>
+                      <div style="font-size: 11px; color: #86868b; font-weight: 400;">Upcoming LTS</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">May 2026 &ndash; May 2031</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Ubuntu 26.04 LTS (Kernel 6.14+)</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Next-gen Gazebo; unreleased upstream driver packages.</td>
+                <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Deferred (Ecosystem Lag)</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--apple-border);">
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="../assets/images/Hilbert/kilted-small.png" alt="Kilted Kaiju" style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px; background: rgba(255,255,255,0.04); padding: 2px;">
+                    <div>
+                      <div>Kilted Kaiju (STS)</div>
+                      <div style="font-size: 11px; color: #86868b; font-weight: 400;">Short-Term Support</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">May 2025 &ndash; Nov 2026</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Ubuntu 24.04 LTS (Kernel 6.8+)</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Non-LTS stepping stone; lacks long-term vendor driver maintenance.</td>
+                <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Rejected (18-Month STS)</span></td>
+              </tr>
+              <tr style="background: rgba(41, 151, 255, 0.04); border-bottom: 1px solid rgba(41, 151, 255, 0.2);">
+                <td style="padding: 10px 12px; font-weight: 700; color: #2997ff;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="../assets/images/Hilbert/jazzy-small.png" alt="Jazzy Jalisco" style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px; background: rgba(41,151,255,0.1); padding: 2px; border: 1px solid rgba(41,151,255,0.3);">
+                    <div>
+                      <div style="color: #2997ff; font-weight: 700;">Jazzy Jalisco (LTS)</div>
+                      <div style="font-size: 11px; color: rgba(41, 151, 255, 0.8); font-weight: 500;">Current Stable LTS</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding: 10px 12px; color: #f5f5f7;">May 2024 &ndash; May 2029</td>
+                <td style="padding: 10px 12px; color: #f5f5f7;">Ubuntu 24.04 LTS (Kernel 6.8+)</td>
+                <td style="padding: 10px 12px; color: #f5f5f7;">Native Gazebo Harmonic (GZ 8.x) bridge; SmacPlanner2D &amp; RPP baseline.</td>
+                <td style="padding: 10px 12px;"><span class="badge badge-blue" style="font-size: 10.5px;">SELECTED (Capstone Baseline)</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--apple-border);">
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="../assets/images/Hilbert/humble-small.png" alt="Humble Hawksbill" style="width: 32px; height: 32px; object-fit: contain; border-radius: 6px; background: rgba(255,255,255,0.04); padding: 2px;">
+                    <div>
+                      <div>Humble Hawksbill (LTS)</div>
+                      <div style="font-size: 11px; color: #86868b; font-weight: 400;">Legacy LTS</div>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">May 2022 &ndash; May 2027</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Ubuntu 22.04 LTS (Kernel 5.15)</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Paired with deprecated Gazebo Classic 11 / Fortress; nearing EOL.</td>
+                <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; font-size: 10.5px;">Evaluated &amp; Superseded</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px;">
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+            <div style="font-size: 13px; font-weight: 600; color: #2997ff; margin-bottom: 6px;">1.2 Software-in-the-Loop Host Platform (WSL2)</div>
+            <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+              Software development and Gazebo Harmonic SIL execution are hosted on Hilbert's Laptop running Ubuntu 24.04 LTS under Windows Subsystem for Linux (WSL2). WSL2 GPU paravirtualization (via DirectX/D3D12 vGPU passthrough) delivers hardware-accelerated rendering at 60 FPS while preserving native Linux POSIX socket performance for DDS networking.
+            </p>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+            <div style="font-size: 13px; font-weight: 600; color: #2997ff; margin-bottom: 6px;">1.3 CycloneDDS Static Unicast Peering</div>
+            <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+              Standard DDS multicast discovery (239.255.0.1) is blocked by enterprise Wi-Fi IGMP snooping. Eclipse CycloneDDS was configured via <code>cyclonedds.xml</code> with explicit static unicast peering between the Laptop (<code>192.168.137.1</code>) and UAV Companion Computer (<code>192.168.137.233</code>), eliminating network storms and delivering &lt;15 ms transmission latency.
+            </p>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+            <div style="font-size: 13px; font-weight: 600; color: #2997ff; margin-bottom: 6px;">1.4 Real-Time Actuation Bridge (STM32 F446RE)</div>
+            <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+              Hilbert's Laptop interfaces over USB serial (<code>/dev/ttyACM0</code>) to an STM32 F446RE microcontroller running FreeRTOS and micro-ROS. The STM32 executes a 100 Hz closed-loop PID controller, translating <code>/cmd_vel</code> twist inputs into RS-485 / CAN velocity frames for the dual ZLAC8015D brushless servo drivers.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- 2.0 HETEROGENEOUS "DETECT-TO-CLEAR" AUTONOMY PIPELINE (A3)                 -->
+      <!-- ========================================================================= -->
+      <div class="card-box" id="sec-2-pipeline" style="margin-bottom: 24px;">
+        <a id="sec-4-3-2"></a>
+        <div class="card-header">
+          <div>
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">2.0 System Architecture (A3)</span>
+            <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
+              2.0 Heterogeneous "Detect-to-Clear" Autonomy Pipeline
+            </h2>
+          </div>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Multi-Agent Dataflow &bull; Decoupled Operations</span>
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+          The airfield remediation system relies on functional decoupling between two heterogeneous robotic agents: an aerial UAV macro-scout and a ground UGV sweeper. Rather than streaming raw 4K video feeds across lossy wireless links (which introduces multi-second latency and bandwidth saturation), the aerial agent runs local edge vision (YOLOv8) and transmits compact, georeferenced JSON alert packets (&lt; 2 KB) over CycloneDDS.
+        </p>
+
+        <!-- PIPELINE FIGURE -->
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 18px; text-align: center; margin-bottom: 16px;">
+          <img src="../assets/images/Hilbert/robot_navigation_pipeline.png" alt="Navigation Pipeline" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.5);">
+          <div style="font-size: 12px; color: #86868b; margin-top: 8px; font-style: italic;">
+            Figure 2.1: Heterogeneous Inter-Agent Autonomy Dataflow: Aerial Edge Detection &rarr; CycloneDDS JSON Alert &rarr; Nav2 Smac &rarr; Regulated Pure Pursuit &rarr; Mechanical Collection.
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- INTERACTIVE WIDGET 1: DETECT-TO-CLEAR PIPELINE SIMULATOR                  -->
+        <!-- ========================================================================= -->
+        <div class="interactive-panel">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <strong style="color: #f5f5f7; font-size: 14.5px;">End-to-End "Detect-to-Clear" Mission Dataflow Simulator</strong>
+              </div>
+              <p style="font-size: 12px; color: #86868b; margin: 4px 0 0 0;">
+                Step through the asynchronous 6-stage UAV-to-UGV remediation pipeline to inspect message payloads, active ROS 2 nodes, and latency budgets.
+              </p>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <button id="sim-btn-prev" class="step-pill">&larr; Prev Stage</button>
+              <button id="sim-btn-next" class="step-pill" style="border-color: #2997ff; color: #2997ff;">Next Stage &rarr;</button>
+            </div>
+          </div>
+
+          <!-- STAGE PROGRESS PILLS -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 6px; margin-bottom: 14px;" id="sim-stage-pills">
+            <button class="step-pill active" data-step="0">01. UAV Vision</button>
+            <button class="step-pill" data-step="1">02. C2 Packaging</button>
+            <button class="step-pill" data-step="2">03. DDS Unicast</button>
+            <button class="step-pill" data-step="3">04. Coordinate Map</button>
+            <button class="step-pill" data-step="4">05. Nav2 Sprint</button>
+            <button class="step-pill" data-step="5">06. Safe Remediation</button>
+          </div>
+
+          <!-- STAGE DISPLAY CARD -->
+          <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; margin-bottom: 12px;">
+              <div>
+                <span id="sim-node-badge" class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-size: 11px;">Active Node: uav_waypoint_commander.py</span>
+                <h4 id="sim-stage-title" style="font-size: 15px; color: #f5f5f7; margin: 4px 0 0 0;">Stage 1: Aerial UAV Edge Detection &amp; Geotagging</h4>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-size: 11px; color: #86868b; text-transform: uppercase;">Estimated Latency</span>
+                <div id="sim-stage-latency" style="font-size: 14px; font-weight: 700; color: #2997ff; font-family: 'SF Mono', Consolas, monospace;">&Delta;t = 33.3 ms (30 FPS)</div>
+              </div>
+            </div>
+
+            <p id="sim-stage-desc" style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 12px;">
+              Aerial companion computer executes edge YOLOv8 tensor inference on synthetic runway video stream. Detects FOD fastener with 94.2% confidence and associates instantaneous UAV GNSS/IMU attitude to calculate geodetic ground coordinates.
+            </p>
+
+            <div style="background: #06090e; border: 1px solid rgba(255,255,255,0.06); border-radius: 6px; padding: 12px; overflow-x: auto;">
+              <div style="font-size: 11px; font-weight: 600; color: #86868b; margin-bottom: 6px; text-transform: uppercase; font-family: 'SF Mono', Consolas, monospace;">
+                Active Payload / ROS 2 Interface:
+              </div>
+              <pre id="sim-stage-payload" style="margin: 0; font-family: 'SF Mono', Consolas, monospace; font-size: 12px; color: #7ee787; line-height: 1.45;"><code>{
+  "event": "TARGET_DETECTED",
+  "source": "UAV-ALPHA (DJI Matrice Proxy)",
+  "confidence": 0.942,
+  "wgs84": { "lat": 1.3005821, "lon": 103.7712394, "alt_m": 18.52 }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- 3.0 CORE AUTONOMY SUBSYSTEMS & ENGINEERING FORMULATION (A3, A5)           -->
+      <!-- ========================================================================= -->
+      <div class="card-box" id="sec-3-autonomy" style="margin-bottom: 24px;">
+        <a id="sec-4-3-3"></a>
+        <div class="card-header">
+          <div>
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">3.0 Algorithmic Formulation (A3, A5)</span>
+            <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
+              3.0 Core Autonomy Subsystems &amp; Engineering Formulation
+            </h2>
+          </div>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Drivetrain Physics &bull; Nav2 Planners &bull; Costmaps</span>
+        </div>
+
+        <!-- 3.1 AUTONOMOUS RUNWAY NAVIGATION & DRIVETRAIN DYNAMICS -->
+        <h3 style="font-size: 16px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
+          3.1 Autonomous Runway Navigation &amp; Drivetrain Dynamics
+        </h3>
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+          Operating a 65.0 kg 4WD skid-steer rover at $\ge 10\text{ km/h}$ across dry asphalt requires strict adherence to tire friction mechanics. During dead-stop in-place zero-radius turns ($R = 0$), tires are forced to slide sideways perpendicular to their rolling direction. The total resistive scrubbing moment is derived as:
+        </p>
+
+        <div class="math-eq-hero">
+          $$M_{z,\text{scrub}} = \frac{1}{2}\mu M g L = \frac{1}{2}(0.80)(65.0\text{ kg})(9.81\text{ m/s}^2)(0.50\text{ m}) = \mathbf{127.5\text{ N}\cdot\text{m}}$$
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+          Overcoming this resistive moment through differential wheel tractive forces translates to an unconstrained motor shaft breakaway torque of:
+        </p>
+
+        <div class="math-eq-hero">
+          $$\tau_{\text{skid}} = \frac{M_{z,\text{scrub}} \cdot r}{2 B \cdot \eta_{\text{gear}}} = \frac{(127.5\text{ N}\cdot\text{m})(0.1315\text{ m})}{2(0.58\text{ m})(0.85)} = \mathbf{16.99\text{ N}\cdot\text{m per shaft}}$$
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- INTERACTIVE WIDGET 2: TARMAC SCRUB TORQUE & MOTOR CURRENT CALCULATOR       -->
+        <!-- ========================================================================= -->
+        <div class="interactive-panel">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <strong style="color: #f5f5f7; font-size: 14.5px;">Tarmac Scrub Torque &amp; Battery Bus Current Calculator</strong>
+              </div>
+              <p style="font-size: 12px; color: #86868b; margin: 4px 0 0 0;">
+                Adjust vehicle parameters to observe how turning radius constraints ($R_{\min} \ge 1.50\text{ m}$) protect hub motor windings and prevent the 70.0 A BMS ceiling trip.
+              </p>
+            </div>
+            <span id="scrub-status-badge" class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-weight: 600;">Optimal (Dubins Compliant)</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 16px;">
+            <div class="slider-control">
+              <label><span>Vehicle Total Mass ($M$):</span> <strong id="val-mass" style="color: #f5f5f7;">65.0 kg</strong></label>
+              <input type="range" id="slider-mass" min="40" max="100" step="1" value="65">
+            </div>
+            <div class="slider-control">
+              <label><span>Asphalt Friction ($\mu$):</span> <strong id="val-mu" style="color: #f5f5f7;">0.80</strong></label>
+              <input type="range" id="slider-mu" min="0.40" max="1.00" step="0.05" value="0.80">
+            </div>
+            <div class="slider-control">
+              <label><span>Turning Radius ($R$):</span> <strong id="val-radius" style="color: #2997ff;">1.50 m</strong></label>
+              <input type="range" id="slider-radius" min="0.0" max="4.0" step="0.1" value="1.5">
+            </div>
+          </div>
+
+          <!-- COMPUTED READOUT CARDS -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px;">
+            <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center;">
+              <div style="font-size: 10.5px; color: #86868b; text-transform: uppercase;">Yaw Scrub Moment ($M_z$)</div>
+              <div id="out-mz" style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 2px;">127.5 N&middot;m</div>
+            </div>
+            <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center;">
+              <div style="font-size: 10.5px; color: #86868b; text-transform: uppercase;">Shaft Torque ($\tau_{\text{motor}}$)</div>
+              <div id="out-tau" style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 2px;">2.43 N&middot;m</div>
+            </div>
+            <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center;">
+              <div style="font-size: 10.5px; color: #86868b; text-transform: uppercase;">Bus Phase Current ($I$)</div>
+              <div id="out-curr" style="font-size: 16px; font-weight: 700; color: #2997ff; margin-top: 2px;">9.18 A</div>
+            </div>
+            <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center;">
+              <div style="font-size: 10.5px; color: #86868b; text-transform: uppercase;">BMS 70.0A Load Margin</div>
+              <div id="out-margin" style="font-size: 16px; font-weight: 700; color: #30d158; margin-top: 2px;">86.9% Safe</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3.1.2 GLOBAL PLANNER & LOCAL CONTROLLER SUMMARY -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px; margin-bottom: 24px;">
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+            <div style="font-size: 13px; font-weight: 600; color: #2997ff; margin-bottom: 6px;">
+              3.1.2 Global Path Planning (Phase 1 SmacPlanner2D &bull; Phase 2 SmacPlannerHybrid)
+            </div>
+            <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+              Phase 1 interim testing utilizes <code>nav2_smac_planner::SmacPlanner2D</code> with internal cost-aware conjugate gradient smoothing ($w_{\text{smooth}}=0.3, w_{\text{curve}}=0.15, w_{\text{cost}}=0.05$). This eliminates sharp 90&deg; turns on open airfield costmaps. For Phase 2 physical deployment, the stack transitions to <code>SmacPlannerHybrid</code>, directly searching in continuous $SE(2)$ Dubins state lattice space ($R_{\min} \ge 1.50\text{ m}$) with analytical expansions (&ldquo;shot-to-goal&rdquo;).
+            </p>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+            <div style="font-size: 13px; font-weight: 600; color: #2997ff; margin-bottom: 6px;">
+              3.1.3 Local Controller: Regulated Pure Pursuit (RPP) vs. MPPI Evaluation
+            </div>
+            <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+              <code>RegulatedPurePursuitController</code> (RPP) was selected as the deterministic 20 Hz operational standard ($&lt;2\text{ ms}$ CPU overhead). RPP features adaptive lookahead distance ($L_d(v) = v \cdot 1.20$) and automatic curvature velocity scaling, decelerating smoothly to $0.60\text{ m/s}$ on $1.20\text{ m}$ bends. While Model Predictive Path Integral (MPPI) was evaluated for dynamic obstacle swerving, its 65% GPU load was reserved for Phase 2 apron clutter.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3.2 AIRFIELD MAPPING & STATIC COSTMAPS -->
+        <h3 style="font-size: 16px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
+          3.2 Airfield Mapping, Degeneracy &amp; Multi-Layer Costmaps
+        </h3>
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+          Active airfield runways represent a classic LiDAR SLAM degeneracy failure mode: wide 60-meter asphalt expanses lack vertical architectural landmarks, causing scan-matching algorithms (Gmapping, Hector SLAM) to experience severe longitudinal slip and pose covariance explosion.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 24px;">
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+            <strong style="color: #f5f5f7; font-size: 13px;">Orthophoto Static Costmap Prior (0.05 m/px)</strong>
+            <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+              To achieve absolute geometric determinism, the global costmap ingests a high-resolution georeferenced orthophoto layer (0.05 m/pixel). Runway margins, taxiway medians, and grass zones were annotated via Nav2 Map Editor as occupied/inflation cells, guaranteeing that the global planner never generates paths outside approved tarmac corridors.
+            </p>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+            <strong style="color: #f5f5f7; font-size: 13px;">Layered Real-Time Safety Envelopes</strong>
+            <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+              Local costmaps fuse 2D LiDAR raytracing (clearing and marking dynamic airfield obstacles) with <code>nav2_collision_monitor</code> direct pointcloud safety polygons. If dynamic ground service vehicles or personnel breach the 1.20 m slowdown buffer or 0.50 m emergency stop polygon, the robot executes immediate decelerated stopping within 2.71 m.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3.3 INTER-AGENT C2 COMMUNICATIONS & SPATIAL TRANSFORMATION -->
+        <h3 style="font-size: 16px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
+          3.3 Inter-Agent C2 Communications &amp; Spatial Transformations
+        </h3>
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+          Upon detecting a foreign object debris item, the UAV Companion Computer formats a compact JSON payload transmitted on <code>/c2/target_alert</code>. Hilbert's <code>ugv_c2_bridge_node.py</code> validates the packet, verifies the SHA-256 HMAC signature, and executes a 2-stage spatial transformation from geodetic WGS84 coordinates into the local Nav2 <code>map</code> Cartesian frame:
+        </p>
+
+        <div class="math-eq-hero">
+          $$\begin{bmatrix} x_{\text{map}} \\ y_{\text{map}} \end{bmatrix} = \begin{bmatrix} \cos(-\theta_{\text{runway}}) & -\sin(-\theta_{\text{runway}}) \\ \sin(-\theta_{\text{runway}}) & \cos(-\theta_{\text{runway}}) \end{bmatrix} \begin{bmatrix} E_{\text{UTM}} - E_0 \\ N_{\text{UTM}} - N_0 \end{bmatrix}$$
+        </div>
+
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- 4.0 INTERACTIVE AIRFIELD PATHFINDING & KINEMATIC SANDBOX (A4, A5)         -->
+      <!-- ========================================================================= -->
+      <div class="card-box" id="sec-4-visualizer" style="margin-bottom: 24px;">
+        <a id="interactive-pathfinding"></a>
+        <div class="card-header">
+          <div>
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">4.0 Interactive Benchmark (A4, A5)</span>
+            <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
+              4.0 Interactive Airfield Pathfinding Visualizer &amp; Speed Benchmark
+            </h2>
+          </div>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Live Algorithm Sandbox</span>
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+          Interactive pathfinding laboratory evaluating global search mechanics. Draw obstacles on the runway tarmac, drag the UGV (<span style="color:#30d158;">🚜</span>) or FOD Target (<span style="color:#ff453a;">🎯</span>), and benchmark search algorithms in real time across simulated corridor topographies.
+        </p>
+
+        <!-- VISUALIZER TOOLBAR -->
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: rgba(255, 255, 255, 0.02); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--apple-border); margin-bottom: 14px;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <label style="font-size: 12px; font-weight: 600; color: #86868b;">Algorithm:</label>
+            <select id="pf-algo-select" style="padding: 6px 10px; font-size: 12.5px; border-radius: 6px; border: 1px solid var(--apple-border); background: var(--apple-surface-card); color: #f5f5f7; font-weight: 600;">
+              <option value="astar" selected>A* Search (Smac 2D / Euclidean) &ndash; Recommended</option>
+              <option value="thetastar">Theta* (Any-Angle Line-of-Sight)</option>
+              <option value="greedy">Greedy Best-First Search</option>
+              <option value="dijkstra">Dijkstra's Algorithm (NavFn)</option>
+              <option value="bfs">Breadth-First Search (BFS)</option>
+            </select>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <label style="font-size: 12px; font-weight: 600; color: #86868b;">Airfield Map:</label>
+            <select id="pf-preset-select" style="padding: 6px 10px; font-size: 12.5px; border-radius: 6px; border: 1px solid var(--apple-border); background: var(--apple-surface-card); color: #f5f5f7;">
+              <option value="runway" selected>Runway Corridor &amp; FOD Obstacles</option>
+              <option value="chicane">Threshold Chicane &amp; Turnaround</option>
+              <option value="apron">Apron Ramp Clutter &amp; GSE</option>
+              <option value="clear">Empty Airfield Grid</option>
+            </select>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <label style="font-size: 12px; font-weight: 600; color: #86868b;">Speed:</label>
+            <select id="pf-speed-select" style="padding: 6px 8px; font-size: 12.5px; border-radius: 6px; border: 1px solid var(--apple-border); background: var(--apple-surface-card); color: #f5f5f7;">
+              <option value="5">Fast (5 ms)</option>
+              <option value="12" selected>Normal (12 ms)</option>
+              <option value="30">Slow (30 ms)</option>
+              <option value="0">Instant (0 ms / Live Drag)</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto;">
+            <button id="pf-run-btn" class="step-pill active" style="font-weight: 600;">&#9658; Run Visualization</button>
+            <button id="pf-benchmark-btn" class="step-pill" style="border-color: #30d158; color: #30d158;">📊 Benchmark All (Speed Test)</button>
+            <button id="pf-clear-path-btn" class="step-pill">🧹 Clear Path</button>
+            <button id="pf-reset-btn" class="step-pill">🔄 Reset Map</button>
+          </div>
+        </div>
+
+        <!-- TELEMETRY HUD CARDS -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 12px;">
+          <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center;">
+            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 700;">Compute Latency</div>
+            <div id="pf-stat-time" style="font-family: 'SF Mono', Consolas, monospace; font-size: 16px; font-weight: 700; color: #2997ff; margin-top: 2px;">0.00 ms</div>
+          </div>
+          <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center;">
+            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 700;">Nodes Explored</div>
+            <div id="pf-stat-visited" style="font-family: 'SF Mono', Consolas, monospace; font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 2px;">0 (0.0%)</div>
+          </div>
+          <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center;">
+            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 700;">Path Length</div>
+            <div id="pf-stat-path" style="font-family: 'SF Mono', Consolas, monospace; font-size: 16px; font-weight: 700; color: #30d158; margin-top: 2px;">--</div>
+          </div>
+          <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center;">
+            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 700;">Planner Status</div>
+            <div style="margin-top: 2px;"><span id="pf-stat-status" class="badge badge-blue">Ready</span></div>
+          </div>
+        </div>
+
+        <!-- CANVAS CONTAINER -->
+        <div style="position: relative; width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--apple-border); background: #090d16; box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);">
+          <canvas id="pathfinding-canvas" style="display: block; width: 100%; cursor: crosshair;"></canvas>
+        </div>
+
+        <!-- LEGEND -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; font-size: 12px; color: #86868b;">
+          <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
+            <span><strong style="color: #30d158;">🚜 UGV Start:</strong> Drag to reposition</span>
+            <span><strong style="color: #ff453a;">🎯 FOD Goal:</strong> Drag to reposition</span>
+            <span><strong style="color: #94a3b8;">⬛ Wall / FOD:</strong> Click &amp; drag on canvas to toggle</span>
+            <span><strong style="color: #60a5fa;">🟦 Explored:</strong> Search frontier</span>
+            <span><strong style="color: #ffd60a;">🟨 Path:</strong> Computed trajectory</span>
+          </div>
+          <div><em>Tip: Select Instant mode and drag the UGV or FOD to watch real-time path deformation!</em></div>
+        </div>
+
+        <!-- LIVE BENCHMARK RESULTS CONTAINER -->
+        <div id="pf-benchmark-results" style="display: none; margin-top: 14px;"></div>
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- 5.0 PROOF OF CONCEPT DEMONSTRATION & SIL BENCHMARKING (A4)                 -->
+      <!-- ========================================================================= -->
+      <div class="card-box" id="sec-5-demonstration" style="margin-bottom: 24px;">
+        <a id="sec-4-3-4"></a>
+        <div class="card-header">
+          <div>
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">5.0 Empirical Verification (A4)</span>
+            <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
+              5.0 Proof of Concept Demonstration &amp; SIL Benchmarking
+            </h2>
+          </div>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Gazebo Harmonic &bull; NUS EA Field</span>
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+          The Phase 1 Software-in-the-Loop (SIL) simulation models the full autonomous patrol loop inside Gazebo Harmonic, utilizing the <strong>AgileX Scout 2.0</strong> 4WD skid-steer proxy chassis ($65.0\text{ kg}$) on the NUS Engineering Auditorium (EA) Field test grounds ($60\text{ m} \times 40\text{ m}$):
+        </p>
+
+        <!-- VIDEO EMBED DEMO -->
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 18px; text-align: center; margin-bottom: 16px;">
+          <div style="font-size: 13.5px; font-weight: 600; color: #f5f5f7; margin-bottom: 10px;">
+            <span style="color: #2997ff;">🎥 Demonstration Video:</span> Autonomous Waypoint Patrol &amp; Obstacle Avoidance (NUS EA Field)
+          </div>
+          <video controls style="max-width: 100%; max-height: 340px; display: block; margin: 0 auto; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.5);" poster="../assets/simulation/nus_ea_simulation_poster.png" preload="metadata">
+            <source src="../assets/simulation/nus_ea_simulation_demo.mp4" type="video/mp4">
+            <p style="color: var(--apple-text-secondary); font-size: 12px;">Your browser does not support HTML5 video.</p>
+          </video>
+          <div style="font-size: 11.5px; color: var(--apple-text-secondary); margin-top: 8px; font-style: italic;">
+            Demonstration: Nav2 autonomous waypoint navigation with cost-aware curve smoothing and Regulated Pure Pursuit executing $10\text{ km/h}$ sprints with zero scrub torque.
+          </div>
+        </div>
+
+        <!-- BENCHMARK TABLE -->
+        <div style="overflow-x: auto; margin-bottom: 14px;">
+          <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--apple-border); background: rgba(255, 255, 255, 0.03);">
+                <th style="padding: 10px 12px;">Evaluated Milestone</th>
+                <th style="padding: 10px 12px;">Engineering Design Target</th>
+                <th style="padding: 10px 12px;">Measured Phase 1 SIL Result</th>
+                <th style="padding: 10px 12px;">Compliance Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--apple-border);">
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Physics Stability (RTF)</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">&ge; 0.95 (Real-Time Physics)</td>
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">0.98 &plusmn; 0.02</td>
+                <td style="padding: 10px 12px;"><span class="badge badge-blue" style="font-size: 10.5px;">Pass (&plusmn;2% Variance)</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--apple-border);">
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Cross-Track Tracking Error</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">&le; 0.10 m (10 cm)</td>
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">0.042 m (4.2 cm mean)</td>
+                <td style="padding: 10px 12px;"><span class="badge badge-blue" style="font-size: 10.5px;">Pass (&lt;50% Design Target)</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--apple-border);">
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Min Turning Radius Compliance</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">$R \ge 1.50\text{ m}$ (Zero Scrub)</td>
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">100% Compliance (0 Violations)</td>
+                <td style="padding: 10px 12px;"><span class="badge badge-blue" style="font-size: 10.5px;">Pass (No In-Place Pivots)</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--apple-border);">
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">C2 Target Dispatch Latency</td>
+                <td style="padding: 10px 12px; color: var(--apple-text-secondary);">&le; 100 ms End-to-End</td>
+                <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">12.4 ms (Mean Unicast)</td>
+                <td style="padding: 10px 12px;"><span class="badge badge-blue" style="font-size: 10.5px;">Pass (CycloneDDS Peering)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- 6.0 SEMESTER 2 HARDWARE ROADMAP & SIM-TO-REAL MIGRATION (A6)              -->
+      <!-- ========================================================================= -->
+      <!-- ========================================================================= -->
+      <!-- 6.0 PHASE 2 ENGINEERING TASKS & PHYSICAL IMPLEMENTATION SCOPE (A6)        -->
+      <!-- ========================================================================= -->
+      <div class="card-box" id="sec-6-roadmap" style="margin-bottom: 24px;">
+        <a id="sec-4-3-5"></a>
+        <div class="card-header">
+          <div>
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">6.0 Phase 2 Tasks &amp; Deliverables (A6)</span>
+            <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
+              6.0 Semester 2 Tasks &amp; Physical Implementation Scope
+            </h2>
+          </div>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Hilbert's Autonomy Scope &bull; Physical UGV</span>
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+          Phase 1 successfully validated all motion algorithms, C2 packet schemas, and safety interlocks inside Gazebo Harmonic and benchmarked the Nav2 / CycloneDDS middleware on Hilbert's Laptop. In Semester 2 (Phase 2), Hilbert is directly responsible for translating this proven software intelligence into physical airfield operations. Below is the comprehensive technical breakdown of all engineering tasks, architectural modifications, and implementation deliverables assigned to Hilbert for Semester 2:
+        </p>
+
+        <!-- ========================================================================= -->
+        <!-- INTERACTIVE WIDGET: PHASE 1 SIL VS PHASE 2 REAL HARDWARE SWITCH           -->
+        <!-- ========================================================================= -->
+        <div class="interactive-panel" style="margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <strong style="color: #f5f5f7; font-size: 14.5px;">Phase 1 SIL vs. Phase 2 Real Hardware Architecture Switch</strong>
+              </div>
+              <p style="font-size: 12px; color: #86868b; margin: 4px 0 0 0;">
+                Toggle between the Phase 1 software testbed and the Phase 2 physical robot hardware specification.
+              </p>
+            </div>
+            <div style="display: flex; gap: 4px; background: rgba(255, 255, 255, 0.05); padding: 4px; border-radius: 8px; border: 1px solid var(--apple-border);">
+              <button id="toggle-hw-p1" class="step-pill active" style="margin: 0;">Phase 1: Interim SIL</button>
+              <button id="toggle-hw-p2" class="step-pill" style="margin: 0;">Phase 2: Physical UGV</button>
+            </div>
+          </div>
+
+          <!-- DYNAMIC ARCHITECTURE CARDS -->
+          <div id="hw-cards-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+            <!-- Dynamically populated by JS -->
+          </div>
+        </div>
+
+        <!-- DETAILED PHASE 2 TASKS & WORK PACKAGES -->
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+
+          <!-- TASK 1 -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 4px solid #2997ff; border-radius: 8px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
+              <div>
+                <span class="badge badge-blue" style="font-size: 10.5px;">Task 1 &bull; Firmware &amp; Actuation</span>
+                <h3 style="font-size: 15.5px; font-weight: 700; color: #f5f5f7; margin: 4px 0 0 0;">
+                  STM32 F446RE Microcontroller Actuation Bridge &amp; CAN Bus Motor Control
+                </h3>
+              </div>
+              <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 11px;">Laptop Proxy &rarr; STM32 F446RE</span>
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 10px;">
+              Transition from laptop-based software command streaming to a dedicated real-time embedded microcontroller running micro-ROS under FreeRTOS, establishing deterministic motor control:
+            </p>
+            <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.6; margin: 0;">
+              <li><strong style="color: #f5f5f7;">micro-ROS Client Node:</strong> Flash and tune micro-ROS client over high-speed USB-CDC serial (<code>/dev/ttyACM0</code>) to subscribe to <code>/cmd_vel</code> geometry messages at 100 Hz.</li>
+              <li><strong style="color: #f5f5f7;">Isolated CAN 2.0B / RS-485 Drivetrain Bus:</strong> Implement CAN framing at 500 kbps to command the dual ZLAC8015D dual-channel hub motor drivers with precise velocity and current setpoints.</li>
+              <li><strong style="color: #f5f5f7;">High-Resolution Encoder Odometry:</strong> Ingest incremental optical encoder pulses from all 4 hub motors, execute forward differential kinematics with calibrated track width, and publish <code>/odom</code> with full covariance matrices.</li>
+              <li><strong style="color: #f5f5f7;">Hardware E-Stop &amp; Heartbeat Watchdog:</strong> Implement hardware emergency stop line monitoring and an automatic zero-velocity cut-off if serial heartbeats cease for &gt; 150 ms.</li>
             </ul>
           </div>
-        </div>
 
-        <!-- 4.3.2 ROBOTICS SIMULATION SOFTWARE BENCHMARKING -->
-        <div class="card-box" id="sec-4-3-2">
-          <div class="card-header">
-            <div class="card-title">🎮 4.3.2 Robotics Simulation Software Evaluation &amp; Benchmarking</div>
-          </div>
-          <p style="margin-bottom: 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6;">
-            Simulation represents the cornerstone of Phase 1 engineering deliverables. It allows the team to model vehicle kinematics, stress-test high-speed path planning at $\ge 10\text{ km/h}$, tune SLAM loop closures in feature-sparse runway corridors, and validate UAV-to-UGV target coordinate dispatches before risking physical hardware on asphalt. Multiple prominent robotics simulation platforms were evaluated:
-          </p>
-
-          <div class="admin-table-wrapper" style="margin-bottom: 16px;">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Simulation Platform</th>
-                  <th>ROS 2 Jazzy Integration</th>
-                  <th>Compute Hardware Demands</th>
-                  <th>Sensor Simulation Fidelity</th>
-                  <th>License &amp; Overhead</th>
-                  <th>Selection Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid var(--accent-purple);">
-                  <td><strong style="color: var(--accent-purple);">Gazebo Harmonic (Gz-Sim 8)</strong></td>
-                  <td><span class="badge badge-emerald">First-Class Native (ros_gz_bridge)</span></td>
-                  <td><span class="badge badge-emerald">Low &ndash; Moderate</span><br><span style="font-size: 11.5px; color: var(--text-muted);">Runs smoothly on laptop CPU/iGPU</span></td>
-                  <td>High: 3D LiDAR, IMU noise models, wheel encoders, monocular RGB camera plugins.</td>
-                  <td>Open Source (Apache 2.0)<br><span style="font-size: 11.5px; color: var(--text-muted);">Lightweight footprint (&lt; 2 GB)</span></td>
-                  <td><strong style="color: var(--accent-emerald);">SELECTED (Phase 1 Baseline)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>NVIDIA Isaac Sim</strong></td>
-                  <td><span class="badge badge-blue">ROS 2 Bridge / Omniverse ROS 2 Gem</span></td>
-                  <td><span class="badge badge-rose">Extremely High</span><br><span style="font-size: 11.5px; color: var(--text-muted);">Requires NVIDIA RTX GPU (min 8GB+ VRAM)</span></td>
-                  <td>Ultra: Photorealistic RTX ray tracing, synthetic domain randomization, physics-accurate LiDAR.</td>
-                  <td>Proprietary (NVIDIA EULA)<br><span style="font-size: 11.5px; color: var(--text-muted);">Massive installation (&gt; 50 GB)</span></td>
-                  <td><strong>REJECTED (Hardware Constraint)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Webots (Cyberbotics)</strong></td>
-                  <td><span class="badge badge-blue">webots_ros2 interface</span></td>
-                  <td><span class="badge badge-emerald">Low</span><br><span style="font-size: 11.5px; color: var(--text-muted);">Runs efficiently on modest hardware</span></td>
-                  <td>Moderate: Solid basic sensors, but less flexible for custom LiDAR point-cloud noise synthesis.</td>
-                  <td>Open Source (Apache 2.0)<br><span style="font-size: 11.5px; color: var(--text-muted);">Simple drag-and-drop setup</span></td>
-                  <td><strong>REJECTED (Limited Nav2 Community)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>CoppeliaSim (formerly V-REP)</strong></td>
-                  <td><span class="badge badge-amber">Custom Lua / C++ ZMQ bridge</span></td>
-                  <td><span class="badge badge-amber">Moderate</span><br><span style="font-size: 11.5px; color: var(--text-muted);">Mid-tier GPU requirements</span></td>
-                  <td>High for robotic arms/manipulators; non-standard outdoor airfield planar dynamics.</td>
-                  <td>Commercial / Free Educational<br><span style="font-size: 11.5px; color: var(--text-muted);">Complex ROS 2 Jazzy bridging</span></td>
-                  <td><strong>REJECTED (Non-Standard Nav2 Stack)</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Gazebo Classic (Gazebo 11)</strong></td>
-                  <td><span class="badge badge-rose">Deprecated (gazebo_ros_pkgs)</span></td>
-                  <td><span class="badge badge-blue">Moderate</span></td>
-                  <td>Standard: Extensive legacy sensor plugins.</td>
-                  <td>Open Source (Apache 2.0)<br><span style="font-size: 11.5px; color: var(--accent-rose);">Reached End-of-Life (EOL) in January 2025; no official Ubuntu 24.04 packages available</span></td>
-                  <td><strong>REJECTED (Deprecated / EOL)</strong></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 14px;">
-            <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-purple);">
-              <h4 style="font-size: 14px; color: var(--accent-purple); margin-bottom: 8px;">Why Gazebo Harmonic Over NVIDIA Isaac Sim?</h4>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                While NVIDIA Isaac Sim provides unmatched photorealism and GPU-accelerated synthetic training data, it imposes strict hardware prerequisites (dedicated desktop NVIDIA RTX 3070+ GPUs with 8&ndash;12 GB VRAM) and a &gt;50 GB software footprint. In contrast, <strong>Gazebo Harmonic</strong> runs fluidly on standard student and developer laptop workstations, has zero proprietary licensing restrictions, and integrates natively with ROS 2 Jazzy without fragile bridge layers.
-              </p>
-            </div>
-
-            <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-emerald);">
-              <h4 style="font-size: 14px; color: var(--accent-emerald); margin-bottom: 8px;">Phase 1 Simulation Architecture Workflow</h4>
-              <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>URDF / Xacro</strong> model of the UGV (differential drive, wheel base, caster wheel, LiDAR &amp; camera transforms) &rarr; Spawned into <strong>Gazebo Harmonic</strong> with simulated runway world &rarr; <code>ros_gz_bridge</code> maps <code>/cmd_vel</code>, <code>/odom</code>, <code>/scan</code>, and <code>/tf</code> &rarr; <strong>Nav2 &amp; SLAM Toolbox</strong> execute in ROS 2 Jazzy &rarr; Visualized in <strong>RViz2</strong>.
-              </p>
-            </div>
-          </div>
-
-          <!-- SIMULATION ROBOT MODEL NOTE -->
-          <div class="callout callout-amber" style="margin-top: 16px;">
-            <div style="display: flex; align-items: flex-start; gap: 10px;">
-              <span style="font-size: 20px; line-height: 1;">🤖</span>
+          <!-- TASK 2 -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 4px solid #2997ff; border-radius: 8px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
               <div>
-                <strong style="color: var(--accent-amber); font-size: 14px;">Simulation Robot Model: AgileX Scout V2 (Proxy Platform)</strong>
-                <p style="margin: 6px 0 0 0; font-size: 13px; color: var(--text-main); line-height: 1.6;">
-                  The Phase 1 Gazebo simulation uses the publicly available <strong>AgileX Scout V2</strong> URDF/Xacro model as a proxy platform (a 4WD skid-steer chassis modeled via differential-drive kinematics), since the custom FOD Hunter UGV CAD and URDF model is currently being finalized. The AgileX Scout V2 provides comparable kinematic control behavior (commanded via <code>geometry_msgs/msg/Twist</code> with linear $x$ and angular $z$), LiDAR mounting elevation, and wheelbase footprint to our intended physical UGV platform, making it a robust placeholder for Nav2 path planning, costmap inflation, and obstacle avoidance tuning.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- NUS EA FIELD SIMULATION VIDEO -->
-          <div style="margin-top: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
-              <h4 style="font-size: 14.5px; color: var(--text-main); margin: 0;">📹 Phase 1 Simulation Demo: NUS EA Field Autonomous Navigation</h4>
-              <a href="../7-documentation/hilbert/simulation.html" class="btn btn-deep-dive" style="padding: 6px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 6px;">
-                <span>📖 Simulation Details →</span>
-              </a>
-            </div>
-            <div class="callout callout-purple" style="margin-bottom: 12px; padding: 10px 14px;">
-              <strong>Simulation Scope Notice:</strong> Only the NUS EA Field simulation environment is in scope for Phase 1 and this interim report.
-            </div>
-            <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 14px;">
-                <div style="background: var(--bg-hover); padding: 12px; border-radius: 6px; border-left: 3px solid var(--accent-emerald);">
-                  <h5 style="font-size: 13px; color: var(--accent-emerald); margin-bottom: 4px;">🗺️ Map Generation Method</h5>
-                  <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                    <strong>Static Occupancy Grid Map from Aerial Orthophoto with Nav2 Map Editor Annotation.</strong> A satellite aerial view of the NUS EA Field was used as the base texture layer, then manually annotated using the Nav2 Map Editor tool to zone out non-traversable areas (buildings, grass, fences) as occupied cells in a PGM/YAML occupancy grid format. Standard LiDAR SLAM-based map generation was not feasible here as the outdoor environment lacks sufficient vertical geometric features (walls, structures) for reliable scan-matching loop closure.
-                  </p>
-                </div>
-                <div style="background: var(--bg-hover); padding: 12px; border-radius: 6px; border-left: 3px solid var(--accent-blue);">
-                  <h5 style="font-size: 13px; color: var(--accent-blue); margin-bottom: 4px;">🎯 Simulation Objectives</h5>
-                  <ul style="padding-left: 16px; font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                    <li>Validate Nav2 autonomous waypoint navigation pipeline</li>
-                    <li>Test dynamic obstacle detection and avoidance</li>
-                    <li>Tune RPP controller for outdoor open-area speeds</li>
-                    <li>Validate simulated UAV-to-UGV coordinate dispatch over CycloneDDS</li>
-                  </ul>
-                </div>
-              </div>
-              <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--bg-terminal); border-radius: 6px; padding: 20px; border: 1px solid var(--border-color);">
-                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px; text-align: center;">📹 NUS EA Field Autonomous Navigation &amp; Avoidance Demo</p>
-                <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
-                  <video controls style="max-width: 100%; width: auto; height: auto; max-height: 400px; border-radius: 6px; margin: 0 auto; display: block; box-shadow: 0 4px 16px rgba(0,0,0,0.4);" poster="../assets/simulation/nus_ea_simulation_poster.png" preload="metadata">
-                    <source src="../assets/simulation/nus_ea_simulation_demo.mp4" type="video/mp4">
-                    <p style="color: var(--text-muted); font-size: 12px;">Your browser does not support HTML5 video. <a href="../assets/simulation/nus_ea_simulation_demo.mp4" style="color: var(--accent-purple);">Download the video (MP4)</a>.</p>
-                  </video>
-                </div>
-                <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 10px; font-style: italic; text-align: center;">AgileX Scout V2 proxy model navigating the NUS EA Field occupancy grid map with Nav2 and SLAM Toolbox.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4.3.3 AUTONOMOUS NAVIGATION, SLAM & PATH PLANNING -->
-        <div class="card-box" id="sec-4-3-3">
-          <div class="card-header">
-            <div class="card-title">🧭 4.3.3 Autonomous Navigation, SLAM &amp; Path Planning Architecture</div>
-          </div>
-          <p style="margin-bottom: 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6;">
-            The UGV autonomous navigation framework runs under <strong>ROS 2 Jazzy on Ubuntu 24.04 LTS</strong>, fusing 2D/3D LiDAR, IMU orientation, and wheel encoder odometry from the <strong>STM32 F446RE</strong> into the <code>Nav2</code> stack. The system is engineered to navigate straight runway corridors and turnaround loops at speeds up to $\ge 10\text{ km/h}$ ($2.78\text{ m/s}$) while executing dynamic obstacle clearance.
-          </p>
-
-          <!-- 1. MAPPING METHODS & SLAM EVALUATION -->
-          <div style="margin-bottom: 24px;">
-            <h3 style="font-size: 16px; color: var(--accent-purple); margin-bottom: 10px;">1. Mapping Methods &amp; SLAM Algorithm Comparison</h3>
-            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-              Runways present severe SLAM challenges: wide 60-meter expanses lack dense vertical geometric landmarks, causing standard scan-matching algorithms to suffer severe longitudinal slip and pose covariance explosion. Four SLAM candidates were rigorously compared:
-            </p>
-
-            <div class="admin-table-wrapper" style="margin-bottom: 14px;">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>SLAM Algorithm</th>
-                    <th>Core Mathematical Formulation</th>
-                    <th>CPU Overhead</th>
-                    <th>Memory Scalability (5 km Strip)</th>
-                    <th>Loop Closure Capability</th>
-                    <th>Selection Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="background: rgba(147, 51, 234, 0.08); border-left: 4px solid var(--accent-purple);">
-                    <td><strong style="color: var(--accent-purple);">SLAM Toolbox</strong></td>
-                    <td>Pose Graph Optimization (Karto SLAM derivative with Ceres Solver)</td>
-                    <td><span class="badge badge-emerald">Low &ndash; Moderate</span></td>
-                    <td><span class="badge badge-emerald">Linear $O(N)$ with Submap Serialization</span></td>
-                    <td>Multi-threaded, high-speed loop closures; supports lifelong and localized incremental updates.</td>
-                    <td><strong style="color: var(--accent-emerald);">SELECTED (Phase 1 &amp; 2)</strong></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Google Cartographer</strong></td>
-                    <td>2D/3D Submap Graph SLAM with Branch-and-Bound scan matcher</td>
-                    <td><span class="badge badge-rose">High (Heavy CPU Spikes)</span></td>
-                    <td><span class="badge badge-amber">Moderate (Caches full probability grids)</span></td>
-                    <td>Robust global loop closures, but can freeze low-power edge nodes during real-time map building.</td>
-                    <td><strong>REJECTED (High Latency)</strong></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Gmapping</strong></td>
-                    <td>Rao-Blackwellized Particle Filter (RBPF)</td>
-                    <td><span class="badge badge-amber">Moderate (Expands with particles)</span></td>
-                    <td><span class="badge badge-rose">Exponential $O(K \cdot N)$ Memory Growth</span></td>
-                    <td>Suffers particle depletion over long corridor strips; lacks lifelong serialization.</td>
-                    <td><strong>REJECTED (Particle Depletion)</strong></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Hector SLAM</strong></td>
-                    <td>Gauss-Newton Scan Matching (pure odometry-free)</td>
-                    <td><span class="badge badge-emerald">Very Low</span></td>
-                    <td><span class="badge badge-emerald">Low</span></td>
-                    <td>Zero loop closure capability; severe longitudinal drift in featureless airfield environments.</td>
-                    <td><strong>REJECTED (No Loop Closure)</strong></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="callout callout-purple" style="margin-top: 10px;">
-              <strong>Decision Justification (Mapping):</strong> <code>SLAM Toolbox</code> was selected due to its asynchronous thread decoupling, efficient submap serialization (allowing 5 km runway maps to load instantly without re-processing entire graphs), lifelong map merging, and minimal CPU footprint on Hilbert's Laptop.
-            </div>
-          </div>
-
-          <!-- 2. GLOBAL PATH PLANNING ALGORITHMS -->
-          <div style="margin-bottom: 24px;">
-            <h3 style="font-size: 16px; color: var(--accent-blue); margin-bottom: 10px;">2. Global Path Planning Algorithm Comparison</h3>
-            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-              The global planner computes an obstacle-free route from the UGV's current position to the coordinates cued by the aerial UAV scout. It must generate kinematically feasible trajectories over hundreds of meters in minimal compute time.
-            </p>
-
-            <div class="admin-table-wrapper" style="margin-bottom: 14px;">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>Global Planner</th>
-                    <th>Search Algorithm</th>
-                    <th>Kinematic Awareness</th>
-                    <th>Computation Latency (1 km corridor)</th>
-                    <th>Runway Strip Suitability</th>
-                    <th>Selection Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="background: rgba(0, 102, 204, 0.08); border-left: 4px solid var(--accent-blue);">
-                    <td><strong style="color: var(--accent-blue);">Smac Planner 2D (A*)</strong></td>
-                    <td>Cost-aware A* with Dubins / Reeds-Shepp heuristic options</td>
-                    <td>Holonomic / Non-holonomic compatible</td>
-                    <td><span class="badge badge-emerald">&lt; 8 ms (Near Instantaneous)</span></td>
-                    <td><strong>Optimal:</strong> Highly efficient straight-line corridor generation down runway tarmac.</td>
-                    <td><strong style="color: var(--accent-emerald);">SELECTED (Corridor Sprints)</strong></td>
-                  </tr>
-                  <tr style="background: rgba(0, 102, 204, 0.05);">
-                    <td><strong style="color: var(--accent-blue);">Smac Planner Lattice</strong></td>
-                    <td>State lattice search with precomputed motion primitives</td>
-                    <td>Strictly non-holonomic (respects minimum turning radius &amp; orientation)</td>
-                    <td><span class="badge badge-blue">&sim; 25 ms</span></td>
-                    <td><strong>High:</strong> Crucial for tight U-turn loops at runway thresholds and precision FOD docking.</td>
-                    <td><strong style="color: var(--accent-emerald);">SELECTED (Turnaround Loops)</strong></td>
-                  </tr>
-                  <tr>
-                    <td><strong>NavFn (Dijkstra / A*)</strong></td>
-                    <td>Breadth-first wavefront propagation</td>
-                    <td>Zero (treats robot as circular point mass)</td>
-                    <td><span class="badge badge-amber">&gt; 120 ms</span></td>
-                    <td><strong>Poor:</strong> Excessive cell expansions over kilometer-scale costmaps; produces jagged zigzag paths.</td>
-                    <td><strong>REJECTED</strong></td>
-                  </tr>
-                  <tr>
-                    <td><strong>Nav2 Theta*</strong></td>
-                    <td>Any-angle Euclidean line-of-sight search</td>
-                    <td>Partial (smooth diagonals post-search)</td>
-                    <td><span class="badge badge-blue">&sim; 35 ms</span></td>
-                    <td><strong>Moderate:</strong> Removes grid artifacts, but lacks vehicle turning radius constraints.</td>
-                    <td><strong>REJECTED</strong></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- 3. LOCAL TRAJECTORY CONTROLLERS -->
-          <div style="margin-bottom: 24px;">
-            <h3 style="font-size: 16px; color: var(--accent-emerald); margin-bottom: 10px;">3. Local Planner &amp; Trajectory Controller Comparison</h3>
-            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;">
-              The local controller runs at 20 Hz, translating the global path into linear velocity ($v$) and angular velocity ($\omega$) commands sent to the STM32 F446RE. Operating at speeds $\ge 10\text{ km/h}$ ($2.78\text{ m/s}$) demands exceptional high-speed tracking stability without lateral oscillations.
-            </p>
-
-            <div class="admin-table-wrapper" style="margin-bottom: 14px;">
-              <table class="admin-table">
-                <thead>
-                  <tr>
-                    <th>Local Controller</th>
-                    <th>Control Philosophy</th>
-                    <th>High-Speed Stability (&ge;10 km/h)</th>
-                    <th>Compute Latency (per cycle)</th>
-                    <th>Curvature Velocity Regulation</th>
-                    <th>Selection Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid var(--accent-emerald);">
-                    <td><strong style="color: var(--accent-emerald);">Regulated Pure Pursuit (RPP)</strong></td>
-                    <td>Geometric lookahead tracking with adaptive curvature braking &amp; collision checks</td>
-                    <td><span class="badge badge-emerald">Outstanding (Zero lateral hunting)</span></td>
-                    <td><span class="badge badge-emerald">&lt; 2 ms (Ultra-Lightweight)</span></td>
-                    <td>Yes &bull; Automatically scales velocity down inversely with path curvature.</td>
-                    <td><strong style="color: var(--accent-emerald);">SELECTED (Primary Controller)</strong></td>
-                  </tr>
-                  <tr>
-                    <td><strong>MPPI Controller</strong></td>
-                    <td>Model Predictive Path Integral (Vectorized stochastic rollouts)</td>
-                    <td><span class="badge badge-emerald">Excellent (Optimal trajectory generation)</span></td>
-                    <td><span class="badge badge-rose">&sim; 15&ndash;25 ms (CPU/GPU bound)</span></td>
-                    <td>Yes &bull; Naturally incorporates dynamic kinematic cost models.</td>
-                    <td><strong>BENCHMARKED (Dynamic Obstacle Mode)</strong></td>
-                  </tr>
-                  <tr>
-                    <td><strong>DWB (Dynamic Window)</strong></td>
-                    <td>Discrete forward simulation over $(v, \omega)$ velocity space with cost critics</td>
-                    <td><span class="badge badge-amber">Prone to severe oscillation at &gt;2.0 m/s</span></td>
-                    <td><span class="badge badge-blue">&sim; 12 ms</span></td>
-                    <td>No &bull; Relies on heuristic trajectory penalty critics.</td>
-                    <td><strong>REJECTED</strong></td>
-                  </tr>
-                  <tr>
-                    <td><strong>TEB Local Planner</strong></td>
-                    <td>Timed Elastic Band topological optimization</td>
-                    <td><span class="badge badge-amber">Variable latency during fast sweeps</span></td>
-                    <td><span class="badge badge-rose">&gt; 30 ms (CPU spikes)</span></td>
-                    <td>Partial &bull; Acceleration bound constraints.</td>
-                    <td><strong>REJECTED</strong></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="callout callout-emerald" style="margin-top: 10px;">
-              <strong>Decision Justification (Local Control):</strong> <code>Regulated Pure Pursuit (RPP)</code> was selected as the operational standard. RPP guarantees smooth, non-oscillatory steering along high-speed straightaways, regulates vehicle speed when executing tight turns to prevent tire slippage, and consumes negligible CPU overhead (&lt;2 ms per 20 Hz control loop), ensuring real-time reliability on Hilbert's Laptop.
-            </div>
-          </div>
-
-          <!-- 4. NAV2 COSTMAPS & RECOVERY BEHAVIORS -->
-          <div>
-            <h3 style="font-size: 16px; color: var(--text-main); margin-bottom: 10px;">4. Nav2 Costmaps &amp; Autonomous Recovery Behaviors</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-              <div style="background: var(--bg-hover); padding: 14px; border-radius: 8px;">
-                <h4 style="font-size: 13.5px; color: var(--accent-purple); margin-bottom: 6px;">Layered Costmap Pipeline</h4>
-                <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                  <li><strong>Static Layer:</strong> Encodes tarmac runway boundaries and non-traversable grass medians.</li>
-                  <li><strong>Obstacle Layer:</strong> Real-time 2D/3D LiDAR point-cloud ray-tracing (clearing and marking dynamic airfield obstacles).</li>
-                  <li><strong>Inflation Layer:</strong> Exponential decay safety buffer matching vehicle footprint (800 mm width) with 0.3 m clearance margin.</li>
-                </ul>
-              </div>
-
-              <div style="background: var(--bg-hover); padding: 14px; border-radius: 8px;">
-                <h4 style="font-size: 13.5px; color: var(--accent-rose); margin-bottom: 6px;">Fail-Safe Recovery Behaviors</h4>
-                <ul style="padding-left: 18px; font-size: 12.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                  <li><strong>Clear Costmap:</strong> Resets transient LiDAR ghost clusters if vehicle detects false entrapment.</li>
-                  <li><strong>Back-up Behavior:</strong> Reverses 0.8 m along vehicle centerline if forward path is blocked.</li>
-                  <li><strong>Spin Behavior:</strong> Controlled in-place yaw sweep to re-localize scan matching before re-planning.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- 5. INTERACTIVE PATHFINDING VISUALIZER & SPEED BENCHMARK -->
-          <div style="margin-top: 28px; border-top: 1px solid var(--border-color); padding-top: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
-              <div>
-                <h3 style="font-size: 17px; color: var(--accent-purple); margin: 0 0 4px 0;">
-                  ⚡ 5. Interactive Airfield Pathfinding Visualizer &amp; Speed Benchmark
+                <span class="badge badge-blue" style="font-size: 10.5px;">Task 2 &bull; Navigation &amp; Kinematics</span>
+                <h3 style="font-size: 15.5px; font-weight: 700; color: #f5f5f7; margin: 4px 0 0 0;">
+                  Nav2 SmacPlannerHybrid Upgrade ($SE(2)$ Dubins State Lattice)
                 </h3>
-                <p style="font-size: 13px; color: var(--text-muted); margin: 0; line-height: 1.5;">
-                  Interactive pathfinding evaluation laboratory (inspired by Clement Mihailescu's visualizer). Draw obstacles on the tarmac, drag the UGV (<span style="color:#10b981;">🚜</span>) or FOD Target (<span style="color:#ef4444;">🎯</span>), and benchmark search algorithms in real time.
-                </p>
               </div>
-              <span class="badge badge-purple" style="font-size: 11px;">Interactive Simulation Tool</span>
+              <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 11px;">SmacPlanner2D &rarr; SmacPlannerHybrid</span>
             </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 10px;">
+              Upgrade the global path planner from Phase 1 2D smoothed A* to full non-holonomic $SE(2)$ Dubins state lattice to eliminate asphalt tire scrubbing at high speeds:
+            </p>
+            <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.6; margin: 0;">
+              <li><strong style="color: #f5f5f7;">Kinematic Minimum Turning Radius:</strong> Hardcode $R_{\min} \ge 1.50\text{ m}$ directly into the Dubins motion primitive expansion, guaranteeing zero in-place zero-radius pivots and bounding yaw scrub resistance ($M_{z,\text{scrub}} \le 18.2\text{ N}\cdot\text{m}$).</li>
+              <li><strong style="color: #f5f5f7;">72 Angular Search Discretizations:</strong> Configure 72 discrete orientation angular bins ($5^\circ$ heading resolution) for full 3D state lattice exploration $(x, y, \theta)$ on 0.05 m/px costmaps.</li>
+              <li><strong style="color: #f5f5f7;">Motion Cost Penalties:</strong> Calibrate reverse penalty ($k_{\text{rev}} = 2.0$) and change-of-direction penalty ($k_{\text{dir}} = 3.0$) to enforce continuous forward sweeping trajectories at $\ge 10.0\text{ km/h}$.</li>
+              <li><strong style="color: #f5f5f7;">Analytical Shot-to-Goal Expansions:</strong> Enable Reed-Shepp / Dubins analytical heuristic shots to accelerate global path generation across 500 m runway corridors to &lt; 25 ms compute time.</li>
+            </ul>
+          </div>
 
-            <!-- Visualizer Toolbar -->
-            <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: var(--bg-hover); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 14px;">
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <label style="font-size: 12px; font-weight: 600; color: var(--text-muted);">Algorithm:</label>
-                <select id="pf-algo-select" style="padding: 6px 10px; font-size: 12.5px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-weight: 600;">
-                  <option value="astar" selected>A* Search (Smac 2D / Euclidean) &ndash; Recommended</option>
-                  <option value="thetastar">Theta* (Any-Angle Line-of-Sight)</option>
-                  <option value="greedy">Greedy Best-First Search</option>
-                  <option value="dijkstra">Dijkstra's Algorithm (NavFn)</option>
-                  <option value="bfs">Breadth-First Search (BFS)</option>
-                </select>
+          <!-- TASK 3 -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 4px solid #2997ff; border-radius: 8px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
+              <div>
+                <span class="badge badge-blue" style="font-size: 10.5px;">Task 3 &bull; Telemetry &amp; Datalink</span>
+                <h3 style="font-size: 15.5px; font-weight: 700; color: #f5f5f7; margin: 4px 0 0 0;">
+                  Airfield-Compliant Long-Range RF Datalink Integration (Microhard P900 V2)
+                </h3>
               </div>
-
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <label style="font-size: 12px; font-weight: 600; color: var(--text-muted);">Airfield Map:</label>
-                <select id="pf-preset-select" style="padding: 6px 10px; font-size: 12.5px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main);">
-                  <option value="runway" selected>Runway Corridor &amp; FOD Obstacles</option>
-                  <option value="chicane">Threshold Chicane &amp; Turnaround</option>
-                  <option value="apron">Apron Ramp Clutter &amp; GSE</option>
-                  <option value="clear">Empty Airfield Grid</option>
-                </select>
-              </div>
-
-              <div style="display: flex; align-items: center; gap: 6px;">
-                <label style="font-size: 12px; font-weight: 600; color: var(--text-muted);">Speed:</label>
-                <select id="pf-speed-select" style="padding: 6px 8px; font-size: 12.5px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main);">
-                  <option value="5">Fast (5 ms)</option>
-                  <option value="12" selected>Normal (12 ms)</option>
-                  <option value="30">Slow (30 ms)</option>
-                  <option value="0">Instant (0 ms / Live Drag)</option>
-                </select>
-              </div>
-
-              <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto;">
-                <button id="pf-run-btn" class="btn" style="padding: 6px 14px; font-size: 12.5px; font-weight: 600; background: var(--accent-purple); color: white; border: none; border-radius: 6px; cursor: pointer;">▶ Run Visualization</button>
-                <button id="pf-benchmark-btn" class="btn" style="padding: 6px 14px; font-size: 12.5px; font-weight: 600; border: 1px solid var(--accent-emerald); color: var(--accent-emerald); background: rgba(16, 185, 129, 0.08); border-radius: 6px; cursor: pointer;">📊 Benchmark All (Speed Test)</button>
-                <button id="pf-clear-path-btn" class="btn" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-muted); border-radius: 6px; cursor: pointer;">🧹 Clear Path</button>
-                <button id="pf-reset-btn" class="btn" style="padding: 6px 10px; font-size: 12px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-muted); border-radius: 6px; cursor: pointer;">🔄 Reset Map</button>
-              </div>
+              <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 11px;">Local Wi-Fi &rarr; 915 MHz FHSS RF</span>
             </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 10px;">
+              Replace interim 5 GHz Wi-Fi peering with an industrial frequency-hopping transceiver adhering to civil aviation and local statutory radio requirements:
+            </p>
+            <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.6; margin: 0;">
+              <li><strong style="color: #f5f5f7;">Singapore IMDA TS SRD Regulatory Compliance:</strong> Restrict frequency hopping channels to 917&ndash;925 MHz with $\le 100\text{ mW}$ ERP output power, ensuring zero interference with airfield avionics (ILS / VOR / ADS-B).</li>
+              <li><strong style="color: #f5f5f7;">Serial Packet Bridge Daemon:</strong> Develop a high-speed UART-to-ROS-2 bridge daemon using Consistent Overhead Byte Stuffing (COBS) packet framing for reliable serial JSON telemetry.</li>
+              <li><strong style="color: #f5f5f7;">Cryptographic Packet Signing:</strong> Preserve SHA-256 HMAC message integrity checking on all incoming UAV detection alerts to guarantee spoofing immunity on open RF spectrum.</li>
+              <li><strong style="color: #f5f5f7;">Heartbeat Fail-Safe Failsafe:</strong> Implement a 2.0 Hz ping/pong telemetry watchdog; upon RF signal loss exceeding 1.5 s, command autonomous rover pause, apply mechanical braking, and sound audio-visual warning beacons.</li>
+            </ul>
+          </div>
 
-            <!-- Telemetry HUD Cards -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 12px;">
-              <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; text-align: center;">
-                <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Compute Latency</div>
-                <div id="pf-stat-time" style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--accent-purple); margin-top: 2px;">0.00 ms</div>
+          <!-- TASK 4 -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 4px solid #2997ff; border-radius: 8px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
+              <div>
+                <span class="badge badge-blue" style="font-size: 10.5px;">Task 4 &bull; Sensor Fusion &amp; State Estimation</span>
+                <h3 style="font-size: 15.5px; font-weight: 700; color: #f5f5f7; margin: 4px 0 0 0;">
+                  Centimeter-Level RTK-GNSS &amp; Livox 3D LiDAR Sensor Fusion (Dual-EKF)
+                </h3>
               </div>
-              <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; text-align: center;">
-                <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Nodes Explored</div>
-                <div id="pf-stat-visited" style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--accent-blue); margin-top: 2px;">0 (0.0%)</div>
+              <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 11px;">Simulation Ground-Truth &rarr; Dual-EKF Physical Fusion</span>
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 10px;">
+              Deploy physical localization hardware to achieve drift-free centimeter-level positioning and active 3D volumetric obstacle perception across open runway corridors:
+            </p>
+            <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.6; margin: 0;">
+              <li><strong style="color: #f5f5f7;">Unicorecomm UM980 RTK-GNSS Integration:</strong> Ingest NMEA GGA messages and stream RTCM3 differential corrections via NTRIP client, achieving $\pm 2.0\text{ cm}$ geodetic positioning accuracy.</li>
+              <li><strong style="color: #f5f5f7;">Cascaded Dual-EKF (robot_localization):</strong> Configure continuous 100 Hz local EKF (wheel odometry + IMU angular rate) for smooth <code>odom</code> &rarr; <code>base_link</code> transforms, cascaded into global EKF fusing RTK-GNSS UTM coordinates for absolute <code>map</code> &rarr; <code>odom</code> pose.</li>
+              <li><strong style="color: #f5f5f7;">Livox Mid-360 3D LiDAR Pointclouds:</strong> Stream non-repetitive scanning pointclouds through <code>livox_ros_driver2</code> with ground-plane filtering, feeding <code>nav2_costmap_2d</code> voxel layers.</li>
+              <li><strong style="color: #f5f5f7;">nav2_collision_monitor Polygons:</strong> Define layered stop ($0.40\text{ m}$), slowdown ($1.20\text{ m}$), and approach ($2.50\text{ m}$) dynamic safety polygons directly projected from 3D LiDAR data.</li>
+            </ul>
+          </div>
+
+          <!-- TASK 5 -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 4px solid #2997ff; border-radius: 8px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
+              <div>
+                <span class="badge badge-blue" style="font-size: 10.5px;">Task 5 &bull; Field Integration &amp; Validation</span>
+                <h3 style="font-size: 15.5px; font-weight: 700; color: #f5f5f7; margin: 4px 0 0 0;">
+                  Physical Chassis Kinematic Calibration &amp; Real-World Airfield Field Trials
+                </h3>
               </div>
-              <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; text-align: center;">
-                <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Path Length</div>
-                <div id="pf-stat-path" style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--accent-emerald); margin-top: 2px;">--</div>
-              </div>
-              <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; text-align: center;">
-                <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Planner Status</div>
-                <div style="margin-top: 2px;"><span id="pf-stat-status" class="badge badge-purple">Ready</span></div>
-              </div>
+              <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 11px;">Digital Twin SIL &rarr; Outdoor Runway Validation</span>
             </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 10px;">
+              Commission the full software stack onto the custom 65.0 kg 4WD skid-steer rover chassis and conduct rigorous outdoor tarmac field verification:
+            </p>
+            <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.6; margin: 0;">
+              <li><strong style="color: #f5f5f7;">Effective Track Width Calibration:</strong> Empirically identify the asphalt slip correction coefficient $\chi = c_{\text{eff}} / c_{\text{nominal}}$ by comparing encoder-derived yaw integration against RTK-GNSS heading truth.</li>
+              <li><strong style="color: #f5f5f7;">Regulated Pure Pursuit High-Speed Tuning:</strong> Calibrate lookahead distance ($L = 1.80\text{ m}$), velocity-scaled lookahead time ($t = 0.6\text{ s}$), and curvature braking heuristics for stable $\ge 10.0\text{ km/h}$ sprints.</li>
+              <li><strong style="color: #f5f5f7;">FOD Target Docking Verification:</strong> Validate final approach precision to ensure the rover docks directly over detected FOD fasteners within $\pm 5.0\text{ cm}$ cross-track error for mechanical remediation.</li>
+              <li><strong style="color: #f5f5f7;">Live Multi-Agent "Detect-to-Clear" Trials:</strong> Conduct integrated field demonstrations with the aerial UAV scout detecting ground targets, transmitting RF alert coordinates, and verifying autonomous UGV interception and clearance.</li>
+            </ul>
+          </div>
 
-            <!-- Canvas Container -->
-            <div style="position: relative; width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); background: #090d16; box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);">
-              <canvas id="pathfinding-canvas" style="display: block; width: 100%; cursor: crosshair;"></canvas>
-            </div>
+        </div>
+      </div>
 
-            <!-- Legend & Instructions -->
-            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; font-size: 12px; color: var(--text-muted);">
-              <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center;">
-                <span><strong style="color: #10b981;">🚜 UGV Start:</strong> Drag to reposition</span>
-                <span><strong style="color: #ef4444;">🎯 FOD Goal:</strong> Drag to reposition</span>
-                <span><strong style="color: #94a3b8;">⬛ Wall / FOD:</strong> Click &amp; drag on canvas to toggle</span>
-                <span><strong style="color: #60a5fa;">🟦 Explored:</strong> Search frontier</span>
-                <span><strong style="color: #fbbf24;">🟨 Path:</strong> Computed trajectory</span>
-              </div>
-              <div><em>Tip: Select Instant mode and drag the UGV or FOD to watch real-time path deformation!</em></div>
-            </div>
-
-            <!-- Live Benchmark Results Container -->
-            <div id="pf-benchmark-results" style="display: none;"></div>
-
-            <!-- A* DOMINANCE EXPLANATION -->
-            <div class="callout callout-blue" style="margin-top: 16px;">
-              <strong>Why A* Consistently Wins in This Benchmark:</strong> The interactive visualizer canvas is modeled as a <strong>runway corridor</strong> — an open, obstacle-sparse environment with few walls. This is A*'s ideal use case: its Manhattan/Euclidean heuristic efficiently guides the search directly toward the goal, minimizing unnecessary node expansions. BFS and Dijkstra explore nodes uniformly in all directions (no heuristic), expanding far more cells before reaching the goal. In complex, enclosed environments with dense obstacle arrays, all algorithms would converge to similar exploration counts. The A* advantage here reflects the real-world runway environment our UGV operates in — wide open tarmac with sparse obstacles.
-            </div>
-
-            <!-- FULL NAVIGATION DOCUMENTATION BUTTON -->
-            <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; flex-wrap: wrap;">
-              <a href="../7-documentation/hilbert/navigation.html" class="btn btn-deep-dive">
-                🧭 Read Full Autonomous Navigation documentation →
-              </a>
-            </div>
+      <!-- ========================================================================= -->
+      <!-- 7.0 MASTER ENGINEERING DEEP-DIVE PORTALS & REFERENCES                     -->
+      <!-- ========================================================================= -->
+      <div class="card-box" id="sec-7-portals" style="margin-bottom: 24px;">
+        <div class="card-header">
+          <div>
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">7.0 Documentation Hub</span>
+            <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
+              7.0 Master Engineering Deep-Dive Portals &amp; References
+            </h2>
           </div>
         </div>
 
-        <!-- 4.3.4 MULTI-AGENT COMMUNICATIONS & DATALINK -->
-        <div class="card-box" id="sec-4-3-4">
-          <div class="card-header">
-            <div class="card-title">📡 4.3.4 Multi-Agent C2 Communications &amp; Datalink</div>
-          </div>
-          <p style="margin-bottom: 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6;">
-            The communications architecture bridges the aerial UAV scout, ground UGV sweeper, and airfield Base Station. To reconcile military RF restrictions with rapid software prototyping, a two-phase datalink strategy is executed:
-          </p>
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+          For exhaustive mathematical derivations, complete C2 packet definitions, CycloneDDS configuration profiles, and step-by-step Gazebo execution instructions, consult Hilbert's primary subsystem documentation suites:
+        </p>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 20px;">
-            <div style="background: rgba(0, 102, 204, 0.05); border: 1px solid rgba(0, 102, 204, 0.2); border-radius: 8px; padding: 16px;">
-              <span class="badge badge-blue" style="margin-bottom: 8px;">Phase 1: Benchtop &amp; Corridor Testing</span>
-              <h4 style="font-size: 15px; color: var(--text-main); margin-bottom: 8px;">Private Router &amp; CycloneDDS Unicast (Aerial Companion Computer &amp; UGV Controller)</h4>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                Operates across a dedicated local Wi-Fi router subnet (<code>192.168.1.0/24</code>) at 5 GHz. The <strong>Aerial Companion Computer / Simulated UAV Ground Station</strong> (Raspberry Pi 5 / Workstation) communicates with the <strong>UGV Main Compute Node / Navigation Controller</strong> over ROS 2 Jazzy. Employs <strong>Eclipse CycloneDDS</strong> with explicit unicast peer discovery configured via the <code>cyclonedds.xml</code> profile using <code>&lt;Peers&gt;</code> elements. This suppresses multicast traffic across subnets that block mDNS/multicast, eliminates network storms, and guarantees deterministic, low-latency (&lt;15 ms) telemetry transfer.
-              </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px;">
+          <a href="../7-documentation/hilbert/navigation.html" style="text-decoration: none; display: block; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px; transition: border-color 0.2s ease;">
+            <div style="font-size: 20px; margin-bottom: 8px;">🧭</div>
+            <div style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Autonomous Runway Navigation Spec</div>
+            <div style="font-size: 12px; color: #86868b; line-height: 1.5;">
+              $SE(2)$ Dubins kinematics, tarmac scrub derivations, RPP controller tuning, and Nav2 costmap configuration.
             </div>
+            <div style="font-size: 12px; font-weight: 600; color: #2997ff; margin-top: 10px;">Read Navigation Spec &rarr;</div>
+          </a>
 
-            <div style="background: rgba(147, 51, 234, 0.05); border: 1px solid rgba(147, 51, 234, 0.2); border-radius: 8px; padding: 16px;">
-              <span class="badge badge-purple" style="margin-bottom: 8px;">Phase 2: Outdoor Physical Airfield</span>
-              <h4 style="font-size: 15px; color: var(--text-main); margin-bottom: 8px;">Microhard P900 V2 Encrypted RF Datalink</h4>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                Transitions to air-gapped 917&ndash;925 MHz Frequency Hopping Spread Spectrum (FHSS) serial transceivers with hardware AES-256 encryption. Delivers robust &gt;5 km Line-of-Sight telemetry across active airfield runways, fully compliant with Singapore IMDA TS SRD standards.
-              </p>
+          <a href="../7-documentation/hilbert/communications.html" style="text-decoration: none; display: block; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px; transition: border-color 0.2s ease;">
+            <div style="font-size: 20px; margin-bottom: 8px;">📡</div>
+            <div style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">C2 Communications &amp; Telemetry Spec</div>
+            <div style="font-size: 12px; color: #86868b; line-height: 1.5;">
+              JSON alert schemas, SHA-256 HMAC authentication, CycloneDDS XML unicast profiles, and WGS84-to-UTM geodesy.
             </div>
-          </div>
+            <div style="font-size: 12px; font-weight: 600; color: #2997ff; margin-top: 10px;">Read Communications Spec &rarr;</div>
+          </a>
 
-          <!-- Structured JSON Message Architecture -->
-          <h3 style="font-size: 15px; color: var(--text-main); margin-bottom: 10px;">Structured C2 Telemetry Interfaces</h3>
-          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
-            To preserve wireless bandwidth and eliminate multi-second video streaming latency, all aerial computer vision inference runs <em>locally at the edge</em> on the UAV. Only compact, structured JSON telemetry packets (&lt; 2 KB) are transmitted across the datalink with 7-decimal-place geodetic precision for centimeter-level RTK alignment:
-          </p>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
-            <div>
-              <div style="font-size: 12px; font-weight: 700; color: var(--accent-purple); text-transform: uppercase; margin-bottom: 6px;">
-                1. Aerial C2 Dispatch Alert (UAV &rarr; UGV)
-              </div>
-              <div class="code-block" style="font-size: 12px; line-height: 1.45; background: #0b1120; border-radius: 6px; padding: 12px; border: 1px solid var(--border-color); overflow-x: auto;">
-                <pre style="margin: 0; color: #cbd5e1;"><code>{
-  "header": { "msg_id": "FOD-2026-0042", "timestamp": 1726561800.125 },
-  "source": "UAV-ALPHA",
-  "target": "UGV-BRAVO",
-  "target_type": "METALLIC_FASTENER",
-  "confidence": 0.942,
-  "wgs84_coords": { "lat": 1.3005821, "lon": 103.7712394, "alt_m": 18.52 },
-  "utm_coords": { "easting_m": 363241.182, "northing_m": 143789.245 },
-  "recommended_remediation": "VACUUM_AND_MAGNET",
-  "priority": "HIGH"
-}</code></pre>
-              </div>
+          <a href="../7-documentation/hilbert/simulation.html" style="text-decoration: none; display: block; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px; transition: border-color 0.2s ease;">
+            <div style="font-size: 20px; margin-bottom: 8px;">🎮</div>
+            <div style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Digital Twin Simulation Architecture</div>
+            <div style="font-size: 12px; color: #86868b; line-height: 1.5;">
+              Gazebo Harmonic physics modeling, AgileX Scout V2 kinematics, multi-machine testbed setup, and RTF profiling.
             </div>
-
-            <div>
-              <div style="font-size: 12px; font-weight: 700; color: var(--accent-emerald); text-transform: uppercase; margin-bottom: 6px;">
-                2. Vehicle Telemetry &amp; Health (UGV &rarr; Base)
-              </div>
-              <div class="code-block" style="font-size: 12px; line-height: 1.45; background: #0b1120; border-radius: 6px; padding: 12px; border: 1px solid var(--border-color); overflow-x: auto;">
-                <pre style="margin: 0; color: #cbd5e1;"><code>{
-  "header": { "seq": 10842, "timestamp": 1726561802.450 },
-  "vehicle_id": "UGV-BRAVO",
-  "current_pose": { "x": 124.52, "y": 8.21, "yaw_deg": 4.12 },
-  "velocity_kmh": 10.4,
-  "battery_state": { "voltage_v": 51.2, "soc_pct": 82.5 },
-  "nav_mode": "NAVIGATING_TO_FOD",
-  "remediation_status": "VACUUM_STANDBY",
-  "heartbeat_ok": true
-}</code></pre>
-              </div>
-            </div>
-          </div>
-
-          <!-- Fail-Safe Protocol Callout -->
-          <div class="callout callout-rose" style="margin-top: 18px;">
-            <strong>Autonomous Safety Fail-Safe:</strong> An asynchronous heartbeat monitor operates at $2.0\text{ Hz}$ (500 ms period). If signal loss exceeds $3.0\text{ seconds}$ (6 consecutive missed pings), the UGV automatically executes an immediate deceleration stop, safely clears the runway centerline, and activates hazard visual beacons until telemetry is re-established.
-          </div>
-
-          <!-- FULL COMMS DOCUMENTATION BUTTON -->
-          <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-color); display: flex; gap: 12px; flex-wrap: wrap;">
-            <a href="../7-documentation/hilbert/communications.html" class="btn btn-deep-dive">
-              📡 Read Full C2 Communication documentation →
-            </a>
-          </div>
+            <div style="font-size: 12px; font-weight: 600; color: #2997ff; margin-top: 10px;">Read Simulation Guide &rarr;</div>
+          </a>
         </div>
 
-      </div> <!-- end apple-container -->
+        <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--apple-border); font-size: 12.5px; color: #86868b;">
+          Academic References &amp; Statutory Standards: Cross-referenced with the centralized repository reference hub in <a href="../6-references/hilbert/references.html" style="color: #2997ff; text-decoration: underline;">Hilbert's Reference Repository</a> (incorporating Macenski et al., 2020 [8], 2022 [7], 2024 [22]; Dubins, 1957 [20]; RobotPlatform.com, 2024 [17]; FAA AC 150/5210-24).
+        </div>
+      </div>
+
+    </div> <!-- end apple-container -->
   </main>
 
   <!-- APPLE FOOTER -->
   <footer class="apple-footer">
     <div class="apple-footer-inner">
       <div>
-        © AY2627 FOD Hunter CDE4301 Team. National University of Singapore.
+        &copy; AY2627 FOD Hunter CDE4301 Team. National University of Singapore.
       </div>
       <ul class="apple-footer-links">
         <li><a href="../index.html">Overview</a></li>
@@ -821,5 +1016,240 @@
 
   <script src="../js/main.js?v=4.2"></script>
   <script src="../js/pathfinding.js"></script>
+
+  <!-- INTERACTIVE WIDGET SCRIPTS -->
+  <script>
+    (function() {
+      'use strict';
+
+      // =========================================================================
+      // INTERACTIVE 1: DETECT-TO-CLEAR MISSION PIPELINE SIMULATOR
+      // =========================================================================
+      const stages = [
+        {
+          title: "Stage 1: Aerial UAV Edge Detection & Geotagging",
+          node: "Active Node: DemoComs_C2.py (Companion RPi 5)",
+          latency: "\u0394t = 33.3 ms (30 FPS TensorRT)",
+          desc: "Aerial companion computer executes edge YOLOv8 tensor inference on camera stream. Detects FOD fastener with 94.2% confidence and associates instantaneous UAV GNSS/IMU attitude to calculate geodetic ground coordinates.",
+          payload: `{\n  "event": "TARGET_DETECTED",\n  "source": "UAV-ALPHA (DJI Matrice Proxy)",\n  "confidence": 0.942,\n  "wgs84": { "lat": 1.3005821, "lon": 103.7712394, "alt_m": 18.52 }\n}`
+        },
+        {
+          title: "Stage 2: C2 Alert Packaging & Cryptographic Signing",
+          node: "Active Node: uav_waypoint_commander.py (Tactical C2)",
+          latency: "\u0394t = 1.2 ms (JSON + HMAC)",
+          desc: "Formats structured JSON packet with message sequence ID, target classification, priority level, and computes a SHA-256 HMAC signature using pre-shared mission keys to safeguard against unauthorized spoofing.",
+          payload: `{\n  "header": { "msg_id": "FOD-2026-0042", "timestamp": 1726561800.125 },\n  "target_type": "METALLIC_FASTENER",\n  "priority": "HIGH",\n  "signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"\n}`
+        },
+        {
+          title: "Stage 3: CycloneDDS Static Unicast Transmission",
+          node: "Active Middleware: CycloneDDS (192.168.137.233 \u2192 192.168.137.1)",
+          latency: "\u0394t = 12.4 ms (Zero Packet Loss)",
+          desc: "Transmits packet over 5 GHz Wi-Fi / direct RJ45 datalink via static unicast XML peering. Bypasses router multicast IGMP snooping filters, guaranteeing instantaneous peer-to-peer delivery without broadcast storms.",
+          payload: `// cyclonedds.xml Peering Transmission:\n<Discovery>\n  <Peers>\n    <Peer address="192.168.137.1"/>\n    <Peer address="192.168.137.233"/>\n  </Peers>\n</Discovery>`
+        },
+        {
+          title: "Stage 4: UGV Alert Ingestion & Geodetic Transformation",
+          node: "Active Node: ugv_c2_bridge_node.py (Hilbert's Laptop)",
+          latency: "\u0394t = 2.1 ms (WGS84 \u2192 UTM \u2192 Map)",
+          desc: "Validates HMAC integrity, unpacks geodetic lat/lon, projects into UTM Zone 48N Easting/Northing, and executes rigid 2D planar rotation into the Nav2 /map coordinate frame before queueing into FIFO goal buffer.",
+          payload: `// UTM Zone 48N \u2192 Nav2 /map frame:\nTarget UTM: E = 363241.182 m, N = 143789.245 m\nNav2 Goal Pose: x = 124.52 m, y = 8.21 m, yaw = 0.072 rad`
+        },
+        {
+          title: "Stage 5: Nav2 Smac Planning & 10 km/h RPP Sprint",
+          node: "Active Stack: planner_server & controller_server",
+          latency: "\u0394t = 18.4 ms Planning \u2022 50 Hz Control Loop",
+          desc: "SmacPlanner2D computes an accelerated costmap corridor path with conjugate gradient curve smoothing. Regulated Pure Pursuit (RPP) guides the UGV along the trajectory at 2.78 m/s (10.0 km/h) with dynamic curvature braking.",
+          payload: `// Controller cmd_vel Output (20 Hz):\ngeometry_msgs/msg/Twist {\n  linear:  { x: 2.78 m/s, y: 0.0, z: 0.0 },\n  angular: { x: 0.0, y: 0.0, z: 0.12 rad/s }\n}`
+        },
+        {
+          title: "Stage 6: Safety Stop & Remediation Verification",
+          node: "Active Node: nav2_collision_monitor & UGV Bridge",
+          latency: "\u0394t = 45.0 ms E-Brake Response \u2022 Clearance ACK",
+          desc: "Collision monitor ensures a 0.80 m safety clearance buffer as the rover docks directly over the FOD item. Mechanical vacuum and magnetic arrays engage, clearing the debris and publishing a Telemetry ACK to Base Station.",
+          payload: `{\n  "event": "FOD_CLEARED",\n  "target_id": "FOD-2026-0042",\n  "ugv_status": "MISSION_COMPLETE",\n  "runway_state": "ALL_CLEAR"\n}`
+        }
+      ];
+
+      let currentStage = 0;
+
+      function updateStageDisplay(idx) {
+        currentStage = idx;
+        const s = stages[idx];
+        document.getElementById('sim-node-badge').textContent = s.node;
+        document.getElementById('sim-stage-title').textContent = s.title;
+        document.getElementById('sim-stage-latency').textContent = s.latency;
+        document.getElementById('sim-stage-desc').textContent = s.desc;
+        document.getElementById('sim-stage-payload').querySelector('code').textContent = s.payload;
+
+        const pills = document.querySelectorAll('#sim-stage-pills button');
+        pills.forEach((p, i) => {
+          if (i === idx) {
+            p.classList.add('active');
+          } else {
+            p.classList.remove('active');
+          }
+        });
+      }
+
+      document.getElementById('sim-btn-prev').addEventListener('click', () => {
+        currentStage = (currentStage - 1 + stages.length) % stages.length;
+        updateStageDisplay(currentStage);
+      });
+
+      document.getElementById('sim-btn-next').addEventListener('click', () => {
+        currentStage = (currentStage + 1) % stages.length;
+        updateStageDisplay(currentStage);
+      });
+
+      document.querySelectorAll('#sim-stage-pills button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const st = parseInt(e.target.getAttribute('data-step'), 10);
+          updateStageDisplay(st);
+        });
+      });
+
+      // =========================================================================
+      // INTERACTIVE 2: TARMAC SCRUB TORQUE & BATTERY CURRENT CALCULATOR
+      // =========================================================================
+      const sliderMass = document.getElementById('slider-mass');
+      const sliderMu = document.getElementById('slider-mu');
+      const sliderRadius = document.getElementById('slider-radius');
+
+      const valMass = document.getElementById('val-mass');
+      const valMu = document.getElementById('val-mu');
+      const valRadius = document.getElementById('val-radius');
+
+      const outMz = document.getElementById('out-mz');
+      const outTau = document.getElementById('out-tau');
+      const outCurr = document.getElementById('out-curr');
+      const outMargin = document.getElementById('out-margin');
+      const statusBadge = document.getElementById('scrub-status-badge');
+
+      function calculateScrub() {
+        const M = parseFloat(sliderMass.value);
+        const mu = parseFloat(sliderMu.value);
+        const R = parseFloat(sliderRadius.value);
+
+        valMass.textContent = M.toFixed(1) + ' kg';
+        valMu.textContent = mu.toFixed(2);
+        valRadius.textContent = R.toFixed(2) + ' m';
+
+        const g = 9.81;
+        const L = 0.50; // wheelbase (m)
+        const B = 0.58; // track width (m)
+        const r = 0.1315; // tire radius (m)
+        const eta = 0.85; // gear efficiency
+        const Kt = 1.057; // torque constant (N*m / A)
+        const BMS_MAX = 70.0; // Amperes
+
+        // Total yaw scrub moment (N*m)
+        const Mz = 0.5 * mu * M * g * L;
+
+        // Static breakaway scrub torque at dead-stop pivot (N*m)
+        const tau_pivot = (Mz * r) / (2 * B * eta);
+
+        // Curvature reduction factor: when R > 0, rolling kinematics dominate scrub
+        let tau_active;
+        if (R <= 0.05) {
+          tau_active = tau_pivot;
+        } else {
+          // As turning radius increases, lateral scrub diminishes exponentially
+          const scrub_factor = (L / 2) / (R + (L / 2));
+          tau_active = 1.2 + (tau_pivot - 1.2) * scrub_factor;
+        }
+
+        // Total 48V battery bus current for 4 hub motors (A)
+        const total_current = (4 * tau_active) / Kt;
+
+        outMz.textContent = Mz.toFixed(1) + ' N\u00B7m';
+        outTau.textContent = tau_active.toFixed(2) + ' N\u00B7m';
+        outCurr.textContent = total_current.toFixed(2) + ' A';
+
+        const margin = Math.max(0, ((BMS_MAX - total_current) / BMS_MAX) * 100);
+        outMargin.textContent = margin.toFixed(1) + '% Safe';
+
+        if (R < 1.20 || total_current > 40.0) {
+          statusBadge.textContent = '\u26A0\uFE0F HIGH SCRUB WARNING';
+          statusBadge.style.background = 'rgba(255, 69, 58, 0.15)';
+          statusBadge.style.color = '#ff453a';
+          outCurr.style.color = '#ff453a';
+          outMargin.style.color = '#ff453a';
+        } else if (R < 1.50) {
+          statusBadge.textContent = 'Moderate Curvature Scale';
+          statusBadge.style.background = 'rgba(255, 214, 10, 0.15)';
+          statusBadge.style.color = '#ffd60a';
+          outCurr.style.color = '#ffd60a';
+          outMargin.style.color = '#ffd60a';
+        } else {
+          statusBadge.textContent = '\u2705 Dubins Compliant (Zero Scrub)';
+          statusBadge.style.background = 'rgba(41, 151, 255, 0.15)';
+          statusBadge.style.color = '#2997ff';
+          outCurr.style.color = '#2997ff';
+          outMargin.style.color = '#30d158';
+        }
+      }
+
+      sliderMass.addEventListener('input', calculateScrub);
+      sliderMu.addEventListener('input', calculateScrub);
+      sliderRadius.addEventListener('input', calculateScrub);
+      calculateScrub();
+
+      // =========================================================================
+      // INTERACTIVE 4: HARDWARE MIGRATION ARCHITECTURE SWITCH
+      // =========================================================================
+      const p1Specs = [
+        { title: "Compute Platform", val: "Hilbert's Laptop (WSL2)", sub: "Intel Core i7 / 16GB RAM / DirectX vGPU" },
+        { title: "Real-Time Bridge", val: "STM32 F446RE (USB micro-ROS)", sub: "100 Hz PID Loop to Dual ZLAC8015D" },
+        { title: "Global Planner", val: "SmacPlanner2D (Cost-Aware)", sub: "Conjugate gradient curve smoothing" },
+        { title: "Datalink Network", val: "CycloneDDS Unicast (Wi-Fi)", sub: "<15 ms Latency across 192.168.137.0/24" },
+        { title: "Perception & SLAM", val: "Gazebo Harmonic SIL Simulation", sub: "2D LiDAR raytracing + Orthophoto Map" }
+      ];
+
+      const p2Specs = [
+        { title: "Compute Platform", val: "NVIDIA Jetson AGX Orin", sub: "275 TOPS AI / 64GB / JetPack 7.x Ubuntu" },
+        { title: "Real-Time Bridge", val: "STM32 CAN Bus Interface", sub: "Isolated 1 Mbps CAN to Hub Drivers" },
+        { title: "Global Planner", val: "SmacPlannerHybrid (SE(2) Dubins)", sub: "Continuous Dubins lattice (R >= 1.50 m)" },
+        { title: "Datalink Network", val: "Microhard P900 V2 FHSS RF", sub: ">5 km LoS Range, Sub-1 GHz, AES-256" },
+        { title: "Perception & SLAM", val: "Livox Mid-360 3D + UM980 RTK", sub: "Pointcloud safety + +/-2cm GNSS position" }
+      ];
+
+      const hwContainer = document.getElementById('hw-cards-container');
+      const btnP1 = document.getElementById('toggle-hw-p1');
+      const btnP2 = document.getElementById('toggle-hw-p2');
+
+      function renderHwCards(specs, isPhase2) {
+        hwContainer.innerHTML = '';
+        specs.forEach(s => {
+          const card = document.createElement('div');
+          card.style.background = '#0d1117';
+          card.style.border = isPhase2 ? '1px solid rgba(41, 151, 255, 0.4)' : '1px solid var(--apple-border)';
+          card.style.borderRadius = '8px';
+          card.style.padding = '14px';
+          card.innerHTML = `
+            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600;">${s.title}</div>
+            <div style="font-size: 14.5px; font-weight: 700; color: ${isPhase2 ? '#2997ff' : '#f5f5f7'}; margin-top: 4px;">${s.val}</div>
+            <div style="font-size: 11.5px; color: #86868b; margin-top: 4px; line-height: 1.4;">${s.sub}</div>
+          `;
+          hwContainer.appendChild(card);
+        });
+      }
+
+      btnP1.addEventListener('click', () => {
+        btnP1.classList.add('active');
+        btnP2.classList.remove('active');
+        renderHwCards(p1Specs, false);
+      });
+
+      btnP2.addEventListener('click', () => {
+        btnP2.classList.add('active');
+        btnP1.classList.remove('active');
+        renderHwCards(p2Specs, true);
+      });
+
+      // Initial render Phase 1
+      renderHwCards(p1Specs, false);
+
+    })();
+  </script>
 </body>
 </html>
