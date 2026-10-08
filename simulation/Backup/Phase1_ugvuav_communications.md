@@ -186,17 +186,19 @@
 
 ---
 
-## ⚡ Direct RJ45 Ethernet Network Configuration
+## ⚡ Network Configuration (WiFi Router & Direct RJ45 Ethernet)
 
-Both machines are connected via a direct point-to-point RJ45 Ethernet cable on the `192.168.137.0/24` subnet:
+Both machines can communicate either over a WiFi Router subnet (`192.168.168.0/24`) or a direct point-to-point RJ45 Ethernet cable (`192.168.137.0/24`):
 
-| Device | Subnet IP | Primary Interface | Role |
+| Setup Mode | Device | IP Address | Role |
 | :--- | :--- | :--- | :--- |
-| **Laptop / PC** | `192.168.137.1` | `eth1` (or `enp...`) | Gazebo Harmonic, Nav2, Robot State Publisher, UGV C2 Bridge |
-| **Raspberry Pi 5** | `192.168.137.233` | `eth0` (or `end0`) | UAV Tactical C2 GUI / Headless CLI Commander |
+| **WiFi Router** | **Laptop / PC** | `192.168.168.50` | Gazebo Harmonic, Nav2, Robot State Publisher, UGV C2 Bridge |
+| **WiFi Router** | **Raspberry Pi 5** | `192.168.168.100` | UAV Tactical C2 GUI / Headless CLI Commander |
+| **Direct RJ45 (Fallback)** | **Laptop / PC** | `192.168.137.1` | Gazebo Harmonic, Nav2, Robot State Publisher, UGV C2 Bridge |
+| **Direct RJ45 (Fallback)** | **Raspberry Pi 5** | `192.168.137.233` | UAV Tactical C2 GUI / Headless CLI Commander |
 
 ### Unified CycloneDDS Configuration (`cyclonedds.xml`)
-Both machines utilize a single, unified DDS configuration that automatically routes traffic through the RJ45 Ethernet interface with direct unicast peer discovery:
+Both machines utilize a single, unified DDS configuration with direct unicast peer discovery to guarantee reliable cross-machine communication without relying on router multicast:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -209,6 +211,8 @@ Both machines utilize a single, unified DDS configuration that automatically rou
         </General>
         <Discovery>
             <Peers>
+                <Peer address="192.168.168.50"/>
+                <Peer address="192.168.168.100"/>
                 <Peer address="192.168.137.1"/>
                 <Peer address="192.168.137.233"/>
             </Peers>
@@ -232,13 +236,15 @@ On the Raspberry Pi 5, the entire C2 Ground Station is self-contained in `~/phas
 ```
 
 ### Sync Files to Raspberry Pi 5 (from Laptop)
+All UAV ground station files are pre-packaged in `~/runway_sim_ws/rpi5_uav/`.
+
 ```bash
-scp \
-  ~/runway_sim_ws/src/runway_communication/runway_communication/uav_waypoint_commander.py \
-  ~/runway_sim_ws/cyclonedds.xml \
-  ~/runway_sim_ws/run_uav_gui.sh \
-  ~/runway_sim_ws/run_uav_headless.sh \
-  uav-sim@uavsim-desktop.local:~/phase1_uav/
+# Option A: 1-Click deploy helper
+cd ~/runway_sim_ws
+./rpi5_uav/deploy_to_rpi5.sh 192.168.168.100 pi
+
+# Option B: Direct rsync / scp
+rsync -avz ~/runway_sim_ws/rpi5_uav/ uav-sim@uavsim-desktop.local:~/phase1_uav/
 ```
 
 ---
@@ -248,17 +254,17 @@ scp \
 ### Step 1: Start Gazebo Simulation on Laptop
 Open **Terminal 1** on the laptop:
 ```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
+source ~/runway_sim_ws/setup_dds.sh
 ros2 launch runway_description sim_nus_ea.launch.py
 ```
-*(Gazebo Harmonic spawns the AgileX Scout V2 UGV in the NUS EA Field environment).*
+*(Sets up CycloneDDS on `192.168.168.50`, peers with RPi5, and spawns the AgileX Scout V2 UGV in NUS EA Field).*
 
 ---
 
 ### Step 2: Start Nav2 & C2 Telemetry Bridge on Laptop
 Open **Terminal 2** on the laptop:
 ```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
+source ~/runway_sim_ws/setup_dds.sh
 ros2 launch runway_navigation bringup_nav2.launch.py world_name:=nus_ea_field
 ```
 *(Initializes the map server, costmaps, planner, pure-pursuit controller, RViz2, and `ugv_c2_bridge_node`).*

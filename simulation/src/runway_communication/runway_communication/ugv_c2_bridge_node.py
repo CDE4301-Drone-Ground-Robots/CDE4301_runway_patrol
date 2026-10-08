@@ -21,8 +21,9 @@ import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
 from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy, HistoryPolicy
 from std_msgs.msg import String
-from geometry_msgs.msg import PoseStamped, Quaternion, Point
+from geometry_msgs.msg import PoseStamped, Quaternion, Point, PoseWithCovarianceStamped
 from nav_msgs.msg import Odometry
 from action_msgs.msg import GoalStatus
 from visualization_msgs.msg import Marker, MarkerArray
@@ -67,13 +68,17 @@ class UGVC2BridgeNode(Node):
         self.battery_pct = 95.0
         self.battery_voltage = 24.8
         
-        self.robot_x = -25.0
-        self.robot_y = 0.0
-        self.robot_yaw = 0.0
+        self.declare_parameter('spawn_x', -25.0)
+        self.declare_parameter('spawn_y', 0.0)
+        self.declare_parameter('spawn_yaw', 0.0)
+
+        self.robot_x = float(self.get_parameter('spawn_x').value)
+        self.robot_y = float(self.get_parameter('spawn_y').value)
+        self.robot_yaw = float(self.get_parameter('spawn_yaw').value)
         self.robot_speed = 0.0
         self.last_pose_time = time.time()
-        self.last_pose_x = -25.0
-        self.last_pose_y = 0.0
+        self.last_pose_x = self.robot_x
+        self.last_pose_y = self.robot_y
 
         # Active Task Ledger
         self.active_threat_id = None
@@ -89,12 +94,27 @@ class UGVC2BridgeNode(Node):
         self.goal_queue = []
         self.active_goal_item = None
 
-        # 1. C2 Alert Subscriber (UAV -> UGV)
+        # Auto Initial Pose Publisher (Primes Nav2 & AMCL without manual 2D Pose Estimate)
+        self.initial_pose_pub = self.create_publisher(
+            PoseWithCovarianceStamped,
+            '/initialpose',
+            10
+        )
+        self.initial_pose_count = 0
+        self.initial_pose_timer = self.create_timer(1.0, self.publish_startup_initial_pose, callback_group=self.cb_group)
+
+        # 1. C2 Alert Subscriber (UAV -> UGV) - Latched QoS matches RPi5 UAV commander
+        qos_latched = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10
+        )
         self.alert_sub = self.create_subscription(
             String,
             '/c2/target_alert',
             self.target_alert_callback,
-            10,
+            qos_latched,
             callback_group=self.cb_group
         )
 
@@ -150,8 +170,33 @@ class UGVC2BridgeNode(Node):
 
         self.get_logger().info("=" * 60)
         self.get_logger().info("📡 UGV C2 Bridge Node Online (Phase 1 Telemetry Active)")
+        self.get_logger().info(f"📍 Spawn Initial Pose: ({self.robot_x:.2f}, {self.robot_y:.2f}, yaw: {self.robot_yaw:.4f})")
         self.get_logger().info("📥 Subscribed: /c2/target_alert | 📤 Publishing: /c2/ugv_telemetry (2 Hz)")
         self.get_logger().info("=" * 60)
+
+    def publish_startup_initial_pose(self):
+        if self.initial_pose_count >= 5:
+            if self.initial_pose_timer is not None:
+                self.initial_pose_timer.cancel()
+                self.initial_pose_timer = None
+            return
+
+        msg = PoseWithCovarianceStamped()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        msg.header.frame_id = 'map'
+        msg.pose.pose.position.x = self.robot_x
+        msg.pose.pose.position.y = self.robot_y
+        msg.pose.pose.position.z = 0.0
+        msg.pose.pose.orientation = yaw_to_quaternion(self.robot_yaw)
+        cov = [0.0] * 36
+        cov[0] = 0.1
+        cov[7] = 0.1
+        cov[35] = 0.05
+        msg.pose.covariance = cov
+
+        self.initial_pose_pub.publish(msg)
+        self.initial_pose_count += 1
+        self.get_logger().info(f"🚀 Published /initialpose [{self.initial_pose_count}/5] -> (x: {self.robot_x:.2f}, y: {self.robot_y:.2f})")
 
     # -------------------------------------------------------------
     # Callbacks & Alert Handling
@@ -159,6 +204,22 @@ class UGVC2BridgeNode(Node):
     def target_alert_callback(self, msg: String):
         try:
             alert = json.loads(msg.data)
+            priority = alert.get('priority_level', 'NORMAL')
+            suggested_action = alert.get('suggested_action', '')
+
+            # 1. Handle ABORT / CANCEL / STOP command
+            if priority in ['ABORT', 'CANCEL', 'STOP'] or suggested_action in ['ABORT', 'CANCEL', 'STOP']:
+                self.get_logger().warn("🛑 [C2 ABORT] Received emergency stop / abort command. Halting UGV and clearing mission queue.")
+                self.goal_queue.clear()
+                self.active_goal_item = None
+                self.active_threat_id = None
+                self.task_state = "IDLE"
+                if self.current_goal_handle is not None:
+                    self.current_goal_handle.cancel_goal_async()
+                    self.current_goal_handle = None
+                self.publish_queue_markers()
+                return
+
             threat_id = alert.get('threat_id', f'FOD_TARGET_{int(time.time()) % 1000:03d}')
             
             # Extract coordinates (metric x,y or georeference)
@@ -175,7 +236,6 @@ class UGVC2BridgeNode(Node):
             anomaly_meta = alert.get('anomaly_metadata', {})
             primary_class = anomaly_meta.get('primary_class', 'FOD')
             sub_class = anomaly_meta.get('sub_class', 'unknown')
-            priority = alert.get('priority_level', 'NORMAL')
 
             goal_item = {
                 'threat_id': threat_id,
@@ -190,6 +250,15 @@ class UGVC2BridgeNode(Node):
                 f"🚨 [C2 ALERT INGESTED] Threat: {threat_id} at ({tx:.2f}, {ty:.2f}) | "
                 f"Class: {goal_item['class']} | Priority: {priority}"
             )
+
+            # If this is an IMMEDIATE single goal (e.g. single click on GUI), clear queue and preempt:
+            if priority == "IMMEDIATE" or alert.get('override_queue', False):
+                self.get_logger().info(f"⚡ [IMMEDIATE OVERRIDE] Clearing previous queue and navigating immediately to {threat_id}.")
+                self.goal_queue.clear()
+                if self.current_goal_handle is not None:
+                    self.current_goal_handle.cancel_goal_async()
+                self.execute_mission_goal(goal_item)
+                return
 
             # Check if rover is currently busy executing another target
             if self.task_state in ["EN_ROUTE", "VERIFIED"] and self.active_threat_id is not None:
@@ -568,7 +637,7 @@ def main(args=None):
     node = UGVC2BridgeNode()
     try:
         rclpy.spin(node)
-    except (KeyboardInterrupt, rclpy.executors.ExternalShutdownException):
+    except (KeyboardInterrupt, rclpy.executors.ExternalShutdownException, RuntimeError, Exception):
         pass
     finally:
         node.destroy_node()

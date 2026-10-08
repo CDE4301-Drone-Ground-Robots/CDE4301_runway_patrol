@@ -146,6 +146,54 @@
         <child link="camera_optical_link" />
     </joint>
 
+    <!-- IMU Sensor Mount (Industrial 9-DOF IMU centered near CG) -->
+    <link name="imu_link">
+        <inertial>
+            <mass value="0.02" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.000005" ixy="0" ixz="0" iyy="0.000005" iyz="0" izz="0.000005" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="0.03 0.03 0.015" />
+            </geometry>
+            <material name="orange">
+                <color rgba="1.0 0.5 0.0 1.0" />
+            </material>
+        </visual>
+    </link>
+
+    <joint name="imu_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.08" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="imu_link" />
+    </joint>
+
+    <!-- RTK-GNSS Antenna Mount (Elevated mast above chassis) -->
+    <link name="gps_link">
+        <inertial>
+            <mass value="0.05" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00001" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder length="0.03" radius="0.04" />
+            </geometry>
+            <material name="white">
+                <color rgba="0.95 0.95 0.95 1.0" />
+            </material>
+        </visual>
+    </link>
+
+    <joint name="gps_joint" type="fixed">
+        <origin xyz="-0.15 0.0 0.22" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="gps_link" />
+    </joint>
+
     <!-- Gazebo Sensor & Actuation Plugins -->
     <gazebo reference="lidar_link">
         <sensor name="lidar" type="gpu_lidar">
@@ -196,6 +244,36 @@
         </sensor>
     </gazebo>
 
+    <gazebo reference="imu_link">
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>50</update_rate>
+            <topic>/imu/data</topic>
+            <gz_frame_id>imu_link</gz_frame_id>
+            <imu>
+                <angular_velocity>
+                    <x><noise type="gaussian"><mean>0.0</mean><stddev>0.0002</stddev></noise></x>
+                    <y><noise type="gaussian"><mean>0.0</mean><stddev>0.0002</stddev></noise></y>
+                    <z><noise type="gaussian"><mean>0.0</mean><stddev>0.0002</stddev></noise></z>
+                </angular_velocity>
+                <linear_acceleration>
+                    <x><noise type="gaussian"><mean>0.0</mean><stddev>0.01</stddev></noise></x>
+                    <y><noise type="gaussian"><mean>0.0</mean><stddev>0.01</stddev></noise></y>
+                    <z><noise type="gaussian"><mean>0.0</mean><stddev>0.01</stddev></noise></z>
+                </linear_acceleration>
+            </imu>
+        </sensor>
+    </gazebo>
+
+    <gazebo reference="gps_link">
+        <sensor name="navsat_sensor" type="navsat">
+            <always_on>true</always_on>
+            <update_rate>10</update_rate>
+            <topic>/gps/fix</topic>
+            <gz_frame_id>gps_link</gz_frame_id>
+        </sensor>
+    </gazebo>
+
     <gazebo>
         <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
             <left_joint>front_left_wheel</left_joint>
@@ -217,7 +295,6 @@
             <frame_id>odom</frame_id>
             <child_frame_id>base_footprint</child_frame_id>
             <odom_publish_frequency>50</odom_publish_frequency>
-            <tf_topic>/tf</tf_topic>
         </plugin>
 
         <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">

@@ -106,7 +106,8 @@ def generate_launch_description():
             '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
             '/camera/image_raw@sensor_msgs/msg/Image[gz.msgs.Image',
             '/camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
-            '/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
+            '/imu/data@sensor_msgs/msg/Imu[gz.msgs.IMU',
+            '/gps/fix@sensor_msgs/msg/NavSatFix[gz.msgs.NavSat',
             '/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model'
         ],
         output='screen'

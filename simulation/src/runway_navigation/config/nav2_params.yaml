@@ -25,7 +25,7 @@ bt_navigator:
     use_sim_time: True
     global_frame: map
     robot_base_frame: base_footprint
-    odom_topic: /odom
+    odom_topic: /odometry/local
     bt_loop_duration: 10
     default_server_timeout: 20
     wait_for_service_timeout: 1000
@@ -62,15 +62,15 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.25
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.35
+      yaw_goal_tolerance: 0.35
 
     FollowPath:
       plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
-      desired_linear_vel: 2.78
-      lookahead_dist: 1.8
-      min_lookahead_dist: 1.0
-      max_lookahead_dist: 3.5
+      desired_linear_vel: 2.22  # 8.0 km/h (8 / 3.6 = 2.22 m/s)
+      lookahead_dist: 1.2
+      min_lookahead_dist: 0.4
+      max_lookahead_dist: 2.5
       lookahead_time: 1.2
       rotate_to_heading_angular_vel: 1.0
       transform_tolerance: 0.1
@@ -84,10 +84,11 @@ controller_server:
       cost_scaling_dist: 1.0
       cost_scaling_gain: 1.0
       inflation_cost_scaling_factor: 2.0
-      regulated_linear_scaling_min_radius: 1.20
-      regulated_linear_scaling_min_speed: 0.60
+      regulated_linear_scaling_min_radius: 0.80
+      regulated_linear_scaling_min_speed: 0.40
       use_rotate_to_heading: True
       rotate_to_heading_min_angle: 0.785
+      rotate_to_heading_angular_vel: 1.2
       max_angular_accel: 2.5
       max_linear_accel: 2.0
       max_linear_decel: -2.5
@@ -162,13 +163,24 @@ planner_server:
     expected_planner_frequency: 20.0
     planner_plugins: ["GridBased"]
     GridBased:
-      plugin: "nav2_smac_planner::SmacPlanner2D"
+      plugin: "nav2_smac_planner::SmacPlannerHybrid"
+      downsample_costmap: true
+      downsampling_factor: 2
       tolerance: 0.5
       allow_unknown: True
       max_iterations: 1000000
       max_on_approach_iterations: 1000
       max_planning_time: 5.0
+      motion_model_for_search: "REEDS_SHEPP"
+      angle_quantization_bins: 64
+      minimum_turning_radius: 1.0
+      reverse_penalty: 2.5
+      change_penalty: 0.1
+      non_straight_penalty: 1.2
       cost_penalty: 2.0
+      retire_old_nodes: true
+      lookup_table_size: 10.0
+      cache_obstacle_heuristic: true
       smooth_path: True
       smoother:
         max_iterations: 1000
@@ -246,10 +258,10 @@ velocity_smoother:
     scale_velocities: False
     feedback: "OPEN_LOOP"
     max_velocity: [2.78, 0.0, 2.0]
-    min_velocity: [-0.5, 0.0, -2.0]
+    min_velocity: [0.0, 0.0, -2.0]
     max_accel: [3.0, 0.0, 3.0]
     max_decel: [-3.0, 0.0, -3.0]
-    odom_topic: "odom"
+    odom_topic: "odometry/local"
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
     velocity_timeout: 1.0

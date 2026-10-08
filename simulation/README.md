@@ -1,331 +1,296 @@
+# 🛫 Autonomous Runway & Campus Inspection UGV Simulation System
+### ROS 2 Jazzy Jalisco · Gazebo Harmonic · Nav2 (Hybrid A* + RPP) · RTK-GNSS + IMU Dual-EKF · AgileX Scout V2
+
 <div align="center">
-
-# 🛩️ Aarhus Airport Runway Patrol & Autonomous Navigation UGV
-
-<p align="center">
-  <b>Autonomous Runway Inspection & Navigation System</b><br>
-  Modeled after <b>Aarhus Airport (IATA: AAR, ICAO: EKAH)</b><br>
-  Built with <b>ROS 2 Jazzy</b>, <b>Gazebo Sim (Harmonic)</b>, and <b>Nav2</b>.
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Location-Aarhus%20Airport%20(EKAH)-C60C30?logo=denmark&logoColor=white" alt="Aarhus Airport" />
-  <img src="https://img.shields.io/badge/ROS%202-Jazzy%20Jalisco-22314E?logo=ros&logoColor=white" alt="ROS 2 Jazzy" />
-  <img src="https://img.shields.io/badge/Gazebo-Harmonic-FF6F00?logo=gazebo&logoColor=white" alt="Gazebo Harmonic" />
-  <img src="https://img.shields.io/badge/Ubuntu-24.04%20LTS-E95420?logo=ubuntu&logoColor=white" alt="Ubuntu 24.04" />
-  <img src="https://img.shields.io/badge/Nav2-Autonomous%20Navigation-3498DB" alt="Nav2" />
-  <img src="https://img.shields.io/badge/Robot-AgileX%20Scout%20V2-2ECC71" alt="Robot Scout V2" />
-</p>
-
+  <img src="assets/rviz_inspection_view.png" alt="Autonomous UGV Nav2 Inspection View" width="850" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.3);" />
+  <p><i>Autonomous AgileX Scout V2 UGV navigating via Nav2 Hybrid A* with centimeter-accurate RTK-GNSS + 9-DOF IMU Dual-EKF localization and 1.2m costmap safety inflation.</i></p>
 </div>
 
 ---
 
-## 🎥 Simulation Demo Showcase
-
-<div align="center">
-  <table>
-    <tr>
-      <td align="center" width="50%">
-        <b>🛫 Aarhus Airport Runway Navigation & Patrol</b><br><br>
-        <a href="assets/simulation_demo.mp4">
-          <img src="assets/simulation_demo.gif" alt="Simulation Navigation Demo - Aarhus Airport" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
-        </a>
-        <br><br>
-        <sub><a href="assets/simulation_demo.mp4"><b>▶ Download / Watch Full HD Video (assets/simulation_demo.mp4)</b></a></sub>
-      </td>
-      <td align="center" width="50%">
-        <b>📍 NUS EA Field Autonomous Navigation & Avoidance</b><br><br>
-        <a href="assets/nus_ea_simulation_demo.mp4">
-          <img src="assets/nus_ea_simulation_poster.png" alt="NUS EA Field Simulation Demo Poster" width="100%" style="border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.35);" />
-        </a>
-        <br><br>
-        <sub><a href="assets/nus_ea_simulation_demo.mp4"><b>▶ Download / Watch Full 60 FPS Video (assets/nus_ea_simulation_demo.mp4)</b></a></sub>
-      </td>
-    </tr>
-  </table>
-</div>
-
----
-
-## 📖 Overview & Simulation Environments
-
-The system supports two distinct outdoor simulation environments:
-1. **Aarhus Airport Runway (EKAH)**: A 100m high-fidelity asphalt runway for centerline inspection, high-speed patrol, and dynamic FOD obstacle avoidance.
-2. **NUS EA Field**: An outdoor campus courtyard featuring intricate concrete walkways, open grass areas, buildings, and custom pedestrian obstacle layouts.
-
-<div align="center">
-  <h3>📍 1. NUS EA Field Environment</h3>
-  <table>
-    <tr>
-      <td align="center" width="50%">
-        <b>🗺️ NUS EA Field Aerial Satellite Model</b><br><br>
-        <img src="assets/nus_ea_field_texture.png" alt="NUS EA Field Aerial Satellite Model" width="100%" style="border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
-      </td>
-      <td align="center" width="50%">
-        <b>📐 NUS EA Field Dimensions & Boundaries</b><br><br>
-        <img src="assets/nus_ea_field_dimensions.png" alt="NUS EA Field Dimension Model" width="100%" style="border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
-      </td>
-    </tr>
-  </table>
-
-  <h3>📍 2. Aarhus Airport Runway (EKAH) Environment</h3>
-  <table>
-    <tr>
-      <td align="center" width="50%">
-        <b>🌐 Aarhus Airport (EKAH) Gazebo 3D Runway</b><br><br>
-        <img src="assets/gazebo_runway_world.png" alt="Aarhus Airport Gazebo Runway World" width="100%" style="border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
-      </td>
-      <td align="center" width="50%">
-        <b>🛫 Aarhus Airport Runway Surface Model</b><br><br>
-        <img src="assets/runway_ground_plane.png" alt="Aarhus Airport Runway Surface Texture" width="100%" style="border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
-      </td>
-    </tr>
-  </table>
-</div>
-
-<table>
-  <tr>
-    <td width="50%">
-      <h3>🤖 Robotic Platform</h3>
-      <ul>
-        <li><b>Chassis:</b> AgileX Scout V2 4WD differential-drive rover</li>
-        <li><b>2D LiDAR:</b> Hokuyo laser scanner (<code>/scan</code>) for obstacle avoidance & costmap generation</li>
-        <li><b>Forward Camera:</b> Optical sensor (<code>/camera/image_raw</code>) for forward visual feed</li>
-        <li><b>State Estimation:</b> Wheel odometry + static runway map alignment</li>
-      </ul>
-    </td>
-    <td width="50%">
-      <h3>🧠 Autonomous Stack</h3>
-      <ul>
-        <li><b>Global Planning:</b> Nav2 Smac Planner 2D (A*) for collision-free shortest paths with zero-radius pivot turn support</li>
-        <li><b>Local Controller:</b> Regulated Pure Pursuit (RPP) with curvature speed scaling & in-place rotation</li>
-        <li><b>Navigation Speed:</b> High-speed patrol up to <b>10 km/h</b> (2.78 m/s) with dynamic cornering regulation</li>
-        <li><b>Obstacle Avoidance:</b> Expanded 1.20m inflation safety boundary around obstacles & pedestrians</li>
-        <li><b>Visualization:</b> Pre-configured RViz2 inspection interface</li>
-      </ul>
-    </td>
-  </tr>
-</table>
-
----
-
-## 🗂️ Repository Architecture
+## 🗂️ 1. File Tree & Repository Architecture
 
 ```text
 runway_sim_ws/
-├── assets/                   # Simulation demo video recordings, snapshots, & poster previews
-│   ├── simulation_demo.mp4   # Full simulation demonstration video (HD 60fps)
-│   ├── simulation_demo.gif   # Animated simulation demo preview (auto-plays on GitHub)
-│   ├── demo_poster.jpg       # Video preview poster
-│   ├── gazebo_runway_world.png # Gazebo 3D simulation runway world snapshot
-│   ├── runway_ground_plane.png # Airport runway surface terrain model
-│   └── rviz_inspection_view.png # RViz autonomous navigation screenshot
-├── src/
-│   ├── 📦 runway_description/       # URDF/XACRO model, sensor meshes, and Gazebo world
-│   │   ├── launch/sim.launch.py     # Gazebo Harmonic launcher + ROS-GZ bridges
-│   │   ├── meshes/                  # Base link, Hokuyo LiDAR, and wheel meshes (.dae)
-│   │   ├── models/                  # Airport runway terrain, lighting, & person obstacle models
-│   │   ├── urdf/                    # Scout V2 xacro definitions & sensor mount transforms
-│   │   └── worlds/airport_runway.sdf # High-fidelity runway environment
-│   │
-│   └── 🧭 runway_navigation/        # Nav2 autonomous navigation & costmap stack
-│       ├── config/nav2_params.yaml  # Tuned Nav2 parameters for ROS 2 Jazzy
-│       ├── launch/bringup_nav2.launch.py # Map server, transforms, and Nav2 lifecycle
-│       ├── launch/runway_navigation_launch.py # Custom lightweight navigation launcher
-│       ├── maps/                    # 100m × 20m occupancy grid map (runway_map.yaml/pgm)
-│       └── rviz/runway_nav2.rviz    # Pre-configured RViz2 inspection interface
+├── assets/                          # Demonstration snapshots, recordings, and media
+│   ├── simulation_demo.mp4          # HD simulation demo video
+│   ├── simulation_demo.gif          # Simulation demo animated preview
+│   ├── gazebo_runway_world.png      # Gazebo 3D simulation runway snapshot
+│   ├── runway_ground_plane.png      # Airport runway surface terrain model
+│   └── rviz_inspection_view.png     # RViz2 autonomous navigation snapshot
 │
-└── 📄 README.md
+├── src/
+│   ├── 📦 runway_description/       # Robot model, sensors, and 3D simulation worlds
+│   │   ├── launch/
+│   │   │   └── sim.launch.py        # Gazebo Harmonic launcher + ros_gz_bridge pipelines
+│   │   ├── meshes/                  # Chassis base link, Hokuyo LiDAR, and wheel meshes (.dae)
+│   │   ├── models/                  # Ground planes, airfield lighting, & person obstacle models
+│   │   ├── urdf/
+│   │   │   ├── scout_v2.xacro       # AgileX Scout V2 robot model & sensor definitions
+│   │   │   └── ugv.urdf.xacro       # Top-level URDF robot description entry point
+│   │   └── worlds/
+│   │       ├── airport_runway.sdf   # 100m asphalt runway environment (Aarhus EKAH datum)
+│   │       └── nus_ea_field.sdf     # NUS EA courtyard environment (Singapore datum)
+│   │
+│   ├── 🧭 runway_navigation/        # Nav2 navigation stack & sensor fusion configs
+│   │   ├── config/
+│   │   │   ├── ekf.yaml             # Dual-EKF + NavSat transform config (Airport Runway)
+│   │   │   ├── ekf_nus.yaml         # Dual-EKF + NavSat transform config (NUS EA Field)
+│   │   │   └── nav2_params.yaml     # Tuned Nav2 SmacPlannerHybrid & RPP parameters
+│   │   ├── launch/
+│   │   │   ├── bringup_nav2.launch.py     # Map server, Dual-EKF, Nav2, and RViz2 launcher
+│   │   │   ├── runway_navigation_launch.py # Custom Nav2 lifecycle component launcher
+│   │   │   └── sim_and_nav.launch.py      # All-in-one unified simulator & navigation launcher
+│   │   ├── maps/
+│   │   │   ├── runway_map.yaml/.pgm # 100m × 20m high-resolution runway occupancy grid
+│   │   │   └── nus_ea_field.yaml/.pgm # High-resolution NUS EA courtyard occupancy grid
+│   │   └── rviz/
+│   │       └── runway_nav2.rviz     # Pre-configured RViz2 inspection interface
+│   │
+│   └── 📡 runway_communication/     # Inter-agent C2 telemetry, task ledger, and goal queue
+│       ├── runway_communication/
+│       │   ├── ugv_c2_bridge_node.py # C2 telemetry bridge, FIFO queue, & task state machine
+│       │   ├── uav_waypoint_commander.py # Tactical radar HUD GUI & headless CLI node
+│       │   └── DemoComs_C2.py       # Automated multi-target FOD alert transmitter script
+│       └── package.xml
+│
+├── 🚁 rpi5_uav/                     # Standalone deployment package for Raspberry Pi 5
+│   ├── uav_waypoint_commander.py    # Tactical GUI HUD & headless CLI
+│   ├── DemoComs_C2.py               # Charan automated multi-target FOD alert dispatcher
+│   ├── run_uav_gui.sh               # 1-Click launcher for 2D Tactical HUD GUI
+│   ├── run_uav_demo.sh              # 1-Click launcher for Charan automated demo
+│   ├── run_uav_headless.sh          # 1-Click launcher for Headless SSH CLI
+│   ├── setup_dds.sh                 # CycloneDDS environment setup script
+│   ├── cyclonedds.xml               # Unicast peer discovery configuration
+│   └── README.md                    # Dedicated RPi 5 setup and operations guide
+│
+├── 💾 Backup/                       # Backup folder preserving previous documentation
+│   ├── README_original.md           # Original repository README backup
+│   ├── README_rpi5_original.md      # Original RPi 5 documentation backup
+│   └── Phase1_ugvuav_communications.md # Phase 1 communications protocol backup
+│
+├── sync_to_repo.py                  # Automated workspace sync to external report repository
+└── 📄 README.md                     # Master simulation documentation
 ```
 
 ---
 
-## ⚙️ Prerequisites & One-Time Installation
+## 🤖 2. What Has Been Simulated
 
-If you are setting this up on a fresh machine or have never used ROS 2 before, follow these steps:
+The simulation models an industrial airport Ground Support Equipment (GSE) and runway patrol rover operating in Gazebo Harmonic with physical sensor bridges to ROS 2 Jazzy.
 
-### 1. System Requirements
-- **Operating System:** Ubuntu 24.04 LTS (Noble Numbat)
-- **ROS Version:** ROS 2 Jazzy Jalisco
-- **Simulator:** Gazebo Sim (Harmonic / `gz-sim`)
+```
+                      [ Gazebo Harmonic Simulation ]
+               ┌───────────────────────┴───────────────────────┐
+               ▼                                               ▼
+      /imu/data (50 Hz)                               /gps/fix (10 Hz)
+   [9-DOF Gyro & Accel]                           [Centimeter RTK NavSat]
+               │                                               │
+               │                                               ▼
+               │                                    ┌──────────────────────┐
+               │                                    │  navsat_transform    │
+               │                                    │  (Datum WGS84 ->     │
+               │                                    │   Local Cartesian)   │
+               │                                    └──────────┬───────────┘
+               │                                               │
+               ├───────────────────┬───────────────┐           │ /odometry/gps
+               │                   │               │           │
+               ▼                   │               ▼           ▼
+  ┌─────────────────────────┐      │     ┌────────────────────────────┐
+  │  ekf_filter_node_odom   │      │     │    ekf_filter_node_map     │
+  │  (Local Continuous EKF) │      │     │    (Global Absolute EKF)   │
+  └────────────┬────────────┘      │     └─────────────┬──────────────┘
+  Fuses /odom  │                   │     Fuses /odometry/local +
+  + IMU ω_z    ▼                   │     /odometry/gps + IMU yaw
+      Publishes TF:                │                   ▼
+   odom -> base_footprint          │             Publishes TF:
+   Topic: /odometry/local          └───────────>   map -> odom
+```
 
-### 2. Install Required Packages
-Open a terminal (<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>T</kbd>) and run:
+### 1. Robot Platform & Physical Sensors
+* **Chassis (AgileX Scout 2.0)**: 4WD skid-steer / differential-drive outdoor rover modeled in URDF/Xacro with authentic mass ($65\text{ kg}$), wheel inertias, suspension clearance, and realistic ground contact friction.
+* **2D LiDAR (Hokuyo Laser Scanner)**: Mounted on the elevated mast (`lidar_link`), publishing `/scan` at 10 Hz with 360 laser beams and a $30.0\text{ m}$ range for real-time obstacle avoidance and dynamic costmap clearing.
+* **RTK-GNSS GPS Receiver**: Simulated high-precision dual-frequency carrier-phase GNSS receiver (`gps_link`), publishing `/gps/fix` at 10 Hz with sub-centimeter position accuracy referenced to the Gazebo world spherical coordinates datum.
+* **9-DOF IMU**: Solid-state inertial measurement unit (`imu_link`), publishing `/imu/data` at 50 Hz measuring high-rate angular velocity ($\omega_z$) and linear acceleration ($a_x, a_y$).
+* **Forward Camera**: Optical color sensor mounted on the chassis (`camera_link`), publishing `/camera/image_raw` at 30 Hz ($640 \times 480$) for forward visual verification of Foreign Object Debris (FOD).
+
+---
+
+### 2. Dual-EKF Sensor Fusion Architecture
+
+#### Why Raw Wheel Odometry Is NOT Enough
+1. **Skid-Steer Tire Scrubbing**: The AgileX Scout 2.0 turns by running left and right wheels at differential speeds without a mechanical steering rack. During any turn, the tires physically scrub sideways across the ground. Wheel encoders assume pure rolling contact without slip, causing open-loop wheel odometry to accumulate severe heading and positional drift within seconds.
+2. **Geometric Degeneracy on Runways (AMCL Failure)**: In an airport runway environment, there are no walls or vertical structures within 2D LiDAR range ($30\text{ m}$). Standard scan-matching and AMCL particle filters suffer from catastrophic geometric degeneracy (the featureless corridor problem) and cannot localize the robot.
+
+#### How Dual-EKF Solves This Problem
+To mirror real-world autonomous airport GSE, the system uses the industry-standard **Dual Extended Kalman Filter (`robot_localization`) + NavSat Transform** architecture:
+
+1. **Local EKF (`ekf_filter_node_odom`)**:
+   - **Inputs**: Wheel odometry linear velocities ($v_x, v_y$) + IMU angular rate ($\omega_z$).
+   - **Function**: Ignores wheel encoder yaw rate and uses the drift-free IMU gyroscope to track orientation.
+   - **Output**: Publishes smooth, continuous `odom -> base_footprint` transforms and `/odometry/local` at 30 Hz for the Nav2 controller.
+2. **NavSat Transform Node (`navsat_transform`)**:
+   - **Inputs**: Raw WGS-84 coordinates (`/gps/fix`) + IMU orientation (`/imu/data`).
+   - **Function**: Projects spherical latitude/longitude fixes onto a local flat ENU Cartesian tangent plane referenced to the world origin datum (`use_local_cartesian: true`).
+   - **Output**: Publishes Cartesian `/odometry/gps` in the `map` frame.
+3. **Global EKF (`ekf_filter_node_map`)**:
+   - **Inputs**: Local filtered odometry (`/odometry/local`) + RTK-GNSS Cartesian pose (`/odometry/gps`) + IMU absolute heading.
+   - **Function**: Continuously corrects any long-term drift against ground truth.
+   - **Output**: Publishes dynamic `map -> odom` transforms at 30 Hz, anchoring the robot to sub-centimeter truth ($< 4\text{ mm}$ measured error).
+
+---
+
+## 🧠 3. Autonomous Navigation Stack (Nav2)
+
+<div align="center">
+  <table>
+    <tr>
+      <th width="50%">Global Planner: SmacPlannerHybrid</th>
+      <th width="50%">Local Controller: Regulated Pure Pursuit (RPP)</th>
+    </tr>
+    <tr>
+      <td>
+        <ul>
+          <li><b>Kinematic Model:</b> Reeds-Shepp continuous curvature arcs</li>
+          <li><b>Minimum Turning Radius:</b> $R \ge 1.0\text{ m}$</li>
+          <li><b>Heuristic Table Size:</b> $10.0\text{ m}$ lookup radius</li>
+          <li><b>Costmap Downsampling:</b> Factor of 2 optimization</li>
+          <li><b>Eliminates:</b> Zero-radius in-place skid scrubbing</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li><b>Regulated Speed:</b> Curvature & obstacle slowdown</li>
+          <li><b>Maximum Speed:</b> $10.0\text{ km/h}$ ($2.78\text{ m/s}$)</li>
+          <li><b>Desired Patrol Speed:</b> $8.0\text{ km/h}$ ($2.22\text{ m/s}$)</li>
+          <li><b>Lookahead Distance:</b> Dynamic $0.6\text{ m} \rightarrow 1.8\text{ m}$</li>
+          <li><b>Rotate to Heading:</b> Enabled for initial alignment</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</div>
+
+### 1. Global Planner: SmacPlannerHybrid vs Alternatives
+* **Selected: `nav2_smac_planner::SmacPlannerHybrid` (Hybrid A*)**:
+  - Plans kinematically feasible, continuous-curvature paths using Reeds-Shepp curves that respect the vehicle's minimum turning radius ($R \ge 1.0\text{ m}$).
+  - Paths consist of smooth driving arcs that keep all 4 wheels rolling forward, preventing skid-steer scrubbing.
+* **Why Alternatives Were Rejected**:
+  - *NavFn / 2D Grid A* / Dijkstra*: Produce piecewise linear paths with sharp 90° corners. Following these paths forces a 4WD rover to execute abrupt zero-radius turns in place, violently scrubbing tires, shaking sensors, and destabilizing state estimation.
+  - *SmacPlannerLattice / Theta**: High computational cost on large maps without guaranteeing continuous steering curvature.
+
+### 2. Local Controller: Regulated Pure Pursuit vs Alternatives
+* **Selected: `nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController` (RPP)**:
+  - Dynamically regulates linear speed based on path curvature (slowing down entering sharp bends and accelerating on straightaways up to $10\text{ km/h}$).
+  - Slows down when approaching proximity obstacles for heightened safety.
+  - Exceptionally stable at high speeds ($2.22\text{ m/s}$ to $2.78\text{ m/s}$) with zero trajectory hunting.
+* **Why Alternatives Were Rejected**:
+  - *DWB (Dynamic Window Approach)*: Often suffers from trajectory oscillation and indecision in narrow walkways between obstacles.
+  - *TEB (Timed Elastic Band)*: Computationally expensive on high-rate loops and prone to local minima flips when pedestrians pass nearby.
+
+### 3. Nav2 Performance & Safety Configuration
+* **Planner Heuristic Optimization**: In ultra-high-resolution maps ($0.028\text{ m/cell}$), default Hybrid A* configurations allocate over 36 million states, freezing initialization for over 35 seconds. By enabling `downsample_costmap: true` (factor 2) and setting `lookup_table_size: 10.0`, planner initialization drops from 35s down to **2.2 seconds**.
+* **Safety Inflation Layer**: A **$1.20\text{ m}$ inflation radius** surrounds all obstacles and pedestrians with exponential cost decay. The robot maintains a generous safety buffer and will not clip corners or brush past airport ground personnel.
+
+---
+
+## 🚀 4. Step-by-Step Instructions to Run the Simulation
+
+### 1. Prerequisites & Installation
+Ensure you are running **Ubuntu 24.04 LTS** with **ROS 2 Jazzy Jalisco**:
 
 ```bash
-sudo apt update && sudo apt install -y \
-  python3-colcon-common-extensions \
+# 1. Install ROS 2 Jazzy, Nav2, Gazebo Harmonic, and Robot Localization
+sudo apt update
+sudo apt install -y \
   ros-jazzy-navigation2 \
   ros-jazzy-nav2-bringup \
-  ros-jazzy-ros-gz-sim \
-  ros-jazzy-ros-gz-bridge \
-  ros-jazzy-robot-state-publisher \
-  ros-jazzy-joint-state-publisher \
-  ros-jazzy-xacro \
-  ros-jazzy-tf2-ros \
-  ros-jazzy-tf2-tools
-```
+  ros-jazzy-nav2-smac-planner \
+  ros-jazzy-robot-localization \
+  ros-jazzy-ros-gz \
+  ros-jazzy-tf2-tools \
+  python3-colcon-common-extensions
 
----
+# 2. Clone or download the workspace
+cd ~
+# If using git:
+git clone <repository_url> runway_sim_ws
+# If downloaded as a ZIP:
+# unzip runway_sim_ws.zip -d ~/runway_sim_ws
 
-## 🔨 Building the Project
-
-Before running the simulation for the first time (or whenever code is modified), build the workspace:
-
-```bash
+# 3. Build the workspace
 cd ~/runway_sim_ws
 source /opt/ros/jazzy/setup.bash
 colcon build --symlink-install
 source install/setup.bash
 ```
 
-> [!NOTE]
-> *`source /opt/ros/jazzy/setup.bash` loads ROS 2 commands, and `source install/setup.bash` loads this project's custom packages into the current terminal.*
+---
+
+### 2. Command Line to Launch Simulation & Navigation
+Launch Gazebo Harmonic, the Dual-EKF localization pipeline, Nav2, and RViz2 together in a **single terminal window**:
+
+#### For NUS EA Field (Campus Courtyard):
+```bash
+source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
+ros2 launch runway_navigation sim_and_nav.launch.py world_name:=nus_ea_field
+```
+
+#### For Aarhus Airport Runway (EKAH 100m Airfield):
+```bash
+source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
+ros2 launch runway_navigation sim_and_nav.launch.py world_name:=airport_runway
+```
+
+*(Gazebo Harmonic boots first, followed automatically after 3.5 seconds by Nav2 and RViz2. Press <kbd>Ctrl</kbd>+<kbd>C</kbd> in this terminal to shut down all processes cleanly together).*
 
 ---
 
-## 🚀 Step-by-Step Running Guide
+### 3. Command Line to Spawn Obstacles (Near Starting Locations)
+Open a **second terminal** to spawn human pedestrian obstacles directly in front of the robot to test real-time obstacle avoidance:
 
-Running the simulation requires **2 separate terminal windows** (or 2 tabs). You can run either the **NUS EA Field** or the **Aarhus Airport Runway** environment.
-
----
-
-### 🟢 Environment 1: NUS EA Field (Courtyard & Walkways)
-
-#### **Terminal 1: Start Gazebo Simulation**
+#### For NUS EA Field (Robot starts at $x = -25.0, y = 0.0$):
 ```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
-ros2 launch runway_description sim_nus_ea.launch.py
-```
-*(Wait ~5 seconds for Gazebo to load)*
-
-#### **Terminal 2: Start Nav2 & RViz2**
-```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
-ros2 launch runway_navigation bringup_nav2.launch.py world_name:=nus_ea_field
+source /opt/ros/jazzy/setup.bash
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_start_1 -x -21.0 -y 1.2 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_start_2 -x -17.5 -y -1.5 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_start_3 -x -13.0 -y 0.5 -z 0.0
 ```
 
-#### **Terminal 3 (Optional): Spawn people on Walkways & Courtyard**
+#### For Aarhus Airport Runway (Robot starts at $x = 0.0, y = 0.0$):
 ```bash
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_1 -x -1.95 -y 10.32 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_2 -x 4.39 -y 8.48 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_3 -x 4.24 -y 7.52 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_4 -x 7.59 -y 10.24 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_5 -x 10.71 -y 9.51 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_6 -x 10.57 -y 7.11 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_7 -x 14.56 -y 8.61 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_8 -x 17.84 -y 9.78 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_9 -x -5.13 -y 5.14 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_10 -x -5.85 -y 4.59 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_11 -x -12.62 -y 2.65 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_12 -x -13.04 -y 1.90 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_13 -x -19.93 -y 2.28 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_14 -x -17.67 -y 0.23 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_15 -x -10.32 -y -0.28 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_16 -x -5.43 -y -0.36 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_17 -x -20.63 -y -3.27 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_18 -x -14.62 -y -2.43 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_19 -x -9.53 -y -3.50 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_20 -x -7.45 -y -7.32 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_21 -x -9.38 -y -9.60 -z 0.0
+source /opt/ros/jazzy/setup.bash
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_runway_1 -x 6.0 -y 1.0 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_runway_2 -x 11.5 -y -1.2 -z 0.0 && \
+ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_runway_3 -x 18.0 -y 0.0 -z 0.0
 ```
 
 ---
 
-### 🟢 Environment 2: Aarhus Airport Runway (EKAH)
-
-#### **Terminal 1: Start Gazebo Simulation**
-```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
-ros2 launch runway_description sim_airport.launch.py
-```
-
-#### **Terminal 2: Start Nav2 & RViz2**
-```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
-ros2 launch runway_navigation bringup_nav2.launch.py
-```
-
-#### **Terminal 3 (Optional): Spawn people on runway**
-```bash
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_1 -x 4.0 -y 0.5 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_2 -x 5.5 -y -1.0 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_3 -x 7.0 -y 0.0 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_4 -x 8.5 -y 1.5 -z 0.0 && \
-ros2 run ros_gz_sim create -file ~/runway_sim_ws/src/runway_description/models/person/model.sdf -name person_5 -x 10.0 -y -0.5 -z 0.0
-```
-
----
-
-## 🕹️ How to Drive & Navigate the Robot
+### 4. How to Drive & Navigate the Robot in RViz2
 
 <div align="center">
   <img src="assets/rviz_inspection_view.png" alt="Nav2 RViz Inspection View" width="750" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);" />
 </div>
 
-Follow these simple mouse actions in the **RViz2 window**:
-
-1. Look at the top toolbar in RViz2 and click the **`Nav2 Goal`** button (or press the <kbd>g</kbd> key on your keyboard).
-2. Move your cursor to the desired destination on the map.
-3. **Left-click and hold** at your desired destination point.
-4. **Drag the mouse** in the direction you want the robot to face when it arrives.
+1. In the **RViz2 window**, look at the top toolbar and click the **`Nav2 Goal`** button (or press the <kbd>g</kbd> key on your keyboard).
+2. Move your cursor to any walkway or runway location where you want the robot to go.
+3. **Left-click and hold** at the destination point.
+4. **Drag the green arrow** in the direction you want the robot to face when it arrives.
 5. **Release the mouse button**.
 
-**Result:**
-- A **green line** (global path) will appear connecting the robot to the goal.
-- The robot will immediately start driving autonomously in both Gazebo and RViz2 while dynamically avoiding any spawned obstacles!
+> [!IMPORTANT]
+> **No Manual "2D Pose Estimate" Required!**  
+> Because the RTK-GNSS + IMU Dual-EKF continuously anchors the UGV to ground truth, you **never** need to manually estimate the robot's pose. Nav2 is ready to plan immediately upon startup.
 
 ---
 
-## ⚡ Nav2 Performance & Kinematics Configuration
+## 🚁 5. Raspberry Pi 5 — UAV Tactical C2 Integration
 
-The autonomous navigation stack has been optimized for the AgileX Scout v2 4WD platform:
+For instructions on deploying the companion UAV Tactical Command & Control Station on a physical Raspberry Pi 5, connecting over the wireless datalink, and running the graphical radar HUD or automated multi-target alert demo:
 
-| Parameter | Value | Description |
-| :--- | :--- | :--- |
-| **Global Planner** | `SmacPlanner2D` | 2D A* grid planner with full 0-radius pivot rotation support |
-| **Local Controller** | `RegulatedPurePursuitController` | Path tracking with lookahead regulation & collision detection |
-| **Max Linear Velocity** | **$2.78\text{ m/s}$ ($10.0\text{ km/h}$)** | High-speed runway & courtyard traverse |
-| **Min Lookahead Distance** | **$1.00\text{ m}$** (Max: $3.50\text{ m}$) | Lookahead dynamically scaled with vehicle speed |
-| **Rotate-to-Heading** | `True` ($\Delta\theta > 45^\circ$) | In-place zero-radius turns before setting off on new path segments |
-| **Curvature Speed Scaling** | $R_{\min} = 1.20\text{ m}$, $V_{\min} = 0.60\text{ m/s}$ | Automatically reduces speed on tight corners to prevent skid-steer drift |
-| **Inflation Radius** | **$1.20\text{ m}$** (`cost_scaling_factor: 2.0`) | Enhanced safety margin around dynamic pedestrian obstacles |
+👉 **[Read the Raspberry Pi 5 UAV Tactical Commander Guide](rpi5_uav/README.md)**
 
----
-
-## 🚁 Raspberry Pi 5 (Simulated UAV) Waypoint Integration
-
-You can connect an external **Raspberry Pi 5** (or simulated UAV node) over your local network to:
-1. **View the live map** (NUS EA Field or Runway) and real-time UGV location.
-2. **Send navigation goals** (single clicks or multi-point patrol missions) directly from the RPi5 to the UGV in Gazebo.
-
-### Quick Start on RPi5:
-```bash
-# 1. Ensure matching ROS_DOMAIN_ID on both PC and RPi5:
-export ROS_DOMAIN_ID=0
-
-# 2. Launch interactive 2D map viewer & waypoint sender:
-ros2 run runway_navigation uav_waypoint_commander
-```
-> 📖 **Full Setup Instructions:** See the complete [Phase 1 UAV-UGV Communication Guide](file:///home/oliver/runway_sim_ws/Phase1_ugvuav_communications.md) for network setup, headless CLI mode, and Python script automation.
-
----
-
-## 🛑 How to Stop & Clean Up
-
-When you are done:
-1. Go to each open terminal and press <kbd>Ctrl</kbd> + <kbd>C</kbd> to stop the running nodes.
-2. If any background Gazebo or ROS 2 process remains open, run this cleanup command:
-
-```bash
-pkill -9 -f "gz sim|gzserver" 2>/dev/null; pkill -9 -f "ros2" 2>/dev/null; pkill -9 -f "rviz" 2>/dev/null; sleep 2
-```
-
----
-
-<div align="center">
-  <sub>Runway & Outdoor Patrol Autonomous Inspection System • ROS 2 Jazzy & Gazebo Harmonic</sub>
-</div>
-
-
+* **Run Interactive 2D Tactical HUD GUI**: `./run_uav_gui.sh` (or `python3 uav_waypoint_commander.py`)
+* **Run Charan Automated FOD Alerts Demo**: `./run_uav_demo.sh` (or `python3 DemoComs_C2.py`)
+* **Run Headless Terminal SSH CLI**: `./run_uav_headless.sh`

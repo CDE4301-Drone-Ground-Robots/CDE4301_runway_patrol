@@ -18,6 +18,8 @@ Panels:
       - /Current View1
     Name: Views
     Splitter Ratio: 0.5
+  - Class: nav2_rviz_plugins/Navigation 2
+    Name: Navigation 2
 Visualization Manager:
   Class: ""
   Displays:
@@ -39,7 +41,7 @@ Visualization Manager:
       Plane Cell Count: 80
       Reference Frame: <Fixed Frame>
       Value: true
-    - Alpha: 0.699999988079071
+    - Alpha: 0.35
       Binary representation: false
       Binary threshold: 100
       Class: rviz_default_plugins/Map
@@ -62,7 +64,7 @@ Visualization Manager:
         Value: /map_updates
       Use Timestamp: false
       Value: true
-    - Alpha: 0.3499999940395355
+    - Alpha: 0.55
       Binary representation: false
       Binary threshold: 100
       Class: rviz_default_plugins/Map
@@ -85,7 +87,7 @@ Visualization Manager:
         Value: /global_costmap/costmap_updates
       Use Timestamp: false
       Value: true
-    - Alpha: 0.550000011920929
+    - Alpha: 0.65
       Binary representation: false
       Binary threshold: 100
       Class: rviz_default_plugins/Map
@@ -363,6 +365,22 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /particlecloud
       Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Queued Waypoints (C2)
+      Namespaces:
+        active_label: true
+        active_target: true
+        queue_breadcrumbs: true
+        queued_labels: true
+        queued_targets: true
+      Topic:
+        Depth: 10
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /c2/queued_waypoints_markers
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -392,22 +410,7 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /goal_pose
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Name: Queued Waypoints (C2)
-      Namespaces:
-        active_label: true
-        active_target: true
-        queue_breadcrumbs: true
-        queued_labels: true
-        queued_targets: true
-      Topic:
-        Depth: 10
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /c2/queued_waypoints_markers
-      Value: true
+    - Class: nav2_rviz_plugins/GoalTool
   Transformation:
     Current:
       Class: rviz_default_plugins/TF
