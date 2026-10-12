@@ -487,28 +487,28 @@
             <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px;">
               <h4 style="color: var(--accent-rose); font-size: 14px; margin-bottom: 6px;">1. Primary 48V Power &amp; Kill Loop</h4>
               <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                [To be filled in]
+                The 48V 20Ah LiFePO₄ battery supplies the main power bus through a 100A BMS, 100A main fuse and 100A kill switch. Power is distributed through individually fused circuits to the hub motors, vacuum and DC-DC converters. The kill switch provides emergency power isolation, while the BMS monitors battery conditions and protects against electrical faults.
               </p>
             </div>
 
             <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px;">
               <h4 style="color: var(--accent-amber); font-size: 14px; margin-bottom: 6px;">2. 20V Laptop Power Sub-Circuit</h4>
               <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                [To be filled in]
+                A dedicated 48V-to-20V, 10A buck converter supplies regulated power to Hilbert's onboard laptop through a protected auxiliary circuit. The laptop handles ROS 2 processing, navigation and high-level control while communicating with the STM32 microcontroller. This separates computing power requirements from the high-current motor and vacuum circuits.
               </p>
             </div>
 
             <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px;">
               <h4 style="color: var(--accent-emerald); font-size: 14px; margin-bottom: 6px;">3. Direct-Drive Hub Motor Train</h4>
               <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                [To be filled in]
+                Two 48V ZLLG80ASM25 hub motors are controlled by the ZLAC8015D V4.2 dual-channel servo driver, supplied through a dedicated 50A ANM fuse. The STM32 communicates with the driver via CAN bus to control motor speed and direction. The direct-drive configuration eliminates mechanical transmission components, reducing maintenance and improving drivetrain efficiency.
               </p>
             </div>
 
             <div style="background: var(--bg-hover); padding: 16px; border-radius: 8px;">
               <h4 style="color: var(--accent-blue); font-size: 14px; margin-bottom: 6px;">4. Automotive Vision &amp; Navigation</h4>
               <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0;">
-                [To be filled in]
+                Dedicated 12V and 5V buck converters supply regulated power to auxiliary electronics, sensors and the STM32 F446RE. The STM32 interfaces with the UM980 GPS and motor driver, while the onboard laptop processes navigation and perception data. Separate low-voltage rails support reliable sensor operation and reduce interference from high-power loads.
               </p>
             </div>
           </div>
