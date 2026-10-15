@@ -60,122 +60,377 @@
     <a href="../../7-documentation.html">Documentation</a>
   </div>
 
-        <!-- SECTION 1 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 4.1.1</span><h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Requirements and Constraints Involved in Design</h2></div><span class="badge badge-rose">Asuka</span></div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">The suspension subsystem for the <strong>65 kg autonomous runway FOD patrol UGV</strong> is governed by five core engineering constraints:</p>
-          <ol style="padding-left: 22px; font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65;">
-            <li><strong>Natural frequency upper ceiling:</strong> Frequency &lt; 10 Hz. This project-advisor requirement ensures mechanical low-pass filtering and keeps suspension resonance well below optical sensor and LiDAR frame rates of 10-30 Hz.</li>
-            <li><strong>Stroke budget:</strong> Maximum 20 mm, set by the physical compression travel limit of the selected shock absorbers.</li>
-            <li><strong>Static operating sag:</strong> 40%-50% of stroke. Static deflection under gravity must sit near 8-10 mm to centre the shock piston and provide equal headroom for bump compression and droop travel.</li>
-            <li><strong>Operating speed:</strong> 10-15 km/h, or 2.8-4.2 m/s. Crossing asphalt expansion joints and runway seams at 4 m/s creates high-frequency impulses that must be dissipated without chassis bouncing.</li>
-            <li><strong>Corner mass budget:</strong> 16.25 kg per corner, calculated from the 65 kg UGV mass divided evenly across four wheels.</li>
-          </ol>
-        </div>
+  <!-- MAIN PAGE CONTENT -->
+  <main class="apple-main-content">
+    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
 
-        <!-- SECTION 2 -->
+      <!-- HERO HEADER -->
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
+        <div class="apple-hero-badge">Mechanical Subsystem • Asuka</div>
+        <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 12px;">
+          Suspension Design and Calculations
+        </h1>
+      </div>
+
+      <div class="page-content">
+
+        <!-- SECTION 1: PURPOSE & REQUIREMENTS -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 4.1.2</span><h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Importance of the Suspension Subsystem</h2></div></div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">On an autonomous runway inspection robot, the suspension is a mission-enabling subsystem with four vital roles:</p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 14px;">
-            <div class="callout callout-blue"><strong>Perception deck and sensor protection</strong><br>High-frequency frame chatter induces point-cloud jitter on 3D LiDARs and motion blur on optical-flow cameras. The suspension acts as a low-pass filter below 10 Hz.</div>
-            <div class="callout callout-purple"><strong>Vacuum intake hood and suction seal</strong><br>Vacuum retrieval depends on consistent ground clearance to preserve the high-speed air boundary layer. Chassis bounce breaks the seal and reduces debris-lifting capability.</div>
-            <div class="callout callout-emerald"><strong>Tire traction and skid-steer control</strong><br>A four-wheel differential-drive robot turns by forcing tires to slide laterally. Suspension maintains normal force F<sub>z</sub> &gt; 0 over bumps, preventing wheel lift, motor overspeed, and odometry slip.</div>
-            <div class="callout callout-amber"><strong>Structural fatigue and shock dissipation</strong><br>The suspension absorbs transient kinetic energy and protects battery packs, motor gearboxes, frame joints, and other internal components from impact spikes.</div>
+          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Purpose and Requirements</h2></div><span class="badge badge-rose">Asuka</span></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px; margin-top: 14px;">
+            <div class="callout callout-blue">
+              <strong>Purpose</strong>
+              <ol style="padding-left: 20px; margin: 8px 0 0; line-height: 1.65;">
+                <li>Filter out jitter to ensure computer vision works.</li>
+                <li>Minimise vibration to protect other hardware parts.</li>
+                <li>Give the FOD Hunter even contact with the ground.</li>
+              </ol>
+            </div>
+            <div class="callout callout-emerald">
+              <strong>Requirements</strong>
+              <ol style="padding-left: 20px; margin: 8px 0 0; line-height: 1.65;">
+                <li>Static sag = ½ of stroke length.</li>
+                <li>Natural frequency &lt; 10 Hz.</li>
+              </ol>
+            </div>
           </div>
         </div>
 
-        <!-- SECTION 3 -->
+        <!-- SECTION 2: DESIGN MODEL -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 4.2.1</span><h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">First Principles Approach</h2></div></div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">Assuming rigid tire behaviour, the single-corner system reduces to a 1 Degree of Freedom mass-spring-damper system. The sprung mass is connected to the road profile through the spring k<sub>s</sub> and damper c<sub>s</sub>.</p>
-          <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.03)); border: 1px solid var(--border-color); border-radius: 8px; padding: 18px; margin-top: 14px; text-align: center; font-family: var(--font-mono); color: var(--text-main); white-space: pre-wrap;">        Sprung Mass (m)     x_s(t) output
+          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 2</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Suspension Design Model</h2></div></div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 14px;">Each corner is modelled as a corner mass supported by a spring and a dampener in parallel, sitting on a wheel assumed to be 100% rigid. To describe the physical relationship between the input (road profile) and the output (position of the chassis), we find the transfer function.</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 18px; margin-top: 16px;">
+            <figure style="margin: 0; text-align: center;">
+              <svg viewBox="0 0 300 330" role="img" aria-label="Corner mass on spring and dampener above a rigid wheel" style="width: 100%; max-width: 320px; color: var(--text-main); font-family: var(--font-apple);">
+                <g fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="105" y="10" width="90" height="50" rx="4" fill="var(--accent-amber-light)" stroke="var(--accent-amber)"/>
+                  <path d="M150 60 V80 M110 80 H190 M110 80 V100 L100 107 L120 121 L100 135 L120 149 L110 156 V170 M190 80 V105 M175 105 H205 M178 105 V140 H202 V105 M190 125 V170 M110 170 H190 M150 170 V190"/>
+                  <circle cx="150" cy="235" r="45"/>
+                  <rect x="20" y="280" width="260" height="45" fill="var(--apple-border-highlight)" stroke="none"/>
+                </g>
+                <g fill="currentColor" font-size="13" text-anchor="middle">
+                  <text x="150" y="32">Corner</text><text x="150" y="48">Mass</text>
+                  <text x="62" y="133">Spring</text><text x="245" y="128">Dampener</text>
+                  <text x="150" y="228">Wheel</text><text x="150" y="245">(100% rigid)</text>
+                  <text x="150" y="308">Ground</text>
+                </g>
+              </svg>
+              <figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Single-corner model.</figcaption>
+            </figure>
+            <figure style="margin: 0; text-align: center;">
+              <svg viewBox="0 0 340 330" role="img" aria-label="Free body diagram with road profile input x(t) and chassis displacement output y(t)" style="width: 100%; max-width: 360px; color: var(--text-main); font-family: var(--font-apple);">
+                <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs>
+                <g fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="125" y="90" width="90" height="50" rx="4" fill="var(--accent-amber-light)" stroke="var(--accent-amber)"/>
+                  <path d="M170 140 V160 M130 160 H210 M130 160 V180 L120 187 L140 201 L120 215 L140 229 L130 236 V280 M210 160 V185 M195 185 H225 M198 185 V220 H222 V185 M210 205 V280"/>
+                  <rect x="20" y="280" width="300" height="45" fill="var(--apple-border-highlight)" stroke="none"/>
+                </g>
+                <g stroke="currentColor" stroke-width="2" marker-end="url(#arr)">
+                  <line x1="170" y1="85" x2="170" y2="45" stroke="var(--accent-blue)"/>
+                  <line x1="110" y1="95" x2="110" y2="135"/>
+                  <line x1="105" y1="185" x2="105" y2="225"/>
+                  <line x1="240" y1="170" x2="240" y2="210"/>
+                  <line x1="290" y1="275" x2="290" y2="235"/>
+                </g>
+                <g fill="currentColor" font-size="13" text-anchor="middle">
+                  <text x="170" y="112">Corner</text><text x="170" y="128">Mass</text>
+                  <text x="250" y="20">Chassis displacement</text><text x="250" y="37" font-style="italic">y(t) (output)</text>
+                  <text x="60" y="120" font-style="italic">F<tspan font-size="10" dy="3">acceleration</tspan></text>
+                  <text x="70" y="210" font-style="italic">F<tspan font-size="10" dy="3">spring</tspan></text>
+                  <text x="283" y="166" font-style="italic">F<tspan font-size="10" dy="3">dampener</tspan></text>
+                  <text x="282" y="232">Road profile <tspan font-style="italic">x(t)</tspan></text>
+                  <text x="170" y="308">Ground</text>
+                </g>
+                <text x="285" y="262" fill="currentColor" font-size="12" text-anchor="end">(input)</text>
+              </svg>
+              <figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Forces acting on the corner mass.</figcaption>
+            </figure>
+          </div>
         </div>
 
-        <!-- SECTION 3 -->
+        <!-- SECTION 3: EQUATIONS OF MOTION -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
+          <div class="card-header"><div><span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 3</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Static Sag and Transfer Function</h2></div></div>
+          <h3 style="font-size: 16px; color: var(--text-main); margin: 16px 0 6px;">Static sag</h3>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Initial conditions: velocity = 0 and system acceleration = 0. Considering the vertical direction only:</p>
+          <div style="font-size: 16px; color: var(--accent-blue); margin: 12px 0;">$$\sum F_y = m a_y$$ $$F_{weight}+F_{spring}+F_{dampener}=F_{acceleration}$$</div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">This reduces to the following, also known as the static sag:</p>
+          <div style="font-size: 16px; color: var(--accent-emerald); margin: 12px 0;">$$F_{weight}=-F_{spring}$$</div>
+
+          <h3 style="font-size: 16px; color: var(--text-main); margin: 22px 0 6px;">Transfer function</h3>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Input road profile = \(x(t)\), output chassis displacement = \(y(t)\). Using \(F = ma\), at equilibrium \(\sum F = 0\) after static sag:</p>
+          <div style="font-size: 16px; color: var(--accent-blue); margin: 12px 0;">$$-m\ddot{y}-k\big(y(t)-x(t)\big)-b\big(\dot{y}(t)-\dot{x}(t)\big)=0$$ $$m\ddot{y}(t)=-k\big(y(t)-x(t)\big)-b\big(\dot{y}(t)-\dot{x}(t)\big)$$</div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Taking the Laplace transform of all terms:</p>
+          <div style="font-size: 16px; color: var(--accent-blue); margin: 12px 0;">$$ms^2Y(s)=-k\big(Y(s)-X(s)\big)-b\big(sY(s)-sX(s)\big)$$</div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Expanding all terms:</p>
+          <div style="font-size: 16px; color: var(--accent-blue); margin: 12px 0;">$$ms^2Y(s)=-kY(s)+kX(s)-bsY(s)+bsX(s)$$</div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Regrouping into \(X(s)\) and \(Y(s)\):</p>
+          <div style="font-size: 16px; color: var(--accent-blue); margin: 12px 0;">$$ms^2Y(s)+kY(s)+bsY(s)=kX(s)+bsX(s)$$ $$Y(s)\big(ms^2+k+bs\big)=X(s)\big(k+bs\big)$$</div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Obtaining the transfer function:</p>
+          <div style="font-size: 18px; color: var(--accent-emerald); margin: 12px 0;">$$\frac{Y(s)}{X(s)}=\frac{bs+k}{ms^2+bs+k}$$</div>
+          <div class="callout callout-purple" style="margin-top: 12px;">This is a <strong>second-order system</strong>.</div>
+        </div>
+
+        <!-- SECTION 4: STEP RESPONSE -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 4</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Unit Step Response</h2></div></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 0 28px; margin-top: 14px;">
             <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">Applying Newton's Second Law:</p>
-          <div style="text-align: center; font-size: 16px; color: var(--accent-blue); margin: 12px 0;">$$m\ddot{x}_s(t)+c_s(\dot{x}_s(t)-\dot{r}(t))+k_s(x_s(t)-r(t))=0$$</div>
-          <div style="text-align: center; font-size: 16px; color: var(--accent-purple); margin: 12px 0;">$$(ms^2+c_ss+k_s)X(s)=(c_ss+k_s)R(s)$$</div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65;">The transfer function is:</p>
-          <div style="text-align: center; font-size: 16px; color: var(--accent-emerald); margin: 12px 0;">$$G(s)=\frac{X(s)}{R(s)}=\frac{c_ss+k_s}{ms^2+c_ss+k_s}=\frac{2\zeta\omega_ns+\omega_n^2}{s^2+2\zeta\omega_ns+\omega_n^2}$$</div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65;">Using the canonical parameters:</p>
-          <div style="text-align: center; font-size: 16px; color: var(--accent-blue); margin: 12px 0;">$$\omega_n=\sqrt{\frac{k_s}{m}},\qquad 2\zeta\omega_n=\frac{c_s}{m},\qquad f_d=f_n\sqrt{1-\zeta^2}$$</div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65;">The steady-state displacement is calculated from $x_{steady}=F_{corner}/k_{spring}$, with the corner force identified in the design notes as approximately <strong>154.42 N</strong>.</p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 18px;">
-            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/suspension-first-principles.png" alt="Suspension first-principles mass spring damper model" style="width: 100%; height: 220px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">First-principles mass-spring-damper model.</figcaption></figure>
-            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/suspension-transfer-function.png" alt="Suspension transfer function derivation" style="width: 100%; height: 220px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Transfer-function derivation.</figcaption></figure>
-            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/suspension-natural-frequency.png" alt="Suspension natural frequency derivation" style="width: 100%; height: 220px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Natural and damped frequency derivation.</figcaption></figure>
+              <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">For a unit step response, \(X(s)=\frac{1}{s}\):</p>
+              <div style="font-size: 16px; color: var(--accent-blue);">$$Y(s)=\frac{bs+k}{s\big(ms^2+bs+k\big)}=\frac{\frac{b}{m}s+\frac{k}{m}}{s\left(s^2+\frac{b}{m}s+\frac{k}{m}\right)}$$</div>
+              <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Let \(\omega_n^2=\frac{k}{m}\) and \(2a=\frac{b}{m}\), for completing the square in later steps:</p>
+              <div style="font-size: 16px; color: var(--accent-blue);">$$Y(s)=\frac{2as+\omega_n^2}{s\big(s^2+2as+\omega_n^2\big)}$$</div>
+              <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Using partial fractions to simplify:</p>
+              <div style="font-size: 16px; color: var(--accent-blue);">$$\frac{2as+\omega_n^2}{s\big(s^2+2as+\omega_n^2\big)}=\frac{A}{s}+\frac{Bs+C}{s^2+2as+\omega_n^2}$$ $$2as+\omega_n^2=A\big(s^2+2as+\omega_n^2\big)+s\big(Bs+C\big)$$ $$2as+\omega_n^2=As^2+2Aas+A\omega_n^2+Bs^2+Cs$$</div>
+              <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Comparing coefficients, \(A+B=0\), \(A=1\), \(C=0\):</p>
+              <div style="font-size: 16px; color: var(--accent-blue);">$$\frac{2as+\omega_n^2}{s\big(s^2+2as+\omega_n^2\big)}=\frac{1}{s}-\frac{s}{s^2+2as+\omega_n^2}$$</div>
+            </div>
+            <div>
+              <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Completing the square:</p>
+              <div style="font-size: 16px; color: var(--accent-blue);">$$\frac{1}{s}-\frac{s}{s^2+2as+\omega_n^2}=\frac{1}{s}-\frac{s}{(s+a)^2+\omega_n^2-a^2}$$</div>
+              <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Let \(\omega_n^2-a^2=p^2\):</p>
+              <div style="font-size: 16px; color: var(--accent-blue);">$$Y(s)=\frac{1}{s}-\frac{s}{(s+a)^2+p^2}$$ $$Y(s)=\frac{1}{s}-\frac{s+a}{(s+a)^2+p^2}+\frac{a}{(s+a)^2+p^2}$$ $$Y(s)=\frac{1}{s}-\frac{s+a}{(s+a)^2+p^2}+\frac{\frac{a}{p}\,p}{(s+a)^2+p^2}$$</div>
+              <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Taking the inverse Laplace transform of both sides:</p>
+              <div style="font-size: 18px; color: var(--accent-emerald);">$$y(t)=1-e^{-at}\cos pt+\frac{a}{p}e^{-at}\sin pt$$</div>
+              <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">Given a unit step input, the response \(y(t)\) is characterised by this equation, where:</p>
+              <div style="font-size: 16px; color: var(--accent-purple);">$$\omega_n^2=\frac{k}{m},\qquad a=\frac{b}{2m},\qquad p=\sqrt{\omega_n^2-a^2}$$</div>
+              <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">From the second-order equation, \(2\xi\omega_n=2a\), so the damping ratio is:</p>
+              <div style="font-size: 16px; color: var(--accent-purple);">$$\xi=\frac{a}{\omega_n}=\frac{b}{2\sqrt{km}}$$</div>
+            </div>
           </div>
         </div>
 
-        <!-- SECTION 4 -->
+        <!-- SECTION 5: SPRING SELECTION -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 4.2.2</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Motion Ratio and Wheel Rate</h2></div></div>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 14px;">When the shock is installed at an angle $\theta$, the motion ratio relates spring displacement to wheel displacement. The wheel rate is reduced by the square of the motion ratio:</p>
-          <div style="text-align: center; font-size: 17px; color: var(--accent-purple); margin: 14px 0;">$$MR=\frac{\Delta z_{spring}}{\Delta z_{wheel}},\qquad k_w=k_s\cos^2\theta$$</div>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">The project calculations use a motion ratio of <strong>0.95</strong>, giving:</p>
-          <div style="text-align: center; font-size: 17px; color: var(--accent-emerald); margin: 14px 0;">$$k_w=k_s\times MR^2$$</div>
-          <figure style="margin: 16px 0 0; text-align: center;"><img src="../../assets/images/Asuka/motion-ratio.png" alt="Suspension motion ratio derivation" style="width: min(100%, 620px); height: 280px; object-fit: contain; border-radius: 8px; margin: auto;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Motion-ratio geometry and wheel-rate derivation.</figcaption></figure>
-        </div>
-
-        <!-- SECTION 5 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 4.2.3</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Spring Rate Selection</h2></div></div>
-          <div class="admin-table-wrapper" style="margin-top: 14px;"><table class="admin-table"><thead><tr><th>Spring rate (lbs/in)</th><th>K<sub>s</sub> (N/m)</th><th>Wheel rate K<sub>w</sub> (N/m)</th><th>K<sub>w</sub> (N/mm)</th><th>x steady state (mm)</th><th>Natural freq. (rad/s)</th><th>Natural freq. (Hz)</th><th>Damped freq. (Hz), eta 0.7</th></tr></thead><tbody>
-            <tr><td>30</td><td>5357.386</td><td>5089.517</td><td>5.090</td><td>31.322</td><td>17.697</td><td>2.817</td><td>2.011</td></tr>
-            <tr><td>50</td><td>8928.976</td><td>8482.528</td><td>8.483</td><td>18.793</td><td>22.847</td><td>3.636</td><td>2.597</td></tr>
-            <tr style="background: rgba(46,160,67,0.15);"><td><strong>100</strong></td><td>17857.953</td><td>16965.055</td><td>16.965</td><td><strong>9.397</strong></td><td>32.311</td><td><strong>5.142</strong></td><td>3.672</td></tr>
-            <tr><td>150</td><td>26786.929</td><td>25447.583</td><td>25.448</td><td>6.264</td><td>39.573</td><td>6.298</td><td>4.498</td></tr>
-            <tr><td>200</td><td>35715.906</td><td>33930.110</td><td>33.930</td><td>4.698</td><td>45.695</td><td>7.273</td><td>5.194</td></tr>
-            <tr><td>300</td><td>53573.858</td><td>50895.165</td><td>50.895</td><td>3.132</td><td>55.964</td><td>8.907</td><td>6.361</td></tr>
-            <tr><td>400</td><td>71431.811</td><td>67860.220</td><td>67.860</td><td>2.349</td><td>64.622</td><td>10.285</td><td>7.345</td></tr>
-            <tr><td>500</td><td>89289.764</td><td>84825.276</td><td>84.825</td><td>1.879</td><td>72.250</td><td>11.499</td><td>8.212</td></tr>
-            <tr><td>550</td><td>98218.740</td><td>93307.803</td><td>93.308</td><td>1.708</td><td>75.776</td><td>12.060</td><td>8.613</td></tr>
-            <tr><td>600</td><td>107147.717</td><td>101790.331</td><td>101.790</td><td>1.566</td><td>79.146</td><td>12.596</td><td>8.996</td></tr>
-            <tr><td>650</td><td>116076.693</td><td>110272.858</td><td>110.273</td><td>1.446</td><td>82.377</td><td>13.111</td><td>9.363</td></tr>
-            <tr><td>700</td><td>125005.669</td><td>118755.386</td><td>118.755</td><td>1.342</td><td>85.487</td><td>13.606</td><td>9.716</td></tr>
-            <tr><td>750</td><td>133934.646</td><td>127237.913</td><td>127.238</td><td>1.253</td><td>88.487</td><td>14.083</td><td>10.057</td></tr>
-          </tbody></table></div>
-          <div class="callout callout-emerald" style="margin-top: 16px;"><strong>Selection:</strong> The 100 lbs/in spring gives a steady-state sag of 9.397 mm, close to the desired 40%-50% of the 20 mm stroke, while maintaining a 5.142 Hz natural frequency and 3.672 Hz damped natural frequency at eta = 0.7.</div>
-        </div>
-
-        <!-- SECTION 6 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 4.1.3</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Comparison of Suspensions</h2></div></div>
-          <div class="admin-table-wrapper" style="margin-top: 14px;"><table class="admin-table"><thead><tr><th>Suspension type</th><th>Advantages</th><th>Disadvantages</th><th>Remarks</th><th>Final score</th></tr></thead><tbody>
-            <tr><td><strong>Trailing arm</strong></td><td>Constant track width and zero camber change; maximum space efficiency; low vertical profile.</td><td>Traverse bending moments concentrate on the main pivot shaft during spot turns.</td><td>Used as rear suspension on vehicles; suitable for strict width constraints.</td><td>8/10<br><strong>Keep as backup plan if width is an issue.</strong></td></tr>
-            <tr><td><strong>MacPherson strut</strong></td><td>Leaves space for other parts at the upper arm assembly; lower part count.</td><td>Higher shock-absorber wear because skid steering exerts large stress.</td><td>Usually used on Ackermann-steering vehicles, which this robot does not use.</td><td>6/10<br><strong>Reject</strong></td></tr>
-            <tr style="background: rgba(46,160,67,0.15);"><td><strong>Double wishbone</strong></td><td>Dual arms absorb lateral bending moments during skid-steering turns and maintain a stable tyre contact patch over the full stroke.</td><td>Mechanically complex.</td><td>Typically used in performance vehicles; the available chassis width is sufficient.</td><td>9/10<br><strong>Chosen</strong></td></tr>
-          </tbody></table></div>
-        </div>
-
-        <!-- SECTION 7: FIGURES -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 4.3</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Suspension Design Figures</h2></div></div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 16px;">
-            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/suspension-trailing-arm.jpg" alt="Trailing Arm Suspension Design" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"><strong>Trailing Arm Suspension Design</strong></figcaption></figure>
-            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/suspension-macpherson-strut.png" alt="Design of MacPherson Strut" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"><strong>Design of MacPherson Strut</strong></figcaption></figure>
-            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/suspension-double-wishbone.png" alt="Double Wishbone Suspension Design" style="width: 100%; height: 250px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"><strong>Double Wishbone Suspension Design</strong></figcaption></figure>
+          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 5</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Spring Rate Selection</h2></div><span class="badge badge-emerald">Selected: 100 lbs/in</span></div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 14px;">Dampener value \(b = 400\ \text{Ns/m}\) (assumption). \(y(t)\) is plotted with a time step of 0.01 s (originally plotted in Excel).</p>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: 6px;"><strong style="color: var(--text-main);">Interactive:</strong> drag the sliders to change the spring rate \(k\) and the dampener value \(b\). The wheel rate uses \(K_w = K_s \times 0.821\) and the corner mass is \(m = 16.25\) kg.</p>
+          <div class="step-grid">
+            <div class="step-panel" data-lbs="100" data-b="400"></div>
+            <div class="step-panel" data-lbs="400" data-b="400"></div>
           </div>
-          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: 16px;">The PDF identifies the double wishbone as the selected suspension architecture. The trailing-arm figure is retained as a backup concept, while the MacPherson strut is rejected because of shock loading under skid steering.</p>
+          <div class="callout callout-emerald" style="margin-top: 16px;"><strong>Both criteria met with the 100 lbs/in spring!</strong></div>
+
+          <h3 style="font-size: 16px; color: var(--text-main); margin: 22px 0 8px;">Spring rate comparison</h3>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65;">System mass = 65 kg, corner mass = 16.25 kg, \(F_{corner}\) = 159.4125 N. Angle of installation = 25°, stroke length = 20 mm.</p>
+          <div class="admin-table-wrapper" style="margin-top: 10px;"><table class="admin-table"><thead><tr><th>Spring rate (lbs/in)</th><th>K<sub>s</sub> (N/m)</th><th>Wheel rate K<sub>w</sub> (N/m) = K<sub>s</sub> × motion ratio [0.821]</th><th>K<sub>w</sub> (N/mm)</th><th>x steady state (mm)</th><th>Natural freq. (rad/s)</th><th>Natural freq. (Hz)</th></tr></thead><tbody>
+            <tr><td>30</td><td>5357.386</td><td>4398.414</td><td>4.398</td><td>36.243</td><td>16.452</td><td class="nf-ok">2.618</td></tr>
+            <tr><td>50</td><td>8928.976</td><td>7330.690</td><td>7.331</td><td>21.746</td><td>21.240</td><td class="nf-ok">3.380</td></tr>
+            <tr class="row-selected"><td><strong>100</strong></td><td>17857.953</td><td>14661.379</td><td>14.661</td><td><strong>10.873</strong></td><td>30.037</td><td class="nf-ok"><strong>4.781</strong></td></tr>
+            <tr><td>150</td><td>26786.929</td><td>21992.069</td><td>21.992</td><td>7.249</td><td>36.788</td><td class="nf-ok">5.855</td></tr>
+            <tr><td>200</td><td>35715.906</td><td>29322.758</td><td>29.323</td><td>5.436</td><td>42.479</td><td class="nf-ok">6.761</td></tr>
+            <tr><td>300</td><td>53573.858</td><td>43984.138</td><td>43.984</td><td>3.624</td><td>52.026</td><td class="nf-ok">8.280</td></tr>
+            <tr><td>400</td><td>71431.811</td><td>58645.517</td><td>58.646</td><td>2.718</td><td>60.075</td><td class="nf-ok">9.561</td></tr>
+            <tr><td>500</td><td>89289.764</td><td>73306.896</td><td>73.307</td><td>2.175</td><td>67.165</td><td>10.690</td></tr>
+            <tr><td>550</td><td>98218.740</td><td>80637.586</td><td>80.638</td><td>1.977</td><td>70.444</td><td>11.211</td></tr>
+            <tr><td>600</td><td>107147.717</td><td>87968.275</td><td>87.968</td><td>1.812</td><td>73.576</td><td>11.710</td></tr>
+            <tr><td>650</td><td>116076.693</td><td>95298.965</td><td>95.299</td><td>1.673</td><td>76.580</td><td>12.188</td></tr>
+            <tr><td>700</td><td>125005.669</td><td>102629.654</td><td>102.630</td><td>1.553</td><td>79.471</td><td>12.648</td></tr>
+            <tr><td>750</td><td>133934.646</td><td>109960.344</td><td>109.960</td><td>1.450</td><td>82.261</td><td>13.092</td></tr>
+          </tbody></table></div>
+          <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Green natural-frequency cells meet the &lt; 10 Hz requirement.</p>
+          <div class="callout callout-emerald" style="margin-top: 12px;"><strong>Component selected: 100 lbs/in spring.</strong> Static sag of 10.873 mm is about ½ of the 20 mm stroke, and the natural frequency of 4.781 Hz is below 10 Hz.</div>
         </div>
 
-        <!-- SECTION 8: COMPONENTS -->
+        <!-- SECTION 6: SUSPENSION TYPE -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 4.4</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Components Required</h2></div></div>
-          <h3 style="font-size: 16px; color: var(--text-main); margin: 16px 0 8px;">Components Required for Double Wishbone</h3>
-          <div class="admin-table-wrapper"><table class="admin-table"><thead><tr><th>Description</th><th>Component</th><th>Link</th><th>Remarks</th></tr></thead><tbody><tr><td>Wheel hub and link arms</td><td>To be custom made</td><td>N.A.</td><td>CAD done, fabricated 1 assembly</td></tr><tr><td>Shock absorber</td><td>To be purchased</td><td>Link here</td><td>Purchased, not delivered</td></tr></tbody></table></div>
-          <h3 style="font-size: 16px; color: var(--text-main); margin: 18px 0 8px;">Components Required for Trailing Arm</h3>
-          <div class="admin-table-wrapper"><table class="admin-table"><thead><tr><th>Description</th><th>Component</th><th>Link</th><th>Remarks</th></tr></thead><tbody><tr><td>CNC wheel hub</td><td>To be custom made</td><td>N.A.</td><td>CAD done</td></tr><tr><td>Shock absorber</td><td>To be purchased</td><td>Link here</td><td>Purchased, not delivered</td></tr><tr><td>Clevis bracket / U bracket</td><td>Purchase</td><td>Link here</td><td>Yet to purchase</td></tr></tbody></table></div>
+          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 6</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Comparison of Suspension Types</h2></div></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; margin-top: 16px;">
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/suspension-trailing-arm.jpg" alt="Trailing arm suspension CAD" style="width: 100%; height: 220px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Trailing arm</figcaption></figure>
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/suspension-macpherson-strut.jpg" alt="MacPherson strut suspension CAD" style="width: 100%; height: 220px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">MacPherson strut</figcaption></figure>
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/suspension-double-wishbone.jpg" alt="Double wishbone suspension CAD" style="width: 100%; height: 220px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Double wishbone</figcaption></figure>
+          </div>
+          <div class="admin-table-wrapper" style="margin-top: 16px;"><table class="admin-table"><thead><tr><th>Suspension type</th><th>Advantages</th><th>Disadvantages</th><th>Remarks</th><th>Final decision</th></tr></thead><tbody>
+            <tr><td><strong>Trailing arm</strong></td><td>Constant track width, zero camber angle change.<br><br>Maximum space efficiency, keeping robot width to the minimum.<br><br>Low vertical profile.</td><td>Transverse bending moments are concentrated on the main pivot shaft during spot turns.</td><td>Used as rear suspension on vehicles, but can also be used on the FOD Hunter with strict width constraints.</td><td>Keep as back-up plan in case width is an issue</td></tr>
+            <tr><td><strong>MacPherson strut</strong></td><td>Leaves space for other parts at the upper arm assembly.<br><br>Lower part count.</td><td>Higher wear on shock absorbers, as skid steering exerts large stress on them.</td><td>Usually used on Ackermann-steering vehicles (which we are not using).</td><td>Reject</td></tr>
+            <tr class="row-selected"><td><strong>Double wishbone</strong></td><td>The dual-arm set-up easily absorbs lateral bending moments during skid-steering turns.<br><br>Maintains a stable tyre contact patch across the full stroke.</td><td>Mechanically complex.</td><td>Typically used in performance vehicles; a wide chassis width is available.</td><td><strong>Selected</strong></td></tr>
+          </tbody></table></div>
+        </div>
+
+        <!-- SECTION 7: RESULT -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 7</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Final Design and Status</h2></div></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 18px; margin-top: 16px; align-items: center;">
+            <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/double-wishbone-on-chassis.jpg" alt="Double wishbone suspension mounted on the FOD Hunter chassis" style="width: 100%; max-height: 300px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Double wishbone suspension on the chassis (CAD).</figcaption></figure>
+            <div class="callout callout-emerald">
+              <strong>Requirements</strong>
+              <ol style="padding-left: 20px; margin: 8px 0 0; line-height: 1.8;">
+                <li>Static sag ½ of stroke length ✅</li>
+                <li>Natural frequency &lt; 10 Hz ✅</li>
+              </ol>
+              <p style="margin: 10px 0 0;"><em>Pending real-life test.</em></p>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
   </main>
+
+  <style>
+    .admin-table tr.row-selected td { background: var(--accent-green-light); }
+    .admin-table td.nf-ok { background: var(--accent-green-light); color: var(--accent-green); font-weight: 600; }
+
+    .page-content .card-box { min-width: 0; }
+    .page-content [style*="display: grid"] > * { min-width: 0; }
+    .page-content mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding-bottom: 2px; }
+    .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 18px; margin-top: 14px; }
+    .step-panel { border: 1px solid var(--apple-border); border-radius: 12px; padding: 16px; background: var(--apple-surface); min-width: 0; }
+    .step-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .step-title { font-size: 15px; font-weight: 600; color: var(--text-main); }
+    .step-reset { font: inherit; font-size: 12px; color: var(--accent-blue); background: none; border: 1px solid var(--apple-border-highlight); border-radius: 980px; padding: 4px 12px; cursor: pointer; }
+    .step-reset:hover { background: var(--accent-blue-light); }
+    .step-svg { width: 100%; display: block; margin-top: 8px; color: var(--text-muted); font-family: var(--font-apple); }
+    .step-eq { font-size: 14px; color: var(--accent-emerald); overflow-x: auto; overflow-y: hidden; min-height: 52px; }
+    .step-eq mjx-container { margin: 6px 0 !important; }
+    .step-ctrl { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; margin-top: 10px; font-size: 13px; color: var(--text-muted); }
+    .step-ctrl output { font-family: var(--font-mono); color: var(--text-main); font-size: 12.5px; }
+    .step-ctrl input[type="range"] { grid-column: 1 / -1; width: 100%; accent-color: var(--accent-green); margin: 2px 0 0; }
+    .step-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-top: 14px; }
+    .step-stat { border: 1px solid var(--apple-border-light); border-radius: 8px; padding: 8px 10px; font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+    .step-stat b { display: block; font-size: 14px; color: var(--text-main); font-family: var(--font-mono); font-weight: 600; }
+    .step-stat.ok { border-color: var(--accent-green); background: var(--accent-green-light); }
+    .step-stat.bad { border-color: var(--accent-rose); background: var(--accent-rose-light); }
+  </style>
+  <script>
+    // Interactive unit step response of (bs+k)/(ms^2+bs+k).
+    // Underdamped: y(t) = 1 - e^{-at} cos(pt) + (a/p) e^{-at} sin(pt), with wn^2 = k/m, a = b/2m, p = sqrt(wn^2 - a^2)
+    (function () {
+      // LBS_IN: N/m per lbs/in, matching the spring rate table
+      var M = 16.25, MR = 0.821, LBS_IN = 178.57953, F_CORNER = 159.4125, STROKE = 20, T_MAX = 3.5;
+      var W = 360, H = 230, L = 44, R = 350, T = 10, B = 196;
+
+      function solve(lbs, b) {
+        var ks = lbs * LBS_IN, kw = ks * MR, wn = Math.sqrt(kw / M), a = b / (2 * M), d = wn * wn - a * a;
+        var s = { kw: kw, wn: wn, a: a, zeta: a / wn, fn: wn / (2 * Math.PI), sag: F_CORNER / kw * 1000 };
+        if (Math.abs(d) < 1e-6 * wn * wn) {
+          s.kind = 'critical';
+          s.y = function (t) { return 1 - Math.exp(-a * t) * (1 - a * t); };
+        } else if (d > 0) {
+          var p = Math.sqrt(d);
+          s.kind = 'under'; s.p = p;
+          s.y = function (t) { var e = Math.exp(-a * t); return 1 - e * Math.cos(p * t) + (a / p) * e * Math.sin(p * t); };
+        } else {
+          var q = Math.sqrt(-d);
+          s.kind = 'over'; s.q = q;
+          // cosh/sinh written as exponentials to stay finite for large a
+          s.y = function (t) {
+            var e1 = Math.exp((-a + q) * t), e2 = Math.exp((-a - q) * t);
+            return 1 - (e1 + e2) / 2 + (a / q) * (e1 - e2) / 2;
+          };
+        }
+        return s;
+      }
+
+      function f(x, n) { return x.toFixed(n); }
+
+      function eqTex(s) {
+        var a = f(s.a, 2);
+        if (s.kind === 'under') {
+          return '$$y(t)=1-e^{-' + a + 't}\\cos(' + f(s.p, 2) + 't)+' + f(s.a / s.p, 3) + '\\,e^{-' + a + 't}\\sin(' + f(s.p, 2) + 't)$$';
+        }
+        if (s.kind === 'critical') {
+          return '$$y(t)=1-e^{-' + a + 't}\\left(1-' + a + 't\\right)\\quad\\text{(critically damped)}$$';
+        }
+        return '$$y(t)=1-e^{-' + a + 't}\\cosh(' + f(s.q, 2) + 't)+' + f(s.a / s.q, 3) + '\\,e^{-' + a + 't}\\sinh(' + f(s.q, 2) + 't)\\quad\\text{(overdamped)}$$';
+      }
+
+      function plot(svg, s) {
+        var n = Math.round(T_MAX / 0.01), pts = [], peak = 0, tPeak = 0;
+        for (var i = 0; i <= n; i++) {
+          var t = i * 0.01, y = s.y(t);
+          pts.push([t, y]);
+          if (y > peak) { peak = y; tPeak = t; }
+        }
+        var yMax = Math.max(1.8, Math.ceil(peak * 5) / 5);
+        var X = function (t) { return L + (t / T_MAX) * (R - L); };
+        var Y = function (y) { return B - (y / yMax) * (B - T); };
+        var step = yMax > 2.4 ? 0.4 : 0.2, html = '';
+        for (var g = 0; g <= yMax + 1e-9; g += step) {
+          html += '<line x1="' + L + '" x2="' + R + '" y1="' + Y(g) + '" y2="' + Y(g) + '" stroke="currentColor" stroke-opacity="0.18"/>';
+          html += '<text x="' + (L - 6) + '" y="' + (Y(g) + 4) + '" font-size="10" text-anchor="end" fill="currentColor">' + g.toFixed(1) + '</text>';
+        }
+        for (var j = 0; j <= T_MAX / 0.5; j++) {
+          html += '<text x="' + X(j * 0.5) + '" y="' + (B + 14) + '" font-size="10" text-anchor="middle" fill="currentColor">' + (j * 0.5).toFixed(2) + '</text>';
+        }
+        html += '<text x="' + ((L + R) / 2) + '" y="' + (B + 30) + '" font-size="11" text-anchor="middle" fill="currentColor">Time (s)</text>';
+        html += '<text transform="translate(11 ' + ((T + B) / 2) + ') rotate(-90)" font-size="11" text-anchor="middle" fill="currentColor">Output y(t)</text>';
+        html += '<polyline points="' + pts.map(function (q) { return X(q[0]).toFixed(1) + ',' + Y(q[1]).toFixed(1); }).join(' ') + '" fill="none" stroke="var(--accent-green)" stroke-width="2.2" stroke-linejoin="round"/>';
+        if (peak > 1.001) {
+          html += '<circle cx="' + X(tPeak) + '" cy="' + Y(peak) + '" r="3.5" fill="var(--accent-amber)"/>';
+          html += '<text x="' + (X(tPeak) + 7) + '" y="' + (Y(peak) - 4) + '" font-size="10" fill="var(--accent-amber)">peak ' + peak.toFixed(3) + ' @ ' + tPeak.toFixed(2) + ' s</text>';
+        }
+        svg.innerHTML = html;
+        return peak;
+      }
+
+      function stat(label, value, cls) {
+        return '<div class="step-stat' + (cls ? ' ' + cls : '') + '">' + label + '<b>' + value + '</b></div>';
+      }
+
+      document.querySelectorAll('.step-panel').forEach(function (panel, idx) {
+        var lbs0 = +panel.dataset.lbs, b0 = +panel.dataset.b;
+        panel.innerHTML =
+          '<div class="step-head"><span class="step-title"></span><button type="button" class="step-reset">Reset to ' + lbs0 + ' lbs/in</button></div>' +
+          '<svg class="step-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img"></svg>' +
+          '<div class="step-eq"></div>' +
+          '<label class="step-ctrl"><span>Spring rate <i>k</i></span><output></output><input type="range" min="10" max="800" step="5" aria-label="Spring rate in lbs per inch"></label>' +
+          '<label class="step-ctrl"><span>Dampener <i>b</i></span><output></output><input type="range" min="0" max="2000" step="10" aria-label="Dampener value in Ns per metre"></label>' +
+          '<div class="step-stats"></div>';
+        var title = panel.querySelector('.step-title'), svg = panel.querySelector('svg'), eq = panel.querySelector('.step-eq');
+        var inputs = panel.querySelectorAll('input'), outs = panel.querySelectorAll('output'), stats = panel.querySelector('.step-stats');
+        var kIn = inputs[0], bIn = inputs[1], pending = 0, lastTex = '';
+
+        function typeset() {
+          pending = 0;
+          var tex = eqTex(solve(+kIn.value, +bIn.value));
+          if (tex === lastTex) return;
+          lastTex = tex;
+          if (window.MathJax && MathJax.typesetPromise) {
+            if (MathJax.typesetClear) MathJax.typesetClear([eq]);
+            eq.textContent = tex;
+            MathJax.typesetPromise([eq]).catch(function () {});
+          } else {
+            eq.textContent = tex;
+            lastTex = '';
+          }
+        }
+
+        function update() {
+          var lbs = +kIn.value, b = +bIn.value, s = solve(lbs, b);
+          title.textContent = lbs + ' lbs/in spring, b = ' + b + ' Ns/m';
+          svg.setAttribute('aria-label', 'Step response for ' + title.textContent);
+          outs[0].textContent = lbs + ' lbs/in (Kw ' + f(s.kw, 0) + ' N/m)';
+          outs[1].textContent = b + ' Ns/m';
+          var peak = plot(svg, s), sagPct = s.sag / STROKE * 100;
+          stats.innerHTML =
+            stat('Natural freq. f<sub>n</sub> (&lt; 10 Hz)', f(s.fn, 3) + ' Hz ' + (s.fn < 10 ? '✅' : '❌'), s.fn < 10 ? 'ok' : 'bad') +
+            stat('Static sag (40–60% of stroke)', f(s.sag, 3) + ' mm · ' + f(sagPct, 0) + '% ' + (sagPct >= 40 && sagPct <= 60 ? '✅' : '❌'), sagPct >= 40 && sagPct <= 60 ? 'ok' : 'bad') +
+            stat('Damping ratio ξ', f(s.zeta, 3)) +
+            stat('ω<sub>n</sub> / a', f(s.wn, 2) + ' / ' + f(s.a, 2) + ' rad/s') +
+            stat('Peak overshoot', peak > 1.001 ? f((peak - 1) * 100, 1) + '%' : 'none');
+          if (!pending) pending = requestAnimationFrame(typeset);
+        }
+
+        function reset() { kIn.value = lbs0; bIn.value = b0; update(); }
+        kIn.addEventListener('input', update);
+        bIn.addEventListener('input', update);
+        panel.querySelector('.step-reset').addEventListener('click', reset);
+        reset();
+      });
+
+      // MathJax loads asynchronously from main.js; re-typeset once it is ready
+      window.addEventListener('load', function () {
+        var tries = 0, wait = setInterval(function () {
+          if ((window.MathJax && MathJax.typesetPromise) || ++tries > 50) {
+            clearInterval(wait);
+            document.querySelectorAll('.step-panel input').forEach(function (el) { el.dispatchEvent(new Event('input')); });
+          }
+        }, 100);
+      });
+    })();
+  </script>
 
   <footer class="apple-footer">
     <div class="apple-footer-inner">

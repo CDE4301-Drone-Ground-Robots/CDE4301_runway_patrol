@@ -139,137 +139,218 @@
           </div>
         </div>
 
-        <!-- SECTION 3 -->
+        <!-- SECTION 1: PURPOSE & REQUIREMENTS -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">First-Principles Pickup and Intake Design</h2>
+          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 3.0</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Purpose and Requirements</h2></div></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px; margin-top: 14px;">
+            <div class="callout callout-blue">
+              <strong>Purpose</strong>
+              <ol style="padding-left: 20px; margin: 8px 0 0; line-height: 1.65;">
+                <li>Collect FOD of varying sizes.</li>
+                <li>Ensure 100% remediation of FOD.</li>
+              </ol>
             </div>
-          </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
-            The pickup concept is governed by the balance between aerodynamic drag and the weight of the debris. The air stream must generate enough force to overcome the object weight, with a safety factor applied during final sizing.
-          </p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 16px;">
-            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.03)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-family: var(--font-mono); color: var(--text-main);">
-              <strong>Pickup force</strong><br><br>
-              $$F_{drag}=\frac{1}{2}\rho_{air}v^2C_dA_{proj}$$<br><br>
-              $$F_{lift} = \Delta P \cdot A_{nozzle}$$
+            <div class="callout callout-emerald">
+              <strong>Requirements</strong>
+              <ol style="padding-left: 20px; margin: 8px 0 0; line-height: 1.65;">
+                <li>Pick up objects sized 4 cm to 18 cm.</li>
+                <li>Ensure 100% remediation of FOD.</li>
+              </ol>
             </div>
-            <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.03)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-family: var(--font-mono); color: var(--text-main);">
-              <strong>Flow and power</strong><br><br>
-              $$v_{min}=\sqrt{\frac{2mg}{\rho_{air}C_dA_{proj}}}$$<br><br>
-              $$Q=A_{duct}v_{min}$$<br><br>
-              $$P_{elec}=\frac{Q\Delta P_{total}}{\eta_{mech}\eta_{motor}}$$
-            </div>
-          </div>
-          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; margin: 16px 0 0;">
-            The top-down intake approach is favoured because pressing the nozzle against the ground creates a temporary seal. When the nozzle lifts, ambient air rushing into the tube creates a short-duration velocity surge that helps launch debris through the corrugated hose and into the collection bin.
-          </p>
-        </div>
-
-        <!-- SECTION 4 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 4.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Quantitative Sizing and Pressure Losses</h2>
-            </div>
-          </div>
-          <div class="admin-table-wrapper" style="margin-top: 14px;">
-            <table class="admin-table">
-              <thead><tr><th>Parameter</th><th>Case A: Nut and bolts, 25 g</th><th>Case B: Bird carcass, 300 g</th><th>Units</th></tr></thead>
-              <tbody>
-                <tr><td>Mass</td><td>0.0025</td><td>0.3000</td><td>kg</td></tr>
-                <tr><td>Dimensions</td><td>D = 8 mm, L = 3 mm</td><td>150 mm x 80 mm x 60 mm</td><td>mm</td></tr>
-                <tr><td>Projected area</td><td>0.0002</td><td>0.0090</td><td>m2</td></tr>
-                <tr><td><strong>Minimum duct diameter</strong></td><td><strong>0.0300</strong></td><td><strong>0.1000</strong></td><td>m</td></tr>
-                <tr><td><strong>Required pickup velocity</strong></td><td><strong>14.5908</strong></td><td><strong>26.1008</strong></td><td>m/s</td></tr>
-                <tr><td>Duct area</td><td>0.0007</td><td>0.0079</td><td>m2</td></tr>
-                <tr><td><strong>Required flow rate Q</strong></td><td><strong>0.0103</strong></td><td><strong>0.2050</strong></td><td>m3/s</td></tr>
-                <tr><td>Flow rate</td><td>21.8533</td><td>434.3597</td><td>CFM</td></tr>
-                <tr><td>Required static pressure</td><td>2135.9414</td><td>2623.2225</td><td>Pa</td></tr>
-                <tr><td><strong>Estimated motor power</strong></td><td><strong>55.0732</strong></td><td><strong>1344.3683</strong></td><td>W</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="admin-table-wrapper" style="margin-top: 18px;">
-            <table class="admin-table">
-              <thead><tr><th>Pressure loss</th><th>Case A: Nut and bolts, 25 g</th><th>Case B: Bird carcass, 300 g</th></tr></thead>
-              <tbody>
-                <tr><td>Dynamic pressure</td><td>127.7344 Pa</td><td>408.7500 Pa</td></tr>
-                <tr><td>Nozzle entry</td><td>44.7070 Pa</td><td>143.0625 Pa</td></tr>
-                <tr><td>Duct friction</td><td>112.4063 Pa</td><td>107.9100 Pa</td></tr>
-                <tr><td>Elbow bend</td><td>51.0938 Pa</td><td>163.5000 Pa</td></tr>
-                <tr><td>Filter pressure drop</td><td>1800 Pa</td><td>1800 Pa</td></tr>
-                <tr><td><strong>Total pressure loss</strong></td><td><strong>2135.9414 Pa</strong></td><td><strong>2623.2225 Pa</strong></td></tr>
-              </tbody>
-            </table>
           </div>
         </div>
 
-        <!-- SECTION 5 -->
+        <!-- SECTION 2: CHOICES -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 5.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Design Iterations and Ground Interface</h2>
-            </div>
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 14px;">
+          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 4.0</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Choice of Clearing Method</h2></div></div>
+          <div class="admin-table-wrapper" style="margin-top: 14px;"><table class="admin-table"><thead><tr><th>Clearing method</th><th>Primary mechanical limitations</th><th>Operational constraints</th><th>Final decision</th></tr></thead><tbody>
+            <tr class="row-selected"><td><strong>Rotary and vacuum sweepers</strong></td><td>High fuel/power draw; internal filters clog; internal combustion engines risk hydraulic/fuel leakage on tarmac.</td><td>Bulky footprint; slow deployment speed (20 km/h in active sweeping).</td><td><strong>Select</strong>, but sweepers may be redundant</td></tr>
+            <tr><td><strong>Friction / mat sweepers</strong></td><td>Passive rubber squeegees wear rapidly; ineffective against heavy, embedded, or large items.</td><td>Must be towed by utility vehicles, restricting manoeuvrability during short inter-flight arrival gaps.</td><td>Reject</td></tr>
+            <tr><td><strong>Magnetic bars</strong></td><td>Blind to non-ferrous debris (aluminium fasteners, titanium strips, tyre rubber fragments, luggage plastics, composites).</td><td>Cannot address biological hazards or composite hardware left on pavement.</td><td>Reject</td></tr>
+            <tr><td><strong>Independent blowers</strong></td><td>Jet/compressed air blowers expel debris off the centreline to the shoulders without containment.</td><td>Debris easily re-migrates back onto active pavement via vortex/crosswinds or jet blast.</td><td class="tbc">To be completed</td></tr>
+            <tr><td><strong>Robot gripper</strong></td><td class="tbc">To be completed</td><td class="tbc">To be completed</td><td>Reject</td></tr>
+          </tbody></table></div>
+        </div>
+
+        <!-- SECTION 3: PICKUP PHYSICS -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 5.0</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Pickup Velocity and Motor Sizing</h2></div></div>
+          <div style="display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 24px; margin-top: 16px; align-items: start;" class="vac-physics">
             <figure style="margin: 0; text-align: center;">
-              <img src="../../assets/images/Asuka/vacuum-design-iteration-1.png" alt="Design Iteration 1: side-mounted vacuum module concept" style="width: 100%; height: 260px; object-fit: contain; margin: auto; border-radius: 8px;">
-              <figcaption style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 8px;"><strong>Design Iteration 1</strong><br>Side-mounted vacuum module concept.</figcaption>
+              <svg viewBox="0 0 220 380" role="img" aria-label="Airflow drawn up a vertical intake tube lifting an object off the ground" style="width: 100%; max-width: 220px; color: var(--text-main); font-family: var(--font-apple);">
+                <defs><marker id="vac-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent-blue)"/></marker></defs>
+                <g stroke="currentColor" stroke-width="2.5"><line x1="62" y1="10" x2="62" y2="298"/><line x1="158" y1="10" x2="158" y2="298"/></g>
+                <text x="110" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="var(--accent-blue)">Airflow</text>
+                <g stroke="var(--accent-blue)" stroke-width="2" fill="none" marker-end="url(#vac-arr)">
+                  <line x1="85" y1="125" x2="85" y2="55"/><line x1="110" y1="125" x2="110" y2="55"/><line x1="135" y1="125" x2="135" y2="55"/>
+                  <line x1="85" y1="255" x2="85" y2="200"/><line x1="110" y1="255" x2="110" y2="200"/><line x1="135" y1="255" x2="135" y2="200"/>
+                  <path d="M20 312 Q78 306 84 270"/><path d="M110 300 V272"/><path d="M200 312 Q142 306 136 270"/>
+                </g>
+                <ellipse cx="110" cy="162" rx="38" ry="22" fill="var(--accent-rose-light)" stroke="var(--accent-rose)" stroke-width="1.5"/>
+                <text x="110" y="167" text-anchor="middle" font-size="13" fill="currentColor">Object</text>
+                <rect x="0" y="318" width="220" height="62" fill="var(--apple-border-highlight)"/>
+                <text x="110" y="355" text-anchor="middle" font-size="15" fill="currentColor">Ground</text>
+              </svg>
+            </figure>
+            <div>
+              <h3 style="font-size: 16px; color: var(--text-main); margin: 0 0 6px;">Minimum pickup velocity</h3>
+              <div class="eq" style="color: var(--accent-blue);">$$F_{Drag}=\frac{1}{2}\rho_{Air}V^2C_dA_{projected},\qquad W_{object}=mg$$</div>
+              <p class="vac-p">In equilibrium:</p>
+              <div class="eq" style="color: var(--accent-blue);">$$mg=\frac{1}{2}\rho_{Air}V^2C_dA_{projected}$$</div>
+              <p class="vac-p">For pickup:</p>
+              <div class="eq" style="color: var(--accent-blue);">$$\frac{1}{2}\rho_{Air}V^2C_dA_{projected}>mg$$</div>
+              <div class="eq" style="color: var(--accent-emerald);">$$V_{min}>\sqrt{\frac{2mg}{\rho_{Air}C_dA_{projected}}}$$</div>
+              <p class="vac-p">Flow rate:</p>
+              <div class="eq" style="color: var(--accent-emerald);">$$Q=A_{tube}V_{pick\,up}$$</div>
+            </div>
+          </div>
+
+          <h3 style="font-size: 16px; color: var(--text-main); margin: 24px 0 6px;">What size motor do I need?</h3>
+          <div class="eq" style="color: var(--accent-purple);">$$\eta_{total}=\eta_{blower}\times\eta_{motor}$$</div>
+          <ul class="vac-p" style="padding-left: 20px;">
+            <li><strong>Blower</strong> efficiency refers to the efficiency of the fan itself (typically 50%).</li>
+            <li><strong>Motor</strong> efficiency refers to the electrical-to-shaft efficiency (typically 80%).</li>
+          </ul>
+          <div class="eq" style="color: var(--accent-emerald);">$$P_{elec}=\frac{P_{fluid}}{\eta_{total}}=\frac{Q\times\Delta Pressure_{Total}}{\eta_{blower}\times\eta_{motor}}$$</div>
+          <div class="eq" style="color: var(--accent-blue);">$$\Delta Pressure_{Total}=\sum Pressure\ Losses=\Delta P_{Entry}+\Delta P_{Friction}+\Delta P_{Elbow\ Loss}+\Delta P_{Filter}$$</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 0 24px;">
+            <div class="eq" style="color: var(--accent-blue);">$$\Delta P_{Entry}=K_{entry}\left(\frac{1}{2}\rho V^2\right)$$</div>
+            <div class="eq" style="color: var(--accent-blue);">$$\Delta P_{Friction}=f\times\frac{L}{D}\times\left(\frac{1}{2}\rho V^2\right)$$</div>
+            <div class="eq" style="color: var(--accent-blue);">$$\Delta P_{Elbow}=K_{bend}\left(\frac{1}{2}\rho V^2\right)$$</div>
+            <div class="eq" style="color: var(--accent-blue);">$$\Delta P_{Filter}=300\ \text{Pa (assumed)}$$</div>
+          </div>
+        </div>
+
+        <!-- SECTION 4: DESIGN SIZING -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 6.0</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Design Sizing</h2></div></div>
+          <div class="admin-table-wrapper" style="margin-top: 14px;"><table class="admin-table"><thead><tr><th>Parameter</th><th>Case A: Nut and bolts, 25 g</th><th>Case B: Bird carcass, 300 g</th><th>Units</th><th>Remarks</th></tr></thead><tbody>
+            <tr><td>Mass</td><td>0.0250</td><td>0.3000</td><td>kg</td><td></td></tr>
+            <tr><td>Dimensions</td><td>D = 12 mm, L = 15 mm</td><td>150 mm × 80 mm × 60 mm</td><td>mm</td><td></td></tr>
+            <tr><td>Projected area</td><td>0.0001131</td><td>0.0090</td><td>m²</td><td></td></tr>
+            <tr><td>Minimum duct diameter</td><td>0.0381</td><td>0.1270</td><td>m</td><td>1.5 inch tube for case A, 5 inch tube for case B</td></tr>
+            <tr><td><strong>Required pickup velocity</strong></td><td><strong>67.2129</strong></td><td><strong>26.1008</strong></td><td>m/s</td><td>Safety factor not accounted for</td></tr>
+            <tr><td>Duct area</td><td>0.0011</td><td>0.0127</td><td>m²</td><td></td></tr>
+            <tr><td><strong>Required flow rate Q</strong></td><td><strong>0.0766</strong></td><td><strong>0.3306</strong></td><td>m³/s</td><td></td></tr>
+            <tr><td>Required static pressure (gauge)</td><td>5669.5089</td><td>1100.2810</td><td>Pa</td><td>Safety factor not accounted for</td></tr>
+            <tr><td>Air power</td><td>434.4481</td><td>363.7929</td><td>W</td><td></td></tr>
+            <tr><td><strong>Estimated motor power</strong></td><td><strong>1086.1202</strong></td><td><strong>909.4822</strong></td><td>W</td><td>Safety factor not accounted for</td></tr>
+          </tbody></table></div>
+
+          <h3 style="font-size: 16px; color: var(--text-main); margin: 22px 0 8px;">Pressure losses</h3>
+          <div class="admin-table-wrapper"><table class="admin-table"><thead><tr><th>Pressure loss</th><th>Case A: Nut and bolts, 25 g</th><th>Case B: Bird carcass, 300 g</th></tr></thead><tbody>
+            <tr><td>Dynamic pressure</td><td>2710.54 Pa</td><td>408.75 Pa</td></tr>
+            <tr><td>Nozzle entry loss</td><td>948.69 Pa</td><td>143.06 Pa</td></tr>
+            <tr><td>Duct friction loss (L = 0.4 m, d = 1.5 inches)</td><td>626.06 Pa</td><td>84.97 Pa</td></tr>
+            <tr><td>Elbow bend (k = 0.4)</td><td>1084.22 Pa</td><td>163.50 Pa</td></tr>
+            <tr><td>Pressure drop due to filter</td><td>300.00 Pa</td><td>300.00 Pa</td></tr>
+            <tr class="row-selected"><td><strong>Total pressure loss</strong></td><td><strong>5669.51 Pa</strong></td><td><strong>1100.28 Pa</strong></td></tr>
+          </tbody></table></div>
+          <div class="callout callout-amber" style="margin-top: 16px;"><strong>In conclusion</strong>, I need a motor that can meet the minimum power rating of <strong>1.1 kW</strong>.</div>
+
+          <!-- INTERACTIVE CALCULATOR -->
+          <h3 style="font-size: 16px; color: var(--text-main); margin: 26px 0 6px;">Interactive pickup sizing calculator</h3>
+          <p class="vac-p">Change the object and duct to see the required pickup velocity, pressure losses and motor power. Constants: \(\rho = 1.2\ \text{kg/m}^3\), \(K_{entry} = 0.35\), \(f = 0.022\), \(L = 0.4\ \text{m}\), \(K_{bend} = 0.4\), \(\Delta P_{Filter} = 300\ \text{Pa}\), \(\eta_{blower}\times\eta_{motor} = 0.5\times0.8\). Duct friction uses the selected duct diameter.</p>
+          <div class="calc" id="vac-calc">
+            <div class="calc-head">
+              <span class="calc-title">Presets</span>
+              <div class="calc-presets">
+                <button type="button" data-preset="A">Case A: nut and bolts, 25 g</button>
+                <button type="button" data-preset="B">Case B: bird carcass, 300 g</button>
+              </div>
+            </div>
+            <div class="calc-ctrls">
+              <label class="step-ctrl"><span>Object mass <i>m</i></span><output data-out="m"></output><input type="range" data-in="m" min="1" max="500" step="1" aria-label="Object mass in grams"></label>
+              <label class="step-ctrl"><span>Projected area <i>A</i></span><output data-out="A"></output><input type="range" data-in="A" min="0" max="1000" step="1" aria-label="Projected area, logarithmic scale"></label>
+              <label class="step-ctrl"><span>Drag coefficient <i>C<sub>d</sub></i></span><output data-out="cd"></output><input type="range" data-in="cd" min="0.3" max="1.3" step="0.05" aria-label="Drag coefficient"></label>
+              <label class="step-ctrl"><span>Duct diameter <i>D</i></span><output data-out="D"></output><input type="range" data-in="D" min="0" max="5" step="1" aria-label="Duct diameter in inches"></label>
+            </div>
+            <div class="step-stats" data-stats></div>
+            <div class="calc-bars" data-bars role="img"></div>
+            <div class="calc-check" data-check></div>
+          </div>
+          <p class="vac-p" style="font-size: 12px; margin-top: 8px;">Safety factor not accounted for.</p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 16px; margin-top: 20px;">
+            <div class="callout callout-emerald"><strong>Decision made:</strong> buy a high-power vacuum off the shelf and start testing!</div>
+            <div class="callout callout-blue"><strong>Selected vacuum:</strong> 2800 W wet and dry vacuum, just over $80 on Shopee, rated at 19 kPa gauge pressure.</div>
+          </div>
+        </div>
+
+        <!-- SECTION 5: DESIGN & ITERATION -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 7.0</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Design and Iteration</h2></div></div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 18px; margin-top: 14px;">
+            <figure style="margin: 0; text-align: center;">
+              <img src="../../assets/images/Asuka/vacuum-design-iteration-1.png" alt="Side intake concept: vacuum module on the chassis with the hose lowered beside the wheel" style="width: 100%; height: 260px; object-fit: contain; border-radius: 8px;">
+              <figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"><strong>Iteration 1:</strong> side intake with a lowering path.</figcaption>
             </figure>
             <figure style="margin: 0; text-align: center;">
-              <img src="../../assets/images/Asuka/vacuum-design-iteration-2.png" alt="Design Iteration 2: front vacuum module concept" style="width: 100%; height: 260px; object-fit: contain; margin: auto; border-radius: 8px;">
-              <figcaption style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 8px;"><strong>Design Iteration 2</strong><br>Front vacuum module and ground-sealing concept.</figcaption>
+              <img src="../../assets/images/Asuka/vacuum-design-iteration-2.png" alt="Top-down UFO concept: intake hood lowered vertically onto the ground" style="width: 100%; height: 260px; object-fit: contain; border-radius: 8px;">
+              <figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;"><strong>Iteration 2:</strong> top-down "UFO" concept.</figcaption>
             </figure>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin: 16px 0 0;">
-            The design evolved from a side-facing pickup concept toward a top-down, seal-assisted intake. The final direction places the nozzle close to the pavement, uses a compliant ground interface to improve negative pressure, and routes collected debris into a contained bin rather than displacing it onto the runway.
-          </p>
         </div>
 
-        <!-- SECTION 6 -->
+        <!-- SECTION 6: INITIAL CONCLUSIONS -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 6.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Testing, Results, and Next Improvements</h2>
-            </div>
-          </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
-            Benchtop testing compared side-entry and top-down pickup. The side approach achieved a low success rate. The top-down approach produced enough air speed to lift screws, but the corrugation in the intake hose prevented some screws from travelling fully into the collection bin. This indicated a steady-state equilibrium between the screw and the air stream.
-          </p>
-          <div class="callout callout-emerald" style="margin-top: 16px;">
-            <strong>Observed improvement:</strong> Pressing the nozzle onto the floor created a seal and a high negative pressure region. Lifting the nozzle then allowed ambient air to rush into the tube, producing an instantaneous velocity surge that launched hovering screws into the bin.
-          </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.65; margin-top: 14px;">
-            The next iteration must integrate this sealing effect into the pickup head for every target. Priority improvements are a smoother internal duct path, a compliant skirt or sealing ring, reduced corrugation near the nozzle, and validation against the 300 g design case.
-          </p>
+          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 8.0</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Initial Thoughts and Conclusions</h2></div></div>
+          <ol class="vac-p" style="padding-left: 22px; margin-top: 14px;">
+            <li>The top-down approach works better than the side approach.</li>
+            <li>The off-the-shelf vacuum system's efficiency is very low (10% of rated gauge pressure).</li>
+          </ol>
+          <div class="callout callout-amber" style="margin-top: 12px;"><strong>Open question:</strong> is spending more money on a bigger (or more powerful) motor going to solve the issue?</div>
         </div>
 
-        <!-- SECTION 7 -->
+        <!-- SECTION 7: TESTING -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 7.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Components Required</h2>
-            </div>
+          <div class="card-header"><div><span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 9.0</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Testing and Evaluation</h2></div></div>
+          <p class="vac-p" style="margin-top: 14px;"><strong>Findings:</strong></p>
+          <ol class="vac-p" style="padding-left: 22px;">
+            <li>Pickup speed was measured at <strong>42.47 m/s</strong> for a 1.5 inch intake.</li>
+            <li>The vacuum was able to pick up many small-sized screws.</li>
+            <li>It was unable to pick up larger-sized screws unless the "surge" effect was applied.</li>
+          </ol>
+        </div>
+
+        <!-- SECTION 8: FUTURE WORK -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 10.0</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Future Work: Redesigning the Pickup Mechanism</h2></div><span class="badge badge-amber">In progress</span></div>
+          <div class="vac-steps">
+            <div class="vac-step"><span>1</span><strong>Open and sweep</strong></div>
+            <div class="vac-step"><span>2</span><strong>Elevate to above the intake point</strong></div>
+            <div class="vac-step"><span>3</span><strong>Turn on the vacuum and remediate FOD</strong></div>
           </div>
-          <div class="admin-table-wrapper" style="margin-top: 14px;">
-            <table class="admin-table">
-              <thead><tr><th>Component</th><th>Link</th><th>Remarks</th></tr></thead>
-              <tbody>
-                <tr><td>2800 W vacuum cleaner</td><td>Link here</td><td>Primary suction source.</td></tr>
-                <tr><td>NEMA17 stepper motor and controller</td><td>Link here</td><td>Actuates the pickup mechanism.</td></tr>
-                <tr><td>6 mm shaft, 330 mm long</td><td>Link here</td><td>Linear motion transmission.</td></tr>
-                <tr><td>Rack and pinion</td><td>To be fabricated</td><td>3D printed mechanism.</td></tr>
-                <tr><td>NEMA17 motor mount</td><td>To be fabricated</td><td>Custom sheet-metal mount.</td></tr>
-                <tr><td>Rack and pinion mount</td><td>To be fabricated</td><td>3D printed structural mount.</td></tr>
-              </tbody>
-            </table>
+
+          <h3 style="font-size: 16px; color: var(--text-main); margin: 24px 0 6px;">Inclined transfer to the bin</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; align-items: center; margin-top: 10px;">
+            <figure style="margin: 0; text-align: center;">
+              <svg viewBox="0 0 440 300" role="img" aria-label="Airflow carries the object from the bounding box opening down an inclined duct at angle theta into the bin" style="width: 100%; max-width: 460px; color: var(--text-main); font-family: var(--font-apple);">
+                <defs><marker id="vac-arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--accent-blue)"/></marker></defs>
+                <rect x="0" y="120" width="70" height="140" fill="var(--apple-border-highlight)"/>
+                <text x="35" y="196" text-anchor="middle" font-size="16" fill="currentColor">Bin</text>
+                <g stroke="currentColor" stroke-width="2.5"><line x1="70" y1="150" x2="270" y2="70"/><line x1="70" y1="232" x2="270" y2="152"/><line x1="70" y1="232" x2="125" y2="232"/></g>
+                <path d="M108 232 A38 38 0 0 0 105 218" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <text x="114" y="226" font-size="13" font-style="italic" fill="currentColor">θ</text>
+                <rect x="250" y="20" width="110" height="160" fill="var(--accent-amber-light)" stroke="var(--accent-amber)" stroke-width="1.5"/>
+                <text x="305" y="104" text-anchor="middle" font-size="14" fill="currentColor">Bounding</text><text x="305" y="122" text-anchor="middle" font-size="14" fill="currentColor">Box</text>
+                <rect x="300" y="32" width="52" height="30" rx="3" fill="var(--accent-blue-light)" stroke="var(--accent-blue)" stroke-width="1.5"/>
+                <text x="326" y="51" text-anchor="middle" font-size="11" fill="currentColor">Opening</text>
+                <ellipse cx="160" cy="152" rx="30" ry="18" fill="var(--accent-rose-light)" stroke="var(--accent-rose)" stroke-width="1.5"/>
+                <text x="160" y="156" text-anchor="middle" font-size="12" fill="currentColor">Object</text>
+                <text x="130" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="var(--accent-blue)">Airflow</text>
+                <g stroke="var(--accent-blue)" stroke-width="2" marker-end="url(#vac-arr2)">
+                  <line x1="425" y1="20" x2="372" y2="42"/><line x1="425" y1="40" x2="372" y2="58"/>
+                  <line x1="240" y1="120" x2="205" y2="134"/><line x1="125" y1="185" x2="90" y2="199"/><line x1="230" y1="160" x2="195" y2="174"/><line x1="128" y1="146" x2="93" y2="160"/>
+                </g>
+                <line x1="235" y1="275" x2="192" y2="275" stroke="currentColor" stroke-width="1.5"/><path d="M184 275 L194 270 L194 280 z" fill="currentColor"/>
+                <text x="245" y="279" font-size="12" fill="currentColor">positive x</text>
+              </svg>
+            </figure>
+            <div>
+              <p class="vac-p">Dynamic analysis using \(F = ma_x\), taking ← (towards the bin, along the duct) as positive:</p>
+              <div class="eq" style="color: var(--accent-emerald);">$$F_{drag}+W_{Object}\cos\theta=ma_x$$</div>
+            </div>
           </div>
         </div>
 
@@ -289,6 +370,117 @@
       </div>
     </div>
   </main>
+
+  <style>
+    .page-content .card-box { min-width: 0; }
+    .page-content [style*="display: grid"] > * { min-width: 0; }
+    .page-content mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; max-width: 100%; padding-bottom: 2px; }
+    .vac-p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+    .eq { font-size: 16px; margin: 8px 0; }
+    .admin-table tr.row-selected td { background: var(--accent-green-light); }
+    .admin-table td.tbc { color: var(--apple-text-tertiary); font-style: italic; }
+    @media (max-width: 640px) { .vac-physics { grid-template-columns: minmax(0, 1fr) !important; } .vac-physics svg { max-width: 180px !important; } }
+
+    .vac-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 12px; margin-top: 16px; counter-reset: s; }
+    .vac-step { display: flex; align-items: center; gap: 12px; border: 1px solid var(--apple-border); border-radius: 12px; padding: 14px 16px; background: var(--apple-surface); font-size: 14px; color: var(--text-main); }
+    .vac-step span { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-blue-light); color: var(--accent-blue); font-weight: 700; font-size: 13px; }
+
+    .calc { border: 1px solid var(--apple-border); border-radius: 12px; padding: 16px; background: var(--apple-surface); margin-top: 10px; }
+    .calc-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .calc-title { font-size: 13px; color: var(--text-muted); }
+    .calc-presets { display: flex; gap: 8px; flex-wrap: wrap; }
+    .calc-presets button { font: inherit; font-size: 12px; color: var(--accent-blue); background: none; border: 1px solid var(--apple-border-highlight); border-radius: 980px; padding: 4px 12px; cursor: pointer; }
+    .calc-presets button:hover, .calc-presets button.on { background: var(--accent-blue-light); }
+    .calc-ctrls { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 4px 24px; margin-top: 4px; }
+    .step-ctrl { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; margin-top: 10px; font-size: 13px; color: var(--text-muted); }
+    .step-ctrl output { font-family: var(--font-mono); color: var(--text-main); font-size: 12.5px; }
+    .step-ctrl input[type="range"] { grid-column: 1 / -1; width: 100%; accent-color: var(--accent-blue); margin: 2px 0 0; }
+    .step-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-top: 16px; }
+    .step-stat { border: 1px solid var(--apple-border-light); border-radius: 8px; padding: 8px 10px; font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+    .step-stat b { display: block; font-size: 14px; color: var(--text-main); font-family: var(--font-mono); font-weight: 600; }
+    .calc-bars { margin-top: 16px; display: grid; gap: 6px; }
+    .calc-bars .bar-row { display: grid; grid-template-columns: 120px 1fr 78px; align-items: center; gap: 10px; font-size: 12px; color: var(--text-muted); }
+    .calc-bars .bar-track { height: 14px; position: relative; }
+    .calc-bars .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent-blue); border-radius: 0 4px 4px 0; min-width: 2px; transition: width .15s ease; }
+    .calc-bars .bar-row.total .bar-fill { background: var(--text-main); opacity: .55; }
+    .calc-bars .bar-val { font-family: var(--font-mono); color: var(--text-main); text-align: right; }
+    .calc-bars .bar-row.total { border-top: 1px solid var(--apple-border); padding-top: 6px; color: var(--text-main); font-weight: 600; }
+    .calc-check { margin-top: 14px; font-size: 13px; line-height: 1.55; border-radius: 8px; padding: 10px 12px; border: 1px solid var(--apple-border); color: var(--text-main); }
+    .calc-check.ok { border-color: var(--accent-green); background: var(--accent-green-light); }
+    .calc-check.bad { border-color: var(--accent-rose); background: var(--accent-rose-light); }
+  </style>
+  <script>
+    // Pickup sizing: V_min = sqrt(2mg / (rho Cd A)), Q = A_duct V, losses as multiples of 1/2 rho V^2
+    (function () {
+      var RHO = 1.2, G = 9.81, K_ENTRY = 0.35, F = 0.022, L = 0.4, K_BEND = 0.4, P_FILTER = 300, ETA = 0.5 * 0.8;
+      var MEASURED = 42.47, DUCTS = [1.5, 2, 2.5, 3, 4, 5];
+      var A_MIN = 0.1, A_MAX = 300; // cm^2, log slider
+      var PRESETS = { A: { m: 25, A: 1.1310, cd: 0.8, D: 0 }, B: { m: 300, A: 90, cd: 0.8, D: 5 } };
+      var root = document.getElementById('vac-calc');
+      var inp = {}, out = {};
+      root.querySelectorAll('[data-in]').forEach(function (el) { inp[el.dataset.in] = el; });
+      root.querySelectorAll('[data-out]').forEach(function (el) { out[el.dataset.out] = el; });
+      var stats = root.querySelector('[data-stats]'), bars = root.querySelector('[data-bars]'), check = root.querySelector('[data-check]');
+
+      function areaFromSlider(v) { return A_MIN * Math.pow(A_MAX / A_MIN, v / 1000); }
+      function sliderFromArea(a) { return Math.round(1000 * Math.log(a / A_MIN) / Math.log(A_MAX / A_MIN)); }
+      function stat(label, value) { return '<div class="step-stat">' + label + '<b>' + value + '</b></div>'; }
+      function fmt(x, n) { return x.toLocaleString('en-US', { minimumFractionDigits: n, maximumFractionDigits: n }); }
+
+      function update(areaOverride) {
+        var m = +inp.m.value / 1000, cd = +inp.cd.value, dIn = DUCTS[+inp.D.value], D = dIn * 0.0254;
+        var Acm = areaOverride || areaFromSlider(+inp.A.value), A = Acm / 1e4;
+        var V = Math.sqrt(2 * m * G / (RHO * cd * A)), Ad = Math.PI * D * D / 4, Q = Ad * V, dyn = 0.5 * RHO * V * V;
+        var losses = [
+          ['Dynamic pressure', dyn],
+          ['Nozzle entry', K_ENTRY * dyn],
+          ['Duct friction', F * L / D * dyn],
+          ['Elbow bend', K_BEND * dyn],
+          ['Filter', P_FILTER]
+        ];
+        var total = losses.reduce(function (s, l) { return s + l[1]; }, 0), air = Q * total, motor = air / ETA;
+
+        out.m.textContent = inp.m.value + ' g';
+        out.A.textContent = fmt(Acm, Acm < 10 ? 3 : 1) + ' cm²';
+        out.cd.textContent = cd.toFixed(2);
+        out.D.textContent = dIn + ' in (' + fmt(D * 1000, 1) + ' mm)';
+
+        stats.innerHTML =
+          stat('Pickup velocity V<sub>min</sub>', fmt(V, 2) + ' m/s') +
+          stat('Flow rate Q', fmt(Q, 4) + ' m³/s') +
+          stat('Static pressure (gauge)', fmt(total, 1) + ' Pa') +
+          stat('Air power', fmt(air, 1) + ' W') +
+          stat('Estimated motor power', fmt(motor, 1) + ' W');
+
+        var max = total;
+        bars.setAttribute('aria-label', 'Pressure losses: ' + losses.map(function (l) { return l[0] + ' ' + fmt(l[1], 0) + ' Pa'; }).join(', ') + '; total ' + fmt(total, 0) + ' Pa');
+        bars.innerHTML = losses.concat([['Total', total]]).map(function (l, i) {
+          return '<div class="bar-row' + (i === losses.length ? ' total' : '') + '"><span>' + l[0] + '</span><div class="bar-track"><div class="bar-fill" style="width:' + (l[1] / max * 100).toFixed(2) + '%"></div></div><span class="bar-val">' + fmt(l[1], 1) + ' Pa</span></div>';
+        }).join('');
+
+        var ok = MEASURED >= V;
+        check.className = 'calc-check ' + (ok ? 'ok' : 'bad');
+        check.innerHTML = (ok ? '✅ ' : '❌ ') + 'Measured off-the-shelf vacuum speed of <strong>' + MEASURED + ' m/s</strong> (1.5 inch intake) is ' +
+          (ok ? 'above' : 'below') + ' the required ' + fmt(V, 2) + ' m/s' + (ok ? ', so this object should be lifted.' : ', so this object would not be lifted at steady state.');
+      }
+
+      function preset(key) {
+        var p = PRESETS[key];
+        inp.m.value = p.m; inp.cd.value = p.cd; inp.D.value = p.D; inp.A.value = sliderFromArea(p.A);
+        root.querySelectorAll('[data-preset]').forEach(function (b) { b.classList.toggle('on', b.dataset.preset === key); });
+        update(p.A);
+      }
+
+      Object.keys(inp).forEach(function (k) {
+        inp[k].addEventListener('input', function () {
+          root.querySelectorAll('[data-preset]').forEach(function (b) { b.classList.remove('on'); });
+          update();
+        });
+      });
+      root.querySelectorAll('[data-preset]').forEach(function (b) { b.addEventListener('click', function () { preset(b.dataset.preset); }); });
+      preset('A');
+    })();
+  </script>
 
   <footer class="apple-footer">
     <div class="apple-footer-inner">
