@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "stlinkgdbtarget",
+            "request": "launch",
+            "name": "STM32: Flash & Debug (ST-Link)",
+            "cwd": "${workspaceFolder}",
+            "runEntry": "main",
+            "imagesAndSymbols": [
+                {
+                    "image": "${workspaceFolder}/build/Debug/CDE4301Stm32.elf",
+                    "symbols": "${workspaceFolder}/build/Debug/CDE4301Stm32.elf"
+                }
+            ]
+        }
+    ]
+}

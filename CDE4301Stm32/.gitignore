@@ -1,0 +1,35 @@
+# ==============================================================================
+# CDE4301 STM32 Skid-Steer Robot .gitignore
+# ==============================================================================
+
+# 1. Ignore compiler object files & ninja cache...
+build/*
+!build/Debug/
+build/Debug/*
+
+# ...BUT TRACK the ready-to-flash binaries so teammates can flash immediately!
+!build/Debug/CDE4301Stm32.elf
+!build/Debug/CDE4301Stm32.bin
+!build/Debug/CDE4301Stm32.hex
+
+# 2. Ignore IDE caches and compiler indexes
+.cache/
+compile_commands.json
+.settings/
+.pio/
+
+# 3. Track essential VS Code / Antigravity tasks, ignore local machine DB
+.vscode/*
+!.vscode/tasks.json
+!.vscode/extensions.json
+!.vscode/launch.json
+.vscode/.browse.c_cpp.db*
+.vscode/ipch/
+
+# 4. Ignore backup files, python cache, zip releases & personal docs
+*.bak
+*.pyc
+__pycache__/
+*.zip
+README_FLASHING.md
+
