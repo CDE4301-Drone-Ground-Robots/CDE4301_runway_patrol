@@ -22,6 +22,7 @@ def generate_launch_description():
     autostart = LaunchConfiguration('autostart')
     use_amcl = LaunchConfiguration('use_amcl')
     use_ekf = LaunchConfiguration('use_ekf')
+    use_c2_bridge = LaunchConfiguration('use_c2_bridge')
 
     default_map_file = PythonExpression([
         "'", pkg_nav, "/maps/nus_ea_field.yaml' if '", world_name, "' == 'nus_ea_field' else '", pkg_nav, "/maps/runway_map.yaml'"
@@ -182,10 +183,6 @@ def generate_launch_description():
             'use_sim_time': use_sim_time,
             'robot_description': robot_description
         }],
-        additional_env={
-            'LIBGL_ALWAYS_SOFTWARE': '1',
-            'QT_QPA_PLATFORM': 'xcb'
-        },
         condition=IfCondition(use_rviz),
         output='screen'
     )
@@ -201,7 +198,8 @@ def generate_launch_description():
             'spawn_x': PythonExpression(["-25.0 if '", world_name, "' == 'nus_ea_field' else 0.0"]),
             'spawn_y': 0.0,
             'spawn_yaw': PythonExpression(["0.0 if '", world_name, "' == 'nus_ea_field' else -0.2274"]),
-        }]
+        }],
+        condition=IfCondition(use_c2_bridge)
     )
 
     return LaunchDescription([
@@ -214,6 +212,7 @@ def generate_launch_description():
         DeclareLaunchArgument('autostart', default_value='true', description='Automatically startup the nav2 stack'),
         DeclareLaunchArgument('use_amcl', default_value='false', description='Use AMCL particle filter instead of static map transform'),
         DeclareLaunchArgument('use_ekf', default_value='true', description='Use RTK-GNSS + IMU Dual-EKF localization pipeline'),
+        DeclareLaunchArgument('use_c2_bridge', default_value='true', description='Launch UGV C2 Bridge node (vacuum & telemetry executive)'),
         map_server_node,
         static_tf_map_odom,
         ekf_local_node,

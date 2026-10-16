@@ -12,6 +12,7 @@ def generate_launch_description():
     world_name = LaunchConfiguration('world_name')
     use_rviz = LaunchConfiguration('use_rviz')
     use_ekf = LaunchConfiguration('use_ekf')
+    use_c2_bridge = LaunchConfiguration('use_c2_bridge')
 
     world_name_arg = DeclareLaunchArgument(
         'world_name',
@@ -31,6 +32,12 @@ def generate_launch_description():
         description='Launch RTK-GNSS + IMU Dual-EKF localization pipeline if true'
     )
 
+    use_c2_bridge_arg = DeclareLaunchArgument(
+        'use_c2_bridge',
+        default_value='true',
+        description='Launch UGV C2 Bridge node (vacuum & telemetry executive) if true'
+    )
+
     # 1. Gazebo Simulation launcher (Spawns world, UGV model, sensor bridges, /clock)
     gazebo_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -41,7 +48,7 @@ def generate_launch_description():
         }.items()
     )
 
-    # 2. Nav2 Autonomous Navigation + RViz2
+    # 2. Nav2 Autonomous Navigation + RViz2 + C2 Bridge Node
     # Delayed by 3.5 seconds to give Gazebo Harmonic time to initialize /clock and GUI
     nav2_bringup = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -51,6 +58,7 @@ def generate_launch_description():
             'world_name': world_name,
             'use_rviz': use_rviz,
             'use_ekf': use_ekf,
+            'use_c2_bridge': use_c2_bridge,
         }.items()
     )
 
@@ -63,6 +71,7 @@ def generate_launch_description():
         world_name_arg,
         use_rviz_arg,
         use_ekf_arg,
+        use_c2_bridge_arg,
         gazebo_sim,
         delayed_nav2,
     ])

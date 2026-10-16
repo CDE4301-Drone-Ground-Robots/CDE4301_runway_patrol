@@ -256,11 +256,69 @@
 
           <!-- 1.2 Operational Constraints -->
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            1.2 Operational Constraints: Mobility, 1–4 km Line-of-Sight, Air-Gap, and Tarmac Multipath
+            1.2 Operational Requirements &amp; Airfield Data Link Constraints
           </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Operating within active military airbases imposes four non-negotiable physical and regulatory constraints on data link engineering:
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+            Operating within active military airbases imposes non-negotiable physical, operational, and regulatory constraints on data link engineering. The communications subsystem was designed and evaluated against five core operational requirements:
           </p>
+
+          <!-- 5 CORE COMMUNICATION REQUIREMENTS CARDS -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 20px;">
+            <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.2); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span style="font-size: 16px;">📡</span>
+                <strong style="color: #2997ff; font-size: 13.5px;">Operational Range</strong>
+              </div>
+              <div style="font-size: 17px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">1.0 to 4.0 km</div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 0;">
+                Line-of-Sight (LOS) link bridging the aerial reconnaissance drone to the ground UGV across wide, flat runway pavements.
+              </p>
+            </div>
+
+            <div style="background: rgba(147, 51, 234, 0.04); border: 1px solid rgba(147, 51, 234, 0.2); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span style="font-size: 16px;">⚖️</span>
+                <strong style="color: var(--accent-purple, #bf5af2); font-size: 13.5px;">Frequency Restriction</strong>
+              </div>
+              <div style="font-size: 17px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">917 – 925 MHz</div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 0;">
+                Statutory SRD compliance under IMDA Singapore (Telecommunications Act 1999) to prevent cellular interference.
+              </p>
+            </div>
+
+            <div style="background: rgba(16, 185, 129, 0.04); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span style="font-size: 16px;">📦</span>
+                <strong style="color: var(--accent-emerald, #30d158); font-size: 13.5px;">Small Telemetry Payload</strong>
+              </div>
+              <div style="font-size: 17px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Zero Video Overhead</div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 0;">
+                Edge AI runs on UAV so only compact JSON target coordinates (&lt; 1.5 KB) are transmitted, consuming lower bandwidth.
+              </p>
+            </div>
+
+            <div style="background: rgba(245, 158, 11, 0.04); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span style="font-size: 16px;">🪶</span>
+                <strong style="color: var(--accent-amber, #ffd60a); font-size: 13.5px;">Hardware Size &amp; Power</strong>
+              </div>
+              <div style="font-size: 17px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Lightweight Footprint</div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 0;">
+                Low power consumption (&lt; 2.5 W) and small footprint (18 g) to conserve drone battery and payload capacity.
+              </p>
+            </div>
+
+            <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.2); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                <span style="font-size: 16px;">🔬</span>
+                <strong style="color: #2997ff; font-size: 13.5px;">Testing Benchmark</strong>
+              </div>
+              <div style="font-size: 17px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Indoor Validation</div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 0;">
+                Rigorous local network and benchtop testing benchmark before field trials on active aerodrome pavement.
+              </p>
+            </div>
+          </div>
 
           <div style="overflow-x: auto; margin-bottom: 16px;">
             <table class="apple-table" style="width: 100%; border-collapse: collapse; font-size: 12.5px;">
@@ -411,70 +469,78 @@
 
           <!-- 3.1 Wireless Technology Trade-Off Matrix -->
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            3.1 Wireless Technology Trade-Off Matrix (Serial RF, Broadband IP, Wi-Fi, Cellular, LoRa)
+            3.1 Communication Method Evaluation &amp; Trade-Off Matrix
           </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            A rigorous engineering trade study evaluated five wireless communication modalities against military airfield constraints:
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+            A rigorous engineering trade study evaluated five candidate wireless communication methods against military airfield constraints, bandwidth requirements, and operational security:
           </p>
 
           <div style="overflow-x: auto; margin-bottom: 18px;">
             <table class="apple-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
               <thead>
                 <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
-                  <th style="padding: 10px 12px; text-align: left;">Technology Category</th>
-                  <th style="padding: 10px 12px; text-align: left;">Operating Frequency</th>
-                  <th style="padding: 10px 12px; text-align: left;">LOS Range</th>
-                  <th style="padding: 10px 12px; text-align: left;">Throughput</th>
-                  <th style="padding: 10px 12px; text-align: left;">Air-Gap &amp; OPSEC</th>
-                  <th style="padding: 10px 12px; text-align: left;">SWaP-C / Overhead</th>
-                  <th style="padding: 10px 12px; text-align: left;">Selection Verdict</th>
+                  <th style="padding: 10px 12px; text-align: left; width: 22%;">Communication Method</th>
+                  <th style="padding: 10px 12px; text-align: left; width: 18%;">Operating Frequency</th>
+                  <th style="padding: 10px 12px; text-align: left; width: 15%;">Range</th>
+                  <th style="padding: 10px 12px; text-align: left;">Remarks</th>
+                  <th style="padding: 10px 12px; text-align: left; width: 18%;">Selection Verdict</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="background: rgba(41, 151, 255, 0.04); border-bottom: 1px solid rgba(41, 151, 255, 0.2);">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #2997ff;">Serial RF (Microhard P900 V2)</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">917–925 MHz (FHSS)</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">&gt; 5.0 km</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">115.2–276 kbps</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">Certified Air-Gap (AES-256)</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">18 g, &lt; 2.5 W, Direct UART</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-weight: 700;">Selected (Phase 2)</span></td>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Wifi Router</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">2.4 GHz / 5 GHz<br><span style="font-size: 11px; color: #86868b;">(802.11ac/ax)</span></td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">&lt; 50 m</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">
+                    High bandwidth &bull; Plug-and-play &bull; Requires disabling AP isolation and tuning DDS &bull; Bulky hardware footprint
+                  </td>
+                  <td style="padding: 10px 12px;">
+                    <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 700; font-size: 10.5px;">ONLY FOR INDOOR TESTING</span>
+                  </td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Broadband IP (Microhard pMDDL2550)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">2.4 / 5.8 GHz (OFDM)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">1.0–3.0 km</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Up to 25 Mbps</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Certified Air-Gap</td>
-                  <td style="padding: 10px 12px; color: #86868b;">130 g, &gt; 10 W, Ethernet Switch</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b;">Evaluated / Rejected</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Cellular (4G/LTE/5G)</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">700 MHz &ndash; 3.5 GHz</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Carrier / tower dependent</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">
+                    High bandwidth (&le; 300 Mbps) &bull; Wide coverage &bull; Violates military airbase policy and operational security (OPSEC)
+                  </td>
+                  <td style="padding: 10px 12px;">
+                    <span class="badge" style="background: rgba(225, 29, 72, 0.15); color: var(--accent-rose); border: 1px solid rgba(225, 29, 72, 0.3); font-weight: 700; font-size: 10.5px;">REJECTED</span>
+                  </td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Industrial Wi-Fi (802.11ac)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">2.4 / 5.0 GHz ISM</td>
-                  <td style="padding: 10px 12px; color: #86868b;">&lt; 80 m on asphalt</td>
-                  <td style="padding: 10px 12px; color: #86868b;">100–433 Mbps</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Local Air-Gap (WPA3)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Low cost, off-the-shelf</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08);">Phase 1 Benchtop Only</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">LoRa (SX1262 Chirp Module)</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">150 MHz &ndash; 960 MHz</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">5 &ndash; 10+ km</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">
+                    Long range &bull; Low power &bull; High latency &bull; Severely restricted bandwidth (&lt; 10&ndash;50 kbps)
+                  </td>
+                  <td style="padding: 10px 12px;">
+                    <span class="badge" style="background: rgba(225, 29, 72, 0.15); color: var(--accent-rose); border: 1px solid rgba(225, 29, 72, 0.3); font-weight: 700; font-size: 10.5px;">REJECTED</span>
+                  </td>
+                </tr>
+                <tr style="background: rgba(48, 209, 88, 0.05); border-bottom: 1px solid rgba(48, 209, 88, 0.2);">
+                  <td style="padding: 10px 12px; font-weight: 700; color: #30d158;">Serial RF (Microhard P900 V2)</td>
+                  <td style="padding: 10px 12px; color: #f5f5f7;">902 &ndash; 928 MHz<br><span style="font-size: 11px; color: #30d158;">(Locked to 917&ndash;925 MHz)</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">&gt; 5.0 km</td>
+                  <td style="padding: 10px 12px; color: #f5f5f7;">
+                    Air-gapped &bull; Low power consumption (&lt; 2.5 W) &bull; Easy UART interface &bull; Up to 276 kbps &bull; Software locked to avoid cellular band interference
+                  </td>
+                  <td style="padding: 10px 12px;">
+                    <span class="badge" style="background: rgba(48, 209, 88, 0.15); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.3); font-weight: 700; font-size: 10.5px;">SELECTED</span>
+                  </td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Commercial Cellular (4G LTE / 5G)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Licensed Telco Bands</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Tower Dependent</td>
-                  <td style="padding: 10px 12px; color: #86868b;">50–300 Mbps</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Zero Air-Gap (Public ISP)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Telco SIM, recurring fees</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08);">Rejected (OPSEC)</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">LoRa (SX1262 Chirp Modulation)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">915–928 MHz CSS</td>
-                  <td style="padding: 10px 12px; color: #86868b;">&gt; 8.0 km</td>
-                  <td style="padding: 10px 12px; color: #86868b;">0.3–5.0 kbps</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Air-Gapped</td>
-                  <td style="padding: 10px 12px; color: #86868b;">&lt; 5 g, &lt; 0.5 W</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08);">Rejected (Bandwidth)</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Broadband IP (Microhard pMDDL2450)</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">2.4 GHz / 5.8 GHz<br><span style="font-size: 11px; color: #86868b;">(Custom range available)</span></td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">&le; 8 &ndash; 9 km</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">
+                    High bandwidth &bull; Supports video streaming &bull; High hardware cost &bull; Larger size (130 g) &bull; Higher integration and power cost (&gt; 10.5 W)
+                  </td>
+                  <td style="padding: 10px 12px;">
+                    <span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.3); font-weight: 700; font-size: 10.5px;">Under consideration</span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -484,9 +550,56 @@
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
             3.2 Hardware Selection: Microhard P900 V2 vs. Broadband IP Bridges
           </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            The central architectural decision was whether to deploy a broadband Ethernet bridge (e.g. Microhard pMDDL2550) or a narrowband serial RF link (Microhard P900 V2). Because Edge AI (YOLOv8) runs locally on the UAV Jetson, uncompressed video streaming across the multi-kilometer runway is eliminated, restricting transmission strictly to compact C2 alert payloads ($&lt; 1.5\text{ KB}$).
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+            The central architectural decision was whether to deploy a broadband IP bridge (Microhard pMDDL2450 / pMDDL2550) or a narrowband serial RF link (Microhard P900 V2). Because Edge AI (YOLOv8) runs locally on the UAV companion computer, uncompressed video streaming across the multi-kilometer runway is eliminated, restricting transmission strictly to compact C2 alert payloads ($&lt; 1.5\text{ KB}$):
           </p>
+
+          <!-- SIDE-BY-SIDE HARDWARE COMPARISON VISUAL CARDS -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 18px;">
+            
+            <!-- MICROHARD P900 V2 (SELECTED) -->
+            <div style="background: rgba(48, 209, 88, 0.04); border: 1px solid rgba(48, 209, 88, 0.35); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <strong style="color: #30d158; font-size: 14px;">Microhard P900 V2 (Serial RF)</strong>
+                  <span class="badge" style="background: rgba(48, 209, 88, 0.15); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.3); font-weight: 700; font-size: 10.5px;">SELECTED</span>
+                </div>
+                <div style="background: #000; border-radius: 6px; padding: 10px; text-align: center; margin-bottom: 12px; border: 1px solid var(--apple-border);">
+                  <img src="../../assets/images/Hilbert/Microhard p900 V2.png" alt="Microhard P900 V2 Serial RF Module" style="max-height: 150px; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
+                </div>
+                <ul style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.55; margin: 0; padding-left: 18px;">
+                  <li><strong>Operating Frequency:</strong> 902–928 MHz (Software locked to 917–925 MHz IMDA window)</li>
+                  <li><strong>Range Capability:</strong> &gt; 5.0 km Line-of-Sight (LOS) coverage</li>
+                  <li><strong>Security &amp; Air-Gap:</strong> True air-gapped point-to-point link with AES-256 encryption</li>
+                  <li><strong>Power Consumption:</strong> &lt; 2.5 W (ideal for UAV battery endurance)</li>
+                  <li><strong>Data Throughput:</strong> Up to 276 kbps (direct UART interface)</li>
+                  <li><strong>SWaP Advantage:</strong> Ultra-compact 18 g footprint</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- BROADBAND IP MODULE (UNDER CONSIDERATION) -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <strong style="color: #f5f5f7; font-size: 14px;">Microhard pMDDL2450 / 2550 (Broadband IP)</strong>
+                  <span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.3); font-weight: 700; font-size: 10.5px;">Under consideration</span>
+                </div>
+                <div style="background: #000; border-radius: 6px; padding: 10px; text-align: center; margin-bottom: 12px; border: 1px solid var(--apple-border);">
+                  <img src="../../assets/images/Hilbert/Microhard pMMDL2550.jpg" alt="Microhard Broadband IP Module" style="max-height: 150px; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
+                </div>
+                <ul style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.55; margin: 0; padding-left: 18px;">
+                  <li><strong>Operating Frequency:</strong> 2.4 GHz / 5.8 GHz (Can request for custom range)</li>
+                  <li><strong>Range Capability:</strong> &le; 8 – 9 km Line-of-Sight</li>
+                  <li><strong>High Bandwidth:</strong> Up to 25 Mbps (Supports live HD video streaming)</li>
+                  <li><strong>Integration Cost:</strong> High hardware unit cost &amp; complex network integration</li>
+                  <li><strong>Overhead:</strong> Larger size (130 g) &amp; requires dedicated Ethernet switches (+350 g, &gt; 10.5 W)</li>
+                  <li><strong>Verdict:</strong> Excessive power and weight when Edge AI eliminates raw video transmission</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
 
           <!-- ARCHITECTURAL DECOUPLING CALLOUT & PRESENTABLE VISUAL TREE -->
           <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.25); border-left: 3px solid #2997ff; border-radius: 8px; padding: 18px; margin-bottom: 20px;">
@@ -580,7 +693,7 @@
                   </div>
                   <div>
                     <span style="color: rgba(255, 255, 255, 0.3);">├──►</span> 
-                    <strong style="color: #f5f5f7;">Livox Mid-360 LiDAR Node</strong> <span style="color: #86868b;">(Spatial Ground Filter &bull; Sensor Fusion Target Confirmation)</span>
+                    <strong style="color: #f5f5f7;">LiDAR Perception Node</strong> <span style="color: #86868b;">(Spatial Ground Filter &bull; Sensor Fusion Target Confirmation)</span>
                   </div>
                   <div>
                     <span style="color: rgba(255, 255, 255, 0.3);">└──►</span> 
@@ -920,11 +1033,60 @@
 
           <!-- 7.1 Multi-Machine Benchtop Testbed Configuration -->
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            7.1 Multi-Machine Benchtop Testbed Configuration
+            7.1 Multi-Machine Testbed: Phased Communication Architectures
           </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            Hilbert Soh successfully deployed and verified the multi-machine C2 data link across independent physical hardware. A standalone <strong>Raspberry Pi 5</strong> (acting as the UAV Scout &amp; Tactical C2 Ground Station, static IP `192.168.137.233`) communicates via direct point-to-point Ethernet using <strong>CycloneDDS unicast discovery</strong> with an autonomy <strong>Laptop</strong> (acting as the UGV Rover, static IP `192.168.137.1`) running Gazebo Harmonic and Nav2:
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
+            Hilbert Soh deployed and verified the multi-machine C2 data link across independent physical hardware, structured into two phased operational configurations:
           </p>
+
+          <!-- PHASED DUAL ARCHITECTURE FLOW CARDS (SEMESTER 1 VS SEMESTER 2) -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 22px;">
+            
+            <!-- SEMESTER 1 ARCHITECTURE -->
+            <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.25); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span class="badge badge-blue" style="font-size: 11px; font-weight: 700;">Semester 1: Local Network / Indoor Testing</span>
+                  <span style="font-size: 10.5px; color: #86868b; font-family: monospace;">Wi-Fi &bull; DDS Unicast</span>
+                </div>
+                <div style="font-size: 13.5px; font-weight: 700; color: #f5f5f7; margin-bottom: 8px;">
+                  Key Feature: UAV-FOD Hunter Handshake Communication
+                </div>
+                <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center; margin-bottom: 10px; font-family: 'SF Mono', Consolas, monospace; font-size: 11.5px; color: #2997ff;">
+                  UAV Simulated PC &nbsp;&rarr;&nbsp; <span style="color: #f5f5f7;">Indoor Router</span> &nbsp;&rarr;&nbsp; FOD Hunter ROS PC
+                </div>
+                <ul style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0; padding-left: 18px;">
+                  <li>Direct benchtop pairing over dedicated 5 GHz Wi-Fi router subnet (192.168.137.x).</li>
+                  <li>Disabled Access Point (AP) isolation to permit peer-to-peer ROS 2 DDS discovery.</li>
+                  <li>Tuned CycloneDDS static unicast XML configuration (<code>cyclonedds.xml</code>).</li>
+                  <li>Verified with node scripts (<code>pub_hello.py</code> / <code>sub_hello.py</code>) and active C2 alert program.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- SEMESTER 2 ARCHITECTURE -->
+            <div style="background: rgba(48, 209, 88, 0.04); border: 1px solid rgba(48, 209, 88, 0.25); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span class="badge" style="background: rgba(48, 209, 88, 0.15); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.3); font-size: 11px; font-weight: 700;">Semester 2: Long Range / Outdoor Testing</span>
+                  <span style="font-size: 10.5px; color: #86868b; font-family: monospace;">Serial RF &bull; Sub-1 GHz</span>
+                </div>
+                <div style="font-size: 13.5px; font-weight: 700; color: #f5f5f7; margin-bottom: 8px;">
+                  Key Feature: Long-Range Aerodrome RF Telemetry Deployment
+                </div>
+                <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 6px; padding: 10px; text-align: center; margin-bottom: 10px; font-family: 'SF Mono', Consolas, monospace; font-size: 11.5px; color: #30d158;">
+                  UAV Camera &nbsp;&rarr;&nbsp; <span style="color: #f5f5f7;">UAV RF Module</span> &nbsp;&rarr;&nbsp; <span style="color: #f5f5f7;">FOD Hunter RF Module</span> &nbsp;&rarr;&nbsp; FOD Hunter
+                </div>
+                <ul style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0; padding-left: 18px;">
+                  <li>Dual Microhard P900 V2 serial transceivers operating in the 917–925 MHz SRD window.</li>
+                  <li>Zero raw video transmission; edge AI running on UAV detects FOD and formats JSON alert.</li>
+                  <li>Over-the-air UART transmission (&gt; 5.0 km LOS) directly into UGV hardware ingest bridge.</li>
+                  <li>Real-time HUD telemetry and tactical map dispatch on ground station GUI.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
 
           <!-- MULTI-QUEUE WAYPOINT VIDEO (NEW FEATURE HIGHLIGHT) -->
           <div style="background: rgba(41, 151, 255, 0.04); border: 2px solid rgba(41, 151, 255, 0.35); border-radius: 10px; padding: 18px; margin-bottom: 24px;">

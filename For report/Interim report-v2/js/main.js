@@ -780,7 +780,7 @@ document.addEventListener('DOMContentLoaded', () => {
         limitations: [
           "Detection accuracy drops significantly during heavy rain, dense fog, or snowstorms, and suffers from shadow-induced false positives."
         ],
-        advantage: "FOD Hunter complements high-resolution optical vision with active 3D LiDAR (Livox Mid-360) and multi-spectral sensors, eliminating false positives caused by tarmac shadows or monsoonal rain."
+        advantage: "FOD Hunter complements high-resolution optical vision with active 3D LiDAR and multi-spectral sensors, eliminating false positives caused by tarmac shadows or monsoonal rain."
       },
       fodfinder: {
         name: "4. Trex Aviation FOD Finder Mobile (Vehicle-Mounted Radar)",

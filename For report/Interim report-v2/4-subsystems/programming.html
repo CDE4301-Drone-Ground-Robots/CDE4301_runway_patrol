@@ -902,7 +902,7 @@
               <div>
                 <span class="badge badge-blue" style="font-size: 10.5px;">Task 4 &bull; Sensor Fusion &amp; State Estimation</span>
                 <h3 style="font-size: 15.5px; font-weight: 700; color: #f5f5f7; margin: 4px 0 0 0;">
-                  Centimeter-Level RTK-GNSS &amp; Livox 3D LiDAR Sensor Fusion (Dual-EKF)
+                  Centimeter-Level RTK-GNSS &amp; 3D LiDAR Sensor Fusion (Dual-EKF)
                 </h3>
               </div>
               <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 11px;">Simulation Ground-Truth &rarr; Dual-EKF Physical Fusion</span>
@@ -913,7 +913,7 @@
             <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.6; margin: 0;">
               <li><strong style="color: #f5f5f7;">Unicorecomm UM980 RTK-GNSS Integration:</strong> Ingest NMEA GGA messages and stream RTCM3 differential corrections via NTRIP client, achieving $\pm 2.0\text{ cm}$ geodetic positioning accuracy.</li>
               <li><strong style="color: #f5f5f7;">Cascaded Dual-EKF (robot_localization):</strong> Configure continuous 100 Hz local EKF (wheel odometry + IMU angular rate) for smooth <code>odom</code> &rarr; <code>base_link</code> transforms, cascaded into global EKF fusing RTK-GNSS UTM coordinates for absolute <code>map</code> &rarr; <code>odom</code> pose.</li>
-              <li><strong style="color: #f5f5f7;">Livox Mid-360 3D LiDAR Pointclouds:</strong> Stream non-repetitive scanning pointclouds through <code>livox_ros_driver2</code> with ground-plane filtering, feeding <code>nav2_costmap_2d</code> voxel layers.</li>
+              <li><strong style="color: #f5f5f7;">3D LiDAR Pointclouds:</strong> Stream pointclouds with ground-plane filtering, feeding <code>nav2_costmap_2d</code> voxel layers.</li>
               <li><strong style="color: #f5f5f7;">nav2_collision_monitor Polygons:</strong> Define layered stop ($0.40\text{ m}$), slowdown ($1.20\text{ m}$), and approach ($2.50\text{ m}$) dynamic safety polygons directly projected from 3D LiDAR data.</li>
             </ul>
           </div>
@@ -1210,7 +1210,7 @@
         { title: "Real-Time Bridge", val: "STM32 CAN Bus Interface", sub: "Isolated 1 Mbps CAN to Hub Drivers" },
         { title: "Global Planner", val: "SmacPlannerHybrid (SE(2) Dubins)", sub: "Continuous Dubins lattice (R >= 1.50 m)" },
         { title: "Datalink Network", val: "Microhard P900 V2 FHSS RF", sub: ">5 km LoS Range, Sub-1 GHz, AES-256" },
-        { title: "Perception & SLAM", val: "Livox Mid-360 3D + UM980 RTK", sub: "Pointcloud safety + +/-2cm GNSS position" }
+        { title: "Perception & SLAM", val: "3D LiDAR + UM980 RTK", sub: "Pointcloud safety + +/-2cm GNSS position" }
       ];
 
       const hwContainer = document.getElementById('hw-cards-container');

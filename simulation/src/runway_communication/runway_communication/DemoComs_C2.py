@@ -32,7 +32,7 @@ def main(args=None):
         qos
     )
 
-    # List of demo detections (Valid open coordinates in NUS EA Field & Runway)
+    # List of demo detections (Original coordinates with safe clustered waypoint)
     targets = [
         {
             "threat_id": "FOD_THREAT_001",
@@ -49,6 +49,14 @@ def main(args=None):
             "y": 2.0,
             "yaw": 0.0,
             "confidence": 0.92
+        },
+        {
+            "threat_id": "FOD_THREAT_002_CLUSTER",
+            "object": "metal_wire",
+            "x": -6.2,
+            "y": 2.0,
+            "yaw": 0.0,
+            "confidence": 0.89
         },
         {
             "threat_id": "FOD_THREAT_003",

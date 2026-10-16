@@ -27,6 +27,10 @@ if [ -n "$LOCAL_IP" ]; then
     echo "[DDS Setup] RMW: rmw_cyclonedds_cpp | ROS_DOMAIN_ID: 0"
     echo "[DDS Setup] Bound to IP: ${LOCAL_IP}"
     echo "[DDS Setup] Discovery Peers: 192.168.168.50 (Laptop), 192.168.168.100 (RPi5)"
+elif [ -f "${SCRIPT_DIR}/cyclonedds.xml" ]; then
+    export CYCLONEDDS_URI="file://${SCRIPT_DIR}/cyclonedds.xml"
+    echo "[DDS Setup] RMW: rmw_cyclonedds_cpp | ROS_DOMAIN_ID: 0"
+    echo "[DDS Setup] Loaded profile: ${CYCLONEDDS_URI}"
 else
     echo "[DDS Setup] Warning: Neither 192.168.168.x nor 192.168.137.x detected. Using default discovery."
 fi

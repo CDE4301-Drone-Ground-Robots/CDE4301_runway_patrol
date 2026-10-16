@@ -317,6 +317,61 @@
               </p>
             </div>
           </div>
+
+          <!-- SIMULATION CLOSED-LOOP ARCHITECTURE PIPELINE -->
+          <div style="margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--apple-border);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h4 style="font-size: 15px; font-weight: 700; color: #f5f5f7; margin: 0;">
+                🔄 Closed-Loop Robotics Simulation Architecture
+              </h4>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; font-size: 10.5px;">Continuous Evaluation Loop</span>
+            </div>
+            <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 14px;">
+              The digital twin operates as a tightly integrated closed-loop pipeline connecting model ingestion, physics simulation, synthetic sensor generation, ROS 2 control execution, and quantitative performance evaluation:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 8px;">
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #2997ff; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 4px;">🤖</div>
+                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">1. Robot Model</strong>
+                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
+                  Import or create 4WD mobile robot model (AgileX Scout 2.0 proxy with mass, inertia, TF frames).
+                </p>
+              </div>
+
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #5856d6; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 4px;">⚙️</div>
+                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">2. Physics Engine</strong>
+                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
+                  Simulate dynamics, ground friction contacts ($\mu = 0.8$), and airfield aerodrome terrain environment.
+                </p>
+              </div>
+
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #34c759; border-radius: 8px; padding: 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 4px;">📡</div>
+                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">3. Sensors</strong>
+                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
+                  Simulate planar LiDAR (<code>/scan</code>), 9-DOF IMU, RTK-GPS positioning, and RGB camera feeds.
+                </p>
+              </div>
+
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #ff9500; border-radius: 6px; padding: 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 4px;">🧠</div>
+                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">4. Controller / ROS</strong>
+                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
+                  Test autonomous control algorithms (Nav2 Behavior Trees, SmacPlanner, Regulated Pure Pursuit).
+                </p>
+              </div>
+
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #ff2d55; border-radius: 6px; padding: 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 4px;">📊</div>
+                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">5. Evaluation</strong>
+                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
+                  Analyse tracking CTE, RTF, motor torque, and iterate parameters back to refine models and controller.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- ========================================================================= -->
@@ -404,7 +459,7 @@
 
           <!-- 3.1 Physics Simulator Trade-Off Matrix -->
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            3.1 Physics Simulator Trade-Off Matrix (Gazebo Classic, Harmonic, Isaac Sim, AWSIM)
+            3.1 Physics Simulator Trade-Off Matrix (Gazebo Sim Harmonic, Isaac Sim, Gazebo Classic, Webots)
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
             A rigorous engineering trade study evaluated four leading robotics simulation platforms against Capstone development constraints:
@@ -416,44 +471,39 @@
                 <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
                   <th style="padding: 10px 12px; text-align: left;">Simulation Engine</th>
                   <th style="padding: 10px 12px; text-align: left;">ROS 2 Jazzy Compatibility</th>
-                  <th style="padding: 10px 12px; text-align: left;">Physics Engine &amp; RTF</th>
-                  <th style="padding: 10px 12px; text-align: left;">Hardware Overhead / GPU Lock</th>
-                  <th style="padding: 10px 12px; text-align: left;">WSL2 / Linux Stability</th>
+                  <th style="padding: 10px 12px; text-align: left;">WSL2 / Ubuntu Stability</th>
+                  <th style="padding: 10px 12px; text-align: left;">Remarks</th>
                   <th style="padding: 10px 12px; text-align: left;">Selection Verdict</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="background: rgba(41, 151, 255, 0.04); border-bottom: 1px solid rgba(41, 151, 255, 0.2);">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #2997ff;">Gazebo Sim Harmonic (gz-sim 8.x)</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">Tier 1 Native Support (ros_gz)</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">DART / ODE (RTF 0.98 &plusmn; 0.02)</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">Lightweight; CPU / Vulkan fallback</td>
+                <tr style="background: rgba(41, 151, 255, 0.05); border-bottom: 1px solid rgba(41, 151, 255, 0.2);">
+                  <td style="padding: 10px 12px; font-weight: 700; color: #2997ff;">Gazebo Sim Harmonic</td>
+                  <td style="padding: 10px 12px; color: #f5f5f7;">Native Support</td>
                   <td style="padding: 10px 12px; color: #f5f5f7;">100% Stable on Ubuntu 24.04 / WSL2</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-weight: 700;">Selected (Primary Baseline)</span></td>
+                  <td style="padding: 10px 12px; color: #f5f5f7;">Lightweight; CPU / Vulkan fallback</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-weight: 700;">SELECTED</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">NVIDIA Isaac Sim (Omniverse)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Partial (Requires ROS 2 Humble/Iron bridge)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">PhysX 5 (GPU accelerated)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Heavy; Strictly requires NVIDIA RTX GPU (&gt;8 GB VRAM)</td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">NVIDIA Isaac Sim</td>
+                  <td style="padding: 10px 12px; color: #86868b;">Partial</td>
                   <td style="padding: 10px 12px; color: #86868b;">Complex Vulkan driver passthrough in WSL2</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08);">Rejected (Hardware Barrier)</span></td>
+                  <td style="padding: 10px 12px; color: #86868b;">Heavy CPU and GPU load</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(225, 29, 72, 0.15); color: var(--accent-rose); font-weight: 700;">REJECTED</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Gazebo Classic (Gazebo 11)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">End-of-Life (Incompatible with Jazzy)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">ODE Single-Threaded (RTF &lt; 0.65)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Low CPU, but single-threaded physics lock</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Deprecated in Ubuntu 24.04</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08);">Rejected (EOL / Obsolete)</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Gazebo Classic</td>
+                  <td style="padding: 10px 12px; color: #86868b;">EOL (ROS1)</td>
+                  <td style="padding: 10px 12px; color: #86868b;">-</td>
+                  <td style="padding: 10px 12px; color: #86868b;">Does not meet requirement</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(225, 29, 72, 0.15); color: var(--accent-rose); font-weight: 700;">REJECTED</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">AWSIM (Unity-Based)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Autoware-focused; limited Nav2 integration</td>
-                  <td style="padding: 10px 12px; color: #86868b;">PhysX (Unity Engine)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">High RAM &amp; dedicated GPU overhead</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Limited Linux headless support</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08);">Rejected (Toolchain Mismatch)</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Webots</td>
+                  <td style="padding: 10px 12px; color: #86868b;">Supported</td>
+                  <td style="padding: 10px 12px; color: #86868b;">Not fully stable with Ubuntu 24.04</td>
+                  <td style="padding: 10px 12px; color: #86868b;">Uses proprietary model format (PROTO)</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(225, 29, 72, 0.15); color: var(--accent-rose); font-weight: 700;">REJECTED</span></td>
                 </tr>
               </tbody>
             </table>
@@ -463,12 +513,109 @@
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
             3.2 Developer Workstation &amp; GPU Constraints Rationale (Ubuntu 24.04 / WSL2)
           </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
             The capstone team develops across heterogeneous developer hardware (Windows laptops with WSL2, MacBook Airs, and standalone Linux workstations). Selecting NVIDIA Isaac Sim would have created an insurmountable bottleneck: developers without dedicated high-TDP NVIDIA RTX mobile GPUs would be completely unable to run or debug simulation tests.
           </p>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 18px;">
             In contrast, <strong>Gazebo Harmonic 8.x</strong> is fully cross-platform. It compiles natively under <strong>Ubuntu 24.04 LTS (Noble Numbat)</strong> and runs deterministically inside Windows Subsystem for Linux (WSL2) via virtualized DirectX/OpenGL acceleration. Furthermore, it supports headless batch execution (<code>gz sim -s -r</code>) on CPU, enabling headless continuous integration (CI) test sweeps for Nav2 trajectory validation.
           </p>
+
+          <!-- 3.3 PROBLEMS FACED VS SOLUTIONS -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 18px; margin-top: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin: 0;">
+                🛠️ 3.3 Simulation Challenges Faced &amp; Engineering Solutions
+              </h3>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; font-size: 10.5px;">Airfield Runway Realities</span>
+            </div>
+            <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 16px;">
+              Simulating an autonomous UGV on a sprawling airfield runway presented unique engineering hurdles that do not exist in standard indoor robotics. Four primary problems were tackled and solved:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+              <!-- Problem 1: Open Runway -->
+              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <strong style="color: #ff453a; font-size: 13.5px;">Problem: Open Runway</strong>
+                  <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">Environment</span>
+                </div>
+                <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
+                  <li>Flat and expansive open space ($&gt; 60\text{ m} \times 100\text{ m}$).</li>
+                  <li>No vertical reference features or walls within laser range.</li>
+                  <li>Robot cannot determine where it is located.</li>
+                </ul>
+                <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
+                  <strong style="color: #34c759; font-size: 12.5px;">Solution: Runway Aerial Mapping</strong>
+                  <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
+                    <li>Import calibrated high-resolution aerial view of the airfield.</li>
+                    <li>Mark out danger areas, runway boundaries, and soft verges.</li>
+                    <li>Accurately scale georeferencing ($0.05\text{ m/pixel}$) into simulation.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Problem 2: Finding a Model -->
+              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <strong style="color: #ff453a; font-size: 13.5px;">Problem: Finding a Model</strong>
+                  <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">Kinematics</span>
+                </div>
+                <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
+                  <li>Simulation model must closely replicate the real product.</li>
+                  <li>Must include complete Transform frame (TF tree) hierarchy.</li>
+                  <li>Must use the exact same 4WD skid-steer steering method.</li>
+                </ul>
+                <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
+                  <strong style="color: #34c759; font-size: 12.5px;">Solution: AgileX Scout V2 Proxy</strong>
+                  <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
+                    <li>Selected AgileX Scout 2.0 as closest verified commercial baseline.</li>
+                    <li>Matches $65.0\text{ kg}$ payload, $0.582\text{ m}$ track width, and $0.498\text{ m}$ wheelbase.</li>
+                    <li>Accurate joint dynamics and DiffDrive Gazebo controller.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Problem 3: Mapping -->
+              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <strong style="color: #ff453a; font-size: 13.5px;">Problem: Mapping Scale</strong>
+                  <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">SLAM Limits</span>
+                </div>
+                <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
+                  <li>How to generate a SLAM map without vertical LiDAR surfaces?</li>
+                  <li>Runway is too large ($3\text{--}4\text{ km}$); dynamic mapping crashes simulation memory.</li>
+                </ul>
+                <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
+                  <strong style="color: #34c759; font-size: 12.5px;">Solution: Orthophoto Costmap</strong>
+                  <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
+                    <li>Eliminate runtime SLAM building via pre-computed static costmaps.</li>
+                    <li>Annotate traversable runway lanes (cost 0) vs. non-traversable grass (cost 254).</li>
+                    <li>Downsample heuristic resolution to fit edge computer RAM budgets.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Problem 4: Localisation -->
+              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                  <strong style="color: #ff453a; font-size: 13.5px;">Problem: Localisation Drift</strong>
+                  <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">State Estimation</span>
+                </div>
+                <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
+                  <li>Wheel odometry alone suffers cumulative wheel slip drift.</li>
+                  <li>LiDAR scan matching fails due to open runway geometry.</li>
+                </ul>
+                <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
+                  <strong style="color: #34c759; font-size: 12.5px;">Solution: Dual-EKF Sensor Fusion</strong>
+                  <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
+                    <li>Sensor fusion: Positioning module (RTK-GNSS) + Inertial Measurement Unit (IMU).</li>
+                    <li>Dual Extended Kalman Filter estimates robot position, velocity, and orientation.</li>
+                    <li>Provides drift-free global pose estimate and rock-solid localization.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- ========================================================================= -->
@@ -740,6 +887,78 @@
             <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Zero Rewrite Interface Parity</span>
           </div>
 
+          <!-- SIMULATION -> REAL WORLD PROGRESSION -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 18px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <h3 style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin: 0;">
+                🚀 Simulation &rarr; Real World Phased Deployment
+              </h3>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; font-size: 10.5px;">Semester 1 &bull; Semester 2</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 14px;">
+              <!-- Semester 1 Card -->
+              <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.25); border-radius: 8px; padding: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                  <span class="badge badge-blue" style="font-size: 11px; font-weight: 700;">Semester 1: Foundation</span>
+                  <span style="font-size: 11px; color: #86868b; font-family: monospace;">SIL Baseline</span>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <strong style="color: #2997ff; font-size: 13px;">Train in Simulation:</strong>
+                  <ul style="padding-left: 18px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 4px 0 0 0;">
+                    <li>Train and test safely without equipment crash risks.</li>
+                    <li>Faster iterations with accelerated batch simulation runs.</li>
+                    <li>Randomize different environmental layouts and obstacle spawns.</li>
+                  </ul>
+                </div>
+                <div>
+                  <strong style="color: #2997ff; font-size: 13px;">Bridge the Gap:</strong>
+                  <ul style="padding-left: 18px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 4px 0 0 0;">
+                    <li>Realistic ODE/DART contact physics and asphalt Coulomb friction.</li>
+                    <li>Hardware-accurate mass distribution, kinematic limits, and sensor noise.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Semester 2 Card -->
+              <div style="background: rgba(52, 199, 89, 0.04); border: 1px solid rgba(52, 199, 89, 0.25); border-radius: 8px; padding: 14px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                  <span class="badge badge-emerald" style="font-size: 11px; font-weight: 700;">Semester 2: Real World</span>
+                  <span style="font-size: 11px; color: #86868b; font-family: monospace;">HIL Deployment</span>
+                </div>
+                <div style="margin-bottom: 8px;">
+                  <strong style="color: #34c759; font-size: 13px;">Validate on Real Robot:</strong>
+                  <ul style="padding-left: 18px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 4px 0 0 0;">
+                    <li>Test in real outdoor aerodrome and campus environments.</li>
+                    <li>Fine-tune controller parameters under live physical friction.</li>
+                    <li>Handle unmodeled effects (suspension pitch, aerodynamic drag).</li>
+                    <li>Ensure fail-safe physical operation with emergency hardware stops.</li>
+                  </ul>
+                </div>
+                <div>
+                  <strong style="color: #34c759; font-size: 13px;">Deploy and Iterate:</strong>
+                  <ul style="padding-left: 18px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 4px 0 0 0;">
+                    <li>Monitor real-time telemetry performance over long-range RF links.</li>
+                    <li>Continuous learning from field edge cases; update simulation models.</li>
+                    <li>Scale to operational airfield debris remediation scenarios.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- TWO CRITICAL CALLOUT BANNERS -->
+            <div style="background: rgba(225, 29, 72, 0.08); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; text-align: center;">
+              <span style="font-size: 14px; font-weight: 700; color: var(--accent-rose);">
+                ⚠️ "If it works in simulation, does not mean it will work in real life!"
+              </span>
+            </div>
+            <div style="background: rgba(41, 151, 255, 0.08); border: 1px solid rgba(41, 151, 255, 0.3); border-radius: 6px; padding: 12px 16px; text-align: center;">
+              <span style="font-size: 13.5px; font-weight: 600; color: #2997ff;">
+                💡 "Simulation reduces cost, risk and time-to-deploy, but real-world testing is essential for a robust and reliable robotic system!"
+              </span>
+            </div>
+          </div>
+
           <!-- 8.1 Hardware Mapping Matrix -->
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
             8.1 Hardware Mapping Matrix (Gazebo Plugins &rarr; Physical Sensors, UM980 &amp; STM32 CAN)
@@ -768,8 +987,8 @@
                 <tr style="border-bottom: 1px solid var(--apple-border);">
                   <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Obstacle Sensing</td>
                   <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Simulated 2D laser scanner (<code>/scan</code>)</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Livox Mid-360 3D solid-state LiDAR with <code>pointcloud_to_laserscan</code> filter</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #2997ff;">/scan (LaserScan)<br>/livox/lidar (PointCloud2)</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">3D solid-state LiDAR with <code>pointcloud_to_laserscan</code> filter</td>
+                  <td style="padding: 10px 12px; font-family: monospace; color: #2997ff;">/scan (LaserScan)<br>/points (PointCloud2)</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
                   <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">C2 Telemetry Link</td>

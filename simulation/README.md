@@ -70,6 +70,8 @@ runway_sim_ws/
 │   └── Phase1_ugvuav_communications.md # Phase 1 communications protocol backup
 │
 ├── sync_to_repo.py                  # Automated workspace sync to external report repository
+├── 📊 tuning_documentation.md       # In-depth controller and planner empirical tuning analysis & graphs
+├── 🔄 behavior.md                   # Skid-steer zero-radius turning conditions & state machine behaviors
 └── 📄 README.md                     # Master simulation documentation
 ```
 
@@ -191,6 +193,8 @@ To mirror real-world autonomous airport GSE, the system uses the industry-standa
 ### 3. Nav2 Performance & Safety Configuration
 * **Planner Heuristic Optimization**: In ultra-high-resolution maps ($0.028\text{ m/cell}$), default Hybrid A* configurations allocate over 36 million states, freezing initialization for over 35 seconds. By enabling `downsample_costmap: true` (factor 2) and setting `lookup_table_size: 10.0`, planner initialization drops from 35s down to **2.2 seconds**.
 * **Safety Inflation Layer**: A **$1.20\text{ m}$ inflation radius** surrounds all obstacles and pedestrians with exponential cost decay. The robot maintains a generous safety buffer and will not clip corners or brush past airport ground personnel.
+* **📖 Detailed Parameter Tuning Report**: For the complete empirical parameter sweep methodology, iteration tables, mathematical derivations ($\kappa = 2y'/L^2$, $a_c = v^2/R$, Coulomb tire scrubbing), and performance tradeoff graphs, see **[`tuning_documentation.md`](tuning_documentation.md)**.
+* **🔄 Skid-Steer Turning & Behavior Guide**: For a detailed breakdown of the 3 exact conditions triggering zero-radius in-place turns ($R = 0$) vs high-speed continuous curvature arcs ($R \ge 1.0\text{ m}$), see **[`behavior.md`](behavior.md)**.
 
 ---
 
@@ -232,13 +236,13 @@ Launch Gazebo Harmonic, the Dual-EKF localization pipeline, Nav2, and RViz2 toge
 
 #### For NUS EA Field (Campus Courtyard):
 ```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
+source setup_dds.sh
 ros2 launch runway_navigation sim_and_nav.launch.py world_name:=nus_ea_field
 ```
 
 #### For Aarhus Airport Runway (EKAH 100m Airfield):
 ```bash
-source /opt/ros/jazzy/setup.bash && source ~/runway_sim_ws/install/setup.bash
+source setup_dds.sh
 ros2 launch runway_navigation sim_and_nav.launch.py world_name:=airport_runway
 ```
 

@@ -94,14 +94,20 @@ class UGVC2BridgeNode(Node):
         self.goal_queue = []
         self.active_goal_item = None
 
-        # Auto Initial Pose Publisher (Primes Nav2 & AMCL without manual 2D Pose Estimate)
+        self.declare_parameter('enable_initial_pose', False)
+        self.enable_initial_pose = bool(self.get_parameter('enable_initial_pose').value)
+
+        # Auto Initial Pose Publisher (Primes Nav2 only if explicitly enabled, e.g. AMCL)
         self.initial_pose_pub = self.create_publisher(
             PoseWithCovarianceStamped,
             '/initialpose',
             10
         )
         self.initial_pose_count = 0
-        self.initial_pose_timer = self.create_timer(1.0, self.publish_startup_initial_pose, callback_group=self.cb_group)
+        if self.enable_initial_pose:
+            self.initial_pose_timer = self.create_timer(1.0, self.publish_startup_initial_pose, callback_group=self.cb_group)
+        else:
+            self.initial_pose_timer = None
 
         # 1. C2 Alert Subscriber (UAV -> UGV) - Latched QoS matches RPi5 UAV commander
         qos_latched = QoSProfile(
@@ -277,16 +283,32 @@ class UGVC2BridgeNode(Node):
             self.get_logger().error(f"Failed to parse C2 target alert: {e}")
 
     def execute_mission_goal(self, goal_item: dict):
-        """Execute a goal (either immediately or popped from queue)."""
+        """Execute a goal with vacuum intake head offset calculation."""
         self.active_goal_item = goal_item
         self.active_threat_id = goal_item['threat_id']
-        self.target_x = goal_item['x']
-        self.target_y = goal_item['y']
+        raw_x = float(goal_item['x'])
+        raw_y = float(goal_item['y'])
         self.task_state = "ACKNOWLEDGED"
         self.task_start_time = time.time()
 
-        self.get_logger().info(f"🚀 [DISPATCH] Driving to {self.active_threat_id} at ({self.target_x:.2f}, {self.target_y:.2f})")
-        self.dispatch_nav_goal(self.target_x, self.target_y, goal_item['yaw'])
+        # Calculate approach heading from current robot location towards FOD
+        if self.robot_x is not None:
+            approach_yaw = math.atan2(raw_y - self.robot_y, raw_x - self.robot_x)
+        else:
+            approach_yaw = 0.0
+
+        # Rear vacuum intake head is mounted 20cm behind chassis rear bumper
+        # Chassis half-length = 0.46m -> Intake head is 0.66m behind base_link center.
+        # To position intake head directly OVER the FOD, robot drives forward past the FOD by 0.66m.
+        VACUUM_OFFSET = 0.66  # meters
+        self.target_x = raw_x + VACUUM_OFFSET * math.cos(approach_yaw)
+        self.target_y = raw_y + VACUUM_OFFSET * math.sin(approach_yaw)
+
+        self.get_logger().info(
+            f"🚀 [DISPATCH] FOD Target: {self.active_threat_id} at ({raw_x:.2f}, {raw_y:.2f}). "
+            f"Centering robot and applying rear vacuum intake offset (+{VACUUM_OFFSET:.2f}m) -> Nav Goal: ({self.target_x:.2f}, {self.target_y:.2f})"
+        )
+        self.dispatch_nav_goal(self.target_x, self.target_y, target_yaw=approach_yaw)
         self.publish_queue_markers()
 
     def dispatch_nav_goal(self, gx: float, gy: float, target_yaw: float = None):
@@ -311,18 +333,23 @@ class UGVC2BridgeNode(Node):
 
         # Fallback publish on topic
         self.goal_pub.publish(pose_msg)
-        self.task_state = "EN_ROUTE"
+        if self.nav_client is not None:
+            if not self.nav_client.server_is_ready():
+                self.get_logger().info("⏳ Waiting up to 5.0s for Nav2 Action server (/navigate_to_pose)...")
+                self.nav_client.wait_for_server(timeout_sec=5.0)
 
-        if self.nav_client is not None and self.nav_client.server_is_ready():
-            goal_msg = NavigateToPose.Goal()
-            goal_msg.pose = pose_msg
-            send_future = self.nav_client.send_goal_async(
-                goal_msg,
-                feedback_callback=self.nav_feedback_cb
-            )
-            send_future.add_done_callback(self.goal_response_cb)
+            if self.nav_client.server_is_ready():
+                goal_msg = NavigateToPose.Goal()
+                goal_msg.pose = pose_msg
+                send_future = self.nav_client.send_goal_async(
+                    goal_msg,
+                    feedback_callback=self.nav_feedback_cb
+                )
+                send_future.add_done_callback(self.goal_response_cb)
+            else:
+                self.get_logger().warn("📡 Nav2 Action server not ready. Goal published via /goal_pose fallback topic.")
         else:
-            self.get_logger().info("📡 Nav2 Action server not connected. Sent via /goal_pose topic.")
+            self.get_logger().info("📡 Nav2 Action client not initialized. Sent via /goal_pose topic.")
 
     def nav_feedback_cb(self, feedback_msg):
         fb = feedback_msg.feedback
@@ -344,12 +371,33 @@ class UGVC2BridgeNode(Node):
     def goal_result_cb(self, future):
         status = future.result().status
         if status == GoalStatus.STATUS_SUCCEEDED:
-            self.get_logger().info(f"🎯 [VERIFICATION] Arrived at {self.active_threat_id}. Verifying & Remediating FOD...")
-            self.task_state = "VERIFIED"
-            # Simulate active physical clearance sequence (vacuum activation)
-            threading.Timer(2.0, self.complete_remediation).start()
+            # Check proximity to next queued FOD in task ledger
+            is_clustered = False
+            d_next = 999.0
+            if len(self.goal_queue) > 0:
+                next_item = self.goal_queue[0]
+                d_next = math.hypot(float(next_item['x']) - self.target_x, float(next_item['y']) - self.target_y)
+                if d_next <= 2.5:  # Next FOD is very close (within 2.5m)
+                    is_clustered = True
+
+            if is_clustered:
+                # Continuous Sweep mode: Do not stop, slowly advance directly over FOD
+                self.get_logger().info(
+                    f"🧹 [CONTINUOUS SWEEP] Rear vacuum intake head is over {self.active_threat_id}. "
+                    f"Next FOD is only {d_next:.2f}m away! Bypassing dwell stop — maintaining slow continuous sweep to next target..."
+                )
+                self.task_state = "CONTINUOUS_SWEEP"
+                threading.Timer(0.5, self.complete_remediation).start()
+            else:
+                # Isolated FOD: Halt completely and dwell for 7.0s (5-10s window) for thorough suction
+                self.get_logger().info(
+                    f"🎯 [VACUUM DWELL] Arrived at {self.active_threat_id}. "
+                    f"Rear vacuum intake head centered over FOD. Halting for 7.0s dwell to suction debris..."
+                )
+                self.task_state = "VACUUMING"
+                threading.Timer(7.0, self.complete_remediation).start()
         elif status == GoalStatus.STATUS_CANCELED:
-            if self.task_state == "EN_ROUTE":
+            if self.task_state in ["EN_ROUTE", "VACUUMING", "CONTINUOUS_SWEEP"]:
                 self.task_state = "CANCELLED"
                 self.active_threat_id = None
                 self.publish_queue_markers()
