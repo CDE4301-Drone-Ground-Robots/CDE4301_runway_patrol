@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script>
-    (function() {
+    (function () {
       try {
         var t = localStorage.getItem('theme');
         if (t === 'light') {
@@ -10,7 +11,7 @@
         } else {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
-      } catch (e) {}
+      } catch (e) { }
     })();
   </script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -18,15 +19,504 @@
   <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YOLO model comparison - Gabriel</title>
+  <title>YOLO Model Comparison - Gabriel | FOD Hunter</title>
   <link rel="stylesheet" href="../../css/styles.css?v=4.2">
+
+  <style>
+    /* ── High-Impact Dashboard Styling ─────────────────────────────────────── */
+    .metric-pill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .metric-pill {
+      background: var(--apple-surface-card);
+      border: 1px solid var(--apple-border);
+      border-radius: 14px;
+      padding: 16px 14px;
+      text-align: center;
+      box-shadow: var(--apple-shadow-sm);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .metric-pill:hover {
+      transform: translateY(-2px);
+      border-color: rgba(41, 151, 255, 0.4);
+    }
+
+    .metric-pill .value {
+      font-size: 26px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .metric-pill .label {
+      font-size: 11.5px;
+      color: var(--apple-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+    .metric-pill .sublabel {
+      font-size: 11px;
+      color: var(--apple-text-tertiary);
+      margin-top: 4px;
+    }
+
+    .chart-box {
+      background: rgba(12, 12, 16, 0.85);
+      border: 1px solid var(--apple-border);
+      border-radius: 14px;
+      padding: 20px;
+      margin: 18px 0;
+    }
+
+    [data-theme="light"] .chart-box {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .svg-container {
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .winner-card {
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.02);
+      position: relative;
+    }
+
+    .winner-card.emerald {
+      border-left: 4px solid var(--apple-green);
+      background: linear-gradient(135deg, rgba(48, 209, 88, 0.05) 0%, transparent 100%);
+    }
+
+    .winner-card.blue {
+      border-left: 4px solid var(--apple-blue);
+      background: linear-gradient(135deg, rgba(41, 151, 255, 0.05) 0%, transparent 100%);
+    }
+
+    /* Stride resolution visualizer */
+    .stride-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .stride-box {
+      background: #09090c;
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    [data-theme="light"] .stride-box {
+      background: #f7f7f9;
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .checklist-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+    }
+
+    /* ── Frame Strip Visualizer & Stat Cards ─────────────────────────────────── */
+    .frame-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .frame-square {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .frame-square:hover {
+      transform: scale(1.25);
+      z-index: 2;
+    }
+
+    @media (max-width: 480px) {
+      .frame-square {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .frame-square {
+        transition: none !important;
+      }
+    }
+
+    .leak-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+      margin-bottom: 20px;
+    }
+
+    .leak-stat-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 16px 14px;
+      text-align: center;
+    }
+
+    [data-theme="light"] .leak-stat-card {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .frame-strip {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    /* ── Interactive Button Groups ─────────────────────────────────────────── */
+    .pill-group {
+      display: inline-flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      cursor: pointer;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--apple-border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--apple-text-secondary);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .pill-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--apple-text-primary);
+    }
+
+    .pill-btn[aria-pressed="true"] {
+      background: var(--apple-blue);
+      color: #ffffff;
+      border-color: var(--apple-blue);
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(41, 151, 255, 0.35);
+    }
+
+    [data-theme="light"] .pill-btn {
+      background: #f0f0f4;
+      border-color: rgba(0, 0, 0, 0.12);
+      color: #55555c;
+    }
+
+    [data-theme="light"] .pill-btn:hover {
+      background: #e4e4e8;
+      color: #111;
+    }
+
+    [data-theme="light"] .pill-btn[aria-pressed="true"] {
+      background: var(--apple-blue);
+      color: #ffffff;
+    }
+
+    /* Keyboard focus accessibility */
+    button:focus-visible,
+    a:focus-visible,
+    summary:focus-visible,
+    [tabindex="0"]:focus-visible {
+      outline: 2px solid var(--apple-blue) !important;
+      outline-offset: 2px !important;
+    }
+
+    /* ── Tooltips (Accessible on hover and focus) ───────────────────────────── */
+    .tooltip-term {
+      border-bottom: 1px dotted var(--apple-text-secondary);
+      cursor: help;
+      position: relative;
+      display: inline-block;
+      outline: none;
+    }
+
+    .tooltip-term .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      width: 230px;
+      background-color: #1a1a20;
+      color: #f5f5f7;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      padding: 8px 11px;
+      font-size: 11.5px;
+      font-weight: 400;
+      line-height: 1.45;
+      position: absolute;
+      z-index: 1000;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      white-space: normal;
+    }
+
+    [data-theme="light"] .tooltip-term .tooltip-text {
+      background-color: #ffffff;
+      color: #1d1d1f;
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .tooltip-term:hover .tooltip-text,
+    .tooltip-term:focus .tooltip-text,
+    .tooltip-term:focus-within .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    /* ── Expandable "Why?" Sections ────────────────────────────────────────── */
+    .why-details {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-size: 13px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .why-details[open] {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(41, 151, 255, 0.3);
+    }
+
+    [data-theme="light"] .why-details {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .why-details[open] {
+      background: #f5f5f7;
+      border-color: rgba(41, 151, 255, 0.4);
+    }
+
+    .why-details summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--apple-blue);
+      user-select: none;
+      list-style-position: inside;
+    }
+
+    .why-details summary::-webkit-details-marker {
+      color: var(--apple-blue);
+    }
+
+    .why-details p {
+      margin: 8px 0 0 0;
+      color: var(--apple-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── Stepper Component ─────────────────────────────────────────────────── */
+    .stepper-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .step-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.25s ease;
+    }
+
+    .step-dot.active {
+      background: var(--apple-blue);
+      transform: scale(1.3);
+    }
+
+    [data-theme="light"] .step-dot {
+      background: rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="light"] .step-dot.active {
+      background: var(--apple-blue);
+    }
+
+    /* ── Lightbox Dialog ───────────────────────────────────────────────────── */
+    dialog#image-lightbox-dialog {
+      border: none;
+      border-radius: 12px;
+      padding: 0;
+      background: var(--apple-card);
+      color: var(--apple-text-primary);
+      max-width: 90vw;
+      max-height: 90vh;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+
+    dialog#image-lightbox-dialog::backdrop {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+    }
+
+    .lightbox-wrapper {
+      position: relative;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--apple-card);
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--apple-text-primary);
+      border: 1px solid var(--apple-border);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .lightbox-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.08);
+    }
+
+    .lightbox-close-btn:focus-visible {
+      outline: 2px solid var(--apple-blue);
+    }
+
+    [data-theme="light"] .lightbox-close-btn {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] .lightbox-close-btn:hover {
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    #lightbox-img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+
+    #lightbox-caption {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--apple-text-secondary);
+      text-align: center;
+      max-width: 650px;
+      line-height: 1.4;
+    }
+
+    /* ── Reduced Motion Preference ─────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+
+      .bar-fill,
+      .metric-pill,
+      .pill-btn,
+      .why-details,
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+    .highlight-stat {
+      color: var(--apple-green);
+      font-weight: 600;
+    }
+
+    .alert-stat {
+      color: var(--apple-red);
+      font-weight: 600;
+    }
+
+    .amber-stat {
+      color: var(--apple-amber);
+      font-weight: 600;
+    }
+
+    .blue-stat {
+      color: var(--apple-blue);
+      font-weight: 600;
+    }
+  </style>
 </head>
+
 <body>
   <!-- APPLE TOP NAVIGATION BAR -->
   <header class="apple-nav">
     <div class="apple-nav-container">
       <a href="../../index.html" class="apple-nav-brand">
-        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore"
+          class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
         <span class="nav-project-code">AIS-406</span>
       </a>
 
@@ -63,72 +553,1139 @@
   <!-- MAIN PAGE CONTENT -->
   <main class="apple-main-content">
     <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
-      
+
       <!-- HERO HEADER -->
-      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
-        <div class="apple-hero-badge">Drone &amp; Vision Subsystem • Gabriel</div>
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 32px;">
+        <div class="apple-hero-badge">Drone &amp; Vision Subsystem • Gabriel Tan</div>
         <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 12px;">
-          YOLO model comparison
+          YOLO Model Comparison &amp; Edge Benchmark
         </h1>
+        <p class="apple-section-desc"
+          style="max-width: 820px; margin: 0 auto; font-size: 14.5px; color: var(--apple-text-secondary);">
+          Quantitative architecture evaluation, public benchmark leakage audit, and native runway tarmac resolution
+          scaling for small metallic fasteners.
+        </p>
+      </div>
+
+      <!-- GLANCEABLE KPI STAT BAR -->
+      <div class="metric-pill-grid">
+        <div class="metric-pill">
+          <div class="value highlight-stat">97.0%</div>
+          <div class="label">mAP@50 (1088 Native)</div>
+          <div class="sublabel">&plusmn;1.4% across 3 <span class="tooltip-term" tabindex="0">seeds<span
+                class="tooltip-text">Random seeds (0, 1, 2) controlling stochastic operations to quantify training
+                stability and variance.</span></span></div>
+        </div>
+        <div class="metric-pill">
+          <div class="value blue-stat">6.5 ms</div>
+          <div class="label">A40 Latency (Batch 1)</div>
+          <div class="sublabel">Budget &le; 33.3 ms (30 FPS)</div>
+        </div>
+        <div class="metric-pill">
+          <div class="value alert-stat">93.8% &rarr; 0%</div>
+          <div class="label">Benchmark Leakage Purged</div>
+          <div class="sublabel">Unmasks true 50.3% mAP</div>
+        </div>
+        <div class="metric-pill">
+          <div class="value highlight-stat">88% Drop</div>
+          <div class="label">False Positives Slashed</div>
+          <div class="sublabel">8.3 &rarr; 1.0 @ 0.25 conf</div>
+        </div>
+        <div class="metric-pill">
+          <div class="value amber-stat">+20.1 pp</div>
+          <div class="label">RT-DETR-L Recall Lead</div>
+          <div class="sublabel">62.6% vs 42.5% (YOLO11-S)</div>
+        </div>
       </div>
 
       <div class="page-content">
 
-        <!-- SECTION 1 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+        <!-- ===================================================================
+             SECTION 1.0: DATASET LEAKAGE AUDIT (FOD-A vs LEAK-FREE)
+             =================================================================== -->
+        <div class="card-box" id="leakage-audit" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 1.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Neural Network Benchmark Matrix</h2>
+              <span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 1.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Dataset Leakage Audit</h2>
+            </div>
+            <span class="badge badge-rose">Methodological Finding</span>
+          </div>
+
+          <!-- 1. Big Before / After Stat Callout -->
+          <div
+            style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 14px; padding: 22px 16px; text-align: center; margin-top: 18px; margin-bottom: 18px;">
+            <div
+              style="font-size: clamp(2.2rem, 5.5vw, 3.4rem); font-weight: 800; font-family: var(--font-mono); line-height: 1.1; letter-spacing: -0.02em;">
+              <span style="color: var(--apple-red);">99.42%</span>
+              <span style="color: var(--apple-text-tertiary); font-size: 0.75em; margin: 0 10px;">&rarr;</span>
+              <span style="color: var(--apple-green);">50.29%</span>
+            </div>
+            <div style="font-size: 13.5px; font-weight: 600; color: var(--apple-text-secondary); margin-top: 8px;">
+              YOLO11-S test mAP@50 before and after fixing the split
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
+
+          <!-- 2. Intro Paragraph -->
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 18px;">
+            The public FOD-A dataset was extracted from a continuous video. Random frame shuffling distributed
+            temporally adjacent frames across train and test sets, inflating reported mAP@50 to ~99% through background
+            asphalt memorization. Enforcing scene-level separation with temporal buffer gaps eliminates visual leakage,
+            revealing the true generalisation baseline.
           </p>
+
+          <!-- 3. Frame-Strip Visualizer -->
+          <div class="chart-box" style="margin-bottom: 20px; padding: 18px;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+              <div>
+                <strong style="font-size: 13.5px; color: var(--apple-text-primary);">Video Frame Partition
+                  Distribution</strong>
+                <div style="font-size: 12px; color: var(--apple-text-tertiary); margin-top: 2px;">
+                  Toggle split methodology to observe temporal leakage vs. contiguous segmentation:
+                </div>
+              </div>
+              <div class="pill-group" role="group" aria-label="Split Methodology">
+                <button type="button" id="btn-strip-random" class="pill-btn split-toggle-btn active"
+                  aria-pressed="true">Random frame split</button>
+                <button type="button" id="btn-strip-clean" class="pill-btn split-toggle-btn"
+                  aria-pressed="false">Leak-free split</button>
+              </div>
+            </div>
+
+            <!-- Row of 40 Small Squares (Wrap on Mobile) -->
+            <div id="frame-strip-container" class="frame-strip" role="img"
+              aria-label="Sample strip of 40 consecutive video frames colored by partition"></div>
+
+            <div style="font-size: 11px; color: var(--apple-text-tertiary); text-align: center; margin-top: 6px;">
+              Illustration only, not real frame counts.
+            </div>
+
+            <!-- Legend -->
+            <div
+              style="display: flex; justify-content: center; flex-wrap: wrap; gap: 18px; margin-top: 14px; font-size: 12px; color: var(--apple-text-secondary);">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span
+                  style="width: 12px; height: 12px; border-radius: 3px; background: var(--apple-blue); display: inline-block;"></span>
+                <span>Train</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span
+                  style="width: 12px; height: 12px; border-radius: 3px; background: var(--apple-purple); display: inline-block;"></span>
+                <span>Validation</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span
+                  style="width: 12px; height: 12px; border-radius: 3px; background: #ff9f0a; display: inline-block;"></span>
+                <span>Test</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span
+                  style="width: 12px; height: 12px; border-radius: 3px; background: #636366; display: inline-block;"></span>
+                <span>Discarded buffer</span>
+              </div>
+            </div>
+
+            <div id="strip-description"
+              style="font-size: 11.5px; color: var(--apple-text-tertiary); text-align: center; margin-top: 10px;">
+              Random frame split interleaves test and validation frames immediately adjacent to train frames.
+            </div>
+          </div>
+
+          <!-- 5-Step Stepper Component -->
+          <div class="chart-box" style="padding: 18px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <strong style="font-size: 13.5px; color: var(--apple-text-primary);">
+                🛠️ 5-Step Automated Leak-Free Protocol (<code
+                  style="font-family: var(--font-mono); color: var(--apple-blue);">build_arch2_dataset.py</code>)
+              </strong>
+              <div class="stepper-dots" id="protocol-dots">
+                <span class="step-dot active"></span>
+                <span class="step-dot"></span>
+                <span class="step-dot"></span>
+                <span class="step-dot"></span>
+                <span class="step-dot"></span>
+              </div>
+            </div>
+
+            <div id="stepper-card"
+              style="background: rgba(255,255,255,0.03); border: 1px solid var(--apple-border); border-radius: 10px; padding: 16px 18px; min-height: 80px;">
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                <span id="step-badge" class="badge badge-blue">STEP 1</span>
+                <h4 id="step-title" style="margin: 0; font-size: 15px; color: var(--apple-text-primary);">Group Frames
+                  to Scenes</h4>
+              </div>
+              <p id="step-desc"
+                style="margin: 0; font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6;">
+                All 33,793 frames are put in order and grouped into scenes, where each scene is showing a different
+                object.
+              </p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
+              <button type="button" id="step-prev-btn" class="pill-btn" disabled>&larr; Back</button>
+              <span id="step-counter" style="font-size: 12px; color: var(--apple-text-tertiary);">Step 1</span>
+              <button type="button" id="step-next-btn" class="pill-btn">Next &rarr;</button>
+            </div>
+          </div>
         </div>
 
-        <!-- SECTION 2 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+
+        <!-- ===================================================================
+             SECTION 2.0: NEURAL NETWORK BENCHMARK MATRIX (LEAK-FREE FOD-A)
+             =================================================================== -->
+        <div class="card-box" id="benchmark-matrix" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 2.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Edge Optimization &amp; Quantization (TensorRT)</h2>
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 2.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Model Performance Benchmarks
+              </h2>
+            </div>
+            <span class="badge badge-emerald">NVIDIA A40 &bull; 30 Epochs</span>
+          </div>
+
+          <!-- Interactive Bar Chart: Test Performance Swapper -->
+          <div class="chart-box" style="margin-top: 16px;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+              <div>
+                <strong id="metric-chart-title" style="font-size: 13.5px; color: var(--apple-text-primary);">A40
+                  Inference Latency vs. 33.3 ms Real-Time Budget</strong>
+                <div style="font-size: 12px; color: var(--apple-text-tertiary); margin-top: 2px;">Select metric to swap
+                  bar comparison:</div>
+              </div>
+              <div class="pill-group" role="group" aria-label="Metric Selection">
+                <button type="button" class="pill-btn metric-btn active" data-metric="latency"
+                  aria-pressed="true">Latency</button>
+                <button type="button" class="pill-btn metric-btn" data-metric="map5095"
+                  aria-pressed="false">mAP@50-95</button>
+                <button type="button" class="pill-btn metric-btn" data-metric="precision"
+                  aria-pressed="false">Precision</button>
+                <button type="button" class="pill-btn metric-btn" data-metric="recall"
+                  aria-pressed="false">Recall</button>
+              </div>
+            </div>
+
+            <!-- Chart Bars -->
+            <div id="metric-bars-container" style="display: flex; flex-direction: column; gap: 14px; padding: 4px 0;">
+              <!-- YOLO11-S -->
+              <div class="bar-row" style="display: flex; align-items: center; gap: 12px;">
+                <div
+                  style="width: 130px; font-size: 13px; font-weight: 600; color: var(--apple-text-primary); text-align: right; flex-shrink: 0;">
+                  YOLO11-S <span
+                    style="font-size: 11px; font-weight: 400; color: var(--apple-text-tertiary);">(9.4M)</span>
+                </div>
+                <div class="bar-track"
+                  style="flex: 1; background: rgba(255,255,255,0.06); height: 24px; border-radius: 6px; position: relative; overflow: hidden;">
+                  <div id="bar-yolo11" class="bar-fill"
+                    style="width: 15.6%; height: 100%; background: var(--apple-blue); border-radius: 6px; transition: width 0.4s ease, background 0.3s ease;">
+                  </div>
+                </div>
+                <div id="val-yolo11"
+                  style="width: 80px; font-size: 13px; font-weight: 700; font-family: var(--font-mono); color: var(--apple-blue); flex-shrink: 0;">
+                  5.2 ms
+                </div>
+              </div>
+
+              <!-- YOLOv8-S -->
+              <div class="bar-row" style="display: flex; align-items: center; gap: 12px;">
+                <div
+                  style="width: 130px; font-size: 13px; font-weight: 600; color: var(--apple-text-primary); text-align: right; flex-shrink: 0;">
+                  YOLOv8-S <span
+                    style="font-size: 11px; font-weight: 400; color: var(--apple-text-tertiary);">(11.1M)</span>
+                </div>
+                <div class="bar-track"
+                  style="flex: 1; background: rgba(255,255,255,0.06); height: 24px; border-radius: 6px; position: relative; overflow: hidden;">
+                  <div id="bar-yolov8" class="bar-fill"
+                    style="width: 13.5%; height: 100%; background: var(--apple-green); border-radius: 6px; transition: width 0.4s ease, background 0.3s ease;">
+                  </div>
+                </div>
+                <div id="val-yolov8"
+                  style="width: 80px; font-size: 13px; font-weight: 700; font-family: var(--font-mono); color: var(--apple-green); flex-shrink: 0;">
+                  4.5 ms
+                </div>
+              </div>
+
+              <!-- RT-DETR-L -->
+              <div class="bar-row" style="display: flex; align-items: center; gap: 12px;">
+                <div
+                  style="width: 130px; font-size: 13px; font-weight: 600; color: var(--apple-text-primary); text-align: right; flex-shrink: 0;">
+                  RT-DETR-L <span
+                    style="font-size: 11px; font-weight: 400; color: var(--apple-text-tertiary);">(32.8M)</span>
+                </div>
+                <div class="bar-track"
+                  style="flex: 1; background: rgba(255,255,255,0.06); height: 24px; border-radius: 6px; position: relative; overflow: hidden;">
+                  <div id="bar-rtdetr" class="bar-fill"
+                    style="width: 72.7%; height: 100%; background: var(--apple-red); border-radius: 6px; transition: width 0.4s ease, background 0.3s ease;">
+                  </div>
+                </div>
+                <div id="val-rtdetr"
+                  style="width: 80px; font-size: 13px; font-weight: 700; font-family: var(--font-mono); color: var(--apple-red); flex-shrink: 0;">
+                  24.2 ms
+                </div>
+              </div>
+            </div>
+
+            <!-- Axis scale -->
+            <div id="metric-axis-scale"
+              style="display: flex; margin-left: 142px; margin-right: 92px; justify-content: space-between; font-size: 10px; color: var(--apple-text-tertiary); padding-top: 6px; border-top: 1px dashed var(--apple-border); margin-top: 8px;">
+              <span>0 ms</span>
+              <span>8.3 ms</span>
+              <span>16.7 ms</span>
+              <span>25.0 ms</span>
+              <span>33.3 ms (Budget)</span>
+            </div>
+
+            <div id="metric-caption"
+              style="font-size: 11.5px; color: var(--apple-text-tertiary); text-align: center; margin-top: 10px;">
+              YOLOv8-S (4.5 ms) and YOLO11-S (5.2 ms) execute ~5x faster than RT-DETR-L (24.2 ms), comfortably within
+              the 33.3 ms real-time edge budget.
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
-          </p>
+
+          <!-- Architecture Decision Card -->
+          <div class="winner-card blue" style="margin-top: 16px;">
+            <div style="margin-bottom: 8px;">
+              <span class="badge badge-blue">SELECTION FRAMEWORK</span>
+            </div>
+            <h3 style="font-size: 16px; margin: 0 0 10px 0; color: var(--apple-text-primary);">Decision rule:
+              highest-recall model that runs within 33 ms on the Jetson Orin</h3>
+            <ul
+              style="margin: 0; padding-left: 18px; font-size: 13px; color: var(--apple-text-secondary); line-height: 1.65;">
+              <li><strong>Architecture Trade-off:</strong> RT-DETR-L has +20.1 pp recall on FOD-A but is 3.5x larger
+                (32.8M vs 9.4M parameters); whether it fits the 33 ms Orin latency budget is untested.</li>
+              <li><strong>Why YOLO11-S is the Development Model:</strong> YOLO11-S is the development model because it
+                trains ~4x faster (0.92 h vs 3.91 h per run on an A40). This dramatic turnaround made iterating on
+                own-data multi-seed experiments practical under capstone compute constraints.</li>
+              <li><strong>Semester 2 Plan:</strong> Fine-tune RT-DETR-L on the same fastener split at 1088, then
+                benchmark both models on the Orin with TensorRT. The decision rule will then pick the final model.</li>
+            </ul>
+          </div>
+
+          <!-- "Why?" Expanders under Section 2 -->
+          <div style="margin-top: 14px;">
+            <details class="why-details">
+              <summary>Why use these specific models?</summary>
+              <p>Fixing model scale at 'S' isolates architecture as the sole experimental variable. 'S' is also the
+                largest size class likely to fit within the 33 ms real-time inference deadline on the Jetson Orin. In
+                addition, RT-DETR-L (32.8M) is the smallest official RT-DETR variant available in Ultralytics.</p>
+            </details>
+            <details class="why-details">
+              <summary>Why is val so much higher than test?</summary>
+              <p>Validation mAP (85–93%) is substantially higher than clean test mAP (47–68%) due to overfitting that
+                occurs after mosaic data augmentation switches off at epoch 20. On the clean test partition, specific
+                classes suffer from cross-category confusion: Hazardous Chemical is only 31% correct (49% predicted as
+                Metallic Tools), and Mineral Stone has 30% missed detections.</p>
+            </details>
+          </div>
+
         </div>
 
-        <!-- SECTION 3 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+
+        <!-- ===================================================================
+             SECTION 3.0: DOMAIN ADAPTATION & RESOLUTION SCALING
+             =================================================================== -->
+        <div class="card-box" id="domain-adaptation" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Testing &amp; Verification</h2>
+              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 3.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Runway Adaptation &amp;
+                Small-Object Resolution Scaling</h2>
+            </div>
+            <span class="badge badge-blue">Native Tarmac Footage &bull; 151 Held-out Test Frames</span>
+          </div>
+
+          <p
+            style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 16px;">
+            <span class="tooltip-term" tabindex="0">Zero-shot<span class="tooltip-text">Evaluating public dataset model
+                weights directly on runway footage without native fine-tuning.</span></span> public weights fail on
+            authentic outdoor tarmac. Fine-tuning on native fastener videos (<code
+              style="font-family: var(--font-mono);">fastener</code> single class) and increasing resolution from 640 to
+            1088 completely recovers performance:
+          </p>
+
+          <!-- Seed Swapper Control -->
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+            <div style="font-size: 13px; color: var(--apple-text-secondary);">
+              Inspect individual multi-<span class="tooltip-term" tabindex="0">seed<span class="tooltip-text">Random
+                  seeds (0, 1, 2) controlling initialization and data shuffling to evaluate
+                  reproducibility.</span></span> training runs vs. mean benchmark:
+            </div>
+            <div class="pill-group" role="group" aria-label="Seed Selection">
+              <button type="button" class="pill-btn seed-btn" data-seed="s0" aria-pressed="false">Seed 0</button>
+              <button type="button" class="pill-btn seed-btn" data-seed="s1" aria-pressed="false">Seed 1</button>
+              <button type="button" class="pill-btn seed-btn" data-seed="s2" aria-pressed="false">Seed 2</button>
+              <button type="button" class="pill-btn seed-btn active" data-seed="mean" aria-pressed="true">Mean &plusmn;
+                SD</button>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
+
+          <!-- Core Domain Adaptation Table -->
+          <div class="admin-table-wrapper" style="margin-bottom: 18px;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Training Regime</th>
+                  <th>Input Resolution</th>
+                  <th>mAP@50</th>
+                  <th><span class="tooltip-term" tabindex="0">mAP@50-95<span class="tooltip-text">Mean Average Precision
+                        across IoU thresholds 0.50 to 0.95 (0.05 step); strict measure of tight box
+                        localization.</span></span></th>
+                  <th><span class="tooltip-term" tabindex="0">Precision<span class="tooltip-text">Proportion of
+                        detections that are genuine runway items; high precision avoids unwarranted UGV
+                        stops.</span></span></th>
+                  <th><span class="tooltip-term" tabindex="0">Recall<span class="tooltip-text">Proportion of actual
+                        runway targets detected; safety-critical to eliminate missed hazards.</span></span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: rgba(244, 63, 94, 0.08);">
+                  <td><strong class="tooltip-term" tabindex="0">Public Weights (Zero-Shot)<span
+                        class="tooltip-text">Evaluating public dataset model weights directly on runway footage without
+                        native fine-tuning.</span></strong></td>
+                  <td>640&times;640</td>
+                  <td><span class="alert-stat">11.91%</span></td>
+                  <td><span class="alert-stat">4.55%</span></td>
+                  <td><span class="alert-stat">45.42%</span></td>
+                  <td><span class="alert-stat">10.60%</span></td>
+                </tr>
+                <tr style="background: rgba(41, 151, 255, 0.08);">
+                  <td id="s3-r640-regime"><strong>Fine-Tuned Native (Seeds 0, 1, 2)</strong></td>
+                  <td>640&times;640</td>
+                  <td id="s3-r640-map50"><span class="blue-stat">87.7 &plusmn; 0.7%</span></td>
+                  <td id="s3-r640-map5095"><span class="blue-stat">54.8 &plusmn; 1.2%</span></td>
+                  <td id="s3-r640-prec"><span class="blue-stat">95.8 &plusmn; 1.0%</span></td>
+                  <td id="s3-r640-rec"><span class="blue-stat">81.5 &plusmn; 0.7%</span></td>
+                </tr>
+                <tr style="background: rgba(48, 209, 88, 0.08);">
+                  <td id="s3-r1088-regime"><strong>Fine-Tuned Native (Seeds 0, 1, 2)</strong></td>
+                  <td>1088&times;1088</td>
+                  <td id="s3-r1088-map50"><strong class="highlight-stat">97.0 &plusmn; 1.4%</strong></td>
+                  <td id="s3-r1088-map5095"><span class="highlight-stat">69.1 &plusmn; 2.2%</span></td>
+                  <td id="s3-r1088-prec"><span class="highlight-stat">98.6 &plusmn; 1.3%</span></td>
+                  <td id="s3-r1088-rec"><strong class="highlight-stat">92.7 &plusmn; 3.2%</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pixelation Comparison: How big a fastener looks to the model -->
+          <div style="margin: 20px 0;">
+            <div style="font-size: 14px; font-weight: 600; color: var(--apple-text-primary); margin-bottom: 12px;">
+              How big a fastener looks to the model
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+              <!-- 640 Box -->
+              <div class="chart-box"
+                style="margin: 0; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 18px;">
+                <span class="badge badge-blue" style="margin-bottom: 8px;">640 input</span>
+                <div
+                  style="font-size: 24px; font-weight: 700; color: var(--apple-blue); font-family: var(--font-mono); margin: 4px 0 10px 0;">
+                  8 px wide</div>
+                <div
+                  style="width: 100%; max-width: 240px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.25); border-radius: 8px; margin-bottom: 12px; overflow: hidden;">
+                  <canvas id="s3-pixel-canvas-640" width="240" height="240"
+                    style="width: 100%; height: 100%; max-width: 240px; aspect-ratio: 1 / 1; display: block; border-radius: 6px; image-rendering: -moz-crisp-edges; image-rendering: pixelated;"></canvas>
+                </div>
+                <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; text-align: center;">
+                  The frame is shrunk 3&times; before the model sees it, so the fastener becomes a blurry speck and its
+                  shape is lost.
+                </div>
+              </div>
+
+              <!-- 1088 Box -->
+              <div class="chart-box"
+                style="margin: 0; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 18px;">
+                <span class="badge badge-emerald" style="margin-bottom: 8px;">1088 input</span>
+                <div
+                  style="font-size: 24px; font-weight: 700; color: var(--apple-green); font-family: var(--font-mono); margin: 4px 0 10px 0;">
+                  14 px wide</div>
+                <div
+                  style="width: 100%; max-width: 240px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.25); border-radius: 8px; margin-bottom: 12px; overflow: hidden;">
+                  <canvas id="s3-pixel-canvas-1088" width="240" height="240"
+                    style="width: 100%; height: 100%; max-width: 240px; aspect-ratio: 1 / 1; display: block; border-radius: 6px; image-rendering: -moz-crisp-edges; image-rendering: pixelated;"></canvas>
+                </div>
+                <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; text-align: center;">
+                  Shrunk much less, the fastener keeps its outline and edges. Result: +14.4 pp mAP@50-95 and false
+                  positives fall from 8.3 to 1.0.
+                </div>
+              </div>
+            </div>
+            <div class="figure-caption"
+              style="font-size: 11.5px; color: var(--apple-text-secondary); text-align: center; margin-top: 10px;">
+              Same real test frame, reduced to each input size.
+            </div>
+          </div>
+
+          <!-- False Alarm Suppression Card -->
+          <div class="chart-box"
+            style="margin: 18px 0; display: flex; flex-direction: column; justify-content: center;">
+            <strong style="font-size: 12.5px; color: var(--apple-text-primary); margin-bottom: 12px;">
+              🎯 False Alarm Suppression on Tarmac Test Set (151 Fasteners)
+            </strong>
+            <div style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 12px;">
+              <div style="text-align: center;">
+                <div
+                  style="font-size: 28px; font-weight: 700; color: var(--apple-amber); font-family: var(--font-mono);">
+                  8.3</div>
+                <div style="font-size: 11px; color: var(--apple-text-secondary);">640 Input (Mean)</div>
+                <div style="font-size: 10px; color: var(--apple-text-tertiary);">15 / 5 / 5 per seed</div>
+              </div>
+              <div style="font-size: 22px; color: var(--apple-text-tertiary);">&rarr;</div>
+              <div style="text-align: center;">
+                <div
+                  style="font-size: 28px; font-weight: 700; color: var(--apple-green); font-family: var(--font-mono);">
+                  1.0</div>
+                <div style="font-size: 11px; color: var(--apple-text-secondary);">1088 Input (Mean)</div>
+                <div style="font-size: 10px; color: var(--apple-text-tertiary);">2 / 1 / 0 per seed</div>
+              </div>
+            </div>
+            <div
+              style="font-size: 11.5px; color: var(--apple-green); background: rgba(48,209,88,0.08); padding: 8px 10px; border-radius: 6px; text-align: center;">
+              88% reduction in false positives with only +0.9 ms latency increase on A40
+            </div>
+          </div>
+
+          <!-- Video-Level Holdout Table (Updated Train Conditions and Val Role) -->
+          <div class="admin-table-wrapper" style="margin-top: 16px;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Partition</th>
+                  <th>Video Composition</th>
+                  <th>Frames</th>
+                  <th>Holdout Rigor &amp; Conditions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Train</strong></td>
+                  <td>13 videos: 6 from Session 1 (S1) + all 7 from Session 2 (S2)</td>
+                  <td>1,305</td>
+                  <td>Sun-lit tarmac + 2 lab videos</td>
+                </tr>
+                <tr>
+                  <td><strong>Val</strong></td>
+                  <td>1 video: <em>spring washer sun</em> (S1)</td>
+                  <td>96</td>
+                  <td>Picking the best epoch</td>
+                </tr>
+                <tr style="background: rgba(41, 151, 255, 0.08);">
+                  <td><strong>Test</strong></td>
+                  <td>2 videos: <em>slotted screw sun</em>, <em>top big lock nut sun</em> (S1)</td>
+                  <td><strong>151</strong></td>
+                  <td><strong>Zero video overlap:</strong> Tests generalization to unseen tarmac passes</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- "Limits of this result" Expander under Section 3 -->
+          <div style="margin-top: 14px;">
+            <details class="why-details">
+              <summary>Limits of this result</summary>
+              <p>Test fastener types also appear in session 2 training videos; the held-out test set contains only 151
+                target fasteners; no empty-tarmac false-alarm test has been completed yet; and the current native
+                dataset was captured using a rolling-shutter webcam (vulnerable to motion blur at operating speeds).</p>
+            </details>
+          </div>
+        </div>
+
+
+        <!-- ===================================================================
+             SECTION 4.0: EDGE OPTIMIZATION & JETSON ORIN DEPLOYMENT
+             =================================================================== -->
+        <div class="card-box" id="edge-optimization" style="margin-bottom: 28px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 4.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Edge Optimization &amp; Jetson
+                Orin Trade-Off (TensorRT)</h2>
+            </div>
+            <span class="badge badge-amber">Hardware Requirements &bull; 4.19 m/s Sweep</span>
+          </div>
+
+          <!-- Kinematic Vision Constraints Table -->
+          <p
+            style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 14px;">
+            Every optical and computational budget is derived from the vehicle's maximum sweep speed (400 RPM x
+            2&pi;(0.1 m) &divide; 60 = 4.19 m/s &asymp; 15.1 km/h):
           </p>
+
+          <div class="admin-table-wrapper" style="margin-bottom: 18px;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Vision Quantity</th>
+                  <th>Working Formulation</th>
+                  <th>Design Value</th>
+                  <th>Hardware / Algorithmic Significance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ground Sample Distance (GSD) @ 2 m</strong></td>
+                  <td>30 mm &divide; 40 px</td>
+                  <td><span class="highlight-stat">0.75 mm/px</span></td>
+                  <td>Design target at 2 m; camera mount being revised to 0.45 m / 20&deg; tilt</td>
+                </tr>
+                <tr>
+                  <td><strong>Max Shutter Exposure (&lt; 1 px blur)</strong></td>
+                  <td>0.75 mm &divide; 4.19 m/s</td>
+                  <td><span class="highlight-stat">&le; 179 &mu;s</span></td>
+                  <td>Requires IMX568 global shutter in Sem 2</td>
+                </tr>
+                <tr>
+                  <td><strong>Forward Detection Window</strong></td>
+                  <td>(3.0 &minus; 0.42) m &divide; 4.19 m/s</td>
+                  <td><span class="highlight-stat">0.62 s (~18 frames @ 30 fps)</span></td>
+                  <td>Allows multi-frame temporal confirmation</td>
+                </tr>
+                <tr style="background: rgba(41, 151, 255, 0.08);">
+                  <td><strong>Per-Frame Processing Budget</strong></td>
+                  <td>1 &divide; 30 fps</td>
+                  <td><span class="highlight-stat">&le; 33.3 ms</span></td>
+                  <td><strong>Hard real-time deadline for Orin inference</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Swath Width &amp; Coverage Rate</strong></td>
+                  <td>2 x 2 m x tan(25&deg;) x 4.19 m/s</td>
+                  <td>1.87 m &bull; 7.8 m&sup2;/s</td>
+                  <td>UGV alone: ~4.8 h for a 3 km x 45 m runway</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Deployment Decision Matrix -->
+          <div class="comparison-grid">
+            <div class="winner-card blue">
+              <span class="badge badge-blue" style="margin-bottom: 6px;">RECOMMENDED BASELINE</span>
+              <h3 style="font-size: 16px; margin: 0 0 6px 0; color: var(--apple-text-primary);">YOLO11-S @ 1088 Input
+              </h3>
+              <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 8px;">
+                <strong>97.0% mAP@50 &bull; 92.7% recall &bull; 1.0 false positive.</strong> At 9.4M parameters, it
+                leaves ample compute margin on the Jetson Orin for RTK navigation, SLAM, and path planning.
+              </p>
+            </div>
+            <div class="winner-card emerald">
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">SAFETY-CRITICAL ALTERNATIVE</span>
+              <h3 style="font-size: 16px; margin: 0 0 6px 0; color: var(--apple-text-primary);">RT-DETR-L (Subject to
+                Sem 2 Orin Profile)</h3>
+              <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 8px;">
+                <strong>+20.1 pp recall lead over YOLO on public data.</strong> If TensorRT FP16/INT8 post-training
+                quantization achieves &le; 33 ms on the Jetson Orin, RT-DETR-L becomes the preferred deployment model.
+              </p>
+            </div>
+          </div>
+
+          <!-- Semester 2 Action Checklist -->
+          <div style="margin-top: 16px;">
+            <strong style="font-size: 13px; color: var(--apple-text-primary);">🚀 Semester 2 Deployment Action
+              Plan:</strong>
+            <div class="checklist-grid">
+              <div class="checklist-item">
+                <span style="color: var(--apple-blue); font-size: 16px;">⚙️</span>
+                <div><strong>TensorRT INT8 Quantization:</strong> Profile p95 latency and power on Jetson Orin.</div>
+              </div>
+              <div class="checklist-item">
+                <span style="color: var(--apple-green); font-size: 16px;">📷</span>
+                <div><strong>Sony IMX568 Sensor:</strong> Capture unblurred video at 4.19 m/s with 179 &mu;s exposure.
+                </div>
+              </div>
+              <div class="checklist-item">
+                <span style="color: var(--apple-amber); font-size: 16px;">📐</span>
+                <div><strong>Model Scale Tuning:</strong> Evaluate Nano (N) vs Small (S) vs Medium (M).</div>
+              </div>
+              <div class="checklist-item">
+                <span style="color: var(--apple-purple); font-size: 16px;">🌪️</span>
+                <div><strong>Vacuum Lift Confirmation:</strong> Validate aerodynamic ingestion per fastener type.</div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
   </main>
 
+  <!-- APPLE FOOTER -->
   <footer class="apple-footer">
     <div class="apple-footer-inner">
-      <div>© AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
+      <div>&copy; AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
       <ul class="apple-footer-links">
         <li><a href="../../index.html">Overview</a></li>
-        <li><a href="../../7-documentation.html">Documentation</a></li>
-        <li><a href="vision-calculations.html">Computer vison calculation →</a></li>
+        <li><a href="../../7-documentation.html">Documentation Hub</a></li>
+        <li><a href="vision-calculations.html">Computer Vision Calculations &rarr;</a></li>
       </ul>
     </div>
   </footer>
 
+  <!-- IMAGE LIGHTBOX DIALOG -->
+  <dialog id="image-lightbox-dialog" aria-label="Enlarged Figure Preview">
+    <div class="lightbox-wrapper">
+      <button type="button" class="lightbox-close-btn" id="lightbox-close-btn"
+        aria-label="Close enlarged preview">&times;</button>
+      <img id="lightbox-img" src="" alt="Enlarged figure view">
+      <div id="lightbox-caption"></div>
+    </div>
+  </dialog>
+
   <script src="../../js/main.js?v=4.2"></script>
+
+  <!-- INTERACTIVE CONTROLS SCRIPT -->
+  <script>
+    (function () {
+      // -----------------------------------------------------------------------
+      // 2. SECTION 2: METRIC SWAPPER (Test Performance on Leak-Free FOD-A)
+      // -----------------------------------------------------------------------
+      const metricData = {
+        latency: {
+          yolo11: 5.2,
+          yolov8: 4.5,
+          rtdetr: 24.2,
+          isLatency: true,
+          caption: 'YOLOv8-S (4.5 ms) and YOLO11-S (5.2 ms) execute ~5x faster than RT-DETR-L (24.2 ms), comfortably within the 33.3 ms real-time edge budget.'
+        },
+        map5095: {
+          yolo11: 39.57,
+          yolov8: 34.55,
+          rtdetr: 51.82,
+          isLatency: false,
+          caption: 'RT-DETR-L leads test mAP@50-95 by +12.25 pp, demonstrating superior bounding-box localization tightness.'
+        },
+        precision: {
+          yolo11: 75.63,
+          yolov8: 65.68,
+          rtdetr: 66.44,
+          isLatency: false,
+          caption: 'YOLO11-S achieves highest precision (75.63%), producing fewer false positive stops on runway clutter.'
+        },
+        recall: {
+          yolo11: 42.50,
+          yolov8: 42.28,
+          rtdetr: 62.57,
+          isLatency: false,
+          caption: 'RT-DETR-L achieves +20.07 pp higher recall (62.57% vs 42.50%), missing significantly fewer runway hazards.'
+        }
+      };
+
+      const metricButtons = document.querySelectorAll('.metric-btn');
+      const barYolo11 = document.getElementById('bar-yolo11');
+      const valYolo11 = document.getElementById('val-yolo11');
+      const barYolov8 = document.getElementById('bar-yolov8');
+      const valYolov8 = document.getElementById('val-yolov8');
+      const barRtdetr = document.getElementById('bar-rtdetr');
+      const valRtdetr = document.getElementById('val-rtdetr');
+      const metricCaption = document.getElementById('metric-caption');
+      const axisScale = document.getElementById('metric-axis-scale');
+      const chartTitle = document.getElementById('metric-chart-title');
+
+      function updateMetric(metricKey) {
+        const d = metricData[metricKey];
+        if (!d) return;
+
+        metricButtons.forEach(btn => {
+          const isActive = btn.dataset.metric === metricKey;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        if (d.isLatency) {
+          if (chartTitle) {
+            chartTitle.textContent = 'A40 Inference Latency vs. 33.3 ms Real-Time Budget';
+          }
+          // Latency in ms (lower is better):
+          // YOLOv8-S (4.5 ms) is fastest (best) -> GREEN
+          // YOLO11-S (5.2 ms) is middle -> BLUE
+          // RT-DETR-L (24.2 ms) is slowest (worst) -> RED
+          const budgetMs = 33.3;
+          if (barYolo11 && valYolo11) {
+            barYolo11.style.width = ((d.yolo11 / budgetMs) * 100).toFixed(1) + '%';
+            valYolo11.textContent = d.yolo11.toFixed(1) + ' ms';
+            barYolo11.style.background = 'var(--apple-blue)';
+            valYolo11.style.color = 'var(--apple-blue)';
+          }
+          if (barYolov8 && valYolov8) {
+            barYolov8.style.width = ((d.yolov8 / budgetMs) * 100).toFixed(1) + '%';
+            valYolov8.textContent = d.yolov8.toFixed(1) + ' ms';
+            barYolov8.style.background = 'var(--apple-green)';
+            valYolov8.style.color = 'var(--apple-green)';
+          }
+          if (barRtdetr && valRtdetr) {
+            barRtdetr.style.width = ((d.rtdetr / budgetMs) * 100).toFixed(1) + '%';
+            valRtdetr.textContent = d.rtdetr.toFixed(1) + ' ms';
+            barRtdetr.style.background = 'var(--apple-red)';
+            valRtdetr.style.color = 'var(--apple-red)';
+          }
+          if (axisScale) {
+            axisScale.innerHTML = '<span>0 ms</span><span>8.3 ms</span><span>16.7 ms</span><span>25.0 ms</span><span>33.3 ms (Budget)</span>';
+          }
+        } else {
+          if (chartTitle) {
+            chartTitle.textContent = 'True Test Generalization on Leak-Free FOD-A';
+          }
+          // Accuracy metrics in % (higher is better):
+          // Best (highest) -> GREEN, Middle -> BLUE, Worst (lowest) -> RED
+          const list = [
+            { key: 'yolo11', val: d.yolo11, bar: barYolo11, label: valYolo11 },
+            { key: 'yolov8', val: d.yolov8, bar: barYolov8, label: valYolov8 },
+            { key: 'rtdetr', val: d.rtdetr, bar: barRtdetr, label: valRtdetr }
+          ];
+          list.sort((a, b) => b.val - a.val);
+
+          // Best [0] -> Green
+          if (list[0].bar && list[0].label) {
+            list[0].bar.style.width = list[0].val + '%';
+            list[0].label.textContent = list[0].val.toFixed(2) + '%';
+            list[0].bar.style.background = 'var(--apple-green)';
+            list[0].label.style.color = 'var(--apple-green)';
+          }
+          // Middle [1] -> Blue
+          if (list[1].bar && list[1].label) {
+            list[1].bar.style.width = list[1].val + '%';
+            list[1].label.textContent = list[1].val.toFixed(2) + '%';
+            list[1].bar.style.background = 'var(--apple-blue)';
+            list[1].label.style.color = 'var(--apple-blue)';
+          }
+          // Worst [2] -> Red
+          if (list[2].bar && list[2].label) {
+            list[2].bar.style.width = list[2].val + '%';
+            list[2].label.textContent = list[2].val.toFixed(2) + '%';
+            list[2].bar.style.background = 'var(--apple-red)';
+            list[2].label.style.color = 'var(--apple-red)';
+          }
+
+          if (axisScale) {
+            axisScale.innerHTML = '<span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>';
+          }
+        }
+
+        if (metricCaption) {
+          metricCaption.textContent = d.caption;
+        }
+      }
+
+      metricButtons.forEach(btn => {
+        btn.addEventListener('click', () => updateMetric(btn.dataset.metric));
+      });
+
+      // -----------------------------------------------------------------------
+      // 1. SECTION 1: FRAME STRIP VISUALIZER & LEAKAGE TOGGLE
+      // -----------------------------------------------------------------------
+      const RANDOM_STRIP = [
+        'train', 'train', 'test', 'train', 'train', 'val', 'test', 'train', 'train', 'test',
+        'train', 'train', 'test', 'train', 'train', 'train', 'test', 'val', 'train', 'train',
+        'test', 'train', 'train', 'train', 'test', 'train', 'train', 'train', 'test', 'train',
+        'val', 'train', 'train', 'test', 'train', 'train', 'train', 'test', 'train', 'train'
+      ];
+
+      const LEAKFREE_STRIP = [
+        // 28 train
+        'train', 'train', 'train', 'train', 'train', 'train', 'train', 'train', 'train', 'train',
+        'train', 'train', 'train', 'train', 'train', 'train', 'train', 'train', 'train', 'train',
+        'train', 'train', 'train', 'train', 'train', 'train', 'train', 'train',
+        // 3 grey (buffer)
+        'buffer', 'buffer', 'buffer',
+        // 4 val
+        'val', 'val', 'val', 'val',
+        // 2 grey (buffer)
+        'buffer', 'buffer',
+        // 3 test
+        'test', 'test', 'test'
+      ];
+
+      const COLOR_MAP = {
+        train: 'var(--apple-blue)',
+        val: 'var(--apple-purple)',
+        test: '#ff9f0a',
+        buffer: '#636366'
+      };
+
+      const LABEL_MAP = {
+        train: 'Train',
+        val: 'Validation',
+        test: 'Test',
+        buffer: 'Discarded buffer'
+      };
+
+      const stripContainer = document.getElementById('frame-strip-container');
+      const btnStripRandom = document.getElementById('btn-strip-random');
+      const btnStripClean = document.getElementById('btn-strip-clean');
+      const stripDesc = document.getElementById('strip-description');
+
+      // Initialize 40 squares
+      if (stripContainer) {
+        stripContainer.innerHTML = '';
+        for (let i = 0; i < 40; i++) {
+          const sq = document.createElement('div');
+          sq.className = 'frame-square';
+          sq.style.background = COLOR_MAP[RANDOM_STRIP[i]];
+          sq.setAttribute('title', 'Frame ' + (i + 1) + ': ' + (LABEL_MAP[RANDOM_STRIP[i]] || RANDOM_STRIP[i]));
+          stripContainer.appendChild(sq);
+        }
+      }
+
+      function setStripMode(isClean) {
+        if (!btnStripRandom || !btnStripClean) return;
+
+        btnStripRandom.classList.toggle('active', !isClean);
+        btnStripRandom.setAttribute('aria-pressed', !isClean ? 'true' : 'false');
+        btnStripClean.classList.toggle('active', isClean);
+        btnStripClean.setAttribute('aria-pressed', isClean ? 'true' : 'false');
+
+        const squares = stripContainer ? stripContainer.querySelectorAll('.frame-square') : [];
+        const pattern = isClean ? LEAKFREE_STRIP : RANDOM_STRIP;
+
+        squares.forEach((sq, i) => {
+          if (pattern[i]) {
+            sq.style.background = COLOR_MAP[pattern[i]];
+            sq.setAttribute('title', 'Frame ' + (i + 1) + ': ' + (LABEL_MAP[pattern[i]] || pattern[i]));
+          }
+        });
+
+        if (stripDesc) {
+          if (isClean) {
+            stripDesc.textContent = 'Leak-free split isolates continuous scenes into train, validation, and test partitions with discarded buffer frames.';
+          } else {
+            stripDesc.textContent = 'Random frame split interleaves test and validation frames immediately adjacent to train frames.';
+          }
+        }
+      }
+
+      if (btnStripRandom && btnStripClean) {
+        btnStripRandom.addEventListener('click', () => setStripMode(false));
+        btnStripClean.addEventListener('click', () => setStripMode(true));
+      }
+
+      // -----------------------------------------------------------------------
+      // 3. SECTION 1: 5-STEP PROTOCOL STEPPER
+      // -----------------------------------------------------------------------
+      const protocolSteps = [
+        {
+          badge: 'STEP 1',
+          title: 'Group Frames to Scenes',
+          desc: 'All 33,793 frames are put in order and grouped into scenes, where each scene is showing a different object.'
+        },
+        {
+          badge: 'STEP 2',
+          title: 'Scene Segmentation',
+          desc: 'For classes filmed in 3 or more scenes, every scene goes entirely into train, validation or test, and is never cut in half.'
+        },
+        {
+          badge: 'STEP 3',
+          title: 'Splitting Rare Scenes',
+          desc: 'Classes filmed in only 1–2 scenes are cut by time instead: first 70% train, 8% discarded, 10% validation, 4% discarded, last 8% test.'
+        },
+        {
+          badge: 'STEP 4',
+          title: 'Removing Buffers',
+          desc: 'Wherever a training scene sits right next to a test scene, 15 frames at the boundary are deleted, 3,416 frames in total were removed in this way.'
+        },
+        {
+          badge: 'STEP 5',
+          title: 'Final Check',
+          desc: 'An automated check confirms zero duplicate frames and zero neighbouring frames across splits. The closest train and test frames are at least 31 frames apart.'
+        }
+      ];
+
+      let currentStepIndex = 0;
+      const stepBadge = document.getElementById('step-badge');
+      const stepTitle = document.getElementById('step-title');
+      const stepDesc = document.getElementById('step-desc');
+      const stepCounter = document.getElementById('step-counter');
+      const prevBtn = document.getElementById('step-prev-btn');
+      const nextBtn = document.getElementById('step-next-btn');
+      const dots = document.querySelectorAll('#protocol-dots .step-dot');
+
+      function renderStep(idx) {
+        currentStepIndex = Math.max(0, Math.min(idx, protocolSteps.length - 1));
+        const step = protocolSteps[currentStepIndex];
+
+        if (stepBadge) stepBadge.textContent = step.badge;
+        if (stepTitle) stepTitle.textContent = step.title;
+        if (stepDesc) stepDesc.textContent = step.desc;
+        if (stepCounter) stepCounter.textContent = 'Step ' + (currentStepIndex + 1) + ' of ' + protocolSteps.length;
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentStepIndex);
+        });
+
+        if (prevBtn) prevBtn.disabled = (currentStepIndex === 0);
+        if (nextBtn) nextBtn.disabled = (currentStepIndex === protocolSteps.length - 1);
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', () => renderStep(currentStepIndex - 1));
+      if (nextBtn) nextBtn.addEventListener('click', () => renderStep(currentStepIndex + 1));
+      dots.forEach((dot, i) => {
+        dot.style.cursor = 'pointer';
+        dot.setAttribute('title', 'Go to step ' + (i + 1));
+        dot.addEventListener('click', () => renderStep(i));
+      });
+
+      // -----------------------------------------------------------------------
+      // 4. SECTION 3: MULTI-SEED SWAPPER
+      // -----------------------------------------------------------------------
+      // 4. SECTION 3: MULTI-SEED SWAPPER & PIXELATION VISUALIZER
+      // -----------------------------------------------------------------------
+      const seedData = {
+        s0: {
+          r640: { regime: 'Fine-Tuned Native (Seed 0)', map50: '88.3%', map5095: '55.8%', prec: '96.8%', rec: '82.1%' },
+          r1088: { regime: 'Fine-Tuned Native (Seed 0)', map50: '95.7%', map5095: '69.4%', prec: '97.1%', rec: '89.2%' }
+        },
+        s1: {
+          r640: { regime: 'Fine-Tuned Native (Seed 1)', map50: '86.9%', map5095: '55.1%', prec: '95.6%', rec: '81.5%' },
+          r1088: { regime: 'Fine-Tuned Native (Seed 1)', map50: '97.0%', map5095: '66.8%', prec: '99.2%', rec: '93.4%' }
+        },
+        s2: {
+          r640: { regime: 'Fine-Tuned Native (Seed 2)', map50: '88.0%', map5095: '53.4%', prec: '94.9%', rec: '80.8%' },
+          r1088: { regime: 'Fine-Tuned Native (Seed 2)', map50: '98.4%', map5095: '71.2%', prec: '99.4%', rec: '95.4%' }
+        },
+        mean: {
+          r640: { regime: 'Fine-Tuned Native (Seeds 0, 1, 2)', map50: '87.7 &plusmn; 0.7%', map5095: '54.8 &plusmn; 1.2%', prec: '95.8 &plusmn; 1.0%', rec: '81.5 &plusmn; 0.7%' },
+          r1088: { regime: 'Fine-Tuned Native (Seeds 0, 1, 2)', map50: '97.0 &plusmn; 1.4%', map5095: '69.1 &plusmn; 2.2%', prec: '98.6 &plusmn; 1.3%', rec: '92.7 &plusmn; 3.2%' }
+        }
+      };
+
+      const seedButtons = document.querySelectorAll('.seed-btn');
+      const r640Regime = document.getElementById('s3-r640-regime');
+      const r640Map50 = document.getElementById('s3-r640-map50');
+      const r640Map5095 = document.getElementById('s3-r640-map5095');
+      const r640Prec = document.getElementById('s3-r640-prec');
+      const r640Rec = document.getElementById('s3-r640-rec');
+
+      const r1088Regime = document.getElementById('s3-r1088-regime');
+      const r1088Map50 = document.getElementById('s3-r1088-map50');
+      const r1088Map5095 = document.getElementById('s3-r1088-map5095');
+      const r1088Prec = document.getElementById('s3-r1088-prec');
+      const r1088Rec = document.getElementById('s3-r1088-rec');
+
+      function updateSeed(seedKey) {
+        const item = seedData[seedKey];
+        if (!item) return;
+
+        seedButtons.forEach(btn => {
+          const isActive = btn.dataset.seed === seedKey;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        if (r640Regime) r640Regime.innerHTML = '<strong>' + item.r640.regime + '</strong>';
+        if (r640Map50) r640Map50.innerHTML = '<span class="blue-stat">' + item.r640.map50 + '</span>';
+        if (r640Map5095) r640Map5095.innerHTML = '<span class="blue-stat">' + item.r640.map5095 + '</span>';
+        if (r640Prec) r640Prec.innerHTML = '<span class="blue-stat">' + item.r640.prec + '</span>';
+        if (r640Rec) r640Rec.innerHTML = '<span class="blue-stat">' + item.r640.rec + '</span>';
+
+        if (r1088Regime) r1088Regime.innerHTML = '<strong>' + item.r1088.regime + '</strong>';
+        if (r1088Map50) r1088Map50.innerHTML = '<strong class="highlight-stat">' + item.r1088.map50 + '</strong>';
+        if (r1088Map5095) r1088Map5095.innerHTML = '<span class="highlight-stat">' + item.r1088.map5095 + '</span>';
+        if (r1088Prec) r1088Prec.innerHTML = '<span class="highlight-stat">' + item.r1088.prec + '</span>';
+        if (r1088Rec) r1088Rec.innerHTML = '<strong class="highlight-stat">' + item.r1088.rec + '</strong>';
+      }
+
+      seedButtons.forEach(btn => {
+        btn.addEventListener('click', () => updateSeed(btn.dataset.seed));
+      });
+
+      // Pixelation Visualizer Canvas Script
+      function drawPixelated(canvas, img, scale) {
+        if (!canvas || !img) return;
+        const w = canvas.width;
+        const h = canvas.height;
+        const offscreen = document.createElement('canvas');
+        const sw = Math.max(1, Math.round(w * scale));
+        const sh = Math.max(1, Math.round(h * scale));
+        offscreen.width = sw;
+        offscreen.height = sh;
+        const offCtx = offscreen.getContext('2d');
+        offCtx.drawImage(img, 0, 0, sw, sh);
+
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        if ('mozImageSmoothingEnabled' in ctx) ctx.mozImageSmoothingEnabled = false;
+        if ('webkitImageSmoothingEnabled' in ctx) ctx.webkitImageSmoothingEnabled = false;
+        if ('msImageSmoothingEnabled' in ctx) ctx.msImageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, w, h);
+        ctx.drawImage(offscreen, 0, 0, sw, sh, 0, 0, w, h);
+      }
+
+      function showPixelFallback(canvasId) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        const fallback = document.createElement('div');
+        fallback.textContent = 'Add assets/images/Gabriel/screw.png';
+        fallback.style.cssText = 'width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--apple-text-tertiary); text-align: center; padding: 16px; box-sizing: border-box;';
+        canvas.replaceWith(fallback);
+      }
+
+      const screwImg = new Image();
+      screwImg.onload = function () {
+        const c640 = document.getElementById('s3-pixel-canvas-640');
+        const c1088 = document.getElementById('s3-pixel-canvas-1088');
+        if (c640) drawPixelated(c640, screwImg, 640 / 1920);
+        if (c1088) drawPixelated(c1088, screwImg, 1088 / 1920);
+      };
+      screwImg.onerror = function () {
+        showPixelFallback('s3-pixel-canvas-640');
+        showPixelFallback('s3-pixel-canvas-1088');
+      };
+      screwImg.src = '../../assets/images/Gabriel/screw.png';
+      if (screwImg.complete) {
+        if (screwImg.naturalWidth > 0) {
+          screwImg.onload();
+        } else {
+          screwImg.onerror();
+        }
+      }
+
+      // -----------------------------------------------------------------------
+      // 5. LIGHTBOX MODAL DIALOG
+      // -----------------------------------------------------------------------
+      const lightboxDialog = document.getElementById('image-lightbox-dialog');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+
+      if (lightboxDialog && lightboxImg) {
+        document.querySelectorAll('img.zoomable, .figure-preview img').forEach(img => {
+          img.addEventListener('click', () => {
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.alt || 'Enlarged figure';
+            if (lightboxCaption) {
+              const captionEl = img.closest('.chart-box')?.querySelector('.figure-caption') ||
+                img.parentElement?.querySelector('.figure-caption');
+              lightboxCaption.textContent = captionEl ? captionEl.textContent.trim() : (img.alt || '');
+            }
+            lightboxDialog.showModal();
+          });
+        });
+
+        if (lightboxCloseBtn) {
+          lightboxCloseBtn.addEventListener('click', () => lightboxDialog.close());
+        }
+
+        // Close on clicking outside the dialog content box (backdrop click)
+        lightboxDialog.addEventListener('click', (e) => {
+          if (e.target === lightboxDialog) {
+            lightboxDialog.close();
+          }
+        });
+      }
+    })();
+
+    // -------------------------------------------------------------------------
+    // 6. PDF EXPORT HANDLER (Expand all details before print)
+    // -------------------------------------------------------------------------
+    function openAllDetailsAndPrint() {
+      document.querySelectorAll('details').forEach(d => { d.open = true; });
+      window.print();
+    }
+
+    window.addEventListener('beforeprint', function () {
+      document.querySelectorAll('details').forEach(d => { d.open = true; });
+    });
+  </script>
 
   <!-- EXPORT PDF BUTTON -->
   <style>
@@ -149,45 +1706,73 @@
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       letter-spacing: 0.01em;
     }
+
     .pdf-export-btn:hover {
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4);
       background: linear-gradient(135deg, #0a84ff 0%, #1d4ed8 100%);
     }
+
     .pdf-export-btn:active {
       transform: translateY(0) scale(0.98);
     }
+
+    .pdf-export-btn:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+    }
+
     .pdf-export-btn svg {
       width: 16px;
       height: 16px;
       fill: currentColor;
     }
+
     @media print {
+
       .pdf-export-btn,
       .apple-nav,
       .apple-mobile-drawer,
-      .apple-footer {
+      .apple-footer,
+      .pill-group,
+      .stepper-dots,
+      #step-prev-btn,
+      #step-next-btn {
         display: none !important;
       }
+
       body {
         background: #fff !important;
         color: #111 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
+
       .apple-main-content {
         padding-top: 0 !important;
       }
+
+      .why-details {
+        border: 1px solid #ccc !important;
+        background: #fafafa !important;
+      }
+
+      .why-details summary {
+        color: #000 !important;
+      }
     }
   </style>
-  <button class="pdf-export-btn" onclick="window.print()" title="Export this page as PDF">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+  <button class="pdf-export-btn" onclick="openAllDetailsAndPrint()" title="Export this page as PDF">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+    </svg>
     Export PDF
   </button>
 
 </body>
+
 </html>
