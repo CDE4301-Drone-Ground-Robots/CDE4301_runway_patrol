@@ -90,7 +90,7 @@
 
     .comparison-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
       gap: 16px;
       margin: 16px 0;
     }
@@ -113,24 +113,10 @@
       background: linear-gradient(135deg, rgba(41, 151, 255, 0.05) 0%, transparent 100%);
     }
 
-    /* Stride resolution visualizer */
-    .stride-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      margin: 16px 0;
-    }
-
-    .stride-box {
-      background: #09090c;
-      border: 1px solid var(--apple-border);
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-    }
-
-    [data-theme="light"] .stride-box {
-      background: #f7f7f9;
+    @media (max-width: 600px) {
+      .card-box {
+        padding: 20px 14px;
+      }
     }
 
     .checklist-grid {
@@ -400,7 +386,7 @@
       border: none;
       border-radius: 12px;
       padding: 0;
-      background: var(--apple-card);
+      background: var(--apple-surface-card, #1c1c1e);
       color: var(--apple-text-primary);
       max-width: 90vw;
       max-height: 90vh;
@@ -419,7 +405,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: var(--apple-card);
+      background: var(--apple-surface-card, #1c1c1e);
     }
 
     .lightbox-close-btn {
@@ -567,34 +553,87 @@
         </p>
       </div>
 
-      <!-- GLANCEABLE KPI STAT BAR -->
-      <div class="metric-pill-grid">
-        <div class="metric-pill">
-          <div class="value highlight-stat">97.0%</div>
-          <div class="label">mAP@50 (1088 Native)</div>
-          <div class="sublabel">&plusmn;1.4% across 3 <span class="tooltip-term" tabindex="0">seeds<span
-                class="tooltip-text">Random seeds (0, 1, 2) controlling stochastic operations to quantify training
-                stability and variance.</span></span></div>
+      <!-- The short version (TL;DR PILLS) -->
+      <div style="margin-bottom: 28px;">
+        <div
+          style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary); margin-bottom: 12px;">
+          The short version
         </div>
-        <div class="metric-pill">
-          <div class="value blue-stat">6.5 ms</div>
-          <div class="label">A40 Latency (Batch 1)</div>
-          <div class="sublabel">Budget &le; 33.3 ms (30 FPS)</div>
-        </div>
-        <div class="metric-pill">
-          <div class="value alert-stat">93.8% &rarr; 0%</div>
-          <div class="label">Benchmark Leakage Purged</div>
-          <div class="sublabel">Unmasks true 50.3% mAP</div>
-        </div>
-        <div class="metric-pill">
-          <div class="value highlight-stat">88% Drop</div>
-          <div class="label">False Positives Slashed</div>
-          <div class="sublabel">8.3 &rarr; 1.0 @ 0.25 conf</div>
-        </div>
-        <div class="metric-pill">
-          <div class="value amber-stat">+20.1 pp</div>
-          <div class="label">RT-DETR-L Recall Lead</div>
-          <div class="sublabel">62.6% vs 42.5% (YOLO11-S)</div>
+        <div class="metric-pill-grid" style="margin-bottom: 0;">
+          <a href="#leakage-audit" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 1</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">Goal
+              </div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                Spot small metal debris on a runway fast enough for a moving robot.</div>
+            </div>
+            <div class="highlight-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">&le;
+              33 ms per frame</div>
+          </a>
+
+          <a href="#leakage-audit" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 2</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">Fix
+                the test</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                The public dataset leaked test images into training, so we rebuilt the split.</div>
+            </div>
+            <div class="alert-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">99%
+              &rarr; 50% real score</div>
+          </a>
+
+          <a href="#benchmark-matrix" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 3</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">Pick
+                a model</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                Three detectors compared. YOLO11-S for development; RT-DETR-L finds more but is slower.</div>
+            </div>
+            <div class="amber-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">+20 pp
+              recall, RT-DETR-L</div>
+          </a>
+
+          <a href="#domain-adaptation" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 4</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Train on our runway</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                Retrained on our own footage and gave small fasteners more pixels.</div>
+            </div>
+            <div class="highlight-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">12%
+              &rarr; 97% mAP@50</div>
+          </a>
+
+          <a href="#future-work" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 5</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">Next
+              </div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                Test both models on the robot's computer and a better camera.</div>
+            </div>
+            <div class="blue-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">Semester
+              2</div>
+          </a>
         </div>
       </div>
 
@@ -883,26 +922,33 @@
 
 
         <!-- ===================================================================
-             SECTION 3.0: DOMAIN ADAPTATION & RESOLUTION SCALING
+             SECTION 3.0: RUNWAY ADAPTATION & SMALL FASTENER RESOLUTION SCALING
              =================================================================== -->
         <div class="card-box" id="domain-adaptation" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
               <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Runway Adaptation &amp;
-                Small-Object Resolution Scaling</h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Runway Adaptation &amp; Small
+                Fastener Resolution Scaling</h2>
             </div>
-            <span class="badge badge-blue">Native Tarmac Footage &bull; 151 Held-out Test Frames</span>
+            <span class="badge badge-blue">Own runway footage &bull; 3 seeds &bull; 151 test fasteners</span>
           </div>
 
+          <!-- 3a. Intro -->
           <p
             style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 16px;">
             <span class="tooltip-term" tabindex="0">Zero-shot<span class="tooltip-text">Evaluating public dataset model
-                weights directly on runway footage without native fine-tuning.</span></span> public weights fail on
-            authentic outdoor tarmac. Fine-tuning on native fastener videos (<code
-              style="font-family: var(--font-mono);">fastener</code> single class) and increasing resolution from 640 to
-            1088 completely recovers performance:
+                weights directly on runway footage without native fine-tuning.</span></span>, the FOD-A model barely
+            recognises fasteners on our own tarmac: 11.91% mAP@50 and 10.60% recall. Our camera, viewing angle, lighting
+            and asphalt differ from FOD-A. We fixed this in two steps: retraining YOLO11-S on our own UGREEN 1080p
+            videos, then raising the input size from 640 to 1088 so small fasteners keep more pixels.
           </p>
+
+          <!-- 3b. Results Table -->
+          <div style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 10px;">
+            What this shows: How well each version finds the fasteners in two test videos it never trained on. Higher is
+            better in every column.
+          </div>
 
           <!-- Seed Swapper Control -->
           <div
@@ -922,12 +968,12 @@
           </div>
 
           <!-- Core Domain Adaptation Table -->
-          <div class="admin-table-wrapper" style="margin-bottom: 18px;">
+          <div class="admin-table-wrapper" style="margin-bottom: 8px;">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>Training Regime</th>
-                  <th>Input Resolution</th>
+                  <th>Training regime</th>
+                  <th>Input</th>
                   <th>mAP@50</th>
                   <th><span class="tooltip-term" tabindex="0">mAP@50-95<span class="tooltip-text">Mean Average Precision
                         across IoU thresholds 0.50 to 0.95 (0.05 step); strict measure of tight box
@@ -941,10 +987,10 @@
               </thead>
               <tbody>
                 <tr style="background: rgba(244, 63, 94, 0.08);">
-                  <td><strong class="tooltip-term" tabindex="0">Public Weights (Zero-Shot)<span
+                  <td><strong class="tooltip-term" tabindex="0">Zero-shot (FOD-A weights)<span
                         class="tooltip-text">Evaluating public dataset model weights directly on runway footage without
                         native fine-tuning.</span></strong></td>
-                  <td>640&times;640</td>
+                  <td>640</td>
                   <td><span class="alert-stat">11.91%</span></td>
                   <td><span class="alert-stat">4.55%</span></td>
                   <td><span class="alert-stat">45.42%</span></td>
@@ -952,7 +998,7 @@
                 </tr>
                 <tr style="background: rgba(41, 151, 255, 0.08);">
                   <td id="s3-r640-regime"><strong>Fine-Tuned Native (Seeds 0, 1, 2)</strong></td>
-                  <td>640&times;640</td>
+                  <td>640</td>
                   <td id="s3-r640-map50"><span class="blue-stat">87.7 &plusmn; 0.7%</span></td>
                   <td id="s3-r640-map5095"><span class="blue-stat">54.8 &plusmn; 1.2%</span></td>
                   <td id="s3-r640-prec"><span class="blue-stat">95.8 &plusmn; 1.0%</span></td>
@@ -960,7 +1006,7 @@
                 </tr>
                 <tr style="background: rgba(48, 209, 88, 0.08);">
                   <td id="s3-r1088-regime"><strong>Fine-Tuned Native (Seeds 0, 1, 2)</strong></td>
-                  <td>1088&times;1088</td>
+                  <td>1088</td>
                   <td id="s3-r1088-map50"><strong class="highlight-stat">97.0 &plusmn; 1.4%</strong></td>
                   <td id="s3-r1088-map5095"><span class="highlight-stat">69.1 &plusmn; 2.2%</span></td>
                   <td id="s3-r1088-prec"><span class="highlight-stat">98.6 &plusmn; 1.3%</span></td>
@@ -969,238 +1015,278 @@
               </tbody>
             </table>
           </div>
+          <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 20px;">
+            Each setting was trained 3 times with different random seeds to check the result isn't luck. Precision and
+            recall at Ultralytics' best-F1 threshold.
+          </div>
 
-          <!-- Pixelation Comparison: How big a fastener looks to the model -->
-          <div style="margin: 20px 0;">
-            <div style="font-size: 14px; font-weight: 600; color: var(--apple-text-primary); margin-bottom: 12px;">
+          <!-- 3c. Pixel Comparison Visualizer -->
+          <div style="margin: 22px 0;">
+            <div style="font-size: 14px; font-weight: 600; color: var(--apple-text-primary); margin-bottom: 6px;">
               How big a fastener looks to the model
             </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-              <!-- 640 Box -->
+            <div style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              What this shows: The model never sees the full camera image. It first shrinks each frame. At 640 it
+              shrinks it 3&times;; at 1088 it shrinks it about 1.8&times;. Below is the same real screw after each
+              shrink, zoomed in so you can see the pixels.
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+              <!-- Panel 1: Camera (full resolution) -->
               <div class="chart-box"
                 style="margin: 0; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 18px;">
-                <span class="badge badge-blue" style="margin-bottom: 8px;">640 input</span>
+                <span class="badge badge-amber" style="margin-bottom: 8px;">Camera (full resolution)</span>
                 <div
-                  style="font-size: 24px; font-weight: 700; color: var(--apple-blue); font-family: var(--font-mono); margin: 4px 0 10px 0;">
-                  8 px wide</div>
-                <div
-                  style="width: 100%; max-width: 240px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.25); border-radius: 8px; margin-bottom: 12px; overflow: hidden;">
-                  <canvas id="s3-pixel-canvas-640" width="240" height="240"
-                    style="width: 100%; height: 100%; max-width: 240px; aspect-ratio: 1 / 1; display: block; border-radius: 6px; image-rendering: -moz-crisp-edges; image-rendering: pixelated;"></canvas>
+                  style="width: 100%; max-width: 260px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.25); border-radius: 8px; margin-bottom: 12px; overflow: hidden;">
+                  <canvas id="s3-pixel-canvas-camera" width="260" height="260"
+                    style="width: 100%; height: 100%; max-width: 260px; aspect-ratio: 1 / 1; display: block; border-radius: 6px;"></canvas>
                 </div>
-                <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; text-align: center;">
-                  The frame is shrunk 3&times; before the model sees it, so the fastener becomes a blurry speck and its
-                  shape is lost.
+                <div
+                  style="font-size: 22px; font-weight: 700; color: var(--apple-amber); font-family: var(--font-mono); margin: 4px 0 2px 0;">
+                  24 px wide</div>
+                <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.4; text-align: center;">
+                  What the camera captures.
                 </div>
               </div>
 
-              <!-- 1088 Box -->
+              <!-- Panel 2: 1088 input -->
               <div class="chart-box"
                 style="margin: 0; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 18px;">
                 <span class="badge badge-emerald" style="margin-bottom: 8px;">1088 input</span>
                 <div
-                  style="font-size: 24px; font-weight: 700; color: var(--apple-green); font-family: var(--font-mono); margin: 4px 0 10px 0;">
-                  14 px wide</div>
-                <div
-                  style="width: 100%; max-width: 240px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.25); border-radius: 8px; margin-bottom: 12px; overflow: hidden;">
-                  <canvas id="s3-pixel-canvas-1088" width="240" height="240"
-                    style="width: 100%; height: 100%; max-width: 240px; aspect-ratio: 1 / 1; display: block; border-radius: 6px; image-rendering: -moz-crisp-edges; image-rendering: pixelated;"></canvas>
+                  style="width: 100%; max-width: 260px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.25); border-radius: 8px; margin-bottom: 12px; overflow: hidden;">
+                  <canvas id="s3-pixel-canvas-1088" width="260" height="260"
+                    style="width: 100%; height: 100%; max-width: 260px; aspect-ratio: 1 / 1; display: block; border-radius: 6px; image-rendering: -moz-crisp-edges; image-rendering: pixelated;"></canvas>
                 </div>
-                <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; text-align: center;">
-                  Shrunk much less, the fastener keeps its outline and edges. Result: +14.4 pp mAP@50-95 and false
-                  positives fall from 8.3 to 1.0.
+                <div
+                  style="font-size: 22px; font-weight: 700; color: var(--apple-green); font-family: var(--font-mono); margin: 4px 0 2px 0;">
+                  &asymp;14 px wide</div>
+                <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.4; text-align: center;">
+                  Outline and edges survive.
+                </div>
+              </div>
+
+              <!-- Panel 3: 640 input -->
+              <div class="chart-box"
+                style="margin: 0; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 18px;">
+                <span class="badge badge-blue" style="margin-bottom: 8px;">640 input</span>
+                <div
+                  style="width: 100%; max-width: 260px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.25); border-radius: 8px; margin-bottom: 12px; overflow: hidden;">
+                  <canvas id="s3-pixel-canvas-640" width="260" height="260"
+                    style="width: 100%; height: 100%; max-width: 260px; aspect-ratio: 1 / 1; display: block; border-radius: 6px; image-rendering: -moz-crisp-edges; image-rendering: pixelated;"></canvas>
+                </div>
+                <div
+                  style="font-size: 22px; font-weight: 700; color: var(--apple-blue); font-family: var(--font-mono); margin: 4px 0 2px 0;">
+                  <span class="tooltip-term" tabindex="0">&asymp;8 px wide<span class="tooltip-text">YOLO reads the
+                      image in 8 &times; 8 px blocks, so an 8 px object fits inside one block.</span></span>
+                </div>
+                <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.4; text-align: center;">
+                  Shrinks to a few blocks; shape is lost.
                 </div>
               </div>
             </div>
+
             <div class="figure-caption"
               style="font-size: 11.5px; color: var(--apple-text-secondary); text-align: center; margin-top: 10px;">
-              Same real test frame, reduced to each input size.
+              Same real test frame. Zoomed for display only; the shrink factors are the real ones the model uses.
+              Result: 1088 gives +14.4 pp mAP@50-95 and fewer false alarms.
             </div>
           </div>
 
-          <!-- False Alarm Suppression Card -->
-          <div class="chart-box"
-            style="margin: 18px 0; display: flex; flex-direction: column; justify-content: center;">
-            <strong style="font-size: 12.5px; color: var(--apple-text-primary); margin-bottom: 12px;">
-              🎯 False Alarm Suppression on Tarmac Test Set (151 Fasteners)
-            </strong>
-            <div style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 12px;">
+          <!-- 3d. Fewer False Alarms Card -->
+          <div class="chart-box" style="margin: 20px 0; display: flex; flex-direction: column;">
+            <div style="font-size: 14px; font-weight: 600; color: var(--apple-text-primary); margin-bottom: 6px;">
+              🎯 Fewer false alarms
+            </div>
+            <div style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 14px;">
+              What this shows: A false alarm is when the model draws a box on something that isn't a fastener, such as a
+              stone or a crack in the asphalt. Each one would make the robot stop for nothing. We counted them across
+              all 151 test images.
+            </div>
+            <div
+              style="display: flex; justify-content: space-around; align-items: center; margin: 10px 0 16px 0; flex-wrap: wrap; gap: 16px;">
               <div style="text-align: center;">
                 <div
-                  style="font-size: 28px; font-weight: 700; color: var(--apple-amber); font-family: var(--font-mono);">
+                  style="font-size: 32px; font-weight: 700; color: var(--apple-amber); font-family: var(--font-mono); line-height: 1.1;">
                   8.3</div>
-                <div style="font-size: 11px; color: var(--apple-text-secondary);">640 Input (Mean)</div>
-                <div style="font-size: 10px; color: var(--apple-text-tertiary);">15 / 5 / 5 per seed</div>
+                <div style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 4px;">at 640 input</div>
+                <div style="font-size: 11px; color: var(--apple-text-tertiary);">(average of 3 runs: 15, 5, 5)</div>
               </div>
-              <div style="font-size: 22px; color: var(--apple-text-tertiary);">&rarr;</div>
+              <div style="font-size: 24px; color: var(--apple-text-tertiary);">&rarr;</div>
               <div style="text-align: center;">
                 <div
-                  style="font-size: 28px; font-weight: 700; color: var(--apple-green); font-family: var(--font-mono);">
+                  style="font-size: 32px; font-weight: 700; color: var(--apple-green); font-family: var(--font-mono); line-height: 1.1;">
                   1.0</div>
-                <div style="font-size: 11px; color: var(--apple-text-secondary);">1088 Input (Mean)</div>
-                <div style="font-size: 10px; color: var(--apple-text-tertiary);">2 / 1 / 0 per seed</div>
+                <div style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 4px;">at 1088 input</div>
+                <div style="font-size: 11px; color: var(--apple-text-tertiary);">(2, 1, 0)</div>
               </div>
             </div>
             <div
-              style="font-size: 11.5px; color: var(--apple-green); background: rgba(48,209,88,0.08); padding: 8px 10px; border-radius: 6px; text-align: center;">
-              88% reduction in false positives with only +0.9 ms latency increase on A40
+              style="font-size: 12px; color: var(--apple-green); background: rgba(48,209,88,0.08); padding: 10px 14px; border-radius: 8px; text-align: center; border: 1px solid rgba(48,209,88,0.2);">
+              Higher input size cuts false alarms by about 88%, for roughly 0.9 ms more per frame on the A40 GPU.
             </div>
           </div>
 
-          <!-- Video-Level Holdout Table (Updated Train Conditions and Val Role) -->
-          <div class="admin-table-wrapper" style="margin-top: 16px;">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Partition</th>
-                  <th>Video Composition</th>
-                  <th>Frames</th>
-                  <th>Holdout Rigor &amp; Conditions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Train</strong></td>
-                  <td>13 videos: 6 from Session 1 (S1) + all 7 from Session 2 (S2)</td>
-                  <td>1,305</td>
-                  <td>Sun-lit tarmac + 2 lab videos</td>
-                </tr>
-                <tr>
-                  <td><strong>Val</strong></td>
-                  <td>1 video: <em>spring washer sun</em> (S1)</td>
-                  <td>96</td>
-                  <td>Picking the best epoch</td>
-                </tr>
-                <tr style="background: rgba(41, 151, 255, 0.08);">
-                  <td><strong>Test</strong></td>
-                  <td>2 videos: <em>slotted screw sun</em>, <em>top big lock nut sun</em> (S1)</td>
-                  <td><strong>151</strong></td>
-                  <td><strong>Zero video overlap:</strong> Tests generalization to unseen tarmac passes</td>
-                </tr>
-              </tbody>
-            </table>
+          <!-- 3e. Split Table -->
+          <div style="margin-top: 20px;">
+            <div style="font-size: 14px; font-weight: 600; color: var(--apple-text-primary); margin-bottom: 6px;">
+              Video-Level Dataset Partition
+            </div>
+            <div style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 12px;">
+              What this shows: Which videos were used for what. No video appears in more than one row, so the test is on
+              footage the model has never seen.
+            </div>
+            <div class="admin-table-wrapper" style="margin-bottom: 14px;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Partition</th>
+                    <th>Videos</th>
+                    <th>Frames</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Train</strong></td>
+                    <td>13 videos: 6 from session 1 + all 7 from session 2</td>
+                    <td>1,305</td>
+                    <td>Sun-lit tarmac + 2 lab videos</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Val</strong></td>
+                    <td>spring washer sun (S1)</td>
+                    <td>96</td>
+                    <td>Picking the best training epoch</td>
+                  </tr>
+                  <tr style="background: rgba(41, 151, 255, 0.08);">
+                    <td><strong>Test</strong></td>
+                    <td>slotted screw sun, top big lock nut sun (S1)</td>
+                    <td><strong>151</strong></td>
+                    <td><strong>Scored once, never trained on</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
-          <!-- "Limits of this result" Expander under Section 3 -->
+          <!-- 3f. Paragraph -->
+          <p
+            style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 0;">
+            Why we trust this: no test video was seen in training, and each setting was trained three times. The worst
+            1088 run (95.7% mAP@50) still beat the best 640 run (88.3%).
+          </p>
+
+          <!-- 3g. Limits of this result Expander -->
           <div style="margin-top: 14px;">
             <details class="why-details">
               <summary>Limits of this result</summary>
-              <p>Test fastener types also appear in session 2 training videos; the held-out test set contains only 151
-                target fasteners; no empty-tarmac false-alarm test has been completed yet; and the current native
-                dataset was captured using a rolling-shutter webcam (vulnerable to motion blur at operating speeds).</p>
+              <p>Slotted screws and lock nuts also appear in session 2 training videos, so this tests unseen videos, not
+                unseen fastener types. The test set is small (151 fasteners, 2 videos) and every test frame contains a
+                fastener, so false alarms on empty tarmac are not yet measured. The footage was shot with a
+                rolling-shutter webcam, not at driving speed.</p>
             </details>
           </div>
         </div>
 
 
         <!-- ===================================================================
-             SECTION 4.0: EDGE OPTIMIZATION & JETSON ORIN DEPLOYMENT
+             SECTION 4.0: FUTURE WORK: SEMESTER 2 DEPLOYMENT PLAN
              =================================================================== -->
-        <div class="card-box" id="edge-optimization" style="margin-bottom: 28px;">
+        <div class="card-box" id="future-work" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 4.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Edge Optimization &amp; Jetson
-                Orin Trade-Off (TensorRT)</h2>
+              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 4.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Future Work: Semester 2
+                Deployment Plan</h2>
             </div>
-            <span class="badge badge-amber">Hardware Requirements &bull; 4.19 m/s Sweep</span>
+            <span class="badge badge-purple">Semester 2</span>
           </div>
 
-          <!-- Kinematic Vision Constraints Table -->
           <p
-            style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 14px;">
-            Every optical and computational budget is derived from the vehicle's maximum sweep speed (400 RPM x
-            2&pi;(0.1 m) &divide; 60 = 4.19 m/s &asymp; 15.1 km/h):
+            style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 16px;">
+            The model works on our footage. These steps decide which model goes on the robot and prove it works in real
+            conditions.
           </p>
 
-          <div class="admin-table-wrapper" style="margin-bottom: 18px;">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Vision Quantity</th>
-                  <th>Working Formulation</th>
-                  <th>Design Value</th>
-                  <th>Hardware / Algorithmic Significance</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Ground Sample Distance (GSD) @ 2 m</strong></td>
-                  <td>30 mm &divide; 40 px</td>
-                  <td><span class="highlight-stat">0.75 mm/px</span></td>
-                  <td>Design target at 2 m; camera mount being revised to 0.45 m / 20&deg; tilt</td>
-                </tr>
-                <tr>
-                  <td><strong>Max Shutter Exposure (&lt; 1 px blur)</strong></td>
-                  <td>0.75 mm &divide; 4.19 m/s</td>
-                  <td><span class="highlight-stat">&le; 179 &mu;s</span></td>
-                  <td>Requires IMX568 global shutter in Sem 2</td>
-                </tr>
-                <tr>
-                  <td><strong>Forward Detection Window</strong></td>
-                  <td>(3.0 &minus; 0.42) m &divide; 4.19 m/s</td>
-                  <td><span class="highlight-stat">0.62 s (~18 frames @ 30 fps)</span></td>
-                  <td>Allows multi-frame temporal confirmation</td>
-                </tr>
-                <tr style="background: rgba(41, 151, 255, 0.08);">
-                  <td><strong>Per-Frame Processing Budget</strong></td>
-                  <td>1 &divide; 30 fps</td>
-                  <td><span class="highlight-stat">&le; 33.3 ms</span></td>
-                  <td><strong>Hard real-time deadline for Orin inference</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Swath Width &amp; Coverage Rate</strong></td>
-                  <td>2 x 2 m x tan(25&deg;) x 4.19 m/s</td>
-                  <td>1.87 m &bull; 7.8 m&sup2;/s</td>
-                  <td>UGV alone: ~4.8 h for a 3 km x 45 m runway</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Deployment Decision Matrix -->
-          <div class="comparison-grid">
-            <div class="winner-card blue">
-              <span class="badge badge-blue" style="margin-bottom: 6px;">RECOMMENDED BASELINE</span>
-              <h3 style="font-size: 16px; margin: 0 0 6px 0; color: var(--apple-text-primary);">YOLO11-S @ 1088 Input
-              </h3>
-              <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 8px;">
-                <strong>97.0% mAP@50 &bull; 92.7% recall &bull; 1.0 false positive.</strong> At 9.4M parameters, it
-                leaves ample compute margin on the Jetson Orin for RTK navigation, SLAM, and path planning.
-              </p>
+          <!-- 4a. Deployment decision (pending) -->
+          <div style="margin-bottom: 22px;">
+            <div style="font-size: 14px; font-weight: 600; color: var(--apple-text-primary); margin-bottom: 12px;">
+              Deployment decision
             </div>
-            <div class="winner-card emerald">
-              <span class="badge badge-emerald" style="margin-bottom: 6px;">SAFETY-CRITICAL ALTERNATIVE</span>
-              <h3 style="font-size: 16px; margin: 0 0 6px 0; color: var(--apple-text-primary);">RT-DETR-L (Subject to
-                Sem 2 Orin Profile)</h3>
-              <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 8px;">
-                <strong>+20.1 pp recall lead over YOLO on public data.</strong> If TensorRT FP16/INT8 post-training
-                quantization achieves &le; 33 ms on the Jetson Orin, RT-DETR-L becomes the preferred deployment model.
-              </p>
-            </div>
-          </div>
-
-          <!-- Semester 2 Action Checklist -->
-          <div style="margin-top: 16px;">
-            <strong style="font-size: 13px; color: var(--apple-text-primary);">🚀 Semester 2 Deployment Action
-              Plan:</strong>
-            <div class="checklist-grid">
-              <div class="checklist-item">
-                <span style="color: var(--apple-blue); font-size: 16px;">⚙️</span>
-                <div><strong>TensorRT INT8 Quantization:</strong> Profile p95 latency and power on Jetson Orin.</div>
+            <div class="comparison-grid">
+              <div class="winner-card blue">
+                <span class="badge badge-blue" style="margin-bottom: 8px;">CURRENT DEVELOPMENT MODEL</span>
+                <h3 style="font-size: 16px; margin: 0 0 8px 0; color: var(--apple-text-primary);">YOLO11-S @ 1088 input
+                </h3>
+                <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+                  97.0% mAP@50, 92.7% recall and 1.0 false alarm on our held-out videos. At 9.4M parameters it is the
+                  lighter option; whether it leaves headroom on the Jetson for navigation and control is still to be
+                  measured.
+                </p>
               </div>
-              <div class="checklist-item">
-                <span style="color: var(--apple-green); font-size: 16px;">📷</span>
-                <div><strong>Sony IMX568 Sensor:</strong> Capture unblurred video at 4.19 m/s with 179 &mu;s exposure.
+            </div>
+            <div style="font-size: 12.5px; color: var(--apple-text-secondary); margin-top: 10px; font-weight: 500;">
+              Rule: pick the model with the highest recall that runs within 33 ms per frame on the Jetson Orin.
+            </div>
+          </div>
+
+          <!-- 4b. Action plan -->
+          <div style="margin-top: 20px;">
+            <div style="font-size: 14px; font-weight: 600; color: var(--apple-text-primary); margin-bottom: 12px;">
+              Semester 2 Action Plan
+            </div>
+
+            <!-- Group 1: Edge optimisation -->
+            <div style="margin-bottom: 16px;">
+              <div
+                style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-blue); margin-bottom: 8px;">
+                Edge optimisation
+              </div>
+              <div class="checklist-grid" style="margin-top: 0;">
+                <div class="checklist-item">
+                  <span style="color: var(--apple-blue); font-size: 16px;">⚙️</span>
+                  <div><strong>TensorRT on the Jetson:</strong> convert both models to FP16 and INT8; measure p95
+                    latency and power.</div>
+                </div>
+                <div class="checklist-item">
+                  <span style="color: var(--apple-blue); font-size: 16px;">📐</span>
+                  <div><strong>Model size tuning:</strong> try other models if latency headroom allows.</div>
                 </div>
               </div>
-              <div class="checklist-item">
-                <span style="color: var(--apple-amber); font-size: 16px;">📐</span>
-                <div><strong>Model Scale Tuning:</strong> Evaluate Nano (N) vs Small (S) vs Medium (M).</div>
+            </div>
+
+            <!-- Group 2: Data -->
+            <div style="margin-bottom: 16px;">
+              <div
+                style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-green); margin-bottom: 8px;">
+                Data
               </div>
-              <div class="checklist-item">
-                <span style="color: var(--apple-purple); font-size: 16px;">🌪️</span>
-                <div><strong>Vacuum Lift Confirmation:</strong> Validate aerodynamic ingestion per fastener type.</div>
+              <div class="checklist-grid" style="margin-top: 0;">
+                <div class="checklist-item">
+                  <span style="color: var(--apple-green); font-size: 16px;">📷</span>
+                  <div><strong>Record with the IMX568 global-shutter camera</strong> at driving speed to feed the model
+                    for better fine tuning.</div>
+                </div>
+                <div class="checklist-item">
+                  <span style="color: var(--apple-purple); font-size: 16px;">🌪️</span>
+                  <div><strong>Weather conditions:</strong> add data with different weathering conditions to improve
+                    robustness.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Group 3: Validation -->
+            <div>
+              <div
+                style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-purple); margin-bottom: 8px;">
+                Validation
+              </div>
+              <div class="checklist-grid" style="margin-top: 0;">
+                <div class="checklist-item">
+                  <span style="color: var(--apple-purple); font-size: 16px;">🔍</span>
+                  <div><strong>Empty-tarmac test:</strong> count false alarms on footage with no fasteners.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -1525,8 +1611,6 @@
       });
 
       // -----------------------------------------------------------------------
-      // 4. SECTION 3: MULTI-SEED SWAPPER
-      // -----------------------------------------------------------------------
       // 4. SECTION 3: MULTI-SEED SWAPPER & PIXELATION VISUALIZER
       // -----------------------------------------------------------------------
       const seedData = {
@@ -1588,14 +1672,14 @@
         btn.addEventListener('click', () => updateSeed(btn.dataset.seed));
       });
 
-      // Pixelation Visualizer Canvas Script
-      function drawPixelated(canvas, img, scale) {
+      // 3c. Fastener Pixelation Comparison (Camera, 1088, 640)
+      function drawPixelatedBlock(canvas, img, scale) {
         if (!canvas || !img) return;
-        const w = canvas.width;
-        const h = canvas.height;
+        const W = canvas.width;
+        const H = canvas.height;
         const offscreen = document.createElement('canvas');
-        const sw = Math.max(1, Math.round(w * scale));
-        const sh = Math.max(1, Math.round(h * scale));
+        const sw = Math.max(1, Math.round(W * scale));
+        const sh = Math.max(1, Math.round(H * scale));
         offscreen.width = sw;
         offscreen.height = sh;
         const offCtx = offscreen.getContext('2d');
@@ -1606,29 +1690,72 @@
         if ('mozImageSmoothingEnabled' in ctx) ctx.mozImageSmoothingEnabled = false;
         if ('webkitImageSmoothingEnabled' in ctx) ctx.webkitImageSmoothingEnabled = false;
         if ('msImageSmoothingEnabled' in ctx) ctx.msImageSmoothingEnabled = false;
-        ctx.clearRect(0, 0, w, h);
-        ctx.drawImage(offscreen, 0, 0, sw, sh, 0, 0, w, h);
+        ctx.clearRect(0, 0, W, H);
+        ctx.drawImage(offscreen, 0, 0, sw, sh, 0, 0, W, H);
+
+        // Faint 1 px grid drawn over each visible pixel block
+        const blockW = W / sw;
+        const blockH = H / sh;
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        ctx.save();
+        ctx.strokeStyle = isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.12)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let x = blockW; x < W; x += blockW) {
+          const px = Math.round(x) + 0.5;
+          ctx.moveTo(px, 0);
+          ctx.lineTo(px, H);
+        }
+        for (let y = blockH; y < H; y += blockH) {
+          const py = Math.round(y) + 0.5;
+          ctx.moveTo(0, py);
+          ctx.lineTo(W, py);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function renderPixelPanels(img) {
+        const cCam = document.getElementById('s3-pixel-canvas-camera');
+        const c1088 = document.getElementById('s3-pixel-canvas-1088');
+        const c640 = document.getElementById('s3-pixel-canvas-640');
+
+        // Panel 1: Camera (full resolution, smoothing on)
+        if (cCam) {
+          const ctx = cCam.getContext('2d');
+          ctx.imageSmoothingEnabled = true;
+          ctx.clearRect(0, 0, cCam.width, cCam.height);
+          ctx.drawImage(img, 0, 0, cCam.width, cCam.height);
+        }
+
+        // Panel 2: 1088 input (scale 0.567, smoothing off, faint 1px pixel grid)
+        if (c1088) {
+          drawPixelatedBlock(c1088, img, 0.567);
+        }
+
+        // Panel 3: 640 input (scale 0.333, smoothing off, faint 1px pixel grid)
+        if (c640) {
+          drawPixelatedBlock(c640, img, 0.333);
+        }
       }
 
       function showPixelFallback(canvasId) {
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
         const fallback = document.createElement('div');
-        fallback.textContent = 'Add assets/images/Gabriel/screw.png';
-        fallback.style.cssText = 'width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--apple-text-tertiary); text-align: center; padding: 16px; box-sizing: border-box;';
+        fallback.textContent = 'Add assets/images/Gabriel/screw.png (tight ~96 px crop, full resolution)';
+        fallback.style.cssText = 'width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 11.5px; color: var(--apple-text-tertiary); text-align: center; padding: 16px; box-sizing: border-box; line-height: 1.4;';
         canvas.replaceWith(fallback);
       }
 
       const screwImg = new Image();
       screwImg.onload = function () {
-        const c640 = document.getElementById('s3-pixel-canvas-640');
-        const c1088 = document.getElementById('s3-pixel-canvas-1088');
-        if (c640) drawPixelated(c640, screwImg, 640 / 1920);
-        if (c1088) drawPixelated(c1088, screwImg, 1088 / 1920);
+        renderPixelPanels(screwImg);
       };
       screwImg.onerror = function () {
-        showPixelFallback('s3-pixel-canvas-640');
+        showPixelFallback('s3-pixel-canvas-camera');
         showPixelFallback('s3-pixel-canvas-1088');
+        showPixelFallback('s3-pixel-canvas-640');
       };
       screwImg.src = '../../assets/images/Gabriel/screw.png';
       if (screwImg.complete) {
@@ -1638,6 +1765,14 @@
           screwImg.onerror();
         }
       }
+
+      // Re-render pixel panels if data-theme changes to update faint grid contrast
+      const themeObserver = new MutationObserver(() => {
+        if (screwImg.complete && screwImg.naturalWidth > 0) {
+          renderPixelPanels(screwImg);
+        }
+      });
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
       // -----------------------------------------------------------------------
       // 5. LIGHTBOX MODAL DIALOG
