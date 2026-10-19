@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script>
-    (function() {
+    (function () {
       try {
         var t = localStorage.getItem('theme');
         if (t === 'light') {
@@ -10,7 +11,7 @@
         } else {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
-      } catch (e) {}
+      } catch (e) { }
     })();
   </script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -18,15 +19,608 @@
   <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STM32 Hardware Architecture - Gabriel</title>
+  <title>STM32 Low-Level Control Unit - Gabriel</title>
   <link rel="stylesheet" href="../../css/styles.css?v=4.2">
+  <style>
+    /* ── Local Design Tokens & Scoped Styles ───────────────────────────────── */
+    .highlight-stat {
+      color: var(--apple-green);
+      font-weight: 600;
+    }
+
+    .blue-stat {
+      color: var(--apple-blue);
+      font-weight: 600;
+    }
+
+    .amber-stat {
+      color: var(--apple-amber);
+      font-weight: 600;
+    }
+
+    .purple-stat {
+      color: var(--apple-purple);
+      font-weight: 600;
+    }
+
+    /* ── Design Cascade (System At a Glance) ───────────────────────────────── */
+    .metric-pill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .metric-pill {
+      background: var(--apple-surface-card, #121214);
+      border: 1px solid var(--apple-border);
+      border-radius: 14px;
+      padding: 16px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      box-shadow: var(--apple-shadow-sm);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .metric-pill:hover {
+      transform: translateY(-2px);
+      border-color: rgba(41, 151, 255, 0.4);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    [data-theme="light"] .metric-pill {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="light"] .metric-pill:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      border-color: rgba(41, 151, 255, 0.5);
+    }
+
+    /* ── Section Headings & Intros ─────────────────────────────────────────── */
+    .section-intro-line {
+      font-size: 15.5px;
+      color: var(--apple-text-primary);
+      font-weight: 500;
+      line-height: 1.6;
+      margin: 0 0 18px 0;
+    }
+
+    /* ── Three Cards Beneath Diagram ───────────────────────────────────────── */
+    .cards-three-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 820px) {
+      .cards-three-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .why-ecu-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+
+    .why-ecu-card:hover {
+      border-color: rgba(41, 151, 255, 0.35);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    [data-theme="light"] .why-ecu-card {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .why-ecu-card:hover {
+      background: #f5f5f7;
+      border-color: rgba(41, 151, 255, 0.35);
+    }
+
+    .why-ecu-card h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--apple-text-primary);
+      margin: 0 0 8px 0;
+    }
+
+    .why-ecu-card p {
+      font-size: 13px;
+      color: var(--apple-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── Two-Way Page Navigation Buttons ─────────────────────────────────── */
+    .nav-prev-page-btn:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(41, 151, 255, 0.4) !important;
+      transform: translateY(-2px);
+    }
+
+    .nav-next-page-btn:hover {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(41, 151, 255, 0.15) 100%) !important;
+      border-color: rgba(168, 85, 247, 0.6) !important;
+      transform: translateY(-2px);
+    }
+
+    [data-theme="light"] .nav-prev-page-btn {
+      background: #fbfbfd !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    [data-theme="light"] .nav-prev-page-btn:hover {
+      background: #f1f5f9 !important;
+      border-color: rgba(41, 151, 255, 0.5) !important;
+    }
+
+    [data-theme="light"] .nav-next-page-btn {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(41, 151, 255, 0.06) 100%) !important;
+      border-color: rgba(168, 85, 247, 0.35) !important;
+    }
+
+    /* ── Compute Utilisation Bar ───────────────────────────────────────────── */
+    .util-container {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 16px 0 20px 0;
+    }
+
+    [data-theme="light"] .util-container {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .util-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .util-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--apple-text-primary);
+    }
+
+    .util-bar-track {
+      position: relative;
+      width: 100%;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      border: 1px solid var(--apple-border);
+    }
+
+    [data-theme="light"] .util-bar-track {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .util-segment {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: width 0.3s ease;
+      color: #ffffff;
+      padding: 0 4px;
+      overflow: hidden;
+    }
+
+    .seg-base {
+      background: linear-gradient(90deg, #2563eb, #3b82f6);
+    }
+
+    .seg-margin {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+      color: #111;
+    }
+
+    .seg-headroom {
+      background: linear-gradient(90deg, rgba(48, 209, 88, 0.18), rgba(48, 209, 88, 0.28));
+      color: var(--apple-green);
+      font-weight: 600;
+      justify-content: flex-start;
+      padding-left: 14px;
+    }
+
+    [data-theme="light"] .seg-headroom {
+      color: #15803d;
+      background: linear-gradient(90deg, rgba(34, 197, 94, 0.18), rgba(34, 197, 94, 0.26));
+    }
+
+    .util-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--apple-text-secondary);
+    }
+
+    .util-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    /* ── Candidate Board Table Highlights ──────────────────────────────────── */
+    .row-muted {
+      opacity: 0.6;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    [data-theme="light"] .row-muted {
+      opacity: 0.65;
+      background: #f8fafc;
+    }
+
+    .row-backup {
+      background: rgba(255, 159, 10, 0.04);
+    }
+
+    .row-selected {
+      background: rgba(48, 209, 88, 0.1) !important;
+      border-left: 4px solid var(--apple-green) !important;
+    }
+
+    [data-theme="light"] .row-selected {
+      background: rgba(34, 197, 94, 0.1) !important;
+    }
+
+    /* ── Subsystem Group Tags in Interface Table ───────────────────────────── */
+    .group-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 980px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .group-tag.tag-sensor {
+      background: rgba(41, 151, 255, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(41, 151, 255, 0.35);
+    }
+
+    .group-tag.tag-power {
+      background: rgba(255, 159, 10, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(255, 159, 10, 0.35);
+    }
+
+    .group-tag.tag-motor {
+      background: rgba(48, 209, 88, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(48, 209, 88, 0.35);
+    }
+
+    .group-tag.tag-visual {
+      background: rgba(191, 90, 242, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(191, 90, 242, 0.35);
+    }
+
+    .group-tag.tag-actuator {
+      background: rgba(6, 182, 212, 0.15);
+      color: #22d3ee;
+      border: 1px solid rgba(6, 182, 212, 0.35);
+    }
+
+    .group-tag.tag-input {
+      background: rgba(249, 115, 22, 0.15);
+      color: #fb923c;
+      border: 1px solid rgba(249, 115, 22, 0.35);
+    }
+
+    [data-theme="light"] .group-tag.tag-sensor {
+      color: #1d4ed8;
+      background: #dbeafe;
+      border-color: #93c5fd;
+    }
+
+    [data-theme="light"] .group-tag.tag-power {
+      color: #b45309;
+      background: #fef3c7;
+      border-color: #fde68a;
+    }
+
+    [data-theme="light"] .group-tag.tag-motor {
+      color: #15803d;
+      background: #dcfce7;
+      border-color: #86efac;
+    }
+
+    [data-theme="light"] .group-tag.tag-visual {
+      color: #7e22ce;
+      background: #f3e8ff;
+      border-color: #d8b4fe;
+    }
+
+    [data-theme="light"] .group-tag.tag-actuator {
+      color: #0e7490;
+      background: #cffafe;
+      border-color: #a5f3fc;
+    }
+
+    [data-theme="light"] .group-tag.tag-input {
+      color: #c2410c;
+      background: #ffedd5;
+      border-color: #fed7aa;
+    }
+
+    /* ── Interface Search & Filter Bar ─────────────────────────────────────── */
+    .table-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 16px 0 12px 0;
+    }
+
+    .table-search-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--apple-border);
+      border-radius: 980px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--apple-text-primary);
+      width: 100%;
+      max-width: 320px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .table-search-input:focus {
+      border-color: var(--apple-blue);
+      box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    [data-theme="light"] .table-search-input {
+      background: #f1f5f9;
+      border-color: rgba(0, 0, 0, 0.12);
+      color: #0f172a;
+    }
+
+    .table-filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .table-filter-pill {
+      cursor: pointer;
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 980px;
+      border: 1px solid var(--apple-border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--apple-text-secondary);
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .table-filter-pill:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--apple-text-primary);
+    }
+
+    .table-filter-pill.active {
+      background: var(--apple-blue);
+      border-color: var(--apple-blue);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* ── Image & Diagram Boxes ─────────────────────────────────────────────── */
+    .image-preview-frame {
+      position: relative;
+      background: rgba(12, 12, 16, 0.85);
+      border: 1px solid var(--apple-border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 16px 0 10px 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .image-preview-frame:hover {
+      border-color: rgba(41, 151, 255, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="light"] .image-preview-frame {
+      background: #f8fafc;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .image-preview-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .image-preview-frame:hover img {
+      transform: scale(1.01);
+    }
+
+    .image-zoom-overlay {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #ffffff;
+      padding: 5px 10px;
+      border-radius: 980px;
+      font-size: 11.5px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+    }
+
+    .figure-caption {
+      font-size: 12px;
+      color: var(--apple-text-secondary);
+      text-align: center;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* ── Lightbox Dialog ───────────────────────────────────────────────────── */
+    dialog#image-lightbox-dialog {
+      border: none;
+      border-radius: 14px;
+      padding: 0;
+      background: var(--apple-surface-card, #1c1c1e);
+      color: var(--apple-text-primary);
+      max-width: 92vw;
+      max-height: 90vh;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+    }
+
+    dialog#image-lightbox-dialog::backdrop {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+    }
+
+    .lightbox-wrapper {
+      position: relative;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--apple-surface-card, #1c1c1e);
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--apple-text-primary);
+      border: 1px solid var(--apple-border);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .lightbox-close-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.08);
+    }
+
+    #lightbox-img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    #lightbox-caption {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--apple-text-secondary);
+      text-align: center;
+      max-width: 700px;
+      line-height: 1.5;
+    }
+
+    /* ── Inline SVG Diagram Containers ─────────────────────────────────────── */
+    .svg-container {
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+      background: rgba(12, 12, 16, 0.6);
+      border: 1px solid var(--apple-border);
+      border-radius: 14px;
+      padding: 16px;
+      margin: 14px 0;
+      scrollbar-width: thin;
+    }
+
+    [data-theme="light"] .svg-container {
+      background: #f8fafc;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    /* ── Software Placeholder ──────────────────────────────────────────────── */
+    .software-section-placeholder {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 32px;
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    [data-theme="light"] .software-section-placeholder {
+      border-color: rgba(0, 0, 0, 0.15);
+      background: rgba(0, 0, 0, 0.02);
+    }
+  </style>
 </head>
+
 <body>
   <!-- APPLE TOP NAVIGATION BAR -->
   <header class="apple-nav">
     <div class="apple-nav-container">
       <a href="../../index.html" class="apple-nav-brand">
-        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore"
+          class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
         <span class="nav-project-code">AIS-406</span>
       </a>
 
@@ -62,138 +656,922 @@
 
   <!-- MAIN PAGE CONTENT -->
   <main class="apple-main-content">
-    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
-      
+    <div class="apple-container" style="padding-top: 10px; padding-bottom: 60px;">
+
       <!-- HERO HEADER -->
-      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
-        <div class="apple-hero-badge">Electrical &amp; Embedded Subsystem • Gabriel</div>
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 24px;">
+        <div class="apple-hero-badge">ELECTRICAL &amp; EMBEDDED SUBSYSTEM • GABRIEL</div>
         <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 12px;">
-          STM32 Hardware Architecture &amp; Interfacing
+          STM32 Low-Level Control Unit
         </h1>
-        <p class="apple-section-subtitle" style="max-width: 780px; margin: 0 auto; color: var(--apple-text-secondary); font-size: 16px; line-height: 1.6;">
-          Hardware design, pinout mapping, CAN transceiver integration, electrical isolation, and wiring interfaces for the real-time UGV motor controller.
+        <p class="apple-section-subtitle"
+          style="max-width: 820px; margin: 0 auto; color: var(--apple-text-secondary); font-size: 16px; line-height: 1.6;">
+          Real-time ECU for motor control, sensor I/O and failsafe handling on the runway UGV &mdash; built on the STM32
+          NUCLEO-F446RE.
         </p>
+      </div>
+
+      <!-- LEADERSHIP & METRICS BADGE CARD -->
+      <div class="card-box" style="margin-bottom: 28px; border-left: 5px solid var(--accent-emerald);">
+        <div
+          style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-blue">Gabriel</span>
+              <span class="badge badge-emerald">Hardware &amp; Electrical</span>
+              <span class="badge badge-amber">STM32 F446RE</span>
+            </div>
+            <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Electrical &amp; Embedded Co-Lead:
+              Gabriel Tan Kai Jie (A0308452H)</h3>
+            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              Hardware Scope: STM32F446RE pinout configuration, CAN transceiver integration, power distribution &amp;
+              regulation, electrical noise isolation, and benchtop testing.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <a href="stm32%20firmware.html" class="btn btn-deep-dive"
+              style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.4); color: #c084fc;">STM32
+              Firmware &rarr;</a>
+            <a href="../../4-subsystems/electrical.html" class="btn btn-deep-dive">4.2 Electrical Subsystem &rarr;</a>
+            <a href="../../7-documentation.html" class="btn btn-deep-dive">Documentation Hub &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SYSTEM AT A GLANCE (4-STEP DESIGN CASCADE) -->
+      <div style="margin-bottom: 28px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+          <span class="badge badge-blue"
+            style="font-size: 11px; padding: 3px 10px; font-weight: 700; letter-spacing: 0.06em;">DESIGN CASCADE</span>
+        </div>
+        <div class="metric-pill-grid" style="margin-bottom: 0;">
+          <a href="#why-dedicated-ecu" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 1 &bull; Architecture Split</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Dedicated ECU Tier</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                Two-tier compute: Jetson autonomy (ROS 2) isolated from real-time microsecond wheel control and hardware
+                Quick-Stop.</div>
+            </div>
+            <div class="highlight-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">
+              Failsafe Isolation</div>
+          </a>
+
+          <a href="#requirements-selection" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 2 &bull; MCU Selection</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                NUCLEO-F446RE Chosen</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                180 MHz Cortex-M4F meets &ge;4 UART, &ge;1 CAN, and 34.32 MHz worst-case load with &gt;80% headroom.
+              </div>
+            </div>
+            <div class="amber-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">&gt; 80%
+              Headroom (180 MHz)</div>
+          </a>
+
+          <a href="#interface-wiring" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 3 &bull; Interface Matrix</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                11 Devices Mapped</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                Complete pin and bus allocations across CAN hub motors, RTK GNSS, telemetry radio, stepper, and E-stop.
+              </div>
+            </div>
+            <div class="blue-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">11
+              Peripherals Mapped</div>
+          </a>
+
+          <a href="#carrier-pcb" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 4 &bull; Runway Carrier (WIP)</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Custom KiCad PCB</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                Designing a locking JST daughterboard to eliminate loose jumper wires under airfield pavement vibration.
+              </div>
+            </div>
+            <div class="purple-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">WIP
+              &bull; Semester 2</div>
+          </a>
+        </div>
       </div>
 
       <div class="page-content">
 
-        <!-- LEADERSHIP & METRICS BADGE CARD -->
-        <div class="card-box" style="margin-bottom: 24px; border-left: 5px solid var(--accent-emerald);">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span class="badge badge-blue">Gabriel</span>
-                <span class="badge badge-emerald">Hardware &amp; Electrical</span>
-                <span class="badge badge-amber">STM32 F446RE</span>
-              </div>
-              <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Electrical &amp; Embedded Co-Lead: Gabriel Tan Kai Jie (A0308452H)</h3>
-              <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                Hardware Scope: STM32F446RE pinout configuration, CAN transceiver integration, power distribution &amp; regulation, electrical noise isolation, and benchtop testing.
-              </p>
-            </div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <a href="stm32%20firmware.html" class="btn btn-deep-dive" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.4); color: #c084fc;">STM32 Firmware →</a>
-              <a href="../../4-subsystems/electrical.html" class="btn btn-deep-dive">4.2 Electrical Subsystem →</a>
-              <a href="../../7-documentation.html" class="btn btn-deep-dive">Documentation Hub →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 1 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+        <!-- ==================================================================
+             SECTION 1: WHY A DEDICATED ECU
+             ================================================================== -->
+        <section id="why-dedicated-ecu" class="card-box" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
               <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 1.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Microcontroller Selection &amp; System Architecture</h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Why a Dedicated ECU</h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
 
-        <!-- SECTION 2 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+          <p class="section-intro-line" style="margin-top: 14px;">
+            The UGV splits computing into two tiers: a high-level computer for autonomy, and a microcontroller for
+            anything that moves.
+          </p>
+
+          <!-- INLINE SVG BLOCK DIAGRAM (GENEROUS 180px SPACING, ZERO OVERLAP) -->
+          <div class="svg-container">
+            <svg viewBox="0 0 1430 200" width="100%" height="auto" style="min-width: 920px; max-width: 1430px;"
+              role="img" aria-label="Two-Tier Computing Split Architecture Diagram">
+              <defs>
+                <linearGradient id="jetsonGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#1e293b" />
+                  <stop offset="100%" stop-color="#0f172a" />
+                </linearGradient>
+                <linearGradient id="stm32Grad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#064e3b" />
+                  <stop offset="100%" stop-color="#022c22" />
+                </linearGradient>
+                <linearGradient id="actuatorGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#312e81" />
+                  <stop offset="100%" stop-color="#1e1b4b" />
+                </linearGradient>
+                <filter id="boxShadow" x="-10%" y="-10%" width="120%" height="120%">
+                  <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.45" />
+                </filter>
+              </defs>
+
+              <!-- Node 1: Autonomy Tier (NVIDIA Jetson) -->
+              <rect x="30" y="20" width="330" height="155" rx="14" fill="url(#jetsonGrad)" stroke="#38bdf8"
+                stroke-width="1.5" filter="url(#boxShadow)" />
+              <rect x="50" y="34" width="130" height="22" rx="11" fill="rgba(56, 189, 248, 0.18)" />
+              <text x="115" y="49" fill="#38bdf8" font-size="10.5"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
+                text-anchor="middle" letter-spacing="0.06em">AUTONOMY TIER</text>
+              <text x="50" y="88" fill="#ffffff" font-size="20"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700">NVIDIA
+                Jetson</text>
+              <text x="50" y="114" fill="#94a3b8" font-size="13"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif">Perception, SLAM &amp; Global
+                Nav</text>
+              <text x="50" y="138" fill="#64748b" font-size="11"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif">Non-real-time Linux OS (ROS
+                2)</text>
+
+              <!-- Connector 1 (Generous 180px gap between Node 1 & Node 2) -->
+              <path d="M 360 97.5 L 536 97.5" fill="none" stroke="#2997ff" stroke-width="2" stroke-dasharray="5,4" />
+              <polygon points="538,97.5 528,92 528,103" fill="#2997ff" />
+              <rect x="390" y="56" width="120" height="26" rx="7" fill="#0b1329" stroke="rgba(41, 151, 255, 0.45)"
+                stroke-width="1" />
+              <text x="450" y="73" fill="#60a5fa" font-size="11" font-family="'JetBrains Mono', monospace"
+                font-weight="600" text-anchor="middle">UART / USB</text>
+
+              <!-- Node 2: Dedicated Real-Time ECU (STM32 F446RE) -->
+              <rect x="540" y="12" width="350" height="175" rx="16" fill="url(#stm32Grad)" stroke="#30d158"
+                stroke-width="2" filter="url(#boxShadow)" />
+              <rect x="562" y="28" width="180" height="22" rx="11" fill="rgba(48, 209, 88, 0.22)" />
+              <text x="652" y="43" fill="#4ade80" font-size="10.5"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
+                text-anchor="middle" letter-spacing="0.06em">DEDICATED REAL-TIME ECU</text>
+              <text x="562" y="82" fill="#ffffff" font-size="21"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700">STM32
+                F446RE</text>
+              <text x="562" y="110" fill="#86efac" font-size="13"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="500">Motor Control
+                &bull; Sensor I/O &bull; Failsafe</text>
+              <text x="562" y="134" fill="#a7f3d0" font-size="11.5"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif">180
+                MHz Cortex-M4F &bull; FreeRTOS</text>
+              <text x="562" y="156" fill="#6ee7b7" font-size="10.5"
+                font-family="'JetBrains Mono', monospace">Deterministic &mu;s Safety Watchdog</text>
+
+              <!-- Connector 2 (Generous 180px gap between Node 2 & Node 3) -->
+              <path d="M 890 97.5 L 1066 97.5" fill="none" stroke="#30d158" stroke-width="2" />
+              <polygon points="1068,97.5 1058,92 1058,103" fill="#30d158" />
+              <rect x="915" y="56" width="130" height="26" rx="7" fill="#062e1e" stroke="rgba(48, 209, 88, 0.45)"
+                stroke-width="1" />
+              <text x="980" y="73" fill="#4ade80" font-size="11" font-family="'JetBrains Mono', monospace"
+                font-weight="600" text-anchor="middle">CAN / GPIO / UART</text>
+
+              <!-- Node 3: Physical Layer (Drivers, Sensors & Actuators) -->
+              <rect x="1070" y="20" width="330" height="155" rx="14" fill="url(#actuatorGrad)" stroke="#a855f7"
+                stroke-width="1.5" filter="url(#boxShadow)" />
+              <rect x="1092" y="34" width="130" height="22" rx="11" fill="rgba(168, 85, 247, 0.2)" />
+              <text x="1157" y="49" fill="#c084fc" font-size="10.5"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
+                text-anchor="middle" letter-spacing="0.06em">PHYSICAL LAYER</text>
+              <text x="1092" y="86" fill="#ffffff" font-size="19"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700">Motors, Sensors,
+                Actuators</text>
+              <text x="1092" y="114" fill="#d8b4fe" font-size="12.5"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif">Dual ZLAC8015D, IMU, ToF,
+                GPS</text>
+              <text x="1092" y="138" fill="#a855f7" font-size="11"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif">Hardware Safety Loops &amp; Bus
+                Sinks</text>
+            </svg>
+          </div>
+
+          <!-- THREE CARDS BENEATH -->
+          <div class="cards-three-grid">
+            <div class="why-ecu-card" style="border-left: 4px solid var(--apple-green);">
+              <h4>Failsafe isolation</h4>
+              <p>
+                If the Jetson's OS crashes, reboots or drops frames, the STM32 detects the communication timeout and
+                independently triggers a CiA 402 Quick-Stop on all four wheels.
+              </p>
+            </div>
+
+            <div class="why-ecu-card" style="border-left: 4px solid var(--apple-blue);">
+              <h4>Deterministic timing</h4>
+              <p>
+                No OS preemption. Control loops and step pulses run with microsecond-level, predictable timing, and
+                hardware peripherals (CAN, timers, UART) handle I/O without loading the CPU.
+              </p>
+            </div>
+
+            <div class="why-ecu-card" style="border-left: 4px solid var(--apple-purple);">
+              <h4>Proven industry pattern</h4>
+              <p>
+                The same high-level / low-level split is used by Pixhawk flight controllers (STM32 + companion computer)
+                and ROBOTIS TurtleBot3's OpenCR board (STM32).
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 2: REQUIREMENTS & SELECTION
+             ================================================================== -->
+        <section id="requirements-selection" class="card-box" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
               <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 2.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Pinout &amp; GPIO Allocation Matrix</h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Requirements &amp; Selection
+              </h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
 
-        <!-- SECTION 3 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+          <!-- STEP A: HARD REQUIREMENTS SPECIFICATION TABLE -->
+          <div style="margin-top: 18px; margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <span class="badge badge-emerald">STEP A</span>
+              <h3 style="font-size: 16px; color: var(--apple-text-primary); margin: 0;">Hard Requirements Specification
+              </h3>
+            </div>
+
+            <div class="admin-table-wrapper" style="margin-top: 10px;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th style="min-width: 170px;">Requirement</th>
+                    <th style="min-width: 150px;">Target Specification</th>
+                    <th style="min-width: 250px;">Peripheral Allocation</th>
+                    <th style="min-width: 320px;">Engineering Justification</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Hardware Serial Ports</strong></td>
+                    <td><strong style="color: var(--apple-blue); font-family: var(--font-mono); font-size: 14px;">&ge; 4
+                        UART / USART</strong></td>
+                    <td>BMS (USART1), RTK GNSS (USART3), Microhard Radio (UART4), ToF (UART5)</td>
+                    <td>Enables concurrent, non-blocking DMA serial streaming without software serial emulation or bus
+                      multiplexing.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>CAN Bus Controller</strong></td>
+                    <td><strong style="color: var(--apple-green); font-family: var(--font-mono); font-size: 14px;">&ge;
+                        1 bxCAN (500 kbps)</strong></td>
+                    <td>CAN1 (PB8/PB9) &rarr; Dual ZLAC8015D dual-channel hub motor drivers</td>
+                    <td>Native differential industrial bus with hardware message ID filtering for real-time CiA 402
+                      motion commands.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>USB Host Interface</strong></td>
+                    <td><strong style="color: var(--apple-amber); font-family: var(--font-mono); font-size: 14px;">USB
+                        2.0 OTG FS</strong></td>
+                    <td>PA11 (DM), PA12 (DP) &rarr; Direct USB gamepad joystick input</td>
+                    <td>Permits direct manual emergency jog control and diagnostics without relying on host PC or ROS 2
+                      network stack.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Compute Clock Budget</strong></td>
+                    <td><strong style="color: var(--apple-purple); font-family: var(--font-mono); font-size: 14px;">&ge;
+                        35 MHz (FPU core)</strong></td>
+                    <td>STM32F446RE Cortex-M4F operating at 180 MHz</td>
+                    <td>Comfortably absorbs peak peripheral interrupt loads (17.16 MHz raw + 2&times; margin = 34.32
+                      MHz) with &gt;80% headroom.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- STEP B: WORST-CASE COMPUTE BUDGET -->
+          <div style="margin-bottom: 28px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <span class="badge badge-blue">STEP B</span>
+              <h3 style="font-size: 16px; color: var(--apple-text-primary); margin: 0;">Worst-Case Compute Budget</h3>
+            </div>
+
+            <!-- ALWAYS VISIBLE UTILISATION BAR -->
+            <div class="util-container">
+              <div class="util-header">
+                <div>
+                  <span class="util-title">Cortex-M4F 180 MHz Frequency Budget Allocation</span>
+                  <div style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 2px;">
+                    Peak throughput under concurrent CAN saturation, 4&times; UART DMA streaming, 10 kHz stepper
+                    interrupts, and IMU polling.
+                  </div>
+                </div>
+                <span class="badge badge-emerald" style="font-size: 12px; font-weight: 700;">&gt; 80% Headroom
+                  Available</span>
+              </div>
+
+              <!-- Multi-segment visual bar -->
+              <div class="util-bar-track">
+                <!-- Base: 17.16 MHz (9.53%) -->
+                <div class="util-segment seg-base" style="width: 9.53%;" title="Base load: 17.16 MHz (9.5%)">
+                  9.5%
+                </div>
+                <!-- Margin: +17.16 MHz (9.53%) -->
+                <div class="util-segment seg-margin" style="width: 9.53%;"
+                  title="2&times; Safety Margin: +17.16 MHz (19.1% total)">
+                  +9.5%
+                </div>
+                <!-- Headroom: 80.94% -->
+                <div class="util-segment seg-headroom" style="width: 80.94%;" title="Headroom: 145.68 MHz (80.9%)">
+                  &gt; 80% headroom for sensor fusion, telemetry and RTOS overhead (145.68 MHz)
+                </div>
+              </div>
+
+              <!-- Legend -->
+              <div class="util-legend">
+                <div class="util-legend-item">
+                  <span class="legend-swatch seg-base"></span>
+                  <span><strong>17.16 MHz (9.5%)</strong> Base Worst-Case Load</span>
+                </div>
+                <div class="util-legend-item">
+                  <span class="legend-swatch seg-margin"></span>
+                  <span><strong>34.32 MHz (19.1%)</strong> Peak Load (2&times; Safety Margin)</span>
+                </div>
+                <div class="util-legend-item">
+                  <span class="legend-swatch" style="background: rgba(48, 209, 88, 0.4);"></span>
+                  <span class="highlight-stat"><strong>&gt; 80% Headroom</strong> for sensor fusion, telemetry and RTOS
+                    overhead</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- COLLAPSIBLE BREAKDOWN TABLE -->
+            <details class="why-details" open
+              style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 12px; padding: 14px 18px;">
+              <summary style="cursor: pointer; font-weight: 600; color: var(--apple-blue); user-select: none;">
+                Show breakdown: task assumptions &amp; cycle budget
+              </summary>
+              <div class="admin-table-wrapper" style="margin-top: 14px;">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th style="min-width: 220px;">Task</th>
+                      <th style="min-width: 320px;">Assumption</th>
+                      <th style="min-width: 180px; text-align: right;">Load</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>4&times; UART (BMS, GPS, radio, ToF)</strong></td>
+                      <td>4 ch &times; 11,520 B/s (115,200 baud ÷ 10 bits) = 46,080 B/s</td>
+                      <td style="text-align: right; font-family: var(--font-mono);">&times; 150 cycles/byte =
+                        <strong>6.91 MHz</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>CAN to ZLAC8015D</strong></td>
+                      <td>9,000 frames/s (1 Mbps bus saturation)</td>
+                      <td style="text-align: right; font-family: var(--font-mono);">&times; 350 cycles/frame =
+                        <strong>3.15 MHz</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>GPS parsing</strong></td>
+                      <td>10 Hz &times; 5 sentences &times; 80 B = 4,000 B/s</td>
+                      <td style="text-align: right; font-family: var(--font-mono);">&times; 100 cycles/byte =
+                        <strong>0.40 MHz</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Stepper pulses</strong></td>
+                      <td>20,000 interrupts/s (10 kHz, 2 per pulse)</td>
+                      <td style="text-align: right; font-family: var(--font-mono);">&times; 75 cycles = <strong>1.50
+                          MHz</strong></td>
+                    </tr>
+                    <tr>
+                      <td><strong>IMU over I2C</strong></td>
+                      <td>100 reads/s</td>
+                      <td style="text-align: right; font-family: var(--font-mono);">&times; 2,000 cycles = <strong>0.20
+                          MHz</strong></td>
+                    </tr>
+                    <tr>
+                      <td><strong>USB host + main loop</strong></td>
+                      <td>&mdash;</td>
+                      <td style="text-align: right; font-family: var(--font-mono);"><strong>5.00 MHz</strong></td>
+                    </tr>
+                    <tr
+                      style="border-top: 2px solid var(--apple-border); background: rgba(255, 255, 255, 0.03); font-weight: 700;">
+                      <td><strong>Total</strong></td>
+                      <td>Worst-case unscaled sum across active peripherals</td>
+                      <td
+                        style="text-align: right; font-family: var(--font-mono); color: var(--apple-blue); font-size: 14.5px;">
+                        <strong>17.16 MHz</strong>
+                      </td>
+                    </tr>
+                    <tr
+                      style="background: rgba(48, 209, 88, 0.08); font-weight: 700; border-top: 1px solid var(--apple-border);">
+                      <td><strong style="color: var(--apple-green);">With 2&times; safety margin</strong></td>
+                      <td style="color: var(--apple-text-secondary);">Conservative industrial doubling for RTOS jitter
+                        &amp; telemetry spikes</td>
+                      <td
+                        style="text-align: right; font-family: var(--font-mono); color: var(--apple-green); font-size: 15.5px;">
+                        <strong>34.32 MHz</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          </div>
+
+          <!-- STEP C: CANDIDATE BOARDS -->
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+              <span class="badge badge-purple">STEP C</span>
+              <h3 style="font-size: 16px; color: var(--apple-text-primary); margin: 0;">Candidate Evaluation</h3>
+            </div>
+
+            <div class="admin-table-wrapper" style="margin-top: 10px;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Board</th>
+                    <th style="text-align: center;">UART</th>
+                    <th style="text-align: center;">CAN</th>
+                    <th>Logic / Clock</th>
+                    <th>Verdict</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="row-muted">
+                    <td><strong>Arduino Uno/Nano</strong></td>
+                    <td style="text-align: center; color: var(--apple-red); font-weight: 600;">1</td>
+                    <td style="text-align: center; color: var(--apple-red); font-weight: 600;">0</td>
+                    <td>5 V, 16 MHz</td>
+                    <td><span class="badge badge-rose" style="font-size: 11px;">&#10007; Too few ports, too slow</span>
+                    </td>
+                  </tr>
+                  <tr class="row-muted">
+                    <td><strong>Arduino Mega 2560</strong></td>
+                    <td style="text-align: center;">4</td>
+                    <td style="text-align: center; color: var(--apple-red); font-weight: 600;">0</td>
+                    <td>5 V, 16 MHz</td>
+                    <td><span class="badge badge-rose" style="font-size: 11px;">&#10007; No CAN, too slow</span></td>
+                  </tr>
+                  <tr class="row-muted">
+                    <td><strong>ESP32</strong></td>
+                    <td style="text-align: center; color: var(--apple-red); font-weight: 600;">3</td>
+                    <td style="text-align: center;">1</td>
+                    <td>3.3 V, 240 MHz</td>
+                    <td><span class="badge badge-rose" style="font-size: 11px;">&#10007; Too few UARTs</span></td>
+                  </tr>
+                  <tr class="row-muted">
+                    <td><strong>Raspberry Pi Pico</strong></td>
+                    <td style="text-align: center; color: var(--apple-red); font-weight: 600;">2</td>
+                    <td style="text-align: center; color: var(--apple-red); font-weight: 600;">0</td>
+                    <td>3.3 V, 133 MHz</td>
+                    <td><span class="badge badge-rose" style="font-size: 11px;">&#10007; Too few UARTs, no CAN</span>
+                    </td>
+                  </tr>
+                  <tr class="row-backup">
+                    <td><strong>Teensy 4.1</strong></td>
+                    <td style="text-align: center; font-weight: 600;">8</td>
+                    <td style="text-align: center; font-weight: 600;">3</td>
+                    <td>3.3 V, 600 MHz</td>
+                    <td><span class="badge badge-amber" style="font-size: 11px; font-weight: 700;">Backup</span></td>
+                  </tr>
+                  <tr class="row-selected">
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <strong style="color: var(--apple-green); font-size: 15px;">NUCLEO-F446RE</strong>
+                        <span class="badge badge-emerald" style="font-size: 9.5px; padding: 2px 6px;">SELECTED</span>
+                      </div>
+                    </td>
+                    <td style="text-align: center; font-weight: 700; color: var(--apple-green);">6</td>
+                    <td style="text-align: center; font-weight: 700; color: var(--apple-green);">2</td>
+                    <td><strong>3.3 V (5 V-tolerant I/O), 180 MHz</strong></td>
+                    <td><span class="badge badge-emerald" style="font-size: 12px; font-weight: 700;">&#10003;
+                        Selected</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- VERDICT CALLOUT -->
+            <div class="card-box"
+              style="margin-top: 16px; border-left: 4px solid var(--apple-green); background: linear-gradient(135deg, rgba(48, 209, 88, 0.06) 0%, transparent 100%);">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="badge badge-emerald">SELECTION VERDICT</span>
+                <h4 style="font-size: 15px; color: var(--apple-text-primary); margin: 0;">Microcontroller Selection
+                  Rationale</h4>
+              </div>
+              <p style="margin: 0; font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6;">
+                Teensy 4.1 out-specs the F446RE on paper, but the STM32 was chosen for its toolchain and industry
+                adoption: STM32CubeMX pin/clock configuration, HAL libraries, an on-board ST-Link debugger, and direct
+                relevance to industrial embedded work. It meets every requirement with &gt;80% headroom.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 3: INTERFACE & WIRING
+             ================================================================== -->
+        <section id="interface-wiring" class="card-box" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
               <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">CAN Transceiver &amp; Motor Driver Interfacing</h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Interface &amp; Wiring</h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
 
-        <!-- SECTION 4 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+          <p class="section-intro-line" style="margin-top: 14px;">
+            Complete hardware mapping for all 11 external devices connected to the STM32 NUCLEO-F446RE, detailing
+            communication protocol, pin assignments, and electrical characteristics.
+          </p>
+
+          <!-- FULL-WIDTH WIRING DIAGRAM IMAGE -->
+          <div class="image-preview-frame figure-preview"
+            onclick="openLightbox('../../assets/images/Gabriel/comm diagram.jpeg', 'NUCLEO-F446RE wiring diagram grouped by Sensor, Power, Motor, Visual and User Input subsystems')">
+            <img src="../../assets/images/Gabriel/comm diagram.jpeg"
+              alt="NUCLEO-F446RE wiring diagram grouped by Sensor, Power, Motor, Visual and User Input subsystems"
+              class="zoomable" width="1200" height="675" loading="lazy">
+            <div class="image-zoom-overlay">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="11" y1="8" x2="11" y2="14"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+              <span>Click to Enlarge</span>
+            </div>
+          </div>
+          <div class="figure-caption">
+            NUCLEO-F446RE wiring diagram grouped by Sensor, Power, Motor, Visual and User Input subsystems (Click image
+            to open full-size lightbox preview)
+          </div>
+
+          <!-- INTERFACE SEARCH & FILTER CONTROLS -->
+          <div class="table-toolbar">
+            <input type="text" id="interface-search" class="table-search-input"
+              placeholder="Search device, pin, interface or notes..." aria-label="Filter interface table">
+
+            <div class="table-filter-pills" role="tablist" aria-label="Filter by Subsystem">
+              <button type="button" class="table-filter-pill active" data-filter="all">All (11)</button>
+              <button type="button" class="table-filter-pill" data-filter="sensor">Sensor (4)</button>
+              <button type="button" class="table-filter-pill" data-filter="power">Power (1)</button>
+              <button type="button" class="table-filter-pill" data-filter="motor">Motor (2)</button>
+              <button type="button" class="table-filter-pill" data-filter="visual">Visual (1)</button>
+              <button type="button" class="table-filter-pill" data-filter="actuator">Actuator (1)</button>
+              <button type="button" class="table-filter-pill" data-filter="input">User Input (2)</button>
+            </div>
+          </div>
+
+          <!-- SEARCHABLE INTERFACE TABLE -->
+          <div class="admin-table-wrapper" style="margin-top: 10px;">
+            <table class="admin-table" id="interface-table">
+              <thead>
+                <tr>
+                  <th style="min-width: 120px;">Group</th>
+                  <th style="min-width: 220px;">Device</th>
+                  <th style="min-width: 140px;">Interface</th>
+                  <th style="min-width: 180px;">Pins</th>
+                  <th style="min-width: 280px;">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-group="sensor">
+                  <td><span class="group-tag tag-sensor">Sensor</span></td>
+                  <td><strong>ToF distance sensor</strong></td>
+                  <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">UART5</code></td>
+                  <td><code style="font-family: var(--font-mono);">PC12 TX, PD2 RX</code></td>
+                  <td>115200 baud</td>
+                </tr>
+                <tr data-group="sensor">
+                  <td><span class="group-tag tag-sensor">Sensor</span></td>
+                  <td><strong>9-DOF IMU</strong></td>
+                  <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">I2C1</code></td>
+                  <td><code style="font-family: var(--font-mono);">PB6 SCL, PB7 SDA</code></td>
+                  <td>addr 0x68</td>
+                </tr>
+                <tr data-group="sensor">
+                  <td><span class="group-tag tag-sensor">Sensor</span></td>
+                  <td><strong>UM980 RTK GNSS</strong></td>
+                  <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">USART3</code></td>
+                  <td><code style="font-family: var(--font-mono);">PC10 TX, PC11 RX</code></td>
+                  <td>115200 baud</td>
+                </tr>
+                <tr data-group="sensor">
+                  <td><span class="group-tag tag-sensor">Sensor</span></td>
+                  <td><strong>Microhard radio</strong></td>
+                  <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">UART4</code></td>
+                  <td><code style="font-family: var(--font-mono);">PA0 TX, PA1 RX</code></td>
+                  <td>telemetry link</td>
+                </tr>
+                <tr data-group="power">
+                  <td><span class="group-tag tag-power">Power</span></td>
+                  <td><strong>BMS 6S–22S LiFePO4 100 A</strong></td>
+                  <td><code style="color: var(--apple-amber); font-family: var(--font-mono);">USART1</code></td>
+                  <td><code style="font-family: var(--font-mono);">PA9 TX, PA10 RX</code></td>
+                  <td>Battery Management System telemetry</td>
+                </tr>
+                <tr data-group="motor">
+                  <td><span class="group-tag tag-motor">Motor</span></td>
+                  <td><strong>2&times; ZLAC8015D (via CAN transceiver)</strong></td>
+                  <td><code style="color: var(--apple-green); font-family: var(--font-mono);">CAN1</code></td>
+                  <td><code style="font-family: var(--font-mono);">PB8 RX, PB9 TX</code></td>
+                  <td>500 kbps, Node 1 &amp; 2, 120 &Omega; termination at both ends</td>
+                </tr>
+                <tr data-group="motor">
+                  <td><span class="group-tag tag-motor">Motor</span></td>
+                  <td><strong>Microstep driver &rarr; stepper</strong></td>
+                  <td><code
+                      style="color: var(--apple-green); font-family: var(--font-mono);">GPIO (open-drain sink)</code>
+                  </td>
+                  <td><code style="font-family: var(--font-mono);">PC2 PUL−, PC3 DIR−</code></td>
+                  <td>PUL+/DIR+ tied to 5 V (common-anode)</td>
+                </tr>
+                <tr data-group="visual">
+                  <td><span class="group-tag tag-visual">Visual</span></td>
+                  <td><strong>Headlights &amp; status light</strong></td>
+                  <td><code style="color: var(--apple-purple); font-family: var(--font-mono);">GPIO out</code></td>
+                  <td><code style="font-family: var(--font-mono);">PB4, PB5</code></td>
+                  <td>Illumination and run-state beacon control</td>
+                </tr>
+                <tr data-group="actuator">
+                  <td><span class="group-tag tag-actuator">Actuator</span></td>
+                  <td><strong>Vacuum relay</strong></td>
+                  <td><code style="color: #22d3ee; font-family: var(--font-mono);">GPIO out</code></td>
+                  <td><code style="font-family: var(--font-mono);">PC0</code></td>
+                  <td>Active suction payload trigger</td>
+                </tr>
+                <tr data-group="input">
+                  <td><span class="group-tag tag-input">User Input</span></td>
+                  <td><strong>RF relay switch (E-stop)</strong></td>
+                  <td><code style="color: #fb923c; font-family: var(--font-mono);">GPIO in</code></td>
+                  <td><code style="font-family: var(--font-mono);">PB1</code></td>
+                  <td>NO contact to GND (COM)</td>
+                </tr>
+                <tr data-group="input">
+                  <td><span class="group-tag tag-input">User Input</span></td>
+                  <td><strong>USB gamepad</strong></td>
+                  <td><code style="color: #fb923c; font-family: var(--font-mono);">USB OTG FS (host)</code></td>
+                  <td><code style="font-family: var(--font-mono);">PA11 DM, PA12 DP</code></td>
+                  <td>Manual joystick override &amp; diagnostic jog control</td>
+                </tr>
+                <tr id="interface-empty-row" style="display: none;">
+                  <td colspan="5" style="text-align: center; padding: 24px; color: var(--apple-text-tertiary);">
+                    No matching devices or interfaces found. Try clearing your search query.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 4: CARRIER PCB (WORK IN PROGRESS)
+             ================================================================== -->
+        <section id="carrier-pcb" class="card-box" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 4.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Power Regulation, Decoupling &amp; Electrical Isolation</h2>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="badge badge-amber">SECTION 4.0</span>
+                <span class="badge badge-amber" style="font-weight: 700; letter-spacing: 0.04em;">WIP · Semester
+                  2</span>
+              </div>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Carrier PCB (Work in Progress)
+              </h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
 
-        <!-- SECTION 5 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 5.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Emergency Stop (E-Stop) &amp; Safety Interlock Circuitry</h2>
-            </div>
-          </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
+          <p class="section-intro-line" style="margin-top: 14px;">
+            A custom carrier board is being designed in KiCad so the Nucleo, CAN transceiver and sensor harnesses plug
+            into locking JST connectors instead of loose jumper wires &mdash; improving reliability under runway
+            vibration.
           </p>
-        </div>
 
-        <!-- SECTION 6 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-cyan" style="margin-bottom: 6px;">SECTION 6.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Hardware Benchtop Testing &amp; Verification</h2>
+          <!-- IMAGE PLACEHOLDER -->
+          <div class="image-preview-frame figure-preview"
+            onclick="openLightbox('../../assets/stm32/kicad-schematic.png', 'Custom KiCad carrier board schematic and PCB routing preview')">
+            <img src="../../assets/stm32/kicad-schematic.png" alt="KiCad carrier board schematic and layout placeholder"
+              class="zoomable" width="1200" height="675" loading="lazy">
+            <div class="image-zoom-overlay">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="11" y1="8" x2="11" y2="14"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+              <span>Click to Enlarge</span>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
+          <div class="figure-caption">
+            KiCad carrier board schematic placeholder (lockable JST-XH/PA connectors, isolated CAN transceiver, and
+            low-noise LDO rails)
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             PLACEHOLDER FOR NEXT PASS: SOFTWARE SECTION
+             ================================================================== -->
+        <section id="software" class="software-section-placeholder"
+          aria-label="Software Architecture Section Placeholder">
+          <!-- Software section: Phases 1–5 to be added -->
+          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+            <span class="badge badge-blue">RESERVED ANCHOR</span>
+            <span class="badge"
+              style="background: rgba(255, 255, 255, 0.08); color: var(--apple-text-tertiary);">PENDING PHASE</span>
+          </div>
+          <h3 style="font-size: 18px; color: var(--apple-text-primary); margin: 0 0 6px 0;">STM32 Software &amp;
+            Firmware Subsystem</h3>
+          <p
+            style="font-size: 13px; color: var(--apple-text-secondary); max-width: 620px; margin: 0 auto; line-height: 1.5;">
+            Phases 1&ndash;5 (FreeRTOS scheduler, CANopen CiA 402 state machine, UART DMA ring buffers, and failsafe
+            watchdog handlers) will be appended below without altering the hardware structure.
           </p>
+        </section>
+
+        <!-- TWO-WAY PAGE NAVIGATION -->
+        <div
+          style="margin-top: 36px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <a href="vision-research.html" class="nav-prev-page-btn" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--apple-border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+          ">
+            <span style="font-size: 18px; color: var(--apple-blue); font-weight: 700;">&larr;</span>
+            <div style="text-align: left;">
+              <div
+                style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600;">
+                Previous Documentation</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary);">Computer Vision
+                Research</div>
+            </div>
+          </a>
+
+          <a href="stm32%20firmware.html" class="nav-next-page-btn" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(41, 151, 255, 0.08) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+          ">
+            <div style="text-align: right;">
+              <div
+                style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #c084fc; font-weight: 700;">
+                Next Architecture</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary);">STM32 Firmware
+                Architecture &rarr;</div>
+            </div>
+          </a>
         </div>
 
       </div>
     </div>
   </main>
 
+  <!-- APPLE FOOTER -->
   <footer class="apple-footer">
     <div class="apple-footer-inner">
       <div>© AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
       <ul class="apple-footer-links">
         <li><a href="../../index.html">Overview</a></li>
-        <li><a href="vision-research.html">← Computer vison research</a></li>
+        <li><a href="vision-research.html">← Computer vision research</a></li>
         <li><a href="stm32%20firmware.html">STM32 Firmware →</a></li>
-        <li><a href="../../7-documentation.html">Documentation</a></li>
+        <li><a href="../../7-documentation.html">Documentation Hub</a></li>
       </ul>
     </div>
   </footer>
 
+  <!-- IMAGE LIGHTBOX DIALOG -->
+  <dialog id="image-lightbox-dialog" aria-label="Enlarged Diagram Preview">
+    <div class="lightbox-wrapper">
+      <button type="button" class="lightbox-close-btn" id="lightbox-close-btn"
+        aria-label="Close enlarged preview">&times;</button>
+      <img id="lightbox-img" src="" alt="Enlarged diagram view">
+      <div id="lightbox-caption"></div>
+    </div>
+  </dialog>
+
   <script src="../../js/main.js?v=4.2"></script>
+
+  <!-- INTERACTIVE PAGE SCRIPTS: LIGHTBOX & SEARCH FILTER -->
+  <script>
+    (function () {
+      // 1. LIGHTBOX MODAL DIALOG
+      const lightboxDialog = document.getElementById('image-lightbox-dialog');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+
+      window.openLightbox = function (src, caption) {
+        if (!lightboxDialog || !lightboxImg) return;
+        lightboxImg.src = src;
+        lightboxImg.alt = caption || 'Enlarged Figure';
+        if (lightboxCaption) {
+          lightboxCaption.textContent = caption || '';
+        }
+        lightboxDialog.showModal();
+      };
+
+      if (lightboxCloseBtn && lightboxDialog) {
+        lightboxCloseBtn.addEventListener('click', function () {
+          lightboxDialog.close();
+        });
+        lightboxDialog.addEventListener('click', function (e) {
+          if (e.target === lightboxDialog) {
+            lightboxDialog.close();
+          }
+        });
+      }
+
+      // 2. SEARCHABLE INTERFACE TABLE FILTER
+      const searchInput = document.getElementById('interface-search');
+      const filterPills = document.querySelectorAll('.table-filter-pill');
+      const tableRows = document.querySelectorAll('#interface-table tbody tr:not(#interface-empty-row)');
+      const emptyRow = document.getElementById('interface-empty-row');
+      let activeFilter = 'all';
+
+      function applyTableFilters() {
+        const query = (searchInput?.value || '').trim().toLowerCase();
+        let matchCount = 0;
+
+        tableRows.forEach(function (row) {
+          const group = (row.getAttribute('data-group') || '').toLowerCase();
+          const rowText = row.textContent.toLowerCase();
+
+          const matchesCategory = (activeFilter === 'all' || group === activeFilter);
+          const matchesQuery = !query || rowText.includes(query);
+
+          if (matchesCategory && matchesQuery) {
+            row.style.display = '';
+            matchCount++;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+
+        if (emptyRow) {
+          emptyRow.style.display = matchCount === 0 ? '' : 'none';
+        }
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', applyTableFilters);
+      }
+
+      filterPills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          filterPills.forEach(function (p) { p.classList.remove('active'); });
+          pill.classList.add('active');
+          activeFilter = (pill.getAttribute('data-filter') || 'all').toLowerCase();
+          applyTableFilters();
+        });
+      });
+    })();
+  </script>
 
   <!-- EXPORT PDF BUTTON -->
   <style>
@@ -214,45 +1592,55 @@
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       letter-spacing: 0.01em;
     }
+
     .pdf-export-btn:hover {
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4);
       background: linear-gradient(135deg, #0a84ff 0%, #1d4ed8 100%);
     }
+
     .pdf-export-btn:active {
       transform: translateY(0) scale(0.98);
     }
+
     .pdf-export-btn svg {
       width: 16px;
       height: 16px;
       fill: currentColor;
     }
+
     @media print {
+
       .pdf-export-btn,
       .apple-nav,
       .apple-mobile-drawer,
       .apple-footer {
         display: none !important;
       }
+
       body {
         background: #fff !important;
         color: #111 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
+
       .apple-main-content {
         padding-top: 0 !important;
       }
     }
   </style>
   <button class="pdf-export-btn" onclick="window.print()" title="Export this page as PDF">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+    </svg>
     Export PDF
   </button>
 
 </body>
+
 </html>
