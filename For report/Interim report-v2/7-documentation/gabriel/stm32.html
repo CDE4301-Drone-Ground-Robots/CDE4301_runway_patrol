@@ -95,43 +95,64 @@
           </div>
         </div>
 
-        <!-- SECTION 1 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
+        <!-- DUAL CARDS FOR SPLIT MODULES -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 30px;">
+          
+          <!-- HARDWARE CARD -->
+          <div class="card-box" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--accent-emerald);">
             <div>
-              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 1.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Hardware Architecture &amp; Pinout Configuration</h2>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span class="badge badge-emerald">HARDWARE ARCHITECTURE</span>
+                <span style="font-size: 12px; color: var(--apple-text-secondary); font-family: var(--font-mono);">stm32 hardware.html</span>
+              </div>
+              <h2 style="font-size: 22px; color: var(--apple-text-primary); margin-bottom: 8px;">
+                ⚡ STM32 Hardware Architecture
+              </h2>
+              <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
+                Microcontroller pinout mappings, electrical schematics, CAN transceiver interfacing (SN65HVD230), power rails, inductive noise filtering, and benchtop wiring.
+              </p>
+              <ul style="font-size: 13px; color: var(--apple-text-muted); line-height: 1.8; padding-left: 20px; margin-bottom: 20px;">
+                <li>Microcontroller Selection &amp; Architecture</li>
+                <li>Pinout &amp; GPIO Allocation Matrix</li>
+                <li>CAN Transceiver &amp; Motor Driver Interfacing</li>
+                <li>Power Regulation, Decoupling &amp; Electrical Isolation</li>
+                <li>Emergency Stop (E-Stop) &amp; Safety Interlock Circuitry</li>
+                <li>Hardware Benchtop Testing &amp; Verification</li>
+              </ul>
             </div>
+            <a href="stm32%20hardware.html" class="apple-btn-pill" style="align-self: flex-start; padding: 8px 18px; font-size: 13px; text-decoration: none;">
+              Open STM32 Hardware Page →
+            </a>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
-          </p>
-        </div>
 
-        <!-- SECTION 2 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
+          <!-- FIRMWARE CARD -->
+          <div class="card-box" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--accent-purple);">
             <div>
-              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 2.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Firmware Architecture &amp; Motor Actuation</h2>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span class="badge badge-purple">FIRMWARE &amp; CONTROL</span>
+                <span style="font-size: 12px; color: var(--apple-text-secondary); font-family: var(--font-mono);">stm32 firmware.html</span>
+              </div>
+              <h2 style="font-size: 22px; color: var(--apple-text-primary); margin-bottom: 8px;">
+                💻 STM32 Firmware &amp; Control
+              </h2>
+              <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
+                Real-time FreeRTOS embedded architecture, micro-ROS middleware, CANopen motor actuation, 100 Hz closed-loop control, odometry publishing, and safety watchdogs.
+              </p>
+              <ul style="font-size: 13px; color: var(--apple-text-muted); line-height: 1.8; padding-left: 20px; margin-bottom: 20px;">
+                <li>Firmware Architecture &amp; FreeRTOS Task Scheduling</li>
+                <li>micro-ROS Middleware &amp; ROS 2 Interface Layer</li>
+                <li>CANopen Protocol &amp; ZLAC8015D Motor Actuation</li>
+                <li>Closed-Loop PID Velocity Control &amp; Wheel Odometry</li>
+                <li>Auxiliary Actuator Sequencing &amp; SSR Suction Control</li>
+                <li>Safety Failsafes, Watchdog Timers &amp; E-Stop Logic</li>
+                <li>Hardware-in-the-Loop (HIL) Testing &amp; Benchmarking</li>
+              </ul>
             </div>
+            <a href="stm32%20firmware.html" class="apple-btn-pill" style="align-self: flex-start; padding: 8px 18px; font-size: 13px; text-decoration: none; background: #9333ea;">
+              Open STM32 Firmware Page →
+            </a>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
-          </p>
-        </div>
 
-        <!-- SECTION 3 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Testing &amp; Verification</h2>
-            </div>
-          </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
-          </p>
         </div>
 
       </div>

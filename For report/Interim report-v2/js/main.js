@@ -1298,8 +1298,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <a href="${prefix}7-documentation/gabriel/vision-research.html" class="apple-megamenu-sublink">
               Computer vison research
             </a>
-            <a href="${prefix}7-documentation/gabriel/stm32.html" class="apple-megamenu-sublink">
-              STM32 Microcontroller &amp; Firmware
+            <a href="${prefix}7-documentation/gabriel/stm32%20hardware.html" class="apple-megamenu-sublink">
+              STM32 Hardware Architecture
+            </a>
+            <a href="${prefix}7-documentation/gabriel/stm32%20firmware.html" class="apple-megamenu-sublink">
+              STM32 Firmware &amp; Control
             </a>
           </div>
 
@@ -1808,7 +1811,8 @@ document.addEventListener('DOMContentLoaded', () => {
       { icon: '🚀', title: 'Gabriel — YOLO Model Comparison', badge: 'Gabriel', desc: 'YOLOv8n/s/m/l/x vs YOLOv11: latency, mAP, deployment benchmarks', url: '7-documentation/gabriel/yolo-comparison.html', group: 'Documentation' },
       { icon: '📐', title: 'Gabriel — Vision Calculations', badge: 'Gabriel', desc: 'Camera focal length, FOV, Ground Sampling Distance (GSD)', url: '7-documentation/gabriel/vision-calculations.html', group: 'Documentation' },
       { icon: '🔬', title: 'Gabriel — Computer Vision Research', badge: 'Gabriel', desc: 'Airfield FOD datasets, adverse weather augmentation, LiDAR fusion', url: '7-documentation/gabriel/vision-research.html', group: 'Documentation' },
-      { icon: '⚡', title: 'Gabriel — STM32 Microcontroller & Firmware', badge: 'Gabriel', desc: 'STM32 F446RE micro-ROS firmware, CAN bus, PID, E-Stop', url: '7-documentation/gabriel/stm32.html', group: 'Documentation' },
+      { icon: '⚡', title: 'Gabriel — STM32 Hardware Architecture', badge: 'Gabriel', desc: 'STM32 F446RE pinout, CAN transceiver, power rails, isolation', url: '7-documentation/gabriel/stm32%20hardware.html', group: 'Documentation' },
+      { icon: '💻', title: 'Gabriel — STM32 Firmware & Control', badge: 'Gabriel', desc: 'STM32 F446RE micro-ROS firmware, CAN bus, 100Hz PID, E-Stop', url: '7-documentation/gabriel/stm32%20firmware.html', group: 'Documentation' },
       { icon: '🛞', title: 'Hilbert — Motor & Drivetrain Sizing', badge: 'Hilbert', desc: 'BLDC motor torque/speed curves, drivetrain gear ratio calculations', url: '7-documentation/hilbert/Motor_drivetrain_calculation.html', group: 'Documentation' },
       { icon: '↔️', title: 'Hilbert — Steering & Kinematics', badge: 'Hilbert', desc: 'Ackermann geometry, turning circle, encoder odometry calibration', url: '7-documentation/hilbert/steering-kinematics.html', group: 'Documentation' },
       { icon: '🤖', title: 'Hilbert — Simulation (Gazebo)', badge: 'Hilbert', desc: 'Gazebo Harmonic SDF model, Nav2 SLAM, sensor plugin configuration', url: '7-documentation/hilbert/simulation.html', group: 'Documentation' },
