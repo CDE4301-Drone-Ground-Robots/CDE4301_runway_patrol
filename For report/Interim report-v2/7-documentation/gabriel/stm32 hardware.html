@@ -1243,7 +1243,7 @@
           <!-- INTERFACE SEARCH & FILTER CONTROLS -->
           <div class="table-toolbar">
             <input type="text" id="interface-search" class="table-search-input"
-              placeholder="Search device, pin, interface or notes..." aria-label="Filter interface table">
+              placeholder="Search device, pin, or interface..." aria-label="Filter interface table">
 
             <div class="table-filter-pills" role="tablist" aria-label="Filter by Subsystem">
               <button type="button" class="table-filter-pill active" data-filter="all">All (11)</button>
@@ -1262,10 +1262,9 @@
               <thead>
                 <tr>
                   <th style="min-width: 120px;">Group</th>
-                  <th style="min-width: 220px;">Device</th>
-                  <th style="min-width: 140px;">Interface</th>
-                  <th style="min-width: 180px;">Pins</th>
-                  <th style="min-width: 280px;">Notes</th>
+                  <th style="min-width: 240px;">Device</th>
+                  <th style="min-width: 160px;">Interface</th>
+                  <th style="min-width: 200px;">Pins</th>
                 </tr>
               </thead>
               <tbody>
@@ -1274,42 +1273,36 @@
                   <td><strong>ToF distance sensor</strong></td>
                   <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">UART5</code></td>
                   <td><code style="font-family: var(--font-mono);">PC12 TX, PD2 RX</code></td>
-                  <td>115200 baud</td>
                 </tr>
                 <tr data-group="sensor">
                   <td><span class="group-tag tag-sensor">Sensor</span></td>
                   <td><strong>9-DOF IMU</strong></td>
                   <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">I2C1</code></td>
                   <td><code style="font-family: var(--font-mono);">PB6 SCL, PB7 SDA</code></td>
-                  <td>addr 0x68</td>
                 </tr>
                 <tr data-group="sensor">
                   <td><span class="group-tag tag-sensor">Sensor</span></td>
                   <td><strong>UM980 RTK GNSS</strong></td>
                   <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">USART3</code></td>
                   <td><code style="font-family: var(--font-mono);">PC10 TX, PC11 RX</code></td>
-                  <td>115200 baud</td>
                 </tr>
                 <tr data-group="sensor">
                   <td><span class="group-tag tag-sensor">Sensor</span></td>
                   <td><strong>Microhard radio</strong></td>
                   <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">UART4</code></td>
                   <td><code style="font-family: var(--font-mono);">PA0 TX, PA1 RX</code></td>
-                  <td>telemetry link</td>
                 </tr>
                 <tr data-group="power">
                   <td><span class="group-tag tag-power">Power</span></td>
                   <td><strong>BMS 6S–22S LiFePO4 100 A</strong></td>
                   <td><code style="color: var(--apple-amber); font-family: var(--font-mono);">USART1</code></td>
                   <td><code style="font-family: var(--font-mono);">PA9 TX, PA10 RX</code></td>
-                  <td>Battery Management System telemetry</td>
                 </tr>
                 <tr data-group="motor">
                   <td><span class="group-tag tag-motor">Motor</span></td>
                   <td><strong>2&times; ZLAC8015D (via CAN transceiver)</strong></td>
                   <td><code style="color: var(--apple-green); font-family: var(--font-mono);">CAN1</code></td>
                   <td><code style="font-family: var(--font-mono);">PB8 RX, PB9 TX</code></td>
-                  <td>500 kbps, Node 1 &amp; 2, 120 &Omega; termination at both ends</td>
                 </tr>
                 <tr data-group="motor">
                   <td><span class="group-tag tag-motor">Motor</span></td>
@@ -1318,38 +1311,33 @@
                       style="color: var(--apple-green); font-family: var(--font-mono);">GPIO (open-drain sink)</code>
                   </td>
                   <td><code style="font-family: var(--font-mono);">PC2 PUL−, PC3 DIR−</code></td>
-                  <td>PUL+/DIR+ tied to 5 V (common-anode)</td>
                 </tr>
                 <tr data-group="visual">
                   <td><span class="group-tag tag-visual">Visual</span></td>
                   <td><strong>Headlights &amp; status light</strong></td>
                   <td><code style="color: var(--apple-purple); font-family: var(--font-mono);">GPIO out</code></td>
                   <td><code style="font-family: var(--font-mono);">PB4, PB5</code></td>
-                  <td>Illumination and run-state beacon control</td>
                 </tr>
                 <tr data-group="actuator">
                   <td><span class="group-tag tag-actuator">Actuator</span></td>
                   <td><strong>Vacuum relay</strong></td>
                   <td><code style="color: #22d3ee; font-family: var(--font-mono);">GPIO out</code></td>
                   <td><code style="font-family: var(--font-mono);">PC0</code></td>
-                  <td>Active suction payload trigger</td>
                 </tr>
                 <tr data-group="input">
                   <td><span class="group-tag tag-input">User Input</span></td>
                   <td><strong>RF relay switch (E-stop)</strong></td>
                   <td><code style="color: #fb923c; font-family: var(--font-mono);">GPIO in</code></td>
                   <td><code style="font-family: var(--font-mono);">PB1</code></td>
-                  <td>NO contact to GND (COM)</td>
                 </tr>
                 <tr data-group="input">
                   <td><span class="group-tag tag-input">User Input</span></td>
                   <td><strong>USB gamepad</strong></td>
                   <td><code style="color: #fb923c; font-family: var(--font-mono);">USB OTG FS (host)</code></td>
                   <td><code style="font-family: var(--font-mono);">PA11 DM, PA12 DP</code></td>
-                  <td>Manual joystick override &amp; diagnostic jog control</td>
                 </tr>
                 <tr id="interface-empty-row" style="display: none;">
-                  <td colspan="5" style="text-align: center; padding: 24px; color: var(--apple-text-tertiary);">
+                  <td colspan="4" style="text-align: center; padding: 24px; color: var(--apple-text-tertiary);">
                     No matching devices or interfaces found. Try clearing your search query.
                   </td>
                 </tr>
