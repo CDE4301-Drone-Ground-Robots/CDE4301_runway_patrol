@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script>
-    (function() {
+    (function () {
       try {
         var t = localStorage.getItem('theme');
         if (t === 'light') {
@@ -10,7 +11,7 @@
         } else {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
-      } catch (e) {}
+      } catch (e) { }
     })();
   </script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -20,13 +21,819 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>STM32 Firmware Architecture - Gabriel</title>
   <link rel="stylesheet" href="../../css/styles.css?v=4.2">
+  <style>
+    /* ── Local Tokens & Typography ─────────────────────────────────────────── */
+    :root {
+      --code-bg: #0b0d13;
+      --code-border: rgba(255, 255, 255, 0.1);
+      --terminal-bg: #07090e;
+      --terminal-green: #34d399;
+    }
+
+    [data-theme="light"] {
+      --code-bg: #f8fafc;
+      --code-border: rgba(0, 0, 0, 0.1);
+      --terminal-bg: #1e293b;
+      --terminal-green: #4ade80;
+    }
+
+    .highlight-stat {
+      color: var(--apple-green);
+      font-weight: 600;
+    }
+
+    .blue-stat {
+      color: var(--apple-blue);
+      font-weight: 600;
+    }
+
+    .amber-stat {
+      color: var(--apple-amber);
+      font-weight: 600;
+    }
+
+    .purple-stat {
+      color: var(--apple-purple);
+      font-weight: 600;
+    }
+
+    /* ── Sticky Sub-Nav ────────────────────────────────────────────────────── */
+    .apple-subnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(18, 18, 22, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--apple-border);
+      padding: 0 16px;
+      margin-bottom: 24px;
+    }
+
+    [data-theme="light"] .apple-subnav {
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .apple-subnav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .apple-subnav-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .apple-subnav-list {
+      display: flex;
+      gap: 6px;
+      list-style: none;
+      padding: 8px 0;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .apple-subnav-list a {
+      color: var(--apple-text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 980px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .apple-subnav-list a:hover {
+      color: var(--apple-text-primary);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    [data-theme="light"] .apple-subnav-list a:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Subnav Dropdown for Phases on Desktop */
+    .subnav-dropdown {
+      position: relative;
+    }
+
+    .subnav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--apple-surface-card, #1c1c1e);
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 6px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      min-width: 200px;
+      z-index: 120;
+    }
+
+    .subnav-dropdown:hover .subnav-dropdown-menu {
+      display: block;
+    }
+
+    .subnav-dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      color: var(--apple-text-secondary);
+      text-decoration: none;
+    }
+
+    .subnav-dropdown-menu a:hover {
+      background: rgba(41, 151, 255, 0.15);
+      color: var(--apple-blue);
+    }
+
+    /* ── Master Staircase (Section 1) ──────────────────────────────────────── */
+    .staircase-container {
+      width: 100%;
+      overflow-x: auto;
+      background: rgba(12, 12, 16, 0.6);
+      border: 1px solid var(--apple-border);
+      border-radius: 14px;
+      padding: 20px 16px;
+      margin: 16px 0 10px 0;
+    }
+
+    [data-theme="light"] .staircase-container {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .staircase-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      min-width: 860px;
+      align-items: end;
+    }
+
+    .stair-step-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      text-decoration: none;
+      color: inherit;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 16px 14px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .stair-step-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(41, 151, 255, 0.5);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="light"] .stair-step-card {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="light"] .stair-step-card:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      border-color: rgba(41, 151, 255, 0.5);
+    }
+
+    /* Ascending Stepped Heights */
+    .stair-1 {
+      height: 140px;
+      border-bottom: 4px solid var(--apple-blue);
+    }
+
+    .stair-2 {
+      height: 165px;
+      border-bottom: 4px solid #06b6d4;
+    }
+
+    .stair-3 {
+      height: 190px;
+      border-bottom: 4px solid var(--apple-green);
+    }
+
+    .stair-4 {
+      height: 215px;
+      border-bottom: 4px solid var(--apple-amber);
+    }
+
+    .stair-5 {
+      height: 240px;
+      border-bottom: 4px solid var(--apple-purple);
+    }
+
+    .stair-step-num {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      padding: 2px 7px;
+      border-radius: 980px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--apple-text-tertiary);
+    }
+
+    .stair-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--apple-text-primary);
+      margin-bottom: 6px;
+    }
+
+    .stair-desc {
+      font-size: 11.5px;
+      color: var(--apple-text-secondary);
+      line-height: 1.45;
+    }
+
+    /* ── PhaseCard Component Styles ────────────────────────────────────────── */
+    .phase-card {
+      background: var(--apple-surface-card, #121214);
+      border: 1px solid var(--apple-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+
+    [data-theme="light"] .phase-card {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .phase-card-header {
+      margin-bottom: 18px;
+    }
+
+    .phase-source-file {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--apple-blue);
+      background: rgba(41, 151, 255, 0.1);
+      border: 1px solid rgba(41, 151, 255, 0.25);
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .phase-problem-callout {
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--apple-blue);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      color: var(--apple-text-secondary);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    [data-theme="light"] .phase-problem-callout {
+      background: #f8fafc;
+      border-color: var(--apple-blue);
+      color: #334155;
+    }
+
+    /* Phase Grid: Levels (left) & Media/Tabs (right) */
+    .phase-card-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    @media (max-width: 920px) {
+      .phase-card-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Mini Staircase Levels List */
+    .phase-levels-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .phase-level-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 10px;
+      padding: 14px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .phase-level-item:hover {
+      border-color: rgba(41, 151, 255, 0.35);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    [data-theme="light"] .phase-level-item {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.07);
+    }
+
+    [data-theme="light"] .phase-level-item:hover {
+      background: #f8fafc;
+      border-color: rgba(41, 151, 255, 0.4);
+    }
+
+    .phase-level-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(41, 151, 255, 0.15);
+      color: var(--apple-blue);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .phase-level-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--apple-text-primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+    }
+
+    .phase-level-desc {
+      font-size: 12.5px;
+      color: var(--apple-text-secondary);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Details expander inside level */
+    .phase-level-details {
+      margin-top: 8px;
+      font-size: 12px;
+      border-top: 1px dashed var(--apple-border);
+      padding-top: 6px;
+    }
+
+    .phase-level-details summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--apple-blue);
+      user-select: none;
+      outline: none;
+    }
+
+    .phase-level-details p {
+      margin: 6px 0 0 0;
+      color: var(--apple-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Media slot & Fallback Box */
+    .phase-media-box {
+      background: #090b10;
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+    }
+
+    .phase-media-box video {
+      width: 100%;
+      height: auto;
+      max-height: 320px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Phase 5 Featured Large Media */
+    .phase-card-featured .phase-media-box video {
+      max-height: 420px;
+    }
+
+    .media-missing-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      text-align: center;
+      gap: 8px;
+      width: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.04) 100%);
+    }
+
+    .media-fallback-icon {
+      width: 36px;
+      height: 36px;
+      color: var(--apple-text-tertiary);
+      opacity: 0.7;
+    }
+
+    .media-fallback-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--apple-text-primary);
+    }
+
+    .media-fallback-path {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--apple-blue);
+      background: rgba(41, 151, 255, 0.1);
+      padding: 3px 8px;
+      border-radius: 6px;
+      word-break: break-all;
+    }
+
+    .media-fallback-hint {
+      font-size: 11.5px;
+      color: var(--apple-text-tertiary);
+    }
+
+    /* Tabs (Code / Console) */
+    .phase-tabs-container {
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--code-bg);
+    }
+
+    .phase-tabs-bar {
+      display: flex;
+      border-bottom: 1px solid var(--apple-border);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 4px;
+      gap: 4px;
+    }
+
+    [data-theme="light"] .phase-tabs-bar {
+      background: #f1f5f9;
+    }
+
+    .phase-tab-btn {
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--apple-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .phase-tab-btn:hover {
+      color: var(--apple-text-primary);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .phase-tab-btn.active {
+      background: var(--apple-surface-card, #1c1c1e);
+      color: var(--apple-text-primary);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    [data-theme="light"] .phase-tab-btn.active {
+      background: #ffffff;
+      color: #0f172a;
+    }
+
+    .phase-tab-panel {
+      display: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .phase-tab-panel.active {
+      display: block;
+    }
+
+    /* Monospace Code & Console Blocks */
+    .code-scroll-frame {
+      max-height: 250px;
+      overflow-y: auto;
+      overflow-x: auto;
+      padding: 14px 16px;
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.55;
+      color: #e2e8f0;
+      scrollbar-width: thin;
+    }
+
+    [data-theme="light"] .code-scroll-frame {
+      color: #1e293b;
+    }
+
+    .code-scroll-frame code {
+      font-family: inherit;
+      white-space: pre;
+    }
+
+    /* Terminal Console Panel */
+    .console-scroll-frame {
+      background: var(--terminal-bg);
+      color: var(--terminal-green);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      line-height: 1.55;
+      padding: 14px 16px;
+      margin: 0;
+      max-height: 250px;
+      overflow-y: auto;
+      overflow-x: auto;
+      white-space: pre;
+      scrollbar-width: thin;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Lead Images Side-by-Side (Phase 4) */
+    .phase4-lead-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .phase4-lead-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .phase4-img-frame {
+      background: #090b10;
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .phase4-img-frame:hover {
+      border-color: rgba(41, 151, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .phase4-img-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .phase4-caption {
+      font-size: 11.5px;
+      color: var(--apple-text-secondary);
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px solid var(--apple-border);
+      text-align: center;
+    }
+
+    /* ── Problems We Hit 3-Card Grid ───────────────────────────────────────── */
+    .problems-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 920px) {
+      .problems-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .problem-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .problem-card:hover {
+      border-color: rgba(255, 159, 10, 0.4);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    [data-theme="light"] .problem-card {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .problem-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--apple-text-primary);
+      margin: 0;
+    }
+
+    .problem-row {
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    .problem-label {
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .lbl-symptom {
+      color: var(--apple-red);
+    }
+
+    .lbl-cause {
+      color: var(--apple-amber);
+    }
+
+    .lbl-fix {
+      color: var(--apple-green);
+    }
+
+    /* ── Semester 2 Roadmap 4-Card Grid ────────────────────────────────────── */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .roadmap-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .roadmap-card:hover {
+      border-color: rgba(191, 90, 242, 0.4);
+      transform: translateY(-2px);
+    }
+
+    [data-theme="light"] .roadmap-card {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .roadmap-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--apple-text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .roadmap-desc {
+      font-size: 12.5px;
+      color: var(--apple-text-secondary);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── Two-Way Page Navigation Buttons ───────────────────────────────────── */
+    .nav-prev-page-btn:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(41, 151, 255, 0.4) !important;
+      transform: translateY(-2px);
+    }
+
+    .nav-next-page-btn:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(41, 151, 255, 0.15) 100%) !important;
+      border-color: rgba(16, 185, 129, 0.6) !important;
+      transform: translateY(-2px);
+    }
+
+    [data-theme="light"] .nav-prev-page-btn {
+      background: #fbfbfd !important;
+      border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    [data-theme="light"] .nav-prev-page-btn:hover {
+      background: #f1f5f9 !important;
+      border-color: rgba(41, 151, 255, 0.5) !important;
+    }
+
+    [data-theme="light"] .nav-next-page-btn {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(41, 151, 255, 0.05) 100%) !important;
+      border-color: rgba(16, 185, 129, 0.35) !important;
+    }
+
+    /* Lightbox Modal */
+    dialog#image-lightbox-dialog {
+      border: none;
+      border-radius: 14px;
+      padding: 0;
+      background: var(--apple-surface-card, #1c1c1e);
+      color: var(--apple-text-primary);
+      max-width: 92vw;
+      max-height: 90vh;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+    }
+
+    dialog#image-lightbox-dialog::backdrop {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+    }
+
+    .lightbox-wrapper {
+      position: relative;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--apple-text-primary);
+      border: 1px solid var(--apple-border);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    #lightbox-img {
+      max-width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    #lightbox-caption {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--apple-text-secondary);
+      text-align: center;
+      max-width: 700px;
+    }
+  </style>
 </head>
+
 <body>
   <!-- APPLE TOP NAVIGATION BAR -->
   <header class="apple-nav">
     <div class="apple-nav-container">
       <a href="../../index.html" class="apple-nav-brand">
-        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore"
+          class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
         <span class="nav-project-code">AIS-406</span>
       </a>
 
@@ -42,7 +849,7 @@
       </ul>
 
       <div class="apple-nav-actions">
-        <a href="../../7-documentation.html" class="apple-btn-pill">← Documentation Hub</a>
+        <a href="../../7-documentation.html" class="apple-btn-pill">&larr; Documentation Hub</a>
         <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
       </div>
     </div>
@@ -60,153 +867,1231 @@
     <a href="../../7-documentation.html">Documentation</a>
   </div>
 
+  <!-- IN-PAGE STICKY SUB-NAV -->
+  <nav class="apple-subnav" aria-label="Software Subsystem Navigation">
+    <div class="apple-subnav-container">
+      <ul class="apple-subnav-list">
+        <li><a href="#section-1-method">1. Method</a></li>
+        <li><a href="#section-2-architecture">2. Architecture</a></li>
+        <li class="subnav-dropdown">
+          <a href="#phase-1">3–7. Build Phases &blacktriangledown;</a>
+          <div class="subnav-dropdown-menu">
+            <a href="#phase-1">Phase 1: Prove the Wire</a>
+            <a href="#phase-2">Phase 2: Precise Timing</a>
+            <a href="#phase-3">Phase 3: Move Four Wheels</a>
+            <a href="#phase-4">Phase 4: Safe to Command</a>
+            <a href="#phase-5">Phase 5: Drive It</a>
+          </div>
+        </li>
+        <li><a href="#section-8-safety">8. Safety by Design</a></li>
+        <li><a href="#section-9-problems">9. Problems We Hit</a></li>
+        <li><a href="#section-10-roadmap">10. S2 Roadmap</a></li>
+      </ul>
+    </div>
+  </nav>
+
   <!-- MAIN PAGE CONTENT -->
   <main class="apple-main-content">
-    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
-      
+    <div class="apple-container" style="padding-top: 10px; padding-bottom: 60px;">
+
       <!-- HERO HEADER -->
-      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
-        <div class="apple-hero-badge">Embedded &amp; Firmware Subsystem • Gabriel</div>
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 24px;">
+        <div class="apple-hero-badge">EMBEDDED FIRMWARE SUBSYSTEM &bull; GABRIEL</div>
         <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 12px;">
-          STM32 Firmware Architecture &amp; Real-Time Control
+          STM32 Firmware Architecture &amp; Control
         </h1>
-        <p class="apple-section-subtitle" style="max-width: 780px; margin: 0 auto; color: var(--apple-text-secondary); font-size: 16px; line-height: 1.6;">
-          Real-time FreeRTOS embedded architecture, micro-ROS middleware, CANopen motor actuation, 100 Hz closed-loop control, and safety watchdogs.
+        <p class="apple-section-subtitle"
+          style="max-width: 820px; margin: 0 auto; color: var(--apple-text-secondary); font-size: 16px; line-height: 1.6;">
+          Deterministic bare-metal motor control, multi-node CANopen actuation, microsecond timing, and layered failsafe
+          recovery on the STM32 NUCLEO-F446RE.
         </p>
+      </div>
+
+      <!-- LEADERSHIP & METRICS BADGE CARD -->
+      <div class="card-box" style="margin-bottom: 28px; border-left: 5px solid var(--accent-purple);">
+        <div
+          style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-blue">Gabriel</span>
+              <span class="badge badge-purple">Firmware &amp; Embedded Lead</span>
+              <span class="badge badge-emerald">STM32 F446RE</span>
+            </div>
+            <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Electrical &amp; Embedded Co-Lead:
+              Gabriel Tan Kai Jie (A0308452H)</h3>
+            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              Firmware Scope: Bare-metal deterministic loop &bull; CANopen CiA 402 state machine &bull; TB6600 stepper
+              common-anode sinking &bull; USB host gamepad teleoperation &bull; 25 ms software velocity ramping &bull;
+              Hardware bus diagnostics &amp; auto-recovery.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <a href="../../4-subsystems/computer-vision.html" class="btn btn-deep-dive">4.4 Overview Card →</a>
+            <a href="../../7-documentation.html" class="btn btn-deep-dive">Documentation Hub →</a>
+          </div>
+        </div>
       </div>
 
       <div class="page-content">
 
-        <!-- LEADERSHIP & METRICS BADGE CARD -->
-        <div class="card-box" style="margin-bottom: 24px; border-left: 5px solid var(--accent-purple);">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span class="badge badge-blue">Gabriel</span>
-                <span class="badge badge-purple">Firmware &amp; micro-ROS</span>
-                <span class="badge badge-emerald">Real-Time Control</span>
-              </div>
-              <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Electrical &amp; Embedded Co-Lead: Gabriel Tan Kai Jie (A0308452H)</h3>
-              <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                Firmware Scope: FreeRTOS task scheduling • micro-ROS node interface • CANopen motor communication • 100 Hz closed-loop PID control • Odometry publisher • Watchdog failsafes.
-              </p>
-            </div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <a href="stm32%20hardware.html" class="btn btn-deep-dive" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #34d399;">← STM32 Hardware</a>
-              <a href="../../4-subsystems/programming.html" class="btn btn-deep-dive">4.4 Programming &amp; Software →</a>
-              <a href="../../7-documentation.html" class="btn btn-deep-dive">Documentation Hub →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- SECTION 1 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+        <!-- ==================================================================
+             SECTION 1: METHOD: PROGRESSIVE VALIDATION
+             ================================================================== -->
+        <section id="section-1-method" class="card-box" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
               <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 1.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Firmware Architecture &amp; FreeRTOS Task Scheduling</h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Built Bottom-Up, Verified at
+                Every Layer</h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
 
-        <!-- SECTION 2 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+          <p
+            style="font-size: 15px; color: var(--apple-text-primary); font-weight: 500; line-height: 1.6; margin: 14px 0 16px 0;">
+            Every layer of the firmware was verified on the bench before the next was built on top of it &mdash; from
+            proving the physical wire carries a signal, to driving the full robot with a wireless gamepad.
+          </p>
+
+          <!-- MASTER STAIRCASE GRAPHIC (5 STEPS ASCENDING, CLICKABLE) -->
+          <div class="staircase-container">
+            <div class="staircase-steps-grid">
+              <!-- Step 1 -->
+              <a href="#phase-1" class="stair-step-card stair-1" title="Jump to Phase 1: Prove the Wire">
+                <span class="stair-step-num">Step 1</span>
+                <div class="stair-title" style="color: var(--apple-blue);">Prove the Wire</div>
+                <div class="stair-desc">CAN bring-up &amp; physical diagnostics</div>
+              </a>
+
+              <!-- Step 2 -->
+              <a href="#phase-2" class="stair-step-card stair-2" title="Jump to Phase 2: Precise Timing">
+                <span class="stair-step-num">Step 2</span>
+                <div class="stair-title" style="color: #06b6d4;">Precise Timing</div>
+                <div class="stair-desc">Stepper actuator microsecond control</div>
+              </a>
+
+              <!-- Step 3 -->
+              <a href="#phase-3" class="stair-step-card stair-3" title="Jump to Phase 3: Move Four Wheels">
+                <span class="stair-step-num">Step 3</span>
+                <div class="stair-title" style="color: var(--apple-green);">Move Four Wheels</div>
+                <div class="stair-desc">Multi-node CAN, CiA 402 profile velocity</div>
+              </a>
+
+              <!-- Step 4 -->
+              <a href="#phase-4" class="stair-step-card stair-4" title="Jump to Phase 4: Make It Safe to Command">
+                <span class="stair-step-num">Step 4</span>
+                <div class="stair-title" style="color: var(--apple-amber);">Make It Safe</div>
+                <div class="stair-desc">5-state machine, GUI &amp; fault recovery</div>
+              </a>
+
+              <!-- Step 5 -->
+              <a href="#phase-5" class="stair-step-card stair-5" title="Jump to Phase 5: Drive It">
+                <span class="stair-step-num">Step 5</span>
+                <div class="stair-title" style="color: var(--apple-purple);">Drive It</div>
+                <div class="stair-desc">Gamepad teleop, kinematics &amp; ramping</div>
+              </a>
+            </div>
+          </div>
+          <div style="font-size: 11.5px; color: var(--apple-text-tertiary); text-align: center; margin-top: 6px;">
+            Click any step above to jump directly to its verification phase below.
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 2: FIRMWARE ARCHITECTURE
+             ================================================================== -->
+        <section id="section-2-architecture" class="card-box" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
               <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 2.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">micro-ROS Middleware &amp; ROS 2 Interface Layer</h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">How the Final Firmware Fits
+                Together</h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
 
-        <!-- SECTION 3 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+          <p style="font-size: 14.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
+            The firmware executes a bare-metal, deterministic main loop on the Cortex-M4F core, decoupling high-level
+            operator kinematics from physical closed-loop Field-Oriented Control (FOC) running inside the motor drivers.
+          </p>
+
+          <!-- INLINE SVG BLOCK DIAGRAM (FORWARD & DASHED RETURN PATH) -->
+          <div
+            style="width: 100%; overflow-x: auto; background: rgba(12, 12, 16, 0.6); border: 1px solid var(--apple-border); border-radius: 14px; padding: 18px; margin: 16px 0 10px 0;">
+            <svg viewBox="0 0 1320 250" width="100%" height="auto" style="min-width: 900px; max-width: 1320px;"
+              role="img" aria-label="Firmware Architecture Block Diagram">
+              <defs>
+                <linearGradient id="fwNodeGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#1e293b" />
+                  <stop offset="100%" stop-color="#0f172a" />
+                </linearGradient>
+                <linearGradient id="fwStmGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#064e3b" />
+                  <stop offset="100%" stop-color="#022c22" />
+                </linearGradient>
+                <linearGradient id="fwDriverGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#312e81" />
+                  <stop offset="100%" stop-color="#1e1b4b" />
+                </linearGradient>
+                <filter id="fwShadow" x="-10%" y="-10%" width="120%" height="120%">
+                  <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.4" />
+                </filter>
+              </defs>
+
+              <!-- Block 1: Gamepad -->
+              <rect x="20" y="25" width="160" height="90" rx="10" fill="url(#fwNodeGrad)" stroke="#38bdf8"
+                stroke-width="1.5" filter="url(#fwShadow)" />
+              <text x="100" y="55" fill="#38bdf8" font-size="10.5" font-family="'JetBrains Mono', monospace"
+                font-weight="700" text-anchor="middle">USB HOST</text>
+              <text x="100" y="78" fill="#ffffff" font-size="13"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
+                text-anchor="middle">Wireless Gamepad</text>
+              <text x="100" y="96" fill="#94a3b8" font-size="10"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">PA11/PA12 (OTG
+                FS)</text>
+
+              <!-- Arrow 1 -->
+              <path d="M 180 70 L 228 70" fill="none" stroke="#2997ff" stroke-width="2" />
+              <polygon points="230,70 222,66 222,74" fill="#2997ff" />
+
+              <!-- Block 2: HID Parser -->
+              <rect x="230" y="25" width="150" height="90" rx="10" fill="url(#fwNodeGrad)" stroke="#38bdf8"
+                stroke-width="1.5" filter="url(#fwShadow)" />
+              <text x="305" y="55" fill="#38bdf8" font-size="10" font-family="'JetBrains Mono', monospace"
+                font-weight="700" text-anchor="middle">PARSER TIER</text>
+              <text x="305" y="78" fill="#ffffff" font-size="13"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
+                text-anchor="middle">HID Parser</text>
+              <text x="305" y="96" fill="#94a3b8" font-size="10"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">XInput Raw
+                Packets</text>
+
+              <!-- Arrow 2 -->
+              <path d="M 380 70 L 428 70" fill="none" stroke="#2997ff" stroke-width="2" />
+              <polygon points="430,70 422,66 422,74" fill="#2997ff" />
+
+              <!-- Block 3: Throttle & Steering -->
+              <rect x="430" y="20" width="170" height="100" rx="10" fill="url(#fwNodeGrad)" stroke="#06b6d4"
+                stroke-width="1.5" filter="url(#fwShadow)" />
+              <text x="515" y="48" fill="#06b6d4" font-size="10" font-family="'JetBrains Mono', monospace"
+                font-weight="700" text-anchor="middle">INPUT SANITIZER</text>
+              <text x="515" y="70" fill="#ffffff" font-size="12.5"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
+                text-anchor="middle">Throttle &amp; Steering</text>
+              <text x="515" y="88" fill="#94a3b8" font-size="10"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Triggers
+                &bull; Deadzones</text>
+              <text x="515" y="104" fill="#67e8f9" font-size="9.5" font-family="'JetBrains Mono', monospace"
+                text-anchor="middle">Conflict Check (0 RPM)</text>
+
+              <!-- Arrow 3 -->
+              <path d="M 600 70 L 648 70" fill="none" stroke="#06b6d4" stroke-width="2" />
+              <polygon points="650,70 642,66 642,74" fill="#06b6d4" />
+
+              <!-- Block 4: Differential Kinematics & Ramp (Featured STM32 Node) -->
+              <rect x="650" y="12" width="220" height="116" rx="12" fill="url(#fwStmGrad)" stroke="#30d158"
+                stroke-width="2" filter="url(#fwShadow)" />
+              <text x="760" y="38" fill="#4ade80" font-size="10" font-family="'JetBrains Mono', monospace"
+                font-weight="700" text-anchor="middle">STM32F446RE CORE</text>
+              <text x="760" y="60" fill="#ffffff" font-size="14"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
+                text-anchor="middle">Differential Kinematics</text>
+              <text x="760" y="80" fill="#86efac" font-size="11"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Software Ramp
+                (25 ms loop)</text>
+              <text x="760" y="100" fill="#a7f3d0" font-size="10" font-family="'JetBrains Mono', monospace"
+                text-anchor="middle">Motor_Set_Velocity()</text>
+              <text x="760" y="116" fill="#6ee7b7" font-size="9.5"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">35 RPM/s Accel
+                &bull; 15 RPM/s Coast</text>
+
+              <!-- Arrow 4 (CAN Bus) -->
+              <path d="M 870 70 L 928 70" fill="none" stroke="#30d158" stroke-width="2" />
+              <polygon points="930,70 922,66 922,74" fill="#30d158" />
+              <rect x="880" y="44" width="45" height="18" rx="4" fill="#062e1e" stroke="rgba(48,209,88,0.4)"
+                stroke-width="1" />
+              <text x="902.5" y="56" fill="#4ade80" font-size="8.5" font-family="'JetBrains Mono', monospace"
+                font-weight="700" text-anchor="middle">CAN1</text>
+
+              <!-- Block 5: Dual ZLAC8015D Drivers -->
+              <rect x="930" y="20" width="190" height="100" rx="10" fill="url(#fwDriverGrad)" stroke="#a855f7"
+                stroke-width="1.5" filter="url(#fwShadow)" />
+              <text x="1025" y="46" fill="#c084fc" font-size="10" font-family="'JetBrains Mono', monospace"
+                font-weight="700" text-anchor="middle">500 kbps CANopen</text>
+              <text x="1025" y="68" fill="#ffffff" font-size="13"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
+                text-anchor="middle">Dual ZLAC8015D</text>
+              <text x="1025" y="88" fill="#d8b4fe" font-size="10.5"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Node 1: Front
+                L/R</text>
+              <text x="1025" y="104" fill="#d8b4fe" font-size="10.5"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Node 2: Rear
+                L/R</text>
+
+              <!-- Arrow 5 -->
+              <path d="M 1120 70 L 1168 70" fill="none" stroke="#a855f7" stroke-width="2" />
+              <polygon points="1170,70 1162,66 1162,74" fill="#a855f7" />
+
+              <!-- Block 6: Physical Motors -->
+              <rect x="1170" y="25" width="130" height="90" rx="10" fill="url(#fwDriverGrad)" stroke="#c084fc"
+                stroke-width="1.5" filter="url(#fwShadow)" />
+              <text x="1235" y="55" fill="#c084fc" font-size="10" font-family="'JetBrains Mono', monospace"
+                font-weight="700" text-anchor="middle">ACTUATION</text>
+              <text x="1235" y="78" fill="#ffffff" font-size="13"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
+                text-anchor="middle">4 Hub Motors</text>
+              <text x="1235" y="96" fill="#d8b4fe" font-size="10"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Closed-Loop
+                FOC</text>
+
+              <!-- ============================================================
+                   RETURN PATH (DASHED, STATUSWORD & FAULT FEEDBACK)
+                   ============================================================ -->
+              <path d="M 1025 120 L 1025 180 L 760 180 L 760 130" fill="none" stroke="#fbbf24" stroke-width="2"
+                stroke-dasharray="6,4" />
+              <polygon points="760,128 756,136 764,136" fill="#fbbf24" />
+
+              <!-- Return path label pill -->
+              <rect x="825" y="166" width="220" height="28" rx="6" fill="#181303" stroke="rgba(251, 191, 36, 0.45)"
+                stroke-width="1" />
+              <text x="935" y="184" fill="#fbbf24" font-size="10.5" font-family="'JetBrains Mono', monospace"
+                font-weight="600" text-anchor="middle">
+                Statusword 0x6041 / SDO Replies
+              </text>
+              <text x="892" y="210" fill="#94a3b8" font-size="10"
+                font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">
+                150 ms Fault Detection &bull; Auto-Quick-Stop Loop
+              </text>
+            </svg>
+          </div>
+
+          <!-- ARCHITECTURE CAPTION -->
+          <div
+            style="background: rgba(255, 255, 255, 0.02); border-left: 4px solid var(--apple-green); border-radius: 0 10px 10px 0; padding: 12px 16px; margin-top: 10px;">
+            <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin: 0;">
+              <strong>Architecture Overview:</strong> Bare-metal, deterministic main loop on the STM32F446RE. The
+              ZLAC8015D
+              drivers run the closed-loop FOC current/velocity control; the STM32 commands velocity setpoints and
+              supervises driver state.
+            </p>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 3: PHASE 1: PROVE THE WIRE
+             ================================================================== -->
+        <section id="phase-1" class="phase-card">
+          <div class="phase-card-header">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-emerald">SECTION 3.0</span>
+              <span class="badge badge-blue">PHASE 1</span>
+            </div>
+            <h2 style="font-size: 21px; color: var(--apple-text-primary); margin: 0 0 6px 0;">Prove the Wire</h2>
+            <code class="phase-source-file">can_debugging_check.c</code>
+            <div class="phase-problem-callout">
+              <strong>Problem Statement:</strong> &ldquo;Before commanding any motor, prove the CAN link itself works
+              &mdash;
+              and when it doesn't, know exactly why.&rdquo;
+            </div>
+          </div>
+
+          <div class="phase-card-body">
+            <!-- Left: Mini staircase levels -->
+            <div class="phase-levels-list">
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">1</span>
+                  DC Loopback Test
+                </div>
+                <p class="phase-level-desc">
+                  Bit-bangs the transceiver as plain GPIO before the CAN controller starts, separating wiring faults
+                  from protocol faults.
+                </p>
+                <details class="phase-level-details">
+                  <summary>Details</summary>
+                  <p>
+                    PB9 is temporarily driven as GPIO output and PB8 read as input. Recessive test: PB9 HIGH &rarr; PB8
+                    must read HIGH.
+                    Dominant test: PB9 LOW &rarr; PB8 must read LOW. Pins are then restored to AF9 (CAN1).
+                  </p>
+                </details>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">2</span>
+                  Live Baud-Rate Sweep
+                </div>
+                <p class="phase-level-desc">
+                  Pressing the blue user button (PC13) cycles 500k &rarr; 250k &rarr; 1M &rarr; 125k and re-pings the
+                  driver, discovering its baud rate without reflashing.
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">3</span>
+                  Mailbox Deadlock Prevention
+                </div>
+                <p class="phase-level-desc">
+                  Auto-retransmission is disabled and stalled TX mailboxes are aborted before each ping, so a missing
+                  ACK can never lock up the controller.
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">4</span>
+                  Hardware Bus Diagnostics
+                </div>
+                <p class="phase-level-desc">
+                  Decodes the CAN Error Status Register (TEC, REC, LEC) into plain-English faults and auto-recovers from
+                  Bus-Off.
+                </p>
+                <details class="phase-level-details">
+                  <summary>Details</summary>
+                  <p>
+                    LEC=1 (stuff error) &rarr; baud mismatch. LEC=3 (ACK error) &rarr; disconnected wires, swapped
+                    CAN_H/CAN_L, or unpowered driver.
+                    BOFF &rarr; controller restarted automatically.
+                  </p>
+                </details>
+              </div>
+            </div>
+
+            <!-- Right: Media & Tabs -->
+            <div>
+              <div class="phase-media-box">
+                <video autoplay muted loop playsinline preload="metadata"
+                  poster="../../assets/images/Gabriel/phase1-can.jpg"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <source src="../../assets/images/Gabriel/phase1-can.mp4" type="video/mp4">
+                </video>
+                <div class="media-missing-fallback">
+                  <svg class="media-fallback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8">
+                    <rect x="2" y="2" width="20" height="20" rx="4"></rect>
+                    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon>
+                  </svg>
+                  <span class="media-fallback-title">Phase 1 Video Demo</span>
+                  <code class="media-fallback-path">/assets/images/Gabriel/phase1-can.mp4</code>
+                  <span class="media-fallback-hint">Place recording here to enable live loop preview</span>
+                </div>
+              </div>
+
+              <div class="phase-tabs-container">
+                <div class="phase-tabs-bar">
+                  <button type="button" class="phase-tab-btn active" data-tab-target="p1-code">Code (C)</button>
+                  <button type="button" class="phase-tab-btn" data-tab-target="p1-console">Console Output</button>
+                </div>
+                <div id="p1-code" class="phase-tab-panel active">
+                  <pre class="code-scroll-frame"><code class="language-c">uint32_t esr = hcan1.Instance-&gt;ESR;
+uint8_t tec = (esr &amp; CAN_ESR_TEC) &gt;&gt; CAN_ESR_TEC_Pos;
+uint8_t lec = (esr &amp; CAN_ESR_LEC) &gt;&gt; CAN_ESR_LEC_Pos;
+
+if (lec == 1) printf("[DIAGNOSTIC] Stuff Error (LEC=1, TEC=%d). Baud rate mismatch?\r\n", tec);
+if (lec == 3) printf("[DIAGNOSTIC] No Acknowledgment (LEC=3, TEC=%d).\r\n", tec);
+
+if (esr &amp; CAN_ESR_BOFF) {
+  printf("[BUS ERROR] Bus-Off! Restarting CAN controller...\r\n");
+  HAL_CAN_Stop(&amp;hcan1);
+  HAL_CAN_Start(&amp;hcan1);
+}</code></pre>
+                </div>
+                <div id="p1-console" class="phase-tab-panel">
+                  <!-- TODO: Replace with real serial capture -->
+                  <pre class="console-scroll-frame">--&gt; [RESULT] Transceiver Physical Loopback: 100% PASS!
+[BUTTON] &gt;&gt;&gt; Switching CAN Baud Rate to: 500 kbps (Default) &lt;&lt;&lt;
+-&gt; [DIAGNOSTIC] No Acknowledgment (ACK Error, LEC=3, TEC=8).</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 4: PHASE 2: PRECISE TIMING
+             ================================================================== -->
+        <!-- TODO: state what the stepper actuates on the robot -->
+        <section id="phase-2" class="phase-card">
+          <div class="phase-card-header">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-emerald">SECTION 4.0</span>
+              <span class="badge badge-cyan"
+                style="color: #06b6d4; background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.35);">PHASE
+                2</span>
+            </div>
+            <h2 style="font-size: 21px; color: var(--apple-text-primary); margin: 0 0 6px 0;">Precise Timing</h2>
+            <code class="phase-source-file">steppermotor_w_user_input.c</code>
+            <div class="phase-problem-callout">
+              <strong>Problem Statement:</strong> &ldquo;Drive a TB6600 microstep driver with clean, sub-millisecond
+              pulses
+              from 3.3 V logic.&rdquo;
+            </div>
+          </div>
+
+          <div class="phase-card-body">
+            <!-- Left: Mini staircase levels -->
+            <div class="phase-levels-list">
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">1</span>
+                  5 V Common-Anode Sinking
+                </div>
+                <p class="phase-level-desc">
+                  PUL+/DIR+ tied to 5 V; the STM32 sinks PUL−/DIR− (PC2/PC3, open-drain), giving the driver's
+                  optocouplers full drive current without a level shifter.
+                </p>
+                <details class="phase-level-details">
+                  <summary>Details</summary>
+                  <p>
+                    Sourcing from 3.3 V leaves only ~1.7 V across the opto's internal resistor after the LED drop
+                    &mdash; not enough current.
+                    Sinking puts the full 5 V across it while the GPIO just switches to ground.
+                  </p>
+                </details>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">2</span>
+                  Microsecond Timing via DWT
+                </div>
+                <p class="phase-level-desc">
+                  The Cortex-M4 cycle counter replaces HAL_Delay(), whose 1 ms tick is too coarse for 200–800 µs step
+                  pulses.
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">3</span>
+                  Direction Setup Guard
+                </div>
+                <p class="phase-level-desc">
+                  A 20 µs guard after every DIR change (TB6600 needs &ge;5 µs) prevents lost steps on reversal.
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">4</span>
+                  Interactive Tuning
+                </div>
+                <p class="phase-level-desc">
+                  UART console: W/S jog &plusmn;400 steps, +/− adjusts step delay (200–5000 µs) live to find resonance
+                  and top speed.
+                </p>
+              </div>
+            </div>
+
+            <!-- Right: Media & Tabs -->
+            <div>
+              <div class="phase-media-box">
+                <video autoplay muted loop playsinline preload="metadata"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <source src="../../assets/images/Gabriel/phase2-stepper.mp4" type="video/mp4">
+                </video>
+                <div class="media-missing-fallback">
+                  <svg class="media-fallback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8">
+                    <rect x="2" y="2" width="20" height="20" rx="4"></rect>
+                    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon>
+                  </svg>
+                  <span class="media-fallback-title">Phase 2 Video Demo</span>
+                  <code class="media-fallback-path">/assets/images/Gabriel/phase2-stepper.mp4</code>
+                  <span class="media-fallback-hint">Place recording here to preview live playback</span>
+                </div>
+              </div>
+
+              <div class="phase-tabs-container">
+                <div class="phase-tabs-bar">
+                  <button type="button" class="phase-tab-btn active" data-tab-target="p2-code">Code (C)</button>
+                  <button type="button" class="phase-tab-btn" data-tab-target="p2-console">Console Output</button>
+                </div>
+                <div id="p2-code" class="phase-tab-panel active">
+                  <pre class="code-scroll-frame"><code class="language-c">/* Enable Cortex-M4 DWT cycle counter */
+CoreDebug-&gt;DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+DWT-&gt;CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+DWT-&gt;CYCCNT = 0;
+
+void Stepper_DelayUs(uint32_t us) {
+  uint32_t start = DWT-&gt;CYCCNT;
+  uint32_t wait  = us * (SystemCoreClock / 1000000);
+  while ((DWT-&gt;CYCCNT - start) &lt; wait);
+}</code></pre>
+                </div>
+                <div id="p2-console" class="phase-tab-panel">
+                  <!-- TODO: Replace with real serial capture -->
+                  <pre class="console-scroll-frame">&gt;&gt;&gt; [SPEED] Faster! Delay = 400 us
+&gt;&gt;&gt; [SPEED] Faster! Delay = 300 us</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 5: PHASE 3: MOVE FOUR WHEELS
+             ================================================================== -->
+        <section id="phase-3" class="phase-card">
+          <div class="phase-card-header">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-emerald">SECTION 5.0</span>
+              <span class="badge badge-emerald">PHASE 3</span>
+            </div>
+            <h2 style="font-size: 21px; color: var(--apple-text-primary); margin: 0 0 6px 0;">Move Four Wheels</h2>
+            <code class="phase-source-file">2_motor_w_user_input.c</code>
+            <div class="phase-problem-callout">
+              <strong>Problem Statement:</strong> &ldquo;Run two ZLAC8015D drivers (four hub motors) on one shared
+              2-wire CAN bus,
+              smoothly and safely.&rdquo;
+            </div>
+          </div>
+
+          <div class="phase-card-body">
+            <!-- Left: Mini staircase levels -->
+            <div class="phase-levels-list">
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">1</span>
+                  Multi-Node Addressing
+                </div>
+                <p class="phase-level-desc">
+                  CANopen SDO IDs route each command to the right driver: Node 1 listens on 0x601 (replies 0x581), Node
+                  2 on 0x602 (replies 0x582). No extra pins needed.
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">2</span>
+                  CiA 402 Power-Up Handshake
+                </div>
+                <p class="phase-level-desc">
+                  Each driver is set to Profile Velocity Mode with 100 ms accel/decel ramps, then armed via Shutdown
+                  (0x06) &rarr; Switch On (0x07) &rarr; Enable Operation (0x0F), with targets initialised at 0 RPM.
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">3</span>
+                  Synchronised Drive &amp; Two-Tier Braking
+                </div>
+                <p class="phase-level-desc">
+                  All four wheels commanded together. [Q] = gentle ramped stop; [E] = CiA 402 Quick-Stop (Controlword
+                  0x0002) that locks the wheels immediately.
+                </p>
+              </div>
+            </div>
+
+            <!-- Right: Media & Tabs -->
+            <div>
+              <div class="phase-media-box">
+                <video autoplay muted loop playsinline preload="metadata"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <source src="../../assets/images/Gabriel/phase3-four-wheels.mp4" type="video/mp4">
+                </video>
+                <div class="media-missing-fallback">
+                  <svg class="media-fallback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8">
+                    <rect x="2" y="2" width="20" height="20" rx="4"></rect>
+                    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon>
+                  </svg>
+                  <span class="media-fallback-title">Phase 3 Video Demo</span>
+                  <code class="media-fallback-path">/assets/images/Gabriel/phase3-four-wheels.mp4</code>
+                  <span class="media-fallback-hint">Place recording here to preview live playback</span>
+                </div>
+              </div>
+
+              <div class="phase-tabs-container">
+                <div class="phase-tabs-bar">
+                  <button type="button" class="phase-tab-btn active" data-tab-target="p3-code">Code (C)</button>
+                  <button type="button" class="phase-tab-btn" data-tab-target="p3-console">Console Output</button>
+                </div>
+                <div id="p3-code" class="phase-tab-panel active">
+                  <pre class="code-scroll-frame"><code class="language-c">/* CiA 402 power-enable handshake, per driver node */
+ZLAC8015D_Write16_Node(nodeId, ZLAC_OBJ_CONTROLWORD, ZLAC_SUB_ALL, 0x0006); /* Shutdown         */
+ZLAC8015D_Write16_Node(nodeId, ZLAC_OBJ_CONTROLWORD, ZLAC_SUB_ALL, 0x0007); /* Switch On        */
+ZLAC8015D_Write16_Node(nodeId, ZLAC_OBJ_CONTROLWORD, ZLAC_SUB_ALL, 0x000F); /* Enable Operation */</code></pre>
+                </div>
+                <div id="p3-console" class="phase-tab-panel">
+                  <!-- TODO: Replace with real serial capture -->
+                  <pre class="console-scroll-frame">[INIT] Initializing ZLAC8015D Driver 1 (Node ID 1)...
+[INIT] Initializing ZLAC8015D Driver 2 (Node ID 2)...
+&gt;&gt;&gt; [ALERT] EMERGENCY STOP TRIGGERED ON ALL MOTORS!</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 6: PHASE 4: MAKE IT SAFE TO COMMAND
+             ================================================================== -->
+        <section id="phase-4" class="phase-card">
+          <div class="phase-card-header">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-emerald">SECTION 6.0</span>
+              <span class="badge badge-amber">PHASE 4</span>
+            </div>
+            <h2 style="font-size: 21px; color: var(--apple-text-primary); margin: 0 0 6px 0;">Make It Safe to Command
+            </h2>
+            <code class="phase-source-file">state_machine_check.c + GUI.py</code>
+            <div class="phase-problem-callout">
+              <strong>Problem Statement:</strong> &ldquo;Stop guessing what the driver is doing &mdash; track its real
+              state and
+              reject unsafe commands before they reach the bus.&rdquo;
+            </div>
+          </div>
+
+          <!-- LEAD IMAGES SIDE-BY-SIDE ABOVE LEVELS -->
+          <div class="phase4-lead-grid">
+            <div class="phase4-img-frame"
+              onclick="openLightbox('../../assets/images/Gabriel/fsm-diagram.png', 'Five-state motor state machine: Disengage, Lock, Movement, Jerk, Error')">
+              <img src="../../assets/images/Gabriel/fsm-diagram.png"
+                alt="Five-state motor state machine: Disengage, Lock, Movement, Jerk, Error" width="800" height="450"
+                loading="lazy">
+              <div class="phase4-caption">Five-state motor state machine: Disengage, Lock, Movement, Jerk, Error</div>
+            </div>
+
+            <div class="phase4-img-frame"
+              onclick="openLightbox('../../assets/images/Gabriel/gui-screenshot.png', 'Python desktop GUI with speed slider streaming commands to the STM32')">
+              <img src="../../assets/images/Gabriel/gui-screenshot.png"
+                alt="Python desktop GUI with speed slider streaming commands to the STM32" width="800" height="450"
+                loading="lazy">
+              <div class="phase4-caption">Python desktop GUI with speed slider streaming commands to the STM32</div>
+            </div>
+          </div>
+
+          <div class="phase-card-body">
+            <!-- Left: Mini staircase levels -->
+            <div class="phase-levels-list">
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">1</span>
+                  Five Explicit States
+                </div>
+                <p class="phase-level-desc">
+                  DISENGAGE (freewheel), LOCK (holding 0 RPM), MOVEMENT (−350 to +350 RPM), JERK (Quick-Stop), ERR
+                  (driver fault).
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">2</span>
+                  Enforced Transitions + GUI
+                </div>
+                <p class="phase-level-desc">
+                  You can't jump from DISENGAGE straight to MOVEMENT; the motor must be locked at 0 RPM first. Invalid
+                  inputs are rejected before any CAN frame is sent. A Python GUI streams target speeds from a slider.
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">3</span>
+                  Statusword Polling &amp; Fault Recovery
+                </div>
+                <p class="phase-level-desc">
+                  The driver's Statusword (0x6041) is polled every 150 ms; a set fault bit (bit 3) forces STATE_ERR and
+                  zero speed automatically. [C] clears the fault with the CiA 402 rising edge on Controlword bit 7
+                  &mdash; no reboot needed.
+                </p>
+              </div>
+            </div>
+
+            <!-- Right: Media & Tabs -->
+            <div>
+              <div class="phase-media-box">
+                <video autoplay muted loop playsinline preload="metadata"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <source src="../../assets/images/Gabriel/phase4-fsm-gui.mp4" type="video/mp4">
+                </video>
+                <div class="media-missing-fallback">
+                  <svg class="media-fallback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8">
+                    <rect x="2" y="2" width="20" height="20" rx="4"></rect>
+                    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon>
+                  </svg>
+                  <span class="media-fallback-title">Phase 4 Video Demo</span>
+                  <code class="media-fallback-path">/assets/images/Gabriel/phase4-fsm-gui.mp4</code>
+                  <span class="media-fallback-hint">Place recording here to preview live playback</span>
+                </div>
+              </div>
+
+              <div class="phase-tabs-container">
+                <div class="phase-tabs-bar">
+                  <button type="button" class="phase-tab-btn active" data-tab-target="p4-code">Code (C)</button>
+                  <button type="button" class="phase-tab-btn" data-tab-target="p4-console">Console Output</button>
+                </div>
+                <div id="p4-code" class="phase-tab-panel active">
+                  <pre class="code-scroll-frame"><code class="language-c">case STATE_LOCK:
+  if (ch == 'w' || ch == 'W') {
+    currentSpeedRpm = SPEED_STEP_RPM;
+    Driver_Set_Speed_Right_Only(currentSpeedRpm);
+    currentState = STATE_MOVEMENT;
+  }
+  else if (ch == 'd' || ch == 'D') {
+    Driver_Disengage();
+    currentState = STATE_DISENGAGE;
+  }
+  break;</code></pre>
+                </div>
+                <div id="p4-console" class="phase-tab-panel">
+                  <!-- TODO: Replace with real serial capture -->
+                  <pre class="console-scroll-frame">&gt;&gt;&gt; [ACTION] RUN: Enabling driver &amp; locking shaft at 0 RPM...
+&gt;&gt;&gt; [!] HARDWARE ALARM DETECTED: Entering STATE_ERR!</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 7: PHASE 5: DRIVE IT
+             ================================================================== -->
+        <section id="phase-5" class="phase-card phase-card-featured">
+          <div class="phase-card-header">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-emerald">SECTION 7.0</span>
+              <span class="badge badge-purple">PHASE 5</span>
+            </div>
+            <h2 style="font-size: 21px; color: var(--apple-text-primary); margin: 0 0 6px 0;">Drive It</h2>
+            <code class="phase-source-file">controller.c</code>
+            <div class="phase-problem-callout">
+              <strong>Problem Statement:</strong> &ldquo;Bring everything together: a wireless gamepad plugged straight
+              into
+              the STM32 drives the full robot &mdash; no laptop in the loop.&rdquo;
+            </div>
+          </div>
+
+          <div class="phase-card-body">
+            <!-- Left: Mini staircase levels -->
+            <div class="phase-levels-list">
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">1</span>
+                  Boot-Time Node Probe
+                </div>
+                <p class="phase-level-desc">
+                  Each driver is pinged at startup; if one doesn't reply within 60 ms, the console prints exactly what
+                  to check (DIP switch, power, CAN wiring).
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">2</span>
+                  Mirrored-Motor Correction
+                </div>
+                <p class="phase-level-desc">
+                  The right-side hub motors are mounted facing the opposite way, so their direction is inverted in
+                  software. Higher layers think only in &ldquo;vehicle forward&rdquo;.
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">3</span>
+                  USB Host Gamepad
+                </div>
+                <p class="phase-level-desc">
+                  XInput packets parsed directly on the STM32. RT = forward, LT = reverse; pulling both at once forces 0
+                  RPM.
+                </p>
+              </div>
+
+              <div class="phase-level-item">
+                <div class="phase-level-title">
+                  <span class="phase-level-badge">4</span>
+                  Differential Steering &amp; Ramping
+                </div>
+                <p class="phase-level-desc">
+                  Track width 381.2 mm, wheel radius 100 mm, turn rate 0.80 rad/s &rarr; &approx;14.6 RPM left/right
+                  difference.
+                  A 25 ms ramp loop accelerates at 35 RPM/s (0&rarr;30 RPM in ~0.85 s) and coasts down at 15 RPM/s.
+                  Gamepad [B] triggers a software CiA 402 Quick-Stop on all four wheels; [A] re-arms.
+                </p>
+              </div>
+            </div>
+
+            <!-- Right: Media (Featured Largest) & Tabs -->
+            <div>
+              <div class="phase-media-box">
+                <video autoplay muted loop playsinline preload="metadata"
+                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <source src="../../assets/images/Gabriel/phase5-drive.mp4" type="video/mp4">
+                </video>
+                <div class="media-missing-fallback">
+                  <svg class="media-fallback-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8">
+                    <rect x="2" y="2" width="20" height="20" rx="4"></rect>
+                    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon>
+                  </svg>
+                  <span class="media-fallback-title">Phase 5 Full Teleoperation Demo</span>
+                  <code class="media-fallback-path">/assets/images/Gabriel/phase5-drive.mp4</code>
+                  <span class="media-fallback-hint">Featured live verification capture (largest video in firmware
+                    scope)</span>
+                </div>
+              </div>
+
+              <div class="phase-tabs-container">
+                <div class="phase-tabs-bar">
+                  <button type="button" class="phase-tab-btn active" data-tab-target="p5-code">Code (C)</button>
+                  <button type="button" class="phase-tab-btn" data-tab-target="p5-console">Console Output</button>
+                </div>
+                <div id="p5-code" class="phase-tab-panel active">
+                  <pre class="code-scroll-frame"><code class="language-c">static int32_t Calculate_Base_RPM(uint8_t lt_pct, uint8_t rt_pct) {
+  /* Safety: both triggers pulled -> force stop */
+  if (lt_pct > TRIGGER_DEADZONE_PCT && rt_pct > TRIGGER_DEADZONE_PCT)
+    return 0;
+  if (rt_pct > TRIGGER_DEADZONE_PCT)               /* RT: forward */
+    return  (int32_t)((rt_pct * MOTOR_MAX_RPM) / 100);
+  if (lt_pct > TRIGGER_DEADZONE_PCT)               /* LT: reverse */
+    return -(int32_t)((lt_pct * MOTOR_MAX_RPM) / 100);
+  return 0;
+}</code></pre>
+                </div>
+                <div id="p5-console" class="phase-tab-panel">
+                  <!-- TODO: Replace with real serial capture -->
+                  <pre class="console-scroll-frame">&gt;&gt;&gt; [INIT] Probing CAN Node 1 &amp; Node 2...
+  &gt;&gt;&gt; [CAN OK] Driver Node 1 DETECTED!
+  &gt;&gt;&gt; [CAN OK] Driver Node 2 DETECTED!</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 8: SAFETY BY DESIGN
+             ================================================================== -->
+        <section id="section-8-safety" class="card-box" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">CANopen Protocol &amp; ZLAC8015D Motor Actuation</h2>
+              <span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 8.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Safety Is Layered, Not Bolted On
+              </h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
 
-        <!-- SECTION 4 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+          <p style="font-size: 14.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
+            A multi-layer safety matrix enforces determinism at the driver protocol, software state machine, and
+            hardware interlock levels.
+          </p>
+
+          <div class="admin-table-wrapper" style="margin-top: 14px;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="min-width: 200px;">Hazard</th>
+                  <th style="min-width: 300px;">Mitigation</th>
+                  <th style="min-width: 120px; text-align: center;">Layer</th>
+                  <th style="min-width: 130px; text-align: center;">Phase</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>No ACK locks the CAN TX mailboxes</strong></td>
+                  <td>Auto-retransmit off; stalled mailboxes aborted</td>
+                  <td style="text-align: center;"><span class="badge badge-blue">Firmware</span></td>
+                  <td style="text-align: center;"><a href="#phase-1"
+                      style="color: var(--apple-blue); font-weight: 600; text-decoration: none;">Phase 1</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Driver not powered / miswired at boot</strong></td>
+                  <td>Node probe with actionable diagnostics</td>
+                  <td style="text-align: center;"><span class="badge badge-blue">Firmware</span></td>
+                  <td style="text-align: center;"><a href="#phase-5"
+                      style="color: var(--apple-blue); font-weight: 600; text-decoration: none;">Phase 5</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Command sent while coils disengaged</strong></td>
+                  <td>State machine rejects invalid transitions</td>
+                  <td style="text-align: center;"><span class="badge badge-blue">Firmware</span></td>
+                  <td style="text-align: center;"><a href="#phase-4"
+                      style="color: var(--apple-blue); font-weight: 600; text-decoration: none;">Phase 4</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Driver fault (stall, overvoltage)</strong></td>
+                  <td>Statusword polled every 150 ms &rarr; STATE_ERR, speed zeroed</td>
+                  <td style="text-align: center;"><span class="badge badge-blue">Firmware</span></td>
+                  <td style="text-align: center;"><a href="#phase-4"
+                      style="color: var(--apple-blue); font-weight: 600; text-decoration: none;">Phase 4</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Both triggers pulled at once</strong></td>
+                  <td>Forced 0 RPM</td>
+                  <td style="text-align: center;"><span class="badge badge-blue">Firmware</span></td>
+                  <td style="text-align: center;"><a href="#phase-5"
+                      style="color: var(--apple-blue); font-weight: 600; text-decoration: none;">Phase 5</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Sudden speed jumps (tipping, gear shock)</strong></td>
+                  <td>Driver ramps + 25 ms software ramp</td>
+                  <td style="text-align: center;"><span class="badge badge-blue">Firmware</span></td>
+                  <td style="text-align: center;">
+                    <a href="#phase-3" style="color: var(--apple-blue); font-weight: 600; text-decoration: none;">Phase
+                      3</a>,
+                    <a href="#phase-5" style="color: var(--apple-blue); font-weight: 600; text-decoration: none;">5</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Operator emergency</strong></td>
+                  <td>Gamepad [B] &rarr; CiA 402 Quick-Stop</td>
+                  <td style="text-align: center;"><span class="badge badge-blue">Firmware</span></td>
+                  <td style="text-align: center;">
+                    <a href="#phase-3" style="color: var(--apple-blue); font-weight: 600; text-decoration: none;">Phase
+                      3</a>,
+                    <a href="#phase-5" style="color: var(--apple-blue); font-weight: 600; text-decoration: none;">5</a>
+                  </td>
+                </tr>
+                <tr style="background: rgba(255, 159, 10, 0.04);">
+                  <td><strong>Firmware or comms failure</strong></td>
+                  <td>Wireless NC kill switch acts directly on drivers; contactor cuts motor power</td>
+                  <td style="text-align: center;"><span class="badge badge-amber">Hardware</span></td>
+                  <td style="text-align: center;"><a href="stm32%20hardware.html#interface-wiring"
+                      style="color: var(--apple-amber); font-weight: 600; text-decoration: none;">Hardware &rarr; Power
+                      &amp; Safety</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 9: PROBLEMS WE HIT
+             ================================================================== -->
+        <section id="section-9-problems" class="card-box" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 4.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Closed-Loop PID Velocity Control &amp; Wheel Odometry</h2>
+              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 9.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Problems We Hit</h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
 
-        <!-- SECTION 5 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+          <p style="font-size: 14.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
+            Key benchtop troubleshooting lessons learned during actuator and motor driver integration.
+          </p>
+
+          <div class="problems-grid">
+            <!-- Problem 1 -->
+            <div class="problem-card">
+              <h4 class="problem-card-title">&ldquo;Stepper driver ignored our pulses&rdquo;</h4>
+              <div class="problem-row">
+                <span class="problem-label lbl-symptom">Symptom</span>
+                <span style="color: var(--apple-text-secondary);">Driver didn't respond reliably.</span>
+              </div>
+              <div class="problem-row">
+                <span class="problem-label lbl-cause">Cause</span>
+                <span style="color: var(--apple-text-secondary);">3.3 V GPIO couldn't push enough current through the
+                  driver's optocoupler LEDs (~1.7 V left after the LED drop).</span>
+              </div>
+              <div class="problem-row">
+                <span class="problem-label lbl-fix">Fix</span>
+                <span style="color: var(--apple-green);">Rewired common-anode to 5 V and sinked the negative inputs with
+                  open-drain GPIO.</span>
+              </div>
+            </div>
+
+            <!-- Problem 2 -->
+            <div class="problem-card">
+              <h4 class="problem-card-title">&ldquo;The wheels fought each other&rdquo;</h4>
+              <div class="problem-row">
+                <span class="problem-label lbl-symptom">Symptom</span>
+                <span style="color: var(--apple-text-secondary);">+30 RPM to all motors locked the chassis.</span>
+              </div>
+              <div class="problem-row">
+                <span class="problem-label lbl-cause">Cause</span>
+                <span style="color: var(--apple-text-secondary);">Right-side hub motors are mounted mirrored.</span>
+              </div>
+              <div class="problem-row">
+                <span class="problem-label lbl-fix">Fix</span>
+                <span style="color: var(--apple-green);">Per-channel direction inversion inside
+                  Motor_Set_Velocity().</span>
+              </div>
+            </div>
+
+            <!-- Problem 3 -->
+            <div class="problem-card">
+              <h4 class="problem-card-title">&ldquo;Step timing was too coarse&rdquo;</h4>
+              <div class="problem-row">
+                <span class="problem-label lbl-symptom">Symptom</span>
+                <span style="color: var(--apple-text-secondary);">Motor couldn't reach usable speed smoothly.</span>
+              </div>
+              <div class="problem-row">
+                <span class="problem-label lbl-cause">Cause</span>
+                <span style="color: var(--apple-text-secondary);">HAL_Delay() has 1 ms resolution; pulses needed 200–800
+                  µs.</span>
+              </div>
+              <div class="problem-row">
+                <span class="problem-label lbl-fix">Fix</span>
+                <span style="color: var(--apple-green);">DWT cycle-counter microsecond delay.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             SECTION 10: SEMESTER 2 ROADMAP
+             ================================================================== -->
+        <section id="section-10-roadmap" class="card-box" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-cyan" style="margin-bottom: 6px;">SECTION 5.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Auxiliary Actuator Sequencing &amp; SSR Suction Control</h2>
+              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 10.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Semester 2 Firmware Roadmap</h2>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
 
-        <!-- SECTION 6 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 6.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Safety Failsafes, Watchdog Timers &amp; E-Stop Logic</h2>
+          <p style="font-size: 14.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
+            Target enhancements scheduled for integration upon delivery of the runway chassis and companion autonomy
+            computer.
+          </p>
+
+          <div class="roadmap-grid">
+            <div class="roadmap-card">
+              <div class="roadmap-title">
+                <span>IMU Sensor Fusion</span>
+                <span class="badge badge-purple" style="font-size: 10px; padding: 2px 7px;">Planned</span>
+              </div>
+              <p class="roadmap-desc">
+                Complementary/EKF filter on the STM32 for attitude and tilt estimation on uneven runway surfaces.
+              </p>
+            </div>
+
+            <div class="roadmap-card">
+              <div class="roadmap-title">
+                <span>Jetson &amp; ROS 2 Integration</span>
+                <span class="badge badge-purple" style="font-size: 10px; padding: 2px 7px;">Planned</span>
+              </div>
+              <p class="roadmap-desc">
+                micro-ROS link: publish odometry and status, subscribe to cmd_vel; add a comms-timeout watchdog so the
+                STM32 Quick-Stops if the Jetson goes silent.
+              </p>
+            </div>
+
+            <div class="roadmap-card">
+              <div class="roadmap-title">
+                <span>BMS Telemetry</span>
+                <span class="badge badge-purple" style="font-size: 10px; padding: 2px 7px;">Planned</span>
+              </div>
+              <p class="roadmap-desc">
+                Cell voltages, SoC and temperature over USART1, with automatic power throttling and cutoffs.
+              </p>
+            </div>
+
+            <div class="roadmap-card">
+              <div class="roadmap-title">
+                <span>Closed-Loop Slip Compensation</span>
+                <span class="badge badge-purple" style="font-size: 10px; padding: 2px 7px;">Planned</span>
+              </div>
+              <p class="roadmap-desc">
+                Use driver encoder feedback to correct heading drift and wheel slip in turns.
+              </p>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
-        </div>
+        </section>
 
-        <!-- SECTION 7 -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 7.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Hardware-in-the-Loop (HIL) Testing &amp; Latency Benchmarking</h2>
+        <!-- TWO-WAY PAGE NAVIGATION -->
+        <div
+          style="margin-top: 36px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <a href="stm32%20hardware.html" class="nav-prev-page-btn" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--apple-border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+          ">
+            <span style="font-size: 18px; color: var(--apple-blue); font-weight: 700;">&larr;</span>
+            <div style="text-align: left;">
+              <div
+                style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600;">
+                Previous Architecture</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary);">STM32 Hardware
+                Subsystem</div>
             </div>
-          </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To Be Fillled]
-          </p>
+          </a>
         </div>
-
       </div>
     </div>
   </main>
 
-  <footer class="apple-footer">
-    <div class="apple-footer-inner">
-      <div>© AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
-      <ul class="apple-footer-links">
-        <li><a href="../../index.html">Overview</a></li>
-        <li><a href="stm32%20hardware.html">← STM32 Hardware</a></li>
-        <li><a href="../hilbert/Motor_drivetrain_calculation.html">Motor Drivetrain →</a></li>
-        <li><a href="../../7-documentation.html">Documentation</a></li>
-      </ul>
+  <!-- IMAGE LIGHTBOX DIALOG -->
+  <dialog id="image-lightbox-dialog" aria-label="Enlarged Diagram Preview">
+    <div class="lightbox-wrapper">
+      <button type="button" class="lightbox-close-btn" id="lightbox-close-btn"
+        aria-label="Close enlarged preview">&times;</button>
+      <img id="lightbox-img" src="" alt="Enlarged diagram view">
+      <div id="lightbox-caption"></div>
     </div>
-  </footer>
+  </dialog>
 
   <script src="../../js/main.js?v=4.2"></script>
+
+  <!-- INTERACTIVE CONTROLS: TABS & LIGHTBOX -->
+  <script>
+    (function () {
+      // 1. LIGHTBOX MODAL DIALOG
+      const lightboxDialog = document.getElementById('image-lightbox-dialog');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+
+      window.openLightbox = function (src, caption) {
+        if (!lightboxDialog || !lightboxImg) return;
+        lightboxImg.src = src;
+        lightboxImg.alt = caption || 'Enlarged Figure';
+        if (lightboxCaption) {
+          lightboxCaption.textContent = caption || '';
+        }
+        lightboxDialog.showModal();
+      };
+
+      if (lightboxCloseBtn && lightboxDialog) {
+        lightboxCloseBtn.addEventListener('click', function () {
+          lightboxDialog.close();
+        });
+        lightboxDialog.addEventListener('click', function (e) {
+          if (e.target === lightboxDialog) {
+            lightboxDialog.close();
+          }
+        });
+      }
+
+      // 2. PHASE CARD TABS (Code vs Console)
+      const tabButtons = document.querySelectorAll('.phase-tab-btn');
+      tabButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const container = btn.closest('.phase-tabs-container');
+          if (!container) return;
+
+          const targetId = btn.getAttribute('data-tab-target');
+          if (!targetId) return;
+
+          // Toggle tab button states
+          container.querySelectorAll('.phase-tab-btn').forEach(function (b) {
+            b.classList.remove('active');
+          });
+          btn.classList.add('active');
+
+          // Toggle tab panels
+          container.querySelectorAll('.phase-tab-panel').forEach(function (p) {
+            p.classList.remove('active');
+          });
+          const targetPanel = container.querySelector('#' + targetId);
+          if (targetPanel) {
+            targetPanel.classList.add('active');
+          }
+        });
+      });
+    })();
+  </script>
 
   <!-- EXPORT PDF BUTTON -->
   <style>
@@ -227,45 +2112,64 @@
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       letter-spacing: 0.01em;
     }
+
     .pdf-export-btn:hover {
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4);
       background: linear-gradient(135deg, #0a84ff 0%, #1d4ed8 100%);
     }
+
     .pdf-export-btn:active {
       transform: translateY(0) scale(0.98);
     }
+
     .pdf-export-btn svg {
       width: 16px;
       height: 16px;
       fill: currentColor;
     }
+
     @media print {
+
       .pdf-export-btn,
       .apple-nav,
       .apple-mobile-drawer,
+      .apple-subnav,
       .apple-footer {
         display: none !important;
       }
+
       body {
         background: #fff !important;
         color: #111 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
+
       .apple-main-content {
         padding-top: 0 !important;
+      }
+
+      .phase-level-details {
+        display: block !important;
+      }
+
+      .phase-level-details summary {
+        display: none !important;
       }
     }
   </style>
   <button class="pdf-export-btn" onclick="window.print()" title="Export this page as PDF">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+    </svg>
     Export PDF
   </button>
 
 </body>
+
 </html>

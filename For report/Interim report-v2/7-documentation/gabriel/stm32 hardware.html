@@ -689,11 +689,8 @@
             </p>
           </div>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <a href="stm32%20firmware.html" class="btn btn-deep-dive"
-              style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.4); color: #c084fc;">STM32
-              Firmware &rarr;</a>
-            <a href="../../4-subsystems/electrical.html" class="btn btn-deep-dive">4.2 Electrical Subsystem &rarr;</a>
-            <a href="../../7-documentation.html" class="btn btn-deep-dive">Documentation Hub &rarr;</a>
+            <a href="../../4-subsystems/computer-vision.html" class="btn btn-deep-dive">4.4 Overview Card →</a>
+            <a href="../../7-documentation.html" class="btn btn-deep-dive">Documentation Hub →</a>
           </div>
         </div>
       </div>
@@ -785,8 +782,8 @@
           </div>
 
           <p class="section-intro-line" style="margin-top: 14px;">
-            The UGV splits computing into two tiers: a high-level computer for autonomy, and a microcontroller for
-            anything that moves.
+            The UGV splits computing into two tiers: a high-level computer for computing and a microcontroller for
+            autonomy.
           </p>
 
           <!-- INLINE SVG BLOCK DIAGRAM (GENEROUS 180px SPACING, ZERO OVERLAP) -->
@@ -817,7 +814,7 @@
               <rect x="50" y="34" width="130" height="22" rx="11" fill="rgba(56, 189, 248, 0.18)" />
               <text x="115" y="49" fill="#38bdf8" font-size="10.5"
                 font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700"
-                text-anchor="middle" letter-spacing="0.06em">AUTONOMY TIER</text>
+                text-anchor="middle" letter-spacing="0.06em">COMPUTING TIER</text>
               <text x="50" y="88" fill="#ffffff" font-size="20"
                 font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700">NVIDIA
                 Jetson</text>
@@ -1370,8 +1367,8 @@
 
           <!-- IMAGE PLACEHOLDER -->
           <div class="image-preview-frame figure-preview"
-            onclick="openLightbox('../../assets/stm32/kicad-schematic.png', 'Custom KiCad carrier board schematic and PCB routing preview')">
-            <img src="../../assets/stm32/kicad-schematic.png" alt="KiCad carrier board schematic and layout placeholder"
+            onclick="openLightbox('../../assets/images/Gabriel/kicad-schematic.png', 'Custom KiCad carrier board schematic and PCB routing preview')">
+            <img src="../../assets/images/Gabriel/kicad-schematic.png" alt="KiCad carrier board schematic and layout placeholder"
               class="zoomable" width="1200" height="675" loading="lazy">
             <div class="image-zoom-overlay">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -1390,23 +1387,29 @@
         </section>
 
         <!-- ==================================================================
-             PLACEHOLDER FOR NEXT PASS: SOFTWARE SECTION
+             SOFTWARE & FIRMWARE SUBSYSTEM LINK
              ================================================================== -->
-        <section id="software" class="software-section-placeholder"
-          aria-label="Software Architecture Section Placeholder">
-          <!-- Software section: Phases 1–5 to be added -->
-          <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
-            <span class="badge badge-blue">RESERVED ANCHOR</span>
-            <span class="badge"
-              style="background: rgba(255, 255, 255, 0.08); color: var(--apple-text-tertiary);">PENDING PHASE</span>
+        <section id="software" class="card-box"
+          style="margin-top: 32px; border-left: 5px solid var(--accent-purple); text-align: left; padding: 22px 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span class="badge badge-purple">SOFTWARE ARCHITECTURE</span>
+                <span class="badge badge-emerald">PHASES 1–5 COMPLETED</span>
+              </div>
+              <h3 style="font-size: 18px; color: var(--apple-text-primary); margin: 0 0 6px 0;">STM32 Firmware
+                Architecture &amp; Control</h3>
+              <p
+                style="font-size: 13px; color: var(--apple-text-secondary); max-width: 680px; margin: 0; line-height: 1.55;">
+                Explore the progressive bottom-up verification (DC loopback, DWT microsecond timing, CiA 402 multi-node
+                CAN, 5-state machine, and wireless gamepad teleoperation).
+              </p>
+            </div>
+            <a href="stm32%20firmware.html" class="apple-btn-pill"
+              style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; font-size: 13.5px; font-weight: 600; text-decoration: none; border-radius: 980px; background: linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(41, 151, 255, 0.2) 100%); border: 1px solid rgba(168, 85, 247, 0.5); color: #ffffff;">
+              <span>Open STM32 Firmware &rarr;</span>
+            </a>
           </div>
-          <h3 style="font-size: 18px; color: var(--apple-text-primary); margin: 0 0 6px 0;">STM32 Software &amp;
-            Firmware Subsystem</h3>
-          <p
-            style="font-size: 13px; color: var(--apple-text-secondary); max-width: 620px; margin: 0 auto; line-height: 1.5;">
-            Phases 1&ndash;5 (FreeRTOS scheduler, CANopen CiA 402 state machine, UART DMA ring buffers, and failsafe
-            watchdog handlers) will be appended below without altering the hardware structure.
-          </p>
         </section>
 
         <!-- TWO-WAY PAGE NAVIGATION -->
