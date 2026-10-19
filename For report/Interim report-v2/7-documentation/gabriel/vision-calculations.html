@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <script>
-    (function() {
+    (function () {
       try {
         var t = localStorage.getItem('theme');
         if (t === 'light') {
@@ -10,7 +11,7 @@
         } else {
           document.documentElement.setAttribute('data-theme', 'dark');
         }
-      } catch (e) {}
+      } catch (e) { }
     })();
   </script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -18,15 +19,520 @@
   <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computer vison calculation - Gabriel</title>
+  <title>Computer Vision Calculations &amp; Camera Geometry - Gabriel Tan | FOD Hunter</title>
   <link rel="stylesheet" href="../../css/styles.css?v=4.2">
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: {
+        enableMenu: false
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* ── MathJax Responsive & High-Legibility Styling ─────────────────────── */
+    mjx-container {
+      max-width: 100% !important;
+      outline: none !important;
+    }
+
+    mjx-container:not([display="true"]) {
+      display: inline-block !important;
+      overflow: visible !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      font-size: 100% !important;
+      vertical-align: -0.1em !important;
+    }
+
+    mjx-container[display="true"] {
+      margin: 4px 0 !important;
+      display: block !important;
+      font-size: 105% !important;
+      overflow: visible !important;
+    }
+
+    .math-eq-box {
+      background: #0b1120;
+      border: 1px solid var(--apple-border, rgba(255, 255, 255, 0.1));
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: center;
+      font-size: 14px;
+      margin: 12px 0 6px 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      box-sizing: border-box;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+    }
+
+    .math-eq-box::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .math-eq-box::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    [data-theme="light"] .math-eq-box {
+      background: #f8fafc;
+      border-color: rgba(0, 0, 0, 0.12);
+    }
+
+    .plain-words-line {
+      font-size: 12.5px;
+      color: var(--apple-text-secondary);
+      font-style: italic;
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+
+    /* ── Breadcrumb Navigation ──────────────────────────────────────────── */
+    .breadcrumb-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--apple-text-tertiary);
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-bar a {
+      color: var(--apple-text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .breadcrumb-bar a:hover {
+      color: var(--apple-blue);
+    }
+
+    .breadcrumb-sep {
+      opacity: 0.4;
+      font-size: 11px;
+    }
+
+    /* ── TL;DR Metric Pills ──────────────────────────────────────────────── */
+    .metric-pill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .metric-pill {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .metric-pill:hover {
+      transform: translateY(-2px);
+      border-color: rgba(41, 151, 255, 0.4);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    [data-theme="light"] .metric-pill {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="light"] .metric-pill:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      border-color: rgba(41, 151, 255, 0.5);
+    }
+
+    /* ── Interactive Simulator Styles ───────────────────────────────────── */
+    .sim-panel {
+      background: rgba(10, 15, 26, 0.7);
+      border: 1px solid var(--apple-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 18px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(12px);
+    }
+
+    [data-theme="light"] .sim-panel {
+      background: #fcfcfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .sim-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .sim-control-group {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    [data-theme="light"] .sim-control-group {
+      background: #f8fafc;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .sim-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .sim-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--apple-text-primary);
+    }
+
+    .sim-val-badge {
+      font-family: var(--font-mono, monospace);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--apple-blue);
+      background: rgba(41, 151, 255, 0.12);
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(41, 151, 255, 0.25);
+    }
+
+    .sim-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.12);
+      outline: none;
+      margin: 10px 0 6px 0;
+      transition: background 0.2s ease;
+    }
+
+    [data-theme="light"] .sim-slider {
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    .sim-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--apple-blue);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(41, 151, 255, 0.5);
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+
+    .sim-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      background: #47a6ff;
+    }
+
+    .sim-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border: none;
+      border-radius: 50%;
+      background: var(--apple-blue);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(41, 151, 255, 0.5);
+    }
+
+    .sim-hint {
+      font-size: 11px;
+      color: var(--apple-text-tertiary);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ── Expandable "Why?" Sections (matching yolo-comparison.html) ────────── */
+    .why-details {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-size: 13px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .why-details[open] {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(41, 151, 255, 0.3);
+    }
+
+    [data-theme="light"] .why-details {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .why-details[open] {
+      background: #f5f5f7;
+      border-color: rgba(41, 151, 255, 0.4);
+    }
+
+    .why-details summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--apple-blue);
+      user-select: none;
+      list-style-position: inside;
+    }
+
+    .why-details summary::-webkit-details-marker {
+      color: var(--apple-blue);
+    }
+
+    .why-details p {
+      margin: 8px 0 0 0;
+      color: var(--apple-text-secondary);
+      line-height: 1.6;
+    }
+
+    .preset-selector {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .preset-btn {
+      cursor: pointer;
+      padding: 7px 14px;
+      border-radius: 980px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--apple-border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--apple-text-secondary);
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .preset-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--apple-text-primary);
+    }
+
+    .preset-btn.active {
+      background: var(--apple-blue);
+      color: #ffffff;
+      border-color: var(--apple-blue);
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(41, 151, 255, 0.4);
+    }
+
+    [data-theme="light"] .preset-btn {
+      background: #f1f5f9;
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #475569;
+    }
+
+    [data-theme="light"] .preset-btn.active {
+      background: var(--apple-blue);
+      color: #ffffff;
+    }
+
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      background: radial-gradient(circle at 15% 30%, rgba(41, 151, 255, 0.06), transparent 50%), #070a12;
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    [data-theme="light"] .canvas-container {
+      background: radial-gradient(circle at 15% 30%, rgba(41, 151, 255, 0.04), transparent 50%), #f8fafc;
+      border-color: rgba(0, 0, 0, 0.12);
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    #sim-canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 8;
+    }
+
+    .hud-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .hud-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--apple-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    [data-theme="light"] .hud-card {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .hud-card-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--apple-text-tertiary);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .hud-card-value {
+      font-family: var(--font-mono, monospace);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--apple-text-primary);
+      line-height: 1.2;
+    }
+
+    .hud-card-sub {
+      font-size: 11px;
+      color: var(--apple-text-secondary);
+      margin-top: 4px;
+      line-height: 1.35;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .status-pass {
+      background: rgba(48, 209, 88, 0.15);
+      color: var(--apple-green);
+      border: 1px solid rgba(48, 209, 88, 0.35);
+    }
+
+    .status-marginal {
+      background: rgba(255, 159, 10, 0.15);
+      color: var(--apple-amber);
+      border: 1px solid rgba(255, 159, 10, 0.35);
+    }
+
+    .status-fail {
+      background: rgba(255, 69, 58, 0.15);
+      color: var(--apple-red);
+      border: 1px solid rgba(255, 69, 58, 0.35);
+    }
+
+    /* ── Pipeline Steps Layout ──────────────────────────────────────────── */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 18px 0;
+    }
+
+    .pipeline-step-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+    }
+
+    [data-theme="light"] .pipeline-step-card {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .step-number-badge {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      border-radius: 50%;
+      background: rgba(41, 151, 255, 0.15);
+      color: var(--apple-blue);
+      font-weight: 700;
+      font-size: 11.5px;
+      margin-bottom: 8px;
+    }
+
+    /* ── Responsive & Accessibility ─────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .card-box {
+        padding: 18px 14px;
+      }
+
+      .sim-panel {
+        padding: 14px 10px;
+      }
+
+      .hud-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      }
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--apple-blue) !important;
+      outline-offset: 2px !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <!-- APPLE TOP NAVIGATION BAR -->
   <header class="apple-nav">
     <div class="apple-nav-container">
       <a href="../../index.html" class="apple-nav-brand">
-        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
+        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore"
+          class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
         <span class="nav-project-code">AIS-406</span>
       </a>
 
@@ -42,6 +548,7 @@
       </ul>
 
       <div class="apple-nav-actions">
+        <a href="yolo-comparison.html" class="apple-btn-pill" style="margin-right: 6px;">YOLO Comparison →</a>
         <a href="../../7-documentation.html" class="apple-btn-pill">← Documentation Hub</a>
         <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
       </div>
@@ -50,6 +557,7 @@
 
   <!-- MOBILE DRAWER -->
   <div class="apple-mobile-drawer" id="apple-mobile-drawer">
+    <a href="yolo-comparison.html" style="color: var(--apple-blue); font-weight: 600;">← YOLO Model Comparison</a>
     <a href="../../index.html">Overview</a>
     <a href="../../1-introduction.html">Introduction</a>
     <a href="../../2-design-overview.html">Overview of Design</a>
@@ -62,61 +570,696 @@
 
   <!-- MAIN PAGE CONTENT -->
   <main class="apple-main-content">
-    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
-      
+    <div class="apple-container" style="padding-top: 24px; padding-bottom: 60px;">
+
+      <!-- BREADCRUMB -->
+      <nav class="breadcrumb-bar" aria-label="Breadcrumb">
+        <a href="../../index.html">🏠 FOD Hunter</a>
+        <span class="breadcrumb-sep">&gt;</span>
+        <a href="../../7-documentation.html">📁 Documentation</a>
+        <span class="breadcrumb-sep">&gt;</span>
+        <a href="../../3-individual-scopes.html#gabriel">👁️ Gabriel</a>
+        <span class="breadcrumb-sep">&gt;</span>
+        <span style="color: var(--apple-text-primary); font-weight: 600;">📐 Vision Calculations</span>
+      </nav>
+
       <!-- HERO HEADER -->
-      <div class="apple-section-header" style="text-align: center; margin-bottom: 40px;">
-        <div class="apple-hero-badge">Drone &amp; Vision Subsystem • Gabriel</div>
+      <div class="apple-section-header" style="text-align: center; margin-bottom: 30px;">
+        <div class="apple-hero-badge">DRONE &amp; VISION SUBSYSTEM • GABRIEL</div>
         <h1 class="apple-section-title" style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 12px;">
-          Computer vison calculation
+          Computer Vision Calculations &amp; Camera Geometry
         </h1>
+        <p class="apple-section-desc"
+          style="max-width: 820px; margin: 0 auto; font-size: 14.5px; color: var(--apple-text-secondary); line-height: 1.6;">
+          How fast the robot drives, where the camera points, and how many pixels a fastener gets: the numbers behind
+          the camera and model choices.
+        </p>
+        <div style="margin-top: 14px;">
+          <a href="yolo-comparison.html" class="apple-btn-pill"
+            style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 18px; border-radius: 980px; background: rgba(41, 151, 255, 0.12); color: var(--apple-blue); border: 1px solid rgba(41, 151, 255, 0.35); font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.2s ease;">
+            ← YOLO Model Comparison &amp; Edge Benchmark
+          </a>
+        </div>
+      </div>
+
+      <!-- The short version (TL;DR PILLS) -->
+      <div style="margin-bottom: 28px;">
+        <div
+          style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary); margin-bottom: 12px;">
+          The short version
+        </div>
+        <div class="metric-pill-grid" style="margin-bottom: 0;">
+          <a href="#s1" class="metric-pill">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 1</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Speed sets the budget</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                400 RPM wheels = 4.19 m/s, so each frame must be processed in 33 ms.</div>
+            </div>
+            <div class="highlight-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">&le;
+              33 ms</div>
+          </a>
+
+          <a href="#s2" class="metric-pill">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 2</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Where the camera looks</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                Mounted 0.45 m high, tilted 20° down; the image centre lands 1.24 m ahead.</div>
+            </div>
+            <div class="blue-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">0.51 &ndash; 2.1 m usable</div>
+          </a>
+
+          <a href="#s3" class="metric-pill">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 3</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Pixels on a fastener</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                A 30 mm bolt gets 60 &times; 21 px on the IMX568, but only 16 &times; 5 px after shrinking to 640.</div>
+            </div>
+            <div class="amber-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">Why 1088 input</div>
+          </a>
+
+          <a href="#s4" class="metric-pill">
+            <div>
+              <div
+                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
+                Step 4</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Freeze the motion</div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
+                Exposure must stay under ~93 µs at the near edge, so a global shutter is needed.</div>
+            </div>
+            <div class="alert-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">&le; 93 µs</div>
+          </a>
+        </div>
       </div>
 
       <div class="page-content">
 
-        <!-- SECTION 1 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+        <!-- ===================================================================
+             SECTION 1: REQUIREMENTS FROM DRIVE SPEED
+             =================================================================== -->
+        <div class="card-box" id="s1" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 1.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Ground Sampling Distance (GSD) &amp; Optical Formulations</h2>
+              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Requirements from Drive Speed
+              </h2>
             </div>
+            <span class="badge badge-blue">Kinematics &amp; Compute Budget</span>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
+
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 12px;">
+            Every camera and compute limit starts from how fast the robot moves.
           </p>
+
+          <div class="math-eq-box">
+            $$v = \frac{\text{RPM} \times 2\pi r}{60} = \frac{400 \times 2\pi(0.1)}{60} = 4.19\text{ m/s} \approx 15.1\text{ km/h}$$
+          </div>
+          <div class="plain-words-line">
+            In plain words: wheel rotation speed times tire circumference gives the robot's ground velocity.
+          </div>
+
+          <div class="admin-table-wrapper" style="margin-top: 14px; margin-bottom: 8px;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Working</th>
+                  <th>Value</th>
+                  <th>Why it matters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ground speed</strong></td>
+                  <td>$400 \times 2\pi \times 0.1 \div 60$</td>
+                  <td><strong class="highlight-stat">4.19 m/s</strong></td>
+                  <td>Sets every other limit</td>
+                </tr>
+                <tr>
+                  <td><strong>Per-frame budget</strong></td>
+                  <td>$1 \div 30\text{ fps}$</td>
+                  <td><strong class="highlight-stat">&le; 33.3 ms</strong></td>
+                  <td>Model + pre/post-processing must fit (sheet min 30 fps)</td>
+                </tr>
+                <tr>
+                  <td><strong>Usable detection band (IMX568)</strong></td>
+                  <td>near edge 0.51 m to where a 30 mm item drops below 16 px wide at 1088 input (2.14 m)</td>
+                  <td><strong class="blue-stat">1.63 m</strong></td>
+                  <td>Region where the model still sees enough of a fastener</td>
+                </tr>
+                <tr>
+                  <td><strong>Time in view</strong></td>
+                  <td>$1.63\text{ m} \div 4.19\text{ m/s}$</td>
+                  <td><strong class="blue-stat">0.39 s</strong> (~12 frames at 30 fps)</td>
+                  <td>Room for multi-frame confirmation</td>
+                </tr>
+                <tr>
+                  <td><strong>Swath at image centre (IMX568)</strong></td>
+                  <td>$2 \times 1.32\text{ m} \times \tan 25^\circ$</td>
+                  <td><strong class="amber-stat">1.23 m</strong></td>
+                  <td>Width covered per pass</td>
+                </tr>
+                <tr>
+                  <td><strong>Runway sweep, UGV alone</strong></td>
+                  <td>$135,000\text{ m}^2 \div (1.23\text{ m} \times 4.19\text{ m/s})$</td>
+                  <td><strong class="alert-stat">&approx; 7.3 h</strong> for 3 km &times; 45 m</td>
+                  <td>Why the drone does the wide search</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size: 12px; color: var(--apple-text-tertiary); margin-bottom: 6px; line-height: 1.5;">
+            Note: Sweep time ignores turns and overlap.<br>
+            16 px at 1088 input is supported by our test results: the model reached 97% mAP@50 on webcam fasteners about 21 px wide at 1088.
+          </div>
         </div>
 
-        <!-- SECTION 2 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+        <!-- ===================================================================
+             SECTION 2: CAMERA GEOMETRY & GROUND SAMPLING DISTANCE
+             =================================================================== -->
+        <div class="card-box" id="s2" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 2.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Shutter Exposure &amp; RTK Georeferencing</h2>
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 2.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Camera Geometry &amp; Ground
+                Sampling Distance</h2>
+            </div>
+            <span class="badge badge-emerald">Optics &amp; Projection</span>
+          </div>
+
+          <!-- 2.1 Focal Length in Pixels -->
+          <div style="margin-top: 16px;">
+            <h3 style="font-size: 15.5px; color: var(--apple-text-primary); margin-bottom: 6px;">2.1 Focal Length in
+              Pixels ($f_x, f_y$)</h3>
+            <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
+              The pinhole camera model converts physical field-of-view angles into discrete sensor pixel dimensions.
+              For a sensor of width $W_{\text{sensor}}$ and height $H_{\text{sensor}}$, the pixel focal lengths scale
+              inversely with the tangent of half the angular field of view. Because pixels on our sensors are square,
+              $f_x$ and $f_y$ share the same value.
+            </p>
+
+            <div class="math-eq-box">
+              $$f_x = \frac{W_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{HFOV}}{2}\right)}, \quad f_y =
+              \frac{H_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{VFOV}}{2}\right)}$$
+            </div>
+            <div class="plain-words-line">
+              In plain words: how many pixels represent the lens's optical focal length; higher means more zoom.
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
-          </p>
+
+          <!-- 2.2 Oblique Slant Range & Ground Incidence -->
+          <div style="margin-top: 20px;">
+            <h3 style="font-size: 15.5px; color: var(--apple-text-primary); margin-bottom: 6px;">2.2 Oblique Slant
+              Range &amp; Ground Incidence</h3>
+            <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
+              Because the camera sits $0.45\text{ m}$ off the ground and points $20^\circ$ downward, it views the tarmac
+              at an angle. The true line-of-sight distance $R$ to any runway point $d$ ahead of the lens follows the
+              Pythagorean theorem. The incidence angle $\psi$ tells us how steeply that line of sight strikes the flat
+              runway.
+            </p>
+
+            <div class="math-eq-box">
+              $$R = \sqrt{H^2 + d^2}, \qquad \psi = \arctan\left(\frac{H}{d}\right)$$
+            </div>
+            <div class="plain-words-line">
+              In plain words: true line-of-sight distance to the ground and how steeply the camera looks down at it.
+            </div>
+          </div>
+
+          <!-- 2.3 Ground Sample Distance -->
+          <div style="margin-top: 20px;">
+            <h3 style="font-size: 15.5px; color: var(--apple-text-primary); margin-bottom: 6px;">2.3 Ground Sample
+              Distance (GSD)</h3>
+            <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
+              Ground Sample Distance measures how many millimetres of runway one pixel covers. Looking forward at a
+              shallow angle stretches the vertical footprint along the driving direction by $1 / \sin\psi$. Across the
+              direction of travel, resolution stays sharper because horizontal ray geometry is not foreshortened.
+            </p>
+
+            <div class="math-eq-box">
+              $$\text{GSD}_{\text{across}} = \frac{R \cdot 1000}{f_x}\ (\text{mm/px}), \qquad \text{GSD}_{\text{along}}
+              = \frac{\text{GSD}_{\text{across}}}{\sin(\psi)}\ (\text{mm/px})$$
+            </div>
+            <div class="plain-words-line">
+              In plain words: how many millimetres of runway one pixel covers; smaller is sharper.
+            </div>
+          </div>
+
+          <!-- Camera Table -->
+          <div class="admin-table-wrapper" style="margin-top: 14px; margin-bottom: 14px;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Sensor Model</th>
+                  <th>Resolution ($W \times H$)</th>
+                  <th>Pixel Pitch</th>
+                  <th>Lens HFOV</th>
+                  <th>Vertical FOV</th>
+                  <th>Nearest visible ground</th>
+                  <th>Top edge of frame</th>
+                  <th>Shutter Mechanism</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: rgba(48, 209, 88, 0.08);">
+                  <td><strong>Leopard LI-IMX568 (Primary)</strong></td>
+                  <td>$2472 \times 2064\text{ px}$</td>
+                  <td>$2.74\ \mu\text{m}$</td>
+                  <td>50.0°</td>
+                  <td>42.5°</td>
+                  <td><strong class="highlight-stat">0.51 m</strong></td>
+                  <td><span class="amber-stat">1.3° above horizon</span></td>
+                  <td><span class="badge badge-emerald">Global Shutter</span></td>
+                </tr>
+                <tr>
+                  <td><strong>UGREEN CM831 Webcam</strong></td>
+                  <td>$1920 \times 1080\text{ px}$</td>
+                  <td>n/a</td>
+                  <td>62.0°</td>
+                  <td>37.4°</td>
+                  <td>0.56 m</td>
+                  <td>19.5 m</td>
+                  <td><span class="badge badge-amber">Rolling Shutter</span></td>
+                </tr>
+                <tr>
+                  <td><strong>e-con Systems e-CAM56</strong></td>
+                  <td>$2472 \times 2064\text{ px}$</td>
+                  <td>$2.74\ \mu\text{m}$</td>
+                  <td>104.8°</td>
+                  <td>94.6°</td>
+                  <td>0.19 m</td>
+                  <td>above horizon</td>
+                  <td><span class="badge badge-emerald">Global Shutter</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Callouts -->
+          <div class="callout callout-amber" style="margin-bottom: 12px;">
+            <strong>Camera Framing:</strong> At 20° tilt the top of the IMX568 frame sits 1.3° above the horizon. Tilt
+            to ≥ 21.3° or crop the top rows so no pixels are spent on sky.
+          </div>
+
+          <div class="callout callout-blue" style="margin-bottom: 18px;">
+            <strong>Foreshortening:</strong> Because the camera looks at a shallow angle, objects are squashed about 3×
+            along the direction of travel: a 30 mm bolt is 60 px wide but only 21 px long (IMX568).
+          </div>
+
+          <!-- =================================================================
+               INTERACTIVE SIMULATOR COMPONENT: OPTICAL GEOMETRY & FOV SIMULATOR
+               ================================================================= -->
+          <div class="sim-panel" id="fov-simulator">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span class="badge badge-blue" style="margin-bottom: 4px;">INTERACTIVE SIMULATOR</span>
+                <h3 style="font-size: 17px; color: var(--apple-text-primary); margin: 0;">Optical Geometry &amp; FOV
+                  Simulator</h3>
+              </div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary);">
+                Speed constant $v = 4.19\text{ m/s}$ (400 RPM)
+              </div>
+            </div>
+
+            <!-- Sensor Preset Selector -->
+            <div style="margin-bottom: 14px;">
+              <div
+                style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 8px;">
+                Select Sensor &amp; Lens Configuration:
+              </div>
+              <div class="preset-selector" role="radiogroup" aria-label="Camera Presets">
+                <button type="button" class="preset-btn active" data-preset="imx568" aria-checked="true">
+                  📷 Leopard LI-IMX568 (50.0° HFOV, Global Shutter)
+                </button>
+                <button type="button" class="preset-btn" data-preset="ecam56" aria-checked="false">
+                  📷 e-con e-CAM56 (104.8° HFOV, Wide Angle)
+                </button>
+                <button type="button" class="preset-btn" data-preset="ugreen" aria-checked="false">
+                  📹 UGREEN CM831 (62.0° HFOV, 1080p Rolling)
+                </button>
+              </div>
+            </div>
+
+            <!-- Interactive Sliders Grid -->
+            <div class="sim-controls-grid">
+              <!-- Slider 1: Camera Height -->
+              <div class="sim-control-group">
+                <div class="sim-label-row">
+                  <span class="sim-label">Camera Height ($H$)</span>
+                  <span class="sim-val-badge" id="val-height">0.45 m</span>
+                </div>
+                <input type="range" class="sim-slider" id="slider-height" min="0.30" max="1.50" step="0.05"
+                  value="0.45" aria-label="Camera Mounting Height">
+                <div class="sim-hint">
+                  <span>0.30 m</span>
+                  <span>Default: 0.45 m</span>
+                  <span>1.50 m</span>
+                </div>
+              </div>
+
+              <!-- Slider 2: Camera Tilt Angle -->
+              <div class="sim-control-group">
+                <div class="sim-label-row">
+                  <span class="sim-label">Camera Tilt ($\theta$)</span>
+                  <span class="sim-val-badge" id="val-tilt">20.0°</span>
+                </div>
+                <input type="range" class="sim-slider" id="slider-tilt" min="5" max="60" step="1" value="20"
+                  aria-label="Camera Downward Tilt">
+                <div class="sim-hint">
+                  <span>5° (Horizon)</span>
+                  <span>Default: 20°</span>
+                  <span>60° (Down)</span>
+                </div>
+              </div>
+
+              <!-- Slider 3: Target Debris Size -->
+              <div class="sim-control-group">
+                <div class="sim-label-row">
+                  <span class="sim-label">Target Debris Size</span>
+                  <span class="sim-val-badge" id="val-debris">30 mm</span>
+                </div>
+                <input type="range" class="sim-slider" id="slider-debris" min="10" max="100" step="1" value="30"
+                  aria-label="Target Debris Dimension">
+                <div class="sim-hint" style="position: relative;">
+                  <span>10 mm</span>
+                  <span style="position: absolute; left: calc(9px + (100% - 18px) * 0.2222); transform: translateX(-50%); font-size: 10.5px; white-space: nowrap; color: var(--apple-text-secondary);">Default: 30 mm</span>
+                  <span>100 mm</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2D Canvas Side-Profile Visualizer -->
+            <div class="canvas-container">
+              <canvas id="sim-canvas" width="800" height="400"></canvas>
+            </div>
+
+            <!-- Live Telemetry & Feasibility HUD -->
+            <div class="hud-grid">
+              <div class="hud-card">
+                <div>
+                  <div class="hud-card-title">Near Cutoff ($d_{\text{near}}$)</div>
+                  <div class="hud-card-value" id="hud-dnear">0.51 m</div>
+                </div>
+                <div class="hud-card-sub">Closest ground in view</div>
+              </div>
+
+              <div class="hud-card">
+                <div>
+                  <div class="hud-card-title">Image Centre ($d_{\text{center}}$)</div>
+                  <div class="hud-card-value" id="hud-dcenter" style="color: var(--apple-blue);">1.24 m</div>
+                </div>
+                <div class="hud-card-sub">Boresight intersection</div>
+              </div>
+
+              <div class="hud-card">
+                <div>
+                  <div class="hud-card-title">GSD at Image Centre</div>
+                  <div class="hud-card-value" id="hud-gsdh">0.50 mm/px</div>
+                </div>
+                <div class="hud-card-sub" id="hud-gsdv">Along: 1.45 mm/px</div>
+              </div>
+
+              <div class="hud-card">
+                <div>
+                  <div class="hud-card-title">Native Footprint</div>
+                  <div class="hud-card-value" id="hud-native-px">60.4 &times; 20.7 px</div>
+                </div>
+                <div class="hud-card-sub">Full sensor (W &times; L)</div>
+              </div>
+
+              <div class="hud-card">
+                <div>
+                  <div class="hud-card-title">Pixels at 640 input</div>
+                  <div class="hud-card-value" id="hud-yolo640-px">15.6 &times; 5.4 px</div>
+                </div>
+                <div style="margin-top: 5px;" id="hud-status-640">
+                  <span class="status-pill status-fail">🔴 FAIL (&lt;16px)</span>
+                </div>
+                <div class="hud-card-sub" id="hud-sub-640">Width: 15.6 px, Length: 5.4 px</div>
+              </div>
+
+              <div class="hud-card">
+                <div>
+                  <div class="hud-card-title">Pixels at 1088 input</div>
+                  <div class="hud-card-value" id="hud-yolo1088-px">26.6 &times; 9.1 px</div>
+                </div>
+                <div style="margin-top: 5px;" id="hud-status-1088">
+                  <span class="status-pill status-marginal">🟡 MARGINAL (16–32px)</span>
+                </div>
+                <div class="hud-card-sub" id="hud-sub-1088">Width: 26.6 px, Length: 9.1 px</div>
+              </div>
+
+              <div class="hud-card">
+                <div>
+                  <div class="hud-card-title">Max Exposure ($t_{\text{exp}}$)</div>
+                  <div class="hud-card-value" id="hud-texp" style="color: var(--apple-amber);">346 µs / 93 µs</div>
+                </div>
+                <div class="hud-card-sub" id="hud-texp-sub">Centre: 346 µs &bull; Near: 93 µs (binding)</div>
+              </div>
+            </div>
+
+            <!-- Explanatory footer under visualizer -->
+            <div
+              style="margin-top: 14px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; padding: 10px 14px; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid var(--apple-border);">
+              💡 <strong>Key Takeaway:</strong> At 0.45 m and 20° tilt, the image centre lands 1.24 m ahead. A 30 mm
+              fastener gets 60 &times; 21 px native on the IMX568, 16 &times; 5 px at 640 input, and 27 &times; 9 px at
+              1088 input. Notice that 1088 keeps the item's width (27 px) closer to the 32 px rule used in our sizing sheet.
+            </div>
+          </div>
         </div>
 
-        <!-- SECTION 3 -->
-        <div class="card-box" style="margin-bottom: 24px;">
+        <!-- ===================================================================
+             SECTION 3: PIXELS THE MODEL ACTUALLY SEES
+             =================================================================== -->
+        <div class="card-box" id="s3" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
               <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Testing &amp; Verification</h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Pixels the Model Actually Sees
+              </h2>
+            </div>
+            <span class="badge badge-amber">Input Resolution Scaling</span>
+          </div>
+
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 14px;">
+            The model shrinks each frame before detecting. This table shows a 30 mm item at the image centre (0.45 m,
+            20°).
+          </p>
+
+          <div class="admin-table-wrapper" style="margin-bottom: 12px;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Camera</th>
+                  <th>Native ($W \times L\text{ px}$)</th>
+                  <th>at 640 input</th>
+                  <th>at 1088 input</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: rgba(48, 209, 88, 0.08);">
+                  <td><strong>IMX568</strong></td>
+                  <td><strong>60 &times; 21</strong></td>
+                  <td><span class="alert-stat">16 &times; 5</span></td>
+                  <td><strong class="highlight-stat">27 &times; 9</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>UGREEN</strong></td>
+                  <td>36 &times; 12</td>
+                  <td>12 &times; 4</td>
+                  <td>21 &times; 7</td>
+                </tr>
+                <tr>
+                  <td><strong>e-CAM56</strong></td>
+                  <td>22 &times; 7</td>
+                  <td>6 &times; 2</td>
+                  <td>10 &times; 3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 12px; margin-bottom: 12px;">
+            YOLO's finest layer reads the image in 8 &times; 8 px blocks. At 640 the item is only a couple of blocks
+            wide, which is why the model trained at 1088 found more fasteners (see <a href="yolo-comparison.html"
+              style="color: var(--apple-blue); text-decoration: underline; font-weight: 500;">YOLO model comparison
+              page</a>: 87.7% &rarr; 97.0% mAP@50).
+          </p>
+
+          <!-- Expander: Why not the wide e-CAM56? -->
+          <div style="margin-top: 12px;">
+            <details class="why-details">
+              <summary>Why not the wide e-CAM56?</summary>
+              <p>Its 104.8° lens spreads pixels over a wide area, so a 30 mm item gets only 22 px across even at full
+                resolution.</p>
+            </details>
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             SECTION 4: MOTION BLUR, SHUTTER & LIGHTING
+             =================================================================== -->
+        <div class="card-box" id="s4" style="margin-bottom: 28px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 4.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Motion Blur, Shutter &amp;
+                Lighting</h2>
+            </div>
+            <span class="badge badge-rose">Exposure Dynamics</span>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <div class="math-eq-box">
+              $$\Delta x = v \cdot t_{\text{exp}} \le \text{GSD}_{\text{along}} \implies t_{\text{exp}} \le
+              \frac{\text{GSD}_{\text{along}}}{v}$$
+            </div>
+            <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 10px; margin-bottom: 6px;">
+              Worked (IMX568): centre 1.45 mm/px ÷ 4.19 m/s ≈ 346 µs; near edge 0.39 mm/px ÷ 4.19 m/s ≈ 93 µs.
+            </p>
+            <div class="plain-words-line">
+              In plain words: The near edge is closest to the camera, so motion there smears the most pixels; it sets the limit.
+            </div>
+
+            <!-- Two Cards: Global shutter & Lighting -->
+            <div
+              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 18px 0 14px 0;">
+              <div class="winner-card emerald" style="padding: 16px;">
+                <span class="badge badge-emerald" style="margin-bottom: 6px;">GLOBAL SHUTTER</span>
+                <h4 style="font-size: 15px; color: var(--apple-text-primary); margin: 0 0 6px 0;">IMX568 Global Shutter
+                </h4>
+                <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+                  A rolling shutter reads the frame line by line over several milliseconds; at 4.19 m/s the robot moves
+                  centimetres during one frame, skewing the image. The IMX568 captures every pixel at once.
+                </p>
+              </div>
+
+              <div class="winner-card blue" style="padding: 16px;">
+                <span class="badge badge-blue" style="margin-bottom: 6px;">LIGHTING (PLANNED)</span>
+                <h4 style="font-size: 15px; color: var(--apple-text-primary); margin: 0 0 6px 0;">Synchronised Strobe
+                </h4>
+                <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+                  Exposures under 100 µs need strong, controlled light; a synchronised LED strobe is planned and will be
+                  sized in Semester 2.
+                </p>
+              </div>
+            </div>
+
+            <!-- Ideas to evaluate Expander -->
+            <div style="margin-top: 14px;">
+              <details class="why-details">
+                <summary>Ideas to evaluate: CPL filters &amp; DOL-HDR (unverified)</summary>
+                <p>Wet runway puddles can produce specular glare, and bright tropical sun creates harsh shadows in
+                  asphalt grooves. Circular Polarizing (CPL) filters and Digital Overlap HDR (DOL-HDR) are under
+                  evaluation as unverified options to be tested if glare causes false alarms in field trials.</p>
+              </details>
             </div>
           </div>
-          <p style="font-size: 14px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px;">
-            [To be filled]
-          </p>
+        </div>
+
+        <!-- ===================================================================
+             SECTION 5: VERIFICATION PLAN
+             =================================================================== -->
+        <div class="card-box" id="s5" style="margin-bottom: 28px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 5.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Verification Plan</h2>
+            </div>
+            <span class="badge badge-emerald">Empirical Targets</span>
+          </div>
+
+          <div class="admin-table-wrapper" style="margin-top: 16px; margin-bottom: 8px;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Target</th>
+                  <th>Current result</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: rgba(48, 209, 88, 0.08);">
+                  <td><strong>mAP@50</strong></td>
+                  <td>&ge; 90%</td>
+                  <td><strong class="highlight-stat">97.0 &plusmn; 1.4%</strong> (webcam footage, 151 held-out fasteners)</td>
+                  <td><span class="badge badge-emerald">Met on test videos</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Recall</strong></td>
+                  <td>&ge; 95%</td>
+                  <td><span class="amber-stat">92.7 &plusmn; 3.2%</span></td>
+                  <td><span class="badge badge-amber">Not yet met</span></td>
+                </tr>
+                <tr>
+                  <td><strong>False alarms per test set</strong></td>
+                  <td>&le; 3</td>
+                  <td><strong class="highlight-stat">1.0</strong></td>
+                  <td><span class="badge badge-emerald">Met; empty-tarmac test pending</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Per-frame latency on Jetson Orin</strong></td>
+                  <td>&le; 33 ms</td>
+                  <td>Not yet measured</td>
+                  <td><span class="badge badge-purple">Semester 2</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size: 12px; color: var(--apple-text-tertiary); margin-bottom: 16px;">
+            Note: Targets are our own design goals, not regulatory figures.
+          </div>
+
+          <div style="font-size: 14px; font-weight: 600; color: var(--apple-text-primary); margin-bottom: 10px;">
+            Planned Tests:
+          </div>
+
+          <div class="checklist-grid" style="margin-top: 0;">
+            <div class="checklist-item">
+              <span style="color: var(--apple-blue); font-size: 16px;">📐</span>
+              <div>
+                <strong>Slanted-edge sharpness test at the mounting height (planned):</strong> Measure MTF50 across the
+                field of view with the IMX568 mounted at 0.45 m.
+              </div>
+            </div>
+
+            <div class="checklist-item">
+              <span style="color: var(--apple-green); font-size: 16px;">🏎️</span>
+              <div>
+                <strong>Driving test at 4.19 m/s with fasteners laid out (planned):</strong> Verify under-1-pixel motion
+                blur and detection consistency over multi-frame sequences at full speed.
+              </div>
+            </div>
+
+            <div class="checklist-item">
+              <span style="color: var(--apple-purple); font-size: 16px;">📍</span>
+              <div>
+                <strong>RTK position error vs measured positions (planned):</strong> Survey physical ground truth marker
+                coordinates to quantify unprojected GPS accuracy using the UM980.
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
   </main>
 
+  <!-- APPLE FOOTER -->
   <footer class="apple-footer">
     <div class="apple-footer-inner">
       <div>© AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
@@ -124,14 +1267,12 @@
         <li><a href="../../index.html">Overview</a></li>
         <li><a href="yolo-comparison.html">← YOLO model comparison</a></li>
         <li><a href="../../7-documentation.html">Documentation</a></li>
-        <li><a href="vision-research.html">Computer vison research →</a></li>
+        <li><a href="vision-research.html">Computer vision research →</a></li>
       </ul>
     </div>
   </footer>
 
-  <script src="../../js/main.js?v=4.2"></script>
-
-  <!-- EXPORT PDF BUTTON -->
+  <!-- EXPORT PDF FLOATING BUTTON -->
   <style>
     .pdf-export-btn {
       position: fixed;
@@ -150,45 +1291,528 @@
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 24px rgba(41, 151, 255, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       letter-spacing: 0.01em;
     }
+
     .pdf-export-btn:hover {
       transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 32px rgba(41, 151, 255, 0.55), 0 4px 12px rgba(0, 0, 0, 0.4);
       background: linear-gradient(135deg, #0a84ff 0%, #1d4ed8 100%);
     }
+
     .pdf-export-btn:active {
       transform: translateY(0) scale(0.98);
     }
+
     .pdf-export-btn svg {
       width: 16px;
       height: 16px;
       fill: currentColor;
     }
+
     @media print {
+
       .pdf-export-btn,
       .apple-nav,
       .apple-mobile-drawer,
-      .apple-footer {
+      .apple-footer,
+      .sim-controls-grid,
+      .preset-selector {
         display: none !important;
       }
+
       body {
         background: #fff !important;
         color: #111 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
+
       .apple-main-content {
         padding-top: 0 !important;
       }
+
+      .why-details {
+        border: 1px solid #ccc !important;
+        background: #fafafa !important;
+      }
+
+      .why-details summary {
+        color: #000 !important;
+      }
     }
   </style>
-  <button class="pdf-export-btn" onclick="window.print()" title="Export this page as PDF">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+  <button class="pdf-export-btn" onclick="openAllDetailsAndPrint()" title="Export this page as PDF">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+    </svg>
     Export PDF
   </button>
+  <script>
+    function openAllDetailsAndPrint() {
+      document.querySelectorAll('details').forEach(function(d) {
+        d.setAttribute('open', '');
+      });
+      window.print();
+    }
+  </script>
+
+  <!-- =====================================================================
+       INTERACTIVE CANVAS & SIMULATION LOGIC SCRIPT
+       ===================================================================== -->
+  <script>
+    (function () {
+      // Sensor Preset Definitions
+      const PRESETS = {
+        imx568: {
+          name: 'Leopard LI-IMX568',
+          width: 2472,
+          height: 2064,
+          hfovDeg: 50.0,
+          vfovDeg: 42.54,
+          fx: 2650.6,
+          fy: 2650.6
+        },
+        ecam56: {
+          name: 'e-con e-CAM56',
+          width: 2472,
+          height: 2064,
+          hfovDeg: 104.8,
+          vfovDeg: 94.67,
+          fx: 951.8,
+          fy: 951.8
+        },
+        ugreen: {
+          name: 'UGREEN CM831 Webcam',
+          width: 1920,
+          height: 1080,
+          hfovDeg: 62.0,
+          vfovDeg: 37.38,
+          fx: 1597.7,
+          fy: 1597.7
+        }
+      };
+
+      let currentPresetKey = 'imx568';
+      const V_SPEED = 4.19; // 400 RPM wheels = 4.19 m/s
+
+      // DOM Elements
+      const sliderHeight = document.getElementById('slider-height');
+      const sliderTilt = document.getElementById('slider-tilt');
+      const sliderDebris = document.getElementById('slider-debris');
+
+      const valHeight = document.getElementById('val-height');
+      const valTilt = document.getElementById('val-tilt');
+      const valDebris = document.getElementById('val-debris');
+
+      const hudDnear = document.getElementById('hud-dnear');
+      const hudDcenter = document.getElementById('hud-dcenter');
+      const hudGsdh = document.getElementById('hud-gsdh');
+      const hudGsdv = document.getElementById('hud-gsdv');
+      const hudNativePx = document.getElementById('hud-native-px');
+      const hudYolo640Px = document.getElementById('hud-yolo640-px');
+      const hudStatus640 = document.getElementById('hud-status-640');
+      const hudSub640 = document.getElementById('hud-sub-640');
+
+      const hudYolo1088Px = document.getElementById('hud-yolo1088-px');
+      const hudStatus1088 = document.getElementById('hud-status-1088');
+      const hudSub1088 = document.getElementById('hud-sub-1088');
+
+      const hudTexp = document.getElementById('hud-texp');
+      const hudTexpSub = document.getElementById('hud-texp-sub');
+
+      const canvas = document.getElementById('sim-canvas');
+      const ctx = canvas.getContext('2d');
+
+      const presetButtons = document.querySelectorAll('.preset-btn');
+
+      // Preset click handlers
+      presetButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          presetButtons.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-checked', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-checked', 'true');
+          currentPresetKey = btn.dataset.preset;
+          updateSimulation();
+        });
+      });
+
+      // Slider input handlers
+      sliderHeight.addEventListener('input', updateSimulation);
+      sliderTilt.addEventListener('input', updateSimulation);
+      sliderDebris.addEventListener('input', updateSimulation);
+
+      function updateSimulation() {
+        const H = parseFloat(sliderHeight.value);
+        const thetaDeg = parseFloat(sliderTilt.value);
+        const debrisMm = parseFloat(sliderDebris.value);
+
+        valHeight.textContent = H.toFixed(2) + ' m';
+        valTilt.textContent = thetaDeg.toFixed(1) + '°';
+        valDebris.textContent = debrisMm.toFixed(0) + ' mm';
+
+        const preset = PRESETS[currentPresetKey];
+        const thetaRad = thetaDeg * Math.PI / 180;
+        const vfovRad = preset.vfovDeg * Math.PI / 180;
+
+        // 1. Geometric intersections on ground plane (Z = 0)
+        // Image centre (boresight) ground point
+        const dCenter = thetaRad > 0.01 ? H / Math.tan(thetaRad) : 99.0;
+
+        // Near ground cutoff (theta + vfov/2)
+        const angleNear = thetaRad + vfovRad / 2;
+        const dNear = angleNear < Math.PI / 2 ? H / Math.tan(angleNear) : 0.05;
+
+        // Far ground cutoff (theta - vfov/2)
+        const angleFar = thetaRad - vfovRad / 2;
+        const isAboveHorizon = angleFar <= 0;
+        const dFar = !isAboveHorizon ? H / Math.tan(angleFar) : Infinity;
+
+        // 2. GSD Calculations at IMAGE CENTRE (d = dCenter)
+        const R_center = Math.sqrt(H * H + dCenter * dCenter);
+        const psi_center = thetaRad; // Angle at image centre equals tilt theta
+
+        // Horizontal GSD (across) at image centre
+        const gsdAcrossCenter = (R_center * 1000) / preset.fx;
+        // Oblique Vertical GSD (along direction of travel) at image centre
+        const gsdAlongCenter = gsdAcrossCenter / Math.sin(psi_center);
+
+        // 3. Target Footprint at Image Centre (W = width across, L = length along)
+        const nativeW = debrisMm / gsdAcrossCenter;
+        const nativeL = debrisMm / gsdAlongCenter;
+
+        // YOLO 640p scaling (640 / width)
+        const scale640 = 640 / preset.width;
+        const yolo640W = nativeW * scale640;
+        const yolo640L = nativeL * scale640;
+
+        // YOLO 1088p scaling (1088 / width)
+        const scale1088 = 1088 / preset.width;
+        const yolo1088W = nativeW * scale1088;
+        const yolo1088L = nativeL * scale1088;
+
+        // 4. Max exposure calculations: t_exp = GSD_along / v
+        // At image centre:
+        const tExpCentre = (gsdAlongCenter / 1000) / V_SPEED * 1e6; // in microseconds
+
+        // At near edge:
+        const R_near = Math.sqrt(H * H + dNear * dNear);
+        const psi_near = angleNear; // Near edge angle
+        const gsdAcrossNear = (R_near * 1000) / preset.fx;
+        const gsdAlongNear = gsdAcrossNear / Math.sin(psi_near);
+        const tExpNear = (gsdAlongNear / 1000) / V_SPEED * 1e6; // in microseconds
+
+        // Update HUD Telemetry DOM
+        hudDnear.textContent = (dNear > 0 ? dNear.toFixed(2) : '0.00') + ' m';
+        hudDcenter.textContent = (dCenter < 50 ? dCenter.toFixed(2) : '> 50') + ' m';
+        hudGsdh.textContent = gsdAcrossCenter.toFixed(2) + ' mm/px';
+        hudGsdv.textContent = 'Along: ' + gsdAlongCenter.toFixed(2) + ' mm/px';
+        hudNativePx.textContent = nativeW.toFixed(1) + ' \u00d7 ' + nativeL.toFixed(1) + ' px';
+
+        hudYolo640Px.textContent = yolo640W.toFixed(1) + ' \u00d7 ' + yolo640L.toFixed(1) + ' px';
+        hudSub640.textContent = 'Width: ' + yolo640W.toFixed(1) + ' px, Length: ' + yolo640L.toFixed(1) + ' px';
+
+        hudYolo1088Px.textContent = yolo1088W.toFixed(1) + ' \u00d7 ' + yolo1088L.toFixed(1) + ' px';
+        hudSub1088.textContent = 'Width: ' + yolo1088W.toFixed(1) + ' px, Length: ' + yolo1088L.toFixed(1) + ' px';
+
+        // Status Pills based on item's WIDTH vs sheet's 32 px rule (>=32 pass, 16-32 marginal, <16 fail)
+        function getStatusPillHtml(widthPx) {
+          if (widthPx >= 32.0) {
+            return '<span class="status-pill status-pass">🟢 PASS (&ge;32px)</span>';
+          } else if (widthPx >= 16.0) {
+            return '<span class="status-pill status-marginal">🟡 MARGINAL (16–32px)</span>';
+          } else {
+            return '<span class="status-pill status-fail">🔴 FAIL (&lt;16px)</span>';
+          }
+        }
+
+        hudStatus640.innerHTML = getStatusPillHtml(yolo640W);
+        hudStatus1088.innerHTML = getStatusPillHtml(yolo1088W);
+
+        hudTexp.textContent = Math.round(tExpCentre) + ' \u00b5s / ' + Math.round(tExpNear) + ' \u00b5s';
+        hudTexpSub.textContent = 'Centre: ' + Math.round(tExpCentre) + ' \u00b5s \u2022 Near: ' + Math.round(tExpNear) + ' \u00b5s (binding)';
+
+        // Render Canvas
+        renderCanvas(H, thetaRad, vfovRad, dNear, dCenter, dFar, isAboveHorizon, debrisMm);
+      }
+
+      function renderCanvas(H, theta, vfov, dNear, dCenter, dFar, isAboveHorizon, debrisMm) {
+        const W = canvas.width;
+        const H_canv = canvas.height;
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+        ctx.clearRect(0, 0, W, H_canv);
+
+        // Ground line at y = 330
+        const groundY = 330;
+        // UGV bumper at x = 110
+        const originX = 110;
+
+        // Scale factors:
+        // 1 meter horizontal = 120 pixels
+        const scaleX = 120;
+        // 1 meter vertical = 140 pixels
+        const scaleY = 140;
+
+        const maxMeters = 5.5;
+
+        // 1. Draw Runway Ground Plane
+        ctx.save();
+        ctx.beginPath();
+        ctx.strokeStyle = isLight ? '#cbd5e1' : '#334155';
+        ctx.lineWidth = 3;
+        ctx.moveTo(0, groundY);
+        ctx.lineTo(W, groundY);
+        ctx.stroke();
+
+        // Asphalt runway sub-base fill
+        ctx.fillStyle = isLight ? '#f1f5f9' : '#0a0e17';
+        ctx.fillRect(0, groundY, W, H_canv - groundY);
+
+        // Runway distance scale tick markers (every 0.5m)
+        ctx.font = '10px -apple-system, BlinkMacSystemFont, "SF Pro Text", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
+        ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+        ctx.lineWidth = 1;
+
+        for (let m = 0; m <= maxMeters; m += 0.5) {
+          const tx = originX + m * scaleX;
+          if (tx > W) break;
+
+          ctx.beginPath();
+          ctx.moveTo(tx, groundY - (m % 1 === 0 ? 8 : 4));
+          ctx.lineTo(tx, groundY + (m % 1 === 0 ? 8 : 4));
+          ctx.stroke();
+
+          if (m % 1 === 0) {
+            ctx.fillText(m.toFixed(1) + ' m', tx, groundY + 20);
+          }
+        }
+
+        // Tarmac expansion seam texture
+        ctx.fillStyle = isLight ? '#94a3b8' : '#1e293b';
+        for (let x = 30; x < W; x += 130) {
+          ctx.fillRect(x, groundY + 1, 2, 50);
+        }
+        ctx.restore();
+
+        // 2. Draw 4WD Robotic Patrol UGV Silhouette
+        ctx.save();
+        const wheelRadius = 0.10 * scaleY; // 100 mm radius = 8-inch tire
+        const wheelY = groundY - wheelRadius;
+
+        ctx.fillStyle = isLight ? '#475569' : '#1e293b';
+        ctx.strokeStyle = isLight ? '#0284c7' : '#38bdf8';
+        ctx.lineWidth = 2;
+
+        // Rear wheel
+        ctx.beginPath();
+        ctx.arc(originX - 65, wheelY, wheelRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Front wheel
+        ctx.beginPath();
+        ctx.arc(originX - 15, wheelY, wheelRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Chassis body box
+        ctx.fillStyle = isLight ? '#e2e8f0' : '#1e293b';
+        ctx.strokeStyle = isLight ? '#94a3b8' : '#475569';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.roundRect(originX - 80, wheelY - 28, 80, 26, 4);
+        ctx.fill();
+        ctx.stroke();
+
+        // Mast mounting post for camera at x = originX - 10
+        const camX = originX - 10;
+        const camY = groundY - H * scaleY;
+
+        ctx.strokeStyle = isLight ? '#64748b' : '#64748b';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(camX, wheelY - 26);
+        ctx.lineTo(camX, camY);
+        ctx.stroke();
+
+        // Mast height dimension label
+        ctx.font = '10px -apple-system, BlinkMacSystemFont, monospace';
+        ctx.fillStyle = isLight ? '#2563eb' : '#38bdf8';
+        ctx.textAlign = 'right';
+        ctx.fillText('H = ' + H.toFixed(2) + 'm', camX - 8, camY + (groundY - camY) / 2);
+
+        // Height dotted guideline
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+        ctx.setLineDash([2, 2]);
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(camX, camY);
+        ctx.lineTo(originX + 15, camY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Camera Sensor Body
+        ctx.save();
+        ctx.translate(camX, camY);
+        ctx.rotate(theta);
+
+        ctx.fillStyle = isLight ? '#0f172a' : '#0284c7';
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.5;
+        // Camera enclosure
+        ctx.fillRect(-12, -7, 18, 14);
+        ctx.strokeRect(-12, -7, 18, 14);
+        // Lens snout
+        ctx.fillStyle = '#38bdf8';
+        ctx.beginPath();
+        ctx.moveTo(6, -5);
+        ctx.lineTo(12, -7);
+        ctx.lineTo(12, 7);
+        ctx.lineTo(6, 5);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+        ctx.restore();
+
+        // 3. Draw Optical FOV Cone & Boresight Ray
+        ctx.save();
+        const nearCanvasX = originX + dNear * scaleX;
+        const centerCanvasX = originX + dCenter * scaleX;
+
+        let farCanvasX;
+        let farCanvasY = groundY;
+
+        if (isAboveHorizon) {
+          // Ray points above horizon: intersect right or top edge of canvas
+          const topAngle = theta - vfov / 2; // <= 0
+          // dx = W - camX
+          // dy = dx * tan(topAngle) (negative means above camY)
+          const dx = W - camX;
+          const dy = dx * Math.tan(topAngle);
+          farCanvasX = W;
+          farCanvasY = camY + dy;
+        } else {
+          farCanvasX = originX + dFar * scaleX;
+        }
+
+        // VFOV Frustum Polygon
+        ctx.beginPath();
+        ctx.moveTo(camX, camY);
+        ctx.lineTo(nearCanvasX, groundY);
+        if (isAboveHorizon) {
+          ctx.lineTo(W, groundY);
+          ctx.lineTo(farCanvasX, farCanvasY);
+        } else {
+          ctx.lineTo(Math.min(farCanvasX, W + 100), groundY);
+        }
+        ctx.closePath();
+
+        const frustumGrad = ctx.createLinearGradient(camX, camY, Math.min(centerCanvasX, W), groundY);
+        frustumGrad.addColorStop(0, 'rgba(41, 151, 255, 0.45)');
+        frustumGrad.addColorStop(0.6, 'rgba(41, 151, 255, 0.16)');
+        frustumGrad.addColorStop(1, 'rgba(41, 151, 255, 0.03)');
+        ctx.fillStyle = frustumGrad;
+        ctx.fill();
+
+        // Outer FOV rays
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = 'rgba(41, 151, 255, 0.7)';
+        ctx.beginPath();
+        // Near ray
+        ctx.moveTo(camX, camY);
+        ctx.lineTo(nearCanvasX, groundY);
+        // Far ray
+        ctx.moveTo(camX, camY);
+        ctx.lineTo(farCanvasX, farCanvasY);
+        ctx.stroke();
+
+        // Center Optical Axis (Boresight)
+        ctx.strokeStyle = '#ff9f0a';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 4]);
+        ctx.beginPath();
+        ctx.moveTo(camX, camY);
+        ctx.lineTo(centerCanvasX, groundY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Cutoff Marker Lines & Points
+        // 1. Near cutoff point
+        ctx.fillStyle = '#30d158';
+        ctx.beginPath();
+        ctx.arc(nearCanvasX, groundY, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.font = '10px -apple-system, BlinkMacSystemFont, monospace';
+        ctx.fillStyle = isLight ? '#15803d' : '#4ade80';
+        ctx.textAlign = 'center';
+        ctx.fillText('d_near (' + dNear.toFixed(2) + 'm)', nearCanvasX, groundY - 12);
+
+        // 2. Boresight Center hit point
+        if (centerCanvasX <= W - 20) {
+          ctx.fillStyle = '#ff9f0a';
+          ctx.beginPath();
+          ctx.arc(centerCanvasX, groundY, 5, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, monospace';
+          ctx.fillStyle = isLight ? '#b45309' : '#fbbf24';
+          ctx.fillText('Image Centre (' + dCenter.toFixed(2) + 'm)', centerCanvasX, groundY - 26);
+
+          // 3. Draw Target Debris (Bolt icon) at Boresight Hit
+          ctx.save();
+          ctx.translate(centerCanvasX, groundY);
+          ctx.fillStyle = '#e2e8f0';
+          ctx.strokeStyle = '#0f172a';
+          ctx.lineWidth = 1;
+          ctx.fillRect(-5, -6, 10, 6);
+          ctx.strokeRect(-5, -6, 10, 6);
+          ctx.fillStyle = '#94a3b8';
+          ctx.fillRect(-2.5, -12, 5, 6);
+          ctx.strokeRect(-2.5, -12, 5, 6);
+          ctx.restore();
+
+          ctx.font = '10px -apple-system, BlinkMacSystemFont, monospace';
+          ctx.fillStyle = isLight ? '#0f172a' : '#f8fafc';
+          ctx.fillText(debrisMm + 'mm bolt', centerCanvasX, groundY - 42);
+        }
+
+        // Far edge label
+        if (isAboveHorizon) {
+          ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, monospace';
+          ctx.fillStyle = isLight ? '#b45309' : '#fbbf24';
+          ctx.textAlign = 'right';
+          ctx.fillText('Top ray: above horizon', W - 14, Math.max(20, farCanvasY + 14));
+        } else if (farCanvasX <= W - 10) {
+          ctx.font = '10px -apple-system, BlinkMacSystemFont, monospace';
+          ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
+          ctx.textAlign = 'center';
+          ctx.fillText('d_far (' + dFar.toFixed(2) + 'm)', farCanvasX, groundY - 12);
+        }
+
+        ctx.restore();
+      }
+
+      // Initial simulation cycle
+      updateSimulation();
+
+      // Theme change observer to trigger canvas re-render
+      const observer = new MutationObserver(() => updateSimulation());
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+      // Window resize handler for responsive redraw
+      window.addEventListener('resize', () => updateSimulation());
+    })();
+  </script>
 
 </body>
+
 </html>
