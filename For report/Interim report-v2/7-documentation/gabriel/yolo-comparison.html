@@ -553,11 +553,35 @@
         </p>
       </div>
 
-      <!-- The short version (TL;DR PILLS) -->
-      <div style="margin-bottom: 28px;">
+      <!-- LEADERSHIP & METRICS BADGE CARD -->
+      <div class="card-box" style="margin-bottom: 24px; border-left: 5px solid var(--accent-emerald);">
         <div
-          style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary); margin-bottom: 12px;">
-          The short version
+          style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-blue">Gabriel</span>
+              <span class="badge badge-emerald">Deep Learning</span>
+              <span class="badge badge-purple">Edge Inference</span>
+            </div>
+            <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Computer Vision &amp; Sensor
+              Fusion Lead: Gabriel Tan Kai Jie (A0308452H)</h3>
+            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              Operational Target: $\ge 90\%\text{ mAP@50}$ small-debris detection accuracy • Leak-free temporal audit
+              elimination • Edge deployment latency $\le 33\text{ ms}$ on Jetson/laptop architecture.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <a href="../../4-subsystems/computer-vision.html" class="btn btn-deep-dive">4.4 Overview Card →</a>
+            <a href="../../7-documentation.html" class="btn btn-deep-dive">Documentation Hub →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- System At a Glance (4-Step Design Cascade) -->
+      <div style="margin-bottom: 28px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+          <span class="badge badge-blue"
+            style="font-size: 11px; padding: 3px 10px; font-weight: 700; letter-spacing: 0.06em;">DESIGN CASCADE</span>
         </div>
         <div class="metric-pill-grid" style="margin-bottom: 0;">
           <a href="#leakage-audit" class="metric-pill"
@@ -565,29 +589,15 @@
             <div>
               <div
                 style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
-                Step 1</div>
-              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">Goal
-              </div>
+                Step 1 &bull; Dataset Audit</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Fix Dataset Leakage</div>
               <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
-                Spot small metal debris on a runway fast enough for a moving robot.</div>
-            </div>
-            <div class="highlight-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">&le;
-              33 ms per frame</div>
-          </a>
-
-          <a href="#leakage-audit" class="metric-pill"
-            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
-            <div>
-              <div
-                style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
-                Step 2</div>
-              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">Fix
-                the test</div>
-              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
-                The public dataset leaked test images into training, so we rebuilt the split.</div>
+                Public video shuffling inflated scores to 99%. Scene separation eliminated leakage, revealing the true
+                50% baseline.</div>
             </div>
             <div class="alert-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">99%
-              &rarr; 50% real score</div>
+              &rarr; 50% Real mAP</div>
           </a>
 
           <a href="#benchmark-matrix" class="metric-pill"
@@ -595,14 +605,14 @@
             <div>
               <div
                 style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
-                Step 3</div>
-              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">Pick
-                a model</div>
+                Step 2 &bull; Benchmark Matrix</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Select Architecture</div>
               <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
-                Three detectors compared. YOLO11-S for development; RT-DETR-L finds more but is slower.</div>
+                Compared YOLO11-S, RT-DETR-L & YOLO11-X. YOLO11-S chosen for development at 13.2 ms inference.</div>
             </div>
-            <div class="amber-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">Yolo11-s
-            </div>
+            <div class="amber-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">YOLO11-S
+              (13.2 ms)</div>
           </a>
 
           <a href="#domain-adaptation" class="metric-pill"
@@ -610,11 +620,12 @@
             <div>
               <div
                 style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
-                Step 4</div>
+                Step 3 &bull; Domain Adaptation</div>
               <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
-                Train on our runway</div>
+                Train on Runway Tarmac</div>
               <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
-                Retrained on our own footage and gave small fasteners more pixels.</div>
+                Zero-shot was only 12%. Fine-tuning on runway footage with 1088p input scaling boosted detection to 97%.
+              </div>
             </div>
             <div class="highlight-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">12%
               &rarr; 97% mAP@50</div>
@@ -625,15 +636,14 @@
             <div>
               <div
                 style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
-                Step 5</div>
+                Step 4 &bull; Edge Deployment</div>
               <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
-                Future Works
-              </div>
+                Hardware Roadmap</div>
               <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
-                Test both models on the robot's computer and a better camera.</div>
+                Deploy TensorRT INT8 models onto Jetson Orin Nano with Leopard LI-IMX568 global-shutter camera.</div>
             </div>
-            <div class="blue-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">Semester
-              2</div>
+            <div class="blue-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">Jetson +
+              IMX568</div>
           </a>
         </div>
       </div>
@@ -1293,6 +1303,46 @@
           </div>
         </div>
 
+        <!-- TWO-WAY PAGE NAVIGATION -->
+        <div style="margin-top: 36px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <a href="vision-calculations.html" class="nav-prev-page-btn" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--apple-border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+          ">
+            <span style="font-size: 18px; color: var(--apple-blue); font-weight: 700;">&larr;</span>
+            <div style="text-align: left;">
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600;">Previous</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary);">Computer Vision Calculations</div>
+            </div>
+          </a>
+
+          <a href="vision-research.html" class="nav-next-page-btn" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, rgba(41, 151, 255, 0.1) 0%, rgba(41, 151, 255, 0.03) 100%);
+            border: 1px solid rgba(41, 151, 255, 0.35);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+          ">
+            <div style="text-align: right;">
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-blue); font-weight: 700;">Next Page</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary);">Computer Vision Research &rarr;</div>
+            </div>
+          </a>
+        </div>
+
       </div>
     </div>
   </main>
@@ -1303,8 +1353,9 @@
       <div>&copy; AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
       <ul class="apple-footer-links">
         <li><a href="../../index.html">Overview</a></li>
+        <li><a href="vision-calculations.html">&larr; Computer Vision Calculations</a></li>
         <li><a href="../../7-documentation.html">Documentation Hub</a></li>
-        <li><a href="vision-calculations.html">Computer Vision Calculations &rarr;</a></li>
+        <li><a href="vision-research.html">Computer Vision Research &rarr;</a></li>
       </ul>
     </div>
   </footer>

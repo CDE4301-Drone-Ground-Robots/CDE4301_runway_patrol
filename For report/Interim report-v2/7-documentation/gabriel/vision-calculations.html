@@ -130,16 +130,17 @@
     }
 
     .metric-pill {
-      background: rgba(255, 255, 255, 0.02);
+      background: var(--apple-surface-card, #121214);
       border: 1px solid var(--apple-border);
-      border-radius: 12px;
-      padding: 14px 16px;
+      border-radius: 14px;
+      padding: 16px 14px;
       text-decoration: none;
       color: inherit;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       text-align: left;
+      box-shadow: var(--apple-shadow-sm);
       transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -158,6 +159,26 @@
     [data-theme="light"] .metric-pill:hover {
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
       border-color: rgba(41, 151, 255, 0.5);
+    }
+
+    .highlight-stat {
+      color: var(--apple-green);
+      font-weight: 600;
+    }
+
+    .alert-stat {
+      color: var(--apple-red);
+      font-weight: 600;
+    }
+
+    .amber-stat {
+      color: var(--apple-amber);
+      font-weight: 600;
+    }
+
+    .blue-stat {
+      color: var(--apple-blue);
+      font-weight: 600;
     }
 
     /* ── Interactive Simulator Styles ───────────────────────────────────── */
@@ -385,7 +406,7 @@
 
     .hud-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-top: 14px;
     }
@@ -505,7 +526,13 @@
       }
 
       .hud-grid {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hud-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -522,6 +549,98 @@
         transition: none !important;
         animation: none !important;
       }
+    }
+
+    /* ── Answer Box & Section Flow ──────────────────────────────────────── */
+    .answer-box {
+      font-size: 15.5px;
+      font-weight: 500;
+      color: var(--apple-text-primary);
+      line-height: 1.55;
+      padding: 12px 16px;
+      background: rgba(41, 151, 255, 0.06);
+      border-left: 4px solid var(--apple-blue);
+      border-radius: 8px;
+      margin: 14px 0 10px 0;
+    }
+
+    .answer-box strong {
+      color: var(--apple-text-primary);
+      font-weight: 700;
+    }
+
+    [data-theme="light"] .answer-box {
+      background: rgba(41, 151, 255, 0.08);
+    }
+
+    .why-matters {
+      font-size: 13.5px;
+      color: var(--apple-text-secondary);
+      line-height: 1.6;
+      margin: 0 0 14px 0;
+    }
+
+    .why-matters strong {
+      color: var(--apple-text-primary);
+    }
+
+    .winner-card {
+      border: 1px solid var(--apple-border);
+      border-radius: 12px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      position: relative;
+    }
+
+    .winner-card.emerald {
+      border-left: 4px solid var(--apple-green);
+      background: linear-gradient(135deg, rgba(48, 209, 88, 0.06) 0%, transparent 100%);
+    }
+
+    .winner-card.blue {
+      border-left: 4px solid var(--apple-blue);
+      background: linear-gradient(135deg, rgba(41, 151, 255, 0.06) 0%, transparent 100%);
+    }
+
+    .winner-card.amber {
+      border-left: 4px solid var(--apple-amber);
+      background: linear-gradient(135deg, rgba(255, 159, 10, 0.06) 0%, transparent 100%);
+    }
+
+    [data-theme="light"] .winner-card {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .checklist-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--apple-border);
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--apple-text-secondary);
+    }
+
+    .checklist-item>span:first-child {
+      font-size: 18px;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
+    [data-theme="light"] .checklist-item {
+      background: #fbfbfd;
+      border-color: rgba(0, 0, 0, 0.08);
     }
   </style>
 </head>
@@ -557,7 +676,7 @@
 
   <!-- MOBILE DRAWER -->
   <div class="apple-mobile-drawer" id="apple-mobile-drawer">
-    <a href="yolo-comparison.html" style="color: var(--apple-blue); font-weight: 600;">← YOLO Model Comparison</a>
+    <a href="yolo-comparison.html" style="color: var(--apple-blue); font-weight: 600;">YOLO Model Comparison →</a>
     <a href="../../index.html">Overview</a>
     <a href="../../1-introduction.html">Introduction</a>
     <a href="../../2-design-overview.html">Overview of Design</a>
@@ -597,69 +716,97 @@
         <div style="margin-top: 14px;">
           <a href="yolo-comparison.html" class="apple-btn-pill"
             style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 18px; border-radius: 980px; background: rgba(41, 151, 255, 0.12); color: var(--apple-blue); border: 1px solid rgba(41, 151, 255, 0.35); font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.2s ease;">
-            ← YOLO Model Comparison &amp; Edge Benchmark
+            YOLO Model Comparison &amp; Edge Benchmark &rarr;
           </a>
         </div>
       </div>
 
-      <!-- The short version (TL;DR PILLS) -->
-      <div style="margin-bottom: 28px;">
+      <!-- LEADERSHIP & METRICS BADGE CARD -->
+      <div class="card-box" style="margin-bottom: 24px; border-left: 5px solid var(--accent-emerald);">
         <div
-          style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary); margin-bottom: 12px;">
-          The short version
+          style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span class="badge badge-blue">Gabriel</span>
+              <span class="badge badge-emerald">Computer Vision</span>
+              <span class="badge badge-purple">Optical Geometry</span>
+            </div>
+            <h3 style="font-size: 19px; color: var(--text-main); margin-bottom: 4px;">Computer Vision &amp; Sensor
+              Fusion Lead: Gabriel Tan Kai Jie (A0308452H)</h3>
+            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+              Operational Target: Real-time $\ge 30\text{ fps}$ ($\le 33\text{ ms}$) processing at $15.1\text{ km/h}$
+              forward velocity • Sub-pixel motion freeze ($\le 81\ \mu\text{s}$ exposure) • Resolving $30\text{ mm}$
+              metallic fasteners at $\ge 16\text{ px}$ target scale.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <a href="../../4-subsystems/computer-vision.html" class="btn btn-deep-dive">4.4 Overview Card →</a>
+            <a href="../../7-documentation.html" class="btn btn-deep-dive">Documentation Hub →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- System At a Glance (4-Step Design Cascade) -->
+      <div style="margin-bottom: 28px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+          <span class="badge badge-blue"
+            style="font-size: 11px; padding: 3px 10px; font-weight: 700; letter-spacing: 0.06em;">DESIGN CASCADE</span>
         </div>
         <div class="metric-pill-grid" style="margin-bottom: 0;">
-          <a href="#s1" class="metric-pill">
+          <a href="#s1" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
             <div>
               <div
                 style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
-                Step 1</div>
-              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
-                Speed sets the budget</div>
+                Step 1 &bull; Speed Constraints</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Speed Sets Budget</div>
               <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
-                400 RPM wheels = 4.19 m/s, so each frame must be processed in 33 ms.</div>
+                At 15.1 km/h (4.19 m/s), total pipeline processing must finish in &le; 33 ms per frame (&ge; 30 fps).</div>
             </div>
-            <div class="highlight-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">&le;
-              33 ms</div>
+            <div class="highlight-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">&le; 33 ms</div>
           </a>
 
-          <a href="#s2" class="metric-pill">
+          <a href="#s2" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
             <div>
               <div
                 style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
-                Step 2</div>
-              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
-                Where the camera looks</div>
+                Step 2 &bull; Camera Selection</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Hardware Selection</div>
               <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
-                Mounted 0.45 m high, tilted 20° down; the image centre lands 1.24 m ahead.</div>
+                Only the 5.1 MP global-shutter sensor satisfies motion freeze (&le; 81 &mu;s) and 16+ px target sizing.</div>
             </div>
-            <div class="blue-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">0.51 &ndash; 2.1 m usable</div>
+            <div class="highlight-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">LI-IMX568</div>
           </a>
 
-          <a href="#s3" class="metric-pill">
+          <a href="#s3" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
             <div>
               <div
                 style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
-                Step 3</div>
-              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
-                Pixels on a fastener</div>
+                Step 3 &bull; Mounting &amp; FOV</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Mounting &amp; Geometry</div>
               <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
-                A 30 mm bolt gets 60 &times; 21 px on the IMX568, but only 16 &times; 5 px after shrinking to 640.</div>
+                Mounted 0.40 &ndash; 0.50 m high at 22&deg; &ndash; 28&deg; tilt; monitors 0.51 m to 2.16 m usable ground.</div>
             </div>
-            <div class="amber-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">Why 1088 input</div>
+            <div class="blue-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">0.51 &ndash; 2.16 m usable</div>
           </a>
 
-          <a href="#s4" class="metric-pill">
+          <a href="#s4" class="metric-pill"
+            style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; text-align: left;">
             <div>
               <div
                 style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 4px;">
-                Step 4</div>
-              <div style="font-size: 14.5px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
-                Freeze the motion</div>
+                Step 4 &bull; Resolution Selection</div>
+              <div style="font-size: 15px; font-weight: 700; color: var(--apple-text-primary); margin-bottom: 6px;">
+                Pixels on a Fastener</div>
               <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin-bottom: 10px;">
-                Exposure must stay under ~93 µs at the near edge, so a global shutter is needed.</div>
+                Pushes resolution to 1088p under 33 ms; a 30 mm bolt yields 27 &times; 9 px (&ge; 16 px threshold).</div>
             </div>
-            <div class="alert-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">&le; 93 µs</div>
+            <div class="amber-stat" style="font-size: 12.5px; font-weight: 700; font-family: var(--font-mono);">1088p Input</div>
           </a>
         </div>
       </div>
@@ -667,27 +814,21 @@
       <div class="page-content">
 
         <!-- ===================================================================
-             SECTION 1: REQUIREMENTS FROM DRIVE SPEED
+             SECTION 1: SPEED & COMPUTE BUDGET
              =================================================================== -->
         <div class="card-box" id="s1" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
               <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Requirements from Drive Speed
-              </h2>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Speed Constraints</h2>
             </div>
             <span class="badge badge-blue">Kinematics &amp; Compute Budget</span>
           </div>
 
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 12px;">
-            Every camera and compute limit starts from how fast the robot moves.
-          </p>
-
           <div class="math-eq-box">
-            $$v = \frac{\text{RPM} \times 2\pi r}{60} = \frac{400 \times 2\pi(0.1)}{60} = 4.19\text{ m/s} \approx 15.1\text{ km/h}$$
-          </div>
-          <div class="plain-words-line">
-            In plain words: wheel rotation speed times tire circumference gives the robot's ground velocity.
+            $$v = \frac{\text{RPM} \times 2\pi r}{60} = \frac{400 \times 2\pi(0.1)}{60} = 4.19\text{ m/s} \approx
+            15.1\text{ km/h}$$
+            $$t_{\text{frame}} \le \frac{1}{\text{FPS}} = \frac{1}{30} \approx 33.3\text{ ms}$$
           </div>
 
           <div class="admin-table-wrapper" style="margin-top: 14px; margin-bottom: 8px;">
@@ -702,34 +843,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Ground speed</strong></td>
-                  <td>$400 \times 2\pi \times 0.1 \div 60$</td>
-                  <td><strong class="highlight-stat">4.19 m/s</strong></td>
-                  <td>Sets every other limit</td>
-                </tr>
-                <tr>
-                  <td><strong>Per-frame budget</strong></td>
-                  <td>$1 \div 30\text{ fps}$</td>
-                  <td><strong class="highlight-stat">&le; 33.3 ms</strong></td>
-                  <td>Model + pre/post-processing must fit (sheet min 30 fps)</td>
-                </tr>
-                <tr>
-                  <td><strong>Usable detection band (IMX568)</strong></td>
-                  <td>near edge 0.51 m to where a 30 mm item drops below 16 px wide at 1088 input (2.14 m)</td>
-                  <td><strong class="blue-stat">1.63 m</strong></td>
-                  <td>Region where the model still sees enough of a fastener</td>
-                </tr>
-                <tr>
                   <td><strong>Time in view</strong></td>
-                  <td>$1.63\text{ m} \div 4.19\text{ m/s}$</td>
+                  <td>$1.65\text{ m} \div 4.19\text{ m/s}$</td>
                   <td><strong class="blue-stat">0.39 s</strong> (~12 frames at 30 fps)</td>
                   <td>Room for multi-frame confirmation</td>
-                </tr>
-                <tr>
-                  <td><strong>Swath at image centre (IMX568)</strong></td>
-                  <td>$2 \times 1.32\text{ m} \times \tan 25^\circ$</td>
-                  <td><strong class="amber-stat">1.23 m</strong></td>
-                  <td>Width covered per pass</td>
                 </tr>
                 <tr>
                   <td><strong>Runway sweep, UGV alone</strong></td>
@@ -740,142 +857,136 @@
               </tbody>
             </table>
           </div>
-          <div style="font-size: 12px; color: var(--apple-text-tertiary); margin-bottom: 6px; line-height: 1.5;">
-            Note: Sweep time ignores turns and overlap.<br>
-            16 px at 1088 input is supported by our test results: the model reached 97% mAP@50 on webcam fasteners about 21 px wide at 1088.
+          <div class="answer-box">
+            Driving at 15.1 km/h means total pipeline latency must be <strong>below 33 ms</strong> per frame (&ge; 30
+            fps).
           </div>
         </div>
 
         <!-- ===================================================================
-             SECTION 2: CAMERA GEOMETRY & GROUND SAMPLING DISTANCE
+             SECTION 2: CAMERA SELECTION
              =================================================================== -->
         <div class="card-box" id="s2" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 2.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Camera Geometry &amp; Ground
-                Sampling Distance</h2>
+              <span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 2.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Camera Selection</h2>
             </div>
-            <span class="badge badge-emerald">Optics &amp; Projection</span>
+            <span class="badge badge-purple">Hardware Selection</span>
           </div>
 
-          <!-- 2.1 Focal Length in Pixels -->
-          <div style="margin-top: 16px;">
-            <h3 style="font-size: 15.5px; color: var(--apple-text-primary); margin-bottom: 6px;">2.1 Focal Length in
-              Pixels ($f_x, f_y$)</h3>
-            <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
-              The pinhole camera model converts physical field-of-view angles into discrete sensor pixel dimensions.
-              For a sensor of width $W_{\text{sensor}}$ and height $H_{\text{sensor}}$, the pixel focal lengths scale
-              inversely with the tangent of half the angular field of view. Because pixels on our sensors are square,
-              $f_x$ and $f_y$ share the same value.
-            </p>
+          <p class="why-matters" style="margin-top: 14px;">
+            <strong>Why it matters:</strong> Driving at 15.1 km/h and needing real-time small-debris detection set hard
+            constraints. This section checks every camera against them.
+          </p>
 
-            <div class="math-eq-box">
-              $$f_x = \frac{W_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{HFOV}}{2}\right)}, \quad f_y =
-              \frac{H_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{VFOV}}{2}\right)}$$
-            </div>
-            <div class="plain-words-line">
-              In plain words: how many pixels represent the lens's optical focal length; higher means more zoom.
-            </div>
-          </div>
-
-          <!-- 2.2 Oblique Slant Range & Ground Incidence -->
-          <div style="margin-top: 20px;">
-            <h3 style="font-size: 15.5px; color: var(--apple-text-primary); margin-bottom: 6px;">2.2 Oblique Slant
-              Range &amp; Ground Incidence</h3>
-            <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
-              Because the camera sits $0.45\text{ m}$ off the ground and points $20^\circ$ downward, it views the tarmac
-              at an angle. The true line-of-sight distance $R$ to any runway point $d$ ahead of the lens follows the
-              Pythagorean theorem. The incidence angle $\psi$ tells us how steeply that line of sight strikes the flat
-              runway.
-            </p>
-
-            <div class="math-eq-box">
-              $$R = \sqrt{H^2 + d^2}, \qquad \psi = \arctan\left(\frac{H}{d}\right)$$
-            </div>
-            <div class="plain-words-line">
-              In plain words: true line-of-sight distance to the ground and how steeply the camera looks down at it.
-            </div>
-          </div>
-
-          <!-- 2.3 Ground Sample Distance -->
-          <div style="margin-top: 20px;">
-            <h3 style="font-size: 15.5px; color: var(--apple-text-primary); margin-bottom: 6px;">2.3 Ground Sample
-              Distance (GSD)</h3>
-            <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
-              Ground Sample Distance measures how many millimetres of runway one pixel covers. Looking forward at a
-              shallow angle stretches the vertical footprint along the driving direction by $1 / \sin\psi$. Across the
-              direction of travel, resolution stays sharper because horizontal ray geometry is not foreshortened.
-            </p>
-
-            <div class="math-eq-box">
-              $$\text{GSD}_{\text{across}} = \frac{R \cdot 1000}{f_x}\ (\text{mm/px}), \qquad \text{GSD}_{\text{along}}
-              = \frac{\text{GSD}_{\text{across}}}{\sin(\psi)}\ (\text{mm/px})$$
-            </div>
-            <div class="plain-words-line">
-              In plain words: how many millimetres of runway one pixel covers; smaller is sharper.
-            </div>
-          </div>
-
-          <!-- Camera Table -->
-          <div class="admin-table-wrapper" style="margin-top: 14px; margin-bottom: 14px;">
+          <!-- Unified Requirements & Specifications Table -->
+          <div class="admin-table-wrapper" style="margin-bottom: 8px;">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>Sensor Model</th>
-                  <th>Resolution ($W \times H$)</th>
-                  <th>Pixel Pitch</th>
-                  <th>Lens HFOV</th>
-                  <th>Vertical FOV</th>
-                  <th>Nearest visible ground</th>
-                  <th>Top edge of frame</th>
-                  <th>Shutter Mechanism</th>
+                  <th>Specification / Requirement</th>
+                  <th>Leopard LI-IMX568</th>
+                  <th>e-con Systems e-CAM56</th>
+                  <th>UGREEN CM831 Webcam</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="background: rgba(48, 209, 88, 0.08);">
-                  <td><strong>Leopard LI-IMX568 (Primary)</strong></td>
-                  <td>$2472 \times 2064\text{ px}$</td>
-                  <td>$2.74\ \mu\text{m}$</td>
-                  <td>50.0°</td>
-                  <td>42.5°</td>
-                  <td><strong class="highlight-stat">0.51 m</strong></td>
-                  <td><span class="amber-stat">1.3° above horizon</span></td>
-                  <td><span class="badge badge-emerald">Global Shutter</span></td>
+                <tr>
+                  <td><strong>Sensor Resolution &amp; Pitch</strong></td>
+                  <td>$2472 \times 2064\text{ px}$ (5.1 MP), $2.74\ \mu\text{m}$</td>
+                  <td>$2472 \times 2064\text{ px}$ (5.1 MP), $2.74\ \mu\text{m}$</td>
+                  <td>$1920 \times 1080\text{ px}$ (2.1 MP), n/a</td>
+                </tr>
+                <tr id="shutter">
+                  <td><strong>Shutter Mechanism (Freezes motion at 15.1 km/h)</strong></td>
+                  <td><span class="highlight-stat">✓</span> Global shutter</td>
+                  <td><span class="highlight-stat">✓</span> Global shutter</td>
+                  <td><span class="alert-stat">✗</span> Rolling shutter (image skew)</td>
                 </tr>
                 <tr>
-                  <td><strong>UGREEN CM831 Webcam</strong></td>
-                  <td>$1920 \times 1080\text{ px}$</td>
-                  <td>n/a</td>
-                  <td>62.0°</td>
-                  <td>37.4°</td>
-                  <td>0.56 m</td>
-                  <td>19.5 m</td>
-                  <td><span class="badge badge-amber">Rolling Shutter</span></td>
+                  <td><strong>Lens Field of View ($H \times V$)</strong></td>
+                  <td>50.0° &times; 42.5°</td>
+                  <td>104.8° &times; 94.6°</td>
+                  <td>62.0° &times; 37.4°</td>
                 </tr>
                 <tr>
-                  <td><strong>e-con Systems e-CAM56</strong></td>
-                  <td>$2472 \times 2064\text{ px}$</td>
-                  <td>$2.74\ \mu\text{m}$</td>
-                  <td>104.8°</td>
-                  <td>94.6°</td>
-                  <td>0.19 m</td>
-                  <td>above horizon</td>
-                  <td><span class="badge badge-emerald">Global Shutter</span></td>
+                  <td><strong>Bolt width at 1088 input, image centre</strong> (need &ge;16 px)</td>
+                  <td><span class="highlight-stat">✓</span> 27 px ($60\text{ px}$ native)</td>
+                  <td><span class="alert-stat">✗</span> 10 px ($22\text{ px}$ native)</td>
+                  <td><span class="highlight-stat">✓</span> 21 px ($36\text{ px}$ native)</td>
+                </tr>
+                <tr>
+                  <td><strong>Ground Coverage ($H=0.45\text{ m}, \theta=20^\circ$)</strong></td>
+                  <td><span class="highlight-stat">✓</span> Nearest: 0.51 m; only 3% of image rows (67 of 2064) above
+                    the horizon — negligible (tilt to ≥21.3° removes it)</td>
+                  <td><span class="alert-stat">✗</span> Nearest: 0.19 m; 33% of image rows above the horizon (wasted on
+                    sky)</td>
+                  <td><span class="highlight-stat">✓</span> Nearest: 0.56 m; no rows above the horizon</td>
+                </tr>
+                <tr>
+                  <td><strong>Frame rate &ge; 30 fps</strong></td>
+                  <td><span class="highlight-stat">✓</span> 60 fps</td>
+                  <td><span class="highlight-stat">✓</span> 79 fps</td>
+                  <td><span class="highlight-stat">✓</span> 60 fps</td>
+                </tr>
+                <tr>
+                  <td><strong>Connects to Jetson</strong></td>
+                  <td><span class="amber-stat">~</span> GMSL2: long, noise-resistant cable; needs a GMSL2 adapter</td>
+                  <td><span class="highlight-stat">✓</span> MIPI CSI-2 direct</td>
+                  <td><span class="highlight-stat">✓</span> USB 2.0</td>
+                </tr>
+                <tr style="background: rgba(255, 255, 255, 0.03);">
+                  <td><strong>Role &amp; Status</strong></td>
+                  <td><span class="badge badge-emerald">Selected for Semester 2</span></td>
+                  <td><span class="badge badge-rose">Rejected</span></td>
+                  <td><span class="badge badge-amber">Interim: used for Semester 1 data collection</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <!-- Callouts -->
-          <div class="callout callout-amber" style="margin-bottom: 12px;">
-            <strong>Camera Framing:</strong> At 20° tilt the top of the IMX568 frame sits 1.3° above the horizon. Tilt
-            to ≥ 21.3° or crop the top rows so no pixels are spent on sky.
+          <div
+            style="font-size: 12px; color: var(--apple-text-tertiary); margin-top: 4px; margin-bottom: 16px; line-height: 1.5;">
+            Note: Pixel counts use each camera's listed field of view. The e-CAM56's 104.8° may be a diagonal figure;
+            if so its horizontal view is narrower, but it would still give far fewer pixels per bolt than the IMX568.
           </div>
 
-          <div class="callout callout-blue" style="margin-bottom: 18px;">
-            <strong>Foreshortening:</strong> Because the camera looks at a shallow angle, objects are squashed about 3×
-            along the direction of travel: a 30 mm bolt is 60 px wide but only 21 px long (IMX568).
+          <!-- Interim Hardware Card (Full Width) -->
+          <div class="winner-card-green" style="padding: 16px; margin-bottom: 14px;">
+            <span class="badge badge-green" style="margin-bottom: 6px;">SELECTED CAMERA</span>
+            <h4 style="font-size: 15px; color: var(--apple-text-primary); margin: 0 0 6px 0;">Leopard LI-IMX568</h4>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+              While needing a serial adapter
+            </p>
+            <span class="badge badge-amber" style="margin-bottom: 6px;">INTERIM HARDWARE</span>
+            <h4 style="font-size: 15px; color: var(--apple-text-primary); margin: 0 0 6px 0;">Interim: UGREEN CM831</h4>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+              Due to initial budget constraints, UGREEN CM831 was adopted as an accessible interim solution for
+              Semester 1 training dataset acquisition. However, because its rolling shutter induces distortion and
+              image skew at operational driving speeds, it is unsuitable for the final robot platform.
+            </p>
+          </div>
+
+          <!-- Summary Answer Box -->
+          <div class="answer-box" style="margin-top: 14px; margin-bottom: 0;">
+            <strong>Summary:</strong> Selected: <strong>Leopard Imaging LI-IMX568</strong>, a 5.1 MP global-shutter
+            camera with a 50° lens. It is
+            the only option that freezes motion at 4.19 m/s, gives a 30 mm bolt enough pixels at 1088
+            input, and keeps almost all of its view on the ground.
+          </div>
+        </div>
+
+        <!-- ===================================================================
+             SECTION 3: CAMERA GEOMETRY & GROUND SAMPLING DISTANCE
+             =================================================================== -->
+        <div class="card-box" id="s3" style="margin-bottom: 28px;">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 3.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Camera Mounting and FOV
+                Calculations</h2>
+            </div>
+            <span class="badge badge-emerald">Optics &amp; Projection</span>
           </div>
 
           <!-- =================================================================
@@ -921,8 +1032,8 @@
                   <span class="sim-label">Camera Height ($H$)</span>
                   <span class="sim-val-badge" id="val-height">0.45 m</span>
                 </div>
-                <input type="range" class="sim-slider" id="slider-height" min="0.30" max="1.50" step="0.05"
-                  value="0.45" aria-label="Camera Mounting Height">
+                <input type="range" class="sim-slider" id="slider-height" min="0.30" max="1.50" step="0.05" value="0.45"
+                  aria-label="Camera Mounting Height">
                 <div class="sim-hint">
                   <span>0.30 m</span>
                   <span>Default: 0.45 m</span>
@@ -953,9 +1064,9 @@
                 </div>
                 <input type="range" class="sim-slider" id="slider-debris" min="10" max="100" step="1" value="30"
                   aria-label="Target Debris Dimension">
-                <div class="sim-hint" style="position: relative;">
+                <div class="sim-hint">
                   <span>10 mm</span>
-                  <span style="position: absolute; left: calc(9px + (100% - 18px) * 0.2222); transform: translateX(-50%); font-size: 10.5px; white-space: nowrap; color: var(--apple-text-secondary);">Default: 30 mm</span>
+                  <span>Default: 30 mm</span>
                   <span>100 mm</span>
                 </div>
               </div>
@@ -970,7 +1081,7 @@
             <div class="hud-grid">
               <div class="hud-card">
                 <div>
-                  <div class="hud-card-title">Near Cutoff ($d_{\text{near}}$)</div>
+                  <div class="hud-card-title">Near cutoff</div>
                   <div class="hud-card-value" id="hud-dnear">0.51 m</div>
                 </div>
                 <div class="hud-card-sub">Closest ground in view</div>
@@ -978,7 +1089,7 @@
 
               <div class="hud-card">
                 <div>
-                  <div class="hud-card-title">Image Centre ($d_{\text{center}}$)</div>
+                  <div class="hud-card-title">Image centre</div>
                   <div class="hud-card-value" id="hud-dcenter" style="color: var(--apple-blue);">1.24 m</div>
                 </div>
                 <div class="hud-card-sub">Boresight intersection</div>
@@ -1022,13 +1133,6 @@
                 <div class="hud-card-sub" id="hud-sub-1088">Width: 26.6 px, Length: 9.1 px</div>
               </div>
 
-              <div class="hud-card">
-                <div>
-                  <div class="hud-card-title">Max Exposure ($t_{\text{exp}}$)</div>
-                  <div class="hud-card-value" id="hud-texp" style="color: var(--apple-amber);">346 µs / 93 µs</div>
-                </div>
-                <div class="hud-card-sub" id="hud-texp-sub">Centre: 346 µs &bull; Near: 93 µs (binding)</div>
-              </div>
             </div>
 
             <!-- Explanatory footer under visualizer -->
@@ -1036,28 +1140,103 @@
               style="margin-top: 14px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; padding: 10px 14px; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid var(--apple-border);">
               💡 <strong>Key Takeaway:</strong> At 0.45 m and 20° tilt, the image centre lands 1.24 m ahead. A 30 mm
               fastener gets 60 &times; 21 px native on the IMX568, 16 &times; 5 px at 640 input, and 27 &times; 9 px at
-              1088 input. Notice that 1088 keeps the item's width (27 px) closer to the 32 px rule used in our sizing sheet.
+              1088 input. Notice that 1088 keeps the item's width (27 px) closer to the 32 px rule used in our sizing
+              sheet.
             </div>
+          </div>
+
+          <!-- Show the working details -->
+          <details class="why-details">
+            <summary>Show the working</summary>
+
+            <!-- 3.1 Focal Length in Pixels -->
+            <div style="margin-top: 10px;">
+              <h3 style="font-size: 15px; color: var(--apple-text-primary); margin: 0 0 6px 0;">3.1 Focal Length in
+                Pixels ($f_x, f_y$)</h3>
+              <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
+                The pinhole camera model converts physical field-of-view angles into discrete sensor pixel dimensions.
+                For a sensor of width $W_{\text{sensor}}$ and height $H_{\text{sensor}}$, the pixel focal lengths scale
+                inversely with the tangent of half the angular field of view. Because pixels on our sensors are square,
+                $f_x$ and $f_y$ share the same value.
+              </p>
+              <div class="math-eq-box">
+                $$f_x = \frac{W_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{HFOV}}{2}\right)}, \quad f_y =
+                \frac{H_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{VFOV}}{2}\right)}$$
+              </div>
+              <div class="plain-words-line">
+                In plain words: how many pixels represent the lens's optical focal length; higher means more zoom.
+              </div>
+            </div>
+
+            <!-- 3.2 Oblique Slant Range & Ground Incidence -->
+            <div style="margin-top: 14px;">
+              <h3 style="font-size: 15px; color: var(--apple-text-primary); margin: 0 0 6px 0;">3.2 Oblique Slant Range
+                &amp; Ground Incidence</h3>
+              <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
+                Because the camera sits $0.45\text{ m}$ off the ground and points $20^\circ$ downward, it views the
+                tarmac at an angle. The true line-of-sight distance $R$ to any runway point $d$ ahead of the lens
+                follows the Pythagorean theorem. The incidence angle $\psi$ tells us how steeply that line of sight
+                strikes the flat runway.
+              </p>
+              <div class="math-eq-box">
+                $$R = \sqrt{H^2 + d^2}, \qquad \psi = \arctan\left(\frac{H}{d}\right)$$
+              </div>
+              <div class="plain-words-line">
+                In plain words: true line-of-sight distance to the ground and how steeply the camera looks down at it.
+              </div>
+            </div>
+
+            <!-- 3.3 Ground Sample Distance -->
+            <div style="margin-top: 14px;">
+              <h3 style="font-size: 15px; color: var(--apple-text-primary); margin: 0 0 6px 0;">3.3 Ground Sample
+                Distance (GSD)</h3>
+              <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
+                Ground Sample Distance measures how many millimetres of runway one pixel covers. Looking forward at a
+                shallow angle stretches the vertical footprint along the driving direction by $1 / \sin\psi$. Across the
+                direction of travel, resolution stays sharper because horizontal ray geometry is not foreshortened.
+              </p>
+              <div class="math-eq-box">
+                $$\text{GSD}_{\text{across}} = \frac{R \cdot 1000}{f_x}\ (\text{mm/px}), \qquad
+                \text{GSD}_{\text{along}} = \frac{\text{GSD}_{\text{across}}}{\sin(\psi)}\ (\text{mm/px})$$
+              </div>
+              <div class="plain-words-line">
+                In plain words: how many millimetres of runway one pixel covers; smaller is sharper.
+              </div>
+              <p
+                style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-top: 10px; margin-bottom: 6px;">
+                For any image row at vertical angle $\alpha$ relative to the optical centre ($\alpha > 0$ downwards
+                towards the near ground):
+              </p>
+              <div class="math-eq-box">
+                $$\text{GSD}_{\text{along}}(\alpha) = \frac{H \cdot \cos^2\alpha}{f \cdot \sin^2(\theta + \alpha)} \cdot
+                1000\ (\text{mm/px}), \qquad \text{GSD}_{\text{across}}(\alpha) = \frac{H \cdot \cos\alpha}{f \cdot
+                \sin(\theta + \alpha)} \cdot 1000\ (\text{mm/px})$$
+              </div>
+              <div class="plain-words-line">
+                At the image centre ($\alpha = 0$) this matches the simpler formula above; away from the centre the
+                $\cos^2\alpha$ term matters.
+              </div>
+            </div>
+          </details>
+
+          <!-- Camera Mounting Callout -->
+          <div class="callout callout-blue" style="margin-top: 14px; margin-bottom: 0;">
+            <strong>Camera Mounting:</strong> The mounting height will be 0.4 – 0.5 m at 22° – 28°. To solve this, we
+            will 3D model an adjustable camera mount.
           </div>
         </div>
 
         <!-- ===================================================================
-             SECTION 3: PIXELS THE MODEL ACTUALLY SEES
+             SECTION 4: HOW BIG DOES A FASTENER LOOK TO THE MODEL?
              =================================================================== -->
-        <div class="card-box" id="s3" style="margin-bottom: 28px;">
+        <div class="card-box" id="s4" style="margin-bottom: 28px;">
           <div class="card-header">
             <div>
-              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 3.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Pixels the Model Actually Sees
-              </h2>
+              <span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 4.0</span>
+              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Resolution Selection</h2>
             </div>
             <span class="badge badge-amber">Input Resolution Scaling</span>
           </div>
-
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 14px; margin-bottom: 14px;">
-            The model shrinks each frame before detecting. This table shows a 30 mm item at the image centre (0.45 m,
-            20°).
-          </p>
 
           <div class="admin-table-wrapper" style="margin-bottom: 12px;">
             <table class="admin-table">
@@ -1092,167 +1271,61 @@
             </table>
           </div>
 
-          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 12px; margin-bottom: 12px;">
-            YOLO's finest layer reads the image in 8 &times; 8 px blocks. At 640 the item is only a couple of blocks
-            wide, which is why the model trained at 1088 found more fasteners (see <a href="yolo-comparison.html"
+          <div class="answer-box">
+            While having a higher resolution exponentially increases the number of parameters and slows the latency, we
+            aim to push resolution as far as hardware permits while being under the 33 ms limit.
+          </div>
+
+          <p class="why-matters">
+            <strong>Why it matters:</strong> Too few pixels and the model can't see the shape. That's why we run the
+            model at 1088 (87.7% &rarr; 97.0% mAP@50 on our test videos, see <a href="yolo-comparison.html"
               style="color: var(--apple-blue); text-decoration: underline; font-weight: 500;">YOLO model comparison
-              page</a>: 87.7% &rarr; 97.0% mAP@50).
+              page</a>).
           </p>
-
-          <!-- Expander: Why not the wide e-CAM56? -->
-          <div style="margin-top: 12px;">
-            <details class="why-details">
-              <summary>Why not the wide e-CAM56?</summary>
-              <p>Its 104.8° lens spreads pixels over a wide area, so a 30 mm item gets only 22 px across even at full
-                resolution.</p>
-            </details>
-          </div>
         </div>
-
-        <!-- ===================================================================
-             SECTION 4: MOTION BLUR, SHUTTER & LIGHTING
-             =================================================================== -->
-        <div class="card-box" id="s4" style="margin-bottom: 28px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 4.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Motion Blur, Shutter &amp;
-                Lighting</h2>
-            </div>
-            <span class="badge badge-rose">Exposure Dynamics</span>
-          </div>
-
-          <div style="margin-top: 16px;">
-            <div class="math-eq-box">
-              $$\Delta x = v \cdot t_{\text{exp}} \le \text{GSD}_{\text{along}} \implies t_{\text{exp}} \le
-              \frac{\text{GSD}_{\text{along}}}{v}$$
-            </div>
-            <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-top: 10px; margin-bottom: 6px;">
-              Worked (IMX568): centre 1.45 mm/px ÷ 4.19 m/s ≈ 346 µs; near edge 0.39 mm/px ÷ 4.19 m/s ≈ 93 µs.
-            </p>
-            <div class="plain-words-line">
-              In plain words: The near edge is closest to the camera, so motion there smears the most pixels; it sets the limit.
-            </div>
-
-            <!-- Two Cards: Global shutter & Lighting -->
-            <div
-              style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 18px 0 14px 0;">
-              <div class="winner-card emerald" style="padding: 16px;">
-                <span class="badge badge-emerald" style="margin-bottom: 6px;">GLOBAL SHUTTER</span>
-                <h4 style="font-size: 15px; color: var(--apple-text-primary); margin: 0 0 6px 0;">IMX568 Global Shutter
-                </h4>
-                <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                  A rolling shutter reads the frame line by line over several milliseconds; at 4.19 m/s the robot moves
-                  centimetres during one frame, skewing the image. The IMX568 captures every pixel at once.
-                </p>
+        <!-- NEXT PAGE NAVIGATION CARD -->
+        <div style="margin-top: 36px; margin-bottom: 24px; display: flex; justify-content: flex-end;">
+          <a href="yolo-comparison.html" class="nav-next-page-btn" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, rgba(41, 151, 255, 0.1) 0%, rgba(41, 151, 255, 0.03) 100%);
+            border: 1px solid rgba(41, 151, 255, 0.35);
+            border-radius: 14px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+          ">
+            <div style="text-align: right;">
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--apple-blue); font-weight: 700; margin-bottom: 4px;">
+                Next Page &rarr;
               </div>
-
-              <div class="winner-card blue" style="padding: 16px;">
-                <span class="badge badge-blue" style="margin-bottom: 6px;">LIGHTING (PLANNED)</span>
-                <h4 style="font-size: 15px; color: var(--apple-text-primary); margin: 0 0 6px 0;">Synchronised Strobe
-                </h4>
-                <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                  Exposures under 100 µs need strong, controlled light; a synchronised LED strobe is planned and will be
-                  sized in Semester 2.
-                </p>
+              <div style="font-size: 17px; font-weight: 700; color: var(--apple-text-primary);">
+                YOLO Model Comparison
+              </div>
+              <div style="font-size: 12.5px; color: var(--apple-text-secondary); margin-top: 2px;">
+                Quantitative benchmarks, leak-free dataset split &amp; edge latency
               </div>
             </div>
-
-            <!-- Ideas to evaluate Expander -->
-            <div style="margin-top: 14px;">
-              <details class="why-details">
-                <summary>Ideas to evaluate: CPL filters &amp; DOL-HDR (unverified)</summary>
-                <p>Wet runway puddles can produce specular glare, and bright tropical sun creates harsh shadows in
-                  asphalt grooves. Circular Polarizing (CPL) filters and Digital Overlap HDR (DOL-HDR) are under
-                  evaluation as unverified options to be tested if glare causes false alarms in field trials.</p>
-              </details>
+            <div style="
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              background: var(--apple-blue);
+              color: #ffffff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 20px;
+              font-weight: 700;
+              flex-shrink: 0;
+              box-shadow: 0 2px 8px rgba(41, 151, 255, 0.4);
+            ">
+              &rarr;
             </div>
-          </div>
-        </div>
-
-        <!-- ===================================================================
-             SECTION 5: VERIFICATION PLAN
-             =================================================================== -->
-        <div class="card-box" id="s5" style="margin-bottom: 28px;">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 5.0</span>
-              <h2 style="font-size: 20px; color: var(--apple-text-primary); margin: 0;">Verification Plan</h2>
-            </div>
-            <span class="badge badge-emerald">Empirical Targets</span>
-          </div>
-
-          <div class="admin-table-wrapper" style="margin-top: 16px; margin-bottom: 8px;">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Metric</th>
-                  <th>Target</th>
-                  <th>Current result</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="background: rgba(48, 209, 88, 0.08);">
-                  <td><strong>mAP@50</strong></td>
-                  <td>&ge; 90%</td>
-                  <td><strong class="highlight-stat">97.0 &plusmn; 1.4%</strong> (webcam footage, 151 held-out fasteners)</td>
-                  <td><span class="badge badge-emerald">Met on test videos</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Recall</strong></td>
-                  <td>&ge; 95%</td>
-                  <td><span class="amber-stat">92.7 &plusmn; 3.2%</span></td>
-                  <td><span class="badge badge-amber">Not yet met</span></td>
-                </tr>
-                <tr>
-                  <td><strong>False alarms per test set</strong></td>
-                  <td>&le; 3</td>
-                  <td><strong class="highlight-stat">1.0</strong></td>
-                  <td><span class="badge badge-emerald">Met; empty-tarmac test pending</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Per-frame latency on Jetson Orin</strong></td>
-                  <td>&le; 33 ms</td>
-                  <td>Not yet measured</td>
-                  <td><span class="badge badge-purple">Semester 2</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div style="font-size: 12px; color: var(--apple-text-tertiary); margin-bottom: 16px;">
-            Note: Targets are our own design goals, not regulatory figures.
-          </div>
-
-          <div style="font-size: 14px; font-weight: 600; color: var(--apple-text-primary); margin-bottom: 10px;">
-            Planned Tests:
-          </div>
-
-          <div class="checklist-grid" style="margin-top: 0;">
-            <div class="checklist-item">
-              <span style="color: var(--apple-blue); font-size: 16px;">📐</span>
-              <div>
-                <strong>Slanted-edge sharpness test at the mounting height (planned):</strong> Measure MTF50 across the
-                field of view with the IMX568 mounted at 0.45 m.
-              </div>
-            </div>
-
-            <div class="checklist-item">
-              <span style="color: var(--apple-green); font-size: 16px;">🏎️</span>
-              <div>
-                <strong>Driving test at 4.19 m/s with fasteners laid out (planned):</strong> Verify under-1-pixel motion
-                blur and detection consistency over multi-frame sequences at full speed.
-              </div>
-            </div>
-
-            <div class="checklist-item">
-              <span style="color: var(--apple-purple); font-size: 16px;">📍</span>
-              <div>
-                <strong>RTK position error vs measured positions (planned):</strong> Survey physical ground truth marker
-                coordinates to quantify unprojected GPS accuracy using the UM980.
-              </div>
-            </div>
-          </div>
+          </a>
         </div>
 
       </div>
@@ -1265,9 +1338,8 @@
       <div>© AY2627 FOD Hunter CDE4301 Team. National University of Singapore.</div>
       <ul class="apple-footer-links">
         <li><a href="../../index.html">Overview</a></li>
-        <li><a href="yolo-comparison.html">← YOLO model comparison</a></li>
-        <li><a href="../../7-documentation.html">Documentation</a></li>
-        <li><a href="vision-research.html">Computer vision research →</a></li>
+        <li><a href="../../7-documentation.html">Documentation Hub</a></li>
+        <li><a href="yolo-comparison.html">YOLO Model Comparison &rarr;</a></li>
       </ul>
     </div>
   </footer>
@@ -1352,7 +1424,7 @@
   </button>
   <script>
     function openAllDetailsAndPrint() {
-      document.querySelectorAll('details').forEach(function(d) {
+      document.querySelectorAll('details').forEach(function (d) {
         d.setAttribute('open', '');
       });
       window.print();
@@ -1364,6 +1436,11 @@
        ===================================================================== -->
   <script>
     (function () {
+      // Derive vfov from sensor height and focal length: vfov = 2 * atan((height / 2) / fx)
+      function computeVfovDeg(height, fx) {
+        return 2 * Math.atan((height / 2) / fx) * (180 / Math.PI);
+      }
+
       // Sensor Preset Definitions
       const PRESETS = {
         imx568: {
@@ -1371,27 +1448,27 @@
           width: 2472,
           height: 2064,
           hfovDeg: 50.0,
-          vfovDeg: 42.54,
-          fx: 2650.6,
-          fy: 2650.6
+          fx: 2650.0,
+          fy: 2650.0,
+          vfovDeg: computeVfovDeg(2064, 2650.0)
         },
         ecam56: {
           name: 'e-con e-CAM56',
           width: 2472,
           height: 2064,
           hfovDeg: 104.8,
-          vfovDeg: 94.67,
           fx: 951.8,
-          fy: 951.8
+          fy: 951.8,
+          vfovDeg: computeVfovDeg(2064, 951.8)
         },
         ugreen: {
           name: 'UGREEN CM831 Webcam',
           width: 1920,
           height: 1080,
           hfovDeg: 62.0,
-          vfovDeg: 37.38,
           fx: 1597.7,
-          fy: 1597.7
+          fy: 1597.7,
+          vfovDeg: computeVfovDeg(1080, 1597.7)
         }
       };
 
@@ -1473,7 +1550,7 @@
         const isAboveHorizon = angleFar <= 0;
         const dFar = !isAboveHorizon ? H / Math.tan(angleFar) : Infinity;
 
-        // 2. GSD Calculations at IMAGE CENTRE (d = dCenter)
+        // 2. GSD Calculations at IMAGE CENTRE (d = dCenter, alpha = 0)
         const R_center = Math.sqrt(H * H + dCenter * dCenter);
         const psi_center = thetaRad; // Angle at image centre equals tilt theta
 
@@ -1497,14 +1574,13 @@
         const yolo1088L = nativeL * scale1088;
 
         // 4. Max exposure calculations: t_exp = GSD_along / v
-        // At image centre:
+        // At image centre (alpha = 0):
         const tExpCentre = (gsdAlongCenter / 1000) / V_SPEED * 1e6; // in microseconds
 
-        // At near edge:
-        const R_near = Math.sqrt(H * H + dNear * dNear);
-        const psi_near = angleNear; // Near edge angle
-        const gsdAcrossNear = (R_near * 1000) / preset.fx;
-        const gsdAlongNear = gsdAcrossNear / Math.sin(psi_near);
+        // At near edge (alpha = vfov / 2):
+        const alphaNear = vfovRad / 2;
+        const gsdAlongNear = (H * Math.pow(Math.cos(alphaNear), 2) / (preset.fx * Math.pow(Math.sin(angleNear), 2))) * 1000; // in mm/px
+        const gsdAcrossNear = ((H / Math.sin(angleNear)) * Math.cos(alphaNear) / preset.fx) * 1000; // in mm/px
         const tExpNear = (gsdAlongNear / 1000) / V_SPEED * 1e6; // in microseconds
 
         // Update HUD Telemetry DOM
@@ -1534,8 +1610,8 @@
         hudStatus640.innerHTML = getStatusPillHtml(yolo640W);
         hudStatus1088.innerHTML = getStatusPillHtml(yolo1088W);
 
-        hudTexp.textContent = Math.round(tExpCentre) + ' \u00b5s / ' + Math.round(tExpNear) + ' \u00b5s';
-        hudTexpSub.textContent = 'Centre: ' + Math.round(tExpCentre) + ' \u00b5s \u2022 Near: ' + Math.round(tExpNear) + ' \u00b5s (binding)';
+        if (hudTexp) hudTexp.textContent = Math.round(tExpCentre) + ' \u00b5s / ' + Math.round(tExpNear) + ' \u00b5s';
+        if (hudTexpSub) hudTexpSub.textContent = 'Centre: ' + Math.round(tExpCentre) + ' \u00b5s \u2022 Near: ' + Math.round(tExpNear) + ' \u00b5s (binding)';
 
         // Render Canvas
         renderCanvas(H, thetaRad, vfovRad, dNear, dCenter, dFar, isAboveHorizon, debrisMm);
@@ -1550,14 +1626,13 @@
 
         // Ground line at y = 330
         const groundY = 330;
-        // UGV bumper at x = 110
+        // UGV bumper & camera mount reference at x = 110 (0.0 m runway mark)
         const originX = 110;
 
-        // Scale factors:
-        // 1 meter horizontal = 120 pixels
-        const scaleX = 120;
-        // 1 meter vertical = 140 pixels
-        const scaleY = 140;
+        // Scale factors: ONE scale for both axes (120 px per metre) so drawn angles match real angles
+        const scale = 120;
+        const scaleX = scale;
+        const scaleY = scale;
 
         const maxMeters = 5.5;
 
@@ -1582,7 +1657,7 @@
         ctx.lineWidth = 1;
 
         for (let m = 0; m <= maxMeters; m += 0.5) {
-          const tx = originX + m * scaleX;
+          const tx = originX + m * scale;
           if (tx > W) break;
 
           ctx.beginPath();
@@ -1604,7 +1679,7 @@
 
         // 2. Draw 4WD Robotic Patrol UGV Silhouette
         ctx.save();
-        const wheelRadius = 0.10 * scaleY; // 100 mm radius = 8-inch tire
+        const wheelRadius = 0.10 * scale; // 100 mm radius = 12 px (wheel diameter = 200 mm)
         const wheelY = groundY - wheelRadius;
 
         ctx.fillStyle = isLight ? '#475569' : '#1e293b';
@@ -1628,18 +1703,18 @@
         ctx.strokeStyle = isLight ? '#94a3b8' : '#475569';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        ctx.roundRect(originX - 80, wheelY - 28, 80, 26, 4);
+        ctx.roundRect(originX - 80, wheelY - 26, 80, 24, 4);
         ctx.fill();
         ctx.stroke();
 
-        // Mast mounting post for camera at x = originX - 10
-        const camX = originX - 10;
-        const camY = groundY - H * scaleY;
+        // Mast mounting post for camera at x = originX (aligned with 0.0m mark)
+        const camX = originX;
+        const camY = groundY - H * scale;
 
         ctx.strokeStyle = isLight ? '#64748b' : '#64748b';
         ctx.lineWidth = 4;
         ctx.beginPath();
-        ctx.moveTo(camX, wheelY - 26);
+        ctx.moveTo(camX, wheelY - 24);
         ctx.lineTo(camX, camY);
         ctx.stroke();
 
@@ -1655,7 +1730,7 @@
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(camX, camY);
-        ctx.lineTo(originX + 15, camY);
+        ctx.lineTo(originX + 25, camY);
         ctx.stroke();
         ctx.setLineDash([]);
 
@@ -1684,23 +1759,28 @@
 
         // 3. Draw Optical FOV Cone & Boresight Ray
         ctx.save();
-        const nearCanvasX = originX + dNear * scaleX;
-        const centerCanvasX = originX + dCenter * scaleX;
+        const nearCanvasX = camX + dNear * scale;
+        const centerCanvasX = camX + dCenter * scale;
 
         let farCanvasX;
         let farCanvasY = groundY;
+        let hitsTopEdge = false;
 
         if (isAboveHorizon) {
           // Ray points above horizon: intersect right or top edge of canvas
           const topAngle = theta - vfov / 2; // <= 0
-          // dx = W - camX
-          // dy = dx * tan(topAngle) (negative means above camY)
-          const dx = W - camX;
-          const dy = dx * Math.tan(topAngle);
-          farCanvasX = W;
-          farCanvasY = camY + dy;
+          const tanTop = Math.tan(topAngle);
+          const yAtRight = camY + (W - camX) * tanTop;
+          if (yAtRight < 0 && Math.abs(tanTop) > 1e-4) {
+            hitsTopEdge = true;
+            farCanvasY = 0;
+            farCanvasX = Math.min(W, Math.max(camX, camX - camY / tanTop));
+          } else {
+            farCanvasX = W;
+            farCanvasY = Math.max(0, yAtRight);
+          }
         } else {
-          farCanvasX = originX + dFar * scaleX;
+          farCanvasX = camX + dFar * scale;
         }
 
         // VFOV Frustum Polygon
@@ -1709,7 +1789,12 @@
         ctx.lineTo(nearCanvasX, groundY);
         if (isAboveHorizon) {
           ctx.lineTo(W, groundY);
-          ctx.lineTo(farCanvasX, farCanvasY);
+          if (hitsTopEdge) {
+            ctx.lineTo(W, 0);
+            ctx.lineTo(farCanvasX, 0);
+          } else {
+            ctx.lineTo(farCanvasX, farCanvasY);
+          }
         } else {
           ctx.lineTo(Math.min(farCanvasX, W + 100), groundY);
         }
@@ -1787,10 +1872,16 @@
 
         // Far edge label
         if (isAboveHorizon) {
+          const topAngleDeg = Math.abs((theta - vfov / 2) * 180 / Math.PI);
           ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, monospace';
           ctx.fillStyle = isLight ? '#b45309' : '#fbbf24';
           ctx.textAlign = 'right';
-          ctx.fillText('Top ray: above horizon', W - 14, Math.max(20, farCanvasY + 14));
+          const labelText = 'Top ray: ' + topAngleDeg.toFixed(1) + '° above horizon';
+          if (hitsTopEdge) {
+            ctx.fillText(labelText, Math.min(W - 14, farCanvasX + 110), 18);
+          } else {
+            ctx.fillText(labelText, W - 14, Math.max(20, Math.min(groundY - 15, farCanvasY + 14)));
+          }
         } else if (farCanvasX <= W - 10) {
           ctx.font = '10px -apple-system, BlinkMacSystemFont, monospace';
           ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
