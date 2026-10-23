@@ -23,6 +23,9 @@ def generate_launch_description():
     use_amcl = LaunchConfiguration('use_amcl')
     use_ekf = LaunchConfiguration('use_ekf')
     use_c2_bridge = LaunchConfiguration('use_c2_bridge')
+    spawn_x = LaunchConfiguration('spawn_x')
+    spawn_y = LaunchConfiguration('spawn_y')
+    spawn_yaw = LaunchConfiguration('spawn_yaw')
 
     default_map_file = PythonExpression([
         "'", pkg_nav, "/maps/nus_ea_field.yaml' if '", world_name, "' == 'nus_ea_field' else '", pkg_nav, "/maps/runway_map.yaml'"
@@ -33,9 +36,9 @@ def generate_launch_description():
         "'", pkg_nav, "/config/ekf_nus.yaml' if '", world_name, "' == 'nus_ea_field' else '", pkg_nav, "/config/ekf.yaml'"
     ])
 
-    tf_x = PythonExpression(["'-25.0' if '", world_name, "' == 'nus_ea_field' else '0.0'"])
-    tf_y = PythonExpression(["'0.0' if '", world_name, "' == 'nus_ea_field' else '0.0'"])
-    tf_yaw = PythonExpression(["'0.0' if '", world_name, "' == 'nus_ea_field' else '-0.2274'"])
+    tf_x = spawn_x
+    tf_y = spawn_y
+    tf_yaw = spawn_yaw
 
     remappings = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
 
@@ -195,15 +198,18 @@ def generate_launch_description():
         output='screen',
         parameters=[{
             'use_sim_time': use_sim_time,
-            'spawn_x': PythonExpression(["-25.0 if '", world_name, "' == 'nus_ea_field' else 0.0"]),
-            'spawn_y': 0.0,
-            'spawn_yaw': PythonExpression(["0.0 if '", world_name, "' == 'nus_ea_field' else -0.2274"]),
+            'spawn_x': spawn_x,
+            'spawn_y': spawn_y,
+            'spawn_yaw': spawn_yaw,
         }],
         condition=IfCondition(use_c2_bridge)
     )
 
     return LaunchDescription([
-        DeclareLaunchArgument('world_name', default_value='airport_runway', description='World name: airport_runway or nus_ea_field'),
+        DeclareLaunchArgument('world_name', default_value='nus_ea_field', description='World name: nus_ea_field or airport_runway'),
+        DeclareLaunchArgument('spawn_x', default_value='-25.0', description='Robot spawn X coordinate (default: -25.0)'),
+        DeclareLaunchArgument('spawn_y', default_value='0.0', description='Robot spawn Y coordinate (default: 0.0)'),
+        DeclareLaunchArgument('spawn_yaw', default_value='0.0', description='Robot spawn Yaw angle (default: 0.0)'),
         DeclareLaunchArgument('use_sim_time', default_value='true', description='Use simulation clock'),
         DeclareLaunchArgument('map', default_value=default_map_file, description='Full path to map yaml file'),
         DeclareLaunchArgument('params_file', default_value=default_params_file, description='Full path to nav2 param file'),

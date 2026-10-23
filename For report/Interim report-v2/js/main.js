@@ -891,7 +891,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Universal Return to Top Floating Button ──────────────────────
+  // ── Universal Return to Top Floating Button (Left) ──────────────────
   (function initBackToTop() {
     if (document.getElementById('apple-back-to-top')) return;
     const btn = document.createElement('button');
@@ -1538,27 +1538,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
   })();
 
-  // ── UX Enhancement: Back-to-Top Button ───────────────────────────────
-  (function initBackToTop() {
-    const btn = document.createElement('button');
-    btn.id = 'back-to-top';
-    btn.className = 'back-to-top-btn';
-    btn.setAttribute('aria-label', 'Back to top');
-    btn.setAttribute('title', 'Back to top');
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 15l-6-6-6 6"/>
-    </svg>`;
-    document.body.appendChild(btn);
-
-    window.addEventListener('scroll', () => {
-      btn.classList.toggle('visible', window.scrollY > 420);
-    }, { passive: true });
-
-    btn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  })();
-
   // ── UX Enhancement: Auto Breadcrumbs ─────────────────────────────────
   (function initBreadcrumbs() {
     const path = window.location.pathname;
@@ -1615,25 +1594,44 @@ document.addEventListener('DOMContentLoaded', () => {
       pfx = m ? m.join('') : '';
     }
 
-    // Parse segments
-    const segments = path.split('/').filter(s => s && s !== '');
-    const crumbs = [];
+    // Determine relevant relative segments based on directory depth
+    const depth = (pfx.match(/\.\.\//g) || []).length;
+    const allSegments = path.split('/').filter(Boolean);
+    const relSegments = depth > 0 ? allSegments.slice(-depth - 1) : allSegments.slice(-1);
 
-    // Always start with Home
+    const crumbs = [];
     crumbs.push({ label: 'FOD Hunter', icon: '🏠', url: pfx + 'index.html' });
 
-    let accPath = pfx;
-    segments.forEach((seg, idx) => {
-      const cleanSeg = seg.replace('.html', '');
+    let currentSection = '';
+    relSegments.forEach((seg, idx) => {
+      const cleanSeg = decodeURIComponent(seg).replace('.html', '');
       const info = LABELS[cleanSeg] || { label: cleanSeg.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()), icon: '📄' };
-      const isLast = idx === segments.length - 1;
+      const isLast = idx === relSegments.length - 1;
 
       if (!isLast) {
-        accPath += seg + '/';
-        // Only add a crumb for known directory segments
-        if (LABELS[cleanSeg]) {
-          crumbs.push({ label: info.label, icon: info.icon, url: accPath + 'index.html' });
+        let targetUrl = null;
+        if (idx === 0) {
+          currentSection = cleanSeg;
+          if (cleanSeg === '7-documentation') {
+            targetUrl = pfx + '7-documentation.html';
+          } else if (cleanSeg === '6-references') {
+            targetUrl = pfx + '6-references.html';
+          } else if (cleanSeg === '4-subsystems') {
+            targetUrl = pfx + '4-subsystems/index.html';
+          } else {
+            targetUrl = pfx + cleanSeg + '.html';
+          }
+        } else if (idx === 1) {
+          // Sub-folder like hilbert, asuka, zacarias, bryan, gabriel, literature
+          if (currentSection === '7-documentation') {
+            targetUrl = (cleanSeg === 'literature') ? (pfx + '7-documentation.html') : (pfx + '7-documentation.html#' + cleanSeg);
+          } else if (currentSection === '6-references') {
+            targetUrl = pfx + '6-references.html#' + cleanSeg;
+          } else {
+            targetUrl = pfx + currentSection + '/' + cleanSeg + '.html';
+          }
         }
+        crumbs.push({ label: info.label, icon: info.icon, url: targetUrl });
       } else {
         crumbs.push({ label: info.label, icon: info.icon, url: null });
       }

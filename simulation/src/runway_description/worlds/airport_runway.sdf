@@ -44,128 +44,170 @@
       <pose>0 160.0 0 0 0 0</pose>
     </include>
 
-    <!-- Inspection FOD Targets on Runway -->
-    <model name="fod_box_1">
-      <pose>8.0 -1.8 0.05 0 0 0</pose>
+    <!-- Inspection FOD Targets on Runway: Tiny Pink Cubes (height 0.03m, too short for LiDAR at 0.45m to detect) -->
+    <!-- Waypoint 1 Target -->
+    <model name="pink_cube_wp1">
+      <static>true</static>
+      <pose>-7.57 -29.64 0.015 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
-            <box><size>0.15 0.15 0.15</size></box>
+            <box><size>0.05 0.05 0.03</size></box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
-            <box><size>0.15 0.15 0.15</size></box>
+            <box><size>0.05 0.05 0.03</size></box>
           </geometry>
           <material>
-            <ambient>1.0 0.0 0.0 1</ambient>
-            <diffuse>1.0 0.0 0.0 1</diffuse>
+            <ambient>1.0 0.15 0.65 1.0</ambient>
+            <diffuse>1.0 0.15 0.65 1.0</diffuse>
+            <specular>0.5 0.5 0.5 1.0</specular>
+            <emissive>0.3 0.05 0.2 1.0</emissive>
           </material>
         </visual>
       </link>
     </model>
 
-    <model name="fod_bolt_2">
-      <pose>16.0 -3.7 0.05 0 0 0</pose>
+    <!-- Waypoint 2 Target -->
+    <model name="pink_cube_wp2">
+      <static>true</static>
+      <pose>-2.92 -11.94 0.015 0 0 0</pose>
       <link name="link">
         <collision name="collision">
           <geometry>
-            <cylinder><radius>0.05</radius><length>0.12</length></cylinder>
+            <box><size>0.05 0.05 0.03</size></box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
-            <cylinder><radius>0.05</radius><length>0.12</length></cylinder>
+            <box><size>0.05 0.05 0.03</size></box>
           </geometry>
           <material>
-            <ambient>0.8 0.8 0.0 1</ambient>
-            <diffuse>0.8 0.8 0.0 1</diffuse>
+            <ambient>1.0 0.15 0.65 1.0</ambient>
+            <diffuse>1.0 0.15 0.65 1.0</diffuse>
+            <specular>0.5 0.5 0.5 1.0</specular>
+            <emissive>0.3 0.05 0.2 1.0</emissive>
           </material>
         </visual>
       </link>
     </model>
 
-    <!-- Grass / Runway Boundary Edge Zone Markers (North & South Edges) -->
-    <!-- North Grass Boundary (Y ≈ +34) -->
-    <model name="boundary_north_marker_1">
+    <!-- Waypoint 3 Target -->
+    <model name="pink_cube_wp3">
       <static>true</static>
-      <pose>-20 38.6 0.15 0 0 0</pose>
+      <pose>39.63 -5.93 0.015 0 0 0</pose>
       <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+        </collision>
         <visual name="visual">
-          <geometry><cylinder><radius>0.1</radius><length>0.3</length></cylinder></geometry>
-          <material><ambient>1 0.8 0 1</ambient><diffuse>1 0.8 0 1</diffuse></material>
-        </visual>
-      </link>
-    </model>
-    <model name="boundary_north_marker_2">
-      <static>true</static>
-      <pose>0 34.0 0.15 0 0 0</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><cylinder><radius>0.1</radius><length>0.3</length></cylinder></geometry>
-          <material><ambient>1 0.8 0 1</ambient><diffuse>1 0.8 0 1</diffuse></material>
-        </visual>
-      </link>
-    </model>
-    <model name="boundary_north_marker_3">
-      <static>true</static>
-      <pose>20 29.4 0.15 0 0 0</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><cylinder><radius>0.1</radius><length>0.3</length></cylinder></geometry>
-          <material><ambient>1 0.8 0 1</ambient><diffuse>1 0.8 0 1</diffuse></material>
-        </visual>
-      </link>
-    </model>
-    <model name="boundary_north_marker_4">
-      <static>true</static>
-      <pose>40 24.8 0.15 0 0 0</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><cylinder><radius>0.1</radius><length>0.3</length></cylinder></geometry>
-          <material><ambient>1 0.8 0 1</ambient><diffuse>1 0.8 0 1</diffuse></material>
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+          <material>
+            <ambient>1.0 0.15 0.65 1.0</ambient>
+            <diffuse>1.0 0.15 0.65 1.0</diffuse>
+            <specular>0.5 0.5 0.5 1.0</specular>
+            <emissive>0.3 0.05 0.2 1.0</emissive>
+          </material>
         </visual>
       </link>
     </model>
 
-    <!-- South Grass Boundary (Y ≈ -34) -->
-    <model name="boundary_south_marker_1">
+    <!-- Waypoint 4 Target -->
+    <model name="pink_cube_wp4">
       <static>true</static>
-      <pose>-20 -29.4 0.15 0 0 0</pose>
+      <pose>15.83 0.06 0.015 0 0 0</pose>
       <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+        </collision>
         <visual name="visual">
-          <geometry><cylinder><radius>0.1</radius><length>0.3</length></cylinder></geometry>
-          <material><ambient>1 0.8 0 1</ambient><diffuse>1 0.8 0 1</diffuse></material>
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+          <material>
+            <ambient>1.0 0.15 0.65 1.0</ambient>
+            <diffuse>1.0 0.15 0.65 1.0</diffuse>
+            <specular>0.5 0.5 0.5 1.0</specular>
+            <emissive>0.3 0.05 0.2 1.0</emissive>
+          </material>
         </visual>
       </link>
     </model>
-    <model name="boundary_south_marker_2">
+
+    <!-- Waypoint 5 Target -->
+    <model name="pink_cube_wp5">
       <static>true</static>
-      <pose>0 -34.0 0.15 0 0 0</pose>
+      <pose>7.75 0.15 0.015 0 0 0</pose>
       <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+        </collision>
         <visual name="visual">
-          <geometry><cylinder><radius>0.1</radius><length>0.3</length></cylinder></geometry>
-          <material><ambient>1 0.8 0 1</ambient><diffuse>1 0.8 0 1</diffuse></material>
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+          <material>
+            <ambient>1.0 0.15 0.65 1.0</ambient>
+            <diffuse>1.0 0.15 0.65 1.0</diffuse>
+            <specular>0.5 0.5 0.5 1.0</specular>
+            <emissive>0.3 0.05 0.2 1.0</emissive>
+          </material>
         </visual>
       </link>
     </model>
-    <model name="boundary_south_marker_3">
+
+    <!-- Additional Demo FOD Cubes -->
+    <model name="pink_cube_fod_a">
       <static>true</static>
-      <pose>20 -38.6 0.15 0 0 0</pose>
+      <pose>8.0 -1.8 0.015 0 0 0</pose>
       <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+        </collision>
         <visual name="visual">
-          <geometry><cylinder><radius>0.1</radius><length>0.3</length></cylinder></geometry>
-          <material><ambient>1 0.8 0 1</ambient><diffuse>1 0.8 0 1</diffuse></material>
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+          <material>
+            <ambient>1.0 0.15 0.65 1.0</ambient>
+            <diffuse>1.0 0.15 0.65 1.0</diffuse>
+            <specular>0.5 0.5 0.5 1.0</specular>
+            <emissive>0.3 0.05 0.2 1.0</emissive>
+          </material>
         </visual>
       </link>
     </model>
-    <model name="boundary_south_marker_4">
+
+    <model name="pink_cube_fod_b">
       <static>true</static>
-      <pose>40 -43.2 0.15 0 0 0</pose>
+      <pose>16.0 -3.7 0.015 0 0 0</pose>
       <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+        </collision>
         <visual name="visual">
-          <geometry><cylinder><radius>0.1</radius><length>0.3</length></cylinder></geometry>
-          <material><ambient>1 0.8 0 1</ambient><diffuse>1 0.8 0 1</diffuse></material>
+          <geometry>
+            <box><size>0.05 0.05 0.03</size></box>
+          </geometry>
+          <material>
+            <ambient>1.0 0.15 0.65 1.0</ambient>
+            <diffuse>1.0 0.15 0.65 1.0</diffuse>
+            <specular>0.5 0.5 0.5 1.0</specular>
+            <emissive>0.3 0.05 0.2 1.0</emissive>
+          </material>
         </visual>
       </link>
     </model>

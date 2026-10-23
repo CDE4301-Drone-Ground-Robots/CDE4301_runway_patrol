@@ -4,24 +4,46 @@
 /* Internal Driver Handle */
 static CAN_HandleTypeDef *pZlacCan = NULL;
 static uint8_t zlacDefaultNodeId = 1;
-static ZLAC_NodeStatus_t nodeStatus[16] = {0};
 
-ZLAC_NodeStatus_t *ZLAC8015D_GetNodeStatus(uint8_t nodeId) {
-  if (nodeId < 16) {
-    return &nodeStatus[nodeId];
-  }
-  return NULL;
-}
+#define ZLAC_MAX_NODES 8
+static ZLAC_NodeStatus_t g_nodeStatus[ZLAC_MAX_NODES] = {0};
 
 /* ==============================================================================
- * Driver Initialization
+ * Driver Initialization & Status
  * ==============================================================================
  */
 HAL_StatusTypeDef ZLAC8015D_Init(CAN_HandleTypeDef *hcan,
                                  uint8_t defaultNodeId) {
   pZlacCan = hcan;
   zlacDefaultNodeId = defaultNodeId;
+  for (uint8_t i = 0; i < ZLAC_MAX_NODES; i++) {
+    g_nodeStatus[i].node_id = i;
+    g_nodeStatus[i].online = 0;
+    g_nodeStatus[i].has_fault = 0;
+    g_nodeStatus[i].statusword = 0;
+    g_nodeStatus[i].error_code = 0;
+    g_nodeStatus[i].actual_velocity_left = 0;
+    g_nodeStatus[i].actual_velocity_right = 0;
+    g_nodeStatus[i].last_seen_ms = 0;
+  }
   return HAL_OK;
+}
+
+ZLAC_NodeStatus_t *ZLAC8015D_GetNodeStatus(uint8_t nodeId) {
+  if (nodeId == 0 || nodeId >= ZLAC_MAX_NODES) {
+    return NULL;
+  }
+  return &g_nodeStatus[nodeId];
+}
+
+void ZLAC8015D_SetNodeStatus(uint8_t nodeId, uint8_t online, uint8_t has_fault) {
+  if (nodeId > 0 && nodeId < ZLAC_MAX_NODES) {
+    g_nodeStatus[nodeId].online = online;
+    g_nodeStatus[nodeId].has_fault = has_fault;
+    if (online) {
+      g_nodeStatus[nodeId].last_seen_ms = HAL_GetTick();
+    }
+  }
 }
 
 /* ==============================================================================
@@ -194,7 +216,7 @@ HAL_StatusTypeDef ZLAC8015D_SetVelocity_Node(uint8_t nodeId, int32_t leftRpm,
                                              int32_t rightRpm) {
   HAL_StatusTypeDef res1 = ZLAC8015D_Write32_Node(
       nodeId, ZLAC_OBJ_TARGET_VELOCITY, ZLAC_SUB_CH1_LEFT, leftRpm);
-  HAL_Delay(2);
+  HAL_Delay(5);
   HAL_StatusTypeDef res2 = ZLAC8015D_Write32_Node(
       nodeId, ZLAC_OBJ_TARGET_VELOCITY, ZLAC_SUB_CH2_RIGHT, rightRpm);
   return (res1 == HAL_OK && res2 == HAL_OK) ? HAL_OK : HAL_ERROR;
@@ -278,6 +300,9 @@ HAL_StatusTypeDef ZLAC8015D_ReleaseEmergencyStop(void) {
 
 /* Clear Error / Fault Reset (Section 3.7 - Command: 2B 40 60 00 80 00 00 00) */
 HAL_StatusTypeDef ZLAC8015D_ClearError_Node(uint8_t nodeId) {
+  if (nodeId > 0 && nodeId < ZLAC_MAX_NODES) {
+    g_nodeStatus[nodeId].has_fault = 0;
+  }
   return ZLAC8015D_Write16_Node(nodeId, ZLAC_OBJ_CONTROLWORD, ZLAC_SUB_ALL,
                                 ZLAC_CMD_CLEAR_ERROR);
 }
@@ -295,36 +320,56 @@ void ZLAC8015D_ProcessRxMessage(CAN_RxHeaderTypeDef *rxHeader,
   /* Check for SDO Response COB-ID (0x580 + NodeID) */
   if (rxHeader->StdId >= 0x581 && rxHeader->StdId <= 0x58F) {
     uint8_t responderNodeId = (uint8_t)(rxHeader->StdId - 0x580);
-    if (responderNodeId < 16) {
-      nodeStatus[responderNodeId].last_rx_tick = HAL_GetTick();
-      nodeStatus[responderNodeId].online = 1;
+    ZLAC_NodeStatus_t *status = ZLAC8015D_GetNodeStatus(responderNodeId);
+    if (status != NULL) {
+      status->online = 1;
+      status->last_seen_ms = HAL_GetTick();
     }
 
     /* Byte 0 == 0x60: SDO Download Acknowledged (Write successful) */
     if (rxData[0] == 0x60) {
       /* Write acknowledged by Node */
     }
-    /* Byte 0 == 0x4B or 0x43: SDO Upload Response (Read successful) */
-    else if (rxData[0] == 0x4B || rxData[0] == 0x43) {
-      uint16_t index = (uint16_t)rxData[1] | ((uint16_t)rxData[2] << 8);
-      if (index == ZLAC_OBJ_STATUSWORD && responderNodeId < 16) {
-        uint16_t sw = (uint16_t)rxData[4] | ((uint16_t)rxData[5] << 8);
-        nodeStatus[responderNodeId].statusword = sw;
-        nodeStatus[responderNodeId].has_fault = (sw & 0x0008) ? 1 : 0;
-      }
-    }
     /* Byte 0 == 0x80: SDO Abort / Error Feedback */
     else if (rxData[0] == 0x80) {
+      if (status != NULL) {
+        status->has_fault = 1;
+      }
       uint32_t abortCode = ((uint32_t)rxData[7] << 24) |
                            ((uint32_t)rxData[6] << 16) |
                            ((uint32_t)rxData[5] << 8) | rxData[4];
-      if (responderNodeId < 16) {
-        nodeStatus[responderNodeId].abort_code = abortCode;
-        nodeStatus[responderNodeId].has_fault = 1;
-      }
       printf("  [ZLAC NODE %d SDO ERROR] Object 0x%02X%02X sub 0x%02X Abort "
              "Code: 0x%08lX\r\n",
              responderNodeId, rxData[2], rxData[1], rxData[3], abortCode);
+    }
+    /* SDO Upload (Read) Response (Byte 0: 0x4B = 2 bytes, 0x4F = 1 byte, 0x43 = 4 bytes, etc.) */
+    else if (rxData[0] == 0x4B || rxData[0] == 0x4F || rxData[0] == 0x43 || (rxData[0] & 0x40)) {
+      uint16_t index = (uint16_t)rxData[1] | ((uint16_t)rxData[2] << 8);
+      if (index == ZLAC_OBJ_STATUSWORD) {
+        uint16_t sw = (uint16_t)rxData[4] | ((uint16_t)rxData[5] << 8);
+        if (status != NULL) {
+          status->statusword = sw;
+          /* CiA 402 Bit 3 is Fault */
+          status->has_fault = (sw & 0x0008) ? 1 : 0;
+        }
+      } else if (index == ZLAC_OBJ_ERROR_CODE) {
+        uint16_t err = (uint16_t)rxData[4] | ((uint16_t)rxData[5] << 8);
+        if (status != NULL) {
+          status->error_code = err;
+          if (err != 0) {
+            status->has_fault = 1;
+          }
+        }
+      }
+    }
+  }
+  /* Heartbeat / Bootup COB-ID (0x700 + NodeID) */
+  else if (rxHeader->StdId >= 0x701 && rxHeader->StdId <= 0x70F) {
+    uint8_t responderNodeId = (uint8_t)(rxHeader->StdId - 0x700);
+    ZLAC_NodeStatus_t *status = ZLAC8015D_GetNodeStatus(responderNodeId);
+    if (status != NULL) {
+      status->online = 1;
+      status->last_seen_ms = HAL_GetTick();
     }
   }
 }
@@ -360,17 +405,14 @@ HAL_StatusTypeDef ZLAC8015D_SendNMT(uint8_t command) {
   return ZLAC8015D_SendNMT_Node(zlacDefaultNodeId, command);
 }
 
-/* Helper: Transmit CAN message safely by waiting for mailbox with timeout */
+/* Helper: Transmit CAN message safely by clearing stuck mailboxes if none are free */
 static HAL_StatusTypeDef CAN_Send_Safe(CAN_HandleTypeDef *hcan,
                                        CAN_TxHeaderTypeDef *pHeader,
                                        uint8_t aData[], uint32_t *pTxMailbox) {
-  uint32_t tickstart = HAL_GetTick();
-  while (HAL_CAN_GetTxMailboxesFreeLevel(hcan) == 0) {
-    if (HAL_GetTick() - tickstart > 2) {
-      /* Mailbox stuck for >2ms (e.g. bus disconnected or no ACK): abort oldest */
-      HAL_CAN_AbortTxRequest(hcan, CAN_TX_MAILBOX0);
-      break;
-    }
+  if (HAL_CAN_GetTxMailboxesFreeLevel(hcan) == 0) {
+    HAL_CAN_AbortTxRequest(hcan, CAN_TX_MAILBOX0);
+    HAL_CAN_AbortTxRequest(hcan, CAN_TX_MAILBOX1);
+    HAL_CAN_AbortTxRequest(hcan, CAN_TX_MAILBOX2);
   }
   return HAL_CAN_AddTxMessage(hcan, pHeader, aData, pTxMailbox);
 }

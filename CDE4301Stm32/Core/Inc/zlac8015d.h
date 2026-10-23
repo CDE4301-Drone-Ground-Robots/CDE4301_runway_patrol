@@ -101,15 +101,20 @@ HAL_StatusTypeDef ZLAC8015D_Write32_Node(uint8_t nodeId, uint16_t index, uint8_t
 HAL_StatusTypeDef ZLAC8015D_RequestRead_Node(uint8_t nodeId, uint16_t index, uint8_t subindex);
 void ZLAC8015D_ProcessRxMessage(CAN_RxHeaderTypeDef *rxHeader, uint8_t *rxData);
 
+/* Node Status & Health Tracking */
 typedef struct {
-  uint32_t last_rx_tick;
-  uint16_t statusword;
-  uint32_t abort_code;
+  uint8_t node_id;
   uint8_t online;
   uint8_t has_fault;
+  uint16_t statusword;
+  uint16_t error_code;
+  int32_t actual_velocity_left;
+  int32_t actual_velocity_right;
+  uint32_t last_seen_ms;
 } ZLAC_NodeStatus_t;
 
 ZLAC_NodeStatus_t *ZLAC8015D_GetNodeStatus(uint8_t nodeId);
+void ZLAC8015D_SetNodeStatus(uint8_t nodeId, uint8_t online, uint8_t has_fault);
 
 #ifdef __cplusplus
 }

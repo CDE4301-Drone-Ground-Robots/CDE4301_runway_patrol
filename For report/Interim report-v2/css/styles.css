@@ -5094,6 +5094,7 @@ tr.gantt-row-hidden {
 
 /* ── Back-to-Top Button ────────────────────────────────────────────── */
 .back-to-top-btn {
+  display: none !important;
   position: fixed;
   bottom: 32px;
   right: 28px;
@@ -5132,6 +5133,10 @@ tr.gantt-row-hidden {
   box-shadow: 0 6px 28px rgba(41, 151, 255, 0.5), 0 1px 0 rgba(255, 255, 255, 0.15) inset;
   transform: translateY(-3px) scale(1.06);
   color: #fff;
+}
+
+body:has(.pdf-export-btn) .back-to-top-btn {
+  bottom: 84px;
 }
 
 [data-theme="light"] .back-to-top-btn {

@@ -21,6 +21,7 @@
  */
 
 #include "main.h"
+#include "stepper.h"
 #include "usbh_core.h"
 #include "usbh_hid.h"
 #include "zlac8015d.h"
@@ -38,8 +39,8 @@
  * POWER PRESET SELECTION (Uncomment the one you want to use):
  * ==============================================================================
  */
-#define USE_POWER_PRESET_3 /* ACTIVE: 33V 6A Benchtop Supply (Low Current /    \
-                              Arc Turns) */
+#define USE_POWER_PRESET_3 /* ACTIVE: 32V 10.4A Benchtop Supply (~332W Total)  \
+                            */
 // #define USE_POWER_PRESET_1    /* UNCOMMENT WHEN BATTERY ARRIVES: 48V Battery
 // (Full Power & Spin Turns) */
 
@@ -56,26 +57,48 @@
 #define DRIVER_HW_DECEL_MS 300        /* 300 ms driver decel profile */
 #define DEFAULT_TURN_OMEGA_RAD_S                                               \
   1.40f /* Full-torque zero-radius spin turn (~19 RPM delta) */
+#define STEERING_EXPO 0.30f /* Exponential curve factor */
 #define ENABLE_LEFT_STICK_THROTTLE                                             \
-  0 /* 0=Triggers only for throttle, stick for steering */
+  1                          /* 1=Dual throttle support (Triggers & Stick Y) */
+#define STICK_DEADZONE 0.08f /* Deadband around neutral stick */
+#define FULL_DEFLECTION_THRESH                                                 \
+  0.85f /* Stick deflection needed for spot turn                               \
+         */
+#define MIN_TURN_RADIUS                                                        \
+  1.50f /* Minimum radius for moving arc turns (meters)                        \
+         */
 
 #elif defined(USE_POWER_PRESET_3)
 /* ------------------------------------------------------------------------------
- * PRESET 3: 33V 6A Benchtop Power Supply (Max 198W Total / ~1.5A per Motor)
+ * PRESET 3: 32V 10.4A Benchtop Power Supply (Max ~332W Total / ~2.6A per Motor)
  * ------------------------------------------------------------------------------
  */
 #define MOTOR_MAX_RPM                                                          \
-  15 /* 15 RPM (~0.20 m/s) to keep total power well under 198W */
+  25 /* Safe, controllable default top speed (~0.34 m/s) */
 #define MOTOR_ACCEL_RPM_PER_SEC                                                \
-  6.0f /* Smooth 2.5s ramp: completely flattens inrush current */
+  35.0f /* Smooth acceleration ramp (35.0 RPM/s) */
 #define MOTOR_DECEL_RPM_PER_SEC                                                \
-  6.0f /* Gentle decel: stops regenerative overvoltage trip */
-#define DRIVER_HW_ACCEL_MS 500 /* Internal driver profile: 500 ms */
-#define DRIVER_HW_DECEL_MS 600 /* Internal driver profile: 600 ms */
+  28.0f /* Sharp software braking ramp (28.0 RPM/s) when stick returns to      \
+           neutral */
+#define DRIVER_HW_ACCEL_MS                                                     \
+  300 /* Internal driver acceleration profile: 300 ms */
+#define DRIVER_HW_DECEL_MS                                                     \
+  200 /* Tightens ZLAC8015D internal deceleration loop to stop passive         \
+         coasting */
 #define DEFAULT_TURN_OMEGA_RAD_S                                               \
-  0.25f /* Low-torque turn (~3.5 RPM delta) to prevent OCP trip */
+  0.45f /* Restricts yaw rate to keep scrub current below 10.4A */
+#define STEERING_EXPO 0.45f /* Smooth center stick control */
 #define ENABLE_LEFT_STICK_THROTTLE                                             \
-  0 /* 0=Triggers only for throttle, stick for steering */
+  1                          /* 1=Dual throttle support (Triggers & Stick Y) */
+
+/* Kinematic Thresholds */
+#define STICK_DEADZONE 0.08f /* Deadband around neutral stick */
+#define FULL_DEFLECTION_THRESH                                                 \
+  0.85f /* Stick deflection needed for spot turn                               \
+         */
+#define MIN_TURN_RADIUS                                                        \
+  0.50f /* Minimum radius for moving arc turns (meters)                        \
+         */
 
 #else
 #error                                                                         \
@@ -84,22 +107,26 @@
 
 /* Robot Geometry */
 #define ROBOT_TRACK_WIDTH_MM                                                   \
-  381.2f /* Distance between left & right wheels (W) */
-#define ROBOT_WHEELBASE_MM 324.0f    /* Distance between front & rear axles (L/W = 0.85) */
-#define ROBOT_WHEEL_RADIUS_MM 131.5f /* Wheel radius (R = 263mm diameter / 2)  \
-                                      */
+  575.0f /* Distance between left & right wheels (W = 0.575 m) */
+#define ROBOT_WHEELBASE_MM                                                     \
+  488.75f /* Distance between front & rear axles (L = 0.48875 m, L/W = 0.85)   \
+           */
+#define ROBOT_WHEEL_RADIUS_MM                                                  \
+  131.5f /* Wheel radius (R = 263mm diameter / 2 = 0.1315 m) */
+#define ROBOT_TRACK_WIDTH_M (ROBOT_TRACK_WIDTH_MM / 1000.0f)   /* 0.575 m */
+#define ROBOT_WHEEL_RADIUS_M (ROBOT_WHEEL_RADIUS_MM / 1000.0f) /* 0.1315 m */
 
 /* Steering & Controller Sensitivity */
-#define STICK_DEADZONE_NORM 0.08f /* 8% stick deadzone */
-#define TRIGGER_DEADZONE_PCT 3    /* 3% trigger deadzone */
-#define STEERING_EXPO                                                          \
-  0.30f /* Exponential curve factor (0.0=linear, 0.3=soft center) */
+#define STICK_DEADZONE_NORM STICK_DEADZONE /* 8% stick deadzone alias */
+#define TRIGGER_DEADZONE_PCT 3             /* 3% trigger deadzone */
+#define BTN_SPOT_TURN                                                          \
+  (BTN_LB | BTN_RB) /* Dedicated spot-turn button: LB or RB bumper */
 
 /* Timing & Safety Thresholds */
 #define CONTROLLER_TIMEOUT_MS                                                  \
   250 /* Fail-safe stop if no valid report for 250 ms */
 #define MOTOR_CAN_INTERVAL_MS                                                  \
-  25 /* Send CAN velocity commands every 25 ms (40 Hz) */
+  20 /* Send CAN velocity commands every 20 ms (50 Hz control loop) */
 #define TELEMETRY_INTERVAL_MS                                                  \
   100 /* Telemetry UART print every 100 ms (10 Hz) */
 #define CAN_PROBE_TIMEOUT_MS                                                   \
@@ -141,6 +168,16 @@ typedef enum {
   ROBOT_STATE_READY          /* Armed and ready for operation */
 } Robot_State_t;
 
+typedef enum {
+  DRIVE_MODE_STOP = 0, /* Neutral / Stopped */
+  DRIVE_MODE_STRAIGHT, /* Straight Forward or Reverse (Symmetrical wheels, wz =
+                          0) */
+  DRIVE_MODE_ARC_TURN, /* Sweeping Arc Turn (R >= MIN_TURN_RADIUS,
+                          non-scrubbing) */
+  DRIVE_MODE_SPOT_TURN /* In-Place Pivot (Locked unless button held & full
+                          deflection) */
+} Drive_Mode_t;
+
 typedef struct {
   uint8_t raw[64];
   uint16_t len;
@@ -149,6 +186,7 @@ typedef struct {
 
 /* Global Adjustable Motion Variables */
 volatile float g_turn_angular_velocity = DEFAULT_TURN_OMEGA_RAD_S;
+volatile int32_t g_motor_max_rpm = MOTOR_MAX_RPM;
 volatile float g_motor_accel_rpm_per_sec = MOTOR_ACCEL_RPM_PER_SEC;
 volatile float g_motor_decel_rpm_per_sec = MOTOR_DECEL_RPM_PER_SEC;
 
@@ -170,6 +208,8 @@ static uint16_t current_btns = 0;
 static uint16_t prev_btns = 0;
 
 /* Kinematic Setpoints & Filtered Output */
+static Drive_Mode_t current_drive_mode = DRIVE_MODE_STOP;
+static float commanded_linear_v_m_s = 0.0f;
 static float commanded_linear_v_mm_s = 0.0f;
 static float commanded_omega_rad_s = 0.0f;
 static int32_t target_left_rpm = 0;
@@ -184,6 +224,9 @@ static Robot_State_t robot_state = ROBOT_STATE_INIT;
 static uint32_t last_can_tx_tick = 0;
 static uint32_t last_telemetry_tick = 0;
 
+/* Stepper Actuator State (Lower / Retract 110 mm) */
+static uint8_t stepper_is_lowered = 0; /* 0 = Retracted (Up), 1 = Lowered (Down) */
+
 /* ==============================================================================
  * SECTION 3: FUNCTION PROTOTYPES
  * ==============================================================================
@@ -197,6 +240,11 @@ static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id);
 
 /* Motion & Kinematic Functions */
 static float Process_Analog_Stick(float raw, float deadzone, float expo);
+void Map_Controller_Inputs(float raw_throttle, float raw_steer,
+                           uint8_t btn_spot_turn, float *out_vx, float *out_wz,
+                           Drive_Mode_t *out_mode);
+void Drive_UGV_With_Mode(float vx, float wz, Drive_Mode_t mode,
+                         int32_t *out_left_rpm, int32_t *out_right_rpm);
 static void Calculate_Kinematics(uint8_t lt_pct, uint8_t rt_pct, float stick_x,
                                  float stick_y, uint16_t btns,
                                  int32_t *out_target_left,
@@ -229,6 +277,7 @@ int main(void) {
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_CAN1_Init();
+  Stepper_Init();
 
   /* Welcome & Architecture Banner */
   printf("\r\n================================================================="
@@ -241,12 +290,14 @@ int main(void) {
   printf("  Axles      : Node 1 (Front Wheels), Node 2 (Rear Wheels)\r\n");
   printf("  Chassis    : Track Width = %.1f mm | Wheelbase = %.1f mm\r\n",
          ROBOT_TRACK_WIDTH_MM, ROBOT_WHEELBASE_MM);
-  printf("  Limits     : Max Wheel Speed = +/-%d RPM | Omega = %.2f rad/s\r\n",
-         MOTOR_MAX_RPM, g_turn_angular_velocity);
+  printf("  Limits     : Max Wheel Speed = +/-%ld RPM | Omega = %.2f rad/s\r\n",
+         (long)g_motor_max_rpm, g_turn_angular_velocity);
   printf("  Ramp Rates : Accel = %.1f RPM/s | Decel = %.1f RPM/s\r\n",
          g_motor_accel_rpm_per_sec, g_motor_decel_rpm_per_sec);
   printf("  Watchdog   : %d ms timeout on wireless controller reports\r\n",
          CONTROLLER_TIMEOUT_MS);
+  printf("  Stepper    : PC2 (PUL), PC3 (DIR) | Stroke = %.1f mm (%ld steps) | Button [X] Toggle\r\n",
+         STEPPER_TRAVEL_MM, (long)STEPPER_TOTAL_STEPS);
   printf("---------------------------------------------------------------------"
          "-\r\n");
 
@@ -297,6 +348,9 @@ int main(void) {
    * ============================================================================
    */
   while (1) {
+    /* Step 0: Service non-blocking stepper motion */
+    Stepper_Update();
+
     /* Step 1: Maintain USB Host state machine */
     USBH_Process(&hUsbHostFS);
 
@@ -324,6 +378,54 @@ int main(void) {
         prev_btns = current_btns;
         current_btns = btns;
 
+        /* D-Pad Real-Time Parameter Tuning:
+         * - D-Pad Left / Right: Decrement / Increment turn omega by 0.1 rad/s
+         * - D-Pad Down / Up   : Decrement / Increment max wheel RPM by 1 RPM
+         */
+        uint16_t btns_pressed = current_btns & ~prev_btns;
+
+        if (btns_pressed & BTN_DPAD_LEFT) {
+          g_turn_angular_velocity = roundf((g_turn_angular_velocity - 0.10f) * 10.0f) / 10.0f;
+          if (g_turn_angular_velocity < 0.10f) g_turn_angular_velocity = 0.10f;
+          printf("\r\n>>> [TUNING] Turn Omega: %.2f rad/s (-0.1)\r\n", g_turn_angular_velocity);
+        } else if (btns_pressed & BTN_DPAD_RIGHT) {
+          g_turn_angular_velocity = roundf((g_turn_angular_velocity + 0.10f) * 10.0f) / 10.0f;
+          if (g_turn_angular_velocity > 4.00f) g_turn_angular_velocity = 4.00f;
+          printf("\r\n>>> [TUNING] Turn Omega: %.2f rad/s (+0.1)\r\n", g_turn_angular_velocity);
+        }
+
+        if (btns_pressed & BTN_DPAD_UP) {
+          g_motor_max_rpm += 1;
+          if (g_motor_max_rpm > 100) g_motor_max_rpm = 100;
+          printf("\r\n>>> [TUNING] Max Wheel Speed: %ld RPM (+1)\r\n", (long)g_motor_max_rpm);
+        } else if (btns_pressed & BTN_DPAD_DOWN) {
+          g_motor_max_rpm -= 1;
+          if (g_motor_max_rpm < 1) g_motor_max_rpm = 1;
+          printf("\r\n>>> [TUNING] Max Wheel Speed: %ld RPM (-1)\r\n", (long)g_motor_max_rpm);
+        }
+
+        /* Button X: Toggle Stepper Lower / Retract 110 mm */
+        if (btns_pressed & BTN_X) {
+          if (Stepper_IsBusy()) {
+            printf("\r\n>>> [STEPPER] Motion already in progress (%ld steps remaining)!\r\n",
+                   (long)Stepper_GetRemainingSteps());
+          } else {
+            if (!stepper_is_lowered) {
+              int32_t move_steps = (STEPPER_DIR_LOWER == STEPPER_DIR_CW) ? STEPPER_TOTAL_STEPS : -STEPPER_TOTAL_STEPS;
+              Stepper_StartMove(move_steps, STEPPER_STEP_DELAY_US);
+              stepper_is_lowered = 1;
+              printf("\r\n>>> [STEPPER] LOWERING by %.1f mm (%ld steps)...\r\n",
+                     STEPPER_TRAVEL_MM, (long)STEPPER_TOTAL_STEPS);
+            } else {
+              int32_t move_steps = (STEPPER_DIR_RETRACT == STEPPER_DIR_CW) ? STEPPER_TOTAL_STEPS : -STEPPER_TOTAL_STEPS;
+              Stepper_StartMove(move_steps, STEPPER_STEP_DELAY_US);
+              stepper_is_lowered = 0;
+              printf("\r\n>>> [STEPPER] RETRACTING by %.1f mm (%ld steps)...\r\n",
+                     STEPPER_TRAVEL_MM, (long)STEPPER_TOTAL_STEPS);
+            }
+          }
+        }
+
         /* If controller was in watchdog stop, check if we can transition to
          * wait-neutral */
         if (robot_state == ROBOT_STATE_DISCONNECTED) {
@@ -335,6 +437,7 @@ int main(void) {
           if (robot_state != ROBOT_STATE_ESTOP_LATCHED) {
             robot_state = ROBOT_STATE_ESTOP_LATCHED;
             Motor_Stop_Quick();
+            Stepper_Stop();
             printf("\r\n>>> [SAFETY] SOFTWARE QUICK-STOP LATCHED via "
                    "Controller Button!\r\n");
             printf(">>> Neutralize all controls and press [A] (fresh press) to "
@@ -347,10 +450,8 @@ int main(void) {
         uint8_t controls_neutral =
             (current_lt_pct <= TRIGGER_DEADZONE_PCT) &&
             (current_rt_pct <= TRIGGER_DEADZONE_PCT) &&
-            (fabsf(current_stick_x_norm) < 0.01f) &&
-            (fabsf(current_stick_y_norm) < 0.01f) &&
-            ((current_btns & (BTN_DPAD_LEFT | BTN_DPAD_RIGHT | BTN_DPAD_UP |
-                              BTN_DPAD_DOWN)) == 0);
+            (fabsf(current_stick_x_norm) <= STICK_DEADZONE) &&
+            (fabsf(current_stick_y_norm) <= STICK_DEADZONE);
 
         uint8_t reset_pressed = ((current_btns & (BTN_A | BTN_START)) &&
                                  !(prev_btns & (BTN_A | BTN_START)));
@@ -392,6 +493,7 @@ int main(void) {
         current_stick_y_norm = 0.0f;
         target_left_rpm = 0;
         target_right_rpm = 0;
+        current_drive_mode = DRIVE_MODE_STOP;
         Motor_Stop_Controlled();
         printf(
             "\r\n>>> [WATCHDOG FAIL-SAFE] Gamepad report timeout (>%d ms)!\r\n",
@@ -401,7 +503,7 @@ int main(void) {
       }
     }
 
-    /* Step 5: Kinematics & Setpoint Calculation */
+    /* Step 5: Kinematics & Setpoint Calculation (3-Regime Control) */
     if (robot_state == ROBOT_STATE_READY) {
       Calculate_Kinematics(current_lt_pct, current_rt_pct, current_stick_x_norm,
                            current_stick_y_norm, current_btns, &target_left_rpm,
@@ -412,14 +514,16 @@ int main(void) {
       target_right_rpm = 0;
       commanded_linear_v_mm_s = 0.0f;
       commanded_omega_rad_s = 0.0f;
+      current_drive_mode = DRIVE_MODE_STOP;
     }
 
-    /* Step 6: Periodic Ramping & CAN Velocity Dispatcher (every 25 ms) */
+    /* Step 6: Periodic Ramping & CAN Velocity Dispatcher (every 20 ms / 50 Hz)
+     */
     if (HAL_GetTick() - last_can_tx_tick >= MOTOR_CAN_INTERVAL_MS) {
       uint32_t now = HAL_GetTick();
       float dt = (float)(now - last_can_tx_tick) / 1000.0f;
       if (dt > 0.1f)
-        dt = 0.025f; /* Clamp anomalous timing glitch */
+        dt = 0.020f; /* Clamp anomalous timing glitch */
       last_can_tx_tick = now;
 
       if (robot_state == ROBOT_STATE_READY || active_left_rpm != 0 ||
@@ -477,17 +581,18 @@ int main(void) {
 }
 
 /* ==============================================================================
- * SECTION 5: PROPORTIONAL DIFFERENTIAL DRIVE KINEMATICS & RAMPING
+ * SECTION 5: 3-REGIME STEERING KINEMATICS, ANTI-SATURATION & NON-BLOCKING
+ * RAMPING
  * ==============================================================================
  */
 
 /**
  * @brief  Normalizes and conditions analog stick input with deadzone rescaling
- * & exponential response
+ *         and exponential response curve.
  * @param  raw: Raw axis value normalized to -1.0 .. +1.0
  * @param  deadzone: Deadzone threshold (e.g. 0.08 for 8%)
  * @param  expo: Exponential curvature factor (0.0=linear, 1.0=cubic)
- * @retval Processed value -1.0 .. +1.0
+ * @retval Processed value -1.0 .. +1.0 (strictly 0.0f within deadzone)
  */
 static float Process_Analog_Stick(float raw, float deadzone, float expo) {
   float abs_val = fabsf(raw);
@@ -500,140 +605,254 @@ static float Process_Analog_Stick(float raw, float deadzone, float expo) {
   if (scaled > 1.0f)
     scaled = 1.0f;
 
-  /* Optional exponential shaping for finer precision around neutral */
+  /* Exponential shaping for finer precision around neutral */
   float shaped = (1.0f - expo) * scaled + expo * (scaled * scaled * scaled);
 
   return (raw > 0.0f) ? shaped : -shaped;
 }
 
 /**
- * @brief  Computes longitudinal linear velocity (v) and angular velocity
- * (omega), applies differential equations, and performs steering-priority
- * saturation.
+ * @brief  Maps raw controller inputs into chassis longitudinal velocity (vx)
+ *         and yaw rate (wz) enforcing the 3-regime steering control model:
  *
- * Coordinate Convention (Standard ROS / ISO 8855):
- *   +X = Forward, +Y = Left, +Z = Up
- *   Positive omega (rad/s) = Counter-Clockwise (CCW) yaw = Turning LEFT
- *   Negative omega (rad/s) = Clockwise (CW) yaw         = Turning RIGHT
+ * 1. Straight Driving (Forward / Reverse):
+ *    - Active when throttle is commanded (|raw_throttle| > STICK_DEADZONE)
+ *      and steering stick is neutral (|raw_steer| <= STICK_DEADZONE).
+ *    - Yaw rate is forced to wz = 0.0 rad/s.
  *
- * Differential Equations:
- *   v_L = v - (omega * W) / 2
- *   v_R = v + (omega * W) / 2
+ * 2. Arc Turn While Moving (Sweeping Curve):
+ *    - Active when BOTH throttle is non-zero (|vx| > 0.05 m/s) AND
+ *      steering stick is deflected (|raw_steer| > STICK_DEADZONE).
+ *    - Rolls smoothly through an arc with minimum turning radius clamp:
+ *      |wz| <= |vx| / MIN_TURN_RADIUS (prevents inner wheel
+ * reversal/scrubbing).
  *
- * Linear velocity to Wheel RPM:
- *   RPM = (v_mm_s * 60) / (2 * pi * R_mm)
+ * 3. Turn-on-the-Spot (In-Place Pivot):
+ *    - Allowed ONLY when BOTH conditions are met:
+ *      a) Dedicated controller button (btn_spot_turn / LB / RB) is held (true).
+ *      b) Steering stick is pushed past threshold (|raw_steer| >=
+ * FULL_DEFLECTION_THRESH).
+ *    - vx = 0.0 m/s, yaw rate capped at DEFAULT_TURN_OMEGA_RAD_S.
+ *    - Safety Lockout: If btn_spot_turn is NOT held OR stick is below
+ * threshold, stationary yaw is strictly locked out (wz = 0.0 rad/s).
+ *
+ * @param  raw_throttle:  Raw normalized throttle input [-1.0 .. +1.0]
+ * @param  raw_steer:     Raw normalized steering input [-1.0 .. +1.0] (+ =
+ * Right, - = Left)
+ * @param  btn_spot_turn: Non-zero if dedicated spot-turn button/bumper is held
+ * @param  out_vx:        Output commanded linear velocity in m/s
+ * @param  out_wz:        Output commanded angular velocity in rad/s
+ * @param  out_mode:      Output active Drive_Mode_t regime
+ */
+void Map_Controller_Inputs(float raw_throttle, float raw_steer,
+                           uint8_t btn_spot_turn, float *out_vx, float *out_wz,
+                           Drive_Mode_t *out_mode) {
+  float vx = 0.0f;
+  float wz = 0.0f;
+  Drive_Mode_t mode = DRIVE_MODE_STOP;
+
+  /* Maximum permissible linear speed in m/s based on g_motor_max_rpm */
+  const float wheel_circ_m = 2.0f * 3.14159265f * ROBOT_WHEEL_RADIUS_M;
+  const float max_linear_speed_m_s =
+      ((float)g_motor_max_rpm * wheel_circ_m) / 60.0f;
+
+  /* --------------------------------------------------------------------------
+   * Step 1: Throttle Deadband & Linear Conditioning
+   * --------------------------------------------------------------------------
+   */
+  float abs_th = fabsf(raw_throttle);
+  if (abs_th > STICK_DEADZONE) {
+    /* Scale linearly above deadzone to preserve full 0.0 .. 1.0 range */
+    float th_scaled = (abs_th - STICK_DEADZONE) / (1.0f - STICK_DEADZONE);
+    if (th_scaled > 1.0f)
+      th_scaled = 1.0f;
+    vx = (raw_throttle > 0.0f) ? (th_scaled * max_linear_speed_m_s)
+                               : (-th_scaled * max_linear_speed_m_s);
+  } else {
+    /* Strict deadzone clamp to prevent zero-drift */
+    vx = 0.0f;
+  }
+
+  /* --------------------------------------------------------------------------
+   * Step 2: 3-Regime Steering Evaluation
+   * --------------------------------------------------------------------------
+   */
+  float abs_steer = fabsf(raw_steer);
+  uint8_t throttle_moving = (fabsf(vx) > 0.05f) ? 1 : 0;
+  uint8_t steer_active = (abs_steer > STICK_DEADZONE) ? 1 : 0;
+
+  if (throttle_moving) {
+    if (!steer_active) {
+      /* Regime 1: Straight Driving (Forward / Reverse) */
+      mode = DRIVE_MODE_STRAIGHT;
+      wz = 0.0f; /* Yaw rate forced to zero for perfectly straight tracking */
+    } else {
+      /* Regime 2: Arc Turn While Moving (Sweeping Curve) */
+      mode = DRIVE_MODE_ARC_TURN;
+
+      /* Condition steering stick with deadzone and exponential shaping */
+      float shaped_steer_signed =
+          Process_Analog_Stick(raw_steer, STICK_DEADZONE, STEERING_EXPO);
+
+      /* Coordinate Convention: Left (raw_steer < 0) -> Turn Left
+       *                        Right (raw_steer > 0) -> Turn Right */
+      float unconstrained_wz = shaped_steer_signed * g_turn_angular_velocity;
+
+      /* Enforce minimum turning radius clamp: |wz| <= |vx| / MIN_TURN_RADIUS */
+      float max_wz = fabsf(vx) / MIN_TURN_RADIUS;
+      if (fabsf(unconstrained_wz) > max_wz) {
+        wz = (unconstrained_wz > 0.0f) ? max_wz : -max_wz;
+      } else {
+        wz = unconstrained_wz;
+      }
+    }
+  } else {
+    /* Chassis is stationary (or throttle within deadzone) */
+    vx = 0.0f;
+
+    /* Regime 3: Turn-on-the-Spot (In-Place Pivot) */
+    if (steer_active) {
+      mode = DRIVE_MODE_SPOT_TURN;
+      float shaped_steer_signed =
+          Process_Analog_Stick(raw_steer, STICK_DEADZONE, STEERING_EXPO);
+      /* Left (raw_steer < 0) -> Turn Left (-wz), Right -> Turn Right (+wz) */
+      wz = shaped_steer_signed * g_turn_angular_velocity;
+    } else {
+      /* Safety Lockout: Stationary yaw is strictly locked out (wz = 0.0) */
+      mode = DRIVE_MODE_STOP;
+      wz = 0.0f;
+    }
+  }
+
+  if (out_vx)
+    *out_vx = vx;
+  if (out_wz)
+    *out_wz = wz;
+  if (out_mode)
+    *out_mode = mode;
+}
+
+/**
+ * @brief  Computes differential wheel RPM setpoints with Kinematic
+ * Anti-Saturation.
+ *
+ * Kinematic Equations:
+ *   v_L = vx - (wz * W) / 2
+ *   v_R = vx + (wz * W) / 2
+ *   RPM = (v * 60) / (2 * pi * r)
+ *
+ * Kinematic Anti-Saturation:
+ *   If either wheel RPM exceeds MOTOR_MAX_RPM (22 RPM), scale both wheel RPMs
+ *   proportionally by scale = MOTOR_MAX_RPM / max(|RPM_L|, |RPM_R|) to preserve
+ *   the curvature radius and trajectory without clipping distortion.
+ *
+ * @param  vx:            Longitudinal linear velocity (m/s)
+ * @param  wz:            Yaw angular velocity (rad/s)
+ * @param  mode:          Current Drive_Mode_t regime
+ * @param  out_left_rpm:  Output RPM target for left wheel pair
+ * @param  out_right_rpm: Output RPM target for right wheel pair
+ */
+void Drive_UGV_With_Mode(float vx, float wz, Drive_Mode_t mode,
+                         int32_t *out_left_rpm, int32_t *out_right_rpm) {
+  if (mode == DRIVE_MODE_STOP) {
+    if (out_left_rpm)
+      *out_left_rpm = 0;
+    if (out_right_rpm)
+      *out_right_rpm = 0;
+    return;
+  }
+
+  /* Mode-specific kinematic assertions */
+  if (mode == DRIVE_MODE_STRAIGHT) {
+    wz = 0.0f;
+  } else if (mode == DRIVE_MODE_SPOT_TURN) {
+    vx = 0.0f;
+  }
+
+  /* 1. Compute wheel linear velocities (m/s) */
+  float half_track_wz = (wz * ROBOT_TRACK_WIDTH_M) / 2.0f;
+  float v_left = vx - half_track_wz;
+  float v_right = vx + half_track_wz;
+
+  /* 2. Convert linear velocities to wheel RPM */
+  const float wheel_circ_m = 2.0f * 3.14159265f * ROBOT_WHEEL_RADIUS_M;
+  float rpm_left = (v_left * 60.0f) / wheel_circ_m;
+  float rpm_right = (v_right * 60.0f) / wheel_circ_m;
+
+  /* 3. Kinematic Anti-Saturation Proportional Scaling */
+  float max_wheel_rpm = fmaxf(fabsf(rpm_left), fabsf(rpm_right));
+  if (max_wheel_rpm > (float)g_motor_max_rpm && max_wheel_rpm > 0.0001f) {
+    float scale = (float)g_motor_max_rpm / max_wheel_rpm;
+    rpm_left *= scale;
+    rpm_right *= scale;
+  }
+
+  /* Strict symmetry reinforcement */
+  if (mode == DRIVE_MODE_STRAIGHT) {
+    rpm_right = rpm_left; /* Strict symmetrical wheel output */
+  } else if (mode == DRIVE_MODE_SPOT_TURN) {
+    rpm_right = -rpm_left; /* Strict opposite rotation */
+  }
+
+  if (out_left_rpm)
+    *out_left_rpm = (int32_t)roundf(rpm_left);
+  if (out_right_rpm)
+    *out_right_rpm = (int32_t)roundf(rpm_right);
+}
+
+/**
+ * @brief  Backward-compatible wrapper integrating Map_Controller_Inputs()
+ *         and Drive_UGV_With_Mode() into the existing firmware architecture.
  */
 static void Calculate_Kinematics(uint8_t lt_pct, uint8_t rt_pct, float stick_x,
                                  float stick_y, uint16_t btns,
                                  int32_t *out_target_left,
                                  int32_t *out_target_right, float *out_v,
                                  float *out_omega) {
-  float v_lin_mm_s = 0.0f;
-  float omega_rad_s = 0.0f;
-
-  /* 1. Longitudinal Throttle Calculation */
-  /* Safety Check: Simultaneous RT and LT cancels all throttle */
-  if (lt_pct > TRIGGER_DEADZONE_PCT && rt_pct > TRIGGER_DEADZONE_PCT) {
-    v_lin_mm_s = 0.0f;
+  /* 1. Extract raw throttle [-1.0 .. +1.0] */
+  float raw_throttle = 0.0f;
+  if (rt_pct > TRIGGER_DEADZONE_PCT && lt_pct > TRIGGER_DEADZONE_PCT) {
+    raw_throttle = 0.0f; /* Simultaneous triggers cancel throttle */
   } else if (rt_pct > TRIGGER_DEADZONE_PCT) {
-    /* Forward movement: Proportional to RT (0 to +30 RPM) */
-    float throttle_norm = (float)rt_pct / 100.0f;
-    float max_linear_speed =
-        ((float)MOTOR_MAX_RPM * 2.0f * 3.14159265f * ROBOT_WHEEL_RADIUS_MM) /
-        60.0f;
-    v_lin_mm_s = throttle_norm * max_linear_speed;
+    raw_throttle = (float)rt_pct / 100.0f;
   } else if (lt_pct > TRIGGER_DEADZONE_PCT) {
-    /* Reverse movement: Proportional to LT (0 to -30 RPM) */
-    float throttle_norm = (float)lt_pct / 100.0f;
-    float max_linear_speed =
-        ((float)MOTOR_MAX_RPM * 2.0f * 3.14159265f * ROBOT_WHEEL_RADIUS_MM) /
-        60.0f;
-    v_lin_mm_s = -throttle_norm * max_linear_speed;
+    raw_throttle = -((float)lt_pct / 100.0f);
   }
 #if (ENABLE_LEFT_STICK_THROTTLE == 1)
-  else if (fabsf(stick_y) > 0.01f) {
-    /* Optional left stick Y throttle backup */
-    float max_linear_speed =
-        ((float)MOTOR_MAX_RPM * 2.0f * 3.14159265f * ROBOT_WHEEL_RADIUS_MM) /
-        60.0f;
-    v_lin_mm_s = stick_y * max_linear_speed;
+  else if (fabsf(stick_y) > STICK_DEADZONE) {
+    raw_throttle = stick_y;
   }
 #endif
-  else {
-    v_lin_mm_s = 0.0f;
-  }
 
-  /* 2. Angular Velocity Calculation (Primary: Stick X, Secondary: D-Pad) */
-  if (fabsf(stick_x) > 0.01f) {
-    /*
-     * Proportional Stick Steering:
-     * stick_x > 0 (Right) -> Commanded CW yaw (omega < 0)
-     * stick_x < 0 (Left)  -> Commanded CCW yaw (omega > 0)
-     */
-    omega_rad_s = -stick_x * g_turn_angular_velocity;
-  } else if (btns & BTN_DPAD_RIGHT) {
-    /* Optional D-Pad Right: Fixed turning rate */
-    omega_rad_s = -g_turn_angular_velocity;
-  } else if (btns & BTN_DPAD_LEFT) {
-    /* Optional D-Pad Left: Fixed turning rate */
-    omega_rad_s = +g_turn_angular_velocity;
-  } else {
-    omega_rad_s = 0.0f;
-  }
+  /* 2. Extract raw steering [-1.0 .. +1.0] from analog stick */
+  float raw_steer = stick_x;
 
-  /* 3. Differential Drive Wheel Velocities */
-  float v_diff_half = (omega_rad_s * ROBOT_TRACK_WIDTH_MM) / 2.0f;
-  float v_left_mm_s = v_lin_mm_s - v_diff_half;
-  float v_right_mm_s = v_lin_mm_s + v_diff_half;
+  /* 3. Extract spot turn button condition (LB or RB bumper held) */
+  uint8_t btn_spot_turn = ((btns & BTN_SPOT_TURN) != 0) ? 1 : 0;
 
-  /* 4. Convert Linear Wheel Velocities to Wheel RPM */
-  float wheel_circ_mm = 2.0f * 3.14159265f * ROBOT_WHEEL_RADIUS_MM;
-  float rpm_left = (v_left_mm_s * 60.0f) / wheel_circ_mm;
-  float rpm_right = (v_right_mm_s * 60.0f) / wheel_circ_mm;
+  /* 4. Map inputs through 3-regime controller */
+  Drive_Mode_t mode = DRIVE_MODE_STOP;
+  float vx = 0.0f, wz = 0.0f;
+  Map_Controller_Inputs(raw_throttle, raw_steer, btn_spot_turn, &vx, &wz,
+                        &mode);
+  current_drive_mode = mode;
+  commanded_linear_v_m_s = vx;
 
-  /*
-   * 5. Steering-Priority Saturation Strategy:
-   * When combined throttle and steering exceed MOTOR_MAX_RPM (+/- 30 RPM),
-   * dynamically scale back longitudinal throttle (v) so that the full
-   * differential steering delta (v_diff) is preserved without clipping
-   * distortion.
-   */
-  float delta_rpm = fabsf((v_diff_half * 60.0f) / wheel_circ_mm);
-  if (delta_rpm > (float)MOTOR_MAX_RPM) {
-    delta_rpm = (float)MOTOR_MAX_RPM;
-  }
+  /* 5. Differential drive kinematics & anti-saturation */
+  Drive_UGV_With_Mode(vx, wz, mode, out_target_left, out_target_right);
 
-  float max_permissible_base = (float)MOTOR_MAX_RPM - delta_rpm;
-  float base_rpm = (v_lin_mm_s * 60.0f) / wheel_circ_mm;
-
-  if (fabsf(base_rpm) > max_permissible_base) {
-    base_rpm = (base_rpm > 0.0f) ? max_permissible_base : -max_permissible_base;
-    /* Recompute with trimmed base RPM */
-    float steer_offset = (omega_rad_s >= 0.0f) ? -delta_rpm : +delta_rpm;
-    rpm_left = base_rpm + steer_offset;
-    rpm_right = base_rpm - steer_offset;
-  }
-
-  /* Hard Clamp to +/- MOTOR_MAX_RPM as ultimate safeguard */
-  if (rpm_left > (float)MOTOR_MAX_RPM)
-    rpm_left = (float)MOTOR_MAX_RPM;
-  if (rpm_left < -(float)MOTOR_MAX_RPM)
-    rpm_left = -(float)MOTOR_MAX_RPM;
-  if (rpm_right > (float)MOTOR_MAX_RPM)
-    rpm_right = (float)MOTOR_MAX_RPM;
-  if (rpm_right < -(float)MOTOR_MAX_RPM)
-    rpm_right = -(float)MOTOR_MAX_RPM;
-
-  *out_target_left = (int32_t)roundf(rpm_left);
-  *out_target_right = (int32_t)roundf(rpm_right);
-  *out_v = v_lin_mm_s;
-  *out_omega = omega_rad_s;
+  /* Output velocities in telemetry units (mm/s and rad/s) */
+  if (out_v)
+    *out_v = vx * 1000.0f;
+  if (out_omega)
+    *out_omega = wz;
 }
 
 /**
  * @brief  Smoothly ramps speed towards target rate, handling reversals cleanly.
- *         During direction reversal (+ to - or - to +), it strictly decelerates
- *         to 0.0 before accelerating in the new direction.
+ *         During direction reversal (+ to - or - to +), it actively decelerates
+ *         through 0 into reverse without latching the state machine or dropping
+ * frames.
  */
 static float Update_Ramp_Channel(float current, float target, float dt) {
   if (dt <= 0.0f)
@@ -642,7 +861,7 @@ static float Update_Ramp_Channel(float current, float target, float dt) {
   float accel_max = g_motor_accel_rpm_per_sec * dt;
   float decel_max = g_motor_decel_rpm_per_sec * dt;
 
-  /* Case 1: Target is zero -> Decelerate towards 0 */
+  /* Case 1: Target is strictly 0.0f -> Active Deceleration to complete stop */
   if (target == 0.0f) {
     if (current > 0.0f) {
       current -= decel_max;
@@ -656,38 +875,51 @@ static float Update_Ramp_Channel(float current, float target, float dt) {
     return current;
   }
 
-  /* Case 2: Target and Current have same sign (or current is exactly 0) */
-  if ((current >= 0.0f && target > 0.0f) ||
-      (current <= 0.0f && target < 0.0f)) {
-    if (fabsf(target) > fabsf(current)) {
-      /* Accelerating in current direction */
-      float diff = target - current;
-      if (diff > accel_max)
-        diff = accel_max;
-      if (diff < -accel_max)
-        diff = -accel_max;
-      current += diff;
+  /* Case 2: Direction Reversal (+ to - or - to +) */
+  /* Actively decelerate through zero into reverse without hanging or dropping
+   * frames */
+  if ((current > 0.0f && target < 0.0f) || (current < 0.0f && target > 0.0f)) {
+    if (current > 0.0f) {
+      current -= decel_max;
+      if (current < 0.0f) {
+        /* Crossed zero: immediately apply remaining step towards reverse target
+         */
+        float remainder = -current;
+        current = -fminf(remainder, accel_max);
+        if (current < target)
+          current = target;
+      }
     } else {
-      /* Decelerating towards target of same sign */
-      float diff = target - current;
-      if (diff > decel_max)
-        diff = decel_max;
-      if (diff < -decel_max)
-        diff = -decel_max;
-      current += diff;
+      current += decel_max;
+      if (current > 0.0f) {
+        /* Crossed zero: immediately apply remaining step towards forward target
+         */
+        float remainder = current;
+        current = fminf(remainder, accel_max);
+        if (current > target)
+          current = target;
+      }
     }
     return current;
   }
 
-  /* Case 3: Direction Reversal (+ to - or - to +) -> Decelerate to 0 first! */
-  if (current > 0.0f) {
-    current -= decel_max;
-    if (current < 0.0f)
-      current = 0.0f; /* Clamp at zero before accelerating reverse */
-  } else if (current < 0.0f) {
-    current += decel_max;
-    if (current > 0.0f)
-      current = 0.0f; /* Clamp at zero before accelerating forward */
+  /* Case 3: Same sign or accelerating from zero */
+  if (fabsf(target) > fabsf(current)) {
+    /* Accelerating in current direction */
+    float diff = target - current;
+    if (diff > accel_max)
+      diff = accel_max;
+    if (diff < -accel_max)
+      diff = -accel_max;
+    current += diff;
+  } else {
+    /* Decelerating towards smaller target of same sign */
+    float diff = target - current;
+    if (diff > decel_max)
+      diff = decel_max;
+    if (diff < -decel_max)
+      diff = -decel_max;
+    current += diff;
   }
 
   return current;
@@ -809,6 +1041,7 @@ static uint8_t Verify_CAN_Node(uint8_t nodeId) {
           uint16_t sw = (uint16_t)rxData[4] | ((uint16_t)rxData[5] << 8);
           printf("  >>> [CAN OK] Node %d acknowledged (Statusword: 0x%04X)\r\n",
                  nodeId, sw);
+          ZLAC8015D_ProcessRxMessage(&rxHeader, rxData);
           return 1;
         }
       }
@@ -864,10 +1097,16 @@ static uint8_t Parse_Gamepad_Report(uint8_t *data, uint16_t len,
     /* Normalize stick to -1.0 .. +1.0 */
     float norm_x = (float)raw_lx / 32768.0f;
     float norm_y = (float)raw_ly / 32768.0f;
-    *out_stick_x =
-        Process_Analog_Stick(norm_x, STICK_DEADZONE_NORM, STEERING_EXPO);
-    *out_stick_y =
-        Process_Analog_Stick(norm_y, STICK_DEADZONE_NORM, STEERING_EXPO);
+    if (norm_x > 1.0f)
+      norm_x = 1.0f;
+    if (norm_x < -1.0f)
+      norm_x = -1.0f;
+    if (norm_y > 1.0f)
+      norm_y = 1.0f;
+    if (norm_y < -1.0f)
+      norm_y = -1.0f;
+    *out_stick_x = norm_x;
+    *out_stick_y = norm_y;
 
     uint16_t b = 0;
     if (btns & 0x10)
@@ -914,10 +1153,16 @@ static uint8_t Parse_Gamepad_Report(uint8_t *data, uint16_t len,
 
     float norm_x = ((float)lx_raw - 2048.0f) / 2048.0f;
     float norm_y = ((float)ly_raw - 2048.0f) / 2048.0f;
-    *out_stick_x =
-        Process_Analog_Stick(norm_x, STICK_DEADZONE_NORM, STEERING_EXPO);
-    *out_stick_y =
-        Process_Analog_Stick(norm_y, STICK_DEADZONE_NORM, STEERING_EXPO);
+    if (norm_x > 1.0f)
+      norm_x = 1.0f;
+    if (norm_x < -1.0f)
+      norm_x = -1.0f;
+    if (norm_y > 1.0f)
+      norm_y = 1.0f;
+    if (norm_y < -1.0f)
+      norm_y = -1.0f;
+    *out_stick_x = norm_x;
+    *out_stick_y = norm_y;
 
     uint16_t b = 0;
     if (b_right & 0x08)
@@ -953,10 +1198,16 @@ static uint8_t Parse_Gamepad_Report(uint8_t *data, uint16_t len,
 
       float norm_x = ((float)lx - 128.0f) / 128.0f;
       float norm_y = -((float)ly - 128.0f) / 128.0f;
-      *out_stick_x =
-          Process_Analog_Stick(norm_x, STICK_DEADZONE_NORM, STEERING_EXPO);
-      *out_stick_y =
-          Process_Analog_Stick(norm_y, STICK_DEADZONE_NORM, STEERING_EXPO);
+      if (norm_x > 1.0f)
+        norm_x = 1.0f;
+      if (norm_x < -1.0f)
+        norm_x = -1.0f;
+      if (norm_y > 1.0f)
+        norm_y = 1.0f;
+      if (norm_y < -1.0f)
+        norm_y = -1.0f;
+      *out_stick_x = norm_x;
+      *out_stick_y = norm_y;
 
       *out_rt_pct = (btn2 & 0x02) ? 100 : 0;
       *out_lt_pct = (btn2 & 0x01) ? 100 : 0;
@@ -1049,13 +1300,30 @@ static void Print_Telemetry(void) {
   int32_t w_crad = (int32_t)roundf(commanded_omega_rad_s * 100.0f);
   int32_t stk_pct = (int32_t)roundf(current_stick_x_norm * 100.0f);
 
-  printf("[%s] v:%c%ld.%02ld m/s w:%+2ld.%02ld | L:%+3ld R:%+3ld (Tgt:%+3ld "
-         "%+3ld) | StkX:%+4ld%% RT:%3d%% LT:%3d%% | CAN:N1[%c] N2[%c] | "
+  const char *mode_str = "STP";
+  switch (current_drive_mode) {
+  case DRIVE_MODE_STRAIGHT:
+    mode_str = "STR";
+    break;
+  case DRIVE_MODE_ARC_TURN:
+    mode_str = "ARC";
+    break;
+  case DRIVE_MODE_SPOT_TURN:
+    mode_str = "SPT";
+    break;
+  default:
+    mode_str = "STP";
+    break;
+  }
+
+  printf("[%s|%s] v:%c%ld.%02ld m/s w:%+2ld.%02ld | L:%+3ld R:%+3ld (Tgt:%+3ld "
+         "%+3ld) | StkX:%+4ld%% RT:%3d%% LT:%3d%% | CAN:N1[%c] N2[%c] | [Cfg:%ldRPM/%.1frad] "
          "WD:%3lums\r\n",
-         state_str, v_sign, v_int, v_cent, w_crad / 100,
+         state_str, mode_str, v_sign, v_int, v_cent, w_crad / 100,
          (w_crad < 0 ? -w_crad : w_crad) % 100, active_left_rpm,
          active_right_rpm, target_left_rpm, target_right_rpm, stk_pct,
-         current_rt_pct, current_lt_pct, n1_stat, n2_stat, wd_ms);
+         current_rt_pct, current_lt_pct, n1_stat, n2_stat,
+         (long)g_motor_max_rpm, g_turn_angular_velocity, wd_ms);
 }
 
 /* ==============================================================================
@@ -1261,6 +1529,14 @@ static void MX_GPIO_Init(void) {
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL; /* External pull-up on Nucleo board */
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+
+  /* Stepper Motor (TB6600): PC2 (PUL) & PC3 (DIR) in 5V Sinking Open-Drain */
+  HAL_GPIO_WritePin(STEPPER_PUL_PORT, STEPPER_PUL_PIN | STEPPER_DIR_PIN, GPIO_PIN_SET);
+  GPIO_InitStruct.Pin = STEPPER_PUL_PIN | STEPPER_DIR_PIN;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 }
 
 void HAL_CAN_MspInit(CAN_HandleTypeDef *hcan) {

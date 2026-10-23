@@ -1,8 +1,8 @@
 CompileFlags:
   Add:
-    - -Wno-format
-  CompilationDatabase: build/Debug
+    - "-Wno-format"
+
 Diagnostics:
   Suppress:
-    - -Wformat
-    - format
+    - "-Wformat"
+    - "format"

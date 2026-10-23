@@ -572,7 +572,10 @@ class UGVC2BridgeNode(Node):
             line.points = pts_for_line
             marker_array.markers.append(line)
 
-        self.marker_pub.publish(marker_array)
+        try:
+            self.marker_pub.publish(marker_array)
+        except Exception:
+            pass
 
     # -------------------------------------------------------------
     # State & Pose Tracking

@@ -152,7 +152,7 @@
           <span class="apple-hero-gradient">Kinematic Path Planning &amp; Autonomy Stack.</span>
         </h1>
         <p class="apple-section-desc" style="margin: 0 auto; max-width: 860px;">
-          Comprehensive algorithmic and physics-based engineering specification detailing non-holonomic $SE(2)$ Dubins global planning ($R_{\min} \ge 1.50\text{ m}$), Regulated Pure Pursuit (RPP) trajectory tracking, tarmac scrubbing mechanics, multi-layer costmaps, state estimation, intermodal UAV-UGV dispatch, and quantitative SIL simulation benchmarks.
+          Comprehensive algorithmic and physics-based engineering specification detailing non-holonomic $SE(2)$ global planning, Regulated Pure Pursuit (RPP) trajectory tracking, tarmac scrubbing mechanics, multi-layer costmaps, state estimation, intermodal UAV-UGV dispatch, and quantitative SIL simulation benchmarks.
         </p>
       </div>
 
@@ -194,11 +194,11 @@
           </div>
           <div style="background: var(--apple-surface-card); padding: 14px; border-radius: 8px; text-align: center; border: 1px solid var(--apple-border);">
             <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Operating Sprint Speed</div>
-            <div style="font-size: 16px; font-weight: 700; color: #2997ff; margin-top: 4px;">&ge; 10.0 km/h <span style="font-size: 12.5px; font-weight: 400; color: #86868b;">(2.78 m/s)</span></div>
+            <div style="font-size: 16px; font-weight: 700; color: #2997ff; margin-top: 4px;">10&ndash;15 km/h <span style="font-size: 12.5px; font-weight: 400; color: #86868b;">(2.78&ndash;4.17 m/s)</span></div>
           </div>
           <div style="background: var(--apple-surface-card); padding: 14px; border-radius: 8px; text-align: center; border: 1px solid var(--apple-border);">
-            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Min Turning Radius ($R_{\min}$)</div>
-            <div style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 4px;">1.50 m <span style="font-size: 12.5px; font-weight: 400; color: #86868b;">(Smoothed 2D &bull; Phase 2 Dubins)</span></div>
+            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Kinematic Aspect Ratio ($L/B$)</div>
+            <div style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 4px;">0.8&ndash;1.0 <span style="font-size: 12.5px; font-weight: 400; color: #86868b;">(4WD Skid-Steer Envelope)</span></div>
           </div>
           <div style="background: var(--apple-surface-card); padding: 14px; border-radius: 8px; text-align: center; border: 1px solid var(--apple-border);">
             <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Global Positioning Accuracy</div>
@@ -216,7 +216,7 @@
           </div>
 
           <!-- 5-STAGE QUESTIONS & CAPABILITIES GRID -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 18px;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
             <!-- 1. Perception -->
             <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
               <div>
@@ -279,14 +279,6 @@
                 <li>Dual BLDC Motor Driver (16A limit)</li>
                 <li>Rear vacuum remediation</li>
               </ul>
-            </div>
-          </div>
-
-          <!-- PIPELINE OVERVIEW DIAGRAM (FIGURE 1) -->
-          <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-            <img src="../../assets/images/Hilbert/robot_navigation_pipeline.png" alt="Autonomous Robot Navigation Pipeline Diagram" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 6px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
-            <div style="font-size: 12px; color: #86868b; margin-top: 10px; font-style: italic;">
-              Figure 1: Five-Stage Closed-Loop Autonomy Control Pipeline.
             </div>
           </div>
         </div>
@@ -380,7 +372,7 @@
                 1.0 Subsystem Scope &amp; Operational Constraints
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Dry Tarmac ($\mu = 0.80$) &bull; $R_{\min} \ge 1.50\text{ m}$</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Dry Tarmac ($\mu = 0.80$) &bull; 4WD Skid-Steer Envelope</span>
           </div>
 
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
@@ -416,7 +408,7 @@
           </div>
 
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            1.2 Platform Dynamics: 4WD Skid-Steer Kinematic Envelope ($R_{\min} \ge 1.50\text{ m}$)
+            1.2 Platform Dynamics: 4WD Skid-Steer Kinematics Overview
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
             The mobile chassis utilizes a 4-Wheel Drive (4WD) skid-steer architecture (modeled after the AgileX Scout 2.0 heavy-duty mobile base). Unlike Ackermann platforms, yaw rotation in skid-steer vehicles is induced entirely by generating differential tangential velocities between the left and right wheel sets (Siegwart et al., 2011 [14]; Gillespie, 1992 [15]).
@@ -439,151 +431,59 @@
           </div>
 
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
-            Given effective track width $B = 0.582\text{ m}$, wheelbase $L = 0.498\text{ m}$, and wheel radius $r = 0.1315\text{ m}$, the relationship between forward speed $v$, yaw rate $\omega$, and individual side wheel velocities $[v_L, v_R]$ is:
+            In summary, forward linear speed $v$ and yaw angular velocity $\omega$ relate to individual wheel velocities $[v_L, v_R]$ through track width $B = 0.582\text{ m}$ and effective tire radius $r = 0.1315\text{ m}$:
           </p>
           <div class="math-eq-hero">
             $$v = \frac{v_R + v_L}{2}, \quad \omega = \frac{v_R - v_L}{B_{\text{eff}}}, \quad R = \frac{v}{\omega} = \frac{B_{\text{eff}}}{2} \left( \frac{v_R + v_L}{v_R - v_L} \right)$$
           </div>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Where $B_{\text{eff}} \approx 1.35 \cdot B$ accounts for tire slip during skid maneuvers. 
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+            Where $B_{\text{eff}} \approx 1.35 \cdot B$ accounts for lateral tire slip during skid-steer maneuvers on pavement.
           </p>
+
+          <!-- CROSS-REFERENCE LINK CARD TO MOTOR & DRIVETRAIN -->
+          <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.25); border-left: 3px solid #2997ff; border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-weight: 600; color: #f5f5f7; font-size: 13.5px; margin-bottom: 2px;">
+                Detailed Steering Kinematics &amp; Drivetrain Derivations
+              </div>
+              <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45;">
+                Full derivations of lateral scrub resistance, skid kinematics, gearbox efficiency, and motor torque sizing are documented in the powertrain report.
+              </div>
+            </div>
+            <a href="Motor_drivetrain_calculation.html" class="apple-button-subtle" style="font-size: 11.5px; padding: 6px 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;">
+              <span>View Powertrain Report</span> &rarr;
+            </a>
+          </div>
 
           <div style="background: rgba(41, 151, 255, 0.03); border: 1px solid rgba(41, 151, 255, 0.2); border-left: 3px solid #2997ff; border-radius: 8px; padding: 14px 16px; margin-top: 14px;">
             <strong style="color: #2997ff; font-size: 13.5px;">Phase 1 Interim Scope Boundary vs. Post-Interim Hardware Implementation:</strong>
             <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.55;">
-              <strong>Interim Milestone (Phase 1):</strong> Autonomous runway navigation is demonstrated <em>purely in high-fidelity Software-in-the-Loop (SIL) simulation</em>. In simulation, an absolute non-holonomic turning constraint of <strong>$R_{\min} \ge 1.50\text{ m}$</strong> is enforced to ensure smooth, high-speed ($\ge 10\text{ km/h}$) trajectory tracking without the simulated tire scrub and odometry divergence that occurs under ODE friction models.<br><br>
-              <strong>Post-Interim Hardware Extension (Phase 2):</strong> Preliminary physical testing with the chassis hub motors and payload driven by the <strong>ZLAC8015D dual-channel servo driver (capped at 16A per motor)</strong> confirmed that the physical platform is fully capable of spinning on the spot without tripping the BMS. This enables a dual-mode control strategy (high-speed Dubins sweeps + low-speed in-place rotation for terminal debris docking and recovery), which will be deployed on the physical vehicle <em>after the interim report</em>.
+              <strong>Interim Milestone (Phase 1):</strong> Autonomous runway navigation is demonstrated <em>purely in high-fidelity Software-in-the-Loop (SIL) simulation</em>. In simulation, continuous-curvature trajectory tracking is enforced to ensure smooth, high-speed ($\ge 10\text{ km/h}$) tracking without the simulated tire scrub and odometry divergence that occurs under ODE friction models.<br><br>
+              <strong>Post-Interim Hardware Extension (Phase 2):</strong> Preliminary physical testing with the chassis hub motors and payload driven by the <strong>ZLAC8015D dual-channel servo driver (capped at 16A per motor)</strong> confirmed that the physical platform is fully capable of spinning on the spot without tripping the BMS. This enables a dual-mode control strategy (high-speed sweeps + low-speed in-place rotation for terminal debris docking and recovery), which will be deployed on the physical vehicle <em>after the interim report</em>.
             </p>
           </div>
         </div>
 
         <!-- ========================================================================= -->
-        <!-- 2.0 ARCHITECTURAL ITERATIONS & DEVELOPMENT PROGRESSION (A2, A3)          -->
+        <!-- 2.0 NAV2 ARCHITECTURE & BEHAVIOR TREE COORDINATION (A2, A3)              -->
         <!-- ========================================================================= -->
         <div class="card-box" id="sec-architectural-iterations" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">2.0 System Evolution (A2, A3)</span>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">2.0 Nav2 Architecture (A2, A3)</span>
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                2.0 Architectural Iterations &amp; Development Progression
+                2.0 Nav2 Architecture &amp; Behavior Tree Coordination
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Iterative Design &amp; Benchmarking</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Hierarchical Mission Control</span>
           </div>
 
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
-            Developing an autonomous navigation architecture for a heavy $65.0\text{ kg}$ skid-steer rover operating at $\ge 10.0\text{ km/h}$ on high-friction runway surfaces required an iterative exploration across the mobile robotics planning taxonomy (Dolgov et al., 2010 [19]; Dubins, 1957 [20]; Macenski et al., 2020 [8]):
+            The autonomous runway navigation subsystem is orchestrated by the Nav2 software stack under ROS 2 Jazzy. Mission execution, trajectory planning, local control, and recovery policies are coordinated hierarchically through declarative Behavior Trees (BT) and deterministic action servers. Detailed evaluations and empirical parameter tuning for candidate global planners and local tracking controllers are presented in Section 4.0 and Section 5.0 respectively.
           </p>
 
-          <!-- TAXONOMY EMBEDDED DIAGRAM -->
-          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 20px;">
-            <img src="../../assets/images/Hilbert/path_planning_taxonomy.png" alt="Path Planning Taxonomy Diagram" style="max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 6px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));">
-            <div style="font-size: 12px; color: #86868b; margin-top: 10px; font-style: italic;">
-              Figure 2: Mobile Robot Path Planning Taxonomy: Traditional (Graph, Sampling, Curve, Optimization) vs. Machine Learning (Supervised, Unsupervised, Deep RL).
-            </div>
-          </div>
-
-          <!-- 4 ITERATIONS GRID -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px;">
-            
-            <!-- Iteration 1 -->
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <strong style="color: #f5f5f7; font-size: 13.5px;">Iteration 1: 2D Grid + DWB</strong>
-                <span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">Tested &amp; Rejected</span>
-              </div>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Employed default ROS 2 NavFn ($A^*$/Dijkstra) with Dynamic Window Approach (DWB). NavFn produced 2D piecewise linear paths with sharp $45^\circ/90^\circ$ turns. DWB commanded abrupt in-place pivots from a dead stop against static breakaway friction ($\mu_s \approx 0.80$, requiring $19.73\text{ N}\cdot\text{m}$), which pushed unconstrained current demand toward $74.6\text{ A}$ total and caused extreme simulated wheel-slip and odometric drift under Gazebo ODE physics.
-              </p>
-            </div>
-
-            <!-- Iteration 2 -->
-            <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.35); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <strong style="color: #2997ff; font-size: 13.5px;">Iteration 2: SmacPlanner2D + Smoother &amp; RPP</strong>
-                <span class="badge badge-blue" style="font-size: 10.5px;">Phase 1 Baseline</span>
-              </div>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Deployed <code>nav2_smac_planner::SmacPlanner2D</code> with internal cost-aware non-linear curve smoothing ($w_{\text{smooth}}=0.3, w_{\text{curve}}=0.15, w_{\text{cost}}=0.05$) paired with Regulated Pure Pursuit (RPP) at $20\text{ Hz}$ featuring dynamic curvature and cost-regulated velocity scaling (Macenski et al., 2024 [22]). Eliminated high-friction in-place pivot commands during Phase 1 benchtop and SIL testing while achieving sub-decimeter path adherence at $10\text{ km/h}$.
-              </p>
-            </div>
-
-            <!-- Iteration 3 -->
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <strong style="color: #f5f5f7; font-size: 13.5px;">Iteration 3: SmacPlannerHybrid Dubins Lattice &amp; Safety Polygons</strong>
-                <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.1); font-size: 10.5px;">Phase 2 Implementation</span>
-              </div>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Transitions to continuous $SE(2)$ SmacPlannerHybrid with Dubins motion primitives enforcing $R_{\min} \ge 1.50\text{ m}$ directly in the graph search tree. Integrates `nav2_collision_monitor` for direct $50\text{ Hz}$ pointcloud safety polygons (`PolygonStop` at $0.50\text{ m}$, `PolygonSlow` at $1.20\text{ m}$), bypassing costmap latency, with non-holonomic reverse recovery routines.
-              </p>
-            </div>
-
-            <!-- Iteration 4 -->
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <strong style="color: #f5f5f7; font-size: 13.5px;">Iteration 4: Tensorized GPU MPPI</strong>
-                <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.1); font-size: 10.5px;">Sem 2 Evaluation</span>
-              </div>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Benchmarked Model Predictive Path Integral (MPPI) running 2,048 stochastic trajectory rollouts at $50\text{ Hz}$ on Nvidia Jetson Orin GPU (Williams et al., 2017 [23]). Provides superior dynamic obstacle swerving around ground service vehicles, but consumes $65\%$ GPU budget; reserved for complex apron operations.
-              </p>
-            </div>
-
-          </div>
-
-          <!-- ITERATION SUMMARY TABLE -->
-          <div style="overflow-x: auto; margin-bottom: 24px;">
-            <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
-              <thead>
-                <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
-                  <th style="padding: 10px 12px;">Iteration</th>
-                  <th style="padding: 10px 12px;">Global Planner</th>
-                  <th style="padding: 10px 12px;">Local Controller</th>
-                  <th style="padding: 10px 12px;">Kinematic Search</th>
-                  <th style="padding: 10px 12px;">Tarmac Scrub Risk</th>
-                  <th style="padding: 10px 12px;">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Iteration 1</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">NavFn (2D Dijkstra/$A^*$)</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">DWB Local Planner</td>
-                  <td style="padding: 10px 12px; color: #86868b;">None (Holonomic 2D)</td>
-                  <td style="padding: 10px 12px; color: #ff453a;">Severe ($74.6\text{ A}$ Static Breakaway Demand; Odometric Drift)</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; font-size: 10.5px;">Tested &amp; Rejected</span></td>
-                </tr>
-                <tr style="background: rgba(41, 151, 255, 0.04); border-bottom: 1px solid rgba(41, 151, 255, 0.2);">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #2997ff;">Iteration 2</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">SmacPlanner2D (Smoothed)</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">Regulated Pure Pursuit (20 Hz)</td>
-                  <td style="padding: 10px 12px; color: #d1d1d6;">Cost-Aware 2D $A^*$ + Curve Smoother</td>
-                  <td style="padding: 10px 12px; color: #2997ff;">Mitigated (Curvature Scaling $\tau &lt; \tau_{\text{stall}}$)</td>
-                  <td style="padding: 10px 12px;"><span class="badge badge-blue" style="font-size: 10.5px;">Phase 1 Baseline</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Iteration 3</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">SmacPlannerHybrid</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">RPP + Collision Monitor</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Continuous $SE(2)$ Dubins ($R \ge 1.50\text{ m}$)</td>
-                  <td style="padding: 10px 12px; color: #d1d1d6;">Zero (Kinematic Lattice &amp; Safety Polygons)</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Phase 2 Roadmap</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Iteration 4</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">SmacPlannerHybrid</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">MPPI Tensor Controller</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Dynamic Stochastic Traj</td>
-                  <td style="padding: 10px 12px; color: #d1d1d6;">Low (Dynamic Cost Softmax)</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sem 2 Evaluation</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
           <!-- 2.1 NAV2 BEHAVIOR TREE SPECIFICATION -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 10px 0; letter-spacing: -0.01em;">
+          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 10px 0; letter-spacing: -0.01em;">
             2.1 Nav2 Behavior Tree (BT) Specification &amp; Escalating Recovery Topology
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
@@ -721,70 +621,28 @@
             <div>
               <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">3.0 Drivetrain Physics (A1, A5)</span>
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                3.0 Physics &amp; Drivetrain Constraints: Tarmac Scrub Mechanics
+                3.0 Physics &amp; Drivetrain Coupling: Powertrain Calculations
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">BMS Protection &bull; $I_{\text{bus}} &lt; 70\text{ A}$</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Consolidated Documentation</span>
           </div>
 
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            3.1 Breakaway Scrubbing Torque Derivation on High-Friction Asphalt
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            When a $65.0\text{ kg}$ 4WD skid-steer vehicle executes a zero-radius in-place rotation on dry airport asphalt ($\mu \approx 0.80$), the tires must continuously shear laterally across the pavement surface (Siegwart et al., 2011 [14]; Gillespie, 1992 [15]). The normal force per wheel is $F_{N,i} = \frac{m \cdot g}{4}$. Assuming Coulomb friction and a gearbox reduction efficiency $\eta_{\text{gear}} = 0.85$, the breakaway lateral scrub torque reflected at each motor shaft is derived as:
-          </p>
-          <div class="math-eq-hero">
-            $$\tau_{\text{skid, per motor}} = \frac{m \cdot g \cdot \mu \cdot r}{4 \cdot \eta_{\text{gear}}} = \frac{65.0 \cdot 9.81 \cdot 0.80 \cdot 0.1315}{4 \cdot 0.85} \approx \mathbf{19.73\text{ N}\cdot\text{m}}$$
-          </div>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Where vehicle mass $m = 65.0\text{ kg}$, gravitational acceleration $g = 9.81\text{ m/s}^2$, tire friction coefficient $\mu = 0.80$, effective tire radius $r = 0.1315\text{ m}$, and planetary gearbox transmission efficiency $\eta_{\text{gear}} = 0.85$.
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+            The detailed physics, Coulomb friction model on airport asphalt ($\mu_s \approx 0.80$), static breakaway scrub torque derivation ($\tau_{\text{skid}} \approx 19.73\text{ N}\cdot\text{m}$ per motor), electrical DC bus current loading ($74.64\text{ A}$ unconstrained vs. $16.0\text{ A}$ ZLAC8015D firmware clamping), and kinetic shearing transitions are fully derived in the dedicated powertrain engineering document.
           </p>
 
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            3.2 Electrical Bus Loading: ZLAC8015D 16A Current Clamping &amp; In-Place Pivot Feasibility
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Given the chassis brushless hub motor torque constant $K_t \approx 1.057\text{ N}\cdot\text{m/A}$ (RobotPlatform.com, 2024 [17]), an unconstrained breakaway against static asphalt friction ($\tau_{\text{skid}} \approx 19.73\text{ N}\cdot\text{m}$) would theoretically demand:
-          </p>
-          <div class="math-eq-hero">
-            $$I_{\text{demand}} = \frac{\tau_{\text{skid}}}{K_t} = \frac{19.73\text{ N}\cdot\text{m}}{1.057\text{ N}\cdot\text{m/A}} \approx 18.66\text{ A/motor} \implies I_{\text{bus, unconstrained}} = 4 \times 18.66\text{ A} = \mathbf{74.64\text{ A}}$$
-          </div>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            An unrestricted $74.64\text{ A}$ draw across the $48.0\text{ V}$ bus ($3.58\text{ kW}$) would breach the onboard Smart BMS continuous discharge limit ($70.0\text{ A}$), inducing acute voltage sag ($&lt; 42.0\text{ V}$) and triggering BMS brownout shutdowns.
-          </p>
-
-          <h4 style="font-size: 13.5px; font-weight: 600; color: #f5f5f7; margin: 18px 0 6px 0;">
-            <span style="color: #2997ff; margin-right: 6px;">●</span>Hardware Protection: ZLAC8015D 16.0 A Firmware Current Ceiling
-          </h4>
-          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
-            To eliminate this failure mode at the electrical hardware layer, the <strong>ZLAC8015D V4.2 dual-channel servo driver</strong> firmware parameter register is configured with a strict current limit of <strong>$16.0\text{ A}$ per motor</strong>. This parameter clamp establishes a deterministic ceiling on both motor torque and DC bus loading:
-          </p>
-          <div class="math-eq-hero">
-            $$\tau_{\max} = K_t \cdot I_{\max} = 1.057\text{ N}\cdot\text{m/A} \times 16.0\text{ A} = \mathbf{16.91\text{ N}\cdot\text{m/motor}}$$
-          </div>
-          <div class="math-eq-hero">
-            $$I_{\text{bus, capped}} = 2 \times 16.0\text{ A} = \mathbf{32.0\text{ A}}\text{ (Dual Hubs)} \quad \Big[\text{or } 4 \times 16.0\text{ A} = \mathbf{64.0\text{ A}}\text{ for 4WD}\Big] &lt; I_{\text{BMS, trip}} = 70.0\text{ A}$$
-          </div>
-
-          <h4 style="font-size: 13.5px; font-weight: 600; color: #f5f5f7; margin: 18px 0 6px 0;">
-            <span style="color: #2997ff; margin-right: 6px;">●</span>In-Place Turning Feasibility: Static Breakaway vs. Kinetic Shearing Mechanics
-          </h4>
-          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 10px;">
-            Physical benchtop and chassis testing with payload verified that the physical platform is capable of turning on the spot. While static breakaway friction from a dead stop requires $19.73\text{ N}\cdot\text{m}$, as soon as tire shearing initiates, the contact interface transitions from static ($\mu_s \approx 0.80$) to dynamic kinetic friction ($\mu_k \approx 0.55\text{--}0.65$):
-          </p>
-          <div class="math-eq-hero">
-            $$\tau_{\text{kinetic}} = \frac{m \cdot g \cdot \mu_k \cdot r}{4 \cdot \eta_{\text{gear}}} = \frac{65.0 \cdot 9.81 \cdot 0.60 \cdot 0.1315}{4 \cdot 0.85} \approx \mathbf{14.80\text{ N}\cdot\text{m}}$$
-          </div>
-          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 12px;">
-            Because the capped motor torque ($\mathbf{16.91\text{ N}\cdot\text{m}}$) under the ZLAC8015D driver's $16.0\text{ A}$ current ceiling exceeds the kinetic friction torque ($\approx \mathbf{14.80\text{ N}\cdot\text{m}}$), once kinetic shearing initiates the physical platform can successfully sustain in-place turning on the spot without exceeding the BMS continuous discharge ceiling ($70\text{ A}$).
-          </p>
-
-          <div style="background: rgba(41, 151, 255, 0.03); border: 1px solid rgba(41, 151, 255, 0.2); border-left: 3px solid #2997ff; border-radius: 8px; padding: 14px 16px; margin-top: 14px;">
-            <strong style="color: #2997ff; font-size: 13.5px;">Phase 1 Simulation Scope vs. Post-Interim Hardware Implementation:</strong>
-            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.55;">
-              &bull; <strong>Interim Report Scope (100% Simulation Baseline):</strong> While preliminary bench testing showed that once kinetic shearing initiates ($\mu_k \approx 0.60$, requiring $\approx 14.8\text{ N}\cdot\text{m}$), the physical platform <em>can</em> turn on the spot under the ZLAC8015D driver's $16\text{ A}$ current ceiling, <strong>Phase 1 Interim strictly enforces Dubins continuous-arc paths ($R_{\min} \ge 1.50\text{ m}$) in simulation</strong> to maintain high-speed sweeps ($\ge 10\text{ km/h}$) and preserve wheel odometry under Gazebo ODE physics.<br>
-              &bull; <strong>Post-Interim Hardware Deployment:</strong> Following the interim report, the ZLAC8015D driver (16A limit) will be integrated with the physical chassis. This enables a dual-mode operational policy: high-speed sweeps utilize Dubins arcs for speed and tire preservation, while controlled in-place pivots will be activated for <em>centimeter-level debris docking</em> and <em>Nav2 Behavior Tree emergency recoveries</em>.
-            </p>
+          <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.25); border-left: 4px solid #2997ff; border-radius: 10px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div style="max-width: 680px;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #f5f5f7; margin: 0 0 6px 0;">
+                Drivetrain Torque Sizing &amp; Tarmac Scrubbing Calculation Report
+              </h3>
+              <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 0; line-height: 1.5;">
+                For the complete mathematical proof, gearbox efficiency parameters, motor driver register configurations, and BMS current protection limits, refer to Section 4.5 of the Motor &amp; Drivetrain documentation.
+              </p>
+            </div>
+            <a href="Motor_drivetrain_calculation.html#sec-tarmac-scrub" class="apple-button" style="padding: 10px 18px; font-size: 12.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; white-space: nowrap;">
+              <span>Open Drivetrain Calculations</span> &rarr;
+            </a>
           </div>
         </div>
 
@@ -1505,22 +1363,307 @@
             <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Dual-EKF Sensor Fusion &bull; 2D vs. 3D LiDAR</span>
           </div>
 
-          <!-- 7.1 INDOOR VS OUTDOOR LOCALIZATION -->
+          <!-- 7.1 DUAL-EKF LOCALIZATION ARCHITECTURE -->
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 10px 0; letter-spacing: -0.01em;">
-            7.1 Indoor vs. Outdoor Localization Dynamics
+            7.1 Dual-EKF State Estimation &amp; Outdoor Localization Architecture
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            In an indoor laboratory environment, using pure odometry data from motor encoders is sufficient because Adaptive Monte Carlo Localization (AMCL) actively compensates for wheel slip by matching planar LiDAR scans against the known indoor occupancy grid map.
+            In indoor laboratory environments, dead reckoning from wheel odometry augmented by Adaptive Monte Carlo Localization (AMCL) reliably maintains tracking by scan-matching planar LiDAR returns against static walls and furniture.
           </p>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            However, on open outdoor airfield runways, the <strong>lack of walls or distinct structural features</strong> causes standard scan-matching localization to fail catastrophically. Across an open $4000\text{ m}$ tarmac corridor, planar laser returns detect only uniform flat asphalt, causing the scan-matching Hessian matrix to degenerate ($\Sigma_{xx} \to \infty$) and resulting in severe positional drift between simulation and navigation visualization.
+            On an active, open airfield runway spanning $3000\text{ to }4000\text{ m}$, vertical landmarks are absent beyond distant perimeter fences. Consequently, planar laser returns detect only uniform flat tarmac, causing the longitudinal spatial gradient to vanish ($\nabla I_x \approx 0$) and the scan-matching Hessian matrix to suffer singular collapse ($\mathbf{\Sigma}_{xx} \to \infty$). To overcome this, the localization architecture deploys a <strong>Dual-EKF Cascaded Sensor Fusion Topology</strong>:
           </p>
 
-          <div style="background: rgba(41, 151, 255, 0.03); border: 1px solid rgba(41, 151, 255, 0.2); border-left: 3px solid #2997ff; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
-            <strong style="color: #2997ff; font-size: 13.5px;">The Solution: Dual-EKF Sensor Fusion Pipeline</strong>
-            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.55;">
-              To resolve open-runway scan degeneracy, the system implements a sensor fusion pipeline combining a 9-DOF Inertial Measurement Unit (IMU) with a simulated positioning module (such as GPS/GNSS) via an <strong>Extended Kalman Filter (Dual-EKF `robot_localization`)</strong>. This topology provides a drift-free global pose estimate and reliable, rock-solid outdoor localization regardless of runway visual featurelessness.
-            </p>
+          <!-- DUAL-EKF ARCHITECTURE BREAKDOWN -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-bottom: 18px;">
+            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-top: 3px solid #2997ff; border-radius: 8px; padding: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: #2997ff; font-size: 13.5px;">Local EKF: Continuous Odometry</strong>
+                <span class="badge badge-blue" style="font-size: 10px;">odom &rarr; base_link</span>
+              </div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
+                <strong>Sensor Inputs:</strong> Wheel Encoders ($50\text{ Hz}$) + 9-DOF IMU Gyro &amp; Accelerometer ($100\text{ Hz}$).
+              </p>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+                Provides a high-frequency, smooth, continuous coordinate frame without discrete teleportation jumps, enabling the Regulated Pure Pursuit (RPP) controller to execute stable $20\text{ Hz}$ trajectory tracking without derivative spikes.
+              </p>
+            </div>
+
+            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-top: 3px solid #30d158; border-radius: 8px; padding: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <strong style="color: #30d158; font-size: 13.5px;">Global EKF: Absolute Airfield Geo-Lock</strong>
+                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10px;">map &rarr; odom</span>
+              </div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
+                <strong>Sensor Inputs:</strong> Local EKF State + GPS / RTK-GNSS ($10\text{ Hz}$ metric position).
+              </p>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
+                Fuses absolute UTM metric position fixes into the state vector, continually bounding long-term odometric wheel slip drift and guaranteeing centimeter-level global positioning accuracy ($\pm 2.0\text{ cm}$) across kilometers of open runway.
+              </p>
+            </div>
+          </div>
+
+          <!-- COMPARATIVE SYSTEM DIAGRAMS: OPEN-LOOP VS CLOSED-LOOP -->
+          <div style="display: flex; flex-direction: column; gap: 18px; margin-bottom: 22px;">
+            
+            <!-- DIAGRAM 1: PURE ODOMETRY OPEN LOOP -->
+            <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--apple-border); border-radius: 10px; padding: 18px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div>
+                  <strong style="color: #f5f5f7; font-size: 13.5px;">Pure Odometry Architecture (Open-Loop System)</strong>
+                  <div style="font-size: 11.5px; color: #86868b;">Direct non-linear kinematic integration without state estimation or sensor feedback</div>
+                </div>
+                <span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">No Feedback &bull; Unbounded Drift</span>
+              </div>
+
+              <!-- SVG DIAGRAM 1 -->
+              <div style="overflow-x: auto; text-align: center; padding: 10px 0;">
+                <svg viewBox="0 0 780 200" style="max-width: 100%; height: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                  <!-- Red Alert Box Top Right -->
+                  <rect x="520" y="10" width="240" height="46" rx="6" fill="rgba(255, 69, 58, 0.08)" stroke="rgba(255, 69, 58, 0.35)" stroke-width="1.5" />
+                  <text x="640" y="28" fill="#ff453a" font-weight="700" font-size="12" text-anchor="middle">No feedback loop</text>
+                  <text x="640" y="44" fill="#ff453a" font-size="11" text-anchor="middle">Errors accumulate to &infin;</text>
+
+                  <!-- Left Inputs -->
+                  <text x="130" y="75" fill="#f5f5f7" font-weight="600" font-size="13" text-anchor="end">Wheel speed (v)</text>
+                  <line x1="145" y1="71" x2="235" y2="71" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue)" />
+
+                  <text x="130" y="125" fill="#f5f5f7" font-weight="600" font-size="13" text-anchor="end">Wheel turning (&omega;)</text>
+                  <line x1="145" y1="121" x2="235" y2="121" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue)" />
+
+                  <!-- Non-linear Integrator Box -->
+                  <rect x="240" y="40" width="240" height="110" rx="6" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="360" y="68" fill="#f5f5f7" font-weight="700" font-size="14" text-anchor="middle">Non-linear integrator</text>
+                  <text x="360" y="98" fill="#2997ff" font-family="'SF Mono', Consolas, monospace" font-size="13" text-anchor="middle">x = &int; v &middot; cos(&theta;) dt</text>
+                  <text x="360" y="124" fill="#2997ff" font-family="'SF Mono', Consolas, monospace" font-size="13" text-anchor="middle">y = &int; v &middot; sin(&theta;) dt</text>
+
+                  <!-- Bottom Disturbance Arrow -->
+                  <line x1="360" y1="180" x2="360" y2="155" stroke="#86868b" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrow-gray)" />
+                  <text x="360" y="194" fill="#86868b" font-style="italic" font-size="11" text-anchor="middle">Wheel slip, mechanical bias</text>
+
+                  <!-- Output Arrow & Text -->
+                  <line x1="480" y1="95" x2="550" y2="95" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue)" />
+                  <text x="565" y="90" fill="#f5f5f7" font-weight="700" font-size="14">Estimated pose</text>
+                  <text x="565" y="110" fill="#86868b" font-family="'SF Mono', Consolas, monospace" font-size="13">(x, y, &theta;)</text>
+                  <text x="565" y="128" fill="#ff453a" font-weight="600" font-size="12">Unbounded drift</text>
+
+                  <!-- Markers Definition -->
+                  <defs>
+                    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2997ff" />
+                    </marker>
+                    <marker id="arrow-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#86868b" />
+                    </marker>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+
+            <!-- DIAGRAM 2: LOCAL EKF CLOSED LOOP -->
+            <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--apple-border); border-radius: 10px; padding: 18px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div>
+                  <strong style="color: #30d158; font-size: 13.5px;">Local EKF Architecture (Closed-Loop System)</strong>
+                  <div style="font-size: 11.5px; color: #86868b;">Predict-update loop with Kalman gain innovation feedback from IMU gyro measurement</div>
+                </div>
+                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">Closed-Loop &bull; Drift Bound</span>
+              </div>
+
+              <!-- SVG DIAGRAM 2 -->
+              <div style="overflow-x: auto; text-align: center; padding: 10px 0;">
+                <svg viewBox="0 0 860 320" style="max-width: 100%; height: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                  <!-- Top Rail: Input Wheel speed (v) -->
+                  <text x="120" y="65" fill="#f5f5f7" font-weight="600" font-size="13" text-anchor="end">Wheel speed (v)</text>
+                  <line x1="135" y1="61" x2="180" y2="61" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue2)" />
+
+                  <!-- Kinematic prediction f(x, u) -->
+                  <rect x="185" y="36" width="160" height="52" rx="6" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="265" y="58" fill="#f5f5f7" font-weight="700" font-size="13" text-anchor="middle">Kinematic prediction</text>
+                  <text x="265" y="76" fill="#2997ff" font-family="'SF Mono', Consolas, monospace" font-size="12" text-anchor="middle">f(x, u)</text>
+
+                  <!-- Arrow from Kinematic prediction to Summing Junction -->
+                  <line x1="345" y1="61" x2="425" y2="61" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue2)" />
+                  <text x="385" y="52" fill="#86868b" font-family="'SF Mono', Consolas, monospace" font-size="11" text-anchor="middle">Prior x&#770;&minus;</text>
+
+                  <!-- Summing Junction (+) -->
+                  <circle cx="438" cy="61" r="13" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="438" y="66" fill="#2997ff" font-weight="bold" font-size="16" text-anchor="middle">+</text>
+
+                  <!-- Arrow from Summing Junction to State update -->
+                  <line x1="451" y1="61" x2="495" y2="61" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue2)" />
+
+                  <!-- State update block -->
+                  <rect x="500" y="36" width="165" height="52" rx="6" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="582" y="58" fill="#f5f5f7" font-weight="700" font-size="13" text-anchor="middle">State update</text>
+                  <text x="582" y="76" fill="#30d158" font-family="'SF Mono', Consolas, monospace" font-size="12" text-anchor="middle">x&#770; = x&#770;&minus; + K &middot; y</text>
+
+                  <!-- Output Arrow & Local pose -->
+                  <line x1="665" y1="61" x2="745" y2="61" stroke="#2997ff" stroke-width="2" />
+                  <line x1="745" y1="61" x2="765" y2="61" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue2)" />
+                  <text x="775" y="56" fill="#f5f5f7" font-weight="700" font-size="13.5">Local pose</text>
+                  <text x="775" y="74" fill="#30d158" font-family="'SF Mono', Consolas, monospace" font-size="12.5">[x, y, &theta;]</text>
+
+                  <!-- Feedback Path downwards -->
+                  <line x1="745" y1="61" x2="745" y2="255" stroke="#2997ff" stroke-width="1.8" />
+                  <line x1="745" y1="255" x2="710" y2="255" stroke="#2997ff" stroke-width="1.8" marker-end="url(#arrow-blue2)" />
+
+                  <!-- Observation Model H -->
+                  <rect x="555" y="230" width="150" height="50" rx="6" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="630" y="252" fill="#f5f5f7" font-weight="700" font-size="13" text-anchor="middle">Observation model</text>
+                  <text x="630" y="269" fill="#2997ff" font-family="'SF Mono', Consolas, monospace" font-size="13" text-anchor="middle">H</text>
+
+                  <!-- Arrow from Observation model to Subtraction Junction -->
+                  <line x1="555" y1="255" x2="455" y2="255" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue2)" />
+                  <text x="505" y="244" fill="#86868b" font-size="11" text-anchor="middle">Estimated measurement Hx&#770;&minus;</text>
+
+                  <!-- Subtraction Junction (-) -->
+                  <circle cx="438" cy="255" r="13" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="438" y="260" fill="#2997ff" font-weight="bold" font-size="18" text-anchor="middle">&minus;</text>
+
+                  <!-- Bottom Left Input: IMU gyro -->
+                  <text x="120" y="248" fill="#f5f5f7" font-weight="600" font-size="13" text-anchor="end">IMU gyro &omega;<tspan font-size="10" dy="3">imu</tspan></text>
+                  <text x="120" y="268" fill="#86868b" font-size="11" text-anchor="end">Measurement z</text>
+                  <line x1="135" y1="255" x2="423" y2="255" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue2)" />
+
+                  <!-- Innovation Residual Arrow pointing up to Kalman Gain -->
+                  <line x1="438" y1="242" x2="438" y2="185" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue2)" />
+                  <text x="428" y="215" fill="#2997ff" font-size="11" text-anchor="end">Innovation residual</text>
+                  <text x="428" y="228" fill="#86868b" font-family="'SF Mono', Consolas, monospace" font-size="10.5" text-anchor="end">y = z &minus; Hx&#770;&minus;</text>
+
+                  <!-- Kalman Gain Block (K) -->
+                  <rect x="365" y="135" width="146" height="46" rx="6" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="438" y="162" fill="#f5f5f7" font-weight="700" font-size="13" text-anchor="middle">Kalman gain (K)</text>
+
+                  <!-- Arrow from Kalman Gain up to Summing Junction -->
+                  <line x1="438" y1="135" x2="438" y2="76" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue2)" />
+                  <text x="448" y="108" fill="#30d158" font-family="'SF Mono', Consolas, monospace" font-size="11.5">K &middot; y</text>
+
+                  <!-- Markers Definition -->
+                  <defs>
+                    <marker id="arrow-blue2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2997ff" />
+                    </marker>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+
+            <!-- DIAGRAM 3: GLOBAL EKF CLOSED LOOP -->
+            <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--apple-border); border-radius: 10px; padding: 18px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div>
+                  <strong style="color: #2997ff; font-size: 13.5px;">Global EKF Architecture (Closed-Loop System)</strong>
+                  <div style="font-size: 11.5px; color: #86868b;">Absolute georeferenced correction loop with Kalman gain innovation feedback from GPS / RTK-GNSS metric fixes</div>
+                </div>
+                <span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px;">Closed-Loop &bull; Absolute Geo-Lock (map &rarr; odom)</span>
+              </div>
+
+              <!-- SVG DIAGRAM 3 -->
+              <div style="overflow-x: auto; text-align: center; padding: 10px 0;">
+                <svg viewBox="0 0 880 290" style="max-width: 100%; height: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                  <!-- Top Left: Smooth local odometry input -->
+                  <text x="160" y="58" fill="#f5f5f7" font-weight="600" font-size="13" text-anchor="end">Smooth local</text>
+                  <text x="160" y="75" fill="#86868b" font-family="'SF Mono', Consolas, monospace" font-size="12" text-anchor="end">odometry [v, &omega;]</text>
+                  <line x1="175" y1="65" x2="215" y2="65" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue3)" />
+
+                  <!-- Block 1: Dead-reckoning prediction f(x, u) -->
+                  <rect x="220" y="38" width="180" height="54" rx="6" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="310" y="60" fill="#f5f5f7" font-weight="700" font-size="13" text-anchor="middle">Dead-reckoning prediction</text>
+                  <text x="310" y="78" fill="#2997ff" font-family="'SF Mono', Consolas, monospace" font-size="12" text-anchor="middle">f(x, u)</text>
+
+                  <!-- Horizontal prior line to Summing Junction (+) -->
+                  <line x1="400" y1="65" x2="490" y2="65" stroke="#2997ff" stroke-width="2" />
+                  <line x1="490" y1="65" x2="652" y2="65" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue3)" />
+                  <text x="575" y="54" fill="#86868b" font-family="'SF Mono', Consolas, monospace" font-size="11.5" text-anchor="middle">Prior x&#770;&minus;</text>
+
+                  <!-- Downward branch into Observation model H -->
+                  <line x1="490" y1="65" x2="490" y2="108" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue3)" />
+
+                  <!-- Block 2: Observation model H -->
+                  <rect x="415" y="112" width="150" height="50" rx="6" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="490" y="134" fill="#f5f5f7" font-weight="700" font-size="13" text-anchor="middle">Observation model</text>
+                  <text x="490" y="151" fill="#2997ff" font-family="'SF Mono', Consolas, monospace" font-size="13" text-anchor="middle">H</text>
+
+                  <!-- Downward arrow from Observation model to Subtraction Junction (-) -->
+                  <line x1="490" y1="162" x2="490" y2="212" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue3)" />
+                  <text x="502" y="192" fill="#2997ff" font-size="11" text-anchor="start">Predicted position Hx&#770;&minus;</text>
+
+                  <!-- Subtraction Junction (-) -->
+                  <circle cx="490" cy="230" r="13" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="490" y="235" fill="#2997ff" font-weight="bold" font-size="18" text-anchor="middle">&minus;</text>
+
+                  <!-- Bottom Left Input: GPS position -->
+                  <text x="160" y="224" fill="#f5f5f7" font-weight="600" font-size="13" text-anchor="end">GPS position</text>
+                  <text x="160" y="242" fill="#86868b" font-family="'SF Mono', Consolas, monospace" font-size="12" text-anchor="end">z<tspan font-size="9" dy="2">GPS</tspan><tspan dy="-2"> = [x, y]<tspan font-size="9" dy="-4">T</tspan></tspan></text>
+                  <line x1="175" y1="230" x2="472" y2="230" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue3)" />
+
+                  <!-- Innovation residual arrow to Kalman gain (K) -->
+                  <line x1="503" y1="230" x2="588" y2="230" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue3)" />
+                  <text x="546" y="218" fill="#2997ff" font-size="11" text-anchor="middle">Innovation</text>
+                  <text x="546" y="244" fill="#2997ff" font-size="11" text-anchor="middle">residual y</text>
+
+                  <!-- Block 3: Kalman gain (K) -->
+                  <rect x="595" y="205" width="150" height="50" rx="6" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="670" y="235" fill="#f5f5f7" font-weight="700" font-size="13" text-anchor="middle">Kalman gain (K)</text>
+
+                  <!-- Upward arrow from Kalman gain to Summing Junction (+) -->
+                  <line x1="670" y1="205" x2="670" y2="82" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue3)" />
+                  <text x="682" y="142" fill="#2997ff" font-size="11">Correction</text>
+                  <text x="682" y="158" fill="#30d158" font-family="'SF Mono', Consolas, monospace" font-size="11.5">K &middot; y</text>
+
+                  <!-- Summing Junction (+) -->
+                  <circle cx="670" cy="65" r="13" fill="#0d1117" stroke="#2997ff" stroke-width="2" />
+                  <text x="670" y="70" fill="#2997ff" font-weight="bold" font-size="16" text-anchor="middle">+</text>
+
+                  <!-- Exit Arrow to Global Pose -->
+                  <line x1="683" y1="65" x2="760" y2="65" stroke="#2997ff" stroke-width="2" marker-end="url(#arrow-blue3)" />
+                  <text x="774" y="60" fill="#f5f5f7" font-weight="700" font-size="13.5">Global pose</text>
+                  <text x="774" y="78" fill="#30d158" font-family="'SF Mono', Consolas, monospace" font-size="12.5">[x, y, &theta;]</text>
+
+                  <!-- Markers Definition -->
+                  <defs>
+                    <marker id="arrow-blue3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2997ff" />
+                    </marker>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- MATLAB SIMULATION VERIFICATION & VIDEO EMBED -->
+          <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 10px; padding: 20px; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                  <span class="badge" style="background: rgba(255, 159, 10, 0.12); color: #ff9f0a; border: 1px solid rgba(255, 159, 10, 0.25); font-size: 10.5px;">MATLAB Simulation Verification</span>
+                  <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px;">With vs. Without EKF</span>
+                </div>
+                <h4 style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin: 0 0 4px 0;">
+                  Dual EKF State Estimation Simulation Demonstration
+                </h4>
+                <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 0; max-width: 680px; line-height: 1.5;">
+                  A MATLAB simulation model was formulated to demonstrate the physical divergence of pure dead reckoning and quantitatively validate the convergence of Extended Kalman Filtering when combining noisy wheel encoder odometry, IMU angular rate gyros, and GPS updates.
+                </p>
+              </div>
+              <a href="../../assets/images/Hilbert/EKF Demo test.mlx" download class="apple-button" style="font-size: 12px; padding: 8px 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;">
+                <span>Download MATLAB Live Script (.mlx)</span> &darr;
+              </a>
+            </div>
+
+            <!-- EMBEDDED DEMO VIDEO -->
+            <div style="max-width: 780px; margin: 0 auto; text-align: center;">
+              <video controls style="width: 100%; max-height: 440px; border-radius: 8px; border: 1px solid var(--apple-border); background: #000; box-shadow: 0 6px 24px rgba(0,0,0,0.5);">
+                <source src="../../assets/images/Hilbert/Dual EKF matlab demo.mov" type="video/mp4">
+                <source src="../../assets/images/Hilbert/Dual EKF matlab demo.mov" type="video/quicktime">
+                Your browser does not support the video tag.
+              </video>
+              <div style="font-size: 12px; color: #86868b; margin-top: 10px; font-style: italic;">
+                Figure 7.1: MATLAB Simulation Demonstration: Comparing Open-Loop Dead-Reckoning Divergence vs. Closed-Loop Dual EKF Pose Estimation on Simulated Trajectory.
+              </div>
+            </div>
           </div>
 
           <!-- 7.2 SIMULATED TF TRANSFORM TREE -->
@@ -1570,7 +1713,7 @@
             <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <strong style="color: #2997ff; font-size: 13.5px;">2D Planar LiDAR</strong>
-                <span class="badge badge-blue" style="font-size: 10px;">Phase 1 Baseline</span>
+                <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10px;">Single-Plane Scanning</span>
               </div>
               <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
                 Significantly more cost-effective and fully satisfies basic horizontal obstacle avoidance. However, it is constrained to a <strong>single horizontal plane</strong> and is blind to hazards above or below its mounting height (e.g., overhangs, wingtips, ground depressions, low-lying gravel).
@@ -1580,7 +1723,7 @@
             <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <strong style="color: #30d158; font-size: 13.5px;">3D Volumetric LiDAR</strong>
-                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10px;">Phase 2 Upgrade</span>
+                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10px;">Multi-Elevation Pointcloud</span>
               </div>
               <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
                 Provides <strong>full volumetric point-cloud data</strong> across multi-elevation layers. Reliably detects hazards at varying heights (ground depressions, overhanging aircraft parts, scattered debris clusters) at the expense of higher hardware cost and compute load.
@@ -1624,17 +1767,11 @@
                   <td style="padding: 9px 12px; color: #ffd60a;">Moderate (30-50 Mbps; 12% CPU / GPU)</td>
                   <td style="padding: 9px 12px; color: var(--apple-text-secondary);">2D fits low-power edge SBCs; 3D requires Jetson / x86 PC.</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Hardware Unit Cost Factor</td>
-                  <td style="padding: 9px 12px; color: #30d158;">Low ($\sim \$150 - \$400$)</td>
-                  <td style="padding: 9px 12px; color: #ff453a;">Moderate-High ($\sim \$900 - \$3,500$)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">2D reduces prototype budget; 3D is commercial-grade.</td>
-                </tr>
                 <tr>
-                  <td style="padding: 9px 12px; font-weight: 700; color: #2997ff;">Selection Verdict</td>
-                  <td style="padding: 9px 12px;"><span class="badge badge-blue" style="font-size: 10.5px;">Phase 1 SIL Baseline</span></td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.15); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.3); font-size: 10.5px;">Phase 2 Physical Upgrade</span></td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Simulated 2D LiDAR for interim; 3D LiDAR planned for physical vehicle.</td>
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Hardware Unit Cost Factor</td>
+                  <td style="padding: 9px 12px; color: #30d158;">$100 &ndash; $250</td>
+                  <td style="padding: 9px 12px; color: #ffd60a;">$300 &ndash; $800</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">2D keeps prototype cost low; 3D adds height/elevation perception within accessible budget.</td>
                 </tr>
               </tbody>
             </table>
@@ -1705,7 +1842,7 @@
             In wide aircraft apron or maintenance hangar zones where debris occurs in 2D spatial clusters, targets are solved as a Traveling Salesperson Problem (TSP) with kinematic edge weights:
           </p>
           <div class="math-eq-hero">
-            $$C_{ij} = \text{DubinsLength}(\mathbf{x}_i,\, \mathbf{x}_j,\, R_{\min} = 1.50\text{ m})$$
+            $$C_{ij} = \text{DubinsLength}(\mathbf{x}_i,\, \mathbf{x}_j,\, R_{\min})$$
           </div>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6;">
             The tour is seeded via Nearest Neighbor and iteratively optimized using real-time <strong>2-Opt edge swapping</strong>, shortening overall apron collection distances by $18.6\%$ compared to raw FIFO dispatch.
@@ -1774,82 +1911,115 @@
         </div>
 
         <!-- ========================================================================= -->
-        <!-- 9.0 EXPERIMENTAL VALIDATION & QUANTITATIVE SIL BENCHMARKS (A4, A5)         -->
+        <!-- 9.0 NAVIGATION VALIDATION (A4, A5)                                        -->
         <!-- ========================================================================= -->
         <div class="card-box" id="sec-experimental-validation" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">9.0 Experimental Validation (A4, A5)</span>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">9.0 Navigation Validation (A4, A5)</span>
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                9.0 Experimental Validation &amp; Quantitative SIL Simulation Benchmarks
+                9.0 Navigation Validation
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Gazebo Harmonic &bull; Real-Time Factor 0.99</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Semester 1 SIL Video Trials &bull; Gazebo Harmonic</span>
           </div>
 
-          <!-- 9.1 SIMULATION ENVIRONMENTS & STANDARDIZED TEST ROUTES -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            9.1 Phase 1 Simulation Environments &amp; Standardized Benchmark Test Routes
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            All Phase 1 navigation algorithms were validated in high-fidelity Software-in-the-Loop (SIL) simulation using <strong>Gazebo Harmonic (8.x)</strong> paired with <strong>ROS 2 Jazzy Jalisco</strong> on Ubuntu 24.04 LTS, following aerodrome digital twin modeling protocols (Krestenitis et al., 2026 [6]). The testing worlds incorporate both the Aarhus Airport (EKAH) runway and the NUS EA Field tarmac environment ($60.0\text{ m} \times 40.0\text{ m}$):
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin: 16px 0 20px 0;">
+            To rigorously validate the Phase 1 autonomous runway navigation stack prior to physical field deployment, a comprehensive suite of high-fidelity Software-in-the-Loop (SIL) simulation trials was conducted using <strong>Gazebo Harmonic (8.x)</strong> paired with <strong>ROS 2 Jazzy Jalisco</strong> on Ubuntu 24.04 LTS. The video demonstrations below document the key experimental tests performed to validate multi-waypoint patrol execution, real-time reactive obstacle evasion, and state estimation stability comparing closed-loop Dual-EKF localization against raw open-loop odometry drift. <em>(For complete simulation world setups, digital twin runway geometry, and aerodrome physics modeling, see <a href="simulation.html" style="color: #2997ff; text-decoration: none; font-weight: 500;">Simulation Environments</a>.)</em>
           </p>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-bottom: 16px;">
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-              <img src="../../assets/images/Hilbert/gazebo_runway_world.png" alt="Gazebo Runway World" style="max-height: 180px; width: auto; max-width: 100%; display: block; margin: 0 auto; border-radius: 6px;">
-              <div style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 8px; font-weight: 600;">
-                Figure 9.1: Gazebo Harmonic 3D Airfield Runway Environment
+          <!-- 9.1 SEMESTER 1 NAVIGATION VALIDATION VIDEO SUITE -->
+          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 14px 0; letter-spacing: -0.01em;">
+            9.1 Semester 1 Software-in-the-Loop (SIL) Video Test Suite
+          </h3>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin-bottom: 24px;">
+            <!-- TEST 1: MULTIWAYPOINT PATROL -->
+            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600;">Validation Test 01</span>
+                <span style="font-size: 11px; color: var(--apple-text-secondary); font-family: monospace;">131026_UGV_Multiwaypoint.mov</span>
+              </div>
+              <h4 style="font-size: 14px; font-weight: 600; color: #f5f5f7; margin: 0 0 8px 0;">
+                Autonomous Multi-Waypoint Runway Patrol
+              </h4>
+              <video controls playsinline preload="metadata" style="width: 100%; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); aspect-ratio: 16/9; background: #000; margin-bottom: 10px;" poster="../../assets/simulation/nus_ea_simulation_poster.png">
+                <source src="../../assets/simulation/131026_UGV_Multiwaypoint.mov" type="video/mp4">
+                <source src="../../assets/simulation/131026_UGV_Multiwaypoint.mov" type="video/quicktime">
+                <p style="color: var(--apple-text-secondary); font-size: 12px;">Your browser does not support HTML5 video.</p>
+              </video>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0; flex-grow: 1;">
+                <strong>Validation Objective:</strong> Evaluates Nav2 Waypoint Follower executing high-speed runway sweep passes ($v = 2.22\text{ m/s}$) across sequential mission waypoints. Demonstrates smooth Reeds-Shepp/Dubins curve transitions without zero-radius scrub stalls and verified terminal goal convergence ($&lt; 0.25\text{ m}$).
+              </p>
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #86868b;">
+                <strong style="color: #2997ff;">Key Metric:</strong> 75.9% reduction in transit time (48.2 s per 100 m route) vs. baseline stop-and-turn behavior.
               </div>
             </div>
 
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-              <img src="../../assets/images/Hilbert/nus_ea_field_dimensions.png" alt="NUS EA Field Dimensions" style="max-height: 180px; width: auto; max-width: 100%; display: block; margin: 0 auto; border-radius: 6px;">
-              <div style="font-size: 12px; color: var(--apple-text-secondary); margin-top: 8px; font-weight: 600;">
-                Figure 9.2: NUS EA Field Test Ground Dimensions ($60\text{ m} \times 40\text{ m}$)
+            <!-- TEST 2: DYNAMIC OBJECT AVOIDANCE -->
+            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <span class="badge" style="background: rgba(255, 159, 10, 0.12); color: #ff9f0a; border: 1px solid rgba(255, 159, 10, 0.25); font-size: 11px; font-weight: 600;">Validation Test 02</span>
+                <span style="font-size: 11px; color: var(--apple-text-secondary); font-family: monospace;">131026_UGV_Object_Avoidance.mov</span>
+              </div>
+              <h4 style="font-size: 14px; font-weight: 600; color: #f5f5f7; margin: 0 0 8px 0;">
+                Dynamic Obstacle Detection &amp; Reactive Evasion
+              </h4>
+              <video controls playsinline preload="metadata" style="width: 100%; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); aspect-ratio: 16/9; background: #000; margin-bottom: 10px;" poster="../../assets/simulation/demo_poster.jpg">
+                <source src="../../assets/simulation/131026_UGV_Object_Avoidance.mov" type="video/mp4">
+                <source src="../../assets/simulation/131026_UGV_Object_Avoidance.mov" type="video/quicktime">
+                <p style="color: var(--apple-text-secondary); font-size: 12px;">Your browser does not support HTML5 video.</p>
+              </video>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0; flex-grow: 1;">
+                <strong>Validation Objective:</strong> Evaluates real-time 2D/3D sensor perception, dynamic costmap inflation ($d_{\text{inflation}}=1.20\text{ m}$), and local collision evasion. The UGV autonomously identifies runway obstacles, executes cost-regulated speed throttling, and safely detours without erratic angular chatter.
+              </p>
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #86868b;">
+                <strong style="color: #ff9f0a;">Key Metric:</strong> Obstacle stand-off clearance expanded from 0.48 m (near-miss baseline) to 1.05 m (2.2&times; safety margin buffer).
               </div>
             </div>
-          </div>
 
-          <!-- 4 STANDARDIZED BENCHMARK ROUTES -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 18px;">
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 12px;">
-              <strong style="color: #2997ff; font-size: 12.5px;">Route 1 (R1: Runway Sprint)</strong>
-              <p style="font-size: 11px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
-                $(0,0) \to (100,0)\text{ m}$ on asphalt straightaway. Tests cruise velocity ($v=2.22-2.78\text{ m/s}$), straight-line stability, and steering chatter.
+            <!-- TEST 3: DUAL-EKF LOCALIZATION -->
+            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 11px; font-weight: 600;">Validation Test 03</span>
+                <span style="font-size: 11px; color: var(--apple-text-secondary); font-family: monospace;">131026_UGV_Dual_EKF_test.mov</span>
+              </div>
+              <h4 style="font-size: 14px; font-weight: 600; color: #f5f5f7; margin: 0 0 8px 0;">
+                Closed-Loop Dual-EKF State Estimation (IMU + Encoders)
+              </h4>
+              <video controls playsinline preload="metadata" style="width: 100%; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); aspect-ratio: 16/9; background: #000; margin-bottom: 10px;" poster="../../assets/simulation/rviz_inspection_view.png">
+                <source src="../../assets/simulation/131026_UGV_Dual_EKF_test.mov" type="video/mp4">
+                <source src="../../assets/simulation/131026_UGV_Dual_EKF_test.mov" type="video/quicktime">
+                <p style="color: var(--apple-text-secondary); font-size: 12px;">Your browser does not support HTML5 video.</p>
+              </video>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0; flex-grow: 1;">
+                <strong>Validation Objective:</strong> Evaluates closed-loop multi-rate sensor fusion (`robot_localization`). Fuses high-frequency wheel encoders with 9-DOF IMU angular velocities and accelerations, compensating for tarmac skid-scrub slip and maintaining rock-solid trajectory alignment.
               </p>
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #86868b;">
+                <strong style="color: #30d158;">Key Metric:</strong> Odometric yaw error bounded to &le; 0.3&deg; per 90&deg; turn (93.8% reduction in rotational slip drift).
+              </div>
             </div>
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 12px;">
-              <strong style="color: #30d158; font-size: 12.5px;">Route 2 (R2: 90&deg; Taxiway Bend)</strong>
-              <p style="font-size: 11px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
-                $(0,0) \to (15,15)\text{ m}$ acute bend ($R=4.0\text{ m}$) bounded by berms. Evaluates corner-cutting CTE, lateral $a_c$, and obstacle clearance.
-              </p>
-            </div>
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 12px;">
-              <strong style="color: #ff9f0a; font-size: 12.5px;">Route 3 (R3: S-Curve Avoidance)</strong>
-              <p style="font-size: 11px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
-                $(10,0) \to (50,0)\text{ m}$ weaving past FOD crates and ground vehicles. Evaluates cost-regulated proximity braking and collision envelopes.
-              </p>
-            </div>
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 12px;">
-              <strong style="color: #bf5af2; font-size: 12.5px;">Route 4 (R4: Narrow Doorway)</strong>
-              <p style="font-size: 11px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
-                $(0,0) \to (12,8)\text{ m}$ traversing a $2.2\text{ m}$ pedestrian gateway between pillars on NUS EA map. Evaluates costmap bottleneck avoidance.
-              </p>
-            </div>
-          </div>
 
-          <!-- VIDEO EMBED DEMO -->
-          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px; margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-            <div style="font-size: 13.5px; font-weight: 600; color: #f5f5f7; margin-bottom: 10px;">
-              <span style="color: #2997ff;">🎥 SIL Verification Video:</span> Autonomous Waypoint Patrol &amp; Obstacle Evasion
-            </div>
-            <video controls style="max-width: 100%; max-height: 280px; display: block; margin: 0 auto; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.5);" poster="../../assets/images/Hilbert/nus_ea_simulation_poster.png">
-              <source src="../../assets/images/Hilbert/Multiqueue waypoint.mp4" type="video/mp4">
-              <p style="color: var(--apple-text-secondary); font-size: 12px;">Your browser does not support HTML5 video.</p>
-            </video>
-            <div style="font-size: 11.5px; color: var(--apple-text-secondary); margin-top: 8px; font-style: italic;">
-              Demonstration: Nav2 autonomous waypoint navigation with cost-aware curve smoothing and RPP executing high-speed sweeps with zero scrub torque.
+            <!-- TEST 4: PURE ODOMETRY TEST (BASELINE ABLATION) -->
+            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+                <span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 11px; font-weight: 600;">Validation Test 04</span>
+                <span style="font-size: 11px; color: var(--apple-text-secondary); font-family: monospace;">131026_UGV_Pure_odom_test.mov</span>
+              </div>
+              <h4 style="font-size: 14px; font-weight: 600; color: #f5f5f7; margin: 0 0 8px 0;">
+                Open-Loop Pure Odometry Baseline Drift (Ablation Test)
+              </h4>
+              <video controls playsinline preload="metadata" style="width: 100%; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); aspect-ratio: 16/9; background: #000; margin-bottom: 10px;" poster="../../assets/simulation/nus_ea_simulation_poster.png">
+                <source src="../../assets/simulation/131026_UGV_Pure_odom_test.mov" type="video/mp4">
+                <source src="../../assets/simulation/131026_UGV_Pure_odom_test.mov" type="video/quicktime">
+                <p style="color: var(--apple-text-secondary); font-size: 12px;">Your browser does not support HTML5 video.</p>
+              </video>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0; flex-grow: 1;">
+                <strong>Validation Objective:</strong> Ablation baseline test executing open-loop dead reckoning without EKF sensor fusion. Highlights rapid rotational drift and accumulated positional divergence under unmodeled skid-steer wheel slippage, demonstrating the absolute necessity of Dual-EKF filtering.
+              </p>
+              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #86868b;">
+                <strong style="color: #ff453a;">Baseline Failure:</strong> Yaw error rapidly exceeds 4.8&deg; per turn, causing runaway path divergence and near-miss obstacle strikes.
+              </div>
             </div>
           </div>
 
@@ -1995,206 +2165,23 @@
         </div>
 
         <!-- ========================================================================= -->
-        <!-- 11.0 ACADEMIC REFERENCES & STATUTORY STANDARDS (APA 7th EDITION)          -->
+        <!-- REFERENCES & STANDARDS CALLOUT (REDIRECT TO CENTRALIZED CATALOGUE)        -->
         <!-- ========================================================================= -->
-        <div class="card-box" id="sec-academic-references" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">11.0 References &amp; Standards</span>
-              <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                11.0 Academic References &amp; Statutory Standards (In-Text Concordance)
-              </h2>
-            </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Centralized Reference Hub &bull; 23 Citations</span>
+        <div class="card-box" id="sec-references" style="margin-bottom: 24px; text-align: center; padding: 24px 20px;">
+          <div style="display: flex; justify-content: center; margin-bottom: 8px;">
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600;">Academic &amp; Statutory Standards Hub</span>
           </div>
-
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            To maintain strict academic integrity and single-source traceability across all capstone deliverables, all full bibliographic entries, DOI persistent links, statutory telecommunications guidelines (IMDA / ICAO), and pavement standards are curated in <strong>Hilbert Soh's Centralized Reference Hub</strong> (<a href="../../6-references/hilbert/references.html" style="color: #2997ff; text-decoration: underline;"><code>6-references/hilbert/references.html</code></a>).
+          <h3 style="font-size: 19px; font-weight: 700; color: #f5f5f7; margin: 4px 0 8px 0;">
+            📚 Hilbert's Centralized Reference Catalogue
+          </h3>
+          <p style="font-size: 13px; color: var(--apple-text-secondary); max-width: 680px; margin: 0 auto 18px auto; line-height: 1.6;">
+            All academic literature citations, peer-reviewed robotics research papers, and statutory aeronautical standards (FAA AC 150/5220-24, ASTM D5340-20, ICAO Doc 9718, IMDA TS SRD) supporting this autonomous runway navigation architecture are catalogued centrally with complete APA 7th edition bibliographic entries and direct DOI links.
           </p>
-
-          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 16px;">
-            The concordance table below indexes all in-text citations referenced throughout this navigation system report, mapping each key directly to its canonical entry in the central repository:
-          </p>
-
-          <!-- CONCORDANCE TABLE -->
-          <div style="overflow-x: auto; margin-bottom: 18px;">
-            <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
-              <thead>
-                <tr style="border-bottom: 1px solid var(--apple-border); background: rgba(255, 255, 255, 0.03);">
-                  <th style="padding: 10px 12px; width: 60px; font-size: 11.5px; font-weight: 600; color: var(--apple-text-secondary); text-transform: uppercase; letter-spacing: 0.04em;">Key</th>
-                  <th style="padding: 10px 12px; width: 200px; font-size: 11.5px; font-weight: 600; color: var(--apple-text-secondary); text-transform: uppercase; letter-spacing: 0.04em;">Author(s) &amp; Year</th>
-                  <th style="padding: 10px 12px; font-size: 11.5px; font-weight: 600; color: var(--apple-text-secondary); text-transform: uppercase; letter-spacing: 0.04em;">Standard / Publication Scope</th>
-                  <th style="padding: 10px 12px; width: 130px; font-size: 11.5px; font-weight: 600; color: var(--apple-text-secondary); text-transform: uppercase; letter-spacing: 0.04em;">Referenced In</th>
-                  <th style="padding: 10px 12px; width: 120px; text-align: center; font-size: 11.5px; font-weight: 600; color: var(--apple-text-secondary); text-transform: uppercase; letter-spacing: 0.04em;">Central Hub</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[1]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">ASTM International (2020)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Airport Pavement Condition Index Surveys (ASTM D5340-20)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 1.2</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-1" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [1] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[2]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">FAA (2014)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Airport Foreign Object Debris (FOD) Management Equipment (AC 150/5220-24)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 1.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-2" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [2] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[3]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">IMDA Singapore (2021)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Technical Specification for Short Range Devices (IMDA TS SRD Issue 1 Rev 2)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 8.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-3" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [3] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[4]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">ICAO (2018)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Radio Frequency Spectrum Requirements for Civil Aviation (Doc 9718)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 8.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-4" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [4] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[5]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Kim, S., et al. (2019)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">UAS-Based Airport Maintenance Inspections &amp; Airfield Robotics (ASCE)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 8.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-5" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [5] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[6]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Krestenitis, M., et al. (2026)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Digitalization and Automation of Runway Inspection Using UAVs (Sensors)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 9.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-6" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [6] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[7]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., et al. (2022)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Robot Operating System 2: Design, Architecture, and Uses (Science Robotics)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 7.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-7" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [7] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[8]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., et al. (2020)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">The Marathon 2: A Navigation System (IEEE/RSJ IROS)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 2.0, 4.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-8" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [8] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[9]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Moore, T., &amp; Stouch, D. (2014)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">A Generalized Extended Kalman Filter Implementation for ROS (Springer)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 7.3</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-9" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [9] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[10]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Munyer, T., et al. (2022)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Foreign Object Debris Detection Based on Vision Transformers (IEEE CSCI)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 10.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-10" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [10] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[11]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Republic of Singapore (1999)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Telecommunications Act 1999 (Cap. 323, 2020 Rev. Ed.)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 10.2</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-11" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [11] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[12]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Shan, J., et al. (2025)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">A Review of Foreign Object Debris Detection on Airport Runways (Remote Sensing)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 1.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-12" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [12] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[13]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Multimodal Transportation (2025)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Cooperative Scheduling &amp; Intermodal Dispatch for Autonomous Robotic Fleets</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 8.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-13" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [13] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[14]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Siegwart, R., et al. (2011)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Introduction to Autonomous Mobile Robots (2nd ed., MIT Press)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 1.3, 3.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-14" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [14] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[15]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Gillespie, T. D. (1992)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Fundamentals of Vehicle Dynamics (SAE International)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 1.3, 3.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-15" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [15] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[17]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">RobotPlatform.com (2024)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Classification of Mobile Robots and Wheel Control Theory</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 3.2</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-17" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [17] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[19]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Dolgov, D., et al. (2010)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Path Planning for Autonomous Vehicles in Unknown Semi-Structured Environments (IJRR)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 2.0, 4.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-19" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [19] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[20]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Dubins, L. E. (1957)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">On Curves of Minimal Length with a Constraint on Average Curvature (Am. J. Math.)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 2.0, 4.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-20" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [20] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[21]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., &amp; Jambrecic, I. (2021)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">SLAM Toolbox: SLAM for the Dynamic World (JOSS)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Section 7.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-21" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [21] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[22]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., et al. (2024)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Regulated Pure Pursuit: A Path-Tracking Controller for Mobile Robots (Autonomous Robots)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 2.0, 5.1, 5.3</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-22" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [22] &rarr;</a></td>
-                </tr>
-                <tr>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[23]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Williams, G., et al. (2017)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Model Predictive Path Integral Control: Acceleration &amp; Related Algorithms (IEEE TAC)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 2.0, 5.3</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-23" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [23] &rarr;</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- CALLOUT LINK TO CENTRALIZED REFERENCES REPOSITORY -->
-          <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px 20px;">
-            <div>
-              <div style="font-size: 14px; font-weight: 600; color: #f5f5f7; margin-bottom: 4px;">
-                Hilbert Soh &bull; Centralized References Repository
-              </div>
-              <div style="font-size: 12.5px; color: var(--apple-text-secondary);">
-                Access complete APA 7th edition bibliographic entries, permanent DOI links, and statutory aviation PDFs across all 23 references.
-              </div>
-            </div>
-            <a href="../../6-references/hilbert/references.html" class="btn btn-deep-dive" style="font-size: 13px; padding: 10px 20px; font-weight: 600; background: linear-gradient(135deg, #2997ff 0%, #0077ed 100%); color: #fff; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(41, 151, 255, 0.25);">
-              <span>📚 Open Centralized References Hub</span> &rarr;
-            </a>
-          </div>
+          <a href="../../6-references/hilbert/references.html" class="btn btn-deep-dive" style="font-size: 13.5px; padding: 10px 24px; font-weight: 600; background: linear-gradient(135deg, #2997ff 0%, #0077ed 100%); color: #fff; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(41, 151, 255, 0.25);">
+            <span>Open Hilbert's Full Reference Catalogue</span> &rarr;
+          </a>
         </div>
+
 
       </div>
     </div>

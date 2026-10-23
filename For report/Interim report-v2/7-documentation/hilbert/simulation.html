@@ -188,90 +188,202 @@
         </div>
       </div>
 
-      <!-- TOP METRIC SNAPSHOT CARDS -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px;">
-        <div class="card-box" style="padding: 16px; margin: 0; text-align: center;">
-          <div style="font-size: 11px; font-weight: 600; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Real-Time Factor (RTF)</div>
-          <div style="font-size: 20px; font-weight: 700; color: #2997ff;">0.98 &plusmn; 0.02</div>
-          <div style="font-size: 12px; color: #86868b; margin-top: 2px;">1000 Hz Physics Step &bull; Zero Frame Drop</div>
-        </div>
-        <div class="card-box" style="padding: 16px; margin: 0; text-align: center;">
-          <div style="font-size: 11px; font-weight: 600; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Turning Radius Constraint</div>
-          <div style="font-size: 20px; font-weight: 700; color: #f5f5f7;">R<sub>min</sub> &ge; 1.50 m</div>
-          <div style="font-size: 12px; color: #86868b; margin-top: 2px;">Dubins Primitives &bull; Eliminates Scrub Stall</div>
-        </div>
-        <div class="card-box" style="padding: 16px; margin: 0; text-align: center;">
-          <div style="font-size: 11px; font-weight: 600; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Multi-Machine C2 Latency</div>
-          <div style="font-size: 20px; font-weight: 700; color: #f5f5f7;">&lt; 12.0 ms RTT</div>
-          <div style="font-size: 12px; color: #86868b; margin-top: 2px;">CycloneDDS Unicast &bull; 0.0% Packet Drop</div>
-        </div>
-        <div class="card-box" style="padding: 16px; margin: 0; text-align: center;">
-          <div style="font-size: 11px; font-weight: 600; color: #86868b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Safety Collision Buffer</div>
-          <div style="font-size: 20px; font-weight: 700; color: #f5f5f7;">0.80 m Clearance</div>
-          <div style="font-size: 12px; color: #86868b; margin-top: 2px;">Tiered Collision Monitor &bull; Dynamic Interlock</div>
-        </div>
-      </div>
-
-      <!-- VIDEO DEMONSTRATION SHOWCASE (DUAL EMBEDS) -->
+      <!-- ========================================================================= -->
+      <!-- PURPOSE OF HUNTER SIMULATION & WORKFLOW                                   -->
+      <!-- ========================================================================= -->
       <div class="card-box" style="margin-bottom: 24px;">
         <div class="card-header">
           <div>
-            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Empirical Verification</span>
-            <h2 style="font-size: 18px; font-weight: 700; color: #f5f5f7; margin: 0;">
-              🎬 High-Fidelity Simulation Demonstrations
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Core Rationale • Digital Twin Mandate</span>
+            <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
+              Purpose of Hunter Simulation
             </h2>
           </div>
-          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px;">60 FPS Synchronized Screen Captures</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">High-Fidelity SIL Verification</span>
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+          Deploying unverified autonomous navigation algorithms directly onto physical 65 kg robotic rovers in operational airfield environments presents severe safety hazards, including runway excursion, high-speed collision with airfield edge lighting, and tire-scrubbing motor burnout. The high-fidelity digital twin fulfills four essential engineering purposes:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-bottom: 20px;">
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px;">
+            <strong style="color: #2997ff; font-size: 13.5px;">1. Risk-Free Kinematic Testing</strong>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+              Verifies vehicle kinematic behavior, dynamic stability, and turning dynamics under realistic tire-ground friction ($\mu = 0.8$), preventing skid-steer wheel scrub and high-current motor stall without risking physical equipment damage.
+            </p>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px;">
+            <strong style="color: #f5f5f7; font-size: 13.5px;">2. Rapid Navigation Tuning Iterations</strong>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+              Enables automated testing across hundreds of waypoint dispatches, dynamic obstacle positions, and randomized lighting conditions at accelerated physics stepping rates ($1000\text{ Hz}$) with zero battery recharge downtime.
+            </p>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px;">
+            <strong style="color: #f5f5f7; font-size: 13.5px;">3. Simulate C2 Communication Protocol</strong>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+              Validates inter-agent JSON mission alert dispatch and Nav2 goal injection over physical CycloneDDS subnets (connecting an external Raspberry Pi 5 to Hunter) without physical drone flight risks or airfield access clearances.
+            </p>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px;">
+            <strong style="color: #f5f5f7; font-size: 13.5px;">4. Zero-Software-Rewrite Sim2Real Parity</strong>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+              Enforces identical ROS 2 message interfaces (<code>/cmd_vel</code>, <code>/scan</code>, <code>/camera/image_raw</code>, <code>/tf</code>), allowing navigation autonomy nodes to transfer directly from simulation to physical Hunter hardware with zero code alterations.
+            </p>
+          </div>
+        </div>
+
+        <!-- REDRAWN CLOSED-LOOP WORKFLOW DIAGRAM (HTML/CSS) -->
+        <div style="margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--apple-border);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; font-size: 10.5px; font-weight: 600;">Development Pipeline</span>
+              <h4 style="font-size: 15px; font-weight: 700; color: #f5f5f7; margin: 4px 0 0 0;">
+                🔄 Closed-Loop Robotics Simulation Development Workflow
+              </h4>
+            </div>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Iterative Evaluation Loop</span>
+          </div>
+
+          <!-- HTML/CSS FLOWCHART -->
+          <div style="background: rgba(0, 0, 0, 0.35); border: 1px solid var(--apple-border); border-radius: 12px; padding: 20px 16px; margin-bottom: 10px;">
+            <div style="display: flex; align-items: stretch; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+              
+              <!-- Step 1: Robot model -->
+              <div style="flex: 1; min-width: 160px; background: rgba(41, 151, 255, 0.06); border: 1px solid rgba(41, 151, 255, 0.35); border-radius: 10px; padding: 14px 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 6px;">🤖</div>
+                <div style="font-size: 13.5px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Robot model</div>
+                <p style="font-size: 11.5px; color: var(--apple-text-secondary); margin: 0; line-height: 1.4;">
+                  &bull; Import or create model
+                </p>
+              </div>
+
+              <!-- Arrow -->
+              <div style="display: flex; align-items: center; justify-content: center; color: #2997ff; font-size: 16px; padding: 0 2px;">
+                <span>➔</span>
+              </div>
+
+              <!-- Step 2: Physics Engine -->
+              <div style="flex: 1; min-width: 160px; background: rgba(88, 86, 214, 0.06); border: 1px solid rgba(88, 86, 214, 0.35); border-radius: 10px; padding: 14px 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 6px;">⚙️</div>
+                <div style="font-size: 13.5px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Physics Engine</div>
+                <p style="font-size: 11.5px; color: var(--apple-text-secondary); margin: 0; line-height: 1.4;">
+                  &bull; Simulate dynamics, contacts and environment
+                </p>
+              </div>
+
+              <!-- Arrow -->
+              <div style="display: flex; align-items: center; justify-content: center; color: #5856d6; font-size: 16px; padding: 0 2px;">
+                <span>➔</span>
+              </div>
+
+              <!-- Step 3: Sensors -->
+              <div style="flex: 1; min-width: 160px; background: rgba(52, 199, 89, 0.06); border: 1px solid rgba(52, 199, 89, 0.35); border-radius: 10px; padding: 14px 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 6px;">📡</div>
+                <div style="font-size: 13.5px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Sensors</div>
+                <p style="font-size: 11.5px; color: var(--apple-text-secondary); margin: 0; line-height: 1.4;">
+                  &bull; Simulate LiDAR, IMU, GPS, etc.
+                </p>
+              </div>
+
+              <!-- Arrow -->
+              <div style="display: flex; align-items: center; justify-content: center; color: #34c759; font-size: 16px; padding: 0 2px;">
+                <span>➔</span>
+              </div>
+
+              <!-- Step 4: Controller / ROS -->
+              <div style="flex: 1; min-width: 160px; background: rgba(255, 149, 0, 0.06); border: 1px solid rgba(255, 149, 0, 0.35); border-radius: 10px; padding: 14px 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 6px;">🧠</div>
+                <div style="font-size: 13.5px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Controller / ROS</div>
+                <p style="font-size: 11.5px; color: var(--apple-text-secondary); margin: 0; line-height: 1.4;">
+                  &bull; Test control algorithms
+                </p>
+              </div>
+
+              <!-- Arrow -->
+              <div style="display: flex; align-items: center; justify-content: center; color: #ff9500; font-size: 16px; padding: 0 2px;">
+                <span>➔</span>
+              </div>
+
+              <!-- Step 5: Evaluation -->
+              <div style="flex: 1; min-width: 160px; background: rgba(255, 45, 85, 0.06); border: 1px solid rgba(255, 45, 85, 0.35); border-radius: 10px; padding: 14px 12px; text-align: center;">
+                <div style="font-size: 22px; margin-bottom: 6px;">📊</div>
+                <div style="font-size: 13.5px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px;">Evaluation</div>
+                <p style="font-size: 11.5px; color: var(--apple-text-secondary); margin: 0; line-height: 1.4;">
+                  &bull; Analyse performance and iterate
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Return Feedback Loop Line -->
+            <div style="margin-top: 14px; padding: 8px 14px; background: rgba(41, 151, 255, 0.04); border: 1px dashed rgba(41, 151, 255, 0.35); border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+              <span style="color: #2997ff; font-size: 14px; transform: rotate(180deg); display: inline-block;">➔</span>
+              <span style="font-size: 12px; font-weight: 600; color: #2997ff; letter-spacing: 0.01em;">
+                Continuous Model Refinement &amp; Controller Iteration Feedback Loop
+              </span>
+              <span style="color: #2997ff; font-size: 14px;">↺</span>
+            </div>
+          </div>
+
+          <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px auto 0 auto; max-width: 820px; text-align: center;">
+            Figure 1.0: Closed-Loop Robotics Simulation Development Lifecycle. Model ingestion, physics dynamics, synthetic perception, autonomous control execution, and quantitative evaluation continuously iterate to ensure simulation fidelity before physical deployment.
+          </p>
+        </div>
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- MULTI-ENVIRONMENT SIMULATION VERIFICATION (AARHUS & NUS EA FIELD)         -->
+      <!-- ========================================================================= -->
+      <div class="card-box" style="margin-bottom: 24px;">
+        <div class="card-header">
+          <div>
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Operational Arenas</span>
+            <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
+              Simulation Environments: Operational Airfield &amp; Campus Testbeds
+            </h2>
+          </div>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Environment Evolution</span>
         </div>
 
         <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
-          Interactive video captures confirming autonomous path execution, dynamic obstacle clearance, and trajectory tracking across the target NUS EA Field environment and reference airfield corridor:
+          The simulation was conducted across two distinct high-fidelity environments, reflecting an engineering progression shaped by operational constraints and deployment realities:
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 18px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 18px; margin-bottom: 14px;">
           
-          <!-- NUS EA FIELD DEMO -->
-          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(41, 151, 255, 0.35); border-radius: 8px; padding: 14px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <h4 style="font-size: 14px; color: #2997ff; margin: 0;">📍 NUS EA Field Autonomous Navigation</h4>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-size: 10px;">Phase 1 Target</span>
-            </div>
-            <div style="background: #000; border-radius: 6px; overflow: hidden; text-align: center;">
-              <video controls playsinline preload="metadata" style="width: 100%; max-height: 260px; display: block; margin: 0 auto;" poster="../../assets/simulation/nus_ea_simulation_poster.png">
-                <source src="../../assets/simulation/nus_ea_simulation_demo.mp4" type="video/mp4">
-                <p style="color: var(--apple-text-secondary); font-size: 12px; padding: 12px;">Your browser does not support HTML5 video.</p>
-              </video>
-            </div>
-            <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 8px 0 0 0; line-height: 1.5;">
-              AgileX Scout 2.0 proxy rover navigating outdoor campus walkways, avoiding simulated dynamic obstacles, and executing waypoints cued through Nav2 on the aerial orthophoto map.
-            </p>
-            <div style="margin-top: 10px;">
-              <a href="../../assets/simulation/nus_ea_simulation_demo.mp4" download class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); text-decoration: none; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px;">
-                Download Video (MP4) &rarr;
-              </a>
-            </div>
-          </div>
-
-          <!-- AARHUS AIRPORT DEMO -->
+          <!-- Environment 1: Aarhus Airport -->
           <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <h4 style="font-size: 14px; color: #f5f5f7; margin: 0;">🛫 Aarhus Airport FOD Hunter (EKAH)</h4>
-              <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10px;">Reference Exploration</span>
+              <h4 style="font-size: 14px; color: #f5f5f7; margin: 0;">🛫 Environment 1: Aarhus Airport Runway (EKAH)</h4>
+              <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10px;">Initial Airfield Baseline</span>
             </div>
-            <div style="background: #000; border-radius: 6px; overflow: hidden; text-align: center;">
-              <video controls playsinline preload="metadata" style="width: 100%; max-height: 260px; display: block; margin: 0 auto;" poster="../../assets/simulation/demo_poster.jpg">
-                <source src="../../assets/simulation/simulation_demo.mp4" type="video/mp4">
-                <p style="color: var(--apple-text-secondary); font-size: 12px; padding: 12px;">Your browser does not support HTML5 video.</p>
-              </video>
+            <div style="background: #000; border-radius: 6px; overflow: hidden; text-align: center; margin-bottom: 10px; border: 1px solid var(--apple-border);">
+              <img src="../../assets/simulation/runway_ground_plane.png" alt="Aarhus Airport Runway Aerial Orthophoto Ground Plane (EKAH)" style="width: 100%; max-height: 220px; object-fit: cover; display: block; margin: 0 auto;">
             </div>
-            <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 8px 0 0 0; line-height: 1.5;">
-              100m high-speed asphalt corridor sweep, centerline tracking, and multi-obstacle avoidance simulation modeled after Aarhus Airport Runway 10R/28L.
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin: 0 0 10px 0;">
+              Aarhus Airport (Runway 10R/28L, measuring <strong>2,702 m long &times; 45 m wide</strong> with asphalt/concrete surface), centerline paint markings, and airfield edge lighting. This environment was initially developed because the team was informed by our industry partner that we would be granted operational clearance to deploy and test the physical Hunter on an actual airport runway in Semester 2.
             </p>
-            <div style="margin-top: 10px;">
-              <a href="../../assets/simulation/simulation_demo.mp4" download class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); text-decoration: none; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px;">
-                Download Video (MP4) &rarr;
-              </a>
+            <p style="font-size: 12px; color: #ff9f0a; line-height: 1.5; margin: 0; background: rgba(255, 159, 10, 0.08); padding: 8px 10px; border-radius: 4px; border-left: 3px solid #ff9f0a;">
+              <strong>Deployment Constraint:</strong> Industry partner was unable to get required permits for field trials.
+            </p>
+          </div>
+
+          <!-- Environment 2: NUS EA Field -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(41, 151, 255, 0.35); border-radius: 8px; padding: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <h4 style="font-size: 14px; color: #2997ff; margin: 0;">📍 Environment 2: NUS EA Field Courtyard</h4>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-size: 10px;">Phase 1 &amp; 2 Deployment Target</span>
             </div>
+            <div style="background: #000; border-radius: 6px; overflow: hidden; text-align: center; margin-bottom: 10px; border: 1px solid rgba(41, 151, 255, 0.25);">
+              <img src="../../assets/simulation/nus_ea_field_texture.png" alt="NUS EA Field Aerial Orthophoto Digital Twin" style="width: 100%; max-height: 220px; object-fit: cover; display: block; margin: 0 auto;">
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin: 0 0 10px 0;">
+              To adapt to deployment constraint, Environment 2 was created directly modeling the NUS EA Field courtyard. Using high-resolution aerial map, the terrain faithfully replicates paved concrete walkways, non-traversable grass borders, drainage grates, and concrete building columns.
+            </p>
+            <p style="font-size: 12px; color: #34c759; line-height: 1.5; margin: 0; background: rgba(52, 199, 89, 0.08); padding: 8px 10px; border-radius: 4px; border-left: 3px solid #34c759;">
+              <strong>Phase 2 Deployment Arena:</strong> The NUS EA Field serves as the physical benchmark testing venue for Semester 2, ensuring that static costmaps, RTK-GNSS coordinate frames, and obstacle avoidance are proven under identical real-world geometry.
+            </p>
           </div>
 
         </div>
@@ -280,476 +392,581 @@
       <div class="page-content">
 
         <!-- ========================================================================= -->
-        <!-- 1.0 SUBSYSTEM SCOPE & DIGITAL TWIN OBJECTIVES (A1)                         -->
+        <!-- 1.0 IMPORTING A MODEL: SOLIDWORKS TO URDF, ROS 2 & TF TRANSFORM TREE      -->
         <!-- ========================================================================= -->
         <div class="card-box" id="sec-1" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">1.0 Subsystem Scope (A1)</span>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Stage 1 • Robot Model</span>
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                1.0 Subsystem Scope &amp; Digital Twin Objectives
+                1.0 Importing a Model: AgileX Scout 2.0 &amp; CAD-to-URDF Pipeline
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">High-Fidelity SIL Verification</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Kinematics &bull; TF Tree</span>
           </div>
 
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            Deploying unverified autonomous navigation algorithms directly onto physical 65 kg robotic rovers in operational airfield environments presents severe safety hazards, including runway excursion, high-speed collision with airfield edge lighting, and tire-scrubbing motor burnout. The high-fidelity digital twin fulfills three critical engineering mandates (Krestenitis et al., 2026 [6]; Macenski et al., 2022 [7]):
+          <!-- 1.1 Why AgileX Scout 2.0? -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 14px; margin-bottom: 18px; align-items: center;">
+            <div>
+              <h3 style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin: 0 0 8px 0;">
+                1.1 Why AgileX Scout 2.0?
+              </h3>
+              <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
+                Developing an autonomous navigation stack requires a verified kinematic and dynamic platform before custom chassis machining and PCB assembly are complete. The commercial <strong>AgileX Scout 2.0</strong> 4WD mobile robot was selected as the digital twin proxy because it closely replicates the target physical Hunter across core parameters:
+              </p>
+              <ul style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; padding-left: 18px; margin-bottom: 10px;">
+                <li><strong>Kinematic Steering:</strong> 4WD skid-steer differential drive actuation sharing identical velocity mapping matrices.</li>
+                <li><strong>Payload Class &amp; Mass:</strong> $65.0\text{ kg}$ total vehicle mass with a low center of gravity (CoG) matching the heavy battery and vacuum payload.</li>
+                <li><strong>Electrical Drivetrain:</strong> Independent 48V brushless hub motors with high-torque reduction gearboxes ($r_{\text{wheel}} = 0.165\text{ m}$).</li>
+              </ul>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 12px; text-align: center;">
+              <img src="../../assets/simulation/agilex_scout_2.0.png" alt="AgileX Scout 2.0 4WD Mobile Robot" style="max-height: 190px; width: auto; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
+              <div style="font-size: 11.5px; color: #86868b; margin-top: 8px;">
+                AgileX Scout 2.0: Verified 4WD Skid-Steer Baseline Model
+              </div>
+            </div>
+          </div>
+
+          <!-- WHEELBASE / TRACKWIDTH RATIO REQUIREMENT -->
+          <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.25); border-left: 4px solid #2997ff; border-radius: 6px; padding: 14px; margin-bottom: 18px;">
+            <strong style="color: #2997ff; font-size: 13.5px;">Kinematic Design Principle: Wheelbase-to-Trackwidth Ratio ($L/B$) in Differential Drive</strong>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 8px 0; line-height: 1.55;">
+              In 4WD skid-steer and differential drive platforms, turning requires tires to slip laterally against the ground. The ratio of wheelbase $L$ (front-to-rear axle distance) to trackwidth $B$ (left-to-right wheel separation) is a critical governing parameter:
+            </p>
+            <div class="math-eq-box" style="margin: 8px 0;">
+              $$\text{Ratio} = \frac{L}{B} = \frac{0.498\text{ m}}{0.582\text{ m}} \approx \mathbf{0.855} < 1.0$$
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 8px 0 0 0; line-height: 1.55;">
+              If $\frac{L}{B} > 1.0$ (a long and narrow chassis), the resistive lateral scrubbing moment dominates over the tractive steering leverage of the tires, causing excessive wheel scrub, extreme motor current draw, violent shaking, and potential motor stall during turns. Maintaining a ratio of $\frac{L}{B} < 1.0$ (ideally between $0.7$ and $0.9$) provides sufficient trackwidth leverage to overcome tire-road scrubbing friction, ensuring responsive and agile yaw rotation without exceeding motor current ceilings.
+            </p>
+          </div>
+
+          <!-- 1.2 Steps Taken -->
+          <h3 style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin: 20px 0 10px 0;">
+            1.2 Steps Taken in Model Importation
+          </h3>
+          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 14px;">
+            The model ingestion pipeline transitioned from mechanical CAD design to live ROS 2 simulation across three distinct engineering steps:
           </p>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 14px;">
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px;">
-              <strong style="color: #2997ff; font-size: 13.5px;">1. Kinematic Boundary &amp; Turning Radius Safety</strong>
-              <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
-                Verifies that path planning algorithms strictly enforce minimum turning radius constraints ($R_{\min} \ge 1.50\text{ m}$) under realistic tire-ground friction ($\mu = 0.8$), preventing skid-steer wheel scrub and high-current motor stall.
+            <!-- Step 1: CAD to URDF -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #2997ff; border-radius: 8px; padding: 14px;">
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; font-size: 10px; margin-bottom: 6px;">Step 1</span>
+              <h4 style="font-size: 14px; color: #f5f5f7; margin: 0 0 6px 0;">SolidWorks CAD to URDF</h4>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
+                The Unified Robot Description Format (URDF) is an XML schema defining the kinematic and dynamic properties of the robot:
               </p>
+              <ul style="font-size: 11.5px; color: #86868b; line-height: 1.45; padding-left: 16px; margin: 0;">
+                <li><strong>Visual vs. Collision Meshes:</strong> High-polygon STLs are assigned to visual tags for photorealistic rendering, while collision meshes are simplified to lightweight bounding boxes and cylinders. Simplified collision shapes eliminate solver computational bottlenecks, ensuring a 1000 Hz physics stepping rate.</li>
+                <li><strong>Mass &amp; 3D Inertia Tensors:</strong> Masses, centers of mass, and 3D inertia matrices ($I_{xx}, I_{yy}, I_{zz}$) were calculated directly from CAD material assignments to ensure realistic momentum, braking distance, and roll/pitch dynamics.</li>
+              </ul>
             </div>
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px;">
-              <strong style="color: #f5f5f7; font-size: 13.5px;">2. Multi-Machine C2 Protocol Decoupling</strong>
-              <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
-                Enables hardware-independent verification of inter-agent JSON alert dispatch and Nav2 goal injection over physical subnets without physical drone flight risks or airfield access clearances.
+
+            <!-- Step 2: URDF to ROS 2 & Gazebo -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #5856d6; border-radius: 8px; padding: 14px;">
+              <span class="badge" style="background: rgba(88, 86, 214, 0.1); color: #5856d6; font-size: 10px; margin-bottom: 6px;">Step 2</span>
+              <h4 style="font-size: 14px; color: #f5f5f7; margin: 0 0 6px 0;">URDF to ROS 2 &amp; Gazebo</h4>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
+                The URDF is parameterized into modular XACRO files and extended with Gazebo simulation plugins:
               </p>
+              <ul style="font-size: 11.5px; color: #86868b; line-height: 1.45; padding-left: 16px; margin: 0;">
+                <li><strong>DiffDrive Plugin:</strong> Configured <code>gz-sim-diff-drive-system</code> to command wheel joints from <code>/cmd_vel</code> and calculate simulated wheel odometry.</li>
+                <li><strong>Parameterization:</strong> Modular macros allow adjusting wheel track width ($0.582\text{ m}$), wheel radius ($0.165\text{ m}$), and sensor mount offsets.</li>
+                <li><strong>ROS 2 Launch Integration:</strong> Automated launch via <code>robot_state_publisher</code> publishing joint states and spawning the entity using <code>ros_gz_sim</code>.</li>
+              </ul>
             </div>
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px;">
-              <strong style="color: #f5f5f7; font-size: 13.5px;">3. Zero-Software-Rewrite Sim2Real Parity</strong>
-              <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
-                Enforces identical ROS 2 message interfaces (<code>/cmd_vel</code>, <code>/scan</code>, <code>/camera/image_raw</code>, <code>/tf</code>), allowing navigation autonomy nodes to transfer directly from simulation to physical rover hardware with zero code alterations.
+
+            <!-- Step 3: TF Transform Tree -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #34c759; border-radius: 8px; padding: 14px;">
+              <span class="badge" style="background: rgba(52, 199, 89, 0.1); color: #34c759; font-size: 10px; margin-bottom: 6px;">Step 3</span>
+              <h4 style="font-size: 14px; color: #f5f5f7; margin: 0 0 6px 0;">TF Transform Tree Implementation</h4>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
+                The <code>tf2</code> coordinate hierarchy establishes real-time spatial transformations between all links:
               </p>
-            </div>
-          </div>
-
-          <!-- SIMULATION CLOSED-LOOP ARCHITECTURE PIPELINE -->
-          <div style="margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--apple-border);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h4 style="font-size: 15px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                🔄 Closed-Loop Robotics Simulation Architecture
-              </h4>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; font-size: 10.5px;">Continuous Evaluation Loop</span>
-            </div>
-            <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 14px;">
-              The digital twin operates as a tightly integrated closed-loop pipeline connecting model ingestion, physics simulation, synthetic sensor generation, ROS 2 control execution, and quantitative performance evaluation:
-            </p>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 8px;">
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #2997ff; border-radius: 8px; padding: 12px; text-align: center;">
-                <div style="font-size: 22px; margin-bottom: 4px;">🤖</div>
-                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">1. Robot Model</strong>
-                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
-                  Import or create 4WD mobile robot model (AgileX Scout 2.0 proxy with mass, inertia, TF frames).
-                </p>
-              </div>
-
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #5856d6; border-radius: 8px; padding: 12px; text-align: center;">
-                <div style="font-size: 22px; margin-bottom: 4px;">⚙️</div>
-                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">2. Physics Engine</strong>
-                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
-                  Simulate dynamics, ground friction contacts ($\mu = 0.8$), and airfield aerodrome terrain environment.
-                </p>
-              </div>
-
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #34c759; border-radius: 8px; padding: 12px; text-align: center;">
-                <div style="font-size: 22px; margin-bottom: 4px;">📡</div>
-                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">3. Sensors</strong>
-                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
-                  Simulate planar LiDAR (<code>/scan</code>), 9-DOF IMU, RTK-GPS positioning, and RGB camera feeds.
-                </p>
-              </div>
-
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #ff9500; border-radius: 6px; padding: 12px; text-align: center;">
-                <div style="font-size: 22px; margin-bottom: 4px;">🧠</div>
-                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">4. Controller / ROS</strong>
-                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
-                  Test autonomous control algorithms (Nav2 Behavior Trees, SmacPlanner, Regulated Pure Pursuit).
-                </p>
-              </div>
-
-              <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #ff2d55; border-radius: 6px; padding: 12px; text-align: center;">
-                <div style="font-size: 22px; margin-bottom: 4px;">📊</div>
-                <strong style="color: #f5f5f7; font-size: 13px; display: block; margin-bottom: 4px;">5. Evaluation</strong>
-                <p style="font-size: 11.5px; color: #86868b; margin: 0; line-height: 1.4;">
-                  Analyse tracking CTE, RTF, motor torque, and iterate parameters back to refine models and controller.
-                </p>
-              </div>
+              <ul style="font-size: 11.5px; color: #86868b; line-height: 1.45; padding-left: 16px; margin: 0;">
+                <li><strong>Tree Hierarchy:</strong> <code>map</code> &rarr; <code>odom</code> &rarr; <code>base_footprint</code> &rarr; <code>base_link</code> &rarr; sensor frames (<code>laser_link</code>, <code>imu_link</code>, <code>gps_link</code>, <code>camera_link</code>) and wheel joints.</li>
+                <li><strong>Spatial Synchronization:</strong> When the LiDAR detects an obstacle 2 meters ahead in <code>laser_link</code>, the TF tree instantly projects those range points into <code>base_link</code> and the global <code>map</code>, allowing Nav2 costmaps to inflate obstacles accurately.</li>
+              </ul>
             </div>
           </div>
         </div>
 
         <!-- ========================================================================= -->
-        <!-- 2.0 ARCHITECTURAL ITERATIONS & ENGINEERING PROGRESSION (A2, A3)           -->
+        <!-- 2.0 SIMULATING REAL WORLD CONSTRAINTS & PHYSICS DYNAMICS                  -->
         <!-- ========================================================================= -->
         <div class="card-box" id="sec-2" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">2.0 Engineering Progression (A2, A3)</span>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Stage 2 • Physics Engine</span>
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                2.0 Architectural Iterations &amp; Engineering Progression
+                2.0 Simulating Real-World Constraints &amp; Physics Dynamics
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">4 Phased Milestones &bull; Physics to C2</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">DART/ODE &bull; $\mu = 0.8$</span>
           </div>
 
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
-            The digital twin development followed a structured four-stage engineering progression, advancing from toolchain benchmarking to fully integrated multi-machine C2 execution:
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+            Simulation fidelity depends entirely on modeling contact forces, ground surface friction, and vehicle rolling resistance. The simulation uses <strong>Gazebo Harmonic (gz-sim 8.x)</strong> with the DART/ODE physics backend configured at a $1000\text{ Hz}$ update frequency ($\Delta t_{\text{step}} = 1.0\text{ ms}$).
           </p>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-bottom: 18px;">
-            <!-- Iteration 1 -->
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.1); font-size: 10.5px;">Iteration 1 &bull; Toolchain</span>
-                <span style="font-size: 11px; color: #86868b; font-family: monospace;">Physics Selection</span>
-              </div>
-              <h4 style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin: 0 0 6px 0;">Physics Engine &amp; Toolchain Selection (Gazebo Harmonic vs. Isaac Sim)</h4>
-              <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Evaluated simulation backends against host hardware boundaries. Selected <strong>Gazebo Harmonic (gz-sim 8.x)</strong> with DART/ODE physics natively running on Ubuntu 24.04 LTS (Noble Numbat) / WSL2, achieving RTF $0.98 \pm 0.02$ without requiring proprietary RTX GPU hardware locks.
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px;">
+            <!-- Rolling Resistance -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px;">
+              <strong style="color: #2997ff; font-size: 13.5px;">Rolling Resistance ($c_{rr} \approx 0.015 - 0.02$)</strong>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+                Pneumatic tires undergo continuous viscoelastic deformation at the tarmac contact patch, creating a resistive rolling force $F_{rr} = c_{rr} M g$. Modeling this parameter ensures the vehicle decelerates realistically upon releasing throttle rather than coasting frictionlessly.
               </p>
             </div>
 
-            <!-- Iteration 2 -->
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.1); font-size: 10.5px;">Iteration 2 &bull; Kinematics</span>
-                <span style="font-size: 11px; color: #86868b; font-family: monospace;">Proxy Modeling</span>
-              </div>
-              <h4 style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin: 0 0 6px 0;">Platform Kinematics &amp; URDF Proxy Modeling (AgileX Scout 2.0)</h4>
-              <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Configured the 4WD skid-steer kinematics in URDF/XACRO utilizing the Gazebo <code>DiffDrive</code> plugin. Incorporated realistic mass properties ($M = 65.0\text{ kg}$), track width ($B = 0.58\text{ m}$), wheel base ($L = 0.50\text{ m}$), and friction coefficients ($\mu_s = 0.85, \mu_k = 0.75$) matching physical chassis dynamics.
+            <!-- Contact Friction Coefficient -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #5856d6; border-radius: 6px; padding: 14px;">
+              <strong style="color: #f5f5f7; font-size: 13.5px;">Tarmac Coulomb Friction ($\mu = 0.8$)</strong>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+                Ground contact parameters were tuned to Coulomb static friction $\mu_s = 0.85$, dynamic friction $\mu_k = 0.75$, and restitution coefficient $e = 0.05$, matching empirical measurements of dry aerodrome asphalt and smooth concrete campus walkways.
               </p>
             </div>
 
-            <!-- Iteration 3 -->
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px;">Iteration 3 &bull; Digital Twin</span>
-                <span style="font-size: 11px; color: #86868b; font-family: monospace;">NUS EA Field</span>
-              </div>
-              <h4 style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin: 0 0 6px 0;">Digital Twin World Construction &amp; Boundary Scoping (NUS EA Field)</h4>
-              <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Constructed the 3D SDF environment for the <strong>NUS EA Field</strong> courtyard using aerial orthophotos, heightmap terrain meshes, and structural boundaries. Generated a <strong>0.05 m/pixel georeferenced static costmap</strong> to overcome airfield LiDAR SLAM feature degeneracy.
+            <!-- Scrubbing Moment Constraint -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #ff9500; border-radius: 6px; padding: 14px;">
+              <strong style="color: #f5f5f7; font-size: 13.5px;">Skid-Steer Scrubbing Moment ($M_{z,\text{scrub}}$)</strong>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+                When a 4WD rover turns in place, all four wheels are forced to drag sideways against the tarmac, generating a severe resistive yaw moment that must be overcome by the motors.
               </p>
             </div>
+          </div>
 
-            <!-- Iteration 4 -->
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px;">Iteration 4 &bull; Multi-Machine</span>
-                <span style="font-size: 11px; color: #86868b; font-family: monospace;">C2 &amp; Nav2 Ingest</span>
-              </div>
-              <h4 style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin: 0 0 6px 0;">Sensor Pipelines, Headless Execution &amp; Multi-Machine C2 Bridge</h4>
-              <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Streamed synthetic LiDAR (<code>/scan</code>) and camera feeds via <code>ros_gz_bridge</code>. Established CycloneDDS static unicast peering connecting an external Raspberry Pi 5 C2 transmitter to the WSL2 Gazebo UGV, demonstrating 100% verified target alert ingestion and autonomous waypoint dispatch.
-              </p>
+          <!-- MATHEMATICAL DERIVATION: SCRUBBING MOMENT & MOTOR CURRENT -->
+          <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px; margin-bottom: 14px;">
+            <h4 style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin: 0 0 8px 0;">
+              Mathematical Proof: Total Vehicle Yaw Scrubbing Moment ($M_{z,\text{scrub}}$)
+            </h4>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 8px;">
+              For vehicle mass $M = 65.0\text{ kg}$, tarmac friction $\mu = 0.80$, gravity $g = 9.81\text{ m/s}^2$, and wheelbase $L = 0.50\text{ m}$:
+            </p>
+            <div class="math-eq-hero">
+              $$M_{z,\text{scrub}} = \frac{1}{2}\mu M g L = \frac{1}{2}(0.80)(65.0\text{ kg})(9.81\text{ m/s}^2)(0.50\text{ m}) = \mathbf{127.5\text{ N}\cdot\text{m}}$$
             </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin: 8px 0 0 0;">
+              Overcoming this resistive moment requires a static breakaway torque of $\tau_{\text{skid}} \approx 19.73\text{ N}\cdot\text{m}$ per motor shaft. For hub motor torque constant $K_t \approx 1.057\text{ N}\cdot\text{m/A}$, executing an in-place turn from a dead stop would draw $74.64\text{ A}$ across the 48V bus, exceeding the $70.0\text{ A}$ BMS safety cutoff. This physics validation demonstrates that zero-radius pivot turns must be prevented through continuous smooth-curvature trajectory planning, eliminating tire scrubbing and protecting motor windings from thermal overload.
+            </p>
           </div>
         </div>
 
         <!-- ========================================================================= -->
-        <!-- 3.0 COMPARATIVE EVALUATION OF SIMULATION ENGINES (A2)                     -->
+        <!-- 3.0 SENSORS: PURPOSE, PERCEPTION & SIMULATION                             -->
         <!-- ========================================================================= -->
         <div class="card-box" id="sec-3" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">3.0 Engine Evaluation (A2)</span>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Stage 3 • Sensors</span>
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                3.0 Comparative Evaluation of Simulation Engines
+                3.0 Sensors: Purpose, Perception &amp; Synthetic Simulation
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Physics Trade Study &bull; Host Hardware Boundaries</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">LiDAR &bull; IMU &bull; RTK-GPS</span>
           </div>
 
-          <!-- 3.1 Physics Simulator Trade-Off Matrix -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            3.1 Physics Simulator Trade-Off Matrix (Gazebo Sim Harmonic, Isaac Sim, Gazebo Classic, Webots)
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            A rigorous engineering trade study evaluated four leading robotics simulation platforms against Capstone development constraints:
-          </p>
-
-          <div style="overflow-x: auto; margin-bottom: 18px;">
-            <table class="apple-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
-              <thead>
-                <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
-                  <th style="padding: 10px 12px; text-align: left;">Simulation Engine</th>
-                  <th style="padding: 10px 12px; text-align: left;">ROS 2 Jazzy Compatibility</th>
-                  <th style="padding: 10px 12px; text-align: left;">WSL2 / Ubuntu Stability</th>
-                  <th style="padding: 10px 12px; text-align: left;">Remarks</th>
-                  <th style="padding: 10px 12px; text-align: left;">Selection Verdict</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="background: rgba(41, 151, 255, 0.05); border-bottom: 1px solid rgba(41, 151, 255, 0.2);">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #2997ff;">Gazebo Sim Harmonic</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">Native Support</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">100% Stable on Ubuntu 24.04 / WSL2</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">Lightweight; CPU / Vulkan fallback</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-weight: 700;">SELECTED</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">NVIDIA Isaac Sim</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Partial</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Complex Vulkan driver passthrough in WSL2</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Heavy CPU and GPU load</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(225, 29, 72, 0.15); color: var(--accent-rose); font-weight: 700;">REJECTED</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Gazebo Classic</td>
-                  <td style="padding: 10px 12px; color: #86868b;">EOL (ROS1)</td>
-                  <td style="padding: 10px 12px; color: #86868b;">-</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Does not meet requirement</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(225, 29, 72, 0.15); color: var(--accent-rose); font-weight: 700;">REJECTED</span></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Webots</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Supported</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Not fully stable with Ubuntu 24.04</td>
-                  <td style="padding: 10px 12px; color: #86868b;">Uses proprietary model format (PROTO)</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(225, 29, 72, 0.15); color: var(--accent-rose); font-weight: 700;">REJECTED</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- 3.2 Developer Workstation & GPU Constraints Rationale -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            3.2 Developer Workstation &amp; GPU Constraints Rationale (Ubuntu 24.04 / WSL2)
-          </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            The capstone team develops across heterogeneous developer hardware (Windows laptops with WSL2, MacBook Airs, and standalone Linux workstations). Selecting NVIDIA Isaac Sim would have created an insurmountable bottleneck: developers without dedicated high-TDP NVIDIA RTX mobile GPUs would be completely unable to run or debug simulation tests.
-          </p>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 18px;">
-            In contrast, <strong>Gazebo Harmonic 8.x</strong> is fully cross-platform. It compiles natively under <strong>Ubuntu 24.04 LTS (Noble Numbat)</strong> and runs deterministically inside Windows Subsystem for Linux (WSL2) via virtualized DirectX/OpenGL acceleration. Furthermore, it supports headless batch execution (<code>gz sim -s -r</code>) on CPU, enabling headless continuous integration (CI) test sweeps for Nav2 trajectory validation.
+            The digital twin generates synthetic sensor streams matching physical sensor rates, message schemas, and noise profiles, routed seamlessly into ROS 2 Jazzy through <code>ros_gz_bridge</code>:
           </p>
 
-          <!-- 3.3 PROBLEMS FACED VS SOLUTIONS -->
-          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 18px; margin-top: 18px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h3 style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                🛠️ 3.3 Simulation Challenges Faced &amp; Engineering Solutions
-              </h3>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; font-size: 10.5px;">Airfield Runway Realities</span>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px;">
+            <!-- LiDAR -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span style="font-size: 20px;">📡</span>
+                <strong style="color: #2997ff; font-size: 14px;">2D / 3D LiDAR (<code>/scan</code>)</strong>
+              </div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
+                <strong>Purpose:</strong> Dynamic obstacle detection (foreign object debris, birds, service carts, pedestrians) and local costmap inflation for proactive collision avoidance.
+              </p>
+              <p style="font-size: 11.5px; color: #86868b; line-height: 1.45; margin: 0;">
+                <strong>Simulation:</strong> Modeled as a Hokuyo UST-20LX equivalent with $360^\circ$ planar coverage, $1080$ ray beams ($0.33^\circ$ angular resolution), $25.0\text{ m}$ range, and zero-mean Gaussian noise ($\sigma = 0.01\text{ m}$) at $20\text{ Hz}$.
+              </p>
             </div>
-            <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 16px;">
-              Simulating an autonomous UGV on a sprawling airfield runway presented unique engineering hurdles that do not exist in standard indoor robotics. Four primary problems were tackled and solved:
+
+            <!-- IMU -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span style="font-size: 20px;">🧭</span>
+                <strong style="color: #f5f5f7; font-size: 14px;">Inertial Measurement Unit (<code>/imu/data</code>)</strong>
+              </div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
+                <strong>Purpose:</strong> Measures 9-DOF orientation, high-frequency ($100-200\text{ Hz}$) angular yaw rates, and linear accelerations, bridging latency gaps between lower-frequency GPS updates.
+              </p>
+              <p style="font-size: 11.5px; color: #86868b; line-height: 1.45; margin: 0;">
+                <strong>Simulation:</strong> Gazebo IMU plugin with calibrated angular random walk, gyro bias drift, and accelerometer white noise modeling chassis vibration over pavement joints.
+              </p>
+            </div>
+
+            <!-- GPS / RTK -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span style="font-size: 20px;">📍</span>
+                <strong style="color: #34c759; font-size: 14px;">RTK-GNSS Receiver (<code>/gps/fix</code>)</strong>
+              </div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
+                <strong>Purpose:</strong> Provides centimeter-level absolute global coordinates ($x, y, z$, lat/lon) in WGS84, delivering drift-free localization across expansive runways where LiDAR SLAM fails.
+              </p>
+              <p style="font-size: 11.5px; color: #86868b; line-height: 1.45; margin: 0;">
+                <strong>Simulation:</strong> Gazebo NavSat plugin configured with georeferenced origin matching NUS EA Field coordinates ($1.3000^\circ\text{N}, 103.7712^\circ\text{E}$).
+              </p>
+            </div>
+
+            <!-- Optical Camera -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <span style="font-size: 20px;">📷</span>
+                <strong style="color: #ff9500; font-size: 14px;">Forward RGB Camera (<code>/camera/image_raw</code>)</strong>
+              </div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
+                <strong>Purpose:</strong> Operator visual stream and optical confirmation of runway debris feeding edge AI (YOLO) detection models.
+              </p>
+              <p style="font-size: 11.5px; color: #86868b; line-height: 1.45; margin: 0;">
+                <strong>Simulation:</strong> GPU camera shader delivering $1280 \times 720$ resolution at $30\text{ FPS}$ with a $90^\circ$ horizontal field of view (HFOV).
+              </p>
+            </div>
+          </div>
+
+          <!-- SENSOR FUSION: DUAL-EKF ARCHITECTURE -->
+          <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.25); border-radius: 8px; padding: 14px;">
+            <strong style="color: #2997ff; font-size: 13.5px;">Sensor Fusion Pipeline: Dual-EKF Architecture (robot_localization)</strong>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.55;">
+              Localization fuses disparate sensor rates via a two-stage Extended Kalman Filter:
+              <br>&bull; <strong>Local EKF (<code>odom</code> frame):</strong> Fuses high-rate wheel odometry ($50\text{ Hz}$) with IMU angular velocity ($100\text{ Hz}$) to produce a smooth, continuous, drift-minimizing pose estimate for local trajectory controllers.
+              <br>&bull; <strong>Global EKF (<code>map</code> frame):</strong> Fuses local odometry with absolute RTK-GNSS position fixes ($10\text{ Hz}$), eliminating cumulative wheel-slip drift and anchoring the robot within world coordinates.
             </p>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
-              <!-- Problem 1: Open Runway -->
-              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                  <strong style="color: #ff453a; font-size: 13.5px;">Problem: Open Runway</strong>
-                  <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">Environment</span>
-                </div>
-                <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
-                  <li>Flat and expansive open space ($&gt; 60\text{ m} \times 100\text{ m}$).</li>
-                  <li>No vertical reference features or walls within laser range.</li>
-                  <li>Robot cannot determine where it is located.</li>
-                </ul>
-                <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
-                  <strong style="color: #34c759; font-size: 12.5px;">Solution: Runway Aerial Mapping</strong>
-                  <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
-                    <li>Import calibrated high-resolution aerial view of the airfield.</li>
-                    <li>Mark out danger areas, runway boundaries, and soft verges.</li>
-                    <li>Accurately scale georeferencing ($0.05\text{ m/pixel}$) into simulation.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Problem 2: Finding a Model -->
-              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                  <strong style="color: #ff453a; font-size: 13.5px;">Problem: Finding a Model</strong>
-                  <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">Kinematics</span>
-                </div>
-                <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
-                  <li>Simulation model must closely replicate the real product.</li>
-                  <li>Must include complete Transform frame (TF tree) hierarchy.</li>
-                  <li>Must use the exact same 4WD skid-steer steering method.</li>
-                </ul>
-                <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
-                  <strong style="color: #34c759; font-size: 12.5px;">Solution: AgileX Scout V2 Proxy</strong>
-                  <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
-                    <li>Selected AgileX Scout 2.0 as closest verified commercial baseline.</li>
-                    <li>Matches $65.0\text{ kg}$ payload, $0.582\text{ m}$ track width, and $0.498\text{ m}$ wheelbase.</li>
-                    <li>Accurate joint dynamics and DiffDrive Gazebo controller.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Problem 3: Mapping -->
-              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                  <strong style="color: #ff453a; font-size: 13.5px;">Problem: Mapping Scale</strong>
-                  <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">SLAM Limits</span>
-                </div>
-                <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
-                  <li>How to generate a SLAM map without vertical LiDAR surfaces?</li>
-                  <li>Runway is too large ($3\text{--}4\text{ km}$); dynamic mapping crashes simulation memory.</li>
-                </ul>
-                <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
-                  <strong style="color: #34c759; font-size: 12.5px;">Solution: Orthophoto Costmap</strong>
-                  <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
-                    <li>Eliminate runtime SLAM building via pre-computed static costmaps.</li>
-                    <li>Annotate traversable runway lanes (cost 0) vs. non-traversable grass (cost 254).</li>
-                    <li>Downsample heuristic resolution to fit edge computer RAM budgets.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Problem 4: Localisation -->
-              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                  <strong style="color: #ff453a; font-size: 13.5px;">Problem: Localisation Drift</strong>
-                  <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">State Estimation</span>
-                </div>
-                <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
-                  <li>Wheel odometry alone suffers cumulative wheel slip drift.</li>
-                  <li>LiDAR scan matching fails due to open runway geometry.</li>
-                </ul>
-                <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
-                  <strong style="color: #34c759; font-size: 12.5px;">Solution: Dual-EKF Sensor Fusion</strong>
-                  <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
-                    <li>Sensor fusion: Positioning module (RTK-GNSS) + Inertial Measurement Unit (IMU).</li>
-                    <li>Dual Extended Kalman Filter estimates robot position, velocity, and orientation.</li>
-                    <li>Provides drift-free global pose estimate and rock-solid localization.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
         <!-- ========================================================================= -->
-        <!-- 4.0 ROBOT MODELING, KINEMATICS & SENSOR SIMULATION (A3)                   -->
+        <!-- 4.0 CONTROLLER: NAVIGATION PLANNING & MOTION EXECUTION                    -->
         <!-- ========================================================================= -->
         <div class="card-box" id="sec-4" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">4.0 Robot Modeling (A3)</span>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Stage 4 • Controller &amp; ROS</span>
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                4.0 Robot Modeling, Kinematics &amp; Sensor Simulation
+                4.0 Controller: Navigation Planning &amp; Motion Execution
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">DiffDrive Plugin &bull; ros_gz_bridge Architecture</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Nav2 Autonomy &bull; Pure Pursuit</span>
           </div>
 
-          <!-- 4.1 4WD Skid-Steer Kinematics via DiffDrive Plugin -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            4.1 4WD Skid-Steer Kinematics via DiffDrive Plugin
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
-            The 4WD AgileX Scout 2.0 proxy chassis is abstracted in Gazebo Harmonic using the differential-drive kinematic plugin (<code>gz-sim-diff-drive-system</code>). Left wheels (front and rear) and right wheels (front and rear) are grouped into paired joint sets. Given desired linear velocity $v$ and angular yaw rate $\omega$, the wheel velocities $v_L, v_R$ are mapped via the kinematic baseline $B = 0.58\text{ m}$:
-          </p>
-          <div class="math-eq-hero">
-            $$\begin{bmatrix} v_L \\ v_R \end{bmatrix} = \begin{bmatrix} 1 & -B/2 \\ 1 & B/2 \end{bmatrix} \begin{bmatrix} v \\ \omega \end{bmatrix}, \quad \omega_L = \frac{v_L}{r_{\text{wheel}}}, \quad \omega_R = \frac{v_R}{r_{\text{wheel}}}$$
-          </div>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
-            On high-friction asphalt ($\mu \approx 0.80$), zero-radius in-place rotation forces all four tires to shear laterally across the pavement surface, generating a substantial <strong>Total Vehicle Yaw Scrubbing Moment ($M_{z,\text{scrub}}$)</strong> proportional to vehicle normal load and wheelbase $L = 0.50\text{ m}$ (Gillespie, 1992 [15]; Siegwart et al., 2011 [14]):
-          </p>
-          <div class="math-eq-hero">
-            $$M_{z,\text{scrub}} = \frac{1}{2}\mu M g L = \frac{1}{2}(0.80)(65.0\text{ kg})(9.81\text{ m/s}^2)(0.50\text{ m}) = \mathbf{127.5\text{ N}\cdot\text{m}}$$
-          </div>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            Overcoming this resistive yaw moment through differential longitudinal wheel forces translates to an unconstrained static breakaway torque of $\tau_{\text{skid}} \approx 19.73\text{ N}\cdot\text{m}$ per motor shaft (as derived in Section 3.1 of <a href="navigation.html#sec-physics-scrub" style="color: #2997ff; text-decoration: underline;">navigation.html</a> for effective tire radius $r = 0.1315\text{ m}$ and gearbox efficiency $\eta_{\text{gear}} = 0.85$). Given the brushless hub motor torque constant $K_t \approx 1.057\text{ N}\cdot\text{m/A}$ (RobotPlatform.com, 2024 [17]), an unconstrained pivot from a dead stop would demand $74.64\text{ A}$ across the $48.0\text{ V}$ bus, exceeding the $70.0\text{ A}$ BMS ceiling. This physics alignment explains why Dubins curvature constraints ($R_{\min} \ge 1.50\text{ m}$) are strictly enforced across the Nav2 planner baseline, eliminating scrub stalls and protecting motor windings from thermal overload.
+            The simulation environment provides the physics world, vehicle chassis proxy, and synthetic sensor feeds; however, the autonomous path planning, trajectory optimization, and velocity control algorithms reside within the <strong>Navigation Subsystem</strong>:
           </p>
 
-          <!-- 4.2 Synthetic Sensor Pipeline -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            4.2 Synthetic Sensor Pipeline: 2D Laser Scanner (/scan) &amp; Camera (/camera/image_raw)
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Synthetic perception in Gazebo Harmonic is generated through physics-based raytracing and GPU camera shaders attached to the robot's URDF transform tree:
-          </p>
-          <ul style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; padding-left: 20px; margin-bottom: 14px;">
-            <li><strong>2D LiDAR Scanner (<code>/scan</code>):</strong> Modeled as a Hokuyo UST-20LX equivalent with $360^\circ$ planar coverage, $1080$ ray beams ($0.33^\circ$ angular resolution), $25.0\text{ m}$ range, and zero-mean Gaussian noise ($\sigma = 0.01\text{ m}$) at $20\text{ Hz}$. Feeds Nav2 local costmap dynamic obstacle layers.</li>
-            <li><strong>Forward Optical Camera (<code>/camera/image_raw</code>):</strong> RGB optical feed at $1280 \times 720$ resolution ($30\text{ Hz}$), $90^\circ$ horizontal field of view (HFOV), providing visual context for forward trajectory clearance and simulated edge AI verification.</li>
-          </ul>
+          <!-- PROMINENT NAVIGATION PAGE HUB CARD -->
+          <div style="background: linear-gradient(135deg, rgba(41, 151, 255, 0.08) 0%, rgba(0, 0, 0, 0.4) 100%); border: 1px solid rgba(41, 151, 255, 0.35); border-radius: 8px; padding: 18px; margin-bottom: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+              <div>
+                <span class="badge badge-blue" style="font-size: 11px; font-weight: 700;">Subsystem Interconnect</span>
+                <h3 style="font-size: 17px; font-weight: 700; color: #f5f5f7; margin: 4px 0 0 0;">
+                  🧭 Autonomous Navigation &amp; Trajectory Tracking Architecture
+                </h3>
+              </div>
+              <a href="navigation.html" class="btn btn-deep-dive" style="font-size: 13px; padding: 8px 18px; font-weight: 600; background: #2997ff; color: #fff; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                <span>View Full Navigation Architecture &rarr;</span>
+              </a>
+            </div>
 
-          <!-- 4.3 ros_gz_bridge Architecture -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            4.3 ros_gz_bridge Architecture &amp; Parameter Mapping
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
-            The <code>ros_gz_bridge</code> node translates Gazebo Sim native transport messages into standardized ROS 2 Jazzy message types, establishing deterministic bidirectional communication:
-          </p>
+            <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 14px;">
+              The digital twin validates three primary navigation algorithms running under the ROS 2 Jazzy Nav2 stack:
+            </p>
 
-          <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-family: 'SF Mono', Consolas, monospace; font-size: 11.5px; color: #86868b; line-height: 1.6; overflow-x: auto;">
-            <div><span style="color: #2997ff;">/cmd_vel</span> [geometry_msgs/msg/Twist] <span style="color: #f5f5f7;">──► (ROS 2 ➔ GZ) ──►</span> /cmd_vel [gz.msgs.Twist]</div>
-            <div><span style="color: #2997ff;">/odom</span> [nav_msgs/msg/Odometry] <span style="color: #f5f5f7;">◄── (GZ ➔ ROS 2) ◄──</span> /model/scout/odometry [gz.msgs.Odometry]</div>
-            <div><span style="color: #2997ff;">/tf</span> [tf2_msgs/msg/TFMessage] <span style="color: #f5f5f7;">◄── (GZ ➔ ROS 2) ◄──</span> /model/scout/pose [gz.msgs.Pose_V]</div>
-            <div><span style="color: #2997ff;">/scan</span> [sensor_msgs/msg/LaserScan] <span style="color: #f5f5f7;">◄── (GZ ➔ ROS 2) ◄──</span> /scan [gz.msgs.LaserScan]</div>
-            <div><span style="color: #2997ff;">/camera/image_raw</span> [sensor_msgs/msg/Image] <span style="color: #f5f5f7;">◄── (GZ ➔ ROS 2) ◄──</span> /camera/image [gz.msgs.Image]</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px;">
+              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 6px; padding: 12px;">
+                <strong style="color: #2997ff; font-size: 13px;">Global Planner (SmacPlanner)</strong>
+                <p style="font-size: 12px; color: #86868b; margin: 4px 0 0 0; line-height: 1.45;">
+                  Enforces continuous-curvature trajectory primitives, ensuring planned paths avoid high-current zero-radius pivot scrub on high-friction tarmac.
+                </p>
+              </div>
+
+              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 6px; padding: 12px;">
+                <strong style="color: #34c759; font-size: 13px;">Local Controller (Regulated Pure Pursuit)</strong>
+                <p style="font-size: 12px; color: #86868b; margin: 4px 0 0 0; line-height: 1.45;">
+                  Dynamically scales linear velocity based on path curvature ($\kappa$) and proximity to obstacles, preventing high-speed cornering roll and wheel slip.
+                </p>
+              </div>
+
+              <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 6px; padding: 12px;">
+                <strong style="color: #ff9500; font-size: 13px;">Collision Monitor (Safety Interlock)</strong>
+                <p style="font-size: 12px; color: #86868b; margin: 4px 0 0 0; line-height: 1.45;">
+                  Enforces dual-zone protection polygons ($3.5\text{ m}$ proactive slowdown, $0.8\text{ m}$ emergency stop), arresting motion within $2.715\text{ m}$ from $10\text{ km/h}$.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- ========================================================================= -->
-        <!-- 5.0 ENVIRONMENT MODELING & COSTMAP EXTRACTION (A3, A5)                    -->
+        <!-- 5.0 EVALUATION: QUANTITATIVE BENCHMARKING & SEMESTER 2 SIM-TO-REAL GAP    -->
         <!-- ========================================================================= -->
         <div class="card-box" id="sec-5" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">5.0 Environment Modeling (A3, A5)</span>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Stage 5 • Evaluation</span>
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                5.0 Environment Modeling &amp; Costmap Extraction
+                5.0 Evaluation: Quantitative Benchmarking &amp; Sim-to-Real Challenges
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">NUS EA Field &bull; Airfield SLAM Degeneracy</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Sim2Real Parity &bull; Semester 2 Roadmap</span>
           </div>
 
-          <!-- 5.1 NUS EA Field World Construction -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            5.1 NUS EA Field World Construction &amp; Asphalt Friction Modeling ($\mu = 0.8$)
+          <!-- REDRAWN SIMULATION -> REAL WORLD PROGRESSION ROADMAP (HTML/CSS) -->
+          <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--apple-border); border-radius: 12px; padding: 22px 18px; margin-bottom: 16px;">
+            <div style="text-align: center; margin-bottom: 18px;">
+              <span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-size: 11px; font-weight: 700;">Phased Deployment Strategy</span>
+              <h3 style="font-size: 22px; font-weight: 700; color: #f5f5f7; margin: 6px 0 2px 0;">
+                Simulation &rarr; Real World
+              </h3>
+              <p style="font-size: 12px; color: #86868b; margin: 0;">
+                Progression from Semester 1 Software-in-the-Loop Foundation to Semester 2 Physical Hardware Deployment
+              </p>
+            </div>
+
+            <!-- DUAL PHASE TIMELINE COLUMNS -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 16px;">
+              
+              <!-- Semester 1 Card -->
+              <div style="background: rgba(41, 151, 255, 0.03); border: 1px solid rgba(41, 151, 255, 0.25); border-radius: 10px; padding: 16px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(41, 151, 255, 0.2);">
+                  <span class="badge badge-blue" style="font-size: 11.5px; font-weight: 700; padding: 4px 10px;">Semester 1: Foundation</span>
+                  <span style="font-size: 11px; color: #86868b; font-family: monospace;">Virtual Sandbox</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px; padding: 12px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #2997ff; margin-bottom: 6px;">Train in simulation</div>
+                    <ul style="font-size: 11.5px; color: var(--apple-text-secondary); line-height: 1.5; padding-left: 16px; margin: 0;">
+                      <li>Train and test safely</li>
+                      <li>Faster iterations</li>
+                      <li>Randomize different environments</li>
+                    </ul>
+                  </div>
+
+                  <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px; padding: 12px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #2997ff; margin-bottom: 6px;">Bridge the gap</div>
+                    <ul style="font-size: 11.5px; color: var(--apple-text-secondary); line-height: 1.5; padding-left: 16px; margin: 0;">
+                      <li>Realistic physics and constraints</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Semester 2 Card -->
+              <div style="background: rgba(52, 199, 89, 0.03); border: 1px solid rgba(52, 199, 89, 0.25); border-radius: 10px; padding: 16px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(52, 199, 89, 0.2);">
+                  <span class="badge badge-emerald" style="font-size: 11.5px; font-weight: 700; padding: 4px 10px;">Semester 2: Deployment</span>
+                  <span style="font-size: 11px; color: #86868b; font-family: monospace;">Physical Trials</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px; padding: 12px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #34c759; margin-bottom: 6px;">Validate on Real Robot</div>
+                    <ul style="font-size: 11.5px; color: var(--apple-text-secondary); line-height: 1.5; padding-left: 16px; margin: 0;">
+                      <li>Test in real environments</li>
+                      <li>Fine-tune parameters</li>
+                      <li>Handle unmodeled effects</li>
+                      <li>Ensure safety</li>
+                    </ul>
+                  </div>
+
+                  <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px; padding: 12px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #34c759; margin-bottom: 6px;">Deploy and iterate</div>
+                    <ul style="font-size: 11.5px; color: var(--apple-text-secondary); line-height: 1.5; padding-left: 16px; margin: 0;">
+                      <li>Monitor performance</li>
+                      <li>Continuous learning</li>
+                      <li>Update models</li>
+                      <li>Scale to new scenarios</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- TWO PROMINENT CALLOUT BANNERS -->
+            <div style="background: rgba(225, 29, 72, 0.08); border: 1px solid rgba(225, 29, 72, 0.35); border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; text-align: center;">
+              <span style="font-size: 14px; font-weight: 700; color: var(--accent-rose);">
+                ⚠️ "If it works in simulation, does not mean it will work in real life!"
+              </span>
+            </div>
+            <div style="background: rgba(52, 199, 89, 0.08); border: 1px solid rgba(52, 199, 89, 0.35); border-radius: 8px; padding: 12px 16px; text-align: center;">
+              <span style="font-size: 13.5px; font-weight: 600; color: #34c759;">
+                💡 "Simulation reduces cost, risk and time-to-deploy, but real-world testing is essential for a robust and reliable robotic system!"
+              </span>
+            </div>
+          </div>
+
+          <!-- SEMESTER 2 PROBLEMS WE MIGHT FACE (SIMULATION TO REAL WORLD) -->
+          <h3 style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin: 20px 0 10px 0;">
+            5.1 Real-World Challenges Anticipated in Semester 2 Physical Deployment
           </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            The <strong>NUS EA Field</strong> digital twin was constructed using scaled ground-plane collision meshes and high-resolution orthophoto textures. Ground-contact friction parameters in the SDF physics world were set to Coulomb friction coefficients matching dry tarmac and smooth concrete walkways ($\mu_s = 0.85, \mu_k = 0.75$, restitution $e = 0.05$), ensuring that simulated wheel dynamics match empirical ground tests.
+          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 14px;">
+            While the Phase 1 digital twin demonstrated $RTF = 0.98 \pm 0.02$ and verified trajectory stability in software, transitioning to physical hardware in Semester 2 introduces critical physical discrepancies (the "Sim-to-Real Gap"):
           </p>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px;">
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 12px; text-align: center;">
-              <h5 style="font-size: 12.5px; color: #f5f5f7; margin-bottom: 8px;">🗺️ Aerial Satellite Texture Model</h5>
-              <img src="../../assets/simulation/nus_ea_field_texture.png" alt="NUS EA Field Aerial Satellite Model" style="max-height: 180px; max-width: 100%; object-fit: contain; border-radius: 4px; display: block; margin: 0 auto;">
-              <p style="font-size: 11.5px; color: #86868b; margin-top: 6px;">High-resolution Google Earth orthophoto texture applied to the terrain ground plane.</p>
+            <!-- Challenge 1: Actuator Dynamics -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #ff453a; border-radius: 6px; padding: 14px;">
+              <strong style="color: #ff453a; font-size: 13px;">1. Actuator Dynamics &amp; CAN Bus Latency</strong>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+                In Gazebo, wheel velocities update instantaneously. The physical ZLAC8015D BLDC hub motors communicate over a CANopen bus via STM32 firmware with 10–20 ms loop latency, non-linear torque-speed drop-off curves, and current limitations that require feedforward tuning.
+              </p>
             </div>
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 12px; text-align: center;">
-              <h5 style="font-size: 12.5px; color: #f5f5f7; margin-bottom: 8px;">📐 Field Dimensions &amp; Zone Annotations</h5>
-              <img src="../../assets/simulation/nus_ea_field_dimensions.png" alt="NUS EA Field Dimension Model" style="max-height: 180px; max-width: 100%; object-fit: contain; border-radius: 4px; display: block; margin: 0 auto;">
-              <p style="font-size: 11.5px; color: #86868b; margin-top: 6px;">Annotated courtyard dimensions and geofenced non-traversable boundaries.</p>
+
+            <!-- Challenge 2: Wheel Slip & Non-Uniform Friction -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #ff453a; border-radius: 6px; padding: 14px;">
+              <strong style="color: #ff453a; font-size: 13px;">2. Unmodeled Wheel Slip &amp; Variable Friction</strong>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+                Gazebo's uniform Coulomb friction ($\mu = 0.8$) does not capture real-world pavement variations such as wet tarmac patches, aircraft rubber touchdown streaks, loose gravel, or tire tread wear, inducing unpredictable lateral drift during high-speed braking sweeps.
+              </p>
             </div>
-          </div>
 
-          <!-- 5.2 Orthophoto-Derived Static Map Generation -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            5.2 Orthophoto-Derived Static Map Generation (0.05 m/px) via Nav2 Map Editor
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            To guarantee absolute spatial geofencing without relying on runtime SLAM mapping, a dedicated static costmap pipeline was implemented:
-          </p>
-          <ol style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; padding-left: 20px; margin-bottom: 14px;">
-            <li><strong>High-Resolution Orthophoto Scaling:</strong> High-altitude aerial orthophotos were georeferenced and scaled to an exact spatial resolution of <strong>0.05 m/pixel</strong> ($5.0\text{ cm/grid cell}$).</li>
-            <li><strong>Nav2 Map Mask Annotation:</strong> Using the Nav2 Map Editor, non-traversable grass verges, concrete curbs, drainage grates, and building walls were annotated with <strong>cost 254 (Lethal Obstacle)</strong>.</li>
-            <li><strong>Traversable Pathway Encoding:</strong> Concrete paths and clear asphalt corridors were annotated with <strong>cost 0 (Free Space)</strong>, providing an infallible static safety envelope that prevents the global planner from ever issuing trajectories into unpaved terrain.</li>
-          </ol>
+            <!-- Challenge 3: Terrain Vibration -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #ff453a; border-radius: 6px; padding: 14px;">
+              <strong style="color: #ff453a; font-size: 13px;">3. Suspension Dynamics &amp; Sensor Noise</strong>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+                The physical custom aluminum trailing-arm suspension transmits terrain vibrations into the IMU accelerometer and induces high-frequency pitch jitter on the 2D LiDAR plane, requiring Butterworth low-pass filtering.
+              </p>
+            </div>
 
-          <!-- 5.3 Airfield SLAM Degeneracy Rationale -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            5.3 Airfield SLAM Degeneracy Rationale (Lack of Vertical Scan Constraints)
-          </h3>
-          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px; margin-bottom: 14px;">
-            <strong style="color: #2997ff; font-size: 13.5px;">Theoretical Defense: Why Standard 2D LiDAR SLAM Fails on Airfield Runways</strong>
-            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.55;">
-              Standard 2D/3D LiDAR scan-matching algorithms (e.g., <code>SLAM Toolbox</code>, <code>Cartographer</code>; Macenski &amp; Jambrecic, 2021 [21]; Shan et al., 2025 [12]) depend fundamentally on abundant, static vertical geometric features (walls, columns, tree trunks) to constrain scan-to-scan matching covariances. On a $60\text{ m}$ wide, multi-kilometer flat airfield runway or expansive courtyard, there are <strong>zero vertical structures within 2D laser scan range ($&le; 25\text{ m}$)</strong>.
-              <br><br>
-              Along the longitudinal axis $x$, the Jacobian of scan measurements $\frac{\partial z}{\partial x} \approx 0$, causing the scan covariance matrix $\Sigma_{xx} \to \infty$. This induces severe scan slip, corridor compression, and rapid divergence. Consequently, utilizing an <strong>orthophoto-derived static costmap paired with RTK-GNSS positioning</strong> is mathematically mandatory for airport runway operations.
-            </p>
+            <!-- Challenge 4: RTK Occlusion -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #ff453a; border-radius: 6px; padding: 14px;">
+              <strong style="color: #ff453a; font-size: 13px;">4. RTK Multipath &amp; Satellite Occlusion</strong>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+                Near airport hangars and campus building facades, satellite signal multipath can cause RTK fix dropouts. The Dual-EKF must implement covariance threshold gating to fall back smoothly onto wheel odometry and IMU integration.
+              </p>
+            </div>
+
+            <!-- Challenge 5: Over-the-air RF Link -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-top: 3px solid #ff453a; border-radius: 6px; padding: 14px;">
+              <strong style="color: #ff453a; font-size: 13px;">5. Over-the-Air RF Telemetry Latency</strong>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
+                Replacing virtual DDS local loopbacks with the physical Microhard P900 V2 900 MHz FHSS serial radio introduces packet jitter and bandwidth constraints (115200 bps) over 1+ km sweeps, requiring lightweight binary JSON serialization.
+              </p>
+            </div>
           </div>
         </div>
 
         <!-- ========================================================================= -->
-        <!-- 6.0 MULTI-MACHINE COMMAND-AND-CONTROL (C2) INTEGRATION (A3, A4)           -->
+        <!-- DEDICATED CHALLENGE SUMMARY BOX (AFTER THE 5 SECTIONS)                    -->
+        <!-- ========================================================================= -->
+        <div class="card-box" style="margin-bottom: 24px; border: 1px solid rgba(41, 151, 255, 0.35); background: rgba(41, 151, 255, 0.02);">
+          <div class="card-header">
+            <div>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Engineering Retrospective</span>
+              <h2 style="font-size: 18px; font-weight: 700; color: #f5f5f7; margin: 0;">
+                🛠️ Summary: Major Challenges Faced &amp; Engineering Solutions
+              </h2>
+            </div>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">4 Primary Hurdle Resolves</span>
+          </div>
+
+          <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 16px;">
+            Simulating an autonomous Hunter in wide-area aerodrome and outdoor environments presented four core engineering challenges that do not occur in conventional indoor mobile robotics:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+            
+            <!-- 1. Open Runway Environment -->
+            <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                <strong style="color: #ff453a; font-size: 13.5px;">1. Open Runway Environment</strong>
+                <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">Environment</span>
+              </div>
+              <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
+                <li>Flat and expansive open space ($&gt; 60\text{ m} \times 100\text{ m}$).</li>
+                <li>Zero vertical reference walls or columns within LiDAR range ($25\text{ m}$).</li>
+                <li>Longitudinal scan covariance diverges ($\Sigma_{xx} \to \infty$), causing 2D SLAM scan matching to slip and fail.</li>
+              </ul>
+              <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
+                <strong style="color: #34c759; font-size: 12.5px;">Solution: Orthophoto Aerial Mapping</strong>
+                <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
+                  <li>Import calibrated high-resolution aerial orthophoto ($0.05\text{ m/pixel}$).</li>
+                  <li>Annotate static traversable lanes and geofenced non-traversable boundaries.</li>
+                  <li>Eliminates reliance on vertical laser scan structures for map generation.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 2. Finding a Model -->
+            <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                <strong style="color: #ff453a; font-size: 13.5px;">2. Finding a Model</strong>
+                <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">Kinematics</span>
+              </div>
+              <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
+                <li>Custom chassis fabrication was ongoing in parallel with autonomy development.</li>
+                <li>Simulation required a verified 4WD skid-steer model with full TF tree frames.</li>
+                <li>Mass distribution and hub motor kinematics had to match the physical design.</li>
+              </ul>
+              <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
+                <strong style="color: #34c759; font-size: 12.5px;">Solution: AgileX Scout 2.0 Baseline Proxy</strong>
+                <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
+                  <li>Selected AgileX Scout 2.0 as verified commercial mobile robot proxy.</li>
+                  <li>Matches $65.0\text{ kg}$ payload, $L/B = 0.855$ ratio, and 48V hub motor drive.</li>
+                  <li>Allowed full autonomy and C2 software stack to mature in Semester 1.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 3. Mapping Scale -->
+            <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                <strong style="color: #ff453a; font-size: 13.5px;">3. Mapping Scale</strong>
+                <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">SLAM Limits</span>
+              </div>
+              <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
+                <li>Airfield runways span 3–4 km in length and 60 m in width.</li>
+                <li>Dynamic occupancy grid SLAM mapping across this scale exhausts edge computer RAM.</li>
+                <li>High-resolution grid updates cause CPU throttling and frame rate collapse.</li>
+              </ul>
+              <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
+                <strong style="color: #34c759; font-size: 12.5px;">Solution: Pre-Computed Static Costmaps</strong>
+                <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
+                  <li>Generate pre-annotated static costmaps (free lanes = cost 0, grass verges = cost 254).</li>
+                  <li>Downsample grid cells to $5.0\text{ cm/pixel}$ balancing planning precision with low RAM.</li>
+                  <li>Allows Nav2 global planners to compute full-mission paths instantaneously.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- 4. Localisation Drifting -->
+            <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                <strong style="color: #ff453a; font-size: 13.5px;">4. Localisation Drifting</strong>
+                <span class="badge" style="background: rgba(255, 69, 58, 0.1); color: #ff453a; font-size: 10px;">State Estimation</span>
+              </div>
+              <ul style="padding-left: 18px; font-size: 12px; color: #86868b; line-height: 1.45; margin: 0 0 10px 0;">
+                <li>4WD skid-steer wheel odometry inherently suffers cumulative lateral wheel slip.</li>
+                <li>Turning on high-friction tarmac produces severe dead-reckoning drift.</li>
+                <li>LiDAR scan matching is unavailable due to open aerodrome terrain geometry.</li>
+              </ul>
+              <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 8px;">
+                <strong style="color: #34c759; font-size: 12.5px;">Solution: Dual-EKF Sensor Fusion</strong>
+                <ul style="padding-left: 18px; font-size: 12px; color: #f5f5f7; line-height: 1.45; margin: 4px 0 0 0;">
+                  <li>Dual-EKF architecture fusing wheel odometry, 9-DOF IMU, and RTK-GNSS positioning.</li>
+                  <li>Local EKF maintains smooth $50\text{ Hz}$ control odometry in <code>odom</code> frame.</li>
+                  <li>Global EKF anchors pose to absolute WGS84 coordinates in <code>map</code> frame, eliminating drift.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- 6.0 MULTI-MACHINE COMMAND-AND-CONTROL (C2) INTEGRATION                    -->
         <!-- ========================================================================= -->
         <div class="card-box" id="sec-6" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">6.0 C2 Integration (A3, A4)</span>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Subnet Interconnect</span>
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
                 6.0 Multi-Machine Command-and-Control (C2) Integration
               </h2>
@@ -757,12 +974,8 @@
             <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Hardware Ingest &bull; Static CycloneDDS Unicast</span>
           </div>
 
-          <!-- 6.1 Multi-Machine Topology -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            6.1 Multi-Machine Topology (RPi 5 / Transmitter PC &harr; WSL2 Gazebo UGV)
-          </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            The Software-in-the-Loop testbench bridges two independent physical computing platforms to replicate the real-world UAV-to-UGV coordination datalink:
+            The Software-in-the-Loop testbench bridges two independent physical computing platforms to replicate the real-world UAV-to-Hunter coordination datalink:
           </p>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px;">
@@ -773,23 +986,22 @@
               </p>
             </div>
             <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid var(--apple-border); border-radius: 6px; padding: 14px;">
-              <strong style="color: #f5f5f7; font-size: 13px;">Receiver Node (Laptop / Gazebo UGV Platform)</strong>
+              <strong style="color: #f5f5f7; font-size: 13px;">Receiver Node (Laptop / Gazebo Hunter Platform)</strong>
               <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
-                Static IP: <code>192.168.137.1</code>. Runs Gazebo Harmonic physics simulation, Nav2 SmacPlanner2D (with cost-aware curve smoothing, transitioning to SmacPlannerHybrid in Phase 2), and Hilbert's <code>ugv_c2_bridge_node.py</code>, ingesting alerts and driving the rover to intercept coordinates.
+                Static IP: <code>192.168.137.1</code>. Runs Gazebo Harmonic physics simulation, Nav2 SmacPlanner, and Hilbert's <code>ugv_c2_bridge_node.py</code>, ingesting alerts and driving Hunter to intercept coordinates.
               </p>
             </div>
           </div>
 
-          <!-- 6.2 CycloneDDS Static Unicast Discovery Configuration -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            6.2 CycloneDDS Static Unicast Discovery Configuration (<code>cyclonedds.xml</code>)
+          <!-- CycloneDDS Configuration -->
+          <h3 style="font-size: 14px; font-weight: 600; color: #f5f5f7; margin: 16px 0 6px 0;">
+            CycloneDDS Static Unicast Discovery Configuration (<code>cyclonedds.xml</code>)
           </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
-            Standard DDS multicast discovery (239.255.0.1) is blocked by router IGMP snooping and enterprise firewall rules. To establish deterministic peer discovery, explicit unicast XML peering was configured (Macenski et al., 2022 [7]):
+          <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.55; margin-bottom: 10px;">
+            Standard DDS multicast discovery is blocked by router IGMP snooping. To establish deterministic peer discovery, explicit unicast XML peering was configured:
           </p>
-
           <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; overflow-x: auto;">
-            <pre style="margin: 0; font-family: 'SF Mono', Consolas, monospace; font-size: 12px; color: #f5f5f7; line-height: 1.5;"><code>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+            <pre style="margin: 0; font-family: 'SF Mono', Consolas, monospace; font-size: 11.5px; color: #f5f5f7; line-height: 1.5;"><code>&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
 &lt;CycloneDDS xmlns="https://cdds.io/config"&gt;
   &lt;Domain id="any"&gt;
     &lt;General&gt;
@@ -806,431 +1018,91 @@
   &lt;/Domain&gt;
 &lt;/CycloneDDS&gt;</code></pre>
           </div>
-
-          <!-- 6.3 Asynchronous JSON Target Dispatch & Nav2 Goal Ingestion -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            6.3 Asynchronous JSON Target Dispatch &amp; Nav2 Goal Ingestion
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
-            Upon receiving a structured target alert payload on <code>/c2/target_alert</code>, <code>ugv_c2_bridge_node.py</code> validates the SHA-256 HMAC signature, extracts target coordinates $(x, y)$, and queues the mission into its FIFO target buffer. Once Nav2 reaches idle state, the bridge commands Nav2's <code>NavigateToPose</code> action client, moving the simulated rover autonomously to the designated FOD coordinates. (For comprehensive packet schemas, link budget margins, and geodetic WGS84-to-Cartesian transformation proofs, consult the <a href="communications.html" style="color: #2997ff; text-decoration: underline;">C2 Communications &amp; Telemetry Architecture</a>).
-          </p>
         </div>
 
         <!-- ========================================================================= -->
-        <!-- 7.0 QUANTITATIVE BENCHMARKING & EMPIRICAL VERIFICATION (A4, A5)           -->
+        <!-- HIGH-FIDELITY SIMULATION DEMONSTRATIONS (MOVED TO END OF PAGE)            -->
         <!-- ========================================================================= -->
-        <div class="card-box" id="sec-7" style="margin-bottom: 24px;">
+        <div class="card-box" id="sec-demos" style="margin-bottom: 24px;">
           <div class="card-header">
             <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">7.0 Benchmarking (A4, A5)</span>
-              <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                7.0 Quantitative Benchmarking &amp; Empirical Verification
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">Empirical Verification</span>
+              <h2 style="font-size: 18px; font-weight: 700; color: #f5f5f7; margin: 0;">
+                🎬 High-Fidelity Simulation Demonstrations
               </h2>
             </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">RTF Stability &bull; Kinematic Compliance</span>
-          </div>
-
-          <!-- 7.1 Real-Time Factor & Physics Frame Stability -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            7.1 Real-Time Factor ($RTF = 0.98 \pm 0.02$) &amp; Physics Frame Stability
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
-            The Real-Time Factor ($RTF$) measures the ratio between elapsed simulation time $\Delta t_{\text{sim}}$ and real wall-clock time $\Delta t_{\text{real}}$:
-          </p>
-          <div class="math-eq-hero">
-            $$RTF = \frac{\Delta t_{\text{sim}}}{\Delta t_{\text{real}}} = \frac{N_{\text{steps}} \times \Delta t_{\text{step}}}{\Delta t_{\text{real}}}$$
-          </div>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Operating at a physics update frequency of $1000\text{ Hz}$ ($\Delta t_{\text{step}} = 1.0\text{ ms}$) in Gazebo Harmonic, empirical profiling across 10 trials of 30-minute continuous runs yielded an average $RTF = \mathbf{0.98 \pm 0.02}$ with zero physics step divergence.
-          </p>
-
-          <!-- 7.2 Path Feasibility & Turning Radius Compliance -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            7.2 Path Feasibility &amp; Turning Radius Compliance ($R_{\min} \ge 1.50\text{ m}$)
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
-            In Phase 1 Interim benchtop testing, <code>nav2_smac_planner::SmacPlanner2D</code> with cost-aware non-linear curve smoothing ($w_{\text{smooth}}=0.3, w_{\text{curve}}=0.15, w_{\text{cost}}=0.05$) was paired with Regulated Pure Pursuit (RPP) curvature velocity scaling ($R_{\text{min\_scale}} = 1.20\text{ m}$, $v_{\min} = 0.60\text{ m/s}$). For Phase 2 physical deployment, continuous Dubins curvature constraints are enforced directly during graph search (Dubins, 1957 [20]; Macenski et al., 2020 [8]):
-          </p>
-          <div class="math-eq-hero">
-            $$\kappa(s) \le \kappa_{\max} = \frac{1}{R_{\min}} = \frac{1}{1.50\text{ m}} = 0.667\text{ m}^{-1}$$
-          </div>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Trajectory inspection confirmed $100\%$ compliance across 50 dispatched goals in SIL: zero trajectory vertices exhibited unconstrained curvature radius $< 1.20\text{ m}$, eliminating wheel slip, protecting motor windings, and preventing skid-steer breakaway stall.
-          </p>
-
-          <!-- 7.3 Collision Monitor Reaction Latency -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            7.3 Collision Monitor Reaction Latency &amp; Dynamic Obstacle Buffers
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 10px;">
-            The <code>nav2_collision_monitor</code> enforces a tiered safety zone around the chassis footprint. When dynamic obstacles (simulated pedestrian models) breach the safety polygon, the stopping distance is governed by robot sprint speed $v_0 = 2.78\text{ m/s}$ ($10\text{ km/h}$), sensor processing latency $t_{\text{rx}} = 0.05\text{ s}$, and controlled deceleration $a_{\text{decel}} = 1.5\text{ m/s}^2$:
-          </p>
-          <div class="math-eq-hero">
-            $$d_{\text{stop}} = v_0 t_{\text{rx}} + \frac{v_0^2}{2 a_{\text{decel}}} = (2.78)(0.05) + \frac{(2.78)^2}{2(1.50)} = 0.139 + 2.576 = \mathbf{2.715\text{ m}}$$
-          </div>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            With safety slowdown zones triggered at $3.50\text{ m}$ and emergency stop polygons locked at $0.80\text{ m}$ buffer clearance, the robot consistently achieved zero collisions in dynamic tests.
-          </p>
-        </div>
-
-        <!-- ========================================================================= -->
-        <!-- 8.0 SIMULATION-TO-REAL (SIM2REAL) TRANSFER ARCHITECTURE (A3, A6)           -->
-        <!-- ========================================================================= -->
-        <div class="card-box" id="sec-8" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">8.0 Sim2Real (A3, A6)</span>
-              <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                8.0 Simulation-to-Real (Sim2Real) Transfer Architecture
-              </h2>
-            </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Zero Rewrite Interface Parity</span>
-          </div>
-
-          <!-- SIMULATION -> REAL WORLD PROGRESSION -->
-          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 18px; margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <h3 style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                🚀 Simulation &rarr; Real World Phased Deployment
-              </h3>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; font-size: 10.5px;">Semester 1 &bull; Semester 2</span>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 14px;">
-              <!-- Semester 1 Card -->
-              <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.25); border-radius: 8px; padding: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                  <span class="badge badge-blue" style="font-size: 11px; font-weight: 700;">Semester 1: Foundation</span>
-                  <span style="font-size: 11px; color: #86868b; font-family: monospace;">SIL Baseline</span>
-                </div>
-                <div style="margin-bottom: 8px;">
-                  <strong style="color: #2997ff; font-size: 13px;">Train in Simulation:</strong>
-                  <ul style="padding-left: 18px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 4px 0 0 0;">
-                    <li>Train and test safely without equipment crash risks.</li>
-                    <li>Faster iterations with accelerated batch simulation runs.</li>
-                    <li>Randomize different environmental layouts and obstacle spawns.</li>
-                  </ul>
-                </div>
-                <div>
-                  <strong style="color: #2997ff; font-size: 13px;">Bridge the Gap:</strong>
-                  <ul style="padding-left: 18px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 4px 0 0 0;">
-                    <li>Realistic ODE/DART contact physics and asphalt Coulomb friction.</li>
-                    <li>Hardware-accurate mass distribution, kinematic limits, and sensor noise.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Semester 2 Card -->
-              <div style="background: rgba(52, 199, 89, 0.04); border: 1px solid rgba(52, 199, 89, 0.25); border-radius: 8px; padding: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-                  <span class="badge badge-emerald" style="font-size: 11px; font-weight: 700;">Semester 2: Real World</span>
-                  <span style="font-size: 11px; color: #86868b; font-family: monospace;">HIL Deployment</span>
-                </div>
-                <div style="margin-bottom: 8px;">
-                  <strong style="color: #34c759; font-size: 13px;">Validate on Real Robot:</strong>
-                  <ul style="padding-left: 18px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 4px 0 0 0;">
-                    <li>Test in real outdoor aerodrome and campus environments.</li>
-                    <li>Fine-tune controller parameters under live physical friction.</li>
-                    <li>Handle unmodeled effects (suspension pitch, aerodynamic drag).</li>
-                    <li>Ensure fail-safe physical operation with emergency hardware stops.</li>
-                  </ul>
-                </div>
-                <div>
-                  <strong style="color: #34c759; font-size: 13px;">Deploy and Iterate:</strong>
-                  <ul style="padding-left: 18px; font-size: 12px; color: var(--apple-text-secondary); line-height: 1.45; margin: 4px 0 0 0;">
-                    <li>Monitor real-time telemetry performance over long-range RF links.</li>
-                    <li>Continuous learning from field edge cases; update simulation models.</li>
-                    <li>Scale to operational airfield debris remediation scenarios.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- TWO CRITICAL CALLOUT BANNERS -->
-            <div style="background: rgba(225, 29, 72, 0.08); border: 1px solid rgba(225, 29, 72, 0.3); border-radius: 6px; padding: 12px 16px; margin-bottom: 10px; text-align: center;">
-              <span style="font-size: 14px; font-weight: 700; color: var(--accent-rose);">
-                ⚠️ "If it works in simulation, does not mean it will work in real life!"
-              </span>
-            </div>
-            <div style="background: rgba(41, 151, 255, 0.08); border: 1px solid rgba(41, 151, 255, 0.3); border-radius: 6px; padding: 12px 16px; text-align: center;">
-              <span style="font-size: 13.5px; font-weight: 600; color: #2997ff;">
-                💡 "Simulation reduces cost, risk and time-to-deploy, but real-world testing is essential for a robust and reliable robotic system!"
-              </span>
-            </div>
-          </div>
-
-          <!-- 8.1 Hardware Mapping Matrix -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            8.1 Hardware Mapping Matrix (Gazebo Plugins &rarr; Physical Sensors, UM980 &amp; STM32 CAN)
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            The digital twin maintains strict topic and action parity with Semester 2 physical rover hardware:
-          </p>
-
-          <div style="overflow-x: auto; margin-bottom: 16px;">
-            <table class="apple-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
-              <thead>
-                <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
-                  <th style="padding: 10px 12px; text-align: left;">Subsystem Domain</th>
-                  <th style="padding: 10px 12px; text-align: left;">Phase 1 Digital Twin (Simulation)</th>
-                  <th style="padding: 10px 12px; text-align: left;">Phase 2 Physical Hardware (Real Rover)</th>
-                  <th style="padding: 10px 12px; text-align: left;">ROS 2 Interface Parity</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Drivetrain &amp; Actuation</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Gazebo DiffDrive Plugin in physics loop</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">STM32 F446RE bridging ZLAC8015D dual-channel hub motors over CANopen</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #2997ff;">/cmd_vel (Twist)<br>/odom (Odometry)</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Obstacle Sensing</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Simulated 2D laser scanner (<code>/scan</code>)</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">3D solid-state LiDAR with <code>pointcloud_to_laserscan</code> filter</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #2997ff;">/scan (LaserScan)<br>/points (PointCloud2)</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">C2 Telemetry Link</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Dedicated Subnet &amp; CycloneDDS Unicast (via Direct RJ45 Ethernet / Local 5 GHz Wi-Fi)</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Microhard P900 V2 (917–925 MHz FHSS serial radio over UART <code>/dev/ttyUSB0</code> via <code>serial_c2_bridge</code>)</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #2997ff;"><code>geometry_msgs/msg/PoseStamped</code> on <code>/goal_pose</code><br><code>/c2/target_alert</code> (JSON)<br><code>/c2/ugv_telemetry</code></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">State Estimation</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Gazebo ground-truth odometry with Gaussian noise</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Dual-EKF (<code>robot_localization</code>) fusing Unicore UM980 RTK-GNSS and 9-DOF IMU</td>
-                  <td style="padding: 10px 12px; font-family: monospace; color: #2997ff;">/odometry/filtered<br>/tf (odom ➔ base_link)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- ========================================================================= -->
-        <!-- 9.0 IDENTIFIED SHORTCOMINGS & SEMESTER 2 TRANSITION ROADMAP (A6)          -->
-        <!-- ========================================================================= -->
-        <div class="card-box" id="sec-9" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">9.0 Roadmap (A6)</span>
-              <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                9.0 Identified Shortcomings &amp; Semester 2 Transition Roadmap
-              </h2>
-            </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Limitations &bull; HIL Milestones</span>
-          </div>
-
-          <!-- 9.1 Phase 1 Simulation Constraints -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 8px 0; letter-spacing: -0.01em;">
-            9.1 Phase 1 Simulation Constraints (Proxy Chassis &amp; Lack of Wheel-Slip Drift)
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Rigorous engineering transparency requires identifying the boundaries of the Phase 1 digital twin:
-          </p>
-          <ul style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; padding-left: 20px; margin-bottom: 16px;">
-            <li><strong>Chassis Proxy Inaccuracies:</strong> While the AgileX Scout 2.0 shares identical skid-steer kinematics with the custom chassis, it does not incorporate the mechanical weight distribution of the custom aluminum trailing arm suspension or vacuum suction hood aerodynamics.</li>
-            <li><strong>Idealized Friction Modeling:</strong> Gazebo's Coulomb friction approximations assume uniform tarmac surfaces, failing to fully capture wet asphalt hydroplaning, rubber skid slickness, or severe tire tread wear during high-speed braking.</li>
-            <li><strong>Benchtop Radio Proxies:</strong> The physical Microhard P900 V2 RF link was tested over local Wi-Fi and serial loopbacks rather than physical over-the-air transmitters.</li>
-          </ul>
-
-          <!-- 9.2 Phase 2 Hardware-in-the-Loop (HIL) Deployment Milestones -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
-            9.2 Phase 2 Hardware-in-the-Loop (HIL) Deployment Milestones
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            In Semester 2, the simulation framework transitions from pure Software-in-the-Loop (SIL) to physical Hardware-in-the-Loop (HIL):
-          </p>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 6px; padding: 14px;">
-              <strong style="color: #2997ff; font-size: 13px;">1. Custom Chassis URDF Export</strong>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
-                Export verified CAD mass properties, exact center-of-gravity (CG), and FEA structural stiffness tensors from Asuka and Zacarias Ng's mechanical chassis design into an updated URDF.
-              </p>
-            </div>
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 6px; padding: 14px;">
-              <strong style="color: #f5f5f7; font-size: 13px;">2. Physical MCU &amp; CAN Hardware Bridging</strong>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
-                Deploy STM32 micro-ROS firmware directly receiving <code>/cmd_vel</code> and transmitting encoder feedback over physical CANopen bus to ZLAC8015D motor drivers on the benchtop.
-              </p>
-            </div>
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 6px; padding: 14px;">
-              <strong style="color: #f5f5f7; font-size: 13px;">3. Full Outdoor Airfield Trials</strong>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
-                Conduct live outdoor validation at NUS EA Field and operational airfield test corridors, validating real-world RTK-GNSS centimeter tracking against the digital twin baseline.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- ========================================================================= -->
-        <!-- 10.0 ACADEMIC REFERENCES & STATUTORY STANDARDS (APA 7TH EDITION)          -->
-        <!-- ========================================================================= -->
-        <div class="card-box" id="sec-10" style="margin-bottom: 24px;">
-          <div class="card-header">
-            <div>
-              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600; margin-bottom: 6px;">10.0 References &amp; Standards</span>
-              <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
-                10.0 Academic References &amp; Statutory Standards (APA 7th Edition)
-              </h2>
-            </div>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Concordance Index &bull; Centralized Hub</span>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px;">60 FPS Synchronized Screen Captures</span>
           </div>
 
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
-            The digital twin physics simulation, synthetic perception pipeline, and kinematically constrained navigation architecture are grounded in peer-reviewed robotics literature and statutory aeronautical standards. The concordance index below cross-references all citations directly into Hilbert Soh's Centralized Reference Repository:
+            Interactive video captures confirming autonomous path execution, dynamic obstacle clearance, and trajectory tracking across the target NUS EA Field environment and reference airfield corridor:
           </p>
 
-          <div style="overflow-x: auto; margin-bottom: 16px;">
-            <table class="apple-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
-              <thead>
-                <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
-                  <th style="padding: 10px 12px; text-align: left; width: 65px;">Ref ID</th>
-                  <th style="padding: 10px 12px; text-align: left; width: 220px;">Author(s) &amp; Year</th>
-                  <th style="padding: 10px 12px; text-align: left;">Publication Title / Authority</th>
-                  <th style="padding: 10px 12px; text-align: left; width: 140px;">Cited Section</th>
-                  <th style="padding: 10px 12px; text-align: center; width: 120px;">Repository Link</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[1]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">ASTM International (2020)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Standard Test Method for Airport Pavement Condition Index Surveys (ASTM D5340-20)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 5.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-1" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [1] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[2]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Federal Aviation Administration (2014)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Airport Foreign Object Debris (FOD) Management Equipment (FAA AC 150/5220-24)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 1.2</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-2" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [2] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[3]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">IMDA Singapore (2021)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Technical Specification for Short Range Devices (IMDA TS SRD Issue 1 Rev 2)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 8.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-3" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [3] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[4]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">ICAO (2018)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Handbook on Radio Frequency Spectrum Requirements for Civil Aviation (Doc 9718)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 8.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-4" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [4] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[5]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Kim, S., et al. (2019)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">UAS-Based Airport Maintenance Inspections &amp; Airfield Robotics (ASCE)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 1.2, 6.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-5" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [5] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[6]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Krestenitis, M., et al. (2026)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Digitalization and Automation of Runway Inspection Using UAVs (Sensors)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 1.2, 5.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-6" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [6] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[7]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., et al. (2022)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Robot Operating System 2: Design, Architecture, and Uses (Science Robotics)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 1.2, 4.3, 6.2</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-7" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [7] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[8]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., et al. (2020)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">The Marathon 2: A Navigation System (IEEE/RSJ IROS)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 7.2</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-8" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [8] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[9]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Moore, T., &amp; Stouch, D. (2014)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">A Generalized Extended Kalman Filter Implementation for ROS (Springer)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 8.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-9" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [9] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[10]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Munyer, T., et al. (2022)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Foreign Object Debris Detection Based on Vision Transformers (IEEE CSCI)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 1.2, 5.3</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-10" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [10] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[12]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Shan, J., et al. (2025)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">A Review of Foreign Object Debris Detection on Airport Runways (Remote Sensing)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 5.3</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-12" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [12] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[14]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Siegwart, R., et al. (2011)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Introduction to Autonomous Mobile Robots (2nd ed., MIT Press)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 4.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-14" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [14] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[15]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Gillespie, T. D. (1992)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Fundamentals of Vehicle Dynamics (SAE International)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 4.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-15" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [15] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[17]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">RobotPlatform.com (2024)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Classification of Mobile Robots and Wheel Control Theory (RobotPlatform Knowledge Base)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 4.1</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-17" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [17] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[20]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Dubins, L. E. (1957)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">On Curves of Minimal Length with a Constraint on Average Curvature (AJM)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 7.2</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-20" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [20] &rarr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[21]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., &amp; Jambrecic, I. (2021)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">SLAM Toolbox: SLAM for the Dynamic World (JOSS)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 5.3</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-21" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [21] &rarr;</a></td>
-                </tr>
-                <tr>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #2997ff;">[22]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., et al. (2024)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Regulated Pure Pursuit: A Path-Tracking Controller for Mobile Robots (Autonomous Robots)</td>
-                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10.5px;">Sec 7.3</span></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="../../6-references/hilbert/references.html#ref-22" class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px; text-decoration: none;">View [22] &rarr;</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- CALLOUT LINK TO CENTRALIZED REFERENCES REPOSITORY -->
-          <div style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px 20px;">
-            <div>
-              <div style="font-size: 14px; font-weight: 600; color: #f5f5f7; margin-bottom: 4px;">
-                Hilbert Soh &bull; Centralized References Repository
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 18px;">
+            
+            <!-- NUS EA FIELD DEMO -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(41, 151, 255, 0.35); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h4 style="font-size: 14px; color: #2997ff; margin: 0;">📍 NUS EA Field Autonomous Navigation</h4>
+                <span class="badge" style="background: rgba(41, 151, 255, 0.15); color: #2997ff; font-size: 10px;">Phase 1 Target</span>
               </div>
-              <div style="font-size: 12.5px; color: var(--apple-text-secondary);">
-                Access complete APA 7th edition bibliographic entries, permanent DOI links, and statutory aviation PDFs across all references.
+              <div style="background: #000; border-radius: 6px; overflow: hidden; text-align: center;">
+                <video controls playsinline preload="metadata" style="width: 100%; max-height: 260px; display: block; margin: 0 auto;" poster="../../assets/simulation/nus_ea_simulation_poster.png">
+                  <source src="../../assets/simulation/nus_ea_simulation_demo.mp4" type="video/mp4">
+                  <p style="color: var(--apple-text-secondary); font-size: 12px; padding: 12px;">Your browser does not support HTML5 video.</p>
+                </video>
+              </div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 8px 0 0 0; line-height: 1.5;">
+                AgileX Scout 2.0 proxy rover navigating outdoor campus walkways, avoiding simulated dynamic obstacles, and executing waypoints cued through Nav2 on the aerial orthophoto map.
+              </p>
+              <div style="margin-top: 10px;">
+                <a href="../../assets/simulation/nus_ea_simulation_demo.mp4" download class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); text-decoration: none; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px;">
+                  Download Video (MP4) &rarr;
+                </a>
               </div>
             </div>
-            <a href="../../6-references/hilbert/references.html" class="btn btn-deep-dive" style="font-size: 13px; padding: 10px 20px; font-weight: 600; background: linear-gradient(135deg, #2997ff 0%, #0077ed 100%); color: #fff; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(41, 151, 255, 0.25);">
-              <span>📚 Open Centralized References Hub</span> &rarr;
-            </a>
+
+            <!-- AARHUS AIRPORT DEMO -->
+            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h4 style="font-size: 14px; color: #f5f5f7; margin: 0;">🛫 Aarhus Airport FOD Hunter (EKAH)</h4>
+                <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; font-size: 10px;">Reference Exploration</span>
+              </div>
+              <div style="background: #000; border-radius: 6px; overflow: hidden; text-align: center;">
+                <video controls playsinline preload="metadata" style="width: 100%; max-height: 260px; display: block; margin: 0 auto;" poster="../../assets/simulation/demo_poster.jpg">
+                  <source src="../../assets/simulation/simulation_demo.mp4" type="video/mp4">
+                  <p style="color: var(--apple-text-secondary); font-size: 12px; padding: 12px;">Your browser does not support HTML5 video.</p>
+                </video>
+              </div>
+              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 8px 0 0 0; line-height: 1.5;">
+                Full-scale asphalt corridor sweep, centerline tracking, and multi-obstacle avoidance simulation modeled after Aarhus Airport Runway 10R/28L ($2,702\text{ m} \times 45\text{ m}$).
+              </p>
+              <div style="margin-top: 10px;">
+                <a href="../../assets/simulation/simulation_demo.mp4" download class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); text-decoration: none; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px;">
+                  Download Video (MP4) &rarr;
+                </a>
+              </div>
+            </div>
+
           </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- REFERENCES & STANDARDS CALLOUT (REDIRECT TO CENTRALIZED CATALOGUE)        -->
+        <!-- ========================================================================= -->
+        <div class="card-box" id="sec-references" style="margin-bottom: 24px; text-align: center; padding: 24px 20px;">
+          <div style="display: flex; justify-content: center; margin-bottom: 8px;">
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600;">Academic &amp; Statutory Standards Hub</span>
+          </div>
+          <h3 style="font-size: 19px; font-weight: 700; color: #f5f5f7; margin: 4px 0 8px 0;">
+            📚 Hilbert's Centralized Reference Catalogue
+          </h3>
+          <p style="font-size: 13px; color: var(--apple-text-secondary); max-width: 680px; margin: 0 auto 18px auto; line-height: 1.6;">
+            All academic literature citations, peer-reviewed robotics research papers, and statutory aeronautical standards (FAA AC 150/5220-24, ASTM D5340-20, ICAO Doc 9718, IMDA TS SRD) supporting this simulation architecture are catalogued centrally with complete APA 7th edition bibliographic entries and direct DOI links.
+          </p>
+          <a href="../../6-references/hilbert/references.html" class="btn btn-deep-dive" style="font-size: 13.5px; padding: 10px 24px; font-weight: 600; background: linear-gradient(135deg, #2997ff 0%, #0077ed 100%); color: #fff; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(41, 151, 255, 0.25);">
+            <span>Open Hilbert's Full Reference Catalogue</span> &rarr;
+          </a>
         </div>
 
       </div>
@@ -1252,7 +1124,7 @@
     </div>
   </footer>
 
-  <script src="../../js/main.js?v=4.2"></script>
+  <script src="../../js/main.js?v=4.3"></script>
 
   <!-- EXPORT PDF BUTTON -->
   <style>

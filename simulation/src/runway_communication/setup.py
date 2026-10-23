@@ -23,6 +23,7 @@ setup(
             'ugv_c2_bridge_node = runway_communication.ugv_c2_bridge_node:main',
             'uav_waypoint_commander = runway_communication.uav_waypoint_commander:main',
             'DemoComs_C2 = runway_communication.DemoComs_C2:main',
+            'c2_alert_receiver = runway_communication.c2_alert_receiver:main',
         ],
     },
 )

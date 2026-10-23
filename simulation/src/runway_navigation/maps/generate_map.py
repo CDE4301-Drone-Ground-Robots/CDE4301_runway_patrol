@@ -52,16 +52,6 @@ for r in range(H):
         else:
             grid[r, c] = OCCUPIED
 
-# Boundary edge markers along the runway perimeter
-for x_m in np.arange(X_MIN, X_MAX, 10.0):
-    for y_m in [34.0 + SLOPE * x_m, -34.0 + SLOPE * x_m]:
-        r_c = int((Y_MAX - y_m) / RESOLUTION)
-        c_c = int((x_m - X_MIN) / RESOLUTION)
-        for dr in range(-1, 2):
-            for dc in range(-1, 2):
-                if 0 <= r_c + dr < H and 0 <= c_c + dc < W:
-                    grid[r_c + dr, c_c + dc] = OCCUPIED
-
 script_dir = os.path.dirname(os.path.abspath(__file__))
 pgm_path = os.path.join(script_dir, "runway_map.pgm")
 yaml_path = os.path.join(script_dir, "runway_map.yaml")
