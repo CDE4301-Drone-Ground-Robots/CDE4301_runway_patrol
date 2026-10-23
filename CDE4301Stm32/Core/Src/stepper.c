@@ -112,3 +112,99 @@ void Stepper_MoveSteps(int32_t steps, uint32_t step_delay_us)
     Stepper_SingleStep(step_delay_us);
   }
 }
+
+/* ==============================================================================
+ * Non-Blocking Stepper Engine (State-Machine Driven via DWT Cycles)
+ * Safe for use inside real-time control loops (50 Hz CAN, USB HID Host)
+ * ============================================================================== */
+static volatile uint8_t  stepper_busy = 0;
+static volatile int32_t  stepper_remaining_steps = 0;
+static volatile uint8_t  stepper_pulse_phase = 0; /* 0: idle, 1: active LOW pulse, 2: rest HIGH */
+static volatile uint32_t stepper_half_period_cycles = 0;
+static volatile uint32_t stepper_last_cycle = 0;
+
+void Stepper_StartMove(int32_t steps, uint32_t step_delay_us)
+{
+  if (steps == 0)
+  {
+    return;
+  }
+
+  if (steps > 0)
+  {
+    Stepper_SetDirection(STEPPER_DIR_CW);
+    stepper_remaining_steps = steps;
+  }
+  else
+  {
+    Stepper_SetDirection(STEPPER_DIR_CCW);
+    stepper_remaining_steps = -steps;
+  }
+
+  /* Compute clock cycles per half-pulse */
+  stepper_half_period_cycles = step_delay_us * (SystemCoreClock / 1000000);
+  stepper_last_cycle = DWT->CYCCNT;
+
+  /* Start first step pulse: pull PUL- LOW (active current flow) */
+  HAL_GPIO_WritePin(STEPPER_PUL_PORT, STEPPER_PUL_PIN, GPIO_PIN_RESET);
+  stepper_pulse_phase = 1;
+  stepper_busy = 1;
+}
+
+void Stepper_Stop(void)
+{
+  stepper_busy = 0;
+  stepper_remaining_steps = 0;
+  stepper_pulse_phase = 0;
+  HAL_GPIO_WritePin(STEPPER_PUL_PORT, STEPPER_PUL_PIN, GPIO_PIN_SET);
+}
+
+uint8_t Stepper_IsBusy(void)
+{
+  return stepper_busy;
+}
+
+int32_t Stepper_GetRemainingSteps(void)
+{
+  return stepper_remaining_steps;
+}
+
+void Stepper_Update(void)
+{
+  if (!stepper_busy)
+  {
+    return;
+  }
+
+  uint32_t current_cycles = DWT->CYCCNT;
+  if ((uint32_t)(current_cycles - stepper_last_cycle) >= stepper_half_period_cycles)
+  {
+    stepper_last_cycle = current_cycles;
+
+    if (stepper_pulse_phase == 1)
+    {
+      /* Active phase complete -> release PUL- HIGH (opto off) */
+      HAL_GPIO_WritePin(STEPPER_PUL_PORT, STEPPER_PUL_PIN, GPIO_PIN_SET);
+      stepper_pulse_phase = 2;
+    }
+    else if (stepper_pulse_phase == 2)
+    {
+      /* Rest phase complete -> one full pulse is finished */
+      stepper_remaining_steps--;
+      if (stepper_remaining_steps > 0)
+      {
+        /* Start next pulse -> pull PUL- LOW */
+        HAL_GPIO_WritePin(STEPPER_PUL_PORT, STEPPER_PUL_PIN, GPIO_PIN_RESET);
+        stepper_pulse_phase = 1;
+      }
+      else
+      {
+        /* All steps finished */
+        HAL_GPIO_WritePin(STEPPER_PUL_PORT, STEPPER_PUL_PIN, GPIO_PIN_SET);
+        stepper_pulse_phase = 0;
+        stepper_busy = 0;
+      }
+    }
+  }
+}
+

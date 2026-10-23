@@ -13,11 +13,14 @@ def generate_launch_description():
     use_rviz = LaunchConfiguration('use_rviz')
     use_ekf = LaunchConfiguration('use_ekf')
     use_c2_bridge = LaunchConfiguration('use_c2_bridge')
+    spawn_x = LaunchConfiguration('spawn_x')
+    spawn_y = LaunchConfiguration('spawn_y')
+    spawn_yaw = LaunchConfiguration('spawn_yaw')
 
     world_name_arg = DeclareLaunchArgument(
         'world_name',
-        default_value='airport_runway',
-        description='Simulation world name: "airport_runway" or "nus_ea_field"'
+        default_value='nus_ea_field',
+        description='Simulation world name: "nus_ea_field" or "airport_runway"'
     )
 
     use_rviz_arg = DeclareLaunchArgument(
@@ -38,6 +41,24 @@ def generate_launch_description():
         description='Launch UGV C2 Bridge node (vacuum & telemetry executive) if true'
     )
 
+    spawn_x_arg = DeclareLaunchArgument(
+        'spawn_x',
+        default_value='-25.0',
+        description='Robot spawn X coordinate (default: -25.0)'
+    )
+
+    spawn_y_arg = DeclareLaunchArgument(
+        'spawn_y',
+        default_value='0.0',
+        description='Robot spawn Y coordinate (default: 0.0)'
+    )
+
+    spawn_yaw_arg = DeclareLaunchArgument(
+        'spawn_yaw',
+        default_value='0.0',
+        description='Robot spawn Yaw angle (default: 0.0)'
+    )
+
     # 1. Gazebo Simulation launcher (Spawns world, UGV model, sensor bridges, /clock)
     gazebo_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -45,6 +66,9 @@ def generate_launch_description():
         ),
         launch_arguments={
             'world_name': world_name,
+            'spawn_x': spawn_x,
+            'spawn_y': spawn_y,
+            'spawn_yaw': spawn_yaw,
         }.items()
     )
 
@@ -59,6 +83,9 @@ def generate_launch_description():
             'use_rviz': use_rviz,
             'use_ekf': use_ekf,
             'use_c2_bridge': use_c2_bridge,
+            'spawn_x': spawn_x,
+            'spawn_y': spawn_y,
+            'spawn_yaw': spawn_yaw,
         }.items()
     )
 
@@ -72,6 +99,9 @@ def generate_launch_description():
         use_rviz_arg,
         use_ekf_arg,
         use_c2_bridge_arg,
+        spawn_x_arg,
+        spawn_y_arg,
+        spawn_yaw_arg,
         gazebo_sim,
         delayed_nav2,
     ])

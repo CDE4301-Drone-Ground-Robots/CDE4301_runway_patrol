@@ -394,6 +394,32 @@
             </tbody>
           </table>
         </div>
+
+        <!-- DETAILED TARMAC SCRUB MECHANICS & MOTOR CURRENT CLAMPING DERIVATION -->
+        <div style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-left: 4px solid var(--accent-purple); border-radius: 8px; padding: 16px; margin-top: 18px;">
+          <h4 style="font-size: 15px; color: var(--text-main); margin: 0 0 8px 0;">
+            3.1 Detailed Tarmac Scrub Torque &amp; Electrical Bus Loading (Coulomb Friction Mechanics)
+          </h4>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px;">
+            When the $65.0\text{ kg}$ 4WD skid-steer rover executes an in-place zero-radius pivot on dry airfield asphalt ($\mu_s \approx 0.80$), all four tires shear laterally across the pavement surface. Assuming normal wheel load $F_{N,i} = \frac{m \cdot g}{4}$ and gearbox transmission efficiency $\eta_{\text{gear}} = 0.85$, the static breakaway torque reflected at each motor shaft is derived as:
+          </p>
+          <div class="math-eq-box">
+            $$\tau_{\text{skid, per motor}} = \frac{m \cdot g \cdot \mu_s \cdot r}{4 \cdot \eta_{\text{gear}}} = \frac{65.0 \times 9.81 \times 0.80 \times 0.1315}{4 \times 0.85} \approx \mathbf{19.73\text{ N}\cdot\text{m}}$$
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 10px 0 8px 0;">
+            With motor torque constant $K_t \approx 1.057\text{ N}\cdot\text{m/A}$, an unconstrained breakaway against static friction would theoretically demand:
+          </p>
+          <div class="math-eq-box">
+            $$I_{\text{demand}} = \frac{\tau_{\text{skid}}}{K_t} = \frac{19.73\text{ N}\cdot\text{m}}{1.057\text{ N}\cdot\text{m/A}} \approx 18.66\text{ A/motor} \implies I_{\text{bus, unconstrained}} = 4 \times 18.66\text{ A} = \mathbf{74.64\text{ A}}$$
+          </div>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin: 10px 0 12px 0;">
+            An unconstrained $74.64\text{ A}$ surge would breach the $70.0\text{ A}$ BMS continuous discharge ceiling. To resolve this, two hardware-firmware protections are established:
+          </p>
+          <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.6; padding-left: 20px; margin: 0 0 12px 0;">
+            <li><strong>ZLAC8015D 16.0 A Firmware Current Clamp:</strong> The driver parameters restrict peak phase current to $16.0\text{ A}$ per channel, capping motor torque at $\tau_{\max} = 1.057 \times 16.0 = \mathbf{16.91\text{ N}\cdot\text{m}}$ and total bus load safely under $64.0\text{ A} &lt; 70.0\text{ A}$.</li>
+            <li><strong>Kinetic Shearing Transition:</strong> As soon as micro-shearing begins, the tire-ground interface drops from static ($\mu_s \approx 0.80$) to kinetic friction ($\mu_k \approx 0.55\text{--}0.65$), reducing required torque to $\tau_{\text{kinetic}} \approx \frac{65 \times 9.81 \times 0.60 \times 0.1315}{4 \times 0.85} \approx \mathbf{14.80\text{ N}\cdot\text{m}}$. Because the $16.91\text{ N}\cdot\text{m}$ capped motor output exceeds $\tau_{\text{kinetic}}$, the rover successfully sustains steady in-place rotation for terminal debris docking without electrical brownout.</li>
+          </ul>
+        </div>
       </div>
 
       <!-- SECTION 4: ELECTRICAL BUS & POWER BUDGET -->
@@ -515,6 +541,24 @@
         <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 12px 0 0 0;">
           The total emergency stop distance of $1.38\text{ m}$ comfortably satisfies the $2.0\text{ m}$ obstacle stop boundary maintained by the Nav2 costmap local obstacle safety layer.
         </p>
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- REFERENCES & STANDARDS CALLOUT (REDIRECT TO CENTRALIZED CATALOGUE)        -->
+      <!-- ========================================================================= -->
+      <div class="card-box" id="sec-references" style="margin-bottom: 24px; text-align: center; padding: 24px 20px;">
+        <div style="display: flex; justify-content: center; margin-bottom: 8px;">
+          <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px; font-weight: 600;">Academic &amp; Statutory Standards Hub</span>
+        </div>
+        <h3 style="font-size: 19px; font-weight: 700; color: #f5f5f7; margin: 4px 0 8px 0;">
+          📚 Hilbert's Centralized Reference Catalogue
+        </h3>
+        <p style="font-size: 13px; color: var(--apple-text-secondary); max-width: 680px; margin: 0 auto 18px auto; line-height: 1.6;">
+          All academic literature citations, peer-reviewed robotics research papers, and statutory aeronautical standards (FAA AC 150/5220-24, ASTM D5340-20, ICAO Doc 9718, IMDA TS SRD) supporting this powertrain sizing and drivetrain calculation architecture are catalogued centrally with complete APA 7th edition bibliographic entries and direct DOI links.
+        </p>
+        <a href="../../6-references/hilbert/references.html" class="btn btn-deep-dive" style="font-size: 13.5px; padding: 10px 24px; font-weight: 600; background: linear-gradient(135deg, #2997ff 0%, #0077ed 100%); color: #fff; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(41, 151, 255, 0.25);">
+          <span>Open Hilbert's Full Reference Catalogue</span> &rarr;
+        </a>
       </div>
 
     </div>

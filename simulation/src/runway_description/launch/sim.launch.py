@@ -13,8 +13,8 @@ def generate_launch_description():
     xacro_file = os.path.join(pkg_dir, 'urdf', 'ugv.urdf.xacro')
     world_name_arg = DeclareLaunchArgument(
         'world_name',
-        default_value='airport_runway',
-        description='World name: "airport_runway" or "nus_ea_field"'
+        default_value='nus_ea_field',
+        description='World name: "nus_ea_field" or "airport_runway"'
     )
     world_arg = DeclareLaunchArgument(
         'world',
@@ -27,8 +27,8 @@ def generate_launch_description():
     )
     spawn_x_arg = DeclareLaunchArgument(
         'spawn_x',
-        default_value=PythonExpression(["'-25.0' if '", LaunchConfiguration('world_name'), "' == 'nus_ea_field' else '0.0'"]),
-        description='Robot spawn X coordinate'
+        default_value='-25.0',
+        description='Robot spawn X coordinate (default: -25.0)'
     )
     spawn_y_arg = DeclareLaunchArgument(
         'spawn_y',
@@ -42,7 +42,7 @@ def generate_launch_description():
     )
     spawn_yaw_arg = DeclareLaunchArgument(
         'spawn_yaw',
-        default_value=PythonExpression(["'0.0' if '", LaunchConfiguration('world_name'), "' == 'nus_ea_field' else '-0.2274'"]),
+        default_value='0.0',
         description='Robot spawn Yaw angle'
     )
 
