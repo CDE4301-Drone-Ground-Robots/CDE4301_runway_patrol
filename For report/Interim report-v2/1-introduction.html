@@ -70,7 +70,7 @@
       
       <!-- Apple Section Header -->
       <div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
-        <div class="apple-hero-badge">Section 1.0. Introduction and problem defintion</div>
+        <div class="apple-hero-badge">Section 1.0 · Introduction and problem definition</div>
         <h1 class="apple-section-title" style="font-size: clamp(2.4rem, 5vw, 3.8rem);">
           Foreign Object Debris,<br>
           small objects that cause massive headaches.
@@ -80,296 +80,96 @@
         </p>
       </div>
 
-        <!-- SECTION 1.1: PROBLEM DEFINITION & LIT REVIEW -->
-        <div class="card-box">
+        <!-- SECTION 1.1: THE PROBLEM -->
+        <div class="card-box intro-sec" id="sec-problem">
           <div class="card-header">
-            <div class="card-title">What is the problem?</div>
+            <div><span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 1.1</span><div class="card-title">What is the problem?</div></div>
             <a href="7-documentation/literature/problem-statement.html" class="btn btn-deep-dive">📖 Read Full Introduction Spec </a>
           </div>
 
+          <h3 class="intro-h3">A case study: Air France Flight 4590</h3>
           <div class="figure-card" style="margin: 16px 0;">
             <img src="assets/plane_on_fire.png" alt="Air France Flight 4590 aircraft on fire shortly after takeoff" class="img-zoomable" style="max-height: 380px;">
             <div class="figure-caption">Air France Flight 4590 shortly after takeoff.</div>
           </div>
-
-          <p style="margin-bottom: 16px;">
-            The imperative to transition from periodic manual sweeps to automated, real-time <strong>Foreign Object Debris (FOD) detection</strong> was dramatically catalyzed by the tragic loss of Air France Flight 4590 in July 2000 [1]. A titanium alloy strip that fell from an earlier flight cut the aircraft's tire and sent a large chunk of the tire into the underside of the aircraft's left wing. This punctured the fuel tank, shortly after which the engines caught fire and stalled. Finally, the aircraft crashed head-on into a nearby hotel two minutes after takeoff, killing all 109 people aboard and four people in the hotel [3].
+          <p class="intro-p">
+            The need to move from periodic manual sweeps to automated, real-time <strong>Foreign Object Debris (FOD)</strong> detection was made painfully clear by the loss of Air France Flight 4590 in July 2000 (BEA, 2002). A titanium alloy strip that had fallen from an earlier flight cut the Concorde's tyre and sent a large piece of it into the underside of the left wing. This punctured a fuel tank, shortly after which the engines caught fire and lost power. The aircraft crashed into a nearby hotel two minutes after takeoff, killing all 109 people aboard and four people on the ground.
           </p>
-
           <div class="figure-card" style="margin-top: 16px;">
             <img src="assets/titanium_strip.png" alt="Titanium strip recovered from the runway after the Air France Flight 4590 accident" class="img-zoomable" style="max-height: 380px;">
-            <div class="figure-caption">Titanium strip that caused the tragic Airfrance accident</div>
+            <div class="figure-caption">The titanium strip that caused the Air France Flight 4590 accident.</div>
           </div>
 
-          <p style="margin-bottom: 16px;">
-            The financial penalty caused by FOD is estimated to cost the global aviation industry \$22 Billion USD [2]. This is an increase from an earlier estimate in 2022 at \$14 Billion [1] USD and \$4 Billion in 2015. The Federal Aviation Administration projects that investment in current FOD Technologies shows net financial benefit and a break-even potential in 1-9 years. These trends underscore the growing demand for an automated solution for this global aviation headache.
+          <h3 class="intro-h3">The global cost of FOD</h3>
+          <div class="intro-stat">
+            <div class="intro-stat-num">USD 22.7 billion</div>
+            <div class="intro-stat-label">Upper estimate of the annual global cost of FOD to the aviation industry (Hilburn &amp; Pesmen, FAA, 2023)</div>
+          </div>
+          <p class="intro-p">
+            Estimates of what FOD costs the global aviation industry each year now range up to USD 22.7 billion, up from earlier estimates of USD 14 billion (2022) and USD 4 billion (2015). The Federal Aviation Administration projects that investment in current FOD technologies shows a net financial benefit, with a break-even period of 1 to 9 years. These trends underscore the growing demand for an automated solution to this global aviation headache.
           </p>
+          <div class="figure-card" style="margin-top: 16px;">
+            <img src="assets/Example_of_FOD.jpg" alt="Airfield Foreign Object Debris Hazard Example" class="img-zoomable" style="max-height: 380px;">
+            <div class="figure-caption">Typical airfield FOD hazards: loose fasteners, hardware, asphalt and rubber fragments.</div>
+          </div>
 
-    <div class="figure-card" style="margin-top: 16px;">
-      <img src="assets/Example_of_FOD.jpg" alt="Airfield Foreign Object Debris Hazard Example" class="img-zoomable" style="max-height: 380px;">
-      <div class="figure-caption">Figure 1: Typical Airfield Foreign Object Debris (FOD) Hazards (Loose Fasteners, Hardware, Asphalt &amp; Rubber Fragments)</div>
-    </div>
-    
+          <h3 class="intro-h3">Closer to home: Singapore's manpower challenge</h3>
+          <p class="intro-p">
+            Singapore is facing declining birth rates, which means less manpower for its conscript army. In a 2022 parliamentary reply, the then Minister for Defence, Dr Ng Eng Hen, described low fertility as a significant structural challenge for the SAF, one that has forced a re-look across the entire SAF "to leverage technology to improve manpower productivity" (MINDEF, 2022).
+          </p>
+          <div class="callout callout-emerald" style="margin-top: 14px;"><strong>This is exactly what our project strives to do:</strong> use technology to take repetitive, manpower-intensive FOD work off people's hands.</div>
         </div>
 
-        <!-- LITERATURE BEDROCK: MULTI-ROBOT FOD CLEARANCE -->
-        <div class="card-box" style="border-left: 4px solid var(--accent-blue); margin-bottom: 24px;">
+        <!-- SECTION 1.2: WHO IS AFFECTED -->
+        <div class="card-box intro-sec" id="sec-affected">
           <div class="card-header">
-            <div>
-              <span class="badge badge-blue" style="margin-bottom: 6px;">Literature Review</span>
-              <h3 style="font-size: 20px; margin: 0; color: var(--text-main);">The Multi-Robot Coordination Bedrock for FOD HUNTER</h3>
-            </div>
-            <span class="badge badge-blue">Öztürk &amp; Kuzucuoğlu, 2016</span>
+            <div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 1.2</span><div class="card-title">Who is affected by the problem?</div></div>
           </div>
 
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 14px 0 12px;">
-            The research conducted by <strong>Savaş Öztürk</strong> and <strong>Ahmet Emin Kuzucuoğlu (2016)</strong> establishes the foundational precedence and theoretical bedrock for FOD HUNTER. In their seminal paper, <em>“A Multi-Robot Coordination Approach for Autonomous Runway Foreign Object Debris (FOD) Clearance,”</em> the authors developed a comprehensive experimental framework simulating runway-clearance operations at Istanbul Atatürk Airport.
-          </p>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0 0 14px;">
-            Their study compared traditional manual collection, which relies on dispatching human-operated “Follow-Me” trucks, against three progressive phases of automated multi-robot coordination (ASP1-ASP3). These phases used heat-map clustering and the Hungarian (Kuhn-Munkres) algorithm for optimal task allocation.
-          </p>
-
-                    <h4 style="font-size: 16px; color: var(--text-main); margin: 24px 0 8px;">Scenario comparison and sensitivity heat map from the study</h4>
-          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin: 0 0 16px;">
-            The complete operational comparison reproduced from <strong>Öztürk and Kuzucuoğlu (2016)</strong> directly integrates the operational cost-delay parameters with the five-year sensitivity heat map across Istanbul Atatürk Airport operational simulations:
-          </p>
-
-          <!-- INTEGRATED SCIENTIFIC FIGURE -->
-          <div class="paper-figure-container">
-            <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; font-family: var(--font-mono, monospace);">
-              Scenario comparison and five-year usage and cost sensitivity heat map (Öztürk &amp; Kuzucuoğlu, 2016).
-            </div>
-            
-            <!-- Baseline Scenario Comparison Table (Faithful Executive Reproduction) -->
-            <div class="scenario-table-card">
-              <div class="scenario-scroll-container">
-                <table class="scenario-table">
-                  <thead>
-                    <!-- Group Header Row -->
-                    <tr>
-                      <th rowspan="2" class="scenario-metric-hdr-cell"></th>
-                      <th colspan="4" class="scenario-group-cell asp3 scenario-sep-right">ASP3</th>
-                      <th colspan="4" class="scenario-group-cell scenario-sep-right">ASP2</th>
-                      <th colspan="4" class="scenario-group-cell scenario-sep-right">ASP1</th>
-                      <th colspan="3" class="scenario-group-cell ms">MS</th>
-                    </tr>
-                    <!-- Subheader Row -->
-                    <tr>
-                      <!-- ASP3 -->
-                      <th class="scenario-sub-cell">20 robots</th>
-                      <th class="scenario-sub-cell">15 robots</th>
-                      <th class="scenario-sub-cell optimal">10 robots</th>
-                      <th class="scenario-sub-cell scenario-sep-right">5 robots</th>
-                      <!-- ASP2 -->
-                      <th class="scenario-sub-cell">20 robots</th>
-                      <th class="scenario-sub-cell">15 robots</th>
-                      <th class="scenario-sub-cell">10 robots</th>
-                      <th class="scenario-sub-cell scenario-sep-right">5 robots</th>
-                      <!-- ASP1 -->
-                      <th class="scenario-sub-cell">20 robots</th>
-                      <th class="scenario-sub-cell">15 robots</th>
-                      <th class="scenario-sub-cell">10 robots</th>
-                      <th class="scenario-sub-cell scenario-sep-right">5 robots</th>
-                      <!-- MS -->
-                      <th class="scenario-sub-cell">5 trucks</th>
-                      <th class="scenario-sub-cell">3 trucks</th>
-                      <th class="scenario-sub-cell">1 truck</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Metric Row 1: Base Cost -->
-                    <tr>
-                      <td class="scenario-metric-cell">BASE COST ($) &rarr;</td>
-                      <!-- ASP3 -->
-                      <td class="scenario-val">2.660.000</td>
-                      <td class="scenario-val">2.282.500</td>
-                      <td class="scenario-val optimal">1.905.000</td>
-                      <td class="scenario-val scenario-sep-right">1.527.500</td>
-                      <!-- ASP2 -->
-                      <td class="scenario-val">2.660.000</td>
-                      <td class="scenario-val">2.282.500</td>
-                      <td class="scenario-val">1.905.000</td>
-                      <td class="scenario-val scenario-sep-right">1.527.500</td>
-                      <!-- ASP1 -->
-                      <td class="scenario-val">2.660.000</td>
-                      <td class="scenario-val">2.282.500</td>
-                      <td class="scenario-val">1.905.000</td>
-                      <td class="scenario-val scenario-sep-right">1.527.500</td>
-                      <!-- MS -->
-                      <td class="scenario-val">2.825.000</td>
-                      <td class="scenario-val">1.975.000</td>
-                      <td class="scenario-val">1.125.000</td>
-                    </tr>
-                    <!-- Metric Row 2: Average Delay Time -->
-                    <tr>
-                      <td class="scenario-metric-cell">AVERAGE DELAY TIME FOR EACH FOD COLLECTION OPERATION (s.) &rarr;</td>
-                      <!-- ASP3 -->
-                      <td class="scenario-val">626</td>
-                      <td class="scenario-val">635</td>
-                      <td class="scenario-val optimal">648</td>
-                      <td class="scenario-val scenario-sep-right">1057</td>
-                      <!-- ASP2 -->
-                      <td class="scenario-val">787</td>
-                      <td class="scenario-val">853</td>
-                      <td class="scenario-val">836</td>
-                      <td class="scenario-val scenario-sep-right">1331</td>
-                      <!-- ASP1 -->
-                      <td class="scenario-val">598</td>
-                      <td class="scenario-val">796</td>
-                      <td class="scenario-val">901</td>
-                      <td class="scenario-val scenario-sep-right">1166</td>
-                      <!-- MS -->
-                      <td class="scenario-val">853</td>
-                      <td class="scenario-val">989</td>
-                      <td class="scenario-val worst">1468</td>
-                    </tr>
-                    <!-- Metric Row 3: Cost of Delay -->
-                    <tr>
-                      <td class="scenario-metric-cell">COST OF DELAY AT EACH OPERATION (USAGE) ($) &rarr;</td>
-                      <!-- ASP3 -->
-                      <td class="scenario-val">15.638</td>
-                      <td class="scenario-val">15.875</td>
-                      <td class="scenario-val optimal">16.205</td>
-                      <td class="scenario-val scenario-sep-right">26.433</td>
-                      <!-- ASP2 -->
-                      <td class="scenario-val">19.670</td>
-                      <td class="scenario-val">21.328</td>
-                      <td class="scenario-val">20.890</td>
-                      <td class="scenario-val scenario-sep-right">33.278</td>
-                      <!-- ASP1 -->
-                      <td class="scenario-val">14.955</td>
-                      <td class="scenario-val">19.893</td>
-                      <td class="scenario-val">22.533</td>
-                      <td class="scenario-val scenario-sep-right">29.153</td>
-                      <!-- MS -->
-                      <td class="scenario-val">21.323</td>
-                      <td class="scenario-val">24.728</td>
-                      <td class="scenario-val worst">36.698</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- Interactive AnyChart Heat Map -->
-            <div style="background: rgba(0, 0, 0, 0.08); border-radius: 8px; padding: 12px 10px 10px; border: 1px solid var(--border-color);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; padding: 0 6px;">
-                <div style="font-size: 12px; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.05em;">
-                  Five-Year Sensitivity Heat Map across 22 Usage Frequencies
-                </div>
-                <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono, monospace);">
-                   Hover cells to inspect sensitivity tier &amp; lifecycle costs
-                </div>
-              </div>
-              <div id="anychart-heatmap-container" style="width: 100%; min-height: 580px; height: 620px;"></div>
-
-              <!-- Figure Footnote (Inside the box, directly below the legend) -->
-              <div style="margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding-left: 6px; padding-right: 6px;">
-                <span style="font-size: 11px; color: var(--text-muted); font-style: italic;">
-                  ASP: Autonomous System Phase; MS: Manual System. Runway delay penalty benchmarked at USD 1,500/min.
-                </span>
-                <span style="font-size: 11px; color: var(--text-muted);">
-                  Öztürk &amp; Kuzucuoğlu (2016)
-                </span>
-              </div>
-            </div>
+          <h3 class="intro-h3">Locally</h3>
+          <div class="intro-grid-2">
+            <figure class="intro-fig">
+              <div class="intro-img"><img src="assets/intro/who-rsaf.jpg" alt="Republic of Singapore Air Force personnel lined up on the airfield beside a fighter jet" loading="lazy" onerror="this.closest('figure').classList.add('missing')"><span class="intro-missing">Image to be added</span></div>
+              <figcaption><strong>Republic of Singapore Air Force (RSAF)</strong><span>Photo: RSAF Facebook page, 2024</span></figcaption>
+            </figure>
+            <figure class="intro-fig">
+              <div class="intro-img"><img src="assets/intro/who-caas.jpg" alt="Civil Aviation Authority of Singapore officers on the airside apron beside an aircraft" loading="lazy" onerror="this.closest('figure').classList.add('missing')"><span class="intro-missing">Image to be added</span></div>
+              <figcaption><strong>Civil Aviation Authority of Singapore (CAAS)</strong><span>Photo: CAAS, 2024</span></figcaption>
+            </figure>
           </div>
 
-          <script src="js/heatmap.js?v=3.0"></script>
-
-          <h4 style="font-size: 16px; color: var(--text-main); margin: 18px 0 8px;">Key findings</h4>
-          <ol style="padding-left: 22px; font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px;">
-            <li style="margin-bottom: 10px;"><strong>Dramatic reduction in runway downtime:</strong> Traditional manual dispatch using a single truck required an average runway-closure time of <strong>1,468 seconds (approximately 24.5 minutes)</strong> per clearance event. An optimised fleet of 10 coordinated autonomous rovers (ASP3) reduced the average clearance downtime to <strong>648 seconds (approximately 10.8 minutes)</strong>, representing a reduction of more than 56% in operational closure time.</li>
-            <li><strong>Nearly 50% reduction in five-year financial costs:</strong> Including capital expenditure, 24/7 personnel salaries, vehicle maintenance, and airport delay penalties calculated at <strong>USD 1,500 per minute</strong> of runway closure, the traditional manual truck system reached <strong>USD 19,473,750</strong> over five years. The 10-robot autonomous system reduced the burden to <strong>USD 10,007,500</strong>, delivering <strong>USD 9,466,250</strong> in net economic savings, or approximately a 48.6% lifecycle cost reduction.</li>
-          </ol>
-
-          <div class="callout callout-emerald" style="margin: 16px 0;">
-            <strong>Integrating this bedrock into the FOD HUNTER narrative:</strong> This empirical research demonstrates that a multi-robot autonomous solution is not merely theoretical. It is a commercially viable strategy capable of reducing airfield downtime, removing human workers from active taxiway hazards, and cutting long-term FOD maintenance costs.
-          </div>
-
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0 0 8px;">
-            By adopting Öztürk and Kuzucuoğlu’s multi-agent coordination framework as a foundation, FOD HUNTER aims to translate and scale these results for high-density international aviation hubs such as Singapore Changi Airport:
+          <h3 class="intro-h3">Not only local, but global</h3>
+          <p class="intro-p">
+            There are many airports around the world. Take the United States as an example: of the roughly 3,300 airports in the FAA's National Plan of Integrated Airport Systems, only about 30 are large, high-traffic hubs (FAA, NPIAS). The thousands of smaller airports that handle medium to low air traffic still need to keep their runways clear of FOD to the same standard, with less manpower.
           </p>
-          <ul style="padding-left: 22px; font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0;">
-            <li><strong>Productivity and throughput:</strong> Integrating the autonomous UGV fleet directly with fixed airfield detection systems, such as Changi’s iFerret cameras, enables immediate direct-path dispatch without search overhead, targeting clearance windows under five minutes.</li>
-            <li><strong>Enhanced safety standards:</strong> The system replaces manual visual sweeps on hot asphalt and removes ground personnel from hazardous jet-blast zones and active traffic.</li>
-            <li><strong>Economic scalability:</strong> At high-traffic airports where slot delays carry extreme financial penalties, scaling the UGV platform amplifies the multi-million-dollar return on investment demonstrated in the literature.</li>
-          </ul>
-        </div>
 
-        <!-- PRIMARY RESEARCH & PRACTITIONER INTERVIEWS CALLOUT -->
-        <div class="card-box" style="border-left: 4px solid var(--accent-purple); background: linear-gradient(180deg, var(--card-bg) 0%, rgba(163, 113, 247, 0.03) 100%); margin-bottom: 24px;">
-          <div style="text-align: center;">
-            <div>
-              <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 6px;">
-                <span class="badge badge-purple">Primary Research</span>
-              </div>
-              <h3 style="font-size: 16px; margin: 0 0 6px 0; color: var(--text-main);">
-                🎙️ Field Interview
-              </h3>
-              <p style="font-size: 13px; color: var(--text-muted); margin: 0 auto; line-height: 1.5; max-width: 780px;">
-                Insights gained from potential users of our project from primary interviews with <strong>Mr. Harry Lim</strong> (IOI Inspire), <strong>3SG(NS) Prady</strong> (Air Force Technician, Paya Lebar Air Base), and <strong>LTA(NS) Elnathan</strong> (Air Traffic Controller, Tengah Air Base).
-              </p>
-              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; max-width: 1080px; margin: 22px auto 0;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0;">
-                  <div aria-hidden="true" style="width: 46px; height: 46px; display: grid; place-items: center; flex: 0 0 46px; border-radius: 50%; background: linear-gradient(145deg, #dbeafe, #93c5fd); font-size: 25px; box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18);">🧑🏻‍💼</div>
-                  <div>
-                    <strong style="display: block; font-size: 12.5px; color: var(--text-main);">Harry Lim</strong>
-                    <span style="font-size: 11.5px; color: var(--accent-blue);">Industry Partner</span>
-                  </div>
-                  <div style="position: relative; width: 100%; margin-top: 8px; padding: 12px 14px; border-radius: 18px; background: #0a84ff; color: #fff; font-size: 12.5px; line-height: 1.5; text-align: left; box-shadow: 0 6px 16px rgba(10, 132, 255, 0.22);">
-                    <span style="position: absolute; top: -7px; left: 50%; width: 14px; height: 14px; transform: translateX(-50%) rotate(45deg); background: #0a84ff;"></span>
-                    <span style="position: relative;">“It's a manual process. They drive and collect with no fixed route, just manual eyeballing and pickup.”<br><br>“Small metal pieces, maybe palm-sized.”<br><br>“The lower birth rates mean that the roles each person plays can be enhanced with technology to keep up with productivity.”<br><br>“There must be a way to improve the process.”</span>
-                  </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0;">
-                  <div aria-hidden="true" style="width: 46px; height: 46px; display: grid; place-items: center; flex: 0 0 46px; border-radius: 50%; background: linear-gradient(145deg, #dcfce7, #86efac); font-size: 25px; box-shadow: 0 5px 12px rgba(22, 163, 74, 0.18);">🧑🏽‍🔧</div>
-                  <div>
-                    <strong style="display: block; font-size: 12.5px; color: var(--text-main);">3SG(NS) Prady</strong>
-                    <span style="font-size: 11.5px; color: var(--accent-emerald);">Air Force Technician</span>
-                  </div>
-                  <div style="position: relative; width: 100%; margin-top: 8px; padding: 12px 14px; border-radius: 18px; background: #34c759; color: #fff; font-size: 12.5px; line-height: 1.5; text-align: left; box-shadow: 0 6px 16px rgba(52, 199, 89, 0.22);">
-                    <span style="position: absolute; top: -7px; left: 50%; width: 14px; height: 14px; transform: translateX(-50%) rotate(45deg); background: #34c759;"></span>
-                    <span style="position: relative;">“My worst experience is using a broom and dustpan, walking the entire runway looking for FOD to sweep up.”<br><br>“Even if the whole airbase worked together to clean the runway, it would still take 1 hour.”<br><br>“Five pickup trucks will drive around the runway; it's a very manual process.”<br><br>“There was once the entire pavement came out during a landing.”<br><br>“I wish we had the solution you are developing!”</span>
-                  </div>
-                </div>
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0;">
-                  <div aria-hidden="true" style="width: 46px; height: 46px; display: grid; place-items: center; flex: 0 0 46px; border-radius: 50%; background: linear-gradient(145deg, #fef3c7, #fcd34d); font-size: 25px; box-shadow: 0 5px 12px rgba(217, 119, 6, 0.18);">🧑🏻‍✈️</div>
-                  <div>
-                    <strong style="display: block; font-size: 12.5px; color: var(--text-main);">LTA(NS) Elnathan</strong>
-                    <span style="font-size: 11.5px; color: var(--accent-amber);">Air Traffic Controller</span>
-                  </div>
-                  <div style="position: relative; width: 100%; margin-top: 8px; padding: 12px 14px; border-radius: 18px; background: #ff9f0a; color: #fff; font-size: 12.5px; line-height: 1.5; text-align: left; box-shadow: 0 6px 16px rgba(255, 159, 10, 0.22);">
-                    <span style="position: absolute; top: -7px; left: 50%; width: 14px; height: 14px; transform: translateX(-50%) rotate(45deg); background: #ff9f0a;"></span>
-                    <span style="position: relative;">“If something gets into the engine, they have to disassemble the entire engine to make sure that it's functional, wasting a lot of time.”<br><br>“We do FOD anywhere the aircraft goes, so not just the runway.”<br><br>“Most times, there's nothing when we do the FOD inspection.”</span>
-                  </div>
-                </div>
-              </div>
+          <h3 class="intro-h3">Stakeholder map</h3>
+          <div class="stake-map" role="img" aria-label="Stakeholder map by interest and power. High interest, low power: industry partner. High interest, high power: RSAF. Low interest, low power: RSAF national servicemen interviewed. Low interest, high power: CAAS representative.">
+            <div class="stake-axis-y">Interest ↑</div>
+            <div class="stake-grid">
+              <div class="stake-q"><span class="stake-chip">Industry partner</span><span class="stake-note">Insurance sector</span></div>
+              <div class="stake-q"><span class="stake-chip stake-strong">RSAF</span></div>
+              <div class="stake-q"><span class="stake-chip">LTA(NS) James Doe</span><span class="stake-chip">3SG(NS) John Doe</span><span class="stake-note">RSAF national servicemen</span></div>
+              <div class="stake-q"><span class="stake-chip stake-strong">CAAS representative</span></div>
             </div>
+            <div class="stake-axis-x">Power →</div>
           </div>
-        <!-- PRIMARY RESEARCH DETAILS -->
-        <div style="border-top: 1px solid var(--border-color); margin-top: 28px; padding-top: 24px;">
-          <div class="card-header">
-            <div class="card-title">📋 Primary Research Findings</div>
-            <span class="badge badge-emerald">Interview Evidence</span>
-          </div>
-          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 18px;">
-            The interviews translate directly into the project requirements. Use the dropdowns to read each interview transcript, then review the recurring operational findings below.
-          </p>
 
+          <h3 class="intro-h3">Interviews</h3>
+          <p class="intro-p">We spoke to many stakeholders. Names are withheld to protect the interviewees. Here are the full interview transcripts:</p>
           <div style="display: grid; gap: 10px; margin-bottom: 22px;">
             <details style="border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px; background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <summary style="cursor: pointer; color: var(--accent-blue); font-weight: 700;">Show transcript · Mr. Harry Lim · IOI Inspire</summary>
+              <summary style="cursor: pointer; color: var(--accent-blue); font-weight: 700;">Show transcript · Mr Industry Partner</summary>
               <div style="padding-top: 10px; color: var(--text-muted); font-size: 13px; line-height: 1.6; white-space: pre-wrap;">
 Interview transcript
 
 Speaker 1: Can you please state your name?
 
-Speaker 2: Harry Lim. Harry.
+Speaker 2: [Name withheld.]
 
 Speaker 1: What is your involvement with the project on a more macro level?
 
-Speaker 2: Okay. This project is part of a collaborative effort between Air Force, NUS, and my company, IOI Inspire. This project, hopefully, can help to boost the relationship between Air Force and us. So over here, you can take IOI Inspire as the catalyst.
+Speaker 2: Okay. This project is part of a collaborative effort between Air Force, NUS, and my company. This project, hopefully, can help to boost the relationship between Air Force and us. So over here, you can take my company as the catalyst.
 
 Speaker 1: Understand.
 
@@ -621,109 +421,109 @@ Speaker 2: No worries.
               </div>
             </details>
             <details style="border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px; background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <summary style="cursor: pointer; color: var(--accent-emerald); font-weight: 700;">Show transcript · 3SG(NS) Prady · Paya Lebar Air Base</summary>
+              <summary style="cursor: pointer; color: var(--accent-emerald); font-weight: 700;">Show transcript · 3SG(NS) John Doe · Paya Lebar Air Base</summary>
               <div style="padding-top: 10px; color: var(--text-muted); font-size: 13px; line-height: 1.6; white-space: pre-wrap;">
 Interview transcript
 
 Interviewer: Just for the record, can you tell me what's your name, and like, your rank, and what's your role in the whole process?
 
-Prady: So, my name's Prady. You can call me Prady, because I don't like using my full name. I was a third sergeant, air force technician, and I was in the fighter series squadron. So that's ground systems, like arrestor wire and stuff. And then I had to clean FOD also.
+John Doe: [Name withheld.] I was a third sergeant, air force technician, and I was in the fighter series squadron. So that's ground systems, like arrestor wire and stuff. And then I had to clean FOD also.
 
 Interviewer: So, was like, wasn't it like a part of your job, or like is it the only job that you do?
 
-Prady: It's a part of my job. Because after we work, we have to clean, and, um, at the times that we work, the people who drive the FOD vehicle are not in base. So we have to take a broom and...
+John Doe: It's a part of my job. Because after we work, we have to clean, and, um, at the times that we work, the people who drive the FOD vehicle are not in base. So we have to take a broom and...
 
 Interviewer: Oh my god! So you guys take a broom and you just walk the...
 
-Prady: I can't specify how long, it's ballpark of 4 kilometers, but it's around there. Walk and broom. Walk and broom. And the broom is like that [expletive] broom.
+John Doe: I can't specify how long, it's ballpark of 4 kilometers, but it's around there. Walk and broom. Walk and broom. And the broom is like that [expletive] broom.
 
 Interviewer: Like a normal broom?
 
-Prady: Just a normal broom. In fact, it makes more FOD than it cleans up.
+John Doe: Just a normal broom. In fact, it makes more FOD than it cleans up.
 
 Interviewer: In your experience, how often do you deal with FOD in a week?
 
-Prady: Oh, every day. Every day you need to do.
+John Doe: Oh, every day. Every day you need to do.
 
 Interviewer: What do you do on a daily operational basis, and how does FOD fit into that picture?
 
-Prady: We have daily checks on all our systems. If there was a storm, sometimes there is a lightning strike, the runway will crack, and there are rocks that we need to pick up. Sometimes the lights will also crack, so the glass needs to be cleaned up.
+John Doe: We have daily checks on all our systems. If there was a storm, sometimes there is a lightning strike, the runway will crack, and there are rocks that we need to pick up. Sometimes the lights will also crack, so the glass needs to be cleaned up.
 
-Prady: After bigger servicing, we open the arrestor gear machine on the runway, take the gears and parts out, fix it, and put everything back together. Sometimes you'll find a screw here, a screw there. Then you have to clean that up and walk around the area to make sure that nothing dropped. Because if it goes into the intake, then you're [expletive].
+John Doe: After bigger servicing, we open the arrestor gear machine on the runway, take the gears and parts out, fix it, and put everything back together. Sometimes you'll find a screw here, a screw there. Then you have to clean that up and walk around the area to make sure that nothing dropped. Because if it goes into the intake, then you're [expletive].
 
 Interviewer: Why would there be screws when aviation traditionally uses a lot of rivets?
 
-Prady: For these ones, vibration's not as big a factor. There's a lot of screws. We just locktight and screw it in.
+John Doe: For these ones, vibration's not as big a factor. There's a lot of screws. We just locktight and screw it in.
 
 Interviewer: Is it an everyday annoyance?
 
-Prady: Yes, yes.
+John Doe: Yes, yes.
 
 Interviewer: What current methods do you adopt other than using the broom and walking the air strip?
 
-Prady: Officially, there are four or five cleaning trucks. They sweep the entire runway like road-sweeping trucks. They do it for two hours every morning and two hours every night before and after flying.
+John Doe: Officially, there are four or five cleaning trucks. They sweep the entire runway like road-sweeping trucks. They do it for two hours every morning and two hours every night before and after flying.
 
-Prady: Those are contracted out. Once they are off duty, anything that happens is on us. We take a tractor or a D-Max, turn the lights all the way up, walk beside the car, watch for anything on the floor, and broom it up.
+John Doe: Those are contracted out. Once they are off duty, anything that happens is on us. We take a tractor or a D-Max, turn the lights all the way up, walk beside the car, watch for anything on the floor, and broom it up.
 
 Interviewer: So it's like walking speed?
 
-Prady: Yeah, pretty much. You have to do it for the entire strip. It takes quite long, upwards of an hour plus. Horrible. Very manual process.
+John Doe: Yeah, pretty much. You have to do it for the entire strip. It takes quite long, upwards of an hour plus. Horrible. Very manual process.
 
 Interviewer: Has the Air Force tried any other method to innovate in this area?
 
-Prady: We tried to use a vacuum cleaner once, but it didn't work.
+John Doe: We tried to use a vacuum cleaner once, but it didn't work.
 
 Interviewer: Why did it not work?
 
-Prady: If you're walking and brooming, it's the same as vacuuming and brooming. You're still walking. It's still slow and you still have to do manual work. Someone tried to tie a vacuum cleaner to the car, but that also doesn't work.
+John Doe: If you're walking and brooming, it's the same as vacuuming and brooming. You're still walking. It's still slow and you still have to do manual work. Someone tried to tie a vacuum cleaner to the car, but that also doesn't work.
 
 Interviewer: What common FOD do you encounter every day?
 
-Prady: Screws, rivets, rocks. Actually, bones are quite common. Rats die on the runway, get roasted by the engine, and then you see the bones. Shattered glass is quite common too.
+John Doe: Screws, rivets, rocks. Actually, bones are quite common. Rats die on the runway, get roasted by the engine, and then you see the bones. Shattered glass is quite common too.
 
 Interviewer: What is the volume that you pick up in a one- or two-hour session?
 
-Prady: Maybe a handful. It's not too much because the sweepers take care of most of it, but the manual one is probably just a handful.
+John Doe: Maybe a handful. It's not too much because the sweepers take care of most of it, but the manual one is probably just a handful.
 
-Prady: Paya Lebar Air Base is really old, so the pavement is cracked. The pavement keeps coming up. There was a C-17 landing one day, and because of the vibration, the whole pavement came out, and you have to carry it out.
+John Doe: Paya Lebar Air Base is really old, so the pavement is cracked. The pavement keeps coming up. There was a C-17 landing one day, and because of the vibration, the whole pavement came out, and you have to carry it out.
 
 Interviewer: Do you think there will be friction for the Air Force to adopt a new process to clear FOD?
 
-Prady: I don't think so. When it comes to new technologies, the RSAF adopts very fast. Some regulars are traditional, and they need to see that it works better than their method, otherwise they will not adopt.
+John Doe: I don't think so. When it comes to new technologies, the RSAF adopts very fast. Some regulars are traditional, and they need to see that it works better than their method, otherwise they will not adopt.
 
 Interviewer: Do you know how much FOD costs the Air Force in damages?
 
-Prady: I cannot share exact figures, but during training they showed us videos where a rivet went inside an air intake. For the C-130, it went into the prop, and they had to replace the entire thing.
+John Doe: I cannot share exact figures, but during training they showed us videos where a rivet went inside an air intake. For the C-130, it went into the prop, and they had to replace the entire thing.
 
 Interviewer: Could more manpower make FOD collection faster?
 
-Prady: We have about four kilometers of runway. On RSAF Safety Day, the entire air base goes down to do a FOD walk together. Even then it takes us one hour to clean.
+John Doe: We have about four kilometers of runway. On RSAF Safety Day, the entire air base goes down to do a FOD walk together. Even then it takes us one hour to clean.
 
 Interviewer: What do you think about existing solutions such as friction drag mats and specialized vehicles?
 
-Prady: The specialized vehicles help us a lot. They are the first tier to clear, and then you guys are the second tier. They clear most of it, but they are inside the vehicle and cannot see what's on the ground. The people on the ground are the only ones who can verify if it is a threat.
+John Doe: The specialized vehicles help us a lot. They are the first tier to clear, and then you guys are the second tier. They clear most of it, but they are inside the vehicle and cannot see what's on the ground. The people on the ground are the only ones who can verify if it is a threat.
 
 Interviewer: Our project is to have a drone and a UGV work together, with the drone scanning for small pieces and giving instructions to the UGV to collect them.
 
-Prady: The smaller pieces are what we need help with. The big sweeper does not pick up the small pieces. It will always miss them. Rivets are the ones that can actually cause damage, and sometimes the sweeper will not pick them up.
+John Doe: The smaller pieces are what we need help with. The big sweeper does not pick up the small pieces. It will always miss them. Rivets are the ones that can actually cause damage, and sometimes the sweeper will not pick them up.
 
-Prady: We already use drones for some operations, such as identifying potholes and their urgency. But the problem with drones in an airbase is that you need special permission every time you fly them, because you need to turn off the airspace.
+John Doe: We already use drones for some operations, such as identifying potholes and their urgency. But the problem with drones in an airbase is that you need special permission every time you fly them, because you need to turn off the airspace.
 
-Prady: The paperwork takes so long that once every couple of months, just for publicity, we'll fly. Other than that, we'll manually do it ourselves.
+John Doe: The paperwork takes so long that once every couple of months, just for publicity, we'll fly. Other than that, we'll manually do it ourselves.
 
 Interviewer: Changi Airport has iFerret, a camera that can spot exactly where FOD is on the runway and tell someone where to clean it.
 
-Prady: I wish we had that. I have an idea for you. You know those high-precision 3D scanners? You could pair expensive lidar with computer vision and cameras, use runway markers, and create a 3D scan of the runway without any FOD. Then it could identify anything additional. But you need very high precision.
+John Doe: I wish we had that. I have an idea for you. You know those high-precision 3D scanners? You could pair expensive lidar with computer vision and cameras, use runway markers, and create a 3D scan of the runway without any FOD. Then it could identify anything additional. But you need very high precision.
 
-Prady: We tried it for potholes. The quotation for the 3D scanner was \$50,000, but the RSAF is not like NUS with a strict limit. They bought it already.
+John Doe: We tried it for potholes. The quotation for the 3D scanner was \$50,000, but the RSAF is not like NUS with a strict limit. They bought it already.
 
-Prady: Another thing we do is use a leaf blower and blow FOD into the grass. Technically it is off the runway, but if it is still close to the runway, it can still be sucked back in.
+John Doe: Another thing we do is use a leaf blower and blow FOD into the grass. Technically it is off the runway, but if it is still close to the runway, it can still be sucked back in.
 
-Prady: I'm all supportive of this [expletive].
+John Doe: I'm all supportive of this [expletive].
               </div>
             </details>
             <details style="border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px; background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <summary style="cursor: pointer; color: var(--accent-amber); font-weight: 700;">Show transcript · LTA(NS) Elnathan · Tengah Air Base</summary>
+              <summary style="cursor: pointer; color: var(--accent-amber); font-weight: 700;">Show transcript · LTA(NS) James Doe · Tengah Air Base</summary>
               <div style="padding-top: 10px; color: var(--text-muted); font-size: 13px; line-height: 1.6; white-space: pre-wrap;">
 Interview transcript
 
@@ -778,7 +578,22 @@ Speaker 2: No worries, man. All the best.
             </details>
           </div>
 
-          <h3 style="font-size: 16px; color: var(--accent-blue); margin: 0 0 12px;">Five operational findings</h3>
+          <h3 class="intro-h3">What we learned</h3>
+          <div class="admin-table-wrapper"><table class="admin-table learn-table"><thead><tr><th>Who</th><th>What they said</th><th>Sentiment</th><th>Key insight</th></tr></thead><tbody>
+            <tr><td rowspan="5"><strong>3SG(NS) John Doe</strong><br><span class="learn-role">RSAF technician, Paya Lebar Air Base</span></td><td>"Walk and broom. Walk and broom… Just a normal broom. In fact, it makes more FOD than it cleans up."</td><td><span class="senti senti-frust">Frustration</span></td><td>When the sweeper contractor is off duty, crews clear ~4 km of runway on foot with brooms.</td></tr>
+            <tr><td>"The big sweeper does not pick up the small pieces. It will always miss the small pieces."</td><td><span class="senti senti-neg">Negative</span></td><td>Small items like rivets, the ones that actually cause damage, slip past current sweepers.</td></tr>
+            <tr><td>"The entire air base goes down to do FOD walk together… And even then it takes us one hour to clean."</td><td><span class="senti senti-frust">Frustration</span></td><td>More manpower doesn't scale: a whole-base FOD walk still takes about an hour.</td></tr>
+            <tr><td>"[A rivet] went into the prop, and then they have to replace the entire thing."</td><td><span class="senti senti-neg">Negative</span></td><td>A single small part can mean a costly engine or propeller replacement (C-130 case).</td></tr>
+            <tr><td>"The paperwork to get it on takes so long that… once every couple months just to show for publicity, we'll fly it."</td><td><span class="senti senti-frust">Frustration</span></td><td>Airspace permissions make on-base drone use impractical.</td></tr>
+            <tr><td rowspan="2"><strong>LTA(NS) James Doe</strong><br><span class="learn-role">Air traffic controller, Tengah Air Base</span></td><td>"It's quite crude, but they just want to say on paper that you can do it."</td><td><span class="senti senti-neg">Negative</span></td><td>Current RSAF drone checks are manual visual reviews, flown only 1–2 times a month.</td></tr>
+            <tr><td>"It could play a huge part into making the runway operational again."</td><td><span class="senti senti-pos">Positive</span></td><td>Biggest value: faster runway recovery after a crash, when every small fragment must be found.</td></tr>
+            <tr><td rowspan="2"><strong>Mr Industry Partner</strong></td><td>"There's no fixed route around the runway. It's pretty random; they go left, right, center."</td><td><span class="senti senti-neg">Negative</span></td><td>Today's inspection is two NSFs eyeballing from a truck at ~40 km/h, with no systematic coverage.</td></tr>
+            <tr><td>"Autonomous vehicle means servicemen can be released for other critical roles, given that the armed forces is shrinking."</td><td><span class="senti senti-pos">Positive</span></td><td>Autonomy frees manpower as the SAF shrinks with lower birth rates.</td></tr>
+            <tr><td rowspan="3"><strong>Ms CAAS Representative</strong><br><span class="learn-role">CAAS, 20+ years at Changi</span></td><td>"You only get 5 minutes… For that extra minute that I give you, I lose one traffic."</td><td><span class="senti senti-ins">Insight</span></td><td>Civil runways allow ~5-minute inspection slots; speed matters more than anything.</td></tr>
+            <tr><td>"You want a drone, but yet you want precision. You want to be able to cover 4 km… It's not so possible."</td><td><span class="senti senti-neg">Negative</span></td><td>There is a trade-off between speed and accuracy.</td></tr>
+            <tr><td>"By investing in iFerret, we effectively shaved off a lot of time… every minute is money."</td><td><span class="senti senti-pos">Positive</span></td><td>Automated detection pays for itself in runway time, but false alarms still need a human to validate.</td></tr>
+          </tbody></table></div>
+          <h3 class="intro-h3">Five operational findings</h3>
           <div style="display: grid; gap: 12px;">
             <div style="padding: 14px; border-left: 3px solid var(--accent-blue); background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
               <strong>1. Current workflow:</strong> Two-person vehicle patrols, contracted sweepers, manual broom walks, and periodic base-wide safety sweeps remain central to runway inspection.
@@ -802,65 +617,42 @@ Speaker 2: No worries, man. All the best.
           </div>
         </div>
 
-        <!-- SECTION 1.2: COMPETITOR ANALYSIS & VALUE PROP -->
-        <div class="card-box" style="margin-top: 32px;">
+        <!-- SECTION 1.3: COMPETITIVE ANALYSIS -->
+        <div class="card-box intro-sec" id="sec-competitors">
           <div class="card-header">
-            <div class="card-title">🔍 Literature Review &amp; Competitor Analysis</div>
+            <div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.3</span><div class="card-title">Competitive analysis</div></div>
             <a href="7-documentation/literature/problem-statement.html" class="btn btn-deep-dive">📖 Read Problem Bottlenecks Spec </a>
           </div>
-
-          <p style="margin-bottom: 16px;">
-            Existing airfield inspection methods suffer from major operational trade-offs across speed, capital cost, and physical remediation capabilities:
-          </p>
-
-          <div class="admin-table-wrapper">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Method / Technology</th>
-                  <th>Sweep Velocity</th>
-                  <th>Physical Remediation</th>
-                  <th>Runway Occupancy Time</th>
-                  <th>Capital Cost</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Manual FOD Walks</strong></td>
-                  <td><span class="badge badge-amber">🐢 Very Slow</span></td>
-                  <td><span class="badge badge-emerald">🟩 Manual Pick</span></td>
-                  <td><span class="badge badge-amber">❌ High (Hours)</span></td>
-                  <td><span class="badge badge-emerald">🟩 Low Initial</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Fixed Camera Towers (e.g. iFerret™)</strong></td>
-                  <td><span class="badge badge-emerald">⚡ Real-time</span></td>
-                  <td><span class="badge badge-amber">❌ Zero Extraction</span></td>
-                  <td><span class="badge badge-purple">🟩 Zero (Airborne)</span></td>
-                  <td><span class="badge badge-amber">❌ High ($ Millions)</span></td>
-                </tr>
-                <tr>
-                  <td><strong>Single Ground Rover (UGV Only)</strong></td>
-                  <td><span class="badge badge-amber">🐢 Slow Sweep</span></td>
-                  <td><span class="badge badge-emerald">🟩 Local Vacuum</span></td>
-                  <td><span class="badge badge-amber">❌ High Ground Footprint</span></td>
-                  <td><span class="badge badge-blue">🟦 Moderate</span></td>
-                </tr>
-                <tr style="background: var(--accent-purple-light);">
-                  <td><strong>FOD Hunter (Joint UAV + UGV)</strong></td>
-                  <td><span class="badge badge-emerald">⚡ Fast Aerial Grid</span></td>
-                  <td><span class="badge badge-emerald">🟩 Cued Target Vacuum</span></td>
-                  <td><span class="badge badge-emerald">🟩 Optimized (-75%)</span></td>
-                  <td><span class="badge badge-blue">🟦 Cost-Effective</span></td>
-                </tr>
-              </tbody>
-            </table>
+          <p class="intro-p">Existing solutions either <strong>detect</strong> FOD or <strong>collect</strong> it, but rarely do both well. The map below places each solution by its detection and collection performance. <strong>Click any solution</strong> to see how it works, what it does well and where it falls short.</p>
+          <div class="comp-wrap">
+            <div class="comp-plot" id="comp-plot" aria-label="Competitor map: detection performance against collection performance">
+              <div class="comp-axis comp-axis-x"></div><div class="comp-axis comp-axis-y"></div>
+              <span class="comp-label comp-label-y">Detection performance ↑</span>
+              <span class="comp-label comp-label-x">Collection performance →</span>
+            </div>
+            <div class="comp-legend">
+              <span><i class="cl-det"></i>Detection only</span><span><i class="cl-col"></i>Collection only</span><span><i class="cl-both"></i>Detection and collection</span><span><i class="cl-ours"></i>Our solution</span>
+            </div>
+            <div class="comp-detail" id="comp-detail" aria-live="polite"></div>
           </div>
+        </div>
 
-          <div class="callout callout-info">
-            <strong>Unique Value Proposition:</strong> By combining an airborne high-velocity scanner (UAV) with an autonomous targeted extraction rover (UGV), FOD Hunter achieves rapid macro scanning while preserving 100% autonomous physical clearance capability.
+        <!-- SECTION 1.4: USER JOURNEY -->
+        <div class="card-box intro-sec" id="sec-journey">
+          <div class="card-header">
+            <div><span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 1.4</span><div class="card-title">User journey</div></div>
           </div>
-
+          <figure class="intro-fig journey-fig">
+            <div class="intro-img" style="aspect-ratio: 16 / 9;"><img src="assets/intro/user-journey.jpg" alt="Six-panel illustration of the FOD Hunter user journey, from FOD on the runway to the rover returning home" loading="lazy" onerror="this.closest('figure').classList.add('missing')"><span class="intro-missing">Image to be added</span></div>
+          </figure>
+          <ol class="journey">
+            <li><b>FOD on the runway</b><span>Various foreign object debris can be found on the runway, including bolts, nuts, screws, rocks and even dead birds, posing a serious risk to aircraft.</span></li>
+            <li><b>Aerial scanning</b><span>The FOD drone flies over the runway, using cameras and LiDAR to detect and identify FOD.</span></li>
+            <li><b>Data transmission</b><span>The drone transmits the detected FOD locations to FOD Hunter in real time.</span></li>
+            <li><b>Ground navigation</b><span>FOD Hunter acknowledges the location, navigates to the target and uses its onboard sensors to detect and confirm the FOD.</span></li>
+            <li><b>Pick up FOD via vacuum system</b><span>FOD Hunter collects the identified FOD using its brush and vacuum system.</span></li>
+            <li><b>Return to home</b><span>After the runway is cleared, FOD Hunter returns to its home position and the drone lands on top.</span></li>
+          </ol>
           <!-- UAV AND UGV COLLABORATION FIGURE -->
           <div class="figure-card" style="margin: 20px 0 24px 0; text-align: center; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: var(--card-bg);">
             <img src="assets/UAV_and_UGV_collab.png" alt="Collaborative UAV and UGV Multi-Agent Architecture" class="img-zoomable" style="max-height: 380px; width: 100%; object-fit: contain; display: block; margin: 0 auto; background: #0b0f19;">
@@ -869,100 +661,311 @@ Speaker 2: No worries, man. All the best.
             </div>
           </div>
 
-          <div style="margin-top: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-              <h3 style="margin: 0; color: var(--accent-blue);">📸 State-of-the-Art Airfield Inspection Reference Systems</h3>
-              <span style="font-size: 12px; color: var(--text-muted);"><strong style="color: var(--accent-blue);">💡 Click any system card</strong> to view operational principle, tech specs, and limitations</span>
+        </div>
+
+        <!-- SECTION 1.5: DEMONSTRATION -->
+        <div class="card-box intro-sec" id="sec-demo">
+          <div class="card-header">
+            <div><span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 1.5</span><div class="card-title">Demonstration: FOD Hunter × FOD Argus</div></div>
+          </div>
+          <p class="intro-p">Simulation of the full workflow: FOD Argus (UAV) patrols the runway on a pre-planned path and reports detected FOD, and FOD Hunter (UGV) is dispatched to clear it.</p>
+          <figure class="demo-fig">
+            <video controls playsinline preload="metadata" poster="assets/videos/fod-hunter-argus-demo-poster.jpg">
+              <source src="assets/videos/fod-hunter-argus-demo.mp4" type="video/mp4">
+              Your browser does not support embedded video.
+            </video>
+          </figure>
+        </div>
+
+        <!-- SECTION 1.6: WHY A MULTI-ROBOT APPROACH -->
+        <div class="card-box intro-sec" id="sec-multirobot" style="border-left: 4px solid var(--accent-blue);">
+          <div class="card-header">
+            <div>
+              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.6</span>
+              <div class="card-title">Why a multi-robot approach?</div>
+            </div>
+            <span class="badge badge-blue">Öztürk &amp; Kuzucuoğlu, 2016</span>
+          </div>
+
+          <h3 class="intro-h3">Differentiating factor: productivity and long-term savings</h3>
+          <p class="intro-p">In 2016, a research study by Savaş Öztürk and Ahmet Emin Kuzucuoğlu compared a five-year projection of the cost and performance of a manual solution against an autonomous solution at Istanbul Atatürk Airport, working with information from a simulated detection device.</p>
+          <ul class="intro-p" style="padding-left: 20px;">
+            <li><strong>Manual solution:</strong> driving a truck on a fixed route to pick up FOD (as they currently do).</li>
+            <li><strong>Autonomous solution:</strong> deploying a fleet of robots (5, 10, 15 or 20) at evenly (or optimally) spaced stations to pick up FOD.</li>
+          </ul>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 14px 0 12px;">
+            The research conducted by <strong>Savaş Öztürk</strong> and <strong>Ahmet Emin Kuzucuoğlu (2016)</strong> establishes the foundational precedence and theoretical bedrock for FOD HUNTER. In their seminal paper, <em>“A Multi-Robot Coordination Approach for Autonomous Runway Foreign Object Debris (FOD) Clearance,”</em> the authors developed a comprehensive experimental framework simulating runway-clearance operations at Istanbul Atatürk Airport.
+          </p>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0 0 14px;">
+            Their study compared traditional manual collection, which relies on dispatching human-operated “Follow-Me” trucks, against three progressive phases of automated multi-robot coordination (ASP1-ASP3). These phases used heat-map clustering and the Hungarian (Kuhn-Munkres) algorithm for optimal task allocation.
+          </p>
+
+                    <h4 style="font-size: 16px; color: var(--text-main); margin: 24px 0 8px;">Scenario comparison and sensitivity heat map from the study</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin: 0 0 16px;">
+            The complete operational comparison reproduced from <strong>Öztürk and Kuzucuoğlu (2016)</strong> directly integrates the operational cost-delay parameters with the five-year sensitivity heat map across Istanbul Atatürk Airport operational simulations:
+          </p>
+
+          <!-- INTEGRATED SCIENTIFIC FIGURE -->
+          <div class="paper-figure-container">
+            <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; font-family: var(--font-mono, monospace);">
+              Scenario comparison and five-year usage and cost sensitivity heat map (Öztürk &amp; Kuzucuoğlu, 2016).
+            </div>
+            
+            <!-- Baseline Scenario Comparison Table (Faithful Executive Reproduction) -->
+            <div class="scenario-table-card">
+              <div class="scenario-scroll-container">
+                <table class="scenario-table">
+                  <thead>
+                    <!-- Group Header Row -->
+                    <tr>
+                      <th rowspan="2" class="scenario-metric-hdr-cell"></th>
+                      <th colspan="4" class="scenario-group-cell asp3 scenario-sep-right">ASP3</th>
+                      <th colspan="4" class="scenario-group-cell scenario-sep-right">ASP2</th>
+                      <th colspan="4" class="scenario-group-cell scenario-sep-right">ASP1</th>
+                      <th colspan="3" class="scenario-group-cell ms">MS</th>
+                    </tr>
+                    <!-- Subheader Row -->
+                    <tr>
+                      <!-- ASP3 -->
+                      <th class="scenario-sub-cell">20 robots</th>
+                      <th class="scenario-sub-cell">15 robots</th>
+                      <th class="scenario-sub-cell optimal">10 robots</th>
+                      <th class="scenario-sub-cell scenario-sep-right">5 robots</th>
+                      <!-- ASP2 -->
+                      <th class="scenario-sub-cell">20 robots</th>
+                      <th class="scenario-sub-cell">15 robots</th>
+                      <th class="scenario-sub-cell">10 robots</th>
+                      <th class="scenario-sub-cell scenario-sep-right">5 robots</th>
+                      <!-- ASP1 -->
+                      <th class="scenario-sub-cell">20 robots</th>
+                      <th class="scenario-sub-cell">15 robots</th>
+                      <th class="scenario-sub-cell">10 robots</th>
+                      <th class="scenario-sub-cell scenario-sep-right">5 robots</th>
+                      <!-- MS -->
+                      <th class="scenario-sub-cell">5 trucks</th>
+                      <th class="scenario-sub-cell">3 trucks</th>
+                      <th class="scenario-sub-cell">1 truck</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Metric Row 1: Base Cost -->
+                    <tr>
+                      <td class="scenario-metric-cell">BASE COST ($) &rarr;</td>
+                      <!-- ASP3 -->
+                      <td class="scenario-val">2.660.000</td>
+                      <td class="scenario-val">2.282.500</td>
+                      <td class="scenario-val optimal">1.905.000</td>
+                      <td class="scenario-val scenario-sep-right">1.527.500</td>
+                      <!-- ASP2 -->
+                      <td class="scenario-val">2.660.000</td>
+                      <td class="scenario-val">2.282.500</td>
+                      <td class="scenario-val">1.905.000</td>
+                      <td class="scenario-val scenario-sep-right">1.527.500</td>
+                      <!-- ASP1 -->
+                      <td class="scenario-val">2.660.000</td>
+                      <td class="scenario-val">2.282.500</td>
+                      <td class="scenario-val">1.905.000</td>
+                      <td class="scenario-val scenario-sep-right">1.527.500</td>
+                      <!-- MS -->
+                      <td class="scenario-val">2.825.000</td>
+                      <td class="scenario-val">1.975.000</td>
+                      <td class="scenario-val">1.125.000</td>
+                    </tr>
+                    <!-- Metric Row 2: Average Delay Time -->
+                    <tr>
+                      <td class="scenario-metric-cell">AVERAGE DELAY TIME FOR EACH FOD COLLECTION OPERATION (s.) &rarr;</td>
+                      <!-- ASP3 -->
+                      <td class="scenario-val">626</td>
+                      <td class="scenario-val">635</td>
+                      <td class="scenario-val optimal">648</td>
+                      <td class="scenario-val scenario-sep-right">1057</td>
+                      <!-- ASP2 -->
+                      <td class="scenario-val">787</td>
+                      <td class="scenario-val">853</td>
+                      <td class="scenario-val">836</td>
+                      <td class="scenario-val scenario-sep-right">1331</td>
+                      <!-- ASP1 -->
+                      <td class="scenario-val">598</td>
+                      <td class="scenario-val">796</td>
+                      <td class="scenario-val">901</td>
+                      <td class="scenario-val scenario-sep-right">1166</td>
+                      <!-- MS -->
+                      <td class="scenario-val">853</td>
+                      <td class="scenario-val">989</td>
+                      <td class="scenario-val worst">1468</td>
+                    </tr>
+                    <!-- Metric Row 3: Cost of Delay -->
+                    <tr>
+                      <td class="scenario-metric-cell">COST OF DELAY AT EACH OPERATION (USAGE) ($) &rarr;</td>
+                      <!-- ASP3 -->
+                      <td class="scenario-val">15.638</td>
+                      <td class="scenario-val">15.875</td>
+                      <td class="scenario-val optimal">16.205</td>
+                      <td class="scenario-val scenario-sep-right">26.433</td>
+                      <!-- ASP2 -->
+                      <td class="scenario-val">19.670</td>
+                      <td class="scenario-val">21.328</td>
+                      <td class="scenario-val">20.890</td>
+                      <td class="scenario-val scenario-sep-right">33.278</td>
+                      <!-- ASP1 -->
+                      <td class="scenario-val">14.955</td>
+                      <td class="scenario-val">19.893</td>
+                      <td class="scenario-val">22.533</td>
+                      <td class="scenario-val scenario-sep-right">29.153</td>
+                      <!-- MS -->
+                      <td class="scenario-val">21.323</td>
+                      <td class="scenario-val">24.728</td>
+                      <td class="scenario-val worst">36.698</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px;">
-              <!-- 1. Tarsier -->
-              <div class="reference-system-card card-box" data-system-id="tarsier" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
-                <div style="position: relative; overflow: hidden;">
-                  <img src="assets/Tarsier_System.jpg" alt="QinetiQ Tarsier Radar Tower" style="height: 150px; object-fit: cover; width: 100%; display: block;">
-                  <span class="badge badge-blue" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);">Stationary MMW</span>
+            <!-- Interactive AnyChart Heat Map -->
+            <div style="background: rgba(0, 0, 0, 0.08); border-radius: 8px; padding: 12px 10px 10px; border: 1px solid var(--border-color);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; padding: 0 6px;">
+                <div style="font-size: 12px; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.05em;">
+                  Five-Year Sensitivity Heat Map across 22 Usage Frequencies
                 </div>
-                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
-                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">QinetiQ Tarsier</h4>
-                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">London Heathrow • Vancouver</p>
-                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11.5px; color: var(--accent-blue); font-weight: 600;">Technical Specs →</span>
-                    <span style="font-size: 12px;">🔍</span>
-                  </div>
+                <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono, monospace);">
+                   Hover cells to inspect sensitivity tier &amp; lifecycle costs
                 </div>
               </div>
+              <div id="anychart-heatmap-container" style="width: 100%; min-height: 580px; height: 620px;"></div>
 
-              <!-- 2. FODetect -->
-              <div class="reference-system-card card-box" data-system-id="fodetect" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
-                <div style="position: relative; overflow: hidden;">
-                  <img src="assets/FODetect_Edge_Light.jpg" alt="Xsight FODetect Edge Light Unit" style="height: 150px; object-fit: cover; width: 100%; display: block;">
-                  <span class="badge badge-purple" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);">Edge-Light Hybrid</span>
-                </div>
-                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
-                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">Xsight FODetect</h4>
-                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Radar + NIR Edge-Lights</p>
-                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11.5px; color: var(--accent-purple); font-weight: 600;">Technical Specs →</span>
-                    <span style="font-size: 12px;">🔍</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 3. iFerret -->
-              <div class="reference-system-card card-box" data-system-id="iferret" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
-                <div style="position: relative; overflow: hidden;">
-                  <img src="assets/iFerret2.0.webp" alt="NCS / CAG iFerret 2.0 System" style="height: 150px; object-fit: cover; width: 100%; display: block;">
-                  <span class="badge badge-emerald" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);">Electro-Optical AI</span>
-                </div>
-                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
-                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">iFerret™ 2.0</h4>
-                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Singapore Changi Airport</p>
-                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11.5px; color: var(--accent-emerald); font-weight: 600;">Technical Specs →</span>
-                    <span style="font-size: 12px;">🔍</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 4. FOD Finder Mobile -->
-              <div class="reference-system-card card-box" data-system-id="fodfinder" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
-                <div style="position: relative; overflow: hidden;">
-                  <img src="assets/FOD_Finder_Mobile.png" alt="Trex FOD Finder Mobile" style="height: 150px; object-fit: cover; width: 100%; display: block;">
-                  <span class="badge badge-amber" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);">Mobile MMW Radar</span>
-                </div>
-                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
-                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">FOD Finder Mobile</h4>
-                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Vehicle-Mounted 78–81 GHz</p>
-                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11.5px; color: var(--accent-amber); font-weight: 600;">Technical Specs →</span>
-                    <span style="font-size: 12px;">🔍</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 5. ELVA-1 -->
-              <div class="reference-system-card card-box" data-system-id="elva1" style="margin: 0; padding: 0; overflow: hidden; border: 1px solid var(--border-color); border-radius: 8px; display: flex; flex-direction: column;">
-                <div style="position: relative; overflow: hidden;">
-                  <img src="assets/ELVA_1_Radar.jpg" alt="ELVA 1 76GHz Radar" style="height: 150px; object-fit: cover; width: 100%; display: block;">
-                  <span class="badge badge-purple" style="position: absolute; top: 8px; left: 8px; font-size: 10px; padding: 3px 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5); background: rgba(147, 51, 234, 0.15);">FMCW Radar</span>
-                </div>
-                <div style="padding: 12px 14px; display: flex; flex-direction: column; flex-grow: 1;">
-                  <h4 style="font-size: 14px; margin-bottom: 3px; color: var(--text-main);">ELVA-1 76GHz</h4>
-                  <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Dual-Dish Scanning Radar</p>
-                  <div style="margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-size: 11.5px; color: var(--accent-purple); font-weight: 600;">Technical Specs →</span>
-                    <span style="font-size: 12px;">🔍</span>
-                  </div>
-                </div>
+              <!-- Figure Footnote (Inside the box, directly below the legend) -->
+              <div style="margin-top: 6px; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding-left: 6px; padding-right: 6px;">
+                <span style="font-size: 11px; color: var(--text-muted); font-style: italic;">
+                  ASP: Autonomous System Phase; MS: Manual System. Runway delay penalty benchmarked at USD 1,500/min.
+                </span>
+                <span style="font-size: 11px; color: var(--text-muted);">
+                  Öztürk &amp; Kuzucuoğlu (2016)
+                </span>
               </div>
             </div>
           </div>
 
+          <script src="js/heatmap.js?v=3.0"></script>
+
+          <p class="intro-p" style="margin-top: 14px;">The colours represent the most appropriate approach for each usage frequency (row-by-row ranking): <strong>green is cheapest</strong> and <strong>red is most expensive</strong>.</p>
+          <div class="mr-cards">
+            <div class="mr-card" style="--mr-c: var(--accent-green);"><h4>ASP3 · 10 robots</h4><table>
+              <tr><td>Delay cost per op × ops</td><td>$16,205 × 500</td></tr><tr><td>Delay cost</td><td>$8,102,500</td></tr><tr><td>+ Base cost</td><td>$1,905,000</td></tr><tr class="tot"><td>5-year total</td><td>$10,007,500</td></tr></table></div>
+            <div class="mr-card" style="--mr-c: var(--accent-rose);"><h4>MS · 1 truck</h4><table>
+              <tr><td>Delay cost per op × ops</td><td>$36,698 × 500</td></tr><tr><td>Delay cost</td><td>$18,349,000</td></tr><tr><td>+ Base cost</td><td>$1,125,000</td></tr><tr class="tot"><td>5-year total</td><td>$19,474,000</td></tr></table></div>
+            <div class="mr-card" style="--mr-c: var(--accent-green);"><h4>Saved with ASP3 over 5 years</h4><div style="font-size: 12px;">$19,474,000 − $10,007,500</div><div class="mr-save">$9,466,500</div></div>
+          </div>
+          <div class="callout callout-emerald" style="margin: 0 0 16px;">This gives us the confidence to move forward with the multi-robot approach: it is not only possible with technology, but also economically viable.</div>
+
+          <h4 style="font-size: 16px; color: var(--text-main); margin: 18px 0 8px;">Key findings</h4>
+          <ol style="padding-left: 22px; font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px;">
+            <li style="margin-bottom: 10px;"><strong>Dramatic reduction in runway downtime:</strong> Traditional manual dispatch using a single truck required an average runway-closure time of <strong>1,468 seconds (approximately 24.5 minutes)</strong> per clearance event. An optimised fleet of 10 coordinated autonomous rovers (ASP3) reduced the average clearance downtime to <strong>648 seconds (approximately 10.8 minutes)</strong>, representing a reduction of more than 56% in operational closure time.</li>
+            <li><strong>Nearly 50% reduction in five-year financial costs:</strong> Including capital expenditure, 24/7 personnel salaries, vehicle maintenance, and airport delay penalties calculated at <strong>USD 1,500 per minute</strong> of runway closure, the traditional manual truck system reached <strong>USD 19,473,750</strong> over five years. The 10-robot autonomous system reduced the burden to <strong>USD 10,007,500</strong>, delivering <strong>USD 9,466,250</strong> in net economic savings, or approximately a 48.6% lifecycle cost reduction.</li>
+          </ol>
+
+          <div class="callout callout-emerald" style="margin: 16px 0;">
+            <strong>Integrating this bedrock into the FOD HUNTER narrative:</strong> This empirical research demonstrates that a multi-robot autonomous solution is not merely theoretical. It is a commercially viable strategy capable of reducing airfield downtime, removing human workers from active taxiway hazards, and cutting long-term FOD maintenance costs.
+          </div>
+
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0 0 8px;">
+            By adopting Öztürk and Kuzucuoğlu’s multi-agent coordination framework as a foundation, FOD HUNTER aims to translate and scale these results for high-density international aviation hubs such as Singapore Changi Airport:
+          </p>
+          <ul style="padding-left: 22px; font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0;">
+            <li><strong>Productivity and throughput:</strong> Integrating the autonomous UGV fleet directly with fixed airfield detection systems, such as Changi’s iFerret cameras, enables immediate direct-path dispatch without search overhead, targeting clearance windows under five minutes.</li>
+            <li><strong>Enhanced safety standards:</strong> The system replaces manual visual sweeps on hot asphalt and removes ground personnel from hazardous jet-blast zones and active traffic.</li>
+            <li><strong>Economic scalability:</strong> At high-traffic airports where slot delays carry extreme financial penalties, scaling the UGV platform amplifies the multi-million-dollar return on investment demonstrated in the literature.</li>
+          </ul>
+        </div>
+
+        <!-- SECTION 1.7: VALUE PROPOSITION STATEMENT -->
+        <div class="card-box intro-sec" id="sec-vps">
+          <div class="card-header">
+            <div><span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 1.7</span><div class="card-title">Our solution and value proposition statement</div></div>
+          </div>
+          <div class="vps">
+            <div class="vps-row"><span class="vps-k">For</span><p>low to moderate air traffic airports that struggle with effective use of manpower,</p></div>
+            <div class="vps-row"><span class="vps-k">Our</span><p>automated solution provides guaranteed clearance of FOD on the runway, while staff focus on more critical jobs,</p></div>
+            <div class="vps-row"><span class="vps-k">Unlike</span><p>the current manual, time-consuming and laborious processes of clearing FOD.</p></div>
+          </div>
+        </div>
+
+        <!-- SECTION 1.8: VALUE PROPOSITION MAP -->
+        <div class="card-box intro-sec" id="sec-vpmap">
+          <div class="card-header">
+            <div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.8</span><div class="card-title">Value proposition map</div></div>
+          </div>
+          <div class="vpc-wrap">
+            <figure class="vpc">
+              <svg viewBox="0 0 400 400" role="img" aria-label="Value map with products and services, gain creators and pain relievers">
+                <circle cx="200" cy="200" r="190" class="vpc-shape"/>
+                <line x1="200" y1="200" x2="390" y2="200" class="vpc-line"/>
+                <line x1="200" y1="200" x2="105" y2="35.5" class="vpc-line"/>
+                <line x1="200" y1="200" x2="105" y2="364.5" class="vpc-line"/>
+                <text x="78" y="196" class="vpc-head">Products &amp;</text><text x="78" y="212" class="vpc-head">services</text>
+                <text x="78" y="244" class="vpc-t">Automated swarm</text><text x="78" y="258" class="vpc-t">of FOD detection</text><text x="78" y="272" class="vpc-t">and collection</text>
+                <text x="250" y="60" class="vpc-t">Staff can be released</text><text x="250" y="74" class="vpc-t">for more critical roles</text>
+                <text x="272" y="104" class="vpc-t">Higher accuracy of</text><text x="272" y="118" class="vpc-t">FOD detection</text>
+                <text x="300" y="144" class="vpc-t">Higher frequency</text><text x="300" y="158" class="vpc-t">of inspection</text>
+                <text x="318" y="188" class="vpc-head">Gain creators</text>
+                <text x="318" y="222" class="vpc-head">Pain relievers</text>
+                <text x="312" y="248" class="vpc-t">Less laborious</text><text x="312" y="262" class="vpc-t">FOD process</text>
+                <text x="298" y="288" class="vpc-t">Less manpower</text><text x="298" y="302" class="vpc-t">required for FOD</text>
+                <text x="274" y="320" class="vpc-t">Fewer mundane</text><text x="274" y="334" class="vpc-t">tasks</text>
+                <text x="240" y="352" class="vpc-t">Cost less overall</text><text x="240" y="366" class="vpc-t">in 5 years</text>
+              </svg>
+              <figcaption>Value map</figcaption>
+            </figure>
+            <figure class="vpc">
+              <svg viewBox="0 0 400 400" role="img" aria-label="Customer map with jobs, gains and pains">
+                <rect x="10" y="10" width="380" height="380" class="vpc-shape"/>
+                <line x1="10" y1="200" x2="200" y2="200" class="vpc-line"/>
+                <line x1="200" y1="200" x2="390" y2="10" class="vpc-line"/>
+                <line x1="200" y1="200" x2="390" y2="390" class="vpc-line"/>
+                <text x="105" y="186" class="vpc-head">Gains</text>
+                <text x="105" y="60" class="vpc-t">Meaningful deployment</text><text x="105" y="74" class="vpc-t">of manpower</text>
+                <text x="105" y="112" class="vpc-t">Safer runways</text>
+                <text x="105" y="146" class="vpc-t">Increased productivity</text>
+                <text x="105" y="222" class="vpc-head">Pains</text>
+                <text x="105" y="252" class="vpc-t">Extremely laborious</text><text x="105" y="266" class="vpc-t">FOD process</text>
+                <text x="105" y="296" class="vpc-t">Manpower-intensive</text><text x="105" y="310" class="vpc-t">FOD process</text>
+                <text x="105" y="340" class="vpc-t">Repetitive, mundane tasks</text>
+                <text x="105" y="368" class="vpc-t">Expensive cost of FOD</text>
+                <text x="332" y="160" class="vpc-head">Jobs</text>
+                <text x="326" y="190" class="vpc-t">Runway</text><text x="326" y="204" class="vpc-t">maintenance team</text>
+                <text x="330" y="232" class="vpc-t">Ground operations</text><text x="330" y="246" class="vpc-t">operator</text>
+                <text x="336" y="274" class="vpc-t">FOD remediation</text><text x="340" y="288" class="vpc-t">team</text>
+              </svg>
+              <figcaption>Customer map</figcaption>
+            </figure>
+          </div>
+
+          <h3 class="intro-h3">Value proposition fit</h3>
+          <p class="intro-p">Each customer pain and gain is answered by a FOD Hunter feature.</p>
+          <div class="admin-table-wrapper"><table class="admin-table fit-table"><thead><tr><th>Value map</th><th aria-hidden="true"></th><th>Customer map</th></tr></thead><tbody>
+            <tr class="fit-group"><td colspan="3">Products and services → Jobs</td></tr>
+            <tr><td>Automated swarm of FOD detection and collection</td><td class="fit-arrow">→</td><td>Runway, ground operations and FOD remediation teams</td></tr>
+            <tr class="fit-group"><td colspan="3">Pain relievers → Pains</td></tr>
+            <tr><td>Less laborious FOD process</td><td class="fit-arrow">→</td><td>Extremely laborious FOD process</td></tr>
+            <tr><td>Less manpower required for FOD</td><td class="fit-arrow">→</td><td>Manpower-intensive FOD process</td></tr>
+            <tr><td>Automated solution decreases mundane tasks</td><td class="fit-arrow">→</td><td>Repetitive and mundane tasks</td></tr>
+            <tr><td>Costs less overall in 5 years</td><td class="fit-arrow">→</td><td>Expensive cost of FOD</td></tr>
+            <tr class="fit-group"><td colspan="3">Gain creators → Gains</td></tr>
+            <tr><td>Staff can be released for more critical roles</td><td class="fit-arrow">→</td><td>Meaningful deployment of manpower</td></tr>
+            <tr><td>Higher accuracy of FOD detection</td><td class="fit-arrow">→</td><td>Safer runways</td></tr>
+            <tr><td>Higher frequency of inspection and intervention</td><td class="fit-arrow">→</td><td>Increased productivity</td></tr>
+          </tbody></table></div>
+        </div>
+
+        <!-- SECTION 1.9: ADDITIONAL BENCHMARKING -->
+        <div class="card-box intro-sec" id="sec-benchmarks">
+          <div class="card-header">
+            <div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 1.9</span><div class="card-title">Additional benchmarking</div></div>
+          </div>
           <!-- FAA AC 150/5220-24 BENCHMARK STANDARDS -->
           <div style="margin-top: 32px; border-top: 1px solid var(--border-color); padding-top: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-              </div>
-              </div>
+              <div>
                 <h3 style="margin: 0; color: var(--accent-blue);">📏 Performance Specifications (FAA AC 150/5220-24 Benchmark)</h3>
                 <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">
                   Regulatory operational performance requirements defined under Federal Aviation Administration Advisory Circular 150/5220-24 for automated FOD detection categories:
@@ -1318,6 +1321,182 @@ Speaker 2: No worries, man. All the best.
 
     </div>
   </div>
+
+  <style>
+    .intro-sec { margin-bottom: 24px; }
+    .intro-h3 { font-size: 17px; color: var(--text-main); margin: 26px 0 10px; }
+    .card-header + .intro-h3 { margin-top: 14px; }
+    .intro-p { font-size: 14.5px; color: var(--text-muted); line-height: 1.7; margin: 0 0 14px; }
+    .intro-stat { border: 1px solid var(--border-color); border-left: 4px solid var(--accent-rose); border-radius: 10px; padding: 14px 18px; margin: 4px 0 14px; background: var(--card-bg-subtle, rgba(255,255,255,0.02)); }
+    .intro-stat-num { font-size: clamp(28px, 5vw, 40px); font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; line-height: 1.1; }
+    .intro-stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .intro-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px; }
+    .intro-fig { margin: 0; }
+    .intro-img { position: relative; aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); background: var(--card-bg-subtle, rgba(255,255,255,0.03)); }
+    .intro-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .intro-missing { display: none; }
+    .intro-fig.missing .intro-img { border-style: dashed; }
+    .intro-fig.missing img { display: none; }
+    .intro-fig.missing .intro-missing { display: grid; place-items: center; position: absolute; inset: 0; font-size: 12px; color: var(--text-muted); }
+    .intro-fig figcaption { margin-top: 8px; font-size: 13px; color: var(--text-main); display: grid; gap: 2px; }
+    .intro-fig figcaption span { font-size: 11.5px; color: var(--text-muted); }
+    .journey-fig .intro-img img { object-fit: contain; background: #0b0f19; }
+
+    .stake-map { display: grid; grid-template-columns: auto 1fr; grid-template-rows: 1fr auto; gap: 6px 8px; max-width: 760px; }
+    .stake-axis-y { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 12px; color: var(--text-muted); text-align: center; }
+    .stake-axis-x { grid-column: 2; text-align: right; font-size: 12px; color: var(--text-muted); }
+    .stake-grid { display: grid; grid-template-columns: 1fr 1fr; border-left: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted); }
+    .stake-q { min-height: 120px; padding: 14px; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 6px; border: 1px dashed var(--border-color); }
+    .stake-chip { font-size: 12.5px; font-weight: 600; color: var(--text-main); border: 1px solid var(--border-color); border-radius: 999px; padding: 5px 12px; background: var(--card-bg); }
+    .stake-strong { border-color: var(--accent-blue); }
+    .stake-note { width: 100%; text-align: center; font-size: 11.5px; color: var(--text-muted); }
+
+    .learn-table td { vertical-align: top; }
+    .learn-role { font-size: 11.5px; color: var(--text-muted); }
+    .senti { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 9px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+    .senti-frust { color: var(--accent-rose); border-color: var(--accent-rose); background: var(--accent-rose-light); }
+    .senti-neg { color: var(--accent-amber); border-color: var(--accent-amber); background: var(--accent-amber-light); }
+    .senti-pos { color: var(--accent-green); border-color: var(--accent-green); background: var(--accent-green-light); }
+    .senti-ins { color: var(--accent-blue); border-color: var(--accent-blue); background: var(--accent-blue-light); }
+
+    .comp-wrap { display: grid; gap: 14px; }
+    .comp-plot { position: relative; aspect-ratio: 16 / 10; border: 1px solid var(--border-color); border-radius: 12px; background: var(--card-bg-subtle, rgba(255,255,255,0.02)); overflow: hidden; }
+    .comp-axis { position: absolute; background: var(--text-muted); opacity: 0.7; }
+    .comp-axis-x { left: 4%; right: 4%; top: 50%; height: 2px; }
+    .comp-axis-y { top: 5%; bottom: 5%; left: 50%; width: 2px; }
+    .comp-label { position: absolute; font-size: 11.5px; font-weight: 600; color: var(--text-muted); }
+    .comp-label-y { left: calc(50% + 8px); top: 4%; }
+    .comp-label-x { right: 4%; top: calc(50% + 6px); }
+    .comp-pt { position: absolute; transform: translate(-50%, -50%); border: 2px solid var(--comp-c); border-radius: 10px; padding: 0; width: clamp(48px, 11%, 104px); aspect-ratio: 4 / 3; overflow: hidden; cursor: pointer; background: var(--card-bg); box-shadow: 0 2px 8px rgba(0,0,0,0.25); transition: transform .15s ease, box-shadow .15s ease; }
+    .comp-pt img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .comp-pt .comp-fallback { display: none; position: absolute; inset: 0; place-items: center; font-size: 10.5px; font-weight: 700; color: var(--text-main); padding: 2px; text-align: center; line-height: 1.15; }
+    .comp-pt.noimg img { display: none; }
+    .comp-pt.noimg .comp-fallback { display: grid; }
+    .comp-pt:hover, .comp-pt:focus-visible { transform: translate(-50%, -50%) scale(1.08); z-index: 2; outline: none; box-shadow: 0 0 0 3px var(--comp-c); }
+    .comp-pt.on { transform: translate(-50%, -50%) scale(1.12); z-index: 3; box-shadow: 0 0 0 3px var(--comp-c), 0 6px 18px rgba(0,0,0,0.35); }
+    .comp-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12px; color: var(--text-muted); }
+    .comp-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; border: 2px solid; }
+    .cl-det { border-color: var(--accent-blue) !important; } .cl-col { border-color: var(--accent-amber) !important; } .cl-both { border-color: var(--accent-purple) !important; } .cl-ours { border-color: var(--accent-green) !important; }
+    .comp-detail { border: 1px solid var(--border-color); border-left: 4px solid var(--comp-c, var(--accent-blue)); border-radius: 12px; padding: 16px; display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); gap: 16px; background: var(--card-bg); }
+    .comp-detail img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color); }
+    .comp-detail h4 { margin: 0 0 2px; font-size: 16px; color: var(--text-main); }
+    .comp-detail .cd-cat { font-size: 11.5px; font-weight: 700; color: var(--comp-c); text-transform: uppercase; letter-spacing: 0.04em; }
+    .comp-detail .cd-how { font-size: 13.5px; color: var(--text-muted); margin: 8px 0 10px; line-height: 1.6; }
+    .comp-detail .cd-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 10px; }
+    .comp-detail .cd-cols div { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+    .comp-detail .cd-cols strong { display: block; font-size: 12px; margin-bottom: 4px; }
+    .comp-detail ul { margin: 0; padding-left: 18px; }
+    .comp-detail.one { grid-template-columns: 1fr; }
+    @media (max-width: 640px) { .comp-detail { grid-template-columns: 1fr; } .comp-label { font-size: 10px; } }
+
+    .journey { list-style: none; counter-reset: j; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 12px; }
+    .journey li { counter-increment: j; border: 1px solid var(--border-color); border-radius: 10px; padding: 14px 14px 14px 52px; position: relative; background: var(--card-bg-subtle, rgba(255,255,255,0.02)); }
+    .journey li::before { content: counter(j); position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--accent-blue); background: var(--accent-blue-light); }
+    .journey b { display: block; font-size: 14px; color: var(--text-main); margin-bottom: 4px; }
+    .journey span { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    .demo-fig { margin: 0; }
+    .demo-fig video { width: 100%; display: block; border-radius: 12px; border: 1px solid var(--border-color); background: #000; }
+
+    .mr-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 12px; margin: 16px 0; }
+    .mr-card { border: 1px solid var(--border-color); border-left: 4px solid var(--mr-c); border-radius: 10px; padding: 14px; background: var(--card-bg-subtle, rgba(255,255,255,0.02)); font-size: 13px; color: var(--text-muted); }
+    .mr-card h4 { margin: 0 0 8px; font-size: 14px; color: var(--mr-c); }
+    .mr-card table { width: 100%; border-collapse: collapse; }
+    .mr-card td { padding: 2px 0; } .mr-card td:last-child { text-align: right; color: var(--text-main); font-family: var(--font-mono, monospace); }
+    .mr-card tr.tot td { border-top: 1px solid var(--border-color); padding-top: 6px; font-weight: 700; color: var(--text-main); }
+    .mr-save { font-size: clamp(26px, 4vw, 34px); font-weight: 700; color: var(--accent-green); }
+
+    .vps { display: grid; gap: 12px; }
+    .vps-row { display: grid; grid-template-columns: 90px 1fr; gap: 14px; align-items: baseline; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+    .vps-row:last-child { border-bottom: 0; }
+    .vps-k { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-green); }
+    .vps-row p { margin: 0; font-size: clamp(17px, 2.2vw, 21px); line-height: 1.45; color: var(--text-main); font-weight: 600; }
+
+    .vpc-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 20px; }
+    .vpc { margin: 0; text-align: center; }
+    .vpc svg { width: 100%; max-width: 420px; display: block; margin: 0 auto; font-family: var(--font-apple, sans-serif); }
+    .vpc-shape { fill: none; stroke: var(--text-main); stroke-width: 2; }
+    .vpc-line { stroke: var(--text-main); stroke-width: 2; }
+    .vpc-head { fill: var(--accent-blue); font-size: 14px; font-weight: 700; text-anchor: middle; }
+    .vpc-t { fill: var(--text-main); font-size: 11.5px; text-anchor: middle; }
+    .vpc figcaption { margin-top: 6px; font-size: 15px; font-weight: 600; color: var(--text-main); }
+    #sec-benchmarks > div:nth-of-type(2) { border-top: 0 !important; margin-top: 8px !important; padding-top: 0 !important; }
+    .fit-table .fit-group td { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-blue); background: var(--accent-blue-light); }
+    .fit-table .fit-arrow { color: var(--accent-green); font-weight: 700; text-align: center; width: 40px; }
+  </style>
+  <script>
+    // Competitor map: x = collection performance, y = detection performance, both -1..1
+    (function () {
+      var plot = document.getElementById('comp-plot'), detail = document.getElementById('comp-detail');
+      if (!plot) return;
+      var C = { det: 'var(--accent-blue)', col: 'var(--accent-amber)', both: 'var(--accent-purple)', ours: 'var(--accent-green)' };
+      var CAT = { det: 'Detection only', col: 'Collection only', both: 'Detection and collection', ours: 'Our solution' };
+      var S = [
+        { id: 'iferret', name: 'iFerret 2.0', cat: 'det', x: -0.62, y: 0.68, img: 'assets/iFerret2.0.webp',
+          how: 'AI-powered cameras for visual detection and verification. Deployed at Singapore Changi Airport.',
+          good: ['Completely passive sensing with no RF emissions, so no interference with aircraft avionics.', 'Automated detection saves runway time ("every minute is money", CAAS).'],
+          bad: ['Not weatherproof: accuracy drops in heavy rain, fog and shadows.', 'Expensive cabling cost.', 'Detection only: FOD still has to be collected by hand.'] },
+        { id: 'tarsier', name: 'QinetiQ Tarsier', cat: 'det', x: -0.86, y: 0.32, img: 'assets/Tarsier_System.jpg',
+          how: 'Stationary radar for detection, with a camera that pans to the radar coordinates for confirmation.',
+          good: ['Integrated PTZ cameras give controllers live visual verification of each detection.'],
+          bad: ['Radar cannot classify FOD.', 'Sensitive to ground clutter: struggles to tell pavement texture from FOD.', 'Detection only.'] },
+        { id: 'fodetect', name: 'Xsight FODetect & RunWize', cat: 'det', x: -0.6, y: 0.3, img: 'assets/FODetect_Edge_Light.jpg',
+          how: 'Stationary radar and sensors built into the runway edge lights, with laser illumination.',
+          good: ['A built-in laser points to detected debris to guide retrieval crews at night.'],
+          bad: ['Hardware-intensive deployment along the full runway length.', 'Detection only.'] },
+        { id: 'elva', name: 'ELVA-1', cat: 'det', x: -0.86, y: -0.14, img: 'assets/ELVA_1_Radar.jpg',
+          how: 'Stationary 76 GHz scanning radar for detection.',
+          good: ['Long-range coverage per sensor with very low RF power.'],
+          bad: ['Long scan time (3 minutes), significantly slower than other systems.', 'Detection only.'] },
+        { id: 'fodfinder', name: 'FOD Finder Mobile', cat: 'det', x: -0.4, y: 0.0, img: 'assets/FOD_Finder_Mobile.png',
+          how: 'Millimetre-wave radar mounted onto a vehicle that drives the runway.',
+          good: ['Mobile: no fixed runway infrastructure.', 'Offers an optional truck-mounted vacuum module.'],
+          bad: ['Intermittent scanning, so FOD can be missed between patrols.', 'Requires a human driver at all times.'] },
+        { id: 'roboxi', name: 'Roboxi', cat: 'both', x: 0.22, y: 0.3, img: 'assets/intro/roboxi.jpg',
+          how: 'A standalone robot that detects and picks up FOD while also inspecting pavements and runway lights.',
+          good: ['Detection and collection in one autonomous platform.', 'Also inspects pavement and runway light bulbs.'],
+          bad: ['High cost.', 'Recently launched (less than 11 months), so efficiency and effectiveness are unknown.'] },
+        { id: 'hunter', name: 'FOD Hunter × FOD Argus', cat: 'ours', x: 0.72, y: 0.66, img: 'assets/intro/fod-hunter-render.jpg',
+          how: 'A drone (FOD Argus) scans the runway and sends FOD locations to an autonomous ground rover (FOD Hunter), which navigates to each item and vacuums it up.',
+          good: ['Fast aerial detection plus autonomous physical collection.', 'No runway infrastructure to install.', 'Frees staff from repetitive FOD sweeps for more critical roles.'],
+          bad: ['Still in development: not yet tested on a live runway.'] },
+        { id: 'manual', name: 'Manual sweeping and picking', cat: 'col', x: 0.42, y: -0.6, img: 'assets/intro/manual-sweeping.jpg',
+          how: 'Crews walk or drive the runway, spotting FOD by eye and picking it up by hand or with brooms.',
+          good: ['Low capital cost.', 'People can pick up almost any type of FOD.'],
+          bad: ['Manpower-intensive and slow: a whole-base FOD walk still takes about an hour.', 'Brooms can create more FOD than they clean up.'] },
+        { id: 'dragmat', name: 'Vehicles with friction drag mats', cat: 'col', x: 0.74, y: -0.66, img: 'assets/images/Asuka/FOD_drag_mat.jpg',
+          how: 'Specialised vehicles tow friction drag mats across the runway to sweep up debris.',
+          good: ['Clears most loose debris as the first tier of runway cleaning.'],
+          bad: ['Misses the small pieces, such as rivets, that cause the most damage.', 'Must be towed by utility vehicles with a driver.', 'Mats wear quickly and struggle with heavy or embedded items.'] }
+      ];
+
+      function show(s, btn) {
+        plot.querySelectorAll('.comp-pt').forEach(function (b) { b.classList.toggle('on', b === btn); b.setAttribute('aria-pressed', String(b === btn)); });
+        detail.style.setProperty('--comp-c', C[s.cat]);
+        var li = function (a) { return '<ul>' + a.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>'; };
+        detail.classList.remove('one');
+        detail.innerHTML = '<img src="' + s.img + '" alt="' + s.name + '" onerror="this.parentNode.classList.add(\'one\'); this.remove();">' +
+          '<div><span class="cd-cat">' + CAT[s.cat] + '</span><h4>' + s.name + '</h4><p class="cd-how">' + s.how + '</p>' +
+          '<div class="cd-cols"><div><strong style="color: var(--accent-green);">✓ Good</strong>' + li(s.good) + '</div>' +
+          '<div><strong style="color: var(--accent-rose);">✗ Shortcomings</strong>' + li(s.bad) + '</div></div></div>';
+      }
+
+      S.forEach(function (s) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'comp-pt';
+        b.style.left = (50 + s.x * 44) + '%'; b.style.top = (50 - s.y * 42) + '%';
+        b.style.setProperty('--comp-c', C[s.cat]);
+        b.setAttribute('aria-label', s.name + ' (' + CAT[s.cat] + ')'); b.title = s.name;
+        b.innerHTML = '<img src="' + s.img + '" alt="">' + '<span class="comp-fallback">' + s.name + '</span>';
+        b.querySelector('img').addEventListener('error', function () { b.classList.add('noimg'); });
+        b.addEventListener('click', function () { show(s, b); });
+        plot.appendChild(b);
+        if (s.id === 'hunter') b._def = true;
+      });
+      var def = [].find.call(plot.querySelectorAll('.comp-pt'), function (b) { return b._def; });
+      show(S.filter(function (s) { return s.id === 'hunter'; })[0], def);
+    })();
+  </script>
 
   <script src="js/main.js?v=4.2"></script>
 </body>
