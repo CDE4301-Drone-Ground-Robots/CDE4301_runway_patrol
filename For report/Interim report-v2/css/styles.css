@@ -5865,3 +5865,173 @@ h4:hover .section-anchor,
   border-color: rgba(59, 130, 246, 0.4);
   font-weight: 600;
 }
+
+
+/* 9. Field Intelligence Dialogue & Chat Micro-Interactions */
+.interview-dialogue-flow::-webkit-scrollbar {
+  width: 5px;
+}
+
+.interview-dialogue-flow::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+
+.chat-bubble {
+  transition: transform 0.25s var(--ease-spring), border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.chat-bubble:hover {
+  transform: translateX(3px);
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+details summary {
+  transition: color 0.2s ease, opacity 0.2s ease;
+  user-select: none;
+}
+
+details summary:hover {
+  opacity: 0.85;
+}
+
+details[open] summary {
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+/* 10. System Architecture & Engineering Specifications (Design Overview) */
+.ds-sec {
+  margin-bottom: 24px;
+}
+
+.req-tree {
+  margin-top: 14px;
+}
+
+.req-root {
+  text-align: center;
+}
+
+.req-root span {
+  display: inline-block;
+  padding: 8px 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #ffffff;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  background: rgba(59, 130, 246, 0.16);
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.2);
+  letter-spacing: 0.02em;
+}
+
+.req-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: 14px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.req-col {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.req-head {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--apple-text-primary);
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  letter-spacing: -0.01em;
+}
+
+.req-box {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-left: 3px solid var(--apple-blue);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  color: var(--apple-text-secondary);
+  line-height: 1.55;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.2s var(--ease-spring);
+}
+
+.req-box:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+.req-box b {
+  display: block;
+  color: #ffffff;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.req-box ul, .spec-box ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.spec-box {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--apple-text-secondary);
+  line-height: 1.6;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.25s var(--ease-spring);
+}
+
+.spec-box:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(245, 158, 11, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.spec-box h4 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spec-box h4 span {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
