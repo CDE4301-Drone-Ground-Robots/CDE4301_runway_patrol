@@ -991,6 +991,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 3D Model Viewer Orbit Controls (ui-ux-pro-max + motion)
+  const modelViewer = document.querySelector('model-viewer');
+  const orbitBtns = document.querySelectorAll('.model-orbit-btn');
+  if (modelViewer && orbitBtns.length > 0) {
+    orbitBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const orbit = btn.getAttribute('data-orbit');
+        orbitBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (orbit) {
+          modelViewer.setAttribute('camera-orbit', orbit);
+        }
+      });
+    });
+  }
+
+
   // ── Apple Mobile Drawer Toggle ──────────────────────────────
   const mobileToggle = document.getElementById('apple-mobile-toggle');
   const mobileDrawer = document.getElementById('apple-mobile-drawer');
@@ -2126,3 +2145,129 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+
+
+/* ── Cult UI & Apple Fluid Interactions ─────────────────────────────────── */
+(function initCultUIEnhancements() {
+  // 1. Dynamic Island Mission HUD Injection
+  if (!document.querySelector('.dynamic-island-hud')) {
+    const hud = document.createElement('div');
+    hud.className = 'dynamic-island-hud';
+    hud.setAttribute('role', 'status');
+    hud.setAttribute('aria-label', 'Mission Status and Quick Navigation');
+
+    hud.innerHTML = `
+      <span class="hud-beacon" title="Airfield Mission Telemetry Active"></span>
+      <span class="hud-label" id="hud-section-name">AIS-406 FOD Hunter</span>
+      <span class="hud-progress-pill" id="hud-read-progress">0%</span>
+      <div class="hud-divider"></div>
+      <button type="button" class="hud-btn" id="hud-top-btn" title="Back to top" aria-label="Back to top">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+        <span>Top</span>
+      </button>
+    `;
+
+    document.body.appendChild(hud);
+
+    // Scroll reading progress & active section tracking
+    const progressEl = document.getElementById('hud-read-progress');
+    const labelEl = document.getElementById('hud-section-name');
+    const topBtn = document.getElementById('hud-top-btn');
+
+    topBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollTop = window.scrollY || document.documentElement.scrollTop;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const pct = docHeight > 0 ? Math.min(100, Math.max(0, Math.round((scrollTop / docHeight) * 100))) : 0;
+          if (progressEl) progressEl.textContent = pct + '%';
+
+          // Detect nearest visible heading or section
+          const headings = document.querySelectorAll('h1, h2, h3, .card-title, .apple-hero-title');
+          let currentSection = 'AIS-406 FOD Hunter';
+          headings.forEach(h => {
+            const rect = h.getBoundingClientRect();
+            if (rect.top <= 180 && rect.bottom >= 0) {
+              const clean = h.textContent.replace(/\s+/g, ' ').trim();
+              if (clean.length > 3 && clean.length < 32) {
+                currentSection = clean;
+              }
+            }
+          });
+          if (labelEl && currentSection) {
+            labelEl.textContent = currentSection;
+          }
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  // 2. Cursor Spotlight on Glass Cards
+  const cards = document.querySelectorAll('.card-box, .apple-card, .spec-box');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    }, { passive: true });
+  });
+
+  // 3. Direction-Aware Sliding Subnav Pill
+  const subnavLists = document.querySelectorAll('.apple-subnav-items');
+  subnavLists.forEach(list => {
+    list.style.position = 'relative';
+    let indicator = list.querySelector('.apple-subnav-indicator');
+    if (!indicator) {
+      indicator = document.createElement('div');
+      indicator.className = 'apple-subnav-indicator';
+      list.appendChild(indicator);
+    }
+
+    const items = list.querySelectorAll('.apple-subnav-item');
+    const activeItem = list.querySelector('.apple-subnav-item.active') || 
+                       list.querySelector('.apple-subnav-item:has(a.active)') || 
+                       items[0];
+
+    function moveTo(el) {
+      if (!el) {
+        indicator.style.opacity = '0';
+        return;
+      }
+      const listRect = list.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      const left = elRect.left - listRect.left;
+      const width = elRect.width;
+
+      indicator.style.transform = `translateX(${left}px)`;
+      indicator.style.width = `${width}px`;
+      indicator.style.opacity = '1';
+    }
+
+    if (activeItem) {
+      setTimeout(() => moveTo(activeItem), 80);
+    }
+
+    items.forEach(item => {
+      item.addEventListener('mouseenter', () => moveTo(item));
+    });
+
+    list.addEventListener('mouseleave', () => {
+      const curActive = list.querySelector('.apple-subnav-item.active') || 
+                        list.querySelector('.apple-subnav-item:has(a.active)') || 
+                        activeItem;
+      moveTo(curActive);
+    });
+  });
+})();
