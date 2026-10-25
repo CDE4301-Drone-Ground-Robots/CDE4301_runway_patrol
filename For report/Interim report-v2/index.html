@@ -71,135 +71,6 @@
   <main class="apple-main-content">
     
     <!-- APPLE KEYNOTE HERO SECTION -->
-    <style>
-      /* ── Apple-Style Cinematic Hero ── */
-      .hero-cinematic-wrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 520px;
-        margin-bottom: 28px;
-        overflow: visible;
-        width: 100vw;
-        margin-left: calc(-50vw + 50%);
-      }
-      /* Giant metallic chrome text elevated above the UGV */
-      .hero-chrome-text {
-        position: absolute;
-        top: 24%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
-        font-size: clamp(5.5rem, 16vw, 13.5rem);
-        font-weight: 900;
-        letter-spacing: -0.03em;
-        line-height: 0.85;
-        text-align: center;
-        white-space: nowrap;
-        user-select: none;
-        pointer-events: none;
-        /* Metallic chrome gradient */
-        background: linear-gradient(
-          180deg,
-          #3a3a3c 0%,
-          #636366 15%,
-          #e5e5ea 30%,
-          #ffffff 42%,
-          #f5f5f7 48%,
-          #d1d1d6 55%,
-          #8e8e93 65%,
-          #636366 78%,
-          #3a3a3c 90%,
-          #1c1c1e 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        z-index: 1;
-      }
-      /* Animated shimmer sweep across chrome text */
-      .hero-chrome-text::after {
-        content: "FOD HUNTER";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        font-size: inherit;
-        font-weight: inherit;
-        letter-spacing: inherit;
-        line-height: inherit;
-        text-align: inherit;
-        white-space: inherit;
-        background: linear-gradient(
-          105deg,
-          transparent 0%,
-          transparent 35%,
-          rgba(255, 255, 255, 0.5) 45%,
-          rgba(255, 255, 255, 0.8) 50%,
-          rgba(255, 255, 255, 0.5) 55%,
-          transparent 65%,
-          transparent 100%
-        );
-        background-size: 200% 100%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: chrome-shimmer 5s ease-in-out infinite;
-      }
-      @keyframes chrome-shimmer {
-        0%, 100% { background-position: 200% center; }
-        50% { background-position: -200% center; }
-      }
-      /* Robot image positioned below the chrome text to prevent blocking */
-      .hero-robot-img {
-        position: relative;
-        z-index: 2;
-        max-height: 310px;
-        width: auto;
-        object-fit: contain;
-        margin-top: 140px;
-        filter: drop-shadow(0 30px 60px rgba(0,0,0,0.9)) drop-shadow(0 0 80px rgba(41, 151, 255, 0.15));
-        animation: hero-float 4s ease-in-out infinite;
-      }
-      @keyframes hero-float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-8px); }
-      }
-      /* Ambient glow behind robot */
-      .hero-cinematic-wrapper::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(ellipse at center,
-          rgba(41, 151, 255, 0.08) 0%,
-          rgba(191, 90, 242, 0.04) 40%,
-          transparent 70%
-        );
-        z-index: 0;
-        pointer-events: none;
-      }
-
-      @media (max-width: 768px) {
-        .hero-chrome-text {
-          top: 24%;
-          font-size: clamp(3rem, 14vw, 7.5rem);
-        }
-        .hero-robot-img {
-          max-height: 190px;
-          margin-top: 80px;
-        }
-        .hero-cinematic-wrapper {
-          min-height: 330px;
-        }
-      }
-    </style>
 
     <section class="apple-hero">
       <div class="apple-container">
@@ -368,10 +239,10 @@
         
         <!-- Tabs Header -->
         <div class="apple-tabs-header">
-          <button class="apple-tab-btn active" data-tab="mech">🦾 4.1 Mechanical (Asuka &amp; Zacarias)</button>
-          <button class="apple-tab-btn" data-tab="elec">⚡ 4.2 Electrical &amp; Power (Bryan)</button>
-          <button class="apple-tab-btn" data-tab="drone">👁️ 4.3 Computer Vision (Gabriel)</button>
-          <button class="apple-tab-btn" data-tab="auton">🧠 4.4 ROS2 Nav &amp; Comms (Hilbert)</button>
+          <button class="apple-tab-btn active" data-tab="mech">&#9881; 4.1 Mechanical (Asuka &amp; Zacarias)</button>
+          <button class="apple-tab-btn" data-tab="elec">&#9889; 4.2 Electrical &amp; Power (Bryan)</button>
+          <button class="apple-tab-btn" data-tab="drone">&#128065; 4.3 Computer Vision (Gabriel)</button>
+          <button class="apple-tab-btn" data-tab="auton">&#129302; 4.4 ROS2 Nav &amp; Comms (Hilbert)</button>
         </div>
 
         <!-- Tab 1: Mechanical (Asuka & Zacarias) -->
@@ -382,15 +253,35 @@
             <p>
               Engineered with 6061-T6 aluminum extrusion framing, carbon-fiber PETG ducting, and dual high-torque hub motor drive to traverse airport pavement undulations while maintaining a stable ground effect suction seal.
             </p>
-            <ul class="apple-tab-spec-list">
-              <li><strong>Payload Capacity:</strong> 60 kg</li>
-              <li><strong>Intake Suction:</strong> 240Vac Vacuum module</li>
-              <li><strong>Chassis Material:</strong> 6061-T6 Aluminum</li>
-              <li><strong>Ground Clearance:</strong> Optimized 180mm suction duct height</li>
-            </ul>
+            <div class="apple-telemetry-grid">
+              <div class="apple-telemetry-chip">
+                <span class="apple-telemetry-chip-label">Payload Capacity</span>
+                <span class="apple-telemetry-chip-val"><span class="indicator"></span>60 kg</span>
+              </div>
+              <div class="apple-telemetry-chip">
+                <span class="apple-telemetry-chip-label">Intake Suction</span>
+                <span class="apple-telemetry-chip-val"><span class="indicator"></span>240Vac High-Flow</span>
+              </div>
+              <div class="apple-telemetry-chip">
+                <span class="apple-telemetry-chip-label">Chassis Material</span>
+                <span class="apple-telemetry-chip-val"><span class="indicator"></span>6061-T6 Aluminum</span>
+              </div>
+              <div class="apple-telemetry-chip">
+                <span class="apple-telemetry-chip-label">Ground Clearance</span>
+                <span class="apple-telemetry-chip-val"><span class="indicator"></span>180 mm Duct Height</span>
+              </div>
+            </div>
             <a href="4-subsystems/mechanical.html" class="apple-btn-pill">Read Mechanical Spec →</a>
           </div>
           <div class="apple-tab-media" style="position: relative; min-height: 300px; padding: 0; overflow: hidden; background: radial-gradient(circle at 50% 45%, #151a22 0%, #0b0c0f 65%, #08090b 100%);">
+            <div class="model-hud-bar">
+              <div class="model-orbit-controls">
+                <button type="button" class="model-orbit-btn active" data-orbit="45deg 70deg auto">Overview</button>
+                <button type="button" class="model-orbit-btn" data-orbit="0deg 110deg 2m">Suction Intake</button>
+                <button type="button" class="model-orbit-btn" data-orbit="90deg 60deg 1.8m">Sensor Mast</button>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 11px; color: var(--apple-blue); background: rgba(59, 130, 246, 0.12); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.25);">INTERACTIVE 3D</div>
+            </div>
             <model-viewer src="assets/UGVmodelreport.glb" alt="Interactive 3D model of the FODHUNTER UGV" camera-controls auto-rotate auto-rotate-delay="1000" rotation-per-second="8deg" shadow-intensity="1" shadow-softness="1" exposure="1" interaction-prompt="none" touch-action="pan-y" camera-orbit="45deg 70deg auto" style="width: 100%; height: 300px; background: transparent; --poster-color: transparent;"></model-viewer>
             <div style="position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); padding: 6px 12px; border-radius: 999px; background: rgba(20,20,22,0.70); border: 1px solid rgba(255,255,255,0.10); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--apple-text-secondary); font-size: 11px; white-space: nowrap; pointer-events: none;">Drag to rotate &nbsp;•&nbsp; Scroll to zoom</div>
           </div>
@@ -525,3 +416,4 @@
   <script src="js/main.js?v=4.2"></script>
 </body>
 </html>
+

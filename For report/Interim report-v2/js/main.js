@@ -991,6 +991,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 3D Model Viewer Orbit Controls (ui-ux-pro-max + motion)
+  const modelViewer = document.querySelector('model-viewer');
+  const orbitBtns = document.querySelectorAll('.model-orbit-btn');
+  if (modelViewer && orbitBtns.length > 0) {
+    orbitBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const orbit = btn.getAttribute('data-orbit');
+        orbitBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (orbit) {
+          modelViewer.setAttribute('camera-orbit', orbit);
+        }
+      });
+    });
+  }
+
+
   // ── Apple Mobile Drawer Toggle ──────────────────────────────
   const mobileToggle = document.getElementById('apple-mobile-toggle');
   const mobileDrawer = document.getElementById('apple-mobile-drawer');

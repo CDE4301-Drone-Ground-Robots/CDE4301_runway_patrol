@@ -1,3 +1,40 @@
-# OS files
+# OS & File Explorer Metadata
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+desktop.ini
+
+# Node / Web Dependencies & Builds
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.next/
+dist/
+build/
+.cache/
+
+# Python Cache & Artifacts (from local preview servers/scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# AI Agent & Local Tooling Skills
+# (Prevents 100+ local skill markdown/CSV files from cluttering the Git report)
+.agents/
+
+# IDE & Editor Local Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs & Temporary Files
+*.log
