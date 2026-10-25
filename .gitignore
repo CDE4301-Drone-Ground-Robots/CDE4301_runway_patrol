@@ -26,8 +26,18 @@ __pycache__/
 *.egg-info/
 
 # AI Agent & Local Tooling Skills
-# (Prevents 100+ local skill markdown/CSV files from cluttering the Git report)
+# (Prevents local skill markdown/CSV files and lockfiles from cluttering the Git report)
 .agents/
+.claude/
+.gemini/
+skills-lock.json
+
+# Video Generation & Hyperframes Renders
+.hyperframes/
+**/.hyperframes/
+brag-output*/
+renders/
+*.poster.mp4
 
 # IDE & Editor Local Settings
 .vscode/
