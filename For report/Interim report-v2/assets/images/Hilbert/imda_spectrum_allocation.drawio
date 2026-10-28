@@ -1,0 +1,28 @@
+<mxfile host="app.diagrams.net" modified="2026-10-28T06:00:00.000Z" agent="Mozilla/5.0" version="24.0.0">
+  <diagram id="imda_spectrum" name="IMDA Spectrum Allocation">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Singapore IMDA TS SRD 917–925 MHz Allocation &amp; Cellular Band 8 Coexistence" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#F5F5F7;" vertex="1" parent="1">
+          <mxGeometry x="150" y="30" width="800" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="band8_up" value="LTE Band 8 Uplink&lt;br&gt;880 - 915 MHz&lt;br&gt;&lt;b&gt;NO TRANSMIT ZONE&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#ef4444;fontColor=#ffffff;align=center;" vertex="1" parent="1">
+          <mxGeometry x="60" y="110" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="guard" value="Guard&lt;br&gt;2 MHz" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#78350f;strokeColor=#f59e0b;fontColor=#ffffff;align=center;" vertex="1" parent="1">
+          <mxGeometry x="330" y="125" width="50" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="imda" value="IMDA TS SRD (Item 13b)&lt;br&gt;&lt;b&gt;917.0 - 925.0 MHz&lt;/b&gt;&lt;br&gt;&lt;br&gt;Max Power: &amp;lt;= 100 mW EIRP (+20 dBm)&lt;br&gt;&lt;b&gt;Microhard P900 V2 Legal Window&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;fontColor=#ffffff;align=center;" vertex="1" parent="1">
+          <mxGeometry x="390" y="90" width="220" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="band8_down" value="LTE Band 8 Downlink&lt;br&gt;925 - 960 MHz&lt;br&gt;&lt;b&gt;NO TRANSMIT ZONE&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7f1d1d;strokeColor=#ef4444;fontColor=#ffffff;align=center;" vertex="1" parent="1">
+          <mxGeometry x="620" y="110" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="at" value="AT Configuration Commands:&lt;br&gt;ATS102=1 (917-925 MHz)&lt;br&gt;ATS105=000000FF (Hopping Mask)&lt;br&gt;ATS108=20 (+20 dBm / 100 mW)&lt;br&gt;AT&amp;amp;W (Save to EEPROM)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#3b82f6;fontColor=#ffffff;align=left;spacing=10;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="250" y="270" width="500" height="140" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <script>
+<link rel="icon" href="data:,">
+<script>
     (function() {
       try {
         var t = localStorage.getItem('theme');
@@ -13,567 +15,386 @@
       } catch (e) {}
     })();
   </script>
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>References - Hilbert | FOD Hunter Interim Report</title>
-  <link rel="stylesheet" href="../../css/styles.css?v=4.2">
+<meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
+<meta content="no-cache" http-equiv="Pragma"/>
+<meta content="0" http-equiv="Expires"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>References - Hilbert | FOD Hunter Interim Report</title>
+<link href="../../css/styles.css?v=4.2" rel="stylesheet"/>
 </head>
 <body>
-  <!-- APPLE TOP NAVIGATION BAR -->
-  <header class="apple-nav">
-    <div class="apple-nav-container">
-      <a href="../../index.html" class="apple-nav-brand">
-        <img src="../../assets/NUS_logo_full-horizontal.jpg" alt="National University of Singapore" class="apple-nav-logo" style="height: 28px; filter: brightness(1.1);">
-        <span class="nav-project-code">AIS-406</span>
-      </a>
-
-      <ul class="apple-nav-links">
-        <li><a href="../../index.html" class="apple-nav-link">Overview</a></li>
-        <li><a href="../../1-introduction.html" class="apple-nav-link">Introduction</a></li>
-        <li><a href="../../2-design-overview.html" class="apple-nav-link">Design</a></li>
-        <li><a href="../../3-individual-scopes.html" class="apple-nav-link">Scopes</a></li>
-        <li><a href="../../4-subsystems/index.html" class="apple-nav-link">Subsystems</a></li>
-        <li><a href="../../5-timeline.html" class="apple-nav-link">Timeline</a></li>
-        <li><a href="../../6-references.html" class="apple-nav-link active">References</a></li>
-        <li><a href="../../7-documentation.html" class="apple-nav-link">Documentation</a></li>
-      </ul>
-
-      <div class="apple-nav-actions">
-        <a href="../../6-references.html" class="apple-btn-pill" style="border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #d1d1d6;">← References Hub</a>
-        <button class="apple-mobile-toggle" id="apple-mobile-toggle" aria-label="Toggle navigation">☰</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- MOBILE DRAWER -->
-  <div class="apple-mobile-drawer" id="apple-mobile-drawer">
-    <a href="../../index.html">Overview</a>
-    <a href="../../6-references.html">← References Hub</a>
-    <a href="../../7-documentation/hilbert/simulation.html">Simulation Guide</a>
-  </div>
-
-  <!-- MAIN PAGE CONTENT -->
-  <main class="apple-main-content">
-    <div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
-      
-      <div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
-        <div class="apple-hero-badge">Section 6.0 • Hilbert's References</div>
-        <h1 class="apple-section-title" style="font-size: clamp(2rem, 4vw, 3rem);">
+<!-- APPLE TOP NAVIGATION BAR -->
+<header class="apple-nav">
+<div class="apple-nav-container">
+<a class="apple-nav-brand" href="../../index.html">
+<img alt="National University of Singapore" class="apple-nav-logo" src="../../assets/NUS_logo_full-horizontal.jpg" style="height: 28px; filter: brightness(1.1);"/>
+<span class="nav-project-code">AIS-406</span>
+</a>
+<ul class="apple-nav-links">
+<li><a class="apple-nav-link" href="../../index.html">Overview</a></li>
+<li><a class="apple-nav-link" href="../../1-introduction.html">Introduction</a></li>
+<li><a class="apple-nav-link" href="../../2-design-overview.html">Design</a></li>
+<li><a class="apple-nav-link" href="../../3-individual-scopes.html">Scopes</a></li>
+<li><a class="apple-nav-link" href="../../4-subsystems/index.html">Subsystems</a></li>
+<li><a class="apple-nav-link" href="../../5-timeline.html">Timeline</a></li>
+<li><a class="apple-nav-link active" href="../../6-references.html">References</a></li>
+<li><a class="apple-nav-link" href="../../7-documentation.html">Documentation</a></li>
+</ul>
+<div class="apple-nav-actions">
+<a class="apple-btn-pill" href="../../6-references.html" style="border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06); color: #d1d1d6;">← References Hub</a>
+<button aria-label="Toggle navigation" class="apple-mobile-toggle" id="apple-mobile-toggle">☰</button>
+</div>
+</div>
+</header>
+<!-- MOBILE DRAWER -->
+<div class="apple-mobile-drawer" id="apple-mobile-drawer">
+<a href="../../index.html">Overview</a>
+<a href="../../6-references.html">← References Hub</a>
+<a href="../../7-documentation/hilbert/simulation.html">Simulation Guide</a>
+</div>
+<!-- MAIN PAGE CONTENT -->
+<main class="apple-main-content">
+<div class="apple-container" style="padding-top: 30px; padding-bottom: 60px;">
+<div class="apple-section-header" style="text-align: center; margin-bottom: 48px;">
+<div class="apple-hero-badge">Section 6.0 • Hilbert's References</div>
+<h1 class="apple-section-title" style="font-size: clamp(2rem, 4vw, 3rem);">
           Hilbert Soh
           <span class="apple-hero-gradient">Reference Catalogue</span>
-        </h1>
-        <p class="apple-section-desc" style="margin: 0 auto;">
-          <span class="badge badge-purple">Software, Nav2 Autonomy &amp; C2 Communications</span>
-        </p>
-      </div>
-
-      <div class="page-content">
-
-        <!-- CONCORDANCE & SUBSYSTEM TRACEABILITY MATRIX -->
-        <div class="card-box" style="border-left: 4px solid var(--accent-blue); margin-bottom: 28px;">
-          <div class="card-header" style="margin-bottom: 8px;">
-            <div>
-              <div class="card-title" style="display: flex; align-items: center; gap: 8px;">
-                <span>📋 In-Text Citation Concordance &amp; Subsystem Traceability</span>
-              </div>
-              <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+</h1>
+<p class="apple-section-desc" style="margin: 0 auto;">
+<span class="badge badge-purple">Software, Nav2 Autonomy &amp; C2 Communications</span>
+</p>
+</div>
+<div class="page-content">
+<!-- CONCORDANCE & SUBSYSTEM TRACEABILITY MATRIX -->
+<div class="card-box" style="border-left: 4px solid var(--accent-blue); margin-bottom: 28px;">
+<div class="card-header" style="margin-bottom: 8px;">
+<div>
+<div class="card-title" style="display: flex; align-items: center; gap: 8px;">
+<span>📋 In-Text Citation Concordance &amp; Subsystem Traceability</span>
+</div>
+<div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
                 Complete cross-reference mapping linking citations in subsystem reports to full bibliographic entries below.
               </div>
-            </div>
-            <span class="badge badge-blue">23 In-Text Citations</span>
-          </div>
-
-          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+</div>
+<span class="badge badge-blue">23 In-Text Citations</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
             The concordance table below indexes all statutory aeronautical standards, peer-reviewed literature, and technical publications cited across Hilbert's engineering reports (<a href="../../7-documentation/hilbert/navigation.html" style="color: var(--accent-blue); text-decoration: underline;">Autonomous Runway Navigation</a>, <a href="../../7-documentation/hilbert/simulation.html" style="color: var(--accent-blue); text-decoration: underline;">Gazebo Simulation Lab</a>, <a href="../../7-documentation/hilbert/communications.html" style="color: var(--accent-blue); text-decoration: underline;">C2 Communications</a>, and <a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html" style="color: var(--accent-blue); text-decoration: underline;">Drivetrain &amp; Scrub Calculations</a>). Click any entry jump button to navigate directly to the complete bibliographic record below:
           </p>
+<div style="overflow-x: auto;">
+<table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
+<thead>
+<tr style="border-bottom: 1px solid var(--border-color); background: rgba(255, 255, 255, 0.03);">
+<th style="padding: 10px 12px; width: 55px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Key</th>
+<th style="padding: 10px 12px; width: 190px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Author(s) &amp; Year</th>
+<th style="padding: 10px 12px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Standard / Publication Scope</th>
+<th style="padding: 10px 12px; width: 160px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Referenced In</th>
+<th style="padding: 10px 12px; width: 100px; text-align: center; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Catalogue</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-bottom: 1px solid var(--border-color);">
+<td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[1]</td>
+<td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">ASTM International (2020)</td>
+<td style="padding: 9px 12px; color: var(--text-muted);">Airport Pavement Condition Index Surveys (ASTM D5340-20)</td>
+<td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-scope-constraints" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §1.2</span></a></td>
+<td style="padding: 9px 12px; text-align: center;"><a class="badge badge-purple" href="#ref-1" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [1] ↓</a></td>
+</tr>
 
-          <div style="overflow-x: auto;">
-            <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
-              <thead>
-                <tr style="border-bottom: 1px solid var(--border-color); background: rgba(255, 255, 255, 0.03);">
-                  <th style="padding: 10px 12px; width: 55px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Key</th>
-                  <th style="padding: 10px 12px; width: 190px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Author(s) &amp; Year</th>
-                  <th style="padding: 10px 12px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Standard / Publication Scope</th>
-                  <th style="padding: 10px 12px; width: 160px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Referenced In</th>
-                  <th style="padding: 10px 12px; width: 100px; text-align: center; font-size: 11.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Catalogue</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[1]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">ASTM International (2020)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Airport Pavement Condition Index Surveys (ASTM D5340-20)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-operational-domain" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §1.2</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-1" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [1] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[2]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">FAA (2014)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Airport Foreign Object Debris (FOD) Management Equipment (AC 150/5220-24)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-operational-domain" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §1.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-2" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [2] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[3]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">IMDA Singapore (2021)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Technical Specification for Short Range Devices (IMDA TS SRD Issue 1 Rev 2)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/communications.html" style="text-decoration: none;"><span class="badge" style="background: rgba(255, 159, 10, 0.1); color: #ff9f0a; font-size: 10.5px;">Comms &amp; Nav §8.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-3" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [3] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[4]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">ICAO (2018)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Radio Frequency Spectrum Requirements for Civil Aviation (Doc 9718)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/communications.html" style="text-decoration: none;"><span class="badge" style="background: rgba(255, 159, 10, 0.1); color: #ff9f0a; font-size: 10.5px;">Comms &amp; Nav §8.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-4" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [4] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[5]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Kim, S., et al. (2019)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">UAS-Based Airport Maintenance Inspections &amp; Airfield Robotics (ASCE)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-multi-agent-coordination" style="text-decoration: none;"><span class="badge" style="background: rgba(48, 209, 88, 0.1); color: #30d158; font-size: 10.5px;">Nav &amp; Comms §8.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-5" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [5] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[6]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Krestenitis, M., et al. (2026)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Digitalization and Automation of Runway Inspection Using UAVs (Sensors)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-experimental-validation" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §9.0</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-6" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [6] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[7]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., et al. (2022)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Robot Operating System 2: Design, Architecture, and Uses (Science Robotics)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-state-estimation-dual-ekf" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §7.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-7" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [7] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[8]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., et al. (2020)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">The Marathon 2: A Navigation System (IEEE/RSJ IROS)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-nav2-architecture" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §2.0, §4.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-8" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [8] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[9]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Moore, T., &amp; Stouch, D. (2014)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">A Generalized Extended Kalman Filter Implementation for ROS (Springer)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-state-estimation-dual-ekf" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §7.1, §7.2</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-9" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [9] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[10]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Munyer, T., et al. (2022)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Foreign Object Debris Detection Based on Vision Transformers (IEEE CSCI)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-shortcomings-roadmap" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §10.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-10" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [10] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[11]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Republic of Singapore (1999)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Telecommunications Act 1999 (Cap. 323, 2020 Rev. Ed.)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/communications.html" style="text-decoration: none;"><span class="badge" style="background: rgba(255, 159, 10, 0.1); color: #ff9f0a; font-size: 10.5px;">Comms &amp; Nav §10.2</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-11" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [11] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[12]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Shan, J., et al. (2025)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">A Review of Foreign Object Debris Detection on Airport Runways (Remote Sensing)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-operational-domain" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §1.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-12" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [12] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[13]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Multimodal Transportation (2025)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Cooperative Scheduling &amp; Intermodal Dispatch for Autonomous Robotic Fleets</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-multi-agent-coordination" style="text-decoration: none;"><span class="badge" style="background: rgba(48, 209, 88, 0.1); color: #30d158; font-size: 10.5px;">Navigation §8.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-13" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [13] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[14]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Siegwart, R., et al. (2011)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Introduction to Autonomous Mobile Robots (2nd ed., MIT Press)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Nav §1.3 &amp; Drivetrain</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-14" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [14] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[15]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Gillespie, T. D. (1992)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Fundamentals of Vehicle Dynamics (SAE International)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Nav §1.3 &amp; Drivetrain</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-15" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [15] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[16]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Ilon, B. E. (1975)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Wheels for Course Stable Selfpropelling Vehicle Traversable in Any Desired Direction (USPTO)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html" style="text-decoration: none;"><span class="badge" style="background: rgba(255, 159, 10, 0.1); color: #ff9f0a; font-size: 10.5px;">Drivetrain Calculations</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-16" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [16] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[17]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">RobotPlatform.com (2024)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Classification of Mobile Robots and Wheel Control Theory</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation &amp; Drivetrain</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-17" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [17] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[18]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Marova, E. (2025)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Open Source Foxglove Alternatives: RViz and Rerun (ReductStore)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/communications.html" style="text-decoration: none;"><span class="badge" style="background: rgba(48, 209, 88, 0.1); color: #30d158; font-size: 10.5px;">C2 Communications</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-18" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [18] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[19]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Dolgov, D., et al. (2010)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Path Planning for Autonomous Vehicles in Unknown Semi-Structured Environments (IJRR)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-nav2-architecture" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §2.0, §4.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-19" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [19] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[20]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Dubins, L. E. (1957)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">On Curves of Minimal Length with a Constraint on Average Curvature (Am. J. Math.)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-nav2-architecture" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §2.0, §4.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-20" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [20] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[21]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., &amp; Jambrecic, I. (2021)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">SLAM Toolbox: SLAM for the Dynamic World (JOSS)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-state-estimation-dual-ekf" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §7.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-21" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [21] &darr;</a></td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[22]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Macenski, S., et al. (2024)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Regulated Pure Pursuit: Path-Tracking Controller in Constrained Environments (Auton. Robots)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-local-planners" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §2.0, §5.1</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-22" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [22] &darr;</a></td>
-                </tr>
-                <tr>
-                  <td style="padding: 9px 12px; font-weight: 600; color: var(--accent-blue);">[23]</td>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Williams, G., et al. (2017)</td>
-                  <td style="padding: 9px 12px; color: var(--text-muted);">Model Predictive Path Integral Control: Acceleration &amp; Related Algorithms (IEEE TAC)</td>
-                  <td style="padding: 9px 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-local-planners" style="text-decoration: none;"><span class="badge" style="background: rgba(41, 151, 255, 0.1); color: var(--accent-blue); font-size: 10.5px;">Navigation §2.0, §5.3</span></a></td>
-                  <td style="padding: 9px 12px; text-align: center;"><a href="#ref-23" class="badge badge-purple" style="font-size: 10.5px; text-decoration: none; padding: 4px 10px;">View [23] &darr;</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
 
-        <div class="card-box" style="border-left: 4px solid var(--accent-purple);">
-          <div class="card-header" style="margin-bottom: 8px;">
-            <div class="card-title">📚 Hilbert's Reference Catalogue</div>
-            <span class="badge badge-purple">Academic &amp; Statutory Standards</span>
-          </div>
-          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[1]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">ASTM International (2020)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Airport Pavement Condition Index Surveys (ASTM D5340-20)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-scope-constraints" style="color: var(--accent-blue); text-decoration: underline;">Nav §1.1</a>, <a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html#sec-1-requirements" style="color: var(--accent-blue); text-decoration: underline;">Drivetrain §1.1</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-1" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [1] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[2]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">FAA (2014)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Airport Foreign Object Debris (FOD) Management Equipment (AC 150/5220-24)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-scope-constraints" style="color: var(--accent-blue); text-decoration: underline;">Nav §1.1</a>, <a href="../../7-documentation/hilbert/communications.html#sec-1" style="color: var(--accent-blue); text-decoration: underline;">Comms §1.1</a>, <a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html#sec-1-requirements" style="color: var(--accent-blue); text-decoration: underline;">Drivetrain §1.1</a>, <a href="../../7-documentation/hilbert/steering-kinematics.html#sec-1-scope" style="color: var(--accent-blue); text-decoration: underline;">Steering §1.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-2" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [2] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[3]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">IMDA Singapore (2021)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Technical Specification for Short Range Devices (IMDA TS SRD Issue 1 Rev 2)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/communications.html#sec-3" style="color: var(--accent-blue); text-decoration: underline;">Comms §3.3</a>, <a href="../../7-documentation/hilbert/navigation.html#sec-intermodal-dispatch" style="color: var(--accent-blue); text-decoration: underline;">Nav §8.1</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-3" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [3] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[4]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">ICAO (2018)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Radio Frequency Spectrum Requirements for Civil Aviation (Doc 9718)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/communications.html#sec-3" style="color: var(--accent-blue); text-decoration: underline;">Comms §3.3</a>, <a href="../../7-documentation/hilbert/navigation.html#sec-intermodal-dispatch" style="color: var(--accent-blue); text-decoration: underline;">Nav §8.1</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-4" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [4] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[5]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Kim, S., et al. (2019)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">UAS-Based Airport Maintenance Inspections &amp; Airfield Robotics (ASCE)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/communications.html#sec-1" style="color: var(--accent-blue); text-decoration: underline;">Comms §1.1</a>, <a href="../../7-documentation/hilbert/navigation.html#sec-intermodal-dispatch" style="color: var(--accent-blue); text-decoration: underline;">Nav §8.1</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-5" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [5] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[6]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Krestenitis, M., et al. (2026)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Digitalization and Automation of Runway Inspection Using UAVs (Sensors)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-experimental-validation" style="color: var(--accent-blue); text-decoration: underline;">Nav §8.1, §9.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-6" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [6] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[7]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Macenski, S., et al. (2022)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Robot Operating System 2: Design, Architecture, and Uses (Science Robotics)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/communications.html#sec-2" style="color: var(--accent-blue); text-decoration: underline;">Comms §2.1</a>, <a href="../../7-documentation/hilbert/simulation.html#sec-1" style="color: var(--accent-blue); text-decoration: underline;">Simulation §1.0</a>, <a href="../../7-documentation/hilbert/navigation.html#sec-architectural-iterations" style="color: var(--accent-blue); text-decoration: underline;">Nav §2.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-7" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [7] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[8]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Macenski, S., et al. (2020)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">The Marathon 2: A Navigation System (IEEE/RSJ IROS Nav2)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-architectural-iterations" style="color: var(--accent-blue); text-decoration: underline;">Nav §2.0, §4.0</a>, <a href="../../7-documentation/hilbert/simulation.html#sec-4" style="color: var(--accent-blue); text-decoration: underline;">Simulation §4.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-8" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [8] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[9]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Moore, T., &amp; Stouch, D. (2014)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">A Generalized Extended Kalman Filter Implementation for ROS (robot_localization)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-state-estimation" style="color: var(--accent-blue); text-decoration: underline;">Nav §7.1</a>, <a href="../../7-documentation/hilbert/simulation.html#sec-3" style="color: var(--accent-blue); text-decoration: underline;">Simulation §3.0</a>, <a href="../../7-documentation/hilbert/communications.html#sec-5" style="color: var(--accent-blue); text-decoration: underline;">Comms §5.3</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-9" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [9] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[10]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Munyer, T., et al. (2022)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Foreign Object Debris Detection Based on Vision Transformers (IEEE CSCI)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/communications.html#sec-4" style="color: var(--accent-blue); text-decoration: underline;">Comms §4.1</a>, <a href="../../7-documentation/hilbert/navigation.html#sec-scope-constraints" style="color: var(--accent-blue); text-decoration: underline;">Nav §1.1, §10.1</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-10" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [10] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[11]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Republic of Singapore (1999)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Telecommunications Act 1999 (Cap. 323, 2020 Rev. Ed.)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/communications.html#sec-3" style="color: var(--accent-blue); text-decoration: underline;">Comms §3.3</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-11" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [11] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[12]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Shan, J., et al. (2025)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">A Review of Foreign Object Debris Detection on Airport Runways (Remote Sensing)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/communications.html#sec-1" style="color: var(--accent-blue); text-decoration: underline;">Comms §1.1</a>, <a href="../../7-documentation/hilbert/navigation.html#sec-scope-constraints" style="color: var(--accent-blue); text-decoration: underline;">Nav §1.1</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-12" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [12] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[13]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Thelasingha, N., et al. (2024)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Energy-Aware UAV-UGV Cooperative Task Site Assignments (IEEE T-ASE)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/communications.html#sec-1" style="color: var(--accent-blue); text-decoration: underline;">Comms §1.1</a>, <a href="../../7-documentation/hilbert/navigation.html#sec-intermodal-dispatch" style="color: var(--accent-blue); text-decoration: underline;">Nav §8.1</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-13" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [13] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[14]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Siegwart, R., et al. (2011)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Introduction to Autonomous Mobile Robots (2nd ed., MIT Press)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html#sec-2-resistance" style="color: var(--accent-blue); text-decoration: underline;">Drivetrain §2.0, §3.0</a>, <a href="../../7-documentation/hilbert/steering-kinematics.html#sec-2-kinematics" style="color: var(--accent-blue); text-decoration: underline;">Steering §2.0</a>, <a href="../../7-documentation/hilbert/navigation.html#sec-scope-constraints" style="color: var(--accent-blue); text-decoration: underline;">Nav §1.2</a>, <a href="../../7-documentation/hilbert/simulation.html#sec-2" style="color: var(--accent-blue); text-decoration: underline;">Simulation §2.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-14" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [14] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[15]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Gillespie, T. D. (1992)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Fundamentals of Vehicle Dynamics (SAE International)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html#sec-2-resistance" style="color: var(--accent-blue); text-decoration: underline;">Drivetrain §2.0, §7.0</a>, <a href="../../7-documentation/hilbert/steering-kinematics.html#sec-4-pitch" style="color: var(--accent-blue); text-decoration: underline;">Steering §4.0</a>, <a href="../../7-documentation/hilbert/navigation.html#sec-scope-constraints" style="color: var(--accent-blue); text-decoration: underline;">Nav §1.2</a>, <a href="../../7-documentation/hilbert/simulation.html#sec-2" style="color: var(--accent-blue); text-decoration: underline;">Simulation §2.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-15" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [15] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[16]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Ilon, B. E. (1975)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Mecanum Wheel Patent (US Patent 3,876,255)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html#sec-trade-study" style="color: var(--accent-blue); text-decoration: underline;">Drivetrain §6.0</a>, <a href="../../7-documentation/hilbert/steering-kinematics.html#sec-5-trade-study" style="color: var(--accent-blue); text-decoration: underline;">Steering §5.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-16" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [16] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[17]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">RobotPlatform.com (2024)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Classification of Mobile Robots and Wheel Control Theory</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/Motor_drivetrain_calculation.html#sec-trade-study" style="color: var(--accent-blue); text-decoration: underline;">Drivetrain §6.0</a>, <a href="../../7-documentation/hilbert/steering-kinematics.html#sec-5-trade-study" style="color: var(--accent-blue); text-decoration: underline;">Steering §5.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-17" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [17] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[18]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Marova, E. (2025)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Open Source Foxglove Alternatives: RViz and Rerun (ReductStore)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/communications.html#sec-7" style="color: var(--accent-blue); text-decoration: underline;">Comms §7.3</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-18" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [18] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[19]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Dolgov, D., et al. (2010)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Path Planning for Autonomous Vehicles (Hybrid A*, IJRR)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-global-planning" style="color: var(--accent-blue); text-decoration: underline;">Nav §4.1</a>, <a href="../../7-documentation/hilbert/communications.html#sec-2" style="color: var(--accent-blue); text-decoration: underline;">Comms §2.3</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-19" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [19] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[20]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Dubins, L. E. (1957)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">On Curves of Minimal Length with Curvature Constraint (Am. J. Math.)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-global-planning" style="color: var(--accent-blue); text-decoration: underline;">Nav §4.1, §8.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-20" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [20] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[21]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Macenski, S., &amp; Jambrecic, I. (2021)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">SLAM Toolbox: SLAM for the Dynamic World (JOSS)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-state-estimation" style="color: var(--accent-blue); text-decoration: underline;">Nav §1.1, §7.1, §7.3</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-21" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [21] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[22]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Macenski, S., et al. (2023)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Regulated pure pursuit for robot path tracking (Auton. Robots)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-local-tracking" style="color: var(--accent-blue); text-decoration: underline;">Nav §5.1</a>, <a href="../../7-documentation/hilbert/simulation.html#sec-4" style="color: var(--accent-blue); text-decoration: underline;">Simulation §4.0</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-22" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [22] ↓</a></td></tr><tr style="border-bottom: 1px solid var(--border-color);"><td style="padding: 10px 12px; font-weight: 700; color: var(--accent-purple); font-size: 13px;">[23]</td><td style="padding: 10px 12px; font-weight: 600; font-size: 13px;">Williams, G., et al. (2017)</td><td style="padding: 10px 12px; font-size: 12.5px; color: var(--text-muted);">Model Predictive Path Integral Control: From Theory to Parallel Computation (JGCD)</td><td style="padding: 10px 12px; font-size: 12px;"><a href="../../7-documentation/hilbert/navigation.html#sec-local-tracking" style="color: var(--accent-blue); text-decoration: underline;">Nav §5.3</a></td><td style="padding: 10px 12px; font-size: 12px; text-align: center;"><a href="#ref-23" style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">View [23] ↓</a></td></tr></tbody>
+</table>
+</div>
+</div>
+<div class="card-box" style="border-left: 4px solid var(--accent-purple);">
+<div class="card-header" style="margin-bottom: 8px;">
+<div class="card-title">📚 Hilbert's Reference Catalogue</div>
+<span class="badge badge-purple">Academic &amp; Statutory Standards</span>
+</div>
+<p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
             Peer-reviewed research papers, statutory aeronautical standards, and technical specifications supporting the UGV autonomous navigation stack, digital twin simulation, and multi-agent C2 communications.
           </p>
-
-          <div style="display: flex; flex-direction: column; gap: 16px;">
-
-            <!-- Reference 1 -->
-            <div id="ref-1" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[1]</span>
-                <span class="badge" style="background: rgba(147, 51, 234, 0.12); color: var(--accent-purple); font-size: 11px;">Standard / Airfield Maintenance</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>ASTM International.</strong> (2020). <em>Standard test method for airport pavement condition index surveys</em> (ASTM D5340-20). ASTM International.<br>
-                <a href="https://doi.org/10.1520/D5340-20" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1520/D5340-20</a>
-              </p>
-            </div>
-
-            <!-- Reference 2 -->
-            <div id="ref-2" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[2]</span>
-                <span class="badge badge-blue" style="font-size: 11px;">Aviation Safety / Regulatory</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Federal Aviation Administration.</strong> (2014). <em>Airport foreign object debris (FOD) management equipment</em> (FAA Advisory Circular AC 150/5220-24). U.S. Department of Transportation.<br>
-                <a href="https://www.faa.gov/airports/resources/advisory_circulars/index.cfm/go/document.current/documentNumber/150_5220-24" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">FAA Advisory Circular AC 150/5220-24 Portal</a>
-              </p>
-            </div>
-
-            <!-- Reference 3 -->
-            <div id="ref-3" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[3]</span>
-                <span class="badge badge-amber" style="font-size: 11px;">RF Standards / IMDA Regulation</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Infocomm Media Development Authority.</strong> (2021). <em>Technical specification for short range devices</em> (IMDA TS SRD Issue 1 Revision 2). Standards Department, Infocomm Media Development Authority of Singapore.<br>
-                <a href="https://www.imda.gov.sg/assets/340548ab-3e43-436b-acc0-6148d95f3d0f.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">IMDA TS SRD Official Specification Document (PDF)</a>
-              </p>
-            </div>
-
-            <!-- Reference 4 -->
-            <div id="ref-4" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[4]</span>
-                <span class="badge badge-emerald" style="font-size: 11px;">ICAO / Aeronautical Telecommunications</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>International Civil Aviation Organization.</strong> (2018). <em>Handbook on radio frequency spectrum requirements for civil aviation including statement of approved ICAO policies</em> (Doc 9718, Vol. 1, 2nd ed.). International Civil Aviation Organization.<br>
-                <a href="https://www.icao.int/safety/airnavigation/OPS/Doc9718/Pages/default.aspx" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">ICAO Doc 9718 Portal</a>
-              </p>
-            </div>
-
-            <!-- Reference 5 -->
-            <div id="ref-5" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[5]</span>
-                <span class="badge badge-cyan" style="font-size: 11px;">Autonomous Inspection / UAV-UGV Operations</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Kim, S., Paes, D., Lee, K., Irizarry, J., &amp; Johnson, E. N.</strong> (2019). UAS-based airport maintenance inspections: Lessons learned from pilot study implementation. In <em>Computing in Civil Engineering 2019</em> (pp. 382–389). American Society of Civil Engineers.<br>
-                <a href="https://doi.org/10.1061/9780784482421.048" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1061/9780784482421.048</a>
-              </p>
-            </div>
-
-            <!-- Reference 6 -->
-            <div id="ref-6" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[6]</span>
-                <span class="badge badge-rose" style="font-size: 11px;">Sensors / Runway Automation</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Krestenitis, M., Petropoulos, A., Koulalis, I., Stipanovic, I., Skaric Palic, S., Ioannidis, K., &amp; Vrochidis, S.</strong> (2026). Digitalization and automation of runway inspection using unmanned aerial vehicles. <em>Sensors</em>, 26(4), Article 1100.<br>
-                <a href="https://doi.org/10.3390/s26041100" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.3390/s26041100</a>
-              </p>
-            </div>
-
-            <!-- Reference 7 -->
-            <div id="ref-7" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[7]</span>
-                <span class="badge badge-purple" style="font-size: 11px;">Science Robotics / ROS 2 Architecture</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Macenski, S., Foote, T., Gerkey, B., Lalancette, C., &amp; Woodall, W.</strong> (2022). Robot Operating System 2: Design, architecture, and uses in the wild. <em>Science Robotics</em>, 7(66), Article eabm6074.<br>
-                <a href="https://doi.org/10.1126/scirobotics.abm6074" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1126/scirobotics.abm6074</a>
-              </p>
-            </div>
-
-            <!-- Reference 8 -->
-            <div id="ref-8" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[8]</span>
-                <span class="badge badge-emerald" style="font-size: 11px;">IEEE IROS / Nav2 Navigation Stack</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Macenski, S., Martín, F., White, R., &amp; Clavero, J.</strong> (2020). The Marathon 2: A navigation system. In <em>2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</em> (pp. 2718–2725). IEEE.<br>
-                <a href="https://doi.org/10.1109/IROS45743.2020.9341207" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1109/IROS45743.2020.9341207</a>
-              </p>
-            </div>
-
-            <!-- Reference 9 -->
-            <div id="ref-9" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[9]</span>
-                <span class="badge badge-blue" style="font-size: 11px;">Springer / State Estimation &amp; EKF</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Moore, T., &amp; Stouch, D.</strong> (2014). A generalized extended Kalman filter implementation for the Robot Operating System. In S. Carpin, R. Verschure, &amp; A. Birk (Eds.), <em>Intelligent autonomous systems 13</em> (Advances in Intelligent Systems and Computing, Vol. 302, pp. 335–348). Springer.<br>
-                <a href="https://doi.org/10.1007/978-3-319-08338-4_25" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1007/978-3-319-08338-4_25</a>
-              </p>
-            </div>
-
-            <!-- Reference 10 -->
-            <div id="ref-10" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[10]</span>
-                <span class="badge badge-amber" style="font-size: 11px;">IEEE CSCI / Vision Transformers &amp; FOD</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Munyer, T., Brinkman, D., Zhong, X., Huang, C., &amp; Konstantzos, I.</strong> (2022). Foreign object debris detection for airport pavement images based on self-supervised localization and vision transformer. In <em>2022 International Conference on Computational Science and Computational Intelligence (CSCI)</em> (pp. 1388–1394). IEEE.<br>
-                <a href="https://doi.org/10.1109/CSCI58124.2022.00248" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1109/CSCI58124.2022.00248</a>
-              </p>
-            </div>
-
-            <!-- Reference 11 -->
-            <div id="ref-11" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[11]</span>
-                <span class="badge badge-rose" style="font-size: 11px;">Statutory Law / Singapore Legislation</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Republic of Singapore.</strong> (1999). <em>Telecommunications Act 1999</em> (Cap. 323, 2020 Rev. Ed.). Singapore Statutes Online.<br>
-                <a href="https://sso.agc.gov.sg/Act/TA1999" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">Singapore Statutes Online: Telecommunications Act 1999</a>
-              </p>
-            </div>
-
-            <!-- Reference 12 -->
-            <div id="ref-12" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[12]</span>
-                <span class="badge badge-purple" style="font-size: 11px;">Remote Sensing / FOD Review</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Shan, J., Miccinesi, L., Beni, A., Pagnini, L., Cioncolini, A., &amp; Pieraccini, M.</strong> (2025). A review of foreign object debris detection on airport runways: Sensors and algorithms. <em>Remote Sensing</em>, 17(2), Article 225.<br>
-                <a href="https://doi.org/10.3390/rs17020225" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.3390/rs17020225</a>
-              </p>
-            </div>
-
-            <!-- Reference 13 -->
-            <div id="ref-13" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[13]</span>
-                <span class="badge" style="background: rgba(41, 151, 255, 0.15); color: var(--accent-blue); font-size: 11px;">Intermodal Systems / Fleet Dispatch</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Elsevier Multimodal Transportation.</strong> (2025). Cooperative scheduling and intermodal dispatch optimization for heterogeneous autonomous robotic fleets. <em>Multimodal Transportation</em>, 4(1), Article 100100.<br>
-                <a href="https://doi.org/10.1016/j.multra.2025.100100" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1016/j.multra.2025.100100</a> &bull; PII: S2772586325001005
-              </p>
-            </div>
-
-            <!-- Reference 14 -->
-            <div id="ref-14" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[14]</span>
-                <span class="badge badge-emerald" style="font-size: 11px;">Robotics Kinematics / MIT Press</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Siegwart, R., Nourbakhsh, I. R., &amp; Scaramuzza, D.</strong> (2011). <em>Introduction to Autonomous Mobile Robots</em> (2nd ed.). MIT Press.<br>
-                <a href="https://doi.org/10.7551/mitpress/8971.001.0001" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.7551/mitpress/8971.001.0001</a>
-              </p>
-            </div>
-
-            <!-- Reference 15 -->
-            <div id="ref-15" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[15]</span>
-                <span class="badge badge-blue" style="font-size: 11px;">Vehicle Dynamics / SAE International</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Gillespie, T. D.</strong> (1992). <em>Fundamentals of Vehicle Dynamics</em>. SAE International.<br>
-                <a href="https://doi.org/10.4271/R-114" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.4271/R-114</a>
-              </p>
-            </div>
-
-            <!-- Reference 16 -->
-            <div id="ref-16" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[16]</span>
-                <span class="badge badge-amber" style="font-size: 11px;">Mecanum Wheel Patent / USPTO</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Ilon, B. E.</strong> (1975). <em>Wheels for a course stable selfpropelling vehicle traversable in any desired direction on the ground or some other base</em> (US Patent No. 3,876,255). U.S. Patent and Trademark Office.<br>
-                <a href="https://patents.google.com/patent/US3876255A/en" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">US Patent 3,876,255 • Google Patents</a>
-              </p>
-            </div>
-
-            <!-- Reference 17 -->
-            <div id="ref-17" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[17]</span>
-                <span class="badge badge-cyan" style="font-size: 11px;">Drive Systems / Control Theory</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>RobotPlatform.com.</strong> (2024). <em>Classification of mobile robots and wheel control theory: Differential, Ackermann, and holonomic drive systems</em>. Knowledge Base in Robotics.<br>
-                <a href="https://www.robotplatform.com/knowledge/Classification_of_Robots/wheel_control_theory.html" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://www.robotplatform.com/knowledge/Classification_of_Robots/wheel_control_theory.html</a>
-              </p>
-            </div>
-
-            <!-- Reference 18 -->
-            <div id="ref-18" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[18]</span>
-                <span class="badge badge-emerald" style="font-size: 11px;">Robotics Telemetry &amp; Visualization</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Marova, E.</strong> (2025, July 15). <em>Open source Foxglove alternatives: RViz and Rerun</em>. ReductStore Technical Publication.<br>
-                <a href="https://www.reduct.store/blog/comparison-rviz-foxglove-rerun" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://www.reduct.store/blog/comparison-rviz-foxglove-rerun</a>
-              </p>
-            </div>
-
-            <!-- Reference 19 -->
-            <div id="ref-19" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[19]</span>
-                <span class="badge badge-blue" style="font-size: 11px;">IJRR / Hybrid A* Motion Planning</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Dolgov, D., Thrun, S., Montemerlo, M., &amp; Diebel, J.</strong> (2010). Path planning for autonomous vehicles in unknown semi-structured environments. <em>The International Journal of Robotics Research</em>, 29(5), 485–501.<br>
-                <a href="https://doi.org/10.1177/0278364909359210" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1177/0278364909359210</a>
-              </p>
-            </div>
-
-            <!-- Reference 20 -->
-            <div id="ref-20" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[20]</span>
-                <span class="badge badge-emerald" style="font-size: 11px;">Mathematics / Dubins Curves Foundation</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Dubins, L. E.</strong> (1957). On curves of minimal length with a constraint on average curvature, and with prescribed initial and terminal positions and tangents. <em>American Journal of Mathematics</em>, 79(3), 497–516.<br>
-                <a href="https://doi.org/10.2307/2372560" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.2307/2372560</a>
-              </p>
-            </div>
-
-            <!-- Reference 21 -->
-            <div id="ref-21" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[21]</span>
-                <span class="badge badge-purple" style="font-size: 11px;">JOSS / SLAM Toolbox Architecture</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Macenski, S., &amp; Jambrecic, I.</strong> (2021). SLAM Toolbox: SLAM for the dynamic world. <em>Journal of Open Source Software</em>, 6(61), Article 2783.<br>
-                <a href="https://doi.org/10.21105/joss.02783" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.21105/joss.02783</a>
-              </p>
-            </div>
-
-            <!-- Reference 22 -->
-            <div id="ref-22" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[22]</span>
-                <span class="badge badge-cyan" style="font-size: 11px;">Autonomous Robots / Regulated Pure Pursuit</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Macenski, S., Singh, P., &amp; Rao, B.</strong> (2024). Regulated Pure Pursuit: A path-tracking controller for mobile robots in constrained environments. <em>Autonomous Robots</em>, 48(2), 145–160.<br>
-                <a href="https://doi.org/10.1007/s10514-024-10164-8" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1007/s10514-024-10164-8</a>
-              </p>
-            </div>
-
-            <!-- Reference 23 -->
-            <div id="ref-23" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
-                <span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[23]</span>
-                <span class="badge badge-amber" style="font-size: 11px;">IEEE TAC / MPPI Control Theory</span>
-              </div>
-              <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
-                <strong>Williams, G., Aldrich, A., &amp; Theodorou, E. A.</strong> (2017). Model predictive path integral control: Acceleration and related algorithms. <em>IEEE Transactions on Automatic Control</em>, 62(10), 5034–5049.<br>
-                <a href="https://doi.org/10.1109/TAC.2017.2704257" target="_blank" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;">https://doi.org/10.1109/TAC.2017.2704257</a>
-              </p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </main>
-
-  <footer class="apple-footer">
-    <div class="apple-footer-inner">
-      <div>&copy; 2026 FOD Hunter Capstone Team &bull; National University of Singapore</div>
-      <ul class="apple-footer-links">
-        <li><a href="../../index.html">Overview</a></li>
-        <li><a href="../../6-references.html">&larr; References Hub</a></li>
-        <li><a href="../../7-documentation/hilbert/navigation.html">Navigation</a></li>
-        <li><a href="../../7-documentation/hilbert/simulation.html">Simulation</a></li>
-        <li><a href="../../7-documentation/hilbert/communications.html">Communications</a></li>
-      </ul>
-    </div>
-  </footer>
-
-  <script src="../../js/main.js?v=4.2"></script>
+<div style="display: flex; flex-direction: column; gap: 16px;">
+<!-- Reference 1 -->
+<div id="ref-1" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[1]</span>
+<span class="badge" style="background: rgba(147, 51, 234, 0.12); color: var(--accent-purple); font-size: 11px;">Standard / Airfield Maintenance</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>ASTM International.</strong> (2020). <em>Standard test method for airport pavement condition index surveys</em> (ASTM D5340-20). ASTM International.<br/>
+<a href="https://doi.org/10.1520/D5340-20" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.1520/D5340-20</a>
+</p>
+</div>
+<!-- Reference 2 -->
+<div id="ref-2" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[2]</span>
+<span class="badge badge-blue" style="font-size: 11px;">Aviation Safety / Regulatory</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Federal Aviation Administration.</strong> (2014). <em>Airport foreign object debris (FOD) management equipment</em> (FAA Advisory Circular AC 150/5220-24). U.S. Department of Transportation.<br/>
+<a href="https://www.faa.gov/airports/resources/advisory_circulars/index.cfm/go/document.current/documentNumber/150_5220-24" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">FAA Advisory Circular AC 150/5220-24 Portal</a>
+</p>
+</div>
+<!-- Reference 3 -->
+<div id="ref-3" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[3]</span>
+<span class="badge badge-amber" style="font-size: 11px;">RF Standards / IMDA Regulation</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Infocomm Media Development Authority.</strong> (2021). <em>Technical specification for short range devices</em> (IMDA TS SRD Issue 1 Revision 2). Standards Department, Infocomm Media Development Authority of Singapore.<br/>
+<a href="https://www.imda.gov.sg/assets/340548ab-3e43-436b-acc0-6148d95f3d0f.pdf" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">IMDA TS SRD Official Specification Document (PDF)</a>
+</p>
+</div>
+<!-- Reference 4 -->
+<div id="ref-4" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[4]</span>
+<span class="badge badge-emerald" style="font-size: 11px;">ICAO / Aeronautical Telecommunications</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>International Civil Aviation Organization.</strong> (2018). <em>Handbook on radio frequency spectrum requirements for civil aviation including statement of approved ICAO policies</em> (Doc 9718, Vol. 1, 2nd ed.). International Civil Aviation Organization.<br/>
+<a href="https://www.icao.int/safety/airnavigation/OPS/Doc9718/Pages/default.aspx" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">ICAO Doc 9718 Portal</a>
+</p>
+</div>
+<!-- Reference 5 -->
+<div id="ref-5" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[5]</span>
+<span class="badge badge-cyan" style="font-size: 11px;">Autonomous Inspection / UAV-UGV Operations</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Kim, S., Paes, D., Lee, K., Irizarry, J., &amp; Johnson, E. N.</strong> (2019). UAS-based airport maintenance inspections: Lessons learned from pilot study implementation. In <em>Computing in Civil Engineering 2019</em> (pp. 382–389). American Society of Civil Engineers.<br/>
+<a href="https://doi.org/10.1061/9780784482445.049" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.1061/9780784482445.049</a>
+</p>
+</div>
+<!-- Reference 6 -->
+<div id="ref-6" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[6]</span>
+<span class="badge badge-rose" style="font-size: 11px;">Sensors / Runway Automation</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Krestenitis, M., Petropoulos, A., Koulalis, I., Stipanovic, I., Skaric Palic, S., Ioannidis, K., &amp; Vrochidis, S.</strong> (2026). Digitalization and automation of runway inspection using unmanned aerial vehicles. <em>Sensors</em>, 26(4), Article 1100.<br/>
+<a href="https://doi.org/10.3390/s26041100" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.3390/s26041100</a>
+</p>
+</div>
+<!-- Reference 7 -->
+<div id="ref-7" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[7]</span>
+<span class="badge badge-purple" style="font-size: 11px;">Science Robotics / ROS 2 Architecture</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Macenski, S., Foote, T., Gerkey, B., Lalancette, C., &amp; Woodall, W.</strong> (2022). Robot Operating System 2: Design, architecture, and uses in the wild. <em>Science Robotics</em>, 7(66), Article eabm6074.<br/>
+<a href="https://doi.org/10.1126/scirobotics.abm6074" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.1126/scirobotics.abm6074</a>
+</p>
+</div>
+<!-- Reference 8 -->
+<div id="ref-8" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[8]</span>
+<span class="badge badge-emerald" style="font-size: 11px;">IEEE IROS / Nav2 Navigation Stack</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Macenski, S., Martín, F., White, R., &amp; Clavero, J.</strong> (2020). The Marathon 2: A navigation system. In <em>2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</em> (pp. 2718–2725). IEEE.<br/>
+<a href="https://doi.org/10.1109/IROS45743.2020.9341207" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.1109/IROS45743.2020.9341207</a>
+</p>
+</div>
+<!-- Reference 9 -->
+<div id="ref-9" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[9]</span>
+<span class="badge badge-blue" style="font-size: 11px;">Springer / State Estimation &amp; EKF</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Moore, T., &amp; Stouch, D.</strong> (2014). A generalized extended Kalman filter implementation for the Robot Operating System. In S. Carpin, R. Verschure, &amp; A. Birk (Eds.), <em>Intelligent autonomous systems 13</em> (Advances in Intelligent Systems and Computing, Vol. 302, pp. 335–348). Springer.<br/>
+<a href="https://doi.org/10.1007/978-3-319-08338-4_25" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.1007/978-3-319-08338-4_25</a>
+</p>
+</div>
+<!-- Reference 10 -->
+<div id="ref-10" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[10]</span>
+<span class="badge badge-amber" style="font-size: 11px;">IEEE CSCI / Vision Transformers &amp; FOD</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Munyer, T., Brinkman, D., Zhong, X., Huang, C., &amp; Konstantzos, I.</strong> (2022). Foreign object debris detection for airport pavement images based on self-supervised localization and vision transformer. In <em>2022 International Conference on Computational Science and Computational Intelligence (CSCI)</em> (pp. 1388–1394). IEEE.<br/>
+<a href="https://doi.org/10.1109/CSCI58124.2022.00249" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.1109/CSCI58124.2022.00249</a>
+</p>
+</div>
+<!-- Reference 11 -->
+<div id="ref-11" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[11]</span>
+<span class="badge badge-rose" style="font-size: 11px;">Statutory Law / Singapore Legislation</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Republic of Singapore.</strong> (1999). <em>Telecommunications Act 1999</em> (Cap. 323, 2020 Rev. Ed.). Singapore Statutes Online.<br/>
+<a href="https://sso.agc.gov.sg/Act/TA1999" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">Singapore Statutes Online: Telecommunications Act 1999</a>
+</p>
+</div>
+<!-- Reference 12 -->
+<div id="ref-12" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[12]</span>
+<span class="badge badge-purple" style="font-size: 11px;">Remote Sensing / FOD Review</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Shan, J., Miccinesi, L., Beni, A., Pagnini, L., Cioncolini, A., &amp; Pieraccini, M.</strong> (2025). A review of foreign object debris detection on airport runways: Sensors and algorithms. <em>Remote Sensing</em>, 17(2), Article 225.<br/>
+<a href="https://doi.org/10.3390/rs17020225" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.3390/rs17020225</a>
+</p>
+</div>
+<!-- Reference 13 -->
+<div id="ref-13" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[13]</span>
+<span class="badge badge-purple" style="font-size: 11px;">IEEE T-ASE / Cooperative UAV-UGV Dispatch</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;"><strong>Thelasingha, N., Julius, A. A., Humann, J., Reddinger, J.-P., Dotterweich, J., &amp; Childers, M.</strong> (2024). Iterative planning for multi-agent systems: An application in energy-aware UAV-UGV cooperative task site assignments. <em>IEEE Transactions on Automation Science and Engineering</em>, 21, 1–14.<br/><a href="https://doi.org/10.1109/TASE.2024.3398663" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.1109/TASE.2024.3398663</a></p>
+</div>
+<!-- Reference 14 -->
+<div id="ref-14" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[14]</span>
+<span class="badge badge-emerald" style="font-size: 11px;">Robotics Kinematics / MIT Press</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;"><strong>Siegwart, R., Nourbakhsh, I. R., &amp; Scaramuzza, D.</strong> (2011). <em>Introduction to Autonomous Mobile Robots</em> (2nd ed.). MIT Press. ISBN: 978-0262015356.<br/><a href="https://mitpress.mit.edu/9780262015356/introduction-to-autonomous-mobile-robots/" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">MIT Press Catalog: Introduction to Autonomous Mobile Robots (2nd ed.)</a></p>
+</div>
+<!-- Reference 15 -->
+<div id="ref-15" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[15]</span>
+<span class="badge badge-blue" style="font-size: 11px;">Vehicle Dynamics / SAE International</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Gillespie, T. D.</strong> (1992). <em>Fundamentals of Vehicle Dynamics</em>. SAE International.<br/>
+<a href="https://doi.org/10.4271/R-114" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.4271/R-114</a>
+</p>
+</div>
+<!-- Reference 16 -->
+<div id="ref-16" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[16]</span>
+<span class="badge badge-amber" style="font-size: 11px;">Mecanum Wheel Patent / USPTO</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Ilon, B. E.</strong> (1975). <em>Wheels for a course stable selfpropelling vehicle traversable in any desired direction on the ground or some other base</em> (US Patent No. 3,876,255). U.S. Patent and Trademark Office.<br/>
+<a href="https://patents.google.com/patent/US3876255A/en" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">US Patent 3,876,255 • Google Patents</a>
+</p>
+</div>
+<!-- Reference 17 -->
+<div id="ref-17" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[17]</span>
+<span class="badge badge-cyan" style="font-size: 11px;">Drive Systems / Control Theory</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>RobotPlatform.com.</strong> (2024). <em>Classification of mobile robots and wheel control theory: Differential, Ackermann, and holonomic drive systems</em>. Knowledge Base in Robotics.<br/>
+<a href="https://www.robotplatform.com/knowledge/Classification_of_Robots/wheel_control_theory.html" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://www.robotplatform.com/knowledge/Classification_of_Robots/wheel_control_theory.html</a>
+</p>
+</div>
+<!-- Reference 18 -->
+<div id="ref-18" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[18]</span>
+<span class="badge badge-emerald" style="font-size: 11px;">Robotics Telemetry &amp; Visualization</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Marova, E.</strong> (2025, July 15). <em>Open source Foxglove alternatives: RViz and Rerun</em>. ReductStore Technical Publication.<br/>
+<a href="https://www.reduct.store/blog/comparison-rviz-foxglove-rerun" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://www.reduct.store/blog/comparison-rviz-foxglove-rerun</a>
+</p>
+</div>
+<!-- Reference 19 -->
+<div id="ref-19" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[19]</span>
+<span class="badge badge-blue" style="font-size: 11px;">IJRR / Hybrid A* Motion Planning</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Dolgov, D., Thrun, S., Montemerlo, M., &amp; Diebel, J.</strong> (2010). Path planning for autonomous vehicles in unknown semi-structured environments. <em>The International Journal of Robotics Research</em>, 29(5), 485–501.<br/>
+<a href="https://doi.org/10.1177/0278364909359210" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.1177/0278364909359210</a>
+</p>
+</div>
+<!-- Reference 20 -->
+<div id="ref-20" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[20]</span>
+<span class="badge badge-emerald" style="font-size: 11px;">Mathematics / Dubins Curves Foundation</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Dubins, L. E.</strong> (1957). On curves of minimal length with a constraint on average curvature, and with prescribed initial and terminal positions and tangents. <em>American Journal of Mathematics</em>, 79(3), 497–516.<br/>
+<a href="https://doi.org/10.2307/2372560" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.2307/2372560</a>
+</p>
+</div>
+<!-- Reference 21 -->
+<div id="ref-21" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[21]</span>
+<span class="badge badge-purple" style="font-size: 11px;">JOSS / SLAM Toolbox Architecture</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;">
+<strong>Macenski, S., &amp; Jambrecic, I.</strong> (2021). SLAM Toolbox: SLAM for the dynamic world. <em>Journal of Open Source Software</em>, 6(61), Article 2783.<br/>
+<a href="https://doi.org/10.21105/joss.02783" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.21105/joss.02783</a>
+</p>
+</div>
+<!-- Reference 22 -->
+<div id="ref-22" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[22]</span>
+<span class="badge badge-cyan" style="font-size: 11px;">Autonomous Robots / Regulated Pure Pursuit</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;"><strong>Macenski, S., Singh, S., Martín, F., &amp; Ginés, J.</strong> (2023). Regulated pure pursuit for robot path tracking. <em>Autonomous Robots</em>, 47(5), 685–694.<br/><a href="https://doi.org/10.1007/s10514-023-10097-6" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.1007/s10514-023-10097-6</a></p>
+</div>
+<!-- Reference 23 -->
+<div id="ref-23" style="background: var(--card-bg-subtle, rgba(255,255,255,0.02)); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; border-left: 4px solid var(--accent-purple);">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; flex-wrap: wrap;">
+<span class="badge badge-purple" style="font-size: 13px; font-weight: 700;">[23]</span>
+<span class="badge badge-amber" style="font-size: 11px;">AIAA JGCD / MPPI Control Theory</span>
+</div>
+<p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0;"><strong>Williams, G., Aldrich, A., &amp; Theodorou, E. A.</strong> (2017). Model predictive path integral control: From theory to parallel computation. <em>Journal of Guidance, Control, and Dynamics</em>, 40(2), 344–357.<br/><a href="https://doi.org/10.2514/1.G001921" rel="noopener noreferrer" style="color: var(--accent-purple); text-decoration: underline; word-break: break-all;" target="_blank">https://doi.org/10.2514/1.G001921</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="apple-footer">
+<div class="apple-footer-inner">
+<div>© 2026 FOD Hunter Capstone Team • National University of Singapore</div>
+<ul class="apple-footer-links">
+<li><a href="../../index.html">Overview</a></li>
+<li><a href="../../6-references.html">← References Hub</a></li>
+<li><a href="../../7-documentation/hilbert/navigation.html">Navigation</a></li>
+<li><a href="../../7-documentation/hilbert/simulation.html">Simulation</a></li>
+<li><a href="../../7-documentation/hilbert/communications.html">Communications</a></li>
+</ul>
+</div>
+</footer>
+<script src="../../js/main.js?v=4.2"></script>
 </body>
 </html>

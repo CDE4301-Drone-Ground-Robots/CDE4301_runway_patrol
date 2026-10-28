@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#0b172a"/>
+    </linearGradient>
+    <filter id="sh3" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="520" rx="14" fill="url(#bg3)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 30)">
+    <rect width="920" height="50" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"/>
+    <text x="20" y="24" fill="#2997ff" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="12" font-weight="700" letter-spacing="0.08em">FIGURE 3.3 &#8226; SEMESTER 2 PROPOSED FIELD ROADMAP</text>
+    <text x="20" y="42" fill="#f5f5f7" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="16" font-weight="700">Proposed UAV–UGV Serial RF Datalink &amp; Intra-Vehicle Middleware Decoupling</text>
+    <text x="900" y="32" text-anchor="end" fill="#86868b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" font-size="12">Source: Hilbert ppt.pdf (Slides 4 &amp; 5)</text>
+  </g>
+
+  <!-- Left: Argus UAV Domain -->
+  <g transform="translate(40, 95)">
+    <rect width="260" height="300" rx="10" fill="rgba(41,151,255,0.04)" stroke="rgba(41,151,255,0.3)" filter="url(#sh3)"/>
+    <rect width="260" height="34" rx="10" fill="rgba(41,151,255,0.12)"/>
+    <text x="130" y="22" text-anchor="middle" fill="#2997ff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">Argus Aerial Domain (UAV)</text>
+
+    <g transform="translate(16, 48)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <text y="14" fill="#f5f5f7" font-weight="700">Companion Computer:</text>
+      <text y="30" fill="#86868b">Jetson Orin Nano / RPi 5</text>
+      <text y="46" fill="#86868b">YOLOv8 Real-time Edge AI</text>
+
+      <rect x="0" y="60" width="228" height="52" rx="6" fill="#0d1117" stroke="rgba(41,151,255,0.2)"/>
+      <text x="10" y="78" fill="#2997ff" font-size="10.5" font-weight="700">Intra-Vehicle Middleware:</text>
+      <text x="10" y="94" fill="#86868b" font-size="10">CycloneDDS strictly on 127.0.0.1</text>
+      <text x="10" y="106" fill="#86868b" font-size="9.5">Shared memory &#8226; Zero RF discovery</text>
+
+      <text y="134" fill="#f5f5f7" font-weight="700">UART Serial Interface:</text>
+      <text y="150" fill="#2997ff" font-family="monospace">/dev/ttyAMA0 (115.2 kbps)</text>
+
+      <rect x="0" y="166" width="228" height="74" rx="6" fill="rgba(48,209,88,0.08)" stroke="rgba(48,209,88,0.3)"/>
+      <text x="10" y="184" fill="#30d158" font-size="11" font-weight="700">Microhard P900 V2 Modem #1</text>
+      <text x="10" y="200" fill="#86868b" font-size="10.5">&#8226; Power: &lt; 2.5 W (Peak)</text>
+      <text x="10" y="216" fill="#86868b" font-size="10.5">&#8226; Weight: 18 g (SWaP optimal)</text>
+      <text x="10" y="232" fill="#86868b" font-size="10.5">&#8226; Antenna: Omni Dipole (+2.15 dBi)</text>
+    </g>
+  </g>
+
+  <!-- Center: Long-Range RF Link (4.0 km) -->
+  <g transform="translate(325, 95)">
+    <rect width="350" height="300" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" filter="url(#sh3)"/>
+    <rect width="350" height="34" rx="10" fill="rgba(255,255,255,0.04)"/>
+    <text x="175" y="22" text-anchor="middle" fill="#ffd60a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">4.0 km Point-to-Point FHSS Link</text>
+
+    <!-- RF Parameter Box -->
+    <g transform="translate(16, 48)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <rect x="0" y="6" width="318" height="110" rx="6" fill="#060c18" stroke="rgba(255,214,10,0.3)"/>
+      <text x="12" y="24" fill="#ffd60a" font-weight="700" font-size="11">MATHEMATICALLY VERIFIED LINK BUDGET:</text>
+
+      <text x="12" y="44" fill="#86868b" font-size="10.5">RF Output Power (PTX):</text>
+      <text x="306" y="44" text-anchor="end" fill="#f5f5f7" font-weight="600" font-size="10.5">+20.0 dBm (100 mW EIRP)</text>
+
+      <text x="12" y="62" fill="#86868b" font-size="10.5">Free Space Path Loss (FSPL):</text>
+      <text x="306" y="62" text-anchor="end" fill="#f5f5f7" font-weight="600" font-size="10.5">103.77 dB @ 4.0 km</text>
+
+      <text x="12" y="80" fill="#86868b" font-size="10.5">Received Power (PRX):</text>
+      <text x="306" y="80" text-anchor="end" fill="#f5f5f7" font-weight="600" font-size="10.5">-80.47 dBm</text>
+
+      <text x="12" y="98" fill="#86868b" font-size="10.5">Receiver Sensitivity (Psens):</text>
+      <text x="306" y="98" text-anchor="end" fill="#f5f5f7" font-weight="600" font-size="10.5">-110.0 dBm (115.2 kbps)</text>
+
+      <!-- Fade Margin Badge -->
+      <rect x="0" y="124" width="318" height="34" rx="6" fill="rgba(48,209,88,0.15)" stroke="rgba(48,209,88,0.4)"/>
+      <text x="159" y="145" text-anchor="middle" fill="#30d158" font-weight="700" font-size="12">EFFECTIVE FADE MARGIN: +29.53 dB (PASS &gt;= 15dB)</text>
+
+      <!-- Protocol Box -->
+      <rect x="0" y="166" width="318" height="74" rx="6" fill="#0d1117" stroke="rgba(255,255,255,0.08)"/>
+      <text x="12" y="184" fill="#2997ff" font-weight="700" font-size="11">Air-Gapped Serial C2 Framing:</text>
+      <text x="12" y="200" fill="#86868b" font-size="10.5">&#8226; Raw ASCII JSON Payloads (&lt; 1.5 KB)</text>
+      <text x="12" y="216" fill="#86868b" font-size="10.5">&#8226; Data Integrity: CRC-16 Checksum Verification</text>
+      <text x="12" y="232" fill="#86868b" font-size="10.5">&#8226; Security: SHA-256 HMAC Authentication</text>
+    </g>
+  </g>
+
+  <!-- Right: Hunter UGV Domain -->
+  <g transform="translate(700, 95)">
+    <rect width="260" height="300" rx="10" fill="rgba(48,209,88,0.04)" stroke="rgba(48,209,88,0.3)" filter="url(#sh3)"/>
+    <rect width="260" height="34" rx="10" fill="rgba(48,209,88,0.12)"/>
+    <text x="130" y="22" text-anchor="middle" fill="#30d158" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">FOD Hunter Domain (UGV)</text>
+
+    <g transform="translate(16, 48)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <rect x="0" y="6" width="228" height="74" rx="6" fill="rgba(48,209,88,0.08)" stroke="rgba(48,209,88,0.3)"/>
+      <text x="10" y="24" fill="#30d158" font-size="11" font-weight="700">Microhard P900 V2 Modem #2</text>
+      <text x="10" y="40" fill="#86868b" font-size="10.5">&#8226; Frequency: 917 - 925 MHz FHSS</text>
+      <text x="10" y="56" fill="#86868b" font-size="10.5">&#8226; Mounted on UGV Mast (1.2m AGL)</text>
+      <text x="10" y="72" fill="#86868b" font-size="10.5">&#8226; Interface: UART /dev/ttyUSB0</text>
+
+      <text y="98" fill="#f5f5f7" font-weight="700">Onboard Computing:</text>
+      <text y="114" fill="#86868b">Advantech Industrial PC</text>
+
+      <rect x="0" y="126" width="228" height="114" rx="6" fill="#0d1117" stroke="rgba(48,209,88,0.2)"/>
+      <text x="10" y="144" fill="#30d158" font-size="10.5" font-weight="700">Internal CycloneDDS Network:</text>
+      <text x="10" y="160" fill="#86868b" font-size="10">&#8226; serial_c2_bridge node ingest</text>
+      <text x="10" y="176" fill="#86868b" font-size="10">&#8226; Nav2 Action Server (Path Planner)</text>
+      <text x="10" y="192" fill="#86868b" font-size="10">&#8226; micro-ROS STM32 Driver Node</text>
+      <text x="10" y="208" fill="#86868b" font-size="10">&#8226; CANopen Bus (500 kbps) &#8594; BLDC Hubs</text>
+      <text x="10" y="224" fill="#30d158" font-size="9.5">ZERO DDS traffic leaves chassis</text>
+    </g>
+  </g>
+
+  <!-- Bottom Fresnel Zone Summary Banner -->
+  <g transform="translate(40, 410)">
+    <rect width="920" height="85" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+    <text x="20" y="24" fill="#2997ff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700">AIRFIELD 1ST FRESNEL ZONE CLEARANCE AUDIT &#8226; 4.0 KM RUNWAY</text>
+
+    <g transform="translate(20, 36)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">
+      <text y="14" fill="#86868b">UAV Flight Altitude:</text>
+      <text y="14" x="140" fill="#f5f5f7">30m - 50m AGL</text>
+
+      <text y="14" x="270" fill="#86868b">UGV Mast Antenna:</text>
+      <text y="14" x="400" fill="#f5f5f7">1.2m AGL</text>
+
+      <text y="14" x="520" fill="#86868b">Midpoint Ray Height:</text>
+      <text y="14" x="650" fill="#f5f5f7">25.6m AGL</text>
+
+      <text y="14" x="760" fill="#86868b">Required 60% Clearance:</text>
+      <text y="14" x="910" text-anchor="end" fill="#30d158" font-weight="700">10.82m (&gt;14.78m margin)</text>
+
+      <text y="34" fill="#30d158" font-size="10.5">Result: 100% uninhibited Line-of-Sight propagation. Zero tarmac diffraction or ground-reflection nulls across entire runway length.</text>
+    </g>
+  </g>
+</svg>

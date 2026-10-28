@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net" modified="2026-10-28T06:00:00.000Z" agent="Mozilla/5.0" version="24.0.0">
+  <diagram id="rf_datalink" name="UAV-UGV RF Datalink">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Proposed UAV–UGV Serial RF Datalink &amp; Intra-Vehicle Middleware Decoupling" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#F5F5F7;" vertex="1" parent="1">
+          <mxGeometry x="150" y="30" width="800" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uav" value="Argus Aerial Domain (UAV)&lt;br&gt;&lt;br&gt;Companion Computer (RPi 5 / Jetson)&lt;br&gt;Intra-Vehicle CycloneDDS (127.0.0.1)&lt;br&gt;&lt;br&gt;UART /dev/ttyAMA0 (115.2 kbps)&lt;br&gt;&lt;br&gt;Microhard P900 V2 Modem #1&lt;br&gt;- 18g, &lt;2.5W Peak&lt;br&gt;- +2.15 dBi Omni Dipole" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#3b82f6;fontColor=#ffffff;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="110" width="260" height="300" as="geometry"/>
+        </mxCell>
+        <mxCell id="rf" value="4.0 km Point-to-Point FHSS Link&lt;br&gt;&lt;br&gt;Link Budget Calculation:&lt;br&gt;- PTX: +20.0 dBm (100 mW EIRP)&lt;br&gt;- FSPL: 103.77 dB @ 921 MHz&lt;br&gt;- PRX: -80.47 dBm&lt;br&gt;- Psens: -110.0 dBm&lt;br&gt;&lt;br&gt;&lt;b&gt;FADE MARGIN: +29.53 dB&lt;/b&gt;&lt;br&gt;&lt;br&gt;Framed JSON with CRC-16 &amp; HMAC-SHA256" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#eab308;fontColor=#ffffff;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="370" y="110" width="280" height="300" as="geometry"/>
+        </mxCell>
+        <mxCell id="ugv" value="FOD Hunter Domain (UGV)&lt;br&gt;&lt;br&gt;Microhard P900 V2 Modem #2&lt;br&gt;- 917-925 MHz IMDA Band&lt;br&gt;- Mast Antenna (1.2m AGL)&lt;br&gt;&lt;br&gt;Advantech Industrial PC&lt;br&gt;Intra-Vehicle CycloneDDS (127.0.0.1):&lt;br&gt;- serial_c2_bridge node&lt;br&gt;- Nav2 Action Server&lt;br&gt;- micro-ROS STM32 Driver &rarr; CANopen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;fontColor=#ffffff;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="700" y="110" width="260" height="300" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,19 @@
+<mxfile host="app.diagrams.net" modified="2026-10-28T06:00:00.000Z" agent="drawio-mcp" version="24.0.0">
+  <diagram id="tradeoff-dyn" name="Steering Geometry Trade-Off Corridor">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="600" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zone_short" value="&lt;b&gt;SHORT WHEELBASE (L/B &lt; 0.80)&lt;/b&gt;&lt;br&gt;• Low scrub torque&lt;br&gt;• DANGER: Pitch Instability &amp; Nose Dive&lt;br&gt;• Risk of tip-over during 1.0g emergency stop" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#451a03;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fffbeb;" vertex="1" parent="1">
+          <mxGeometry x="50" y="100" width="240" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_optimal" value="&lt;b&gt;OPTIMAL DESIGN CORRIDOR&lt;/b&gt;&lt;br&gt;&lt;b&gt;0.80 &lt;= L/B &lt;= 1.00&lt;/b&gt;&lt;br&gt;• Confirmed Baseline: L/B = 0.8500&lt;br&gt;• Scrub Torque M_scrub = 124.7 Nm&lt;br&gt;• Motor Torque tau_m = 16.77 Nm (Safe &lt; 28.5 Nm)&lt;br&gt;• Pitch load transfer safe with +57.9 N margin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;" vertex="1" parent="1">
+          <mxGeometry x="320" y="80" width="280" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="zone_long" value="&lt;b&gt;LONG WHEELBASE (L/B &gt; 1.00)&lt;/b&gt;&lt;br&gt;• High straight line stability&lt;br&gt;• DANGER: Lateral Scrub Tractive Stall&lt;br&gt;• Fx &gt; Fx_max causes wheel spinout&lt;br&gt;• Motor overcurrent &amp; tire destruction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4c0519;strokeColor=#f43f5e;strokeWidth=2;fontColor=#fff1f2;" vertex="1" parent="1">
+          <mxGeometry x="630" y="100" width="240" height="200" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

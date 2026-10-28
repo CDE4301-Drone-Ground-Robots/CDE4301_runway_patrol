@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" modified="2026-10-28T06:00:00.000Z" agent="Mozilla/5.0" version="24.0.0">
+  <diagram id="comms_tradeoff" name="Wireless Tradeoff Matrix">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Airside C2 Wireless Technology Architecture Evaluation Matrix" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#F5F5F7;" vertex="1" parent="1">
+          <mxGeometry x="150" y="40" width="800" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1" value="Wi-Fi Router (802.11)&lt;br&gt;&lt;b&gt;BENCHTOP ONLY&lt;/b&gt;&lt;br&gt;&lt;br&gt;Range: &lt;120m&lt;br&gt;Throughput: 50-300 Mbps&lt;br&gt;Latency: Jitter under Multicast&lt;br&gt;OPSEC: WPA2/3&lt;br&gt;&lt;br&gt;Verdict: Outdoor 4km Impossible" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#3b82f6;fontColor=#ffffff;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="200" height="320" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="Cellular 4G/LTE / 5G&lt;br&gt;&lt;b&gt;REJECTED (OPSEC RISK)&lt;/b&gt;&lt;br&gt;&lt;br&gt;Range: Tower Dependent&lt;br&gt;Throughput: 10-100 Mbps&lt;br&gt;Latency: 35-120 ms&lt;br&gt;OPSEC: Public Network Risk&lt;br&gt;&lt;br&gt;Verdict: Airbase Deadzones &amp; SIM Cost" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#ef4444;fontColor=#ffffff;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="120" width="200" height="320" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3" value="LoRa / LoRaWAN&lt;br&gt;&lt;b&gt;REJECTED (THROUGHPUT)&lt;/b&gt;&lt;br&gt;&lt;br&gt;Range: &gt;10 km&lt;br&gt;Throughput: 0.3-50 kbps&lt;br&gt;Latency: 500-2500 ms&lt;br&gt;OPSEC: AES-128&lt;br&gt;&lt;br&gt;Verdict: Cannot support 2Hz Telemetry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#f59e0b;fontColor=#ffffff;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="560" y="120" width="200" height="320" as="geometry"/>
+        </mxCell>
+        <mxCell id="c4" value="Microhard P900 V2 (FHSS)&lt;br&gt;&lt;b&gt;SELECTED ARCHITECTURE&lt;/b&gt;&lt;br&gt;&lt;br&gt;Range: 40-60 km (4.0km pass)&lt;br&gt;Throughput: 115.2 kbps UART&lt;br&gt;Latency: &lt;10 ms Deterministic&lt;br&gt;OPSEC: Air-gapped AES-256&lt;br&gt;&lt;br&gt;Verdict: +29.53dB Margin, IMDA Compliant" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;fontColor=#ffffff;align=left;spacing=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="800" y="120" width="220" height="320" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 540" width="100%" height="auto" style="background: transparent; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="fbd-shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="fbd-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+    <marker id="fbd-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+    <marker id="fbd-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="fbd-gold" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- Frame Box -->
+  <rect x="10" y="10" width="760" height="520" rx="14" fill="#090f1d" stroke="#334155" stroke-width="1.5" filter="url(#fbd-shadow)"/>
+
+  <!-- Diagram Title -->
+  <text x="390" y="38" text-anchor="middle" fill="#f8fafc" font-size="16" font-weight="700">4WD Skid-Steer Dynamic Free-Body Diagram (CCW Yaw Pivot ωz)</text>
+  <text x="390" y="56" text-anchor="middle" fill="#94a3b8" font-size="12">Equilibrium between Driving Yaw Torque (M_drive) and Lateral Scrub Resistance (M_scrub)</text>
+
+  <!-- Wheelbase L (Vertical Dimension on Left) -->
+  <g transform="translate(45, 0)">
+    <line x1="60" y1="125" x2="60" y2="415" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <line x1="45" y1="125" x2="75" y2="125" stroke="#38bdf8" stroke-width="1.5"/>
+    <line x1="45" y1="415" x2="75" y2="415" stroke="#38bdf8" stroke-width="1.5"/>
+    <line x1="60" y1="135" x2="60" y2="240" stroke="#38bdf8" stroke-width="2" marker-start="url(#fbd-blue)"/>
+    <line x1="60" y1="405" x2="60" y2="295" stroke="#38bdf8" stroke-width="2" marker-start="url(#fbd-blue)"/>
+    <rect x="15" y="252" width="90" height="28" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+    <text x="60" y="271" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">L = 488.8 mm</text>
+  </g>
+
+  <!-- Trackwidth B (Horizontal Dimension on Bottom) -->
+  <g transform="translate(0, 35)">
+    <line x1="220" y1="435" x2="560" y2="435" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,3"/>
+    <line x1="220" y1="420" x2="220" y2="450" stroke="#38bdf8" stroke-width="1.5"/>
+    <line x1="560" y1="420" x2="560" y2="450" stroke="#38bdf8" stroke-width="1.5"/>
+    <line x1="230" y1="435" x2="340" y2="435" stroke="#38bdf8" stroke-width="2" marker-start="url(#fbd-blue)"/>
+    <line x1="550" y1="435" x2="440" y2="435" stroke="#38bdf8" stroke-width="2" marker-start="url(#fbd-blue)"/>
+    <rect x="345" y="421" width="90" height="28" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+    <text x="390" y="440" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">B = 575.0 mm</text>
+  </g>
+
+  <!-- Chassis Body -->
+  <rect x="240" y="145" width="300" height="250" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2.5"/>
+  <rect x="265" y="165" width="250" height="210" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="390" y="190" text-anchor="middle" fill="#64748b" font-size="12" font-weight="700" letter-spacing="0.1em">FOD HUNTER CHASSIS FRAME</text>
+  <text x="390" y="208" text-anchor="middle" fill="#94a3b8" font-size="11">Total Mass m = 65.0 kg • Normal Load N_i = 159.41 N</text>
+  <text x="390" y="224" text-anchor="middle" fill="#10b981" font-size="11" font-weight="600">Firmware Baseline Stance Ratio: L / B = 0.850</text>
+
+  <!-- Center of Gravity (CG) -->
+  <circle cx="390" cy="270" r="22" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+  <path d="M 390 248 A 22 22 0 0 1 412 270 L 390 270 Z" fill="#f59e0b"/>
+  <path d="M 390 292 A 22 22 0 0 1 368 270 L 390 270 Z" fill="#f59e0b"/>
+  <circle cx="390" cy="270" r="4" fill="#ffffff"/>
+  <text x="390" y="306" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="700">CG</text>
+
+  <!-- Yaw Rotation Vector (CCW Arc) -->
+  <path d="M 360 250 A 38 38 0 0 1 420 250" fill="none" stroke="#a855f7" stroke-width="3" marker-end="url(#fbd-gold)"/>
+  <text x="390" y="240" text-anchor="middle" fill="#c084fc" font-size="12" font-weight="700">ωz (CCW Yaw)</text>
+
+  <!-- ========================================== -->
+  <!-- FOUR ROAD WHEELS & FORCE VECTORS           -->
+  <!-- ========================================== -->
+
+  <!-- 1. FRONT-LEFT (FL) WHEEL (Upper Left) -->
+  <g transform="translate(205, 125)">
+    <rect x="-15" y="-35" width="30" height="70" rx="6" fill="#020617" stroke="#10b981" stroke-width="2.5"/>
+    <text x="0" y="4" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="700">FL</text>
+    <!-- Longitudinal Tractive Force Fx,fl (FORWARD +) -->
+    <line x1="0" y1="-35" x2="0" y2="-85" stroke="#10b981" stroke-width="3" marker-end="url(#fbd-green)"/>
+    <text x="-8" y="-90" text-anchor="end" fill="#10b981" font-size="11" font-weight="700">+Fx,fl</text>
+    <!-- Lateral Scrub Force Fy,fl (INWARD / RIGHT) -->
+    <line x1="15" y1="0" x2="65" y2="0" stroke="#f43f5e" stroke-width="3" marker-end="url(#fbd-rose)"/>
+    <text x="70" y="4" fill="#f43f5e" font-size="11" font-weight="700">Fy,fl</text>
+  </g>
+
+  <!-- 2. FRONT-RIGHT (FR) WHEEL (Upper Right) -->
+  <g transform="translate(575, 125)">
+    <rect x="-15" y="-35" width="30" height="70" rx="6" fill="#020617" stroke="#f43f5e" stroke-width="2.5"/>
+    <text x="0" y="4" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="700">FR</text>
+    <!-- Longitudinal Tractive Force Fx,fr (REVERSE -) -->
+    <line x1="0" y1="35" x2="0" y2="85" stroke="#10b981" stroke-width="3" marker-end="url(#fbd-green)"/>
+    <text x="8" y="95" fill="#10b981" font-size="11" font-weight="700">-Fx,fr</text>
+    <!-- Lateral Scrub Force Fy,fr (OUTWARD / RIGHT) -->
+    <line x1="15" y1="0" x2="65" y2="0" stroke="#f43f5e" stroke-width="3" marker-end="url(#fbd-rose)"/>
+    <text x="70" y="4" fill="#f43f5e" font-size="11" font-weight="700">Fy,fr</text>
+  </g>
+
+  <!-- 3. REAR-LEFT (RL) WHEEL (Lower Left) -->
+  <g transform="translate(205, 415)">
+    <rect x="-15" y="-35" width="30" height="70" rx="6" fill="#020617" stroke="#10b981" stroke-width="2.5"/>
+    <text x="0" y="4" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="700">RL</text>
+    <!-- Longitudinal Tractive Force Fx,rl (FORWARD +) -->
+    <line x1="0" y1="-35" x2="0" y2="-85" stroke="#10b981" stroke-width="3" marker-end="url(#fbd-green)"/>
+    <text x="-8" y="-90" text-anchor="end" fill="#10b981" font-size="11" font-weight="700">+Fx,rl</text>
+    <!-- Lateral Scrub Force Fy,rl (INWARD / LEFT) -->
+    <line x1="-15" y1="0" x2="-65" y2="0" stroke="#f43f5e" stroke-width="3" marker-end="url(#fbd-rose)"/>
+    <text x="-70" y="4" text-anchor="end" fill="#f43f5e" font-size="11" font-weight="700">Fy,rl</text>
+  </g>
+
+  <!-- 4. REAR-RIGHT (RR) WHEEL (Lower Right) -->
+  <g transform="translate(575, 415)">
+    <rect x="-15" y="-35" width="30" height="70" rx="6" fill="#020617" stroke="#f43f5e" stroke-width="2.5"/>
+    <text x="0" y="4" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="700">RR</text>
+    <!-- Longitudinal Tractive Force Fx,rr (REVERSE -) -->
+    <line x1="0" y1="35" x2="0" y2="85" stroke="#10b981" stroke-width="3" marker-end="url(#fbd-green)"/>
+    <text x="8" y="95" fill="#10b981" font-size="11" font-weight="700">-Fx,rr</text>
+    <!-- Lateral Scrub Force Fy,rr (OUTWARD / LEFT) -->
+    <line x1="-15" y1="0" x2="-65" y2="0" stroke="#f43f5e" stroke-width="3" marker-end="url(#fbd-rose)"/>
+    <text x="-70" y="4" text-anchor="end" fill="#f43f5e" font-size="11" font-weight="700">Fy,rr</text>
+  </g>
+
+  <!-- Bottom Equilibrium Equations Callout -->
+  <rect x="50" y="475" width="680" height="40" rx="8" fill="rgba(15,23,42,0.95)" stroke="#334155" stroke-width="1.2"/>
+  <text x="390" y="493" text-anchor="middle" fill="#f8fafc" font-size="11">
+    <tspan font-weight="700" fill="#38bdf8">Driving Yaw Moment:</tspan> M_drive = 2 • F_x • B | 
+    <tspan font-weight="700" fill="#f43f5e">Resisting Scrub Moment:</tspan> M_scrub = ½ • μ_y • m • g • L
+  </text>
+  <text x="390" y="508" text-anchor="middle" fill="#94a3b8" font-size="10.5">
+    Limiting Turn Condition: F_x ≥ ¼ • μ_y • m • g • (L / B) = 127.53 • (L / B) N • At L/B = 0.850: F_x = 108.4 N (τ_motor = 16.77 Nm)
+  </text>
+</svg>

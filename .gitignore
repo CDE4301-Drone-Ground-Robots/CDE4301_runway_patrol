@@ -8,7 +8,7 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# Node / Web Dependencies & Builds
+# Node, Web Dependencies & Builds
 node_modules/
 package-lock.json
 npm-debug.log*
@@ -19,11 +19,21 @@ dist/
 build/
 .cache/
 
-# Python Cache & Artifacts (from local preview servers/scripts)
+# Playwright & Browser Automation Artifacts
+.playwright-mcp/
+test-results/
+playwright-report/
+blob-report/
+
+# Python Virtual Environments & Caches
 __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
+.venv/
+venv/
+ENV/
+env/
 
 # AI Agent & Local Tooling Skills
 # (Prevents local skill markdown/CSV files and lockfiles from cluttering the Git report)
@@ -31,6 +41,23 @@ __pycache__/
 .claude/
 .gemini/
 skills-lock.json
+
+# ROS 2 & Robotics Build Artifacts
+install/
+log/
+.colcon/
+
+# Embedded & Microcontroller Build Artifacts (STM32 / PlatformIO)
+.pio/
+Debug/
+Release/
+*.elf
+*.bin
+*.hex
+*.map
+*.su
+*.d
+compile_commands.json
 
 # Video Generation & Hyperframes Renders
 .hyperframes/
@@ -46,5 +73,15 @@ renders/
 *.swo
 *~
 
-# Logs & Temporary Files
+# Logs, Backups & Temporary Files
 *.log
+*.bak
+*.backup
+*.tmp
+*.temp
+*.drawio.bkp
+
+# Local Environment Variables & Secrets
+.env
+.env.local
+.env.*.local

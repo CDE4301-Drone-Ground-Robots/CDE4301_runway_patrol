@@ -1,0 +1,19 @@
+<mxfile host="app.diagrams.net" modified="2026-10-28T06:00:00.000Z" agent="drawio-mcp" version="24.0.0">
+  <diagram id="arch-comp" name="Steering Architecture Comparison">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="600" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="box_skid" value="&lt;b&gt;4WD SKID-STEER (SELECTED)&lt;/b&gt;&lt;br&gt;• Turning Radius: R = 0 (Pure Pivot)&lt;br&gt;• 4 Direct-Drive Sealed Hubs&lt;br&gt;• Zero Kinematic Linkages&lt;br&gt;• Constant 45mm Ground Clearance&lt;br&gt;• Stance Corridor: 0.80 &lt;= L/B &lt;= 1.00" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;strokeWidth=2;fontColor=#ecfdf5;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="300" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="box_ackermann" value="&lt;b&gt;ACKERMANN STEERING (REJECTED)&lt;/b&gt;&lt;br&gt;• Turning Radius: R_min &gt;= 1.5 m&lt;br&gt;• Cannot perform zero-radius pivot&lt;br&gt;• Multi-point shunting over FOD&lt;br&gt;• Tie-rods suffer runway vibration shock&lt;br&gt;• Mechanical complexity and backlash" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4c0519;strokeColor=#f43f5e;strokeWidth=2;fontColor=#fff1f2;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="380" y="80" width="300" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="box_mecanum" value="&lt;b&gt;MECANUM DRIVE (REJECTED)&lt;/b&gt;&lt;br&gt;• Omnidirectional 3-DOF Crabbing&lt;br&gt;• Loose tarmac grit jams 45 deg rollers&lt;br&gt;• &gt;50 Hz vibration corrupts SLAM/IMU&lt;br&gt;• Low outdoor traction (mu = 0.35-0.45)&lt;br&gt;• Extreme lifecycle maintenance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#451a03;strokeColor=#f59e0b;strokeWidth=2;fontColor=#fffbeb;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="720" y="80" width="300" height="400" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

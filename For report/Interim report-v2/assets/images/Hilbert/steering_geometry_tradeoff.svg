@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 440" width="100%" height="auto" style="background: transparent; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="to-shadow" x="-3%" y="-3%" width="106%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <linearGradient id="grad-zone-stubby" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(244, 63, 94, 0.25)"/>
+      <stop offset="100%" stop-color="rgba(244, 63, 94, 0.05)"/>
+    </linearGradient>
+    <linearGradient id="grad-zone-opt" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(16, 185, 129, 0.25)"/>
+      <stop offset="100%" stop-color="rgba(16, 185, 129, 0.15)"/>
+    </linearGradient>
+    <linearGradient id="grad-zone-long" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(239, 68, 68, 0.05)"/>
+      <stop offset="100%" stop-color="rgba(239, 68, 68, 0.25)"/>
+    </linearGradient>
+    <marker id="to-arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+    <marker id="to-arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Frame Box -->
+  <rect x="10" y="10" width="820" height="420" rx="14" fill="#090f1d" stroke="#334155" stroke-width="1.5" filter="url(#to-shadow)"/>
+
+  <!-- Diagram Title -->
+  <text x="420" y="38" text-anchor="middle" fill="#f8fafc" font-size="16" font-weight="700">Wheelbase-to-Trackwidth Ratio (L / B) Trade-Off Continuum</text>
+  <text x="420" y="56" text-anchor="middle" fill="#94a3b8" font-size="12">Balancing Skid-Steer Turning Scrub Resistance against Longitudinal Pitch Instability</text>
+
+  <!-- Background Zones -->
+  <!-- Zone 1: L/B < 0.80 (Stubby / Pitch Risk) -->
+  <rect x="60" y="80" width="220" height="240" fill="url(#grad-zone-stubby)" stroke="#f43f5e" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="170" y="105" text-anchor="middle" fill="#f43f5e" font-size="12" font-weight="700">SUB-CRITICAL: L / B &lt; 0.80</text>
+  <text x="170" y="122" text-anchor="middle" fill="#fda4af" font-size="10">Stubby Stance • Pitch Risk</text>
+
+  <!-- Zone 2: 0.80 <= L/B <= 1.00 (Optimal Design Corridor) -->
+  <rect x="280" y="80" width="220" height="240" fill="url(#grad-zone-opt)" stroke="#10b981" stroke-width="2"/>
+  <text x="390" y="105" text-anchor="middle" fill="#10b981" font-size="12.5" font-weight="700">OPTIMAL CORRIDOR: 0.80 – 1.00</text>
+  <text x="390" y="122" text-anchor="middle" fill="#a7f3d0" font-size="10">Stable Pitch &amp; Feasible Traction Pivot</text>
+
+  <!-- Zone 3: L/B > 1.00 (Long / High Scrub Stall) -->
+  <rect x="500" y="80" width="280" height="240" fill="url(#grad-zone-long)" stroke="#e11d48" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="640" y="105" text-anchor="middle" fill="#f43f5e" font-size="12" font-weight="700">SUPER-CRITICAL: L / B &gt; 1.00</text>
+  <text x="640" y="122" text-anchor="middle" fill="#fda4af" font-size="10">Long Wheelbase • Traction-Limit Scrub Stall</text>
+
+  <!-- Coordinate Axes -->
+  <line x1="60" y1="280" x2="780" y2="280" stroke="#475569" stroke-width="2"/>
+  <line x1="60" y1="280" x2="60" y2="80" stroke="#475569" stroke-width="2"/>
+
+  <!-- Horizontal Axis Ticks -->
+  <!-- 0.6 -->
+  <line x1="140" y1="280" x2="140" y2="286" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="140" y="302" text-anchor="middle" fill="#94a3b8" font-size="11">0.60</text>
+  <!-- 0.8 Boundary -->
+  <line x1="280" y1="80" x2="280" y2="286" stroke="#10b981" stroke-width="2" stroke-dasharray="3,3"/>
+  <text x="280" y="302" text-anchor="middle" fill="#10b981" font-size="12" font-weight="700">0.80 (Min)</text>
+  <!-- 0.85 Physical CDE4301 Pin -->
+  <line x1="335" y1="80" x2="335" y2="286" stroke="#38bdf8" stroke-width="2.5"/>
+  <circle cx="335" cy="195" r="5" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="335" y="318" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700">0.850 (CDE4301)</text>
+  <!-- 1.0 Boundary -->
+  <line x1="500" y1="80" x2="500" y2="286" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,3"/>
+  <text x="500" y="302" text-anchor="middle" fill="#f59e0b" font-size="12" font-weight="700">1.00 (Max)</text>
+  <!-- 1.2 -->
+  <line x1="640" y1="280" x2="640" y2="286" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="640" y="302" text-anchor="middle" fill="#94a3b8" font-size="11">1.20</text>
+  <!-- 1.4 -->
+  <line x1="750" y1="280" x2="750" y2="286" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="750" y="302" text-anchor="middle" fill="#94a3b8" font-size="11">1.40</text>
+
+  <text x="420" y="335" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="700">Wheelbase-to-Trackwidth Stance Ratio (L / B)</text>
+
+  <!-- Curve 1: Turning Scrub Resistance Torque M_scrub (Red Rising Curve) -->
+  <path d="M 80 250 Q 280 215 500 170 T 770 110" fill="none" stroke="#f43f5e" stroke-width="3"/>
+  <text x="760" y="100" fill="#f43f5e" font-size="11" font-weight="700" text-anchor="end">Turning Scrub Torque Demand (M_scrub ∝ L/B)</text>
+
+  <!-- Curve 2: Pitch Instability & Front Wheel Lift-Off Risk (Blue Falling Curve) -->
+  <path d="M 80 110 Q 180 180 280 215 T 770 260" fill="none" stroke="#38bdf8" stroke-width="3"/>
+  <text x="90" y="125" fill="#38bdf8" font-size="11" font-weight="700">Pitch Instability / Load Transfer Risk (ΔN ∝ 1 / (L/B))</text>
+
+  <!-- Intersection Marker (Trade-Off Equilibrium) -->
+  <circle cx="280" cy="215" r="6" fill="#f59e0b" stroke="#ffffff" stroke-width="2"/>
+  <text x="260" y="235" fill="#f59e0b" font-size="10.5" font-weight="700" text-anchor="end">Stability Threshold (0.80)</text>
+
+  <!-- Traction Slip Limit Line (Horizontal Dashed Red) -->
+  <line x1="280" y1="170" x2="780" y2="170" stroke="#f43f5e" stroke-width="1.8" stroke-dasharray="5,4"/>
+  <text x="770" y="163" fill="#f43f5e" font-size="10.5" font-weight="700" text-anchor="end">Maximum Longitudinal Tire Traction Limit (Fx = μ_x • N_i)</text>
+
+  <!-- Bottom Detailed Assessment Callout Cards -->
+  <g transform="translate(0, 345)">
+    <rect x="25" y="0" width="245" height="65" rx="6" fill="#1e1b4b" stroke="#f43f5e" stroke-width="1"/>
+    <text x="35" y="18" fill="#fda4af" font-size="10.5" font-weight="700">L / B &lt; 0.80: Pitch Unstable</text>
+    <text x="35" y="34" fill="#cbd5e1" font-size="9.5">• Agile zero-radius pivoting.</text>
+    <text x="35" y="48" fill="#cbd5e1" font-size="9.5">• Front wheels lift under hard accel.</text>
+    <text x="35" y="60" fill="#f43f5e" font-size="9">• Violent pitch bucking during braking.</text>
+
+    <rect x="285" y="0" width="250" height="65" rx="6" fill="#022c22" stroke="#10b981" stroke-width="1.2"/>
+    <text x="295" y="18" fill="#34d399" font-size="10.5" font-weight="700">0.80 ≤ L / B ≤ 1.00: Optimal Corridor</text>
+    <text x="295" y="34" fill="#cbd5e1" font-size="9.5">• Pivot scrub within tire traction grip.</text>
+    <text x="295" y="48" fill="#cbd5e1" font-size="9.5">• Positive front axle load (N_front &gt; 0).</text>
+    <text x="295" y="60" fill="#38bdf8" font-size="9">• CDE4301 Baseline: L = 488.8, B = 575.0 (0.850).</text>
+
+    <rect x="550" y="0" width="265" height="65" rx="6" fill="#1e1b4b" stroke="#e11d48" stroke-width="1"/>
+    <text x="560" y="18" fill="#fda4af" font-size="10.5" font-weight="700">L / B &gt; 1.00: Traction Scrub Stall</text>
+    <text x="560" y="34" fill="#cbd5e1" font-size="9.5">• Exceptional straight-line tracking.</text>
+    <text x="560" y="48" fill="#cbd5e1" font-size="9.5">• Scrub moment exceeds tractive grip.</text>
+    <text x="560" y="60" fill="#f43f5e" font-size="9">• Drive wheels slip longitudinally or stall.</text>
+  </g>
+</svg>

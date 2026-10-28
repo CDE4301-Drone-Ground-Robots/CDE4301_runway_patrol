@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#0e182d"/>
+    </linearGradient>
+    <filter id="sh4" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="520" rx="14" fill="url(#bg4)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 30)">
+    <rect width="920" height="50" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"/>
+    <text x="20" y="24" fill="#2997ff" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="12" font-weight="700" letter-spacing="0.08em">FIGURE 3.4 &#8226; SINGAPORE SPECTRUM MANDATE</text>
+    <text x="20" y="42" fill="#f5f5f7" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="16" font-weight="700">Singapore IMDA TS SRD 917–925 MHz Allocation &amp; Cellular Band 8 Coexistence</text>
+    <text x="900" y="32" text-anchor="end" fill="#86868b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" font-size="12">Source: IMDA TS SRD (Item 13b); Telecommunications Act 1999</text>
+  </g>
+
+  <!-- Spectrum Frequency Bar Diagram -->
+  <g transform="translate(60, 110)">
+    <!-- Axis line -->
+    <line x1="0" y1="120" x2="880" y2="120" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+
+    <!-- Band 1: Cellular Band 8 Uplink (880 - 915 MHz) -->
+    <rect x="0" y="40" width="350" height="80" rx="6" fill="rgba(255,69,58,0.12)" stroke="rgba(255,69,58,0.4)" stroke-width="1.5"/>
+    <text x="175" y="70" text-anchor="middle" fill="#ff453a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">LTE BAND 8 UPLINK</text>
+    <text x="175" y="90" text-anchor="middle" fill="#86868b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Commercial Telco (Singtel, StarHub, M1)</text>
+    <text x="175" y="106" text-anchor="middle" fill="#ff453a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="600">STRICT NO TRANSMIT ZONE</text>
+
+    <!-- Freq labels -->
+    <text x="0" y="140" fill="#86868b" font-family="monospace" font-size="11">880 MHz</text>
+    <text x="350" y="140" text-anchor="middle" fill="#86868b" font-family="monospace" font-size="11">915 MHz</text>
+
+    <!-- Guard Band (915 - 917 MHz) -->
+    <rect x="350" y="55" width="40" height="65" fill="rgba(255,214,10,0.1)" stroke="rgba(255,214,10,0.3)" stroke-dasharray="3,3"/>
+    <text x="370" y="45" text-anchor="middle" fill="#ffd60a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" font-weight="700">GUARD</text>
+    <text x="370" y="140" text-anchor="middle" fill="#ffd60a" font-family="monospace" font-size="9.5">2 MHz</text>
+
+    <!-- Band 2: IMDA TS SRD (917 - 925 MHz) - LEGAL CDE4301 WINDOW -->
+    <rect x="390" y="20" width="180" height="100" rx="8" fill="rgba(48,209,88,0.18)" stroke="#30d158" stroke-width="2.5" filter="url(#sh4)"/>
+    <text x="480" y="48" text-anchor="middle" fill="#30d158" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13.5" font-weight="700">&#x2713; IMDA TS SRD (ITEM 13b)</text>
+    <text x="480" y="68" text-anchor="middle" fill="#f5f5f7" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="600">917.0 - 925.0 MHz Window</text>
+    <text x="480" y="86" text-anchor="middle" fill="#30d158" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700">MAX POWER: &lt;= 100 mW EIRP</text>
+    <text x="480" y="104" text-anchor="middle" fill="#86868b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5">Microhard P900 V2 Legal FHSS Band</text>
+
+    <text x="390" y="140" text-anchor="middle" fill="#30d158" font-family="monospace" font-size="11" font-weight="700">917 MHz</text>
+    <text x="570" y="140" text-anchor="middle" fill="#30d158" font-family="monospace" font-size="11" font-weight="700">925 MHz</text>
+
+    <!-- Band 3: Cellular Band 8 Downlink (925 - 960 MHz) -->
+    <rect x="570" y="40" width="310" height="80" rx="6" fill="rgba(255,69,58,0.12)" stroke="rgba(255,69,58,0.4)" stroke-width="1.5"/>
+    <text x="725" y="70" text-anchor="middle" fill="#ff453a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">LTE BAND 8 DOWNLINK</text>
+    <text x="725" y="90" text-anchor="middle" fill="#86868b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Commercial Cellular Base Stations</text>
+    <text x="725" y="106" text-anchor="middle" fill="#ff453a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="600">STRICT NO TRANSMIT ZONE</text>
+
+    <text x="880" y="140" text-anchor="end" fill="#86868b" font-family="monospace" font-size="11">960 MHz</text>
+  </g>
+
+  <!-- Legal & Configuration Details (Cards below) -->
+  <g transform="translate(60, 275)">
+    <!-- Warning Box: North American FCC vs IMDA -->
+    <rect width="425" height="210" rx="8" fill="rgba(255,69,58,0.04)" stroke="rgba(255,69,58,0.3)"/>
+    <text x="20" y="26" fill="#ff453a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700">CRITICAL STATUTORY COMPLIANCE RISK</text>
+    <g transform="translate(20, 44)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#86868b" line-height="1.5">
+      <text y="14">&#8226; Factory-default North American P900 V2 modems</text>
+      <text y="30">  transmit across the 902 - 928 MHz FCC band at 1.0 W.</text>
+      <text y="50">&#8226; Frequencies 902 - 917 MHz &amp; 925 - 928 MHz directly</text>
+      <text y="66">  interfere with Singtel, StarHub, and M1 mobile towers.</text>
+      <text y="86" fill="#ff453a" font-weight="600">&#8226; Unauthorized operation is a statutory offence under the</text>
+      <text y="102" fill="#ff453a" font-weight="600">  Singapore Telecommunications Act (Cap. 323).</text>
+      <text y="126" fill="#f5f5f7">&#8226; Strict firmware register locking is mandatory before</text>
+      <text y="142" fill="#f5f5f7">  airfield deployment to protect aircraft radio altimeters.</text>
+    </g>
+
+    <!-- Solution Box: AT Command Register Sequence -->
+    <rect x="455" width="425" height="210" rx="8" fill="#050811" stroke="rgba(48,209,88,0.35)"/>
+    <text x="475" y="26" fill="#30d158" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700">MANDATORY AT FIRMWARE LOCK SCRIPT</text>
+    <g transform="translate(475, 46)" font-family="monospace" font-size="10.5" fill="#f5f5f7">
+      <text y="14" fill="#2997ff">AT&amp;F</text>
+      <text y="14" x="140" fill="#86868b"># Reset to factory defaults</text>
+
+      <text y="34" fill="#2997ff">ATS102=1</text>
+      <text y="34" x="140" fill="#30d158"># Set Band: 917.0 - 925.0 MHz</text>
+
+      <text y="54" fill="#2997ff">ATS105=000000FF</text>
+      <text y="54" x="140" fill="#86868b"># Hopping mask (SG channels)</text>
+
+      <text y="74" fill="#2997ff">ATS108=20</text>
+      <text y="74" x="140" fill="#30d158"># RF Power: +20 dBm (100 mW EIRP)</text>
+
+      <text y="94" fill="#2997ff">ATS110=115200</text>
+      <text y="94" x="140" fill="#86868b"># Serial baud rate 115.2 kbps</text>
+
+      <text y="114" fill="#2997ff">AT&amp;W</text>
+      <text y="114" x="140" fill="#ffd60a"># Save to non-volatile EEPROM</text>
+
+      <text y="138" fill="#30d158" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="600">&#x2713; Fully certified for Singapore airfield deployment</text>
+    </g>
+  </g>
+</svg>

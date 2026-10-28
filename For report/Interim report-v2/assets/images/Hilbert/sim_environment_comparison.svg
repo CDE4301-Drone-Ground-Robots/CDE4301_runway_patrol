@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" width="1080" height="560">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#0e172a"/>
+    </linearGradient>
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#162038"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="shadow3" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="560" fill="url(#bgGrad3)" rx="16"/>
+  <rect x="2" y="2" width="1076" height="556" fill="none" stroke="#334155" stroke-width="1.5" rx="15"/>
+
+  <!-- Title & Subtitle -->
+  <text x="40" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="21" font-weight="700" fill="#f8fafc">
+    Simulation Environments: Aarhus Airport vs. NUS EA Field
+  </text>
+  <text x="40" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="400" fill="#94a3b8">
+    Comparative analysis of macroscopic airfield scale versus localized campus testing proving ground (Slide 31)
+  </text>
+
+  <!-- ENVIRONMENT 1: AARHUS AIRPORT (LEFT) -->
+  <g transform="translate(40, 95)" filter="url(#shadow3)">
+    <rect width="480" height="400" rx="12" fill="url(#cardGrad3)" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect x="0" y="0" width="480" height="36" rx="12" fill="#0284c7"/>
+    <text x="240" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff" text-anchor="middle">🛫 ENVIRONMENT 1: AARHUS AIRPORT (EKAH)</text>
+
+    <rect x="20" y="50" width="440" height="100" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="32" y="70" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Airfield Scale &amp; Operating Envelope</text>
+    <text x="32" y="90" font-family="monospace" font-size="10.5" fill="#cbd5e1">• Active Operating Area: 300 m (X) &#215; 200 m (Y)</text>
+    <text x="32" y="108" font-family="monospace" font-size="10.5" fill="#cbd5e1">• Grid Resolution: 0.10 m/px (3000 &#215; 2000 cells = 6 MB)</text>
+    <text x="32" y="126" font-family="monospace" font-size="10.5" fill="#cbd5e1">• Runway Heading Slope: -605 / 2615 ≈ -0.23135</text>
+    <text x="32" y="142" font-family="monospace" font-size="10" fill="#94a3b8">• North/South grass boundaries defined in generate_map.py</text>
+
+    <rect x="20" y="165" width="440" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="32" y="185" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Engineering Purpose &amp; Rationale</text>
+    <text x="32" y="205" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#cbd5e1">• Initial Macroscopic Proof-of-Concept for open airside scale.</text>
+    <text x="32" y="223" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#cbd5e1">• Demonstrated featureless runway AMCL localization degeneracy.</text>
+    <text x="32" y="241" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#cbd5e1">• Evaluated long-distance monotonic runway sweeps &amp; waypoint cubes.</text>
+    <text x="32" y="259" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#34d399">• Proved RTK-GNSS + IMU Dual-EKF necessity over wide tarmac.</text>
+
+    <rect x="20" y="290" width="440" height="90" rx="8" fill="#082f49" stroke="#0284c7" stroke-width="1"/>
+    <text x="32" y="310" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#7dd3fc">Limitations Identified:</text>
+    <text x="32" y="328" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#bae6fd">• High GPU memory load when rendering full runway satellite texture.</text>
+    <text x="32" y="344" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#bae6fd">• Physical validation impossible (no access to Aarhus Airport tarmac).</text>
+    <text x="32" y="360" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#bae6fd">• Motivated transition to a locally verifiable campus proving ground.</text>
+  </g>
+
+  <!-- ENVIRONMENT 2: NUS EA FIELD (RIGHT) -->
+  <g transform="translate(560, 95)" filter="url(#shadow3)">
+    <rect width="480" height="400" rx="12" fill="url(#cardGrad3)" stroke="#34d399" stroke-width="1.5"/>
+    <rect x="0" y="0" width="480" height="36" rx="12" fill="#059669"/>
+    <text x="240" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13.5" font-weight="700" fill="#ffffff" text-anchor="middle">📍 ENVIRONMENT 2: NUS EA FIELD COURTYARD</text>
+
+    <rect x="20" y="50" width="440" height="100" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="32" y="70" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#34d399">Physical Campus Dimensions &amp; Map</text>
+    <text x="32" y="90" font-family="monospace" font-size="10.5" fill="#cbd5e1">• Physical Bounds: 52.2 m (Length) &#215; 29.1 m (Width)</text>
+    <text x="32" y="108" font-family="monospace" font-size="10.5" fill="#cbd5e1">• Ultra-High Resolution: 0.02826 m/px (~2.8 cm/cell)</text>
+    <text x="32" y="126" font-family="monospace" font-size="10.5" fill="#cbd5e1">• Georeferenced Origin: [-26.112 m, -14.554 m, 0.0 m]</text>
+    <text x="32" y="142" font-family="monospace" font-size="10" fill="#94a3b8">• Exact aerial drone orthophoto stitched into Gazebo ground plane</text>
+
+    <rect x="20" y="165" width="440" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="32" y="185" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#34d399">Engineering Purpose &amp; Rationale</text>
+    <text x="32" y="205" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#cbd5e1">• Ground-truth proving ground for physical Semester 2 field trials.</text>
+    <text x="32" y="223" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#cbd5e1">• Directly accessible outside NUS Engineering blocks EA/E1A.</text>
+    <text x="32" y="241" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#cbd5e1">• Verified real-time factor RTF = 0.95–1.0 on local workstation GPU.</text>
+    <text x="32" y="259" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#38bdf8">• Perfect 1:1 geometry match for Sim-to-Real calibration.</text>
+
+    <rect x="20" y="290" width="440" height="90" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+    <text x="32" y="310" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#a7f3d0">Key Sim2Real Outcome:</text>
+    <text x="32" y="328" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#d1fae5">• Proved that Nav2 waypoints planned in simulation translate</text>
+    <text x="32" y="344" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#d1fae5">  directly into real-world GPS coordinates without scale errors.</text>
+    <text x="32" y="360" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#d1fae5">• Serves as the primary outdoor testing facility for physical UGV.</text>
+  </g>
+
+  <!-- Bottom Legend -->
+  <text x="40" y="525" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">
+    Design Progression: Aarhus demonstrated airfield macro-scale challenges • NUS EA Field provided the exact physical proving grounds for Semester 2 Sim-to-Real hardware deployment.
+  </text>
+</svg>

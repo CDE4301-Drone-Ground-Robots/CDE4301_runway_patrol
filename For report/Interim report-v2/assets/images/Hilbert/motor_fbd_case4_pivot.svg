@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380" width="100%" height="auto" style="background: transparent; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="c4-shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="c4-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+    <marker id="c4-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+    <marker id="c4-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M 0 2 L 8 5 L 0 8 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <rect x="10" y="10" width="660" height="360" rx="12" fill="#090f1d" stroke="#334155" stroke-width="1.5" filter="url(#c4-shadow)"/>
+
+  <!-- Title -->
+  <text x="340" y="34" text-anchor="middle" fill="#f8fafc" font-size="15" font-weight="700">Case 4: In-Place Zero-Radius Skid-Steer Pivot (R = 0 m)</text>
+  <text x="340" y="52" text-anchor="middle" fill="#94a3b8" font-size="11.5">Yaw Moment Balance: Drive Torque (M_drive) vs Resisting Lateral Scrub Torque (M_scrub)</text>
+
+  <!-- Chassis Body (Top-Down) -->
+  <rect x="220" y="85" width="240" height="190" rx="10" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+  <rect x="245" y="105" width="190" height="150" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="340" y="130" text-anchor="middle" fill="#64748b" font-size="11" font-weight="700">UGV CHASSIS BODY (m = 65 kg)</text>
+
+  <!-- Center of Gravity (CG) -->
+  <circle cx="340" cy="180" r="16" fill="rgba(56,189,248,0.15)" stroke="#38bdf8" stroke-width="1.5"/>
+  <circle cx="340" cy="180" r="4" fill="#38bdf8"/>
+  <text x="340" y="160" text-anchor="middle" fill="#38bdf8" font-size="10" font-weight="700">CG</text>
+
+  <!-- CCW Yaw Pivot Arc -->
+  <path d="M 315 195 A 28 28 0 1 1 365 195" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" marker-end="url(#c4-green)"/>
+  <text x="340" y="218" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="700">wz (CCW Pivot)</text>
+
+  <!-- 4 Independent Wheels with Forces -->
+  <!-- FL Wheel -->
+  <rect x="185" y="75" width="30" height="65" rx="4" fill="#020617" stroke="#10b981" stroke-width="2"/>
+  <text x="200" y="112" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="800">FL</text>
+  <line x1="200" y1="75" x2="200" y2="35" stroke="#10b981" stroke-width="2.5" marker-end="url(#c4-green)"/>
+  <text x="160" y="55" fill="#10b981" font-size="10" font-weight="700">Fx = +102 N</text>
+  <line x1="185" y1="107" x2="135" y2="107" stroke="#f43f5e" stroke-width="2" marker-end="url(#c4-rose)"/>
+  <text x="130" y="98" fill="#f43f5e" font-size="9" font-weight="700">Fy = 127.5 N</text>
+
+  <!-- RL Wheel -->
+  <rect x="185" y="220" width="30" height="65" rx="4" fill="#020617" stroke="#10b981" stroke-width="2"/>
+  <text x="200" y="257" text-anchor="middle" fill="#10b981" font-size="8.5" font-weight="800">RL</text>
+  <line x1="200" y1="220" x2="200" y2="180" stroke="#10b981" stroke-width="2.5" marker-end="url(#c4-green)"/>
+  <text x="160" y="200" fill="#10b981" font-size="10" font-weight="700">Fx = +102 N</text>
+  <line x1="185" y1="252" x2="135" y2="252" stroke="#f43f5e" stroke-width="2" marker-end="url(#c4-rose)"/>
+  <text x="130" y="243" fill="#f43f5e" font-size="9" font-weight="700">Fy = 127.5 N</text>
+
+  <!-- FR Wheel -->
+  <rect x="465" y="75" width="30" height="65" rx="4" fill="#020617" stroke="#f43f5e" stroke-width="2"/>
+  <text x="480" y="112" text-anchor="middle" fill="#f43f5e" font-size="8.5" font-weight="800">FR</text>
+  <line x1="480" y1="140" x2="480" y2="180" stroke="#f43f5e" stroke-width="2.5" marker-end="url(#c4-rose)"/>
+  <text x="490" y="165" fill="#f43f5e" font-size="10" font-weight="700">Fx = -102 N</text>
+  <line x1="465" y1="107" x2="415" y2="107" stroke="#f43f5e" stroke-width="2" marker-end="url(#c4-rose)"/>
+  <text x="420" y="98" fill="#f43f5e" font-size="9" font-weight="700">Fy = 127.5 N</text>
+
+  <!-- RR Wheel -->
+  <rect x="465" y="220" width="30" height="65" rx="4" fill="#020617" stroke="#f43f5e" stroke-width="2"/>
+  <text x="480" y="257" text-anchor="middle" fill="#f43f5e" font-size="8.5" font-weight="800">RR</text>
+  <line x1="480" y1="285" x2="480" y2="325" stroke="#f43f5e" stroke-width="2.5" marker-end="url(#c4-rose)"/>
+  <text x="490" y="310" fill="#f43f5e" font-size="10" font-weight="700">Fx = -102 N</text>
+  <line x1="465" y1="252" x2="415" y2="252" stroke="#f43f5e" stroke-width="2" marker-end="url(#c4-rose)"/>
+  <text x="420" y="243" fill="#f43f5e" font-size="9" font-weight="700">Fy = 127.5 N</text>
+
+  <!-- Dimensions: Wheelbase L on left, Trackwidth B on bottom -->
+  <line x1="90" y1="107" x2="90" y2="252" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <text x="80" y="184" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="end">L = 480 mm</text>
+  <line x1="200" y1="315" x2="480" y2="315" stroke="#38bdf8" stroke-width="1.2" stroke-dasharray="2,2"/>
+  <text x="340" y="330" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">B = 550 mm</text>
+
+  <!-- Summary Badge Box -->
+  <rect x="25" y="335" width="630" height="26" rx="5" fill="rgba(244,63,94,0.08)" stroke="#f43f5e" stroke-width="1"/>
+  <text x="340" y="352" text-anchor="middle" fill="#f8fafc" font-size="9.5">
+    <tspan font-weight="700" fill="#f43f5e">Peak Scrub Torque:</tspan> 15.78 Nm / hub | 
+    <tspan font-weight="700" fill="#f59e0b">Current / Hub:</tspan> 14.72 A | 
+    <tspan font-weight="700" fill="#10b981">4-Motor Bus:</tspan> 58.87 A (&lt; 80A BMS) | 
+    <tspan font-weight="700" fill="#38bdf8">Headroom:</tspan> 1.81x (28.5 Nm)
+  </text>
+</svg>

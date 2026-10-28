@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#0e172a"/>
+    </linearGradient>
+    <linearGradient id="cardGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#162038"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="shadow4" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrowAmber2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="560" fill="url(#bgGrad4)" rx="16"/>
+  <rect x="2" y="2" width="1076" height="556" fill="none" stroke="#334155" stroke-width="1.5" rx="15"/>
+
+  <!-- Title & Subtitle -->
+  <text x="40" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="21" font-weight="700" fill="#f8fafc">
+    Semester 1 to Semester 2 Sim-to-Real Engineering Transition Strategy
+  </text>
+  <text x="40" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="400" fill="#94a3b8">
+    Iterative progression from Software-in-the-Loop simulation to physical hardware calibration and airfield proving (Slide 32)
+  </text>
+
+  <!-- Flow Arrows -->
+  <path d="M 270 280 L 305 280" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowAmber2)"/>
+  <path d="M 535 280 L 570 280" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowAmber2)"/>
+  <path d="M 800 280 L 835 280" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowAmber2)"/>
+
+  <!-- PHASE 1: SEMESTER 1 SIL -->
+  <g transform="translate(40, 95)" filter="url(#shadow4)">
+    <rect width="230" height="410" rx="12" fill="url(#cardGrad4)" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect x="0" y="0" width="230" height="36" rx="12" fill="#0284c7"/>
+    <text x="115" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">PHASE 1: SEMESTER 1 SIL</text>
+
+    <rect x="14" y="48" width="202" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#38bdf8">Digital Twin Architecture</text>
+    <text x="24" y="86" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Gazebo Harmonic simulation</text>
+    <text x="24" y="102" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Scout 2.0 proxy model</text>
+    <text x="24" y="118" font-family="monospace" font-size="9.5" fill="#cbd5e1">• DART 1000 Hz physics</text>
+    <text x="24" y="134" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Synthetic GPU LiDAR &amp; GPS</text>
+    <text x="24" y="150" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Dual EKF sensor fusion</text>
+
+    <rect x="14" y="168" width="202" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#38bdf8">Nav2 Algorithm Tuning</text>
+    <text x="24" y="206" font-family="monospace" font-size="9.5" fill="#cbd5e1">• SmacPlannerHybrid lattice</text>
+    <text x="24" y="222" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Reeds-Shepp R_min = 1.0 m</text>
+    <text x="24" y="238" font-family="monospace" font-size="9.5" fill="#cbd5e1">• RPP lookahead L = 1.2 m</text>
+    <text x="24" y="254" font-family="monospace" font-size="9.5" fill="#cbd5e1">• 25 structured test runs</text>
+    <text x="24" y="270" font-family="monospace" font-size="9.5" fill="#34d399">• Status: 100% Complete</text>
+
+    <rect x="14" y="288" width="202" height="110" rx="8" fill="#082f49" stroke="#0284c7" stroke-width="1"/>
+    <text x="24" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#7dd3fc">Key Outcome:</text>
+    <text x="24" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#e0f2fe">Proven ROS 2 interfaces,</text>
+    <text x="24" y="342" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#e0f2fe">costmap pipelines, and</text>
+    <text x="24" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#e0f2fe">closed-loop waypoint sweeps</text>
+    <text x="24" y="374" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#e0f2fe">before touching hardware.</text>
+  </g>
+
+  <!-- PHASE 2: HIL & BENCH -->
+  <g transform="translate(305, 95)" filter="url(#shadow4)">
+    <rect width="230" height="410" rx="12" fill="url(#cardGrad4)" stroke="#fbbf24" stroke-width="1.5"/>
+    <rect x="0" y="0" width="230" height="36" rx="12" fill="#d97706"/>
+    <text x="115" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">PHASE 2: HIL &amp; BENCH</text>
+
+    <rect x="14" y="48" width="202" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fbbf24">CANopen Bridge</text>
+    <text x="24" y="86" font-family="monospace" font-size="9.5" fill="#cbd5e1">• STM32F4 CANopen master</text>
+    <text x="24" y="102" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Dual ZLAC8015D drivers</text>
+    <text x="24" y="118" font-family="monospace" font-size="9.5" fill="#cbd5e1">• 500 kbps CAN bus timing</text>
+    <text x="24" y="134" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Convert /cmd_vel to RPM</text>
+    <text x="24" y="150" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Measure loopback delay</text>
+
+    <rect x="14" y="168" width="202" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fbbf24">Motor Dyno Testing</text>
+    <text x="24" y="206" font-family="monospace" font-size="9.5" fill="#cbd5e1">• 4x ZLLG80ASM250 motors</text>
+    <text x="24" y="222" font-family="monospace" font-size="9.5" fill="#cbd5e1">• 48V LiFePO4 bench supply</text>
+    <text x="24" y="238" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Verified torque &amp; speed curves</text>
+    <text x="24" y="254" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Thermal dissipation test</text>
+    <text x="24" y="270" font-family="monospace" font-size="9.5" fill="#fbbf24">• Status: Bench Verified</text>
+
+    <rect x="14" y="288" width="202" height="110" rx="8" fill="#451a03" stroke="#d97706" stroke-width="1"/>
+    <text x="24" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#fed7aa">Key Outcome:</text>
+    <text x="24" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fef3c7">Validates electrical &amp;</text>
+    <text x="24" y="342" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fef3c7">firmware interfaces,</text>
+    <text x="24" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fef3c7">confirming that driver</text>
+    <text x="24" y="374" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fef3c7">responds within &lt;10 ms.</text>
+  </g>
+
+  <!-- PHASE 3: PHYSICAL INTEGRATION -->
+  <g transform="translate(570, 95)" filter="url(#shadow4)">
+    <rect width="230" height="410" rx="12" fill="url(#cardGrad4)" stroke="#c084fc" stroke-width="1.5"/>
+    <rect x="0" y="0" width="230" height="36" rx="12" fill="#7e22ce"/>
+    <text x="115" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">PHASE 3: INTEGRATION</text>
+
+    <rect x="14" y="48" width="202" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#c084fc">Chassis Assembly</text>
+    <text x="24" y="86" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Custom aluminum frame</text>
+    <text x="24" y="102" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Total Mass: 65 kg</text>
+    <text x="24" y="118" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Wheel R = 0.1315 m</text>
+    <text x="24" y="134" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Wheelbase L = 0.45 m</text>
+    <text x="24" y="150" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Track W = 0.58 m</text>
+
+    <rect x="14" y="168" width="202" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#c084fc">Sensor Extrinsics</text>
+    <text x="24" y="206" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Mount Hesai JT16 3D LiDAR</text>
+    <text x="24" y="222" font-family="monospace" font-size="9.5" fill="#cbd5e1">• u-blox ZED-F9P RTK antenna</text>
+    <text x="24" y="238" font-family="monospace" font-size="9.5" fill="#cbd5e1">• BNO085 IMU at chassis CG</text>
+    <text x="24" y="254" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Calibrate TF extrinsics</text>
+    <text x="24" y="270" font-family="monospace" font-size="9.5" fill="#c084fc">• Status: In Progress</text>
+
+    <rect x="14" y="288" width="202" height="110" rx="8" fill="#3b0764" stroke="#9333ea" stroke-width="1"/>
+    <text x="24" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#f3e8ff">Key Outcome:</text>
+    <text x="24" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#f5d0fe">Transitions software</text>
+    <text x="24" y="342" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#f5d0fe">from proxy dimensions to</text>
+    <text x="24" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#f5d0fe">the physical 65 kg robot</text>
+    <text x="24" y="374" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#f5d0fe">with verified kinematics.</text>
+  </g>
+
+  <!-- PHASE 4: AIRFIELD TRIALS -->
+  <g transform="translate(835, 95)" filter="url(#shadow4)">
+    <rect width="205" height="410" rx="12" fill="url(#cardGrad4)" stroke="#34d399" stroke-width="1.5"/>
+    <rect x="0" y="0" width="205" height="36" rx="12" fill="#059669"/>
+    <text x="102" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">PHASE 4: FIELD TRIALS</text>
+
+    <rect x="12" y="48" width="181" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="22" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#34d399">NUS EA Proving Ground</text>
+    <text x="22" y="86" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Real tarmac traction</text>
+    <text x="22" y="102" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Measure true tire scrub</text>
+    <text x="22" y="118" font-family="monospace" font-size="9.5" fill="#cbd5e1">• RTK-GNSS base station</text>
+    <text x="22" y="134" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Compare Sim vs Real CTE</text>
+    <text x="22" y="150" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Calibrate RPP lookahead</text>
+
+    <rect x="12" y="168" width="181" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="22" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#34d399">Remediation Testing</text>
+    <text x="22" y="206" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Vacuum intake sweeps</text>
+    <text x="22" y="222" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Collect test metal FOD</text>
+    <text x="22" y="238" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Live UAV aerial target</text>
+    <text x="22" y="254" font-family="monospace" font-size="9.5" fill="#cbd5e1">• End-to-end mission</text>
+    <text x="22" y="270" font-family="monospace" font-size="9.5" fill="#34d399">• Status: Semester 2 Target</text>
+
+    <rect x="12" y="288" width="181" height="110" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+    <text x="22" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#a7f3d0">Core Principle:</text>
+    <text x="22" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d1fae5">Simulation proves</text>
+    <text x="22" y="342" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d1fae5">architecture;</text>
+    <text x="22" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d1fae5">physical testing proves</text>
+    <text x="22" y="374" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d1fae5">autonomous reality.</text>
+  </g>
+
+  <!-- Bottom Legend -->
+  <text x="40" y="535" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">
+    Evidence Hierarchy: Semester 1 verified in SIL Gazebo Harmonic • Hardware-in-the-Loop bench testing completed • Full physical platform assembly &amp; airfield trials scheduled for Semester 2.
+  </text>
+</svg>

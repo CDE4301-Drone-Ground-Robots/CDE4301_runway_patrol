@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 440" width="100%" height="auto" style="background: transparent; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="pitch-shadow" x="-3%" y="-3%" width="106%" height="110%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="pitch-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="pitch-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+    <marker id="pitch-gold" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="pitch-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+  </defs>
+
+  <!-- Frame Box -->
+  <rect x="10" y="10" width="800" height="420" rx="14" fill="#090f1d" stroke="#334155" stroke-width="1.5" filter="url(#pitch-shadow)"/>
+
+  <!-- Diagram Title -->
+  <text x="410" y="38" text-anchor="middle" fill="#f8fafc" font-size="16" font-weight="700">Longitudinal Pitch Dynamics &amp; Dynamic Axle Load Transfer</text>
+  <text x="410" y="56" text-anchor="middle" fill="#94a3b8" font-size="12">Inertial Pitching Moment (M_pitch) &amp; Front Wheel Ground Contact Boundary (N_front &gt; 0)</text>
+
+  <!-- Ground Plane (Grooved Asphalt) -->
+  <line x1="50" y1="315" x2="770" y2="315" stroke="#475569" stroke-width="2.5" stroke-dasharray="6,4"/>
+  <text x="750" y="335" fill="#64748b" font-size="10" text-anchor="end">Airfield Runway Tarmac Ground Plane</text>
+
+  <!-- Chassis Body in Profile -->
+  <rect x="180" y="160" width="460" height="110" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="410" y="185" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="700">FOD HUNTER UGV CHASSIS (m = 65.0 kg)</text>
+  <text x="410" y="204" text-anchor="middle" fill="#94a3b8" font-size="11">Direct-Drive Hub Powertrain • Static Axle Weight W_axle = 318.8 N</text>
+
+  <!-- Road Wheels (D = 263 mm, r = 131.5 mm) -->
+  <!-- Rear Wheels (Left in profile) -->
+  <circle cx="270" cy="275" r="40" fill="#020617" stroke="#10b981" stroke-width="3"/>
+  <circle cx="270" cy="275" r="14" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="270" y="279" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="700">REAR</text>
+
+  <!-- Front Wheels (Right in profile) -->
+  <circle cx="550" cy="275" r="40" fill="#020617" stroke="#10b981" stroke-width="3"/>
+  <circle cx="550" cy="275" r="14" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="550" y="279" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="700">FRONT</text>
+
+  <!-- Wheelbase Dimension L (Between contact patches) -->
+  <line x1="270" y1="315" x2="270" y2="355" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <line x1="550" y1="315" x2="550" y2="355" stroke="#475569" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <line x1="280" y1="345" x2="365" y2="345" stroke="#38bdf8" stroke-width="2" marker-start="url(#pitch-blue)"/>
+  <line x1="540" y1="345" x2="455" y2="345" stroke="#38bdf8" stroke-width="2" marker-start="url(#pitch-blue)"/>
+  <rect x="368" y="332" width="84" height="26" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+  <text x="410" y="349" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">L = 488.8 mm</text>
+
+  <!-- Center of Gravity (CG) -->
+  <circle cx="410" cy="220" r="18" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+  <path d="M 410 202 A 18 18 0 0 1 428 220 L 410 220 Z" fill="#f59e0b"/>
+  <path d="M 410 238 A 18 18 0 0 1 392 220 L 410 220 Z" fill="#f59e0b"/>
+  <circle cx="410" cy="220" r="3.5" fill="#ffffff"/>
+  <text x="410" y="196" text-anchor="middle" fill="#f59e0b" font-size="11.5" font-weight="700">CG</text>
+
+  <!-- CG Height Dimension hcg -->
+  <line x1="345" y1="220" x2="410" y2="220" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="360" y1="225" x2="360" y2="310" stroke="#f59e0b" stroke-width="1.5" marker-start="url(#pitch-gold)"/>
+  <text x="350" y="270" text-anchor="end" fill="#f59e0b" font-size="11" font-weight="700">hcg</text>
+
+  <!-- Acceleration Vector a (Forward) -->
+  <line x1="410" y1="110" x2="520" y2="110" stroke="#38bdf8" stroke-width="3" marker-end="url(#pitch-blue)"/>
+  <text x="530" y="114" fill="#38bdf8" font-size="12" font-weight="700">a = 1.389 m/s² (Forward Acceleration)</text>
+
+  <!-- Inertial Force at CG (Rearward) -->
+  <line x1="410" y1="220" x2="300" y2="220" stroke="#f43f5e" stroke-width="3" marker-end="url(#pitch-rose)"/>
+  <text x="290" y="215" text-anchor="end" fill="#f43f5e" font-size="11" font-weight="700">F_inertial = m • a</text>
+
+  <!-- Weight Force at CG (Downward) -->
+  <line x1="410" y1="220" x2="410" y2="305" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#pitch-rose)"/>
+  <text x="418" y="295" fill="#f59e0b" font-size="10.5" font-weight="700">W = 637.65 N</text>
+
+  <!-- Axle Normal Reaction Forces -->
+  <!-- Rear Axle Normal Force (INCREASED by ΔN) -->
+  <line x1="270" y1="315" x2="270" y2="220" stroke="#10b981" stroke-width="3.5" marker-end="url(#pitch-green)"/>
+  <text x="260" y="210" text-anchor="end" fill="#10b981" font-size="11" font-weight="700">N_rear = ½ mg + ΔN</text>
+
+  <!-- Front Axle Normal Force (REDUCED by ΔN) -->
+  <line x1="550" y1="315" x2="550" y2="250" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#pitch-green)"/>
+  <text x="560" y="245" fill="#f59e0b" font-size="11" font-weight="700">N_front = ½ mg − ΔN</text>
+
+  <!-- Bottom Pitch Equation & Boundary Callout -->
+  <rect x="35" y="375" width="750" height="42" rx="8" fill="rgba(15,23,42,0.95)" stroke="#334155" stroke-width="1.2"/>
+  <text x="410" y="393" text-anchor="middle" fill="#f8fafc" font-size="11.5">
+    <tspan font-weight="700" fill="#38bdf8">Load Transfer:</tspan> ΔN = (m • a • hcg) / L | 
+    <tspan font-weight="700" fill="#10b981">Lift-Off Prevention Condition (N_front &gt; 0):</tspan> L &gt; 2 • hcg • (a / g) ⇒ L / B &gt; 2 • (hcg / B) • (a / g)
+  </text>
+  <text x="410" y="408" text-anchor="middle" fill="#94a3b8" font-size="10.5">
+    At illustrative bounds (hcg / B = 0.40, a / g = 1.0): L / B &gt; 0.80 • CDE4301 Stance L/B = 0.850 maintains stable positive front axle contact
+  </text>
+</svg>

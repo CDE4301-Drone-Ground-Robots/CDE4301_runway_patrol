@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#0d1527"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="520" rx="14" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 36)">
+    <rect width="920" height="50" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"/>
+    <text x="20" y="24" fill="#2997ff" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif" font-size="12" font-weight="700" letter-spacing="0.08em">FIGURE 3.1 &#8226; ENGINEERING TRADE-OFF STUDY</text>
+    <text x="20" y="42" fill="#f5f5f7" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif" font-size="16" font-weight="700">Airside C2 Wireless Technology Architecture Evaluation Matrix</text>
+    <text x="900" y="32" text-anchor="end" fill="#86868b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" font-size="12">Source: Hilbert ppt.pdf (Slides 1 &amp; 4)</text>
+  </g>
+
+  <!-- 4 Columns -->
+  <!-- Col 1: Wi-Fi Router -->
+  <g transform="translate(40, 105)">
+    <rect width="215" height="385" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" filter="url(#shadow)"/>
+    <rect width="215" height="34" rx="10" fill="rgba(255,255,255,0.04)"/>
+    <text x="107" y="22" text-anchor="middle" fill="#f5f5f7" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">Wi-Fi Router (802.11)</text>
+
+    <!-- Badge -->
+    <rect x="25" y="46" width="165" height="22" rx="4" fill="rgba(41,151,255,0.12)" stroke="rgba(41,151,255,0.3)"/>
+    <text x="107" y="61" text-anchor="middle" fill="#2997ff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700">BENCHTOP ONLY</text>
+
+    <!-- Metric Rows -->
+    <g transform="translate(15, 85)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <text y="0" fill="#86868b">Frequency:</text>
+      <text y="0" x="185" text-anchor="end" fill="#f5f5f7" font-weight="600">2.4 / 5.8 GHz</text>
+
+      <text y="30" fill="#86868b">LOS Range:</text>
+      <text y="30" x="185" text-anchor="end" fill="#ff453a" font-weight="600">&lt; 120 m (Deficit)</text>
+
+      <text y="60" fill="#86868b">Throughput:</text>
+      <text y="60" x="185" text-anchor="end" fill="#30d158" font-weight="600">50 - 300 Mbps</text>
+
+      <text y="90" fill="#86868b">Latency / Jitter:</text>
+      <text y="90" x="185" text-anchor="end" fill="#ffd60a" font-weight="600">High Jitter (Multicast)</text>
+
+      <text y="120" fill="#86868b">Telco Dependency:</text>
+      <text y="120" x="185" text-anchor="end" fill="#30d158" font-weight="600">Zero (Local AP)</text>
+
+      <text y="150" fill="#86868b">Airfield Security:</text>
+      <text y="150" x="185" text-anchor="end" fill="#ffd60a" font-weight="600">Standard WPA2/3</text>
+
+      <line x1="0" y1="170" x2="185" y2="170" stroke="rgba(255,255,255,0.08)"/>
+
+      <text y="195" fill="#f5f5f7" font-weight="700">Engineering Verdict:</text>
+      <text y="215" fill="#86868b" font-size="11" width="185">
+        <tspan x="0" dy="0">High throughput enables</tspan>
+        <tspan x="0" dy="16">easy lab development,</tspan>
+        <tspan x="0" dy="16">but 120m range cutoff</tspan>
+        <tspan x="0" dy="16">makes outdoor 4.0 km</tspan>
+        <tspan x="0" dy="16">airfield runway transit</tspan>
+        <tspan x="0" dy="16" fill="#ff453a" font-weight="600">physically impossible.</tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- Col 2: Cellular 4G/LTE -->
+  <g transform="translate(275, 105)">
+    <rect width="215" height="385" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" filter="url(#shadow)"/>
+    <rect width="215" height="34" rx="10" fill="rgba(255,255,255,0.04)"/>
+    <text x="107" y="22" text-anchor="middle" fill="#f5f5f7" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">Cellular (4G/LTE / 5G)</text>
+
+    <!-- Badge -->
+    <rect x="25" y="46" width="165" height="22" rx="4" fill="rgba(255,69,58,0.12)" stroke="rgba(255,69,58,0.3)"/>
+    <text x="107" y="61" text-anchor="middle" fill="#ff453a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700">REJECTED (OPSEC RISK)</text>
+
+    <!-- Metric Rows -->
+    <g transform="translate(15, 85)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <text y="0" fill="#86868b">Frequency:</text>
+      <text y="0" x="185" text-anchor="end" fill="#f5f5f7" font-weight="600">Licensed Telco Bands</text>
+
+      <text y="30" fill="#86868b">LOS Range:</text>
+      <text y="30" x="185" text-anchor="end" fill="#30d158" font-weight="600">Extensive (Tower-based)</text>
+
+      <text y="60" fill="#86868b">Throughput:</text>
+      <text y="60" x="185" text-anchor="end" fill="#30d158" font-weight="600">10 - 100 Mbps</text>
+
+      <text y="90" fill="#86868b">Latency / Jitter:</text>
+      <text y="90" x="185" text-anchor="end" fill="#ff453a" font-weight="600">35 - 120 ms (Unstable)</text>
+
+      <text y="120" fill="#86868b">Telco Dependency:</text>
+      <text y="120" x="185" text-anchor="end" fill="#ff453a" font-weight="600">High (Recurring SIM)</text>
+
+      <text y="150" fill="#86868b">Airfield Security:</text>
+      <text y="150" x="185" text-anchor="end" fill="#ff453a" font-weight="600">Public Infrastructure</text>
+
+      <line x1="0" y1="170" x2="185" y2="170" stroke="rgba(255,255,255,0.08)"/>
+
+      <text y="195" fill="#f5f5f7" font-weight="700">Engineering Verdict:</text>
+      <text y="215" fill="#86868b" font-size="11" width="185">
+        <tspan x="0" dy="0">High recurring monthly</tspan>
+        <tspan x="0" dy="16">costs. Telco tower coverage</tspan>
+        <tspan x="0" dy="16">in active airbases has dead</tspan>
+        <tspan x="0" dy="16">zones. Violates military</tspan>
+        <tspan x="0" dy="16">air-gap OPSEC rules on</tspan>
+        <tspan x="0" dy="16" fill="#ff453a" font-weight="600">autonomous C2 networks.</tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- Col 3: LoRa / LoRaWAN -->
+  <g transform="translate(510, 105)">
+    <rect width="215" height="385" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" filter="url(#shadow)"/>
+    <rect width="215" height="34" rx="10" fill="rgba(255,255,255,0.04)"/>
+    <text x="107" y="22" text-anchor="middle" fill="#f5f5f7" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">LoRa / LoRaWAN</text>
+
+    <!-- Badge -->
+    <rect x="25" y="46" width="165" height="22" rx="4" fill="rgba(255,69,58,0.12)" stroke="rgba(255,69,58,0.3)"/>
+    <text x="107" y="61" text-anchor="middle" fill="#ff453a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700">REJECTED (THROUGHPUT)</text>
+
+    <!-- Metric Rows -->
+    <g transform="translate(15, 85)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <text y="0" fill="#86868b">Frequency:</text>
+      <text y="0" x="185" text-anchor="end" fill="#f5f5f7" font-weight="600">920 - 925 MHz (SRD)</text>
+
+      <text y="30" fill="#86868b">LOS Range:</text>
+      <text y="30" x="185" text-anchor="end" fill="#30d158" font-weight="600">&gt; 10 km (Excellent)</text>
+
+      <text y="60" fill="#86868b">Throughput:</text>
+      <text y="60" x="185" text-anchor="end" fill="#ff453a" font-weight="600">0.3 - 50 kbps (Deficit)</text>
+
+      <text y="90" fill="#86868b">Latency / Jitter:</text>
+      <text y="90" x="185" text-anchor="end" fill="#ff453a" font-weight="600">500 - 2500 ms (Severe)</text>
+
+      <text y="120" fill="#86868b">Telco Dependency:</text>
+      <text y="120" x="185" text-anchor="end" fill="#30d158" font-weight="600">Zero (Private)</text>
+
+      <text y="150" fill="#86868b">Airfield Security:</text>
+      <text y="150" x="185" text-anchor="end" fill="#30d158" font-weight="600">AES-128 Encryption</text>
+
+      <line x1="0" y1="170" x2="185" y2="170" stroke="rgba(255,255,255,0.08)"/>
+
+      <text y="195" fill="#f5f5f7" font-weight="700">Engineering Verdict:</text>
+      <text y="215" fill="#86868b" font-size="11" width="185">
+        <tspan x="0" dy="0">Outstanding range and</tspan>
+        <tspan x="0" dy="16">propagation, but 50 kbps</tspan>
+        <tspan x="0" dy="16">bandwidth cannot support</tspan>
+        <tspan x="0" dy="16">continuous 2 Hz UGV state</tspan>
+        <tspan x="0" dy="16">telemetry and 720-byte</tspan>
+        <tspan x="0" dy="16" fill="#ff453a" font-weight="600">task ledger updates.</tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- Col 4: Microhard P900 V2 (Selected) -->
+  <g transform="translate(745, 105)">
+    <rect width="215" height="385" rx="10" fill="rgba(48,209,88,0.04)" stroke="rgba(48,209,88,0.35)" stroke-width="1.8" filter="url(#shadow)"/>
+    <rect width="215" height="34" rx="10" fill="rgba(48,209,88,0.12)"/>
+    <text x="107" y="22" text-anchor="middle" fill="#30d158" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">Microhard P900 V2 (FHSS)</text>
+
+    <!-- Badge -->
+    <rect x="25" y="46" width="165" height="22" rx="4" fill="rgba(48,209,88,0.2)" stroke="rgba(48,209,88,0.4)"/>
+    <text x="107" y="61" text-anchor="middle" fill="#30d158" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700">&#x2713; SELECTED ARCHITECTURE</text>
+
+    <!-- Metric Rows -->
+    <g transform="translate(15, 85)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <text y="0" fill="#86868b">Frequency:</text>
+      <text y="0" x="185" text-anchor="end" fill="#30d158" font-weight="600">917 - 925 MHz (IMDA)</text>
+
+      <text y="30" fill="#86868b">LOS Range:</text>
+      <text y="30" x="185" text-anchor="end" fill="#30d158" font-weight="600">40 - 60 km (&gt;4.0 km pass)</text>
+
+      <text y="60" fill="#86868b">Throughput:</text>
+      <text y="60" x="185" text-anchor="end" fill="#30d158" font-weight="600">115.2 kbps (UART)</text>
+
+      <text y="90" fill="#86868b">Latency / Jitter:</text>
+      <text y="90" x="185" text-anchor="end" fill="#30d158" font-weight="600">&lt; 10 ms (Deterministic)</text>
+
+      <text y="120" fill="#86868b">Telco Dependency:</text>
+      <text y="120" x="185" text-anchor="end" fill="#30d158" font-weight="600">Zero (Direct P2P Link)</text>
+
+      <text y="150" fill="#86868b">Airfield Security:</text>
+      <text y="150" x="185" text-anchor="end" fill="#30d158" font-weight="600">Air-Gapped + AES-256</text>
+
+      <line x1="0" y1="170" x2="185" y2="170" stroke="rgba(48,209,88,0.2)"/>
+
+      <text y="195" fill="#30d158" font-weight="700">Engineering Verdict:</text>
+      <text y="215" fill="#86868b" font-size="11" width="185">
+        <tspan x="0" dy="0">Optimal SWaP (18g, 2.3W).</tspan>
+        <tspan x="0" dy="16">Deterministic FHSS RF.</tspan>
+        <tspan x="0" dy="16">100% compliant with IMDA</tspan>
+        <tspan x="0" dy="16">TS SRD table 1, item 13b.</tspan>
+        <tspan x="0" dy="16">+29.53 dB fade margin at</tspan>
+        <tspan x="0" dy="16" fill="#30d158" font-weight="600">4.0 km Changi runway span.</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

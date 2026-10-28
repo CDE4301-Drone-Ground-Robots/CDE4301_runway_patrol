@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 580" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#0e172a"/>
+    </linearGradient>
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#162038"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="580" fill="url(#bgGrad)" rx="16"/>
+  <rect x="2" y="2" width="1076" height="576" fill="none" stroke="#334155" stroke-width="1.5" rx="15"/>
+
+  <!-- Title & Subtitle -->
+  <text x="40" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="21" font-weight="700" fill="#f8fafc">
+    CDE4301 FOD Hunter UGV — 5-Stage Autonomy Control Pipeline
+  </text>
+  <text x="40" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="400" fill="#94a3b8">
+    Hierarchical ROS 2 Jazzy &amp; Nav2 architecture from sensor perception to 4WD direct-drive BLDC actuation
+  </text>
+
+  <!-- Horizontal Flow Arrow Guides -->
+  <path d="M 224 290 L 246 290" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M 434 290 L 456 290" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M 644 290 L 666 290" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M 854 290 L 876 290" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STAGE 1: PERCEPTION -->
+  <g transform="translate(35, 100)" filter="url(#shadow)">
+    <rect width="190" height="420" rx="12" fill="url(#cardGrad1)" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect x="0" y="0" width="190" height="38" rx="12" fill="url(#blueGrad)"/>
+    <text x="95" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">1. PERCEPTION</text>
+    
+    <!-- Item 1: LiDAR -->
+    <rect x="14" y="52" width="162" height="105" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="72" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Primary 3D LiDAR</text>
+    <text x="24" y="90" font-family="monospace" font-size="10.5" fill="#e2e8f0">• Hesai JT16 (Selected)</text>
+    <text x="24" y="106" font-family="monospace" font-size="10" fill="#94a3b8">  360°×40°, 30m, 10-20Hz</text>
+    <text x="24" y="122" font-family="monospace" font-size="10" fill="#94a3b8">  100k lux sunlight proof</text>
+    <text x="24" y="140" font-family="monospace" font-size="10" fill="#34d399">• Sim: GPU LaserScan</text>
+
+    <!-- Item 2: Camera -->
+    <rect x="14" y="167" width="162" height="75" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="187" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#38bdf8">Vision &amp; Depth</text>
+    <text x="24" y="205" font-family="monospace" font-size="10.5" fill="#e2e8f0">• Intel RealSense D435</text>
+    <text x="24" y="223" font-family="monospace" font-size="10" fill="#94a3b8">  /camera/image_raw</text>
+
+    <!-- Item 3: Output Topics -->
+    <rect x="14" y="252" width="162" height="152" rx="8" fill="#0b1329" stroke="#1e3a8a" stroke-width="1"/>
+    <text x="24" y="272" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#93c5fd">Published Interfaces:</text>
+    <text x="24" y="294" font-family="monospace" font-size="9.5" fill="#cbd5e1">→ /scan (2D Scan)</text>
+    <text x="24" y="312" font-family="monospace" font-size="9.5" fill="#cbd5e1">→ /points (PointCloud2)</text>
+    <text x="24" y="330" font-family="monospace" font-size="9.5" fill="#cbd5e1">→ /camera/color/image</text>
+    <text x="24" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="600" fill="#64748b">Obstacle Sensing:</text>
+    <text x="24" y="376" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#94a3b8">Direct 3D scan fed into</text>
+    <text x="24" y="392" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#94a3b8">Nav2 obstacle costmap</text>
+  </g>
+
+  <!-- STAGE 2: LOCALIZATION -->
+  <g transform="translate(245, 100)" filter="url(#shadow)">
+    <rect width="190" height="420" rx="12" fill="url(#cardGrad1)" stroke="#c084fc" stroke-width="1.5"/>
+    <rect x="0" y="0" width="190" height="38" rx="12" fill="url(#purpleGrad)"/>
+    <text x="95" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">2. LOCALIZATION</text>
+
+    <!-- Item 1: Local EKF -->
+    <rect x="14" y="52" width="162" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="72" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#c084fc">Local EKF (30 Hz)</text>
+    <text x="24" y="90" font-family="monospace" font-size="10" fill="#e2e8f0">• Wheel Odom (/odom)</text>
+    <text x="24" y="106" font-family="monospace" font-size="10" fill="#e2e8f0">• IMU Gyro/Accel</text>
+    <text x="24" y="124" font-family="monospace" font-size="9.5" fill="#a855f7">Publishes TF:</text>
+    <text x="24" y="142" font-family="monospace" font-size="10" font-weight="700" fill="#38bdf8">odom → base_footprint</text>
+    <text x="24" y="156" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" fill="#94a3b8">Continuous, drift-mitigated</text>
+
+    <!-- Item 2: Global EKF -->
+    <rect x="14" y="172" width="162" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="192" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#c084fc">Global EKF (30 Hz)</text>
+    <text x="24" y="210" font-family="monospace" font-size="10" fill="#e2e8f0">• RTK-GNSS (/gps/fix)</text>
+    <text x="24" y="226" font-family="monospace" font-size="10" fill="#e2e8f0">• navsat_transform (UTM)</text>
+    <text x="24" y="244" font-family="monospace" font-size="9.5" fill="#a855f7">Publishes TF:</text>
+    <text x="24" y="262" font-family="monospace" font-size="10" font-weight="700" fill="#38bdf8">map → odom</text>
+    <text x="24" y="276" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" fill="#94a3b8">Zero unbounded drift</text>
+
+    <!-- Item 3: Rationale Note -->
+    <rect x="14" y="292" width="162" height="112" rx="8" fill="#2e1065" stroke="#7e22ce" stroke-width="1"/>
+    <text x="24" y="312" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#e9d5ff">Runway Feature Note:</text>
+    <text x="24" y="330" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d8b4fe">AMCL fails on airfield</text>
+    <text x="24" y="346" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d8b4fe">due to lack of vertical walls.</text>
+    <text x="24" y="366" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fbcfe8">Dual EKF provides robust</text>
+    <text x="24" y="382" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fbcfe8">open-field georeferencing.</text>
+  </g>
+
+  <!-- STAGE 3: PLANNING -->
+  <g transform="translate(455, 100)" filter="url(#shadow)">
+    <rect width="190" height="420" rx="12" fill="url(#cardGrad1)" stroke="#fbbf24" stroke-width="1.5"/>
+    <rect x="0" y="0" width="190" height="38" rx="12" fill="url(#amberGrad)"/>
+    <text x="95" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">3. PLANNING</text>
+
+    <!-- Item 1: Nav2 BT -->
+    <rect x="14" y="52" width="162" height="100" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="72" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#fbbf24">Nav2 BT Navigator</text>
+    <text x="24" y="90" font-family="monospace" font-size="10" fill="#e2e8f0">• NavigateToPose Server</text>
+    <text x="24" y="106" font-family="monospace" font-size="10" fill="#e2e8f0">• Goal/Waypoint Queue</text>
+    <text x="24" y="122" font-family="monospace" font-size="10" fill="#e2e8f0">• Dynamic Recovery Tree</text>
+    <text x="24" y="138" font-family="monospace" font-size="9.5" fill="#94a3b8">  Costmap clear &amp; spin</text>
+
+    <!-- Item 2: Global SmacPlanner -->
+    <rect x="14" y="162" width="162" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="182" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#fbbf24">SmacPlannerHybrid</text>
+    <text x="24" y="200" font-family="monospace" font-size="10" fill="#e2e8f0">• Reeds-Shepp lattice</text>
+    <text x="24" y="216" font-family="monospace" font-size="10" fill="#e2e8f0">• R_min = 1.0 m</text>
+    <text x="24" y="232" font-family="monospace" font-size="10" fill="#e2e8f0">• Reverse penalty = 2.5</text>
+    <text x="24" y="248" font-family="monospace" font-size="10" fill="#e2e8f0">• 64 orientation bins</text>
+    <text x="24" y="266" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#34d399">Avoids high-torque pivot turns</text>
+
+    <!-- Item 3: Costmaps -->
+    <rect x="14" y="292" width="162" height="112" rx="8" fill="#451a03" stroke="#b45309" stroke-width="1"/>
+    <text x="24" y="312" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#fde68a">Costmap Configuration:</text>
+    <text x="24" y="330" font-family="monospace" font-size="9.5" fill="#fed7aa">• Res: 0.05 m (5 cm)</text>
+    <text x="24" y="348" font-family="monospace" font-size="9.5" fill="#fed7aa">• Inflat_rad: 0.55 m</text>
+    <text x="24" y="366" font-family="monospace" font-size="9.5" fill="#fed7aa">• Obstacle layer: /scan</text>
+    <text x="24" y="386" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fef08a">Prevents tarmac collisions</text>
+  </g>
+
+  <!-- STAGE 4: CONTROL -->
+  <g transform="translate(665, 100)" filter="url(#shadow)">
+    <rect width="190" height="420" rx="12" fill="url(#cardGrad1)" stroke="#34d399" stroke-width="1.5"/>
+    <rect x="0" y="0" width="190" height="38" rx="12" fill="url(#emeraldGrad)"/>
+    <text x="95" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">4. CONTROL</text>
+
+    <!-- Item 1: RPP Controller -->
+    <rect x="14" y="52" width="162" height="145" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="72" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#34d399">Regulated Pure Pursuit</text>
+    <text x="24" y="90" font-family="monospace" font-size="10" fill="#e2e8f0">• Lookahead: L = 1.2 m</text>
+    <text x="24" y="106" font-family="monospace" font-size="10" fill="#e2e8f0">• Max speed: 2.22 m/s</text>
+    <text x="24" y="122" font-family="monospace" font-size="10" fill="#e2e8f0">• Curv scaling: R = 0.8m</text>
+    <text x="24" y="138" font-family="monospace" font-size="10" fill="#e2e8f0">• Cost scaling: d = 1.0m</text>
+    <text x="24" y="154" font-family="monospace" font-size="10" fill="#e2e8f0">• Rate: 20 Hz loop</text>
+    <text x="24" y="174" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#6ee7b7">Low CPU: 2-5% compute load</text>
+    <text x="24" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8.5" fill="#94a3b8">Minimizes lateral tire scrub</text>
+
+    <!-- Item 2: Output Interface -->
+    <rect x="14" y="207" width="162" height="85" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="24" y="227" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#34d399">Velocity Command</text>
+    <text x="24" y="247" font-family="monospace" font-size="10.5" fill="#38bdf8">→ /cmd_vel</text>
+    <text x="24" y="265" font-family="monospace" font-size="9.5" fill="#cbd5e1">  v_x (linear m/s)</text>
+    <text x="24" y="281" font-family="monospace" font-size="9.5" fill="#cbd5e1">  ω_z (angular rad/s)</text>
+
+    <!-- Item 3: Skid Disclaimer -->
+    <rect x="14" y="302" width="162" height="102" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+    <text x="24" y="322" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#a7f3d0">Kinematic Disclaimer:</text>
+    <text x="24" y="340" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#d1fae5">RPP smooths trajectory</text>
+    <text x="24" y="356" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#d1fae5">arcs to reduce scrub, but</text>
+    <text x="24" y="372" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#fcd34d">DOES NOT eliminate</text>
+    <text x="24" y="388" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#fcd34d">physical 4WD tire friction.</text>
+  </g>
+
+  <!-- STAGE 5: ACTUATION -->
+  <g transform="translate(875, 100)" filter="url(#shadow)">
+    <rect width="170" height="420" rx="12" fill="url(#cardGrad1)" stroke="#f43f5e" stroke-width="1.5"/>
+    <rect x="0" y="0" width="170" height="38" rx="12" fill="url(#roseGrad)"/>
+    <text x="85" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">5. ACTUATION</text>
+
+    <!-- Item 1: Skid IK -->
+    <rect x="12" y="52" width="146" height="85" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="72" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fb7185">4WD Skid IK Model</text>
+    <text x="20" y="90" font-family="monospace" font-size="9.5" fill="#cbd5e1">ω_L = (v - ω·W/2)/R</text>
+    <text x="20" y="108" font-family="monospace" font-size="9.5" fill="#cbd5e1">ω_R = (v + ω·W/2)/R</text>
+    <text x="20" y="124" font-family="monospace" font-size="9" fill="#94a3b8">W=0.58m, R=0.1315m</text>
+
+    <!-- Item 2: CANopen Bridge -->
+    <rect x="12" y="147" width="146" height="85" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="167" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fb7185">CANopen Bridge</text>
+    <text x="20" y="185" font-family="monospace" font-size="9.5" fill="#e2e8f0">• STM32 MCU Bridge</text>
+    <text x="20" y="201" font-family="monospace" font-size="9.5" fill="#e2e8f0">• Dual ZLAC8015D</text>
+    <text x="20" y="219" font-family="monospace" font-size="9" fill="#94a3b8">  CAN bus 500 kbps</text>
+
+    <!-- Item 3: Direct-Drive BLDC -->
+    <rect x="12" y="242" width="146" height="95" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="262" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fb7185">4× Hub Motors</text>
+    <text x="20" y="280" font-family="monospace" font-size="9" fill="#e2e8f0">• ZLLG80ASM250</text>
+    <text x="20" y="296" font-family="monospace" font-size="9" fill="#e2e8f0">• 250W ea, 48V bus</text>
+    <text x="20" y="312" font-family="monospace" font-size="9" fill="#e2e8f0">• Total Mass: 65 kg</text>
+    <text x="20" y="328" font-family="monospace" font-size="9" fill="#38bdf8">• Max Speed: 15 km/h</text>
+
+    <!-- Item 4: Remediation Tool -->
+    <rect x="12" y="347" width="146" height="57" rx="8" fill="#4c0519" stroke="#be123c" stroke-width="1"/>
+    <text x="20" y="365" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#fda4af">FOD Remediation:</text>
+    <text x="20" y="381" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#fecdd3">Rear vacuum intake head</text>
+    <text x="20" y="395" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#fecdd3">collects tarmac debris</text>
+  </g>
+
+  <!-- Bottom Legend / Footnote -->
+  <text x="40" y="550" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">
+    Evidence Hierarchy: Hesai JT16 LiDAR &amp; 4WD BLDC platform confirmed by team author • Simulation currently runs Gazebo Harmonic with GPU LaserScan • Physical robot integration in progress.
+  </text>
+</svg>

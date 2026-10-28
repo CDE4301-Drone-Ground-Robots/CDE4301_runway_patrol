@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net" modified="2026-10-28T06:00:00.000Z" agent="Mozilla/5.0" version="24.0.0">
+  <diagram id="cyclonedds_topology" name="CycloneDDS Unicast Topology">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Multi-Machine Benchtop Network Topology &amp; CycloneDDS Unicast Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#F5F5F7;" vertex="1" parent="1">
+          <mxGeometry x="150" y="30" width="800" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uav" value="Argus UAV Companion (RPi 5)&lt;br&gt;&lt;br&gt;IP: 192.168.168.100 (Wi-Fi)&lt;br&gt;IP: 192.168.137.233 (Direct RJ45)&lt;br&gt;&lt;br&gt;uav_waypoint_commander.py&lt;br&gt;- Downlink: /c2/target_alert (Latched)&lt;br&gt;- Uplink: /c2/ugv_telemetry (Reliable)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e3a8a;strokeColor=#3b82f6;fontColor=#ffffff;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="110" width="260" height="260" as="geometry"/>
+        </mxCell>
+        <mxCell id="net" value="Wi-Fi Router &amp; CycloneDDS Gateway&lt;br&gt;&lt;br&gt;Multicast Drop Mechanism:&lt;br&gt;- 802.11 basic rate drops (1-6 Mbps)&lt;br&gt;- AP Client Isolation blocks peers&lt;br&gt;&lt;br&gt;Unicast Solution (cyclonedds.xml):&lt;br&gt;&amp;lt;Peers&amp;gt; directs SPDP over UDP unicast" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#eab308;fontColor=#ffffff;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="380" y="110" width="280" height="260" as="geometry"/>
+        </mxCell>
+        <mxCell id="ugv" value="FOD Hunter UGV Host (Laptop)&lt;br&gt;&lt;br&gt;IP: 192.168.168.50 (Wi-Fi)&lt;br&gt;IP: 192.168.137.1 (Direct RJ45)&lt;br&gt;&lt;br&gt;ugv_c2_bridge_node.py&lt;br&gt;- FIFO Goal Queue Management&lt;br&gt;- Nav2 NavigateToPose Action Client&lt;br&gt;- Uplink: /c2/ugv_telemetry (2 Hz)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#064e3b;strokeColor=#10b981;fontColor=#ffffff;align=left;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="720" y="110" width="260" height="260" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
