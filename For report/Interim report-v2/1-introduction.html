@@ -81,10 +81,11 @@
       </div>
 
         <!-- SECTION 1.1: THE PROBLEM -->
-        <div class="card-box intro-sec" id="sec-problem">
-          <div class="card-header">
-            <div><span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 1.1</span><div class="card-title">What is the problem?</div></div>
-            <a href="7-documentation/literature/problem-statement.html" class="btn btn-deep-dive">📖 Read Full Introduction Spec </a>
+        <section class="intro-sec" id="sec-problem">
+          <div class="intro-sec-head">
+            <div class="apple-section-lead">Section 1.1</div>
+            <h2 class="apple-section-title">What is the problem?</h2>
+            <a href="7-documentation/literature/problem-statement.html" class="intro-deep-link">Read full introduction spec →</a>
           </div>
 
           <h3 class="intro-h3">A case study: Air France Flight 4590</h3>
@@ -117,13 +118,14 @@
           <p class="intro-p">
             Singapore is facing declining birth rates, which means less manpower for its conscript army. In a 2022 parliamentary reply, the then Minister for Defence, Dr Ng Eng Hen, described low fertility as a significant structural challenge for the SAF, one that has forced a re-look across the entire SAF "to leverage technology to improve manpower productivity" (MINDEF, 2022).
           </p>
-          <div class="callout callout-emerald" style="margin-top: 14px;"><strong>This is exactly what our project strives to do:</strong> use technology to take repetitive, manpower-intensive FOD work off people's hands.</div>
-        </div>
+          <p class="intro-p"><strong>This is exactly what our project strives to do:</strong> use technology to take repetitive, manpower-intensive FOD work off people's hands.</p>
+        </section>
 
         <!-- SECTION 1.2: WHO IS AFFECTED -->
-        <div class="card-box intro-sec" id="sec-affected">
-          <div class="card-header">
-            <div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 1.2</span><div class="card-title">Who is affected by the problem?</div></div>
+        <section class="intro-sec" id="sec-affected">
+          <div class="intro-sec-head">
+            <div class="apple-section-lead">Section 1.2</div>
+            <h2 class="apple-section-title">Who is affected by the problem?</h2>
           </div>
 
           <h3 class="intro-h3">Locally</h3>
@@ -157,10 +159,10 @@
 
           <h3 class="intro-h3">Interviews</h3>
           <p class="intro-p">We spoke to many stakeholders. Names are withheld to protect the interviewees. Here are the full interview transcripts:</p>
-          <div style="display: grid; gap: 10px; margin-bottom: 22px;">
-            <details style="border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px; background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <summary style="cursor: pointer; color: var(--accent-blue); font-weight: 700;">Show transcript · Mr Industry Partner</summary>
-              <div style="padding-top: 10px; color: var(--text-muted); font-size: 13px; line-height: 1.6; white-space: pre-wrap;">
+          <div class="intro-transcripts">
+            <details class="intro-transcript">
+              <summary>Show transcript · Mr Industry Partner</summary>
+              <div class="intro-transcript-body">
 Interview transcript
 
 Speaker 1: Can you please state your name?
@@ -420,9 +422,9 @@ Speaker 1: That's all for my questions. Anyone else?
 Speaker 2: No worries.
               </div>
             </details>
-            <details style="border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px; background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <summary style="cursor: pointer; color: var(--accent-emerald); font-weight: 700;">Show transcript · 3SG(NS) John Doe · Paya Lebar Air Base</summary>
-              <div style="padding-top: 10px; color: var(--text-muted); font-size: 13px; line-height: 1.6; white-space: pre-wrap;">
+            <details class="intro-transcript">
+              <summary>Show transcript · 3SG(NS) John Doe · Paya Lebar Air Base</summary>
+              <div class="intro-transcript-body">
 Interview transcript
 
 Interviewer: Just for the record, can you tell me what's your name, and like, your rank, and what's your role in the whole process?
@@ -522,9 +524,9 @@ John Doe: Another thing we do is use a leaf blower and blow FOD into the grass. 
 John Doe: I'm all supportive of this [expletive].
               </div>
             </details>
-            <details style="border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 14px; background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <summary style="cursor: pointer; color: var(--accent-amber); font-weight: 700;">Show transcript · LTA(NS) James Doe · Tengah Air Base</summary>
-              <div style="padding-top: 10px; color: var(--text-muted); font-size: 13px; line-height: 1.6; white-space: pre-wrap;">
+            <details class="intro-transcript">
+              <summary>Show transcript · LTA(NS) James Doe · Tengah Air Base</summary>
+              <div class="intro-transcript-body">
 Interview transcript
 
 Speaker 1: Yeah. Maybe I introduce myself first, before I can introduce yourself. My name is Asuka. I'm Josh's friend. I met him on exchange, actually. I also realized that he's an Air Force officer in the same batch that I was in OCS.
@@ -594,34 +596,23 @@ Speaker 2: No worries, man. All the best.
             <tr><td>"By investing in iFerret, we effectively shaved off a lot of time… every minute is money."</td><td><span class="senti senti-pos">Positive</span></td><td>Automated detection pays for itself in runway time, but false alarms still need a human to validate.</td></tr>
           </tbody></table></div>
           <h3 class="intro-h3">Five operational findings</h3>
-          <div style="display: grid; gap: 12px;">
-            <div style="padding: 14px; border-left: 3px solid var(--accent-blue); background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <strong>1. Current workflow:</strong> Two-person vehicle patrols, contracted sweepers, manual broom walks, and periodic base-wide safety sweeps remain central to runway inspection.
-            </div>
-            <div style="padding: 14px; border-left: 3px solid var(--accent-rose); background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <strong>2. Operational pain points:</strong> Visual inspection at speed creates fatigue and uncertainty; brooms can add debris, while leaf blowers can move FOD into nearby grass.
-            </div>
-            <div style="padding: 14px; border-left: 3px solid var(--accent-amber); background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <strong>3. Debris profile:</strong> Common targets include screws, rivets, rocks, glass, animal remains, plastic, wood, and loose nails. Small objects can be less than 2 cm and collections are often only handful-sized.
-            </div>
-            <div style="padding: 14px; border-left: 3px solid var(--accent-purple); background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <strong>4. UAV constraints:</strong> Drone operations require airspace clearance and can be limited to occasional flights, so the ground robot needs an independent fallback mode.
-            </div>
-            <div style="padding: 14px; border-left: 3px solid var(--accent-emerald); background: var(--card-bg-subtle, rgba(255,255,255,0.02));">
-              <strong>5. Stakeholder value:</strong> The strongest benefits are more frequent inspection, reduced repetitive manpower, faster emergency runway recovery, and a reliable system that is practical to deploy.
-            </div>
+          <div>
+            <p class="intro-p"><strong>1. Current workflow:</strong> Two-person vehicle patrols, contracted sweepers, manual broom walks, and periodic base-wide safety sweeps remain central to runway inspection.</p>
+            <p class="intro-p"><strong>2. Operational pain points:</strong> Visual inspection at speed creates fatigue and uncertainty; brooms can add debris, while leaf blowers can move FOD into nearby grass.</p>
+            <p class="intro-p"><strong>3. Debris profile:</strong> Common targets include screws, rivets, rocks, glass, animal remains, plastic, wood, and loose nails. Small objects can be less than 2 cm and collections are often only handful-sized.</p>
+            <p class="intro-p"><strong>4. UAV constraints:</strong> Drone operations require airspace clearance and can be limited to occasional flights, so the ground robot needs an independent fallback mode.</p>
+            <p class="intro-p"><strong>5. Stakeholder value:</strong> The strongest benefits are more frequent inspection, reduced repetitive manpower, faster emergency runway recovery, and a reliable system that is practical to deploy.</p>
           </div>
 
-          <div class="callout callout-info" style="margin-top: 18px;">
-            <strong>Engineering translation:</strong> FOD Hunter should detect small debris, distinguish true objects from stains and bird droppings, operate independently when UAV clearance is unavailable, and use a fast transit mode followed by a slower precision collection mode.
-          </div>
-        </div>
+          <p class="intro-p"><strong>Engineering translation:</strong> FOD Hunter should detect small debris, distinguish true objects from stains and bird droppings, operate independently when UAV clearance is unavailable, and use a fast transit mode followed by a slower precision collection mode.</p>
+        </section>
 
         <!-- SECTION 1.3: COMPETITIVE ANALYSIS -->
-        <div class="card-box intro-sec" id="sec-competitors">
-          <div class="card-header">
-            <div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.3</span><div class="card-title">Competitive analysis</div></div>
-            <a href="7-documentation/literature/problem-statement.html" class="btn btn-deep-dive">📖 Read Problem Bottlenecks Spec </a>
+        <section class="intro-sec" id="sec-competitors">
+          <div class="intro-sec-head">
+            <div class="apple-section-lead">Section 1.3</div>
+            <h2 class="apple-section-title">Competitive analysis</h2>
+            <a href="7-documentation/literature/problem-statement.html" class="intro-deep-link">Read problem bottlenecks spec →</a>
           </div>
           <p class="intro-p">Existing solutions either <strong>detect</strong> FOD or <strong>collect</strong> it, but rarely do both well. The map below places each solution by its detection and collection performance. <strong>Click any solution</strong> to see how it works, what it does well and where it falls short.</p>
           <div class="comp-wrap">
@@ -635,12 +626,13 @@ Speaker 2: No worries, man. All the best.
             </div>
             <div class="comp-detail" id="comp-detail" aria-live="polite"></div>
           </div>
-        </div>
+        </section>
 
         <!-- SECTION 1.4: USER JOURNEY -->
-        <div class="card-box intro-sec" id="sec-journey">
-          <div class="card-header">
-            <div><span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 1.4</span><div class="card-title">User journey</div></div>
+        <section class="intro-sec" id="sec-journey">
+          <div class="intro-sec-head">
+            <div class="apple-section-lead">Section 1.4</div>
+            <h2 class="apple-section-title">User journey</h2>
           </div>
           <figure class="intro-fig journey-fig">
             <div class="intro-img" style="aspect-ratio: 16 / 9;"><img src="assets/intro/user-journey.jpg" alt="Six-panel illustration of the FOD Hunter user journey, from FOD on the runway to the rover returning home" loading="lazy" onerror="this.closest('figure').classList.add('missing')"><span class="intro-missing">Image to be added</span></div>
@@ -661,12 +653,13 @@ Speaker 2: No worries, man. All the best.
             </div>
           </div>
 
-        </div>
+        </section>
 
         <!-- SECTION 1.5: DEMONSTRATION -->
-        <div class="card-box intro-sec" id="sec-demo">
-          <div class="card-header">
-            <div><span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 1.5</span><div class="card-title">Demonstration: FOD Hunter × FOD Argus</div></div>
+        <section class="intro-sec" id="sec-demo">
+          <div class="intro-sec-head">
+            <div class="apple-section-lead">Section 1.5</div>
+            <h2 class="apple-section-title">Demonstration: FOD Hunter × FOD Argus</h2>
           </div>
           <p class="intro-p">Simulation of the full workflow: FOD Argus (UAV) patrols the runway on a pre-planned path and reports detected FOD, and FOD Hunter (UGV) is dispatched to clear it.</p>
           <figure class="demo-fig">
@@ -675,33 +668,30 @@ Speaker 2: No worries, man. All the best.
               Your browser does not support embedded video.
             </video>
           </figure>
-        </div>
+        </section>
 
         <!-- SECTION 1.6: WHY A MULTI-ROBOT APPROACH -->
-        <div class="card-box intro-sec" id="sec-multirobot" style="border-left: 4px solid var(--accent-blue);">
-          <div class="card-header">
-            <div>
-              <span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.6</span>
-              <div class="card-title">Why a multi-robot approach?</div>
-            </div>
-            <span class="badge badge-blue">Öztürk &amp; Kuzucuoğlu, 2016</span>
+        <section class="intro-sec" id="sec-multirobot">
+          <div class="intro-sec-head">
+            <div class="apple-section-lead">Section 1.6</div>
+            <h2 class="apple-section-title">Why a multi-robot approach?</h2>
           </div>
 
           <h3 class="intro-h3">Differentiating factor: productivity and long-term savings</h3>
           <p class="intro-p">In 2016, a research study by Savaş Öztürk and Ahmet Emin Kuzucuoğlu compared a five-year projection of the cost and performance of a manual solution against an autonomous solution at Istanbul Atatürk Airport, working with information from a simulated detection device.</p>
-          <ul class="intro-p" style="padding-left: 20px;">
+          <ul class="intro-list">
             <li><strong>Manual solution:</strong> driving a truck on a fixed route to pick up FOD (as they currently do).</li>
             <li><strong>Autonomous solution:</strong> deploying a fleet of robots (5, 10, 15 or 20) at evenly (or optimally) spaced stations to pick up FOD.</li>
           </ul>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 14px 0 12px;">
+          <p class="intro-p">
             The research conducted by <strong>Savaş Öztürk</strong> and <strong>Ahmet Emin Kuzucuoğlu (2016)</strong> establishes the foundational precedence and theoretical bedrock for FOD HUNTER. In their seminal paper, <em>“A Multi-Robot Coordination Approach for Autonomous Runway Foreign Object Debris (FOD) Clearance,”</em> the authors developed a comprehensive experimental framework simulating runway-clearance operations at Istanbul Atatürk Airport.
           </p>
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0 0 14px;">
+          <p class="intro-p">
             Their study compared traditional manual collection, which relies on dispatching human-operated “Follow-Me” trucks, against three progressive phases of automated multi-robot coordination (ASP1-ASP3). These phases used heat-map clustering and the Hungarian (Kuhn-Munkres) algorithm for optimal task allocation.
           </p>
 
-                    <h4 style="font-size: 16px; color: var(--text-main); margin: 24px 0 8px;">Scenario comparison and sensitivity heat map from the study</h4>
-          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin: 0 0 16px;">
+          <h3 class="intro-h3">Scenario comparison and sensitivity heat map from the study</h3>
+          <p class="intro-p">
             The complete operational comparison reproduced from <strong>Öztürk and Kuzucuoğlu (2016)</strong> directly integrates the operational cost-delay parameters with the five-year sensitivity heat map across Istanbul Atatürk Airport operational simulations:
           </p>
 
@@ -848,7 +838,7 @@ Speaker 2: No worries, man. All the best.
 
           <script src="js/heatmap.js?v=3.0"></script>
 
-          <p class="intro-p" style="margin-top: 14px;">The colours represent the most appropriate approach for each usage frequency (row-by-row ranking): <strong>green is cheapest</strong> and <strong>red is most expensive</strong>.</p>
+          <p class="intro-p" style="margin-top: 18px;">The colours represent the most appropriate approach for each usage frequency (row-by-row ranking): <strong>green is cheapest</strong> and <strong>red is most expensive</strong>.</p>
           <div class="mr-cards">
             <div class="mr-card" style="--mr-c: var(--accent-green);"><h4>ASP3 · 10 robots</h4><table>
               <tr><td>Delay cost per op × ops</td><td>$16,205 × 500</td></tr><tr><td>Delay cost</td><td>$8,102,500</td></tr><tr><td>+ Base cost</td><td>$1,905,000</td></tr><tr class="tot"><td>5-year total</td><td>$10,007,500</td></tr></table></div>
@@ -856,44 +846,44 @@ Speaker 2: No worries, man. All the best.
               <tr><td>Delay cost per op × ops</td><td>$36,698 × 500</td></tr><tr><td>Delay cost</td><td>$18,349,000</td></tr><tr><td>+ Base cost</td><td>$1,125,000</td></tr><tr class="tot"><td>5-year total</td><td>$19,474,000</td></tr></table></div>
             <div class="mr-card" style="--mr-c: var(--accent-green);"><h4>Saved with ASP3 over 5 years</h4><div style="font-size: 12px;">$19,474,000 − $10,007,500</div><div class="mr-save">$9,466,500</div></div>
           </div>
-          <div class="callout callout-emerald" style="margin: 0 0 16px;">This gives us the confidence to move forward with the multi-robot approach: it is not only possible with technology, but also economically viable.</div>
+          <p class="intro-p">This gives us the confidence to move forward with the multi-robot approach: it is not only possible with technology, but also economically viable.</p>
 
-          <h4 style="font-size: 16px; color: var(--text-main); margin: 18px 0 8px;">Key findings</h4>
-          <ol style="padding-left: 22px; font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px;">
-            <li style="margin-bottom: 10px;"><strong>Dramatic reduction in runway downtime:</strong> Traditional manual dispatch using a single truck required an average runway-closure time of <strong>1,468 seconds (approximately 24.5 minutes)</strong> per clearance event. An optimised fleet of 10 coordinated autonomous rovers (ASP3) reduced the average clearance downtime to <strong>648 seconds (approximately 10.8 minutes)</strong>, representing a reduction of more than 56% in operational closure time.</li>
+          <h3 class="intro-h3">Key findings</h3>
+          <ol class="intro-list">
+            <li><strong>Dramatic reduction in runway downtime:</strong> Traditional manual dispatch using a single truck required an average runway-closure time of <strong>1,468 seconds (approximately 24.5 minutes)</strong> per clearance event. An optimised fleet of 10 coordinated autonomous rovers (ASP3) reduced the average clearance downtime to <strong>648 seconds (approximately 10.8 minutes)</strong>, representing a reduction of more than 56% in operational closure time.</li>
             <li><strong>Nearly 50% reduction in five-year financial costs:</strong> Including capital expenditure, 24/7 personnel salaries, vehicle maintenance, and airport delay penalties calculated at <strong>USD 1,500 per minute</strong> of runway closure, the traditional manual truck system reached <strong>USD 19,473,750</strong> over five years. The 10-robot autonomous system reduced the burden to <strong>USD 10,007,500</strong>, delivering <strong>USD 9,466,250</strong> in net economic savings, or approximately a 48.6% lifecycle cost reduction.</li>
           </ol>
 
-          <div class="callout callout-emerald" style="margin: 16px 0;">
-            <strong>Integrating this bedrock into the FOD HUNTER narrative:</strong> This empirical research demonstrates that a multi-robot autonomous solution is not merely theoretical. It is a commercially viable strategy capable of reducing airfield downtime, removing human workers from active taxiway hazards, and cutting long-term FOD maintenance costs.
-          </div>
+          <p class="intro-p"><strong>Integrating this bedrock into the FOD HUNTER narrative:</strong> This empirical research demonstrates that a multi-robot autonomous solution is not merely theoretical. It is a commercially viable strategy capable of reducing airfield downtime, removing human workers from active taxiway hazards, and cutting long-term FOD maintenance costs.</p>
 
-          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0 0 8px;">
+          <p class="intro-p">
             By adopting Öztürk and Kuzucuoğlu’s multi-agent coordination framework as a foundation, FOD HUNTER aims to translate and scale these results for high-density international aviation hubs such as Singapore Changi Airport:
           </p>
-          <ul style="padding-left: 22px; font-size: 14px; color: var(--text-muted); line-height: 1.65; margin: 0;">
+          <ul class="intro-list">
             <li><strong>Productivity and throughput:</strong> Integrating the autonomous UGV fleet directly with fixed airfield detection systems, such as Changi’s iFerret cameras, enables immediate direct-path dispatch without search overhead, targeting clearance windows under five minutes.</li>
             <li><strong>Enhanced safety standards:</strong> The system replaces manual visual sweeps on hot asphalt and removes ground personnel from hazardous jet-blast zones and active traffic.</li>
             <li><strong>Economic scalability:</strong> At high-traffic airports where slot delays carry extreme financial penalties, scaling the UGV platform amplifies the multi-million-dollar return on investment demonstrated in the literature.</li>
           </ul>
-        </div>
+        </section>
 
         <!-- SECTION 1.7: VALUE PROPOSITION STATEMENT -->
-        <div class="card-box intro-sec" id="sec-vps">
-          <div class="card-header">
-            <div><span class="badge badge-emerald" style="margin-bottom: 6px;">SECTION 1.7</span><div class="card-title">Our solution and value proposition statement</div></div>
+        <section class="intro-sec" id="sec-vps">
+          <div class="intro-sec-head">
+            <div class="apple-section-lead">Section 1.7</div>
+            <h2 class="apple-section-title">Our solution and value proposition statement</h2>
           </div>
           <div class="vps">
             <div class="vps-row"><span class="vps-k">For</span><p>low to moderate air traffic airports that struggle with effective use of manpower,</p></div>
             <div class="vps-row"><span class="vps-k">Our</span><p>automated solution provides guaranteed clearance of FOD on the runway, while staff focus on more critical jobs,</p></div>
             <div class="vps-row"><span class="vps-k">Unlike</span><p>the current manual, time-consuming and laborious processes of clearing FOD.</p></div>
           </div>
-        </div>
+        </section>
 
         <!-- SECTION 1.8: VALUE PROPOSITION MAP -->
-        <div class="card-box intro-sec" id="sec-vpmap">
-          <div class="card-header">
-            <div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1.8</span><div class="card-title">Value proposition map</div></div>
+        <section class="intro-sec" id="sec-vpmap">
+          <div class="intro-sec-head">
+            <div class="apple-section-lead">Section 1.8</div>
+            <h2 class="apple-section-title">Value proposition map</h2>
           </div>
           <div class="vpc-wrap">
             <figure class="vpc">
@@ -955,24 +945,18 @@ Speaker 2: No worries, man. All the best.
             <tr><td>Higher accuracy of FOD detection</td><td class="fit-arrow">→</td><td>Safer runways</td></tr>
             <tr><td>Higher frequency of inspection and intervention</td><td class="fit-arrow">→</td><td>Increased productivity</td></tr>
           </tbody></table></div>
-        </div>
+        </section>
 
         <!-- SECTION 1.9: ADDITIONAL BENCHMARKING -->
-        <div class="card-box intro-sec" id="sec-benchmarks">
-          <div class="card-header">
-            <div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 1.9</span><div class="card-title">Additional benchmarking</div></div>
+        <section class="intro-sec" id="sec-benchmarks">
+          <div class="intro-sec-head">
+            <div class="apple-section-lead">Section 1.9</div>
+            <h2 class="apple-section-title">Additional benchmarking</h2>
           </div>
           <!-- FAA AC 150/5220-24 BENCHMARK STANDARDS -->
-          <div style="margin-top: 32px; border-top: 1px solid var(--border-color); padding-top: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <h3 style="margin: 0; color: var(--accent-blue);">📏 Performance Specifications (FAA AC 150/5220-24 Benchmark)</h3>
-                <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">
-                  Regulatory operational performance requirements defined under Federal Aviation Administration Advisory Circular 150/5220-24 for automated FOD detection categories:
-                </p>
-              </div>
-              <span class="badge badge-purple">FAA Regulatory Standard</span>
-            </div>
+          <div>
+            <h3 class="intro-h3">Performance specifications (FAA AC 150/5220-24 benchmark)</h3>
+            <p class="intro-p">Regulatory operational performance requirements defined under Federal Aviation Administration Advisory Circular 150/5220-24 for automated FOD detection categories:</p>
 
             <div class="admin-table-wrapper" style="margin-top: 12px;">
               <table class="admin-table">
@@ -1015,16 +999,9 @@ Speaker 2: No worries, man. All the best.
           </div>
 
           <!-- TABLE 3.2: ANALYSIS OF EXISTING AIRSIDE UGV SOLUTIONS -->
-          <div style="margin-top: 32px; border-top: 1px solid var(--border-color); padding-top: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <h3 style="margin: 0; color: var(--accent-purple);">🤖 Analysis of Existing Airside UGV Solutions</h3>
-                <p style="font-size: 13px; color: var(--text-muted); margin: 4px 0 0 0;">
-                  <em>Table 3.2:</em> Benchmarking current commercial and research autonomous ground vehicles deployed for airfield maintenance:
-                </p>
-              </div>
-              <span class="badge badge-emerald">UGV State of the Art</span>
-            </div>
+          <div>
+            <h3 class="intro-h3">Analysis of existing airside UGV solutions</h3>
+            <p class="intro-p"><em>Table 3.2:</em> Benchmarking current commercial and research autonomous ground vehicles deployed for airfield maintenance:</p>
 
             <div class="admin-table-wrapper" style="margin-top: 12px;">
               <table class="admin-table">
@@ -1080,30 +1057,19 @@ Speaker 2: No worries, man. All the best.
               </table>
             </div>
 
-            <div class="callout callout-warning" style="margin-top: 16px;">
-              <strong>Key Research &amp; Engineering Gap:</strong> Existing airside UGVs fall into two extremes: either heavy, costly diagnostic inspection rovers (Airtrek, Roboxi) that only log coordinates without physical retrieval, or civil engineering machines (Guimu) built exclusively for sub-surface radar. <strong>FOD Hunter uniquely couples high-speed aerial cueing (UAV) with targeted, active physical extraction (UGV) to achieve true closed-loop "Find-and-Fix" airside remediation.</strong>
-            </div>
+            <p class="intro-p"><strong>Key Research &amp; Engineering Gap:</strong> Existing airside UGVs fall into two extremes: either heavy, costly diagnostic inspection rovers (Airtrek, Roboxi) that only log coordinates without physical retrieval, or civil engineering machines (Guimu) built exclusively for sub-surface radar. <strong>FOD Hunter uniquely couples high-speed aerial cueing (UAV) with targeted, active physical extraction (UGV) to achieve true closed-loop "Find-and-Fix" airside remediation.</strong></p>
           </div>
-        </div>
+        </section>
 
-        <!-- SECTION 1.3: PROGRESS TO DATE -->
-        <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-            <div>
-              <div class="card-title">📈 Progress To Date</div>
-              <p style="font-size: 13.5px; color: var(--apple-text-secondary); margin: 4px 0 0 0;">
-                Multi-domain Phase 1 velocity tracking across core capstone engineering workstreams.
-              </p>
-            </div>
-            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-              <span class="badge badge-emerald">Active Sprint</span>
-              <a href="5-timeline.html" class="apple-btn-pill" style="padding: 6px 14px; font-size: 12.5px; display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
-                <span>Project Timeline</span>
-                <span style="font-size: 14px;">→</span>
-              </a>
-            </div>
+        <!-- PROGRESS TO DATE -->
+        <section class="intro-sec" id="sec-progress">
+          <div class="intro-sec-head">
+            <h2 class="apple-section-title">Progress to date</h2>
+            <a href="5-timeline.html" class="intro-deep-link">Project timeline →</a>
           </div>
+          <p class="intro-p">Multi-domain Phase 1 velocity tracking across core capstone engineering workstreams.</p>
 
+          <div class="card-box intro-board">
           <div class="apple-progress-layout">
             <!-- Left: Apple Watch Concentric Activity Rings (6 Rings) -->
             <div class="apple-rings-card">
@@ -1235,7 +1201,8 @@ Speaker 2: No worries, man. All the best.
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        </section>
 
       </div> <!-- end apple-container -->
   </main>
@@ -1323,13 +1290,27 @@ Speaker 2: No worries, man. All the best.
   </div>
 
   <style>
-    .intro-sec { margin-bottom: 24px; }
-    .intro-h3 { font-size: 17px; color: var(--text-main); margin: 26px 0 10px; }
-    .card-header + .intro-h3 { margin-top: 14px; }
-    .intro-p { font-size: 14.5px; color: var(--text-muted); line-height: 1.7; margin: 0 0 14px; }
-    .intro-stat { border: 1px solid var(--border-color); border-left: 4px solid var(--accent-rose); border-radius: 10px; padding: 14px 18px; margin: 4px 0 14px; background: var(--card-bg-subtle, rgba(255,255,255,0.02)); }
-    .intro-stat-num { font-size: clamp(28px, 5vw, 40px); font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; line-height: 1.1; }
-    .intro-stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    /* Naked text sections, matching the overview page. Cards are kept for images, tables, figures and interactive boards. */
+    .intro-sec { max-width: 920px; margin: 0 auto; padding: 0 0 88px; }
+    .intro-sec + .intro-sec { padding-top: 88px; border-top: 1px solid var(--apple-border); }
+    .intro-sec-head { margin-bottom: 8px; }
+    .intro-sec-head .apple-section-title { margin-bottom: 20px; }
+    .intro-deep-link { display: inline-block; font-size: 15px; font-weight: 500; color: var(--apple-blue); text-decoration: none; margin: -6px 0 20px; }
+    .intro-deep-link:hover { text-decoration: underline; }
+    .intro-h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.015em; color: #ffffff; margin: 40px 0 14px; }
+    .intro-sec-head + .intro-h3 { margin-top: 12px; }
+    .intro-p, .intro-list { font-size: 17px; line-height: 1.7; color: #ffffff; letter-spacing: -0.01em; margin: 0 0 18px; max-width: 72ch; }
+    .intro-list { padding-left: 22px; }
+    .intro-list li { margin-bottom: 10px; }
+    [data-theme="light"] .intro-p, [data-theme="light"] .intro-list, [data-theme="light"] .intro-h3 { color: var(--apple-text-primary); }
+    .intro-stat { margin: 4px 0 18px; }
+    .intro-stat-num { font-size: clamp(36px, 6vw, 56px); font-weight: 700; color: var(--text-main); letter-spacing: -0.03em; line-height: 1.05; }
+    .intro-stat-label { font-size: 15px; color: var(--text-muted); margin-top: 8px; max-width: 72ch; }
+    .intro-board { margin: 8px 0 0; }
+    .intro-transcripts { display: grid; gap: 4px; margin-bottom: 22px; max-width: 72ch; }
+    .intro-transcript summary { cursor: pointer; color: var(--apple-blue); font-size: 16px; font-weight: 500; padding: 6px 0; }
+    .intro-transcript-body { padding: 10px 0 18px; font-size: 16px; line-height: 1.7; color: #ffffff; white-space: pre-wrap; }
+    [data-theme="light"] .intro-transcript-body { color: var(--apple-text-primary); }
     .intro-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px; }
     .intro-fig { margin: 0; }
     .intro-img { position: relative; aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); background: var(--card-bg-subtle, rgba(255,255,255,0.03)); }
@@ -1389,11 +1370,12 @@ Speaker 2: No worries, man. All the best.
     .comp-detail.one { grid-template-columns: 1fr; }
     @media (max-width: 640px) { .comp-detail { grid-template-columns: 1fr; } .comp-label { font-size: 10px; } }
 
-    .journey { list-style: none; counter-reset: j; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 12px; }
-    .journey li { counter-increment: j; border: 1px solid var(--border-color); border-radius: 10px; padding: 14px 14px 14px 52px; position: relative; background: var(--card-bg-subtle, rgba(255,255,255,0.02)); }
-    .journey li::before { content: counter(j); position: absolute; left: 14px; top: 14px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--accent-blue); background: var(--accent-blue-light); }
-    .journey b { display: block; font-size: 14px; color: var(--text-main); margin-bottom: 4px; }
-    .journey span { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+    .journey { list-style: none; counter-reset: j; margin: 28px 0 0; padding: 0; display: grid; gap: 22px; max-width: 72ch; }
+    .journey li { counter-increment: j; padding-left: 44px; position: relative; }
+    .journey li::before { content: counter(j); position: absolute; left: 0; top: 1px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--accent-blue); background: var(--accent-blue-light); }
+    .journey b { display: block; font-size: 17px; font-weight: 600; color: var(--text-main); margin-bottom: 4px; }
+    .journey span { font-size: 17px; color: #ffffff; line-height: 1.7; }
+    [data-theme="light"] .journey span { color: var(--apple-text-primary); }
 
     .demo-fig { margin: 0; }
     .demo-fig video { width: 100%; display: block; border-radius: 12px; border: 1px solid var(--border-color); background: #000; }
@@ -1420,7 +1402,6 @@ Speaker 2: No worries, man. All the best.
     .vpc-head { fill: var(--accent-blue); font-size: 14px; font-weight: 700; text-anchor: middle; }
     .vpc-t { fill: var(--text-main); font-size: 11.5px; text-anchor: middle; }
     .vpc figcaption { margin-top: 6px; font-size: 15px; font-weight: 600; color: var(--text-main); }
-    #sec-benchmarks > div:nth-of-type(2) { border-top: 0 !important; margin-top: 8px !important; padding-top: 0 !important; }
     .fit-table .fit-group td { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-blue); background: var(--accent-blue-light); }
     .fit-table .fit-arrow { color: var(--accent-green); font-weight: 700; text-align: center; width: 40px; }
   </style>

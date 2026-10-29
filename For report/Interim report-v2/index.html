@@ -221,287 +221,69 @@
         <p class="apple-hero-subtitle">
           A high-speed collaborative multi-agent robotic system pairing autonomous UAV aerial macro-scouting with precision ground robotic extraction to safeguard active airfields.
         </p>
-
-        <div class="apple-hero-actions">
-          <a href="#demo-video" class="apple-btn-pill" style="font-size: 14px; padding: 10px 24px;">Watch Simulation Demo ▷</a>
-          <a href="2-design-overview.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 14px; padding: 10px 24px;">Explore Architecture →</a>
-          <a href="7-documentation/hilbert/simulation.html" class="apple-btn-pill apple-btn-pill-secondary" style="font-size: 14px; padding: 10px 24px;">Simulation Guide 🤖</a>
-        </div>
-
-        <!-- CINEMATIC VIDEO SHOWCASE -->
-        <div class="apple-video-frame" id="demo-video">
-          <video controls playsinline preload="metadata">
-            <source src="assets/simulation/UAV-UGV%20Communication%20video.mp4" type="video/mp4">
-            <source src="assets/simulation/UAV-UGV Communication video.mp4" type="video/mp4">
-            Your browser does not support HTML5 video.
-          </video>
-          <div class="apple-video-caption-bar">
-            <div class="apple-video-caption">
-              <strong>Phase 1 Autonomous Navigation Simulation:</strong> NUS EA Field Multi-Waypoint Corridor Sweep &amp; Obstacle Clearance
-            </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
-              <span class="badge badge-purple">ROS 2 Jazzy</span>
-              <span class="badge badge-blue">Gazebo Harmonic</span>
-              <span class="badge badge-emerald">Nav2 Smac Planner</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- METRIC HIGHLIGHTS RIBBON -->
-        <div class="apple-metrics-ribbon">
-          <div class="apple-metric-card">
-            <div class="apple-metric-val">75%</div>
-            <div class="apple-metric-label">ROT Reduction</div>
-            <div class="apple-metric-sub">Runway Occupancy Time slashed vs human vehicles</div>
-          </div>
-
-          <div class="apple-metric-card">
-            <div class="apple-metric-val">100%</div>
-            <div class="apple-metric-label">Physical Clearance</div>
-            <div class="apple-metric-sub">Active high-flow centrifugal debris suction</div>
-          </div>
-
-          <div class="apple-metric-card">
-            <div class="apple-metric-val">&lt; 15 ms</div>
-            <div class="apple-metric-label">Telemetry Latency</div>
-            <div class="apple-metric-sub">915 MHz FHSS non-line-of-sight command loop</div>
-          </div>
-
-          <div class="apple-metric-card">
-            <div class="apple-metric-val">60 m</div>
-            <div class="apple-metric-label">Airfield Strip Sweep</div>
-            <div class="apple-metric-sub">Full active runway lane clearance capability</div>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- TAKE A CLOSER LOOK: APPLE BENTO GRID -->
-    <section class="apple-container" style="padding-bottom: 40px;">
-      <div class="apple-section-header">
-        <div class="apple-section-lead">INNOVATION ARCHITECTURE</div>
-        <h2 class="apple-section-title">Take a closer look.</h2>
-        <p class="apple-section-desc">
-          Engineered to solve the critical runway safety bottlenecks that multi-million dollar stationary radar towers and manual truck sweeps cannot address.
-        </p>
+    <!-- ACKNOWLEDGEMENTS & EXECUTIVE SUMMARY -->
+    <style>
+      .overview-prose { max-width: 680px; margin: 0 auto; padding: 0 0 88px; text-align: left; }
+      .overview-prose + .overview-prose { padding-top: 88px; border-top: 1px solid var(--apple-border); }
+      .overview-prose .apple-section-title { margin-bottom: 24px; }
+      .overview-prose p { font-size: 17px; line-height: 1.7; color: #ffffff; letter-spacing: -0.01em; margin: 0 0 18px; }
+      [data-theme="light"] .overview-prose p { color: var(--apple-text-primary); }
+      .overview-prose p:last-child { margin-bottom: 0; }
+      .overview-prose strong { font-weight: 600; }
+      .overview-thanks { margin: 26px 0 0; padding-left: 22px; border-left: 2px solid var(--apple-border-highlight); }
+      .overview-thanks p { margin-bottom: 20px; }
+
+      /* Staggered fade-in on scroll (only when JS runs) */
+      .prose-reveal .overview-prose > h2, .prose-reveal .overview-prose > p, .prose-reveal .overview-thanks > p {
+        opacity: 0; transform: translateY(16px);
+        transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(var(--i, 0) * 70ms);
+      }
+      .prose-reveal .is-in { opacity: 1 !important; transform: none !important; }
+    </style>
+
+    <section class="apple-container">
+      <div class="overview-prose" id="acknowledgements">
+        <h2 class="apple-section-title">Acknowledgements</h2>
+        <p>This team of four Mechanical Engineering students and one Electrical Engineering student was pushed beyond its comfort zone to apply knowledge from our NUS coursework to the technically demanding construction of our Innovation and Design Capstone, the FOD Hunter. With the power of friendship, grit and determination, they were able to overcome the challenges faced in this semster and produce a critical functions prototype of the FOD Hunter.</p>
+        <p>We would like to thank the following individuals:</p>
+        <div class="overview-thanks">
+          <p><strong>Dr Mark De Lessio and Dr Tang Kok Zuea</strong>, for their advice and direction throughout the project. Their liaison with stakeholders kept communication channels clear. They also initiated discussions on a potential Memorandum of Understanding between the Republic of Singapore Air Force and NUS iDP, which would allow future projects like ours to be channelled towards real-world impact.</p>
+          <p><strong>Ms Annie Tan, Mr Patrick Tan, Mr Alvin Pon and Ms Mei Yin</strong>, for their enthusiasm, support and guidance during our hands-on work in the electronics workshop.</p>
+          <p><strong>The National Servicemen</strong> who shared both positive and negative experiences with us. Their insights shaped our design around their operational needs.</p>
+          <p><strong>Ms Cindy Koh</strong>, Representative from the Civil Aviation Authority of Singapore (CAAS), for her insights on the aviation industry, which informed the constraints of our design.</p>
+        </div>
       </div>
 
-      <div class="apple-bento-grid">
-        
-        <!-- Bento 1: UAV Macro Scouting (col-8) -->
-        <div class="bento-card col-8">
-          <div class="bento-card-top">
-            <div class="bento-card-tag">AERIAL RECONNAISSANCE</div>
-            <h3 class="bento-card-title">Heterogeneous Multi-Agent Operations</h3>
-            <p class="bento-card-desc">
-              By decoupling macro-scale high-speed scanning from physical debris extraction, an aerial scout UAV covers the 60m runway corridor in minutes, cued-dispatching coordinates to the ground clearance rover.
-            </p>
-          </div>
-          <div class="bento-card-media" style="padding: 12px; background: #0b0f19;">
-            <img src="assets/UAV_and_UGV_collab.png" alt="Collaborative UAV and UGV Multi-Agent Architecture" style="max-height: 320px; width: 100%; object-fit: contain; margin: 0 auto;">
-          </div>
-        </div>
-
-        <!-- Bento 2: Precision Ground Extraction (col-4) -->
-        <div class="bento-card col-4">
-          <div class="bento-card-top">
-            <div class="bento-card-tag">PHYSICAL REMEDIATION</div>
-            <h3 class="bento-card-title">Debris Suction</h3>
-            <p class="bento-card-desc">
-              Unlike optical or radar towers that only sound false alarms, the electric UGV houses an industrial 240Vac wet &amp; dry vacuum and high-clearance intake nozzle to extract hardware, rubber debris, and asphalt fragments.
-            </p>
-          </div>
-          <div class="bento-card-media" style="padding: 16px 24px 22px; min-height: 260px; background: #0e111a; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden;">
-            <img src="assets/images/Asuka/wetndryvacuum.png" alt="240Vac Wet and Dry Vacuum" style="width: 180px; height: 145px; max-width: 80%; object-fit: contain; display: block; margin: 0 auto 12px;">
-            <div style="position: relative; z-index: 2; font-weight: 700; font-size: 16px; line-height: 1.3; color: var(--apple-text-primary); margin-top: 6px;">240Vac Wet &amp; Dry Vacuum</div>
-            <div style="position: relative; z-index: 2; max-width: 260px; font-size: 13px; line-height: 1.5; color: var(--apple-text-secondary); margin-top: 5px;">Direct extraction into onboard collection hopper</div>
-          </div>
-        </div>
-
-        <!-- Bento 3: Edge AI Vision & 3D LiDAR (col-4) -->
-        <div class="bento-card col-4">
-          <div class="bento-card-top">
-            <div class="bento-card-tag">MULTI-MODAL PERCEPTION</div>
-            <h3 class="bento-card-title">Edge AI Vision &amp; 3D LiDAR</h3>
-            <p class="bento-card-desc">
-              Real-time YOLO object detection fused with 3D LiDAR point clouds guarantees zero shadow false alarms and reliable classification in torrential rain and night lighting.
-            </p>
-          </div>
-          <div class="bento-card-media" style="padding: 24px; text-align: center; display: flex; align-items: center; justify-content: center; min-height: 220px; background: #0e111a;">
-            <div style="text-align: center;">
-              <div style="font-size: 54px; margin-bottom: 12px;">👁️</div>
-              <div style="font-weight: 700; font-size: 16px; color: var(--apple-text-primary);">YOLOv8 + 3D LiDAR</div>
-              <div style="font-size: 13px; color: var(--apple-text-secondary); margin-top: 4px;">Centimeter-accurate coordinate geotagging</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bento 4: Gazebo Digital Twin Simulation (col-8) -->
-        <div class="bento-card col-8">
-          <div class="bento-card-top">
-            <div class="bento-card-tag">SOFTWARE-IN-THE-LOOP</div>
-            <h3 class="bento-card-title">Gazebo Harmonic Digital Twin</h3>
-            <p class="bento-card-desc">
-              Full kinematic SITL simulation verifying Nav2 path generation, costmap inflation layers, dynamic obstacle avoidance, and C2 dispatch prior to physical chassis assembly.
-            </p>
-          </div>
-          <div class="bento-card-media">
-            <img src="assets/simulation/UAVsimUI.png" alt="Gazebo Harmonic Digital Twin Simulation UI" style="max-height: 300px; width: 100%; object-fit: cover;">
-          </div>
-        </div>
-
+      <div class="overview-prose" id="executive-summary">
+        <h2 class="apple-section-title">Executive summary</h2>
+        <p>This project addresses the manual, labour-intensive process of clearing Foreign Object Debris (FOD) from airport runways. The team was first introduced to the problem by industry partner Mr Harry Lim of IO Inspire, and subsequent stakeholder interviews highlighted the potential for an autonomous, multi-robot solution. Such a system may offer a technically feasible and commercially viable alternative, particularly for low- to medium-traffic airports locally and globally.</p>
+        <p>FOD Hunter is the remediation half of the two-robot FOD Hunter × FOD Argus system: FOD Argus detects debris, whilst FOD Hunter removes it. A critical-function prototype of FOD Hunter has been achieved, with clearly defined roles across eight subsystems: navigation, communication, mechanical (chassis, suspension and FOD remediation), electrical (power and microcontroller), and computer vision.</p>
+        <p>This report details the testing and outcomes of each subsystem, followed by future work and a Gantt chart for AY2026/27 Semesters 1 and 2.</p>
+        <p>Communication has been established with the Republic of Singapore Air Force as a potential end user, and a site visit for live testing of both FOD Hunter and FOD Argus is being pursued.</p>
       </div>
     </section>
 
-    <!-- INTERACTIVE SUBSYSTEMS HARDWARE SHOWCASE -->
-    <section class="apple-container" style="padding-bottom: 60px;">
-      <div class="apple-section-header">
-        <div class="apple-section-lead">HARDWARE &amp; SOFTWARE ARCHITECTURE</div>
-        <h2 class="apple-section-title">Engineered to the finest detail.</h2>
-        <p class="apple-section-desc">
-          Explore the five modular engineering subsystems developed by the capstone engineering team.
-        </p>
-      </div>
-
-      <div class="apple-subsystems-showcase">
-        
-        <!-- Tabs Header -->
-        <div class="apple-tabs-header">
-          <button class="apple-tab-btn active" data-tab="mech">🦾 4.1 Mechanical (Asuka &amp; Zacarias)</button>
-          <button class="apple-tab-btn" data-tab="elec">⚡ 4.2 Electrical &amp; Power (Bryan)</button>
-          <button class="apple-tab-btn" data-tab="drone">👁️ 4.3 Computer Vision (Gabriel)</button>
-          <button class="apple-tab-btn" data-tab="auton">🧠 4.4 ROS2 Nav &amp; Comms (Hilbert)</button>
-        </div>
-
-        <!-- Tab 1: Mechanical (Asuka & Zacarias) -->
-        <div class="apple-tab-pane active" id="tab-mech">
-          <div class="apple-tab-content">
-            <div class="apple-tab-lead">CHASSIS, SUCTION &amp; STRUCTURAL DYNAMICS • ASUKA &amp; ZACARIAS NG</div>
-            <h3>Custom Unmanned Ground Vehicle</h3>
-            <p>
-              Engineered with 6061-T6 aluminum extrusion framing, carbon-fiber PETG ducting, and dual high-torque hub motor drive to traverse airport pavement undulations while maintaining a stable ground effect suction seal.
-            </p>
-            <ul class="apple-tab-spec-list">
-              <li><strong>Payload Capacity:</strong> 60 kg</li>
-              <li><strong>Intake Suction:</strong> 240Vac Vacuum module</li>
-              <li><strong>Chassis Material:</strong> 6061-T6 Aluminum</li>
-              <li><strong>Ground Clearance:</strong> Optimized 180mm suction duct height</li>
-            </ul>
-            <a href="4-subsystems/mechanical.html" class="apple-btn-pill">Read Mechanical Spec →</a>
-          </div>
-          <div class="apple-tab-media" style="position: relative; min-height: 300px; padding: 0; overflow: hidden; background: radial-gradient(circle at 50% 45%, #151a22 0%, #0b0c0f 65%, #08090b 100%);">
-            <model-viewer src="assets/UGVmodelreport.glb" alt="Interactive 3D model of the FODHUNTER UGV" camera-controls auto-rotate auto-rotate-delay="1000" rotation-per-second="8deg" shadow-intensity="1" shadow-softness="1" exposure="1" interaction-prompt="none" touch-action="pan-y" camera-orbit="45deg 70deg auto" style="width: 100%; height: 300px; background: transparent; --poster-color: transparent;"></model-viewer>
-            <div style="position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); padding: 6px 12px; border-radius: 999px; background: rgba(20,20,22,0.70); border: 1px solid rgba(255,255,255,0.10); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--apple-text-secondary); font-size: 11px; white-space: nowrap; pointer-events: none;">Drag to rotate &nbsp;•&nbsp; Scroll to zoom</div>
-          </div>
-        </div>
-        <!-- Tab 2: Electrical & Power (Bryan) -->
-        <div class="apple-tab-pane" id="tab-elec">
-          <div class="apple-tab-content">
-            <div class="apple-tab-lead">48V ARCHITECTURE &amp; POWER DISTRIBUTION • BRYAN NG (OVERSIGHT: GABRIEL TAN)</div>
-            <h3>High-Efficiency Isolated Power Train</h3>
-            <p>
-              Dual-rail isolated power distribution system separating high-noise inductive motor spikes from sensitive compute (Ubuntu host, STM32 MCU, and LiDAR).
-            </p>
-            <ul class="apple-tab-spec-list">
-              <li><strong>Primary Battery:</strong> 48V LiFePO4 / Li-Ion Pack</li>
-              <li><strong>Buck Regulators:</strong> Synchronous 48V→24V &amp; 48V→12V/5V</li>
-              <li><strong>Motor Driver:</strong> ZLAC8015D Dual-Channel Servo</li>
-              <li><strong>Safety Protection:</strong> Hardware E-Stop &amp; Current Limiting</li>
-            </ul>
-            <a href="4-subsystems/electrical.html" class="apple-btn-pill">Read Electrical Spec →</a>
-          </div>
-          <div class="apple-tab-media">
-            <div style="padding: 40px 20px; text-align: center;">
-              <div style="font-size: 64px; margin-bottom: 12px;">⚡</div>
-              <h4 style="color: var(--apple-text-primary); font-size: 18px; margin-bottom: 6px;">Electrical Power Bus</h4>
-              <p style="color: var(--apple-text-secondary); font-size: 13px; max-width: 300px; margin: 0 auto;">Isolated DC-DC power regulation with thermal load management.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab 3: Computer Vision (Gabriel) -->
-        <div class="apple-tab-pane" id="tab-drone">
-          <div class="apple-tab-content">
-            <div class="apple-tab-lead">AERIAL AIRFRAME &amp; COMPUTER VISION • GABRIEL TAN</div>
-            <h3>Airfield Target Extraction &amp; Computer Vision</h3>
-            <p>
-              Autonomous aerial reconnaissance platform featuring high-throughput edge computer vision, real-time debris detection, and multi-spectral coordinate georeferencing for ground sweeper dispatch.
-            </p>
-            <ul class="apple-tab-spec-list">
-              <li><strong>Vision Model:</strong> Custom Lightweight YOLOv8 / Edge TensorRT</li>
-              <li><strong>Airframe:</strong> Heavy-lift quadrotor configuration with PX4</li>
-              <li><strong>Downlink Stream:</strong> 5.8 GHz OFDM Digital Video</li>
-              <li><strong>Positioning:</strong> Multi-Band RTK GNSS receiver</li>
-            </ul>
-            <a href="4-subsystems/computer-vision.html" class="apple-btn-pill">Read Computer Vision Spec →</a>
-          </div>
-          <div class="apple-tab-media">
-            <div style="padding: 40px 20px; text-align: center;">
-              <div style="font-size: 64px; margin-bottom: 12px;">👁️</div>
-              <h4 style="color: var(--apple-text-primary); font-size: 18px; margin-bottom: 6px;">Edge Vision &amp; Detection</h4>
-              <p style="color: var(--apple-text-secondary); font-size: 13px; max-width: 300px; margin: 0 auto;">PX4 aerial scout waypoint dispatch with real-time bounding box georeferencing.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab 4: ROS2 Nav & Comms (Hilbert) -->
-        <div class="apple-tab-pane" id="tab-auton">
-          <div class="apple-tab-content">
-            <div class="apple-tab-lead">ROS 2 JAZZY, NAV2 &amp; C2 COMMUNICATIONS • HILBERT SOH</div>
-            <h3>Full-Stack Autonomous Navigation &amp; C2 Datalink</h3>
-            <p>
-              Production-grade ROS 2 Jazzy navigation stack featuring global A* path planning, local obstacle avoidance, dynamic inflation layers, and low-latency motor bridging, coupled with robust dual-band C2 telemetry.
-            </p>
-            <ul class="apple-tab-spec-list">
-              <li><strong>Middleware &amp; Nav:</strong> ROS 2 Jazzy Jalisco &amp; Nav2 Smac Planner</li>
-              <li><strong>Simulation:</strong> Gazebo Harmonic (Gz-Sim 8) Digital Twin</li>
-              <li><strong>Telemetry Modem:</strong> Microhard P900 V2 (902–928 MHz FHSS)</li>
-              <li><strong>Controller MCU:</strong> STM32 F446RE Real-Time Motor Loop</li>
-            </ul>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
-              <a href="7-documentation/hilbert/simulation.html" class="apple-btn-pill">Read Simulation Architecture →</a>
-              <a href="7-documentation/hilbert/communications.html" class="apple-btn-pill" style="border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06);">Full C2 Communication documentation →</a>
-            </div>
-          </div>
-          <div class="apple-tab-media">
-            <img src="assets/simulation/rviz_inspection_view.png" alt="Nav2 RViz Inspection View" style="max-height: 320px; width: 100%; object-fit: cover;">
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- TESTING GROUND & OPERATIONAL CREDENTIALS -->
-    <section class="apple-container" style="padding-bottom: 80px;">
-      <div class="content-section" style="background: linear-gradient(180deg, #121214 0%, #0a0a0c 100%);">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 24px;">
-          <div>
-            <div class="badge badge-purple" style="margin-bottom: 8px;">VALIDATION ENVIRONMENT</div>
-            <h3 style="font-size: 22px; font-weight: 700; color: #ffffff; margin: 0;">Phase 1 Physical &amp; Virtual Testing Field</h3>
-          </div>
-          <a href="https://maps.app.goo.gl/vXYZFszTeikcyCFSA" target="_blank" rel="noopener noreferrer" class="apple-btn-pill apple-btn-pill-secondary">
-            📍 View Engineering Drive 2 on Google Maps ↗
-          </a>
-        </div>
-
-        <p style="color: var(--apple-text-secondary); font-size: 14.5px; line-height: 1.6; margin-bottom: 24px;">
-          Testing and software-in-the-loop verification are anchored at the <strong>NUS Engineering Drive 2 Field</strong>, modeled with high-resolution aerial photogrammetry into the Gazebo Harmonic digital twin environment before full chassis physical deployment.
-        </p>
-
-        <!-- INSTITUTIONAL PARTNERS LOGO STRIP -->
-        <div style="border-top: 1px solid var(--apple-border-light); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-          <div>
-            <img src="assets/NUS_logo_full-horizontal.jpg" alt="NUS Logo" style="max-height: 48px; object-fit: contain; filter: brightness(0.95);">
-          </div>
-          <div style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5;">
-            <strong>CDE4301 Innovation &amp; Design Capstone</strong><br>
-            Republic of Singapore Air Force (RSAF) × RAiD Collaboration<br>
-            Supervised by Dr Tang Kok Zuea
-          </div>
-        </div>
-      </div>
-    </section>
+    <script>
+      (function () {
+        if (!('IntersectionObserver' in window) || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+        var items = document.querySelectorAll('.overview-prose > h2, .overview-prose > p, .overview-thanks > p');
+        document.documentElement.classList.add('prose-reveal');
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        [].forEach.call(items, function (el) {
+          var sib = [].indexOf.call(el.parentNode.children, el);
+          el.style.setProperty('--i', Math.min(sib, 4));
+          io.observe(el);
+        });
+      })();
+    </script>
 
   </main>
 

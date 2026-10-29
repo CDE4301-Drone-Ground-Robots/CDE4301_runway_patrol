@@ -74,6 +74,11 @@
 
       <div class="page-content">
 
+        <!-- CHAPTER INTRODUCTION -->
+        <p style="font-size: 16px; line-height: 1.75; color: var(--text-main); margin: 0 0 28px;">
+          In this chapter, I discuss the design of the suspension subsystem, which keeps the FOD Hunter’s wheels in contact with the ground and limits the vibration reaching the camera and onboard electronics. I first model a single corner of the robot as a spring–damper system, assuming the load is evenly distributed across all four wheels. From this model, I derive the transfer function and analyse the step response to select a spring rate of 100 lbf/in, the only option that meets both the static sag and natural frequency criteria. I then compare three suspension types and select the double wishbone, keeping the trailing arm as a back-up in case the chassis width becomes a constraint. Finally, video analysis of the assembled suspension shows all four wheels stayed in contact with the ground over undulating terrain (simulated by obstacles).
+        </p>
+
         <!-- SECTION 1: PURPOSE & REQUIREMENTS -->
         <div class="card-box" style="margin-bottom: 24px;">
           <div class="card-header"><div><span class="badge badge-blue" style="margin-bottom: 6px;">SECTION 1</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Purpose and Requirements</h2></div><span class="badge badge-rose">Asuka</span></div>
@@ -242,9 +247,17 @@
           <div class="callout callout-emerald" style="margin-top: 12px;"><strong>Component selected: 100 lbf/in spring.</strong> Static sag of 11.087 mm is 55% of the 20 mm stroke (within 40–60%), and the natural frequency of 4.734 Hz is below 10 Hz.</div>
         </div>
 
-        <!-- SECTION 6: SUSPENSION TYPE -->
+        <!-- SECTION 6: SHOCK ABSORBER COST TRADE-OFF -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 6</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Suspension Selection</h2></div></div>
+          <div class="card-header"><div><span class="badge badge-amber" style="margin-bottom: 6px;">SECTION 6</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Cost Trade-off: Off-the-Shelf vs Adjustable Shock Absorbers</h2></div></div>
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 14px;">Shock absorbers in this size range cost from about <span class="ph">$[2]</span> to <span class="ph">$[800]</span> each. The main difference between them is precision and adjustability. The spring rate is largely fixed once a spring is chosen, but the damping can vary significantly. In a hydraulic damper, the damping force comes from oil forced through small orifices as the shock compresses and extends. A smaller orifice resists the flow more, giving a higher damping coefficient and a slower, more controlled response. A larger orifice gives lower damping and a softer response. Higher-end shock absorbers allow these settings to be adjusted and tuned.</p>
+
+          <p style="font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-top: 14px;">For the FOD Hunter, the main innovations are the coordination between the FOD Argus and the FOD Hunter and the FOD pickup mechanism. To put more budget and time into these systems, I chose a low-cost, non-adjustable shock absorber (<span class="ph">[part name]</span>, <span class="ph">$[X]</span> each, <span class="ph">$[4X]</span> for four corners) instead of an adjustable unit. The trade-off is that its damping coefficient is not published or adjustable, which is why my model assumes \(b = 400\ \text{Ns/m}\) (Section 2). Despite this, the selected 100 lbf/in spring still meets the static sag and natural frequency requirements, as confirmed by testing (<span class="ph">Section [X]</span>). Measuring the actual damping coefficient, for example from the decay rate in a bounce test, is listed as future work.</p>
+        </div>
+
+        <!-- SECTION 7: SUSPENSION TYPE -->
+        <div class="card-box" style="margin-bottom: 24px;">
+          <div class="card-header"><div><span class="badge badge-purple" style="margin-bottom: 6px;">SECTION 7</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Suspension Selection</h2></div></div>
           <div class="admin-table-wrapper" style="margin-top: 16px;"><table class="admin-table"><thead><tr><th></th><th>Suspension type</th><th>Advantages</th><th>Disadvantages</th><th>Remarks</th><th>Final decision</th></tr></thead><tbody>
             <tr><td><img class="susp-thumb" src="../../assets/images/Asuka/suspension-trailing-arm.jpg" alt="Trailing arm suspension CAD"></td><td><strong>Trailing arm</strong></td><td>Constant track width, zero camber angle change.<br><br>Maximum space efficiency, keeping robot width to the minimum.<br><br>Low vertical profile.</td><td>Transverse bending moments are concentrated on the main pivot shaft during spot turns.</td><td>Used as rear suspension on vehicles, but can also be used on the FOD Hunter with strict width constraints.</td><td>Keep as back-up plan in case width is an issue</td></tr>
             <tr><td><img class="susp-thumb" src="../../assets/images/Asuka/suspension-macpherson-strut.jpg" alt="MacPherson strut suspension CAD"></td><td><strong>MacPherson strut</strong></td><td>Leaves space for other parts at the upper arm assembly.<br><br>Lower part count.</td><td>Higher wear on shock absorbers, as skid steering exerts large stress on them.</td><td>Usually used on Ackermann-steering vehicles (which we are not using).</td><td>Reject</td></tr>
@@ -252,9 +265,9 @@
           </tbody></table></div>
         </div>
 
-        <!-- SECTION 7: RESULT -->
+        <!-- SECTION 8: RESULT -->
         <div class="card-box" style="margin-bottom: 24px;">
-          <div class="card-header"><div><span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 7</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Final Design and Status</h2></div></div>
+          <div class="card-header"><div><span class="badge badge-rose" style="margin-bottom: 6px;">SECTION 8</span><h2 style="font-size: 20px; color: var(--text-main); margin: 0;">Final Design and Status</h2></div></div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 18px; margin-top: 16px; align-items: center;">
             <figure style="margin: 0; text-align: center;"><img src="../../assets/images/Asuka/double-wishbone-on-chassis.jpg" alt="Double wishbone suspension mounted on the FOD Hunter chassis" style="width: 100%; max-height: 300px; object-fit: contain; border-radius: 8px;"><figcaption style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Double wishbone suspension on the chassis (CAD).</figcaption></figure>
             <div class="callout callout-emerald">
@@ -301,6 +314,7 @@
     .step-stat b { display: block; font-size: 14px; color: var(--text-main); font-family: var(--font-mono); font-weight: 600; }
     .step-stat.ok { border-color: var(--accent-green); background: var(--accent-green-light); }
     .step-stat.bad { border-color: var(--accent-rose); background: var(--accent-rose-light); }
+    .ph { background: var(--accent-amber-light); color: var(--accent-amber); border-radius: 4px; padding: 0 4px; font-weight: 600; }
   </style>
   <script>
     // Interactive unit step response of (bs+k)/(ms^2+bs+k).
@@ -442,6 +456,7 @@
         }, 100);
       });
     })();
+
   </script>
 
   <footer class="apple-footer">
