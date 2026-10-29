@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#0c1628"/>
+    </linearGradient>
+    <filter id="sh2" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="520" rx="14" fill="url(#bg2)" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <g transform="translate(40, 32)">
+    <rect width="920" height="50" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"/>
+    <text x="20" y="24" fill="#2997ff" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="12" font-weight="700" letter-spacing="0.08em">FIGURE 3.2 &#8226; PHASE 1 BENCHTOP TESTBED</text>
+    <text x="20" y="42" fill="#f5f5f7" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="16" font-weight="700">Multi-Machine Benchtop Network Topology &amp; CycloneDDS Unicast Discovery Architecture</text>
+    <text x="900" y="32" text-anchor="end" fill="#86868b" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif" font-size="12">Source: Hilbert ppt.pdf (Slides 2 &amp; 3)</text>
+  </g>
+
+  <!-- Left: Argus UAV Commander (Raspberry Pi 5) -->
+  <g transform="translate(40, 100)">
+    <rect width="280" height="270" rx="10" fill="rgba(41,151,255,0.04)" stroke="rgba(41,151,255,0.3)" filter="url(#sh2)"/>
+    <rect width="280" height="34" rx="10" fill="rgba(41,151,255,0.12)"/>
+    <text x="140" y="22" text-anchor="middle" fill="#2997ff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">Argus UAV Companion (RPi 5)</text>
+
+    <g transform="translate(16, 48)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <text y="14" fill="#f5f5f7" font-weight="600">Hardware:</text>
+      <text y="14" x="248" text-anchor="end" fill="#86868b">Raspberry Pi 5 (8GB RAM)</text>
+
+      <text y="38" fill="#f5f5f7" font-weight="600">OS &amp; Middleware:</text>
+      <text y="38" x="248" text-anchor="end" fill="#86868b">Ubuntu 24.04 &#8226; ROS 2 Jazzy</text>
+
+      <text y="62" fill="#f5f5f7" font-weight="600">Wi-Fi IP:</text>
+      <text y="62" x="248" text-anchor="end" fill="#2997ff" font-family="monospace" font-weight="700">192.168.168.100</text>
+
+      <text y="86" fill="#f5f5f7" font-weight="600">Direct RJ45 IP:</text>
+      <text y="86" x="248" text-anchor="end" fill="#2997ff" font-family="monospace" font-weight="700">192.168.137.233</text>
+
+      <line x1="0" y1="102" x2="248" y2="102" stroke="rgba(255,255,255,0.08)"/>
+
+      <text y="122" fill="#2997ff" font-weight="700">uav_waypoint_commander.py</text>
+      <text y="142" fill="#86868b" font-size="11">&#8226; Downlink: /c2/target_alert</text>
+      <text y="158" fill="#30d158" font-size="10.5" font-family="monospace">  QoS: TRANSIENT_LOCAL (depth 1)</text>
+      <text y="178" fill="#86868b" font-size="11">&#8226; Uplink: /c2/ugv_telemetry</text>
+      <text y="194" fill="#30d158" font-size="10.5" font-family="monospace">  QoS: RELIABLE (depth 10)</text>
+      <text y="210" fill="#86868b" font-size="11">&#8226; Tactical Radar Ground Station GUI</text>
+    </g>
+  </g>
+
+  <!-- Center: Networking Core & Why Multicast Fails -->
+  <g transform="translate(345, 100)">
+    <rect width="310" height="270" rx="10" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" filter="url(#sh2)"/>
+    <rect width="310" height="34" rx="10" fill="rgba(255,255,255,0.04)"/>
+    <text x="155" y="22" text-anchor="middle" fill="#ffd60a" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">Local Wi-Fi Switch &amp; DDS Gateway</text>
+
+    <!-- Content -->
+    <g transform="translate(16, 48)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <rect x="0" y="6" width="278" height="66" rx="6" fill="rgba(255,69,58,0.08)" stroke="rgba(255,69,58,0.25)"/>
+      <text x="10" y="24" fill="#ff453a" font-weight="700" font-size="11">PROBLEM: Why Wi-Fi Multicast Fails</text>
+      <text x="10" y="42" fill="#86868b" font-size="10.5">&#8226; 802.11 drops multicast to 1-6 Mbps</text>
+      <text x="10" y="58" fill="#86868b" font-size="10.5">&#8226; AP Client Isolation blocks STA-to-STA</text>
+
+      <!-- CycloneDDS XML Snippet -->
+      <rect x="0" y="80" width="278" height="130" rx="6" fill="#050811" stroke="rgba(41,151,255,0.3)"/>
+      <text x="10" y="98" fill="#30d158" font-weight="700" font-size="11">SOLUTION: cyclonedds.xml &lt;Peers&gt;</text>
+      <text x="10" y="116" fill="#86868b" font-family="monospace" font-size="10">&lt;Discovery&gt;</text>
+      <text x="20" y="132" fill="#2997ff" font-family="monospace" font-size="10">&lt;Peers&gt;</text>
+      <text x="30" y="148" fill="#f5f5f7" font-family="monospace" font-size="9.5">&lt;Peer address="192.168.168.50"/&gt;</text>
+      <text x="30" y="164" fill="#f5f5f7" font-family="monospace" font-size="9.5">&lt;Peer address="192.168.168.100"/&gt;</text>
+      <text x="30" y="180" fill="#f5f5f7" font-family="monospace" font-size="9.5">&lt;Peer address="192.168.137.1"/&gt;</text>
+      <text x="30" y="196" fill="#f5f5f7" font-family="monospace" font-size="9.5">&lt;Peer address="192.168.137.233"/&gt;</text>
+    </g>
+  </g>
+
+  <!-- Right: Hunter UGV Simulation Host (Laptop) -->
+  <g transform="translate(680, 100)">
+    <rect width="280" height="270" rx="10" fill="rgba(48,209,88,0.04)" stroke="rgba(48,209,88,0.3)" filter="url(#sh2)"/>
+    <rect width="280" height="34" rx="10" fill="rgba(48,209,88,0.12)"/>
+    <text x="140" y="22" text-anchor="middle" fill="#30d158" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700">FOD Hunter UGV Host (Laptop)</text>
+
+    <g transform="translate(16, 48)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5">
+      <text y="14" fill="#f5f5f7" font-weight="600">Hardware:</text>
+      <text y="14" x="248" text-anchor="end" fill="#86868b">Core i7 / RTX 4070 (SIL Host)</text>
+
+      <text y="38" fill="#f5f5f7" font-weight="600">OS &amp; Stack:</text>
+      <text y="38" x="248" text-anchor="end" fill="#86868b">Ubuntu 24.04 &#8226; Gazebo + Nav2</text>
+
+      <text y="62" fill="#f5f5f7" font-weight="600">Wi-Fi IP:</text>
+      <text y="62" x="248" text-anchor="end" fill="#30d158" font-family="monospace" font-weight="700">192.168.168.50</text>
+
+      <text y="86" fill="#f5f5f7" font-weight="600">Direct RJ45 IP:</text>
+      <text y="86" x="248" text-anchor="end" fill="#30d158" font-family="monospace" font-weight="700">192.168.137.1</text>
+
+      <line x1="0" y1="102" x2="248" y2="102" stroke="rgba(255,255,255,0.08)"/>
+
+      <text y="122" fill="#30d158" font-weight="700">ugv_c2_bridge_node.py</text>
+      <text y="142" fill="#86868b" font-size="11">&#8226; Ingests /c2/target_alert into queue</text>
+      <text y="158" fill="#86868b" font-size="11">&#8226; Dispatches Nav2 NavigateToPose</text>
+      <text y="174" fill="#86868b" font-size="11">&#8226; Broadcasts /c2/ugv_telemetry (2 Hz)</text>
+      <text y="190" fill="#86868b" font-size="11">&#8226; Markers: /c2/queued_waypoints_markers</text>
+      <text y="206" fill="#86868b" font-size="11">&#8226; Gazebo Harmonic digital twin sync</text>
+    </g>
+  </g>
+
+  <!-- Bottom Verified Testbed IP Summary Banner -->
+  <g transform="translate(40, 390)">
+    <rect width="920" height="95" rx="8" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)"/>
+    <text x="20" y="24" fill="#2997ff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700">VERIFIED TESTBED IP CONFIGURATION (simulation/setup_dds.sh &amp; cyclonedds.xml)</text>
+
+    <!-- Inset Table -->
+    <g transform="translate(20, 36)" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">
+      <text y="16" fill="#86868b">Primary Wi-Fi Subnet (192.168.168.0/24):</text>
+      <text y="16" x="280" fill="#f5f5f7">Argus UAV: <tspan fill="#2997ff" font-family="monospace" font-weight="700">192.168.168.100</tspan></text>
+      <text y="16" x="500" fill="#f5f5f7">FOD Hunter UGV: <tspan fill="#30d158" font-family="monospace" font-weight="700">192.168.168.50</tspan></text>
+      <text y="16" x="740" fill="#2997ff">(GL.iNet 5 GHz Access Point)</text>
+
+      <text y="40" fill="#86868b">Fallback Direct RJ45 (192.168.137.0/24):</text>
+      <text y="40" x="280" fill="#f5f5f7">Argus UAV: <tspan fill="#2997ff" font-family="monospace" font-weight="700">192.168.137.233</tspan></text>
+      <text y="40" x="500" fill="#f5f5f7">FOD Hunter UGV: <tspan fill="#30d158" font-family="monospace" font-weight="700">192.168.137.1</tspan></text>
+      <text y="40" x="740" fill="#30d158">(Zero-switch Cat6 Direct Link)</text>
+    </g>
+  </g>
+</svg>

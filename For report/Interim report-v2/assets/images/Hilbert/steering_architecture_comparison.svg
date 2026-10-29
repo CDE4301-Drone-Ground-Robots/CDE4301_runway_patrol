@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="100%" height="auto" style="background: transparent; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="comp-shadow" x="-3%" y="-3%" width="106%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <linearGradient id="grad-skid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="grad-acker" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="grad-meca" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#31101e"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Frame Box -->
+  <rect x="10" y="10" width="860" height="400" rx="14" fill="#090f1d" stroke="#334155" stroke-width="1.5" filter="url(#comp-shadow)"/>
+
+  <!-- Title & Subtitle -->
+  <text x="440" y="38" text-anchor="middle" fill="#f8fafc" font-size="16" font-weight="700" letter-spacing="0.02em">Steering &amp; Drive Architecture Down-Selection Trade Study</text>
+  <text x="440" y="56" text-anchor="middle" fill="#94a3b8" font-size="12">Evaluation Against Airside Runway Inspection Requirements (10–15 km/h, Outdoor Asphalt, Micro-Docking, Reliability)</text>
+
+  <!-- ========================================== -->
+  <!-- COLUMN 1: 4WD SKID STEER (SELECTED)        -->
+  <!-- ========================================== -->
+  <rect x="25" y="75" width="265" height="320" rx="10" fill="url(#grad-skid)" stroke="#10b981" stroke-width="2"/>
+  <rect x="25" y="75" width="265" height="28" rx="10" fill="#047857"/>
+  <text x="157" y="94" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">4WD DIFFERENTIAL / SKID STEER</text>
+  <rect x="105" y="109" width="105" height="18" rx="4" fill="#10b981"/>
+  <text x="157" y="122" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">SELECTED ARCHITECTURE</text>
+
+  <!-- Visual Schematic (Skid) -->
+  <rect x="75" y="138" width="165" height="90" rx="6" fill="#022c22" stroke="#059669" stroke-width="1"/>
+  <!-- Wheels -->
+  <rect x="55" y="145" width="16" height="32" rx="3" fill="#10b981"/>
+  <rect x="55" y="190" width="16" height="32" rx="3" fill="#10b981"/>
+  <rect x="245" y="145" width="16" height="32" rx="3" fill="#10b981"/>
+  <rect x="245" y="190" width="16" height="32" rx="3" fill="#10b981"/>
+  <!-- Annotations -->
+  <text x="157" y="175" text-anchor="middle" fill="#34d399" font-size="11" font-weight="700">Zero-Radius Pivot (R = 0)</text>
+  <text x="157" y="192" text-anchor="middle" fill="#a7f3d0" font-size="9.5">4x Independent Hub Motors</text>
+  <text x="157" y="206" text-anchor="middle" fill="#6ee7b7" font-size="9">Zero Steering Linkages</text>
+
+  <!-- Evaluation Bullets -->
+  <text x="38" y="248" fill="#34d399" font-size="10.5" font-weight="700">✓ In-Place Zero-Radius Turning:</text>
+  <text x="46" y="262" fill="#cbd5e1" font-size="9.5">Enables precise micro-alignment over FOD.</text>
+  <text x="38" y="278" fill="#34d399" font-size="10.5" font-weight="700">✓ Mechanical Simplicity &amp; Sealing:</text>
+  <text x="46" y="292" fill="#cbd5e1" font-size="9.5">IP65 hub motors; no tie rods or gearheads.</text>
+  <text x="38" y="308" fill="#34d399" font-size="10.5" font-weight="700">✓ Robust Outdoor Traction:</text>
+  <text x="46" y="322" fill="#cbd5e1" font-size="9.5">Solid pneumatic grip on grooved asphalt.</text>
+  <text x="38" y="338" fill="#f59e0b" font-size="10.5" font-weight="700">⚠️ Design Trade-Off (Scrub Friction):</text>
+  <text x="46" y="352" fill="#cbd5e1" font-size="9.5">Requires optimized L/B ratio to limit scrub.</text>
+  <text x="46" y="366" fill="#94a3b8" font-size="8.5">• Fully solved by L/B = 0.85 &amp; 28.5 Nm hub torque.</text>
+
+  <!-- ========================================== -->
+  <!-- COLUMN 2: ACKERMANN STEERING (REJECTED)    -->
+  <!-- ========================================== -->
+  <rect x="307" y="75" width="265" height="320" rx="10" fill="url(#grad-acker)" stroke="#475569" stroke-width="1.5"/>
+  <rect x="307" y="75" width="265" height="28" rx="10" fill="#334155"/>
+  <text x="440" y="94" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">ACKERMANN STEERING</text>
+  <rect x="390" y="109" width="100" height="18" rx="4" fill="#64748b"/>
+  <text x="440" y="122" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">REJECTED FOR FOD</text>
+
+  <!-- Visual Schematic (Ackermann) -->
+  <rect x="357" y="138" width="165" height="90" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <!-- Front Angled Wheels -->
+  <rect x="339" y="145" width="16" height="30" rx="3" fill="#64748b" transform="rotate(-18 347 160)"/>
+  <rect x="525" y="145" width="16" height="30" rx="3" fill="#64748b" transform="rotate(-12 533 160)"/>
+  <!-- Rear Wheels -->
+  <rect x="337" y="190" width="16" height="32" rx="3" fill="#475569"/>
+  <rect x="527" y="190" width="16" height="32" rx="3" fill="#475569"/>
+  <!-- Linkage bar -->
+  <line x1="347" y1="160" x2="533" y2="160" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,2"/>
+  <!-- Annotations -->
+  <text x="440" y="185" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="700">Min Turning Radius R &gt; 1.5 m</text>
+  <text x="440" y="202" text-anchor="middle" fill="#cbd5e1" font-size="9.5">Mechanical Linkage &amp; Kingpins</text>
+  <text x="440" y="216" text-anchor="middle" fill="#94a3b8" font-size="9">Cannot Pivot in Place</text>
+
+  <!-- Evaluation Bullets -->
+  <text x="320" y="248" fill="#38bdf8" font-size="10.5" font-weight="700">✓ Zero Tire Scrubbing at Speed:</text>
+  <text x="328" y="262" fill="#cbd5e1" font-size="9.5">Geometric pure rolling during curved sweep.</text>
+  <text x="320" y="278" fill="#f43f5e" font-size="10.5" font-weight="700">✗ Cannot Execute Zero-Radius Pivot:</text>
+  <text x="328" y="292" fill="#cbd5e1" font-size="9.5">Requires multi-point K-turns over debris.</text>
+  <text x="320" y="308" fill="#f43f5e" font-size="10.5" font-weight="700">✗ High Mechanical Vulnerability:</text>
+  <text x="328" y="322" fill="#cbd5e1" font-size="9.5">Exposed tie rods, ball joints, kingpins.</text>
+  <text x="320" y="338" fill="#f43f5e" font-size="10.5" font-weight="700">✗ Airside Vibration Wear:</text>
+  <text x="328" y="352" fill="#cbd5e1" font-size="9.5">Grooved runway tarmac induces linkage play.</text>
+  <text x="328" y="366" fill="#94a3b8" font-size="8.5">• Reversing over missed FOD disrupts sweeping line.</text>
+
+  <!-- ========================================== -->
+  <!-- COLUMN 3: MECANUM WHEELS (REJECTED)        -->
+  <!-- ========================================== -->
+  <rect x="590" y="75" width="265" height="320" rx="10" fill="url(#grad-meca)" stroke="#e11d48" stroke-width="1.5"/>
+  <rect x="590" y="75" width="265" height="28" rx="10" fill="#9f1239"/>
+  <text x="722" y="94" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">MECANUM WHEEL DRIVE</text>
+  <rect x="672" y="109" width="100" height="18" rx="4" fill="#e11d48"/>
+  <text x="722" y="122" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="700">REJECTED FOR FOD</text>
+
+  <!-- Visual Schematic (Mecanum) -->
+  <rect x="640" y="138" width="165" height="90" rx="6" fill="#1e1b4b" stroke="#475569" stroke-width="1"/>
+  <!-- Mecanum Rollers -->
+  <rect x="620" y="145" width="16" height="32" rx="3" fill="#fda4af"/>
+  <line x1="621" y1="148" x2="635" y2="158" stroke="#881337" stroke-width="1.5"/>
+  <line x1="621" y1="160" x2="635" y2="170" stroke="#881337" stroke-width="1.5"/>
+  <rect x="620" y="190" width="16" height="32" rx="3" fill="#fda4af"/>
+  <line x1="621" y1="193" x2="635" y2="203" stroke="#881337" stroke-width="1.5"/>
+  <line x1="621" y1="205" x2="635" y2="215" stroke="#881337" stroke-width="1.5"/>
+  <rect x="810" y="145" width="16" height="32" rx="3" fill="#fda4af"/>
+  <line x1="811" y1="158" x2="825" y2="148" stroke="#881337" stroke-width="1.5"/>
+  <line x1="811" y1="170" x2="825" y2="160" stroke="#881337" stroke-width="1.5"/>
+  <rect x="810" y="190" width="16" height="32" rx="3" fill="#fda4af"/>
+  <line x1="811" y1="203" x2="825" y2="193" stroke="#881337" stroke-width="1.5"/>
+  <line x1="811" y1="215" x2="825" y2="205" stroke="#881337" stroke-width="1.5"/>
+  <!-- Annotations -->
+  <text x="722" y="175" text-anchor="middle" fill="#f43f5e" font-size="11" font-weight="700">Holonomic Omnidirectional</text>
+  <text x="722" y="192" text-anchor="middle" fill="#fecdd3" font-size="9.5">45° Peripheral Passive Rollers</text>
+  <text x="722" y="206" text-anchor="middle" fill="#fda4af" font-size="9">Severe Runway Roller Vibration</text>
+
+  <!-- Evaluation Bullets -->
+  <text x="603" y="248" fill="#38bdf8" font-size="10.5" font-weight="700">✓ Omnidirectional Strafe:</text>
+  <text x="611" y="262" fill="#cbd5e1" font-size="9.5">Lateral translation without chassis heading change.</text>
+  <text x="603" y="278" fill="#f43f5e" font-size="10.5" font-weight="700">✗ Severe Airborne FOD Ingestion Jam:</text>
+  <text x="611" y="292" fill="#cbd5e1" font-size="9.5">Debris wires and bitumen grit seize roller bearings.</text>
+  <text x="603" y="308" fill="#f43f5e" font-size="10.5" font-weight="700">✗ High-Frequency Sensor Churn:</text>
+  <text x="611" y="322" fill="#cbd5e1" font-size="9.5">Roller discontinuity vibrates 3D LiDAR / cameras.</text>
+  <text x="603" y="338" fill="#f43f5e" font-size="10.5" font-weight="700">✗ Inadequate Incline &amp; Wet Traction:</text>
+  <text x="611" y="352" fill="#cbd5e1" font-size="9.5">Excessive slip on 5° wet asphalt verges.</text>
+  <text x="611" y="366" fill="#94a3b8" font-size="8.5">• High maintenance: 36–48 exposed needle bearings.</text>
+</svg>

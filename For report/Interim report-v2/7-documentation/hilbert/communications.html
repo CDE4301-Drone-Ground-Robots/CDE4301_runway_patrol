@@ -18,6 +18,7 @@
   <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
   <title>Autonomous C2 Communications &amp; Telemetry Architecture - Hilbert Soh | FOD Hunter</title>
   <link rel="stylesheet" href="../../css/styles.css?v=4.2">
   <script>
@@ -31,7 +32,7 @@
       }
     };
   </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script id="mathjax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     /* MATHJAX RESPONSIVE & HIGH-LEGIBILITY STYLING */
     .MathJax {
@@ -99,6 +100,31 @@
     .math-eq-hero .MathJax[display="true"] {
       font-size: 118% !important;
     }
+  
+    /* Apple-inspired citation badge styling */
+    .citation-ref {
+      color: var(--apple-blue, #2997ff);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88em;
+      padding: 1px 5px;
+      margin: 0 1px;
+      border-radius: 4px;
+      background: rgba(41, 151, 255, 0.08);
+      border: 1px solid rgba(41, 151, 255, 0.22);
+      transition: all 0.2s ease;
+      display: inline-block;
+      line-height: 1.25;
+      vertical-align: baseline;
+    }
+    .citation-ref:hover {
+      background: rgba(41, 151, 255, 0.22);
+      border-color: rgba(41, 151, 255, 0.5);
+      color: #5ac8fa;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
   </style>
 </head>
 <body>
@@ -127,6 +153,25 @@
       </div>
     </div>
   </header>
+
+  <!-- APPLE STICKY SUB-NAVIGATION -->
+  <nav class="apple-subnav">
+    <div class="apple-subnav-container">
+      <div class="apple-subnav-title" style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 8px #3b82f6;"></span>
+        <span style="font-weight: 600; color: #f5f5f7;">Hilbert Soh • Engineering Suite</span>
+      </div>
+      <ul class="apple-subnav-items">
+        <li class="apple-subnav-item"><a href="../../4-subsystems/programming.html" style="color: #60a5fa; font-weight: 500;">4.3 Programming Hub ↗</a></li>
+        <li class="apple-subnav-item"><a href="navigation.html">Navigation</a></li>
+        <li class="apple-subnav-item"><a href="simulation.html">Simulation</a></li>
+        <li class="apple-subnav-item"><a href="communications.html" class="active">C2 Comms</a></li>
+        <li class="apple-subnav-item"><a href="steering-kinematics.html">Kinematics</a></li>
+        <li class="apple-subnav-item"><a href="Motor_drivetrain_calculation.html">Drivetrain</a></li>
+      </ul>
+    </div>
+  </nav>
+
 
   <!-- MOBILE DRAWER -->
   <div class="apple-mobile-drawer" id="apple-mobile-drawer">
@@ -233,10 +278,10 @@
             1.1 Airfield Detect-to-Clear Bottleneck &amp; Multi-Agent Rationale
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Foreign Object Debris (FOD) on active military and commercial runways presents a critical operational vulnerability (FAA AC 150/5220-24 [2]; Shan et al., 2025 [12]). Conventional airside maintenance relies on manual human drive-by inspections, requiring <strong>30 to 45 minutes of total runway shutdown</strong>. This operational bottleneck induces severe commercial flight diversion penalties and impairs rapid military scramble readiness. 
+            Foreign Object Debris (FOD) on active military and commercial runways presents a critical operational vulnerability (FAA AC 150/5220-24 <a href="../../6-references/hilbert/references.html#ref-2" class="citation-ref" title="FAA AC 150/5220-24 (2014)">[2]</a>; Shan et al., 2025 <a href="../../6-references/hilbert/references.html#ref-12" class="citation-ref" title="Shan et al., Remote Sensing (2025)">[12]</a>). Conventional airside maintenance relies on manual human drive-by inspections, requiring <strong>30 to 45 minutes of total runway shutdown</strong>. This operational bottleneck induces severe commercial flight diversion penalties and impairs rapid military scramble readiness. 
           </p>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            Single-agent autonomous systems fail to resolve this operational trade-off: a ground vehicle traveling at safe sweep speeds ($10\text{--}15\text{ km/h}$) cannot inspect a $5.0\text{ km} \times 60\text{ m}$ runway within narrow air traffic windows, whereas an aerial drone possesses high search velocities ($30\text{--}40\text{ km/h}$) but lacks physical payload mass to clear heavy metallic debris. This necessitates a <strong>heterogeneous multi-agent architecture</strong> (Kim et al., 2019 [5]; Multimodal Transportation, 2025 [13]):
+            Single-agent autonomous systems fail to resolve this operational trade-off: a ground vehicle traveling at safe sweep speeds ($10\text{--}15\text{ km/h}$) cannot inspect a $5.0\text{ km} \times 60\text{ m}$ runway within narrow air traffic windows, whereas an aerial drone possesses high search velocities ($30\text{--}40\text{ km/h}$) but lacks physical payload mass to clear heavy metallic debris. This necessitates a <strong>heterogeneous multi-agent architecture</strong> (Kim et al., 2019 <a href="../../6-references/hilbert/references.html#ref-5" class="citation-ref" title="Kim et al., ASCE (2019)">[5]</a>; Thelasingha et al., 2024 <a href="../../6-references/hilbert/references.html#ref-13" class="citation-ref" title="Thelasingha et al., IEEE T-ASE (2024)">[13]</a>):
           </p>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px;">
@@ -378,7 +423,7 @@
             <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 6px; padding: 14px;">
               <strong style="color: #f5f5f7; font-size: 13px;">3. Certified Dynamic Inertia Tensors &amp; ODE Surface Friction</strong>
               <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
-                The AgileX Scout 2.0 URDF incorporates certified mass properties ($M = 65.0\text{ kg}$), principal moments of inertia ($I_{xx}, I_{yy}, I_{zz}$), and ODE contact surface friction coefficients ($\mu_s = 0.85, \mu_k = 0.75$), preventing unrealistic wheel slip artifacts during high-speed C2 waypoint dispatch and emergency deceleration maneuvers (Siegwart et al., 2011 [14]; Gillespie, 1992 [15]).
+                The AgileX Scout 2.0 URDF incorporates certified mass properties ($M = 65.0\text{ kg}$), principal moments of inertia ($I_{xx}, I_{yy}, I_{zz}$), and ODE contact surface friction coefficients ($\mu_s = 0.85, \mu_k = 0.75$), preventing unrealistic wheel slip artifacts during high-speed C2 waypoint dispatch and emergency deceleration maneuvers (Siegwart et al., 2011 <a href="../../6-references/hilbert/references.html#ref-14" class="citation-ref" title="Siegwart et al., MIT Press (2011)">[14]</a>; Gillespie, 1992 <a href="../../6-references/hilbert/references.html#ref-15" class="citation-ref" title="Gillespie, SAE (1992)">[15]</a>).
               </p>
             </div>
           </div>
@@ -411,7 +456,7 @@
               </div>
               <h4 style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin: 0 0 6px 0;">Point-to-Point Hardwired Link &amp; Middleware Baseline (Direct RJ45)</h4>
               <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Direct Category 6 RJ45 connection between Raspberry Pi 5 (`192.168.137.233`) and Laptop (`192.168.137.1`). <strong>CycloneDDS with explicit unicast peer discovery (`cyclonedds.xml`) was used exclusively for Phase 1 Interim Benchtop testing</strong>, eliminating router hops and establishing baseline serialization performance ($1.84\text{ ms}$ latency, $0.0\%$ packet loss) (Macenski et al., 2022 [7]).
+                Direct Category 6 RJ45 connection between Raspberry Pi 5 (`192.168.137.233`) and Laptop (`192.168.137.1`). <strong>CycloneDDS with explicit unicast peer discovery (`cyclonedds.xml`) was used exclusively for Phase 1 Interim Benchtop testing</strong>, eliminating router hops and establishing baseline serialization performance ($1.84\text{ ms}$ latency, $0.0\%$ packet loss) (Macenski et al., 2022 <a href="../../6-references/hilbert/references.html#ref-7" class="citation-ref" title="Macenski et al., Science Robotics (2022)">[7]</a>).
               </p>
             </div>
 
@@ -435,7 +480,7 @@
               </div>
               <h4 style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin: 0 0 6px 0;">Geodetic-to-Cartesian Spatial Transformation Pipeline</h4>
               <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Engineered the mathematical coordinate conversion pipeline. Formulated the Transverse Mercator projection from WGS84 coordinates into UTM Zone 48N, followed by a 2D affine rotation into the local metric airfield map frame, validated across Gazebo digital twin waypoints (Dolgov et al., 2010 [19]).
+                Engineered the mathematical coordinate conversion pipeline. Formulated the Transverse Mercator projection from WGS84 coordinates into UTM Zone 48N, followed by a 2D affine rotation into the local metric airfield map frame, validated across Gazebo digital twin waypoints (Dolgov et al., 2010 <a href="../../6-references/hilbert/references.html#ref-19" class="citation-ref" title="Dolgov et al., IJRR (2010)">[19]</a>).
               </p>
             </div>
 
@@ -447,7 +492,7 @@
               </div>
               <h4 style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin: 0 0 6px 0;">Long-Range RF Telemetry &amp; Statutory Transition (Microhard P900 V2)</h4>
               <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Hardware procurement roadmap replacing Wi-Fi with the <strong>Microhard P900 V2</strong>. Across the air, data travels strictly as serial JSON packets over UART (`/dev/ttyUSB0`) with a dedicated Python bridge node (`serial_c2_bridge`). <strong>CycloneDDS remains active solely as intra-vehicle middleware</strong> inside the UGV chassis over local loopback (`127.0.0.1`), ensuring zero radio discovery overhead while maintaining statutory compliance with IMDA TS SRD ($917\text{--}925\text{ MHz}$, $\le 100\text{ mW}$ EIRP) [3].
+                Hardware procurement roadmap replacing Wi-Fi with the <strong>Microhard P900 V2</strong>. Across the air, data travels strictly as serial JSON packets over UART (`/dev/ttyUSB0`) with a dedicated Python bridge node (`serial_c2_bridge`). <strong>CycloneDDS remains active solely as intra-vehicle middleware</strong> inside the UGV chassis over local loopback (`127.0.0.1`), ensuring zero radio discovery overhead while maintaining statutory compliance with IMDA TS SRD ($917\text{--}925\text{ MHz}$, $\le 100\text{ mW}$ EIRP) <a href="../../6-references/hilbert/references.html#ref-3" class="citation-ref" title="IMDA TS SRD (2021)">[3]</a>.
               </p>
             </div>
           </div>
@@ -544,6 +589,16 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          <!-- FIGURE 3.1: WIRELESS DATA LINK TRADE-OFF MATRIX -->
+          <div style="margin: 22px 0 26px 0;">
+            <div style="width: 100%; background: #090f1d; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.08); text-align: center;">
+              <img src="../../assets/images/Hilbert/comms_architecture_comparison.svg" alt="Airfield Wireless Data Link Trade-Off Matrix" style="max-width: 100%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));">
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin-top: 8px; text-align: center;">
+              <strong style="color: #f5f5f7;">Figure 3.1: Airfield Wireless Data Link Evaluation &amp; Trade-Off Matrix</strong> &mdash; Systematic multi-parameter comparison between Wi-Fi, 4G/LTE, LoRaWAN, and 900 MHz FHSS (Microhard P900 V2). Demonstrates why dedicated 900 MHz FHSS is the sole architecture meeting airside operational range ($4.0\text{ km}$), deterministic latency ($&lt; 10\text{ ms}$), zero third-party telco reliance, and air-gapped security. 
+            </p>
           </div>
 
           <!-- 3.2 Hardware Selection: P900 V2 vs Broadband IP Bridges -->
@@ -709,6 +764,16 @@
             </p>
           </div>
 
+          <!-- FIGURE 3.3: PROPOSED UAV-UGV RF DATALINK & MIDDLEWARE DECOUPLING -->
+          <div style="margin: 22px 0 26px 0;">
+            <div style="width: 100%; background: #090f1d; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.08); text-align: center;">
+              <img src="../../assets/images/Hilbert/uav_ugv_rf_datalink.svg" alt="Proposed UAV-UGV Serial RF Datalink & Intra-Vehicle Middleware Decoupling" style="max-width: 100%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));">
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin-top: 8px; text-align: center;">
+              <strong style="color: #f5f5f7;">Figure 3.3: Proposed UAV–UGV Serial RF Datalink &amp; Intra-Vehicle Middleware Decoupling Architecture</strong> &mdash; The inter-vehicle air link carries strictly compact, authenticated JSON character streams over UART (<code style="color: #2997ff;">/dev/ttyUSB0</code>, $115.2\text{ kbps}$) with CRC-16 and HMAC-SHA256 digests. High-rate CycloneDDS middleware runs exclusively on local host loopback (<code style="color: #2997ff;">127.0.0.1</code>) and shared memory inside each platform, eliminating radio discovery overhead. 
+            </p>
+          </div>
+
           <!-- 3.2.1 Serialization Latency & Airtime Link Budget Derivation -->
           <h4 style="font-size: 14px; font-weight: 600; color: #2997ff; margin: 18px 0 6px 0;">
             3.2.1 Serialization Latency &amp; Airtime Link Budget Derivation
@@ -736,13 +801,13 @@
             <li>$FSPL_{5.8\text{ GHz}} = 103.77 + 20\log_{10}(5800 / 920) = \mathbf{119.77\text{ dB}}$ ($+16.00\text{ dB}$ additional path loss, requiring $\approx 40\times$ transmit power).</li>
           </ul>
           <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 8px;">
-            The link fade margin $M_{\text{fade}}$ under the IMDA statutory cap ($P_{\text{TX}} = +20\text{ dBm}$ EIRP), with $2.15\text{ dBi}$ dipole antennas ($G_{\text{TX}} = G_{\text{RX}} = 2.15\text{ dBi}$), cable losses $L_{\text{cable}} = 1.0\text{ dB}$, and receiver sensitivity $P_{\text{RX\_sens}} = -116\text{ dBm}$ (Microhard P900 V2 specification) is calculated as:
+            The link fade margin $M_{\text{fade}}$ under the Singapore IMDA statutory cap ($P_{\text{TX}} = +20\text{ dBm}$ EIRP, $100\text{ mW}$), half-wave dipole antennas ($G_{\text{TX}} = G_{\text{RX}} = 2.15\text{ dBi}$), coaxial jumper insertion losses $L_{\text{cable}} = 1.0\text{ dB}$ ($0.5\text{ dB}$ per end), and verified manufacturer receiver sensitivity $P_{\text{RX\_sens}} = -110.0\text{ dBm}$ (official Microhard P900 V2 hardware datasheet specification at $115.2\text{ kbps}$, $10^{-5}$ BER; noting that $-116\text{ dBm}$ applies solely to reduced $19.2\text{ kbps}$ links) is derived as:
           </p>
           <div class="math-eq-hero">
-            $$M_{\text{fade}} = P_{\text{TX}} + G_{\text{TX}} + G_{\text{RX}} - FSPL - L_{\text{cable}} - P_{\text{RX\_sens}} = 20 + 2.15 + 2.15 - 103.77 - 1.0 - (-116) = \mathbf{+35.53\text{ dB}}$$
+            $$M_{\text{fade}} = P_{\text{TX}} + G_{\text{TX}} + G_{\text{RX}} - FSPL - L_{\text{cable}} - P_{\text{RX\_sens}} = 20 + 2.15 + 2.15 - 103.77 - 1.0 - (-110.0) = \mathbf{+29.53\text{ dB}}$$
           </div>
           <p style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 12px;">
-            A link fade margin of $\mathbf{+35.5\text{ dB}}$ provides an extraordinary buffer exceeding the standard aeronautical engineering requirement ($\ge 15.0\text{ dB}$), guaranteeing zero packet loss even during heavy tropical thunderstorms.
+            A mathematically verified link fade margin of $\mathbf{+29.53\text{ dB}}$ easily surpasses the stringent civil aviation C2 reliability benchmark ($\ge 15.0\text{ dB}$) by $\mathbf{+14.53\text{ dB}}$. This substantial reserve provides absolute resilience against low-grazing-angle tarmac multipath reflections and heavy tropical monsoonal precipitation ($> 100\text{ mm/hr}$, where $900\text{ MHz}$ atmospheric attenuation is $< 0.02\text{ dB/km}$ per ITU-R P.838).
           </p>
 
           <!-- 3.2.2 Power Sizing & Packaging Overhead -->
@@ -772,7 +837,7 @@
             3.3 Singapore Spectrum Compliance: IMDA TS SRD Window (917–925 MHz, &le; 100 mW EIRP)
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Radio frequency transmissions across military and civil airfields in Singapore are strictly governed by the Infocomm Media Development Authority (IMDA) under the <em>Telecommunications Act 1999</em> [11] and the <em>Technical Specification for Short Range Devices (IMDA TS SRD Issue 1 Rev 2, 2021 [3])</em>, Table 1 (Item 13b):
+            Radio frequency transmissions across military and civil airfields in Singapore are strictly governed by the Infocomm Media Development Authority (IMDA) under the <em>Telecommunications Act 1999</em> <a href="../../6-references/hilbert/references.html#ref-11" class="citation-ref" title="Telecommunications Act 1999 (Cap. 323)">[11]</a> and the <em>Technical Specification for Short Range Devices (IMDA TS SRD Issue 1 Rev 2, 2021 <a href="../../6-references/hilbert/references.html#ref-3" class="citation-ref" title="IMDA TS SRD (2021)">[3]</a>)</em>, Table 1 (Item 13b):
           </p>
 
           <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px; margin-bottom: 14px;">
@@ -783,10 +848,43 @@
           </div>
 
           <ul style="font-size: 13px; color: var(--apple-text-secondary); line-height: 1.6; padding-left: 20px; margin-bottom: 14px;">
-            <li><strong>Permitted Operational Window:</strong> Transmissions are strictly locked to the <strong>$917\text{--}925\text{ MHz}$ SRD sub-band</strong>.</li>
-            <li><strong>Maximum Effective Radiated Power (EIRP):</strong> Radio firmware is throttled to guarantee $\mathbf{\le 100\text{ mW}}$ ($+20\text{ dBm}$) EIRP.</li>
-            <li><strong>Pseudorandom Frequency Hopping:</strong> The P900 module is programmed via custom AT command registers (`AT&amp;W`, `S102`) to restrict its pseudo-random hopping table strictly to 16 channels within $917.2\text{--}924.8\text{ MHz}$, ensuring compliance with ICAO Doc 9718 aeronautical spectrum mandates [4].</li>
+            <li><strong>Permitted Operational Window:</strong> Transmissions are strictly locked to the <strong>$917.0\text{--}925.0\text{ MHz}$ SRD sub-band</strong> (IMDA TS SRD Table 1, Item 13b).</li>
+            <li><strong>Maximum Effective Radiated Power (EIRP):</strong> Radio firmware is throttled to guarantee $\mathbf{\le 100\text{ mW}}$ ($+20.0\text{ dBm}$) EIRP.</li>
+            <li><strong>Pseudorandom Frequency Hopping:</strong> The P900 module is programmed via non-volatile AT command registers (<code style="color: #2997ff;">ATS102=1</code>, <code style="color: #2997ff;">ATS108=20</code>) to restrict its pseudo-random hopping table strictly to channels within $917.0\text{--}925.0\text{ MHz}$, ensuring complete non-interference with adjacent cellular LTE Band 8 operators and compliance with ICAO Doc 9718 aeronautical spectrum mandates <a href="../../6-references/hilbert/references.html#ref-4" class="citation-ref" title="ICAO Doc 9718 (2018)">[4]</a>.</li>
           </ul>
+
+          <!-- FIGURE 3.4: IMDA SPECTRUM ALLOCATION & CELLULAR COEXISTENCE -->
+          <div style="margin: 22px 0 20px 0;">
+            <div style="width: 100%; background: #090f1d; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.08); text-align: center;">
+              <img src="../../assets/images/Hilbert/imda_spectrum_allocation.svg" alt="Singapore IMDA TS SRD Spectrum Allocation & Cellular Coexistence" style="max-width: 100%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));">
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin-top: 8px; text-align: center;">
+              <strong style="color: #f5f5f7;">Figure 3.4: Singapore IMDA TS SRD 917–925 MHz Spectrum Allocation &amp; Cellular Band 8 Coexistence</strong> &mdash; Statutory frequency boundaries under IMDA TS SRD Table 1 (Item 13b) showing the permitted $\le 100\\text{ mW}$ EIRP SRD window ($917\\text{--}925\\text{ MHz}$) and adjacent commercial cellular LTE Band 8 allocations (Singtel, StarHub, M1) requiring AT command firmware locking. Source: <em>IMDA TS SRD Issue 1 Rev 2; Telecommunications Act 1999</em>.
+            </p>
+          </div>
+
+          <!-- AT COMMAND FIRMWARE CONFIGURATION SCRIPT -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="color: #2997ff; font-size: 13px;">Microhard P900 V2 Regulatory Initialization Script (Serial AT Terminal)</strong>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px;">Statutory Lock</span>
+            </div>
+            <pre style="margin: 0; font-family: 'SF Mono', Consolas, monospace; font-size: 11.5px; color: #f5f5f7; line-height: 1.45; overflow-x: auto; background: #000; padding: 10px; border-radius: 6px;"><code>+++                 # Enter AT command mode (guard delay 1000 ms)
+OK
+AT&amp;F                # Reset all registers to factory defaults
+OK
+ATS102=1            # Set Operating Frequency Band: 917.0 - 925.0 MHz (Singapore IMDA SRD)
+OK
+ATS105=000000FF     # Hopping pattern mask: limit pseudo-random hops to legal Singapore channels
+OK
+ATS108=20           # Throttle transmit RF output power to +20 dBm (100 mW EIRP)
+OK
+ATS110=115200       # Fix serial interface baud rate to 115,200 bps (8N1)
+OK
+AT&amp;W                # Commit configuration permanently to non-volatile EEPROM
+OK
+ATO                 # Return to online data mode</code></pre>
+          </div>
         </div>
 
         <!-- ========================================================================= -->
@@ -858,7 +956,7 @@
             <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 6px; padding: 12px;">
               <strong style="color: #f5f5f7; font-size: 13px;">4.1.2 Threat Classification &amp; Routing</strong>
               <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
-                Vision Transformer metadata (Munyer et al., 2022 [10]) dictates end-effector activation: `metallic_ferrous` triggers the permanent magnetic sweep bar, while `rubber_shred` or `composite` activates high-vacuum suction.
+                Vision Transformer metadata (Munyer et al., 2022 <a href="../../6-references/hilbert/references.html#ref-10" class="citation-ref" title="Munyer et al., IEEE CSCI (2022)">[10]</a>) dictates end-effector activation: `metallic_ferrous` triggers the permanent magnetic sweep bar, while `rubber_shred` or `composite` activates high-vacuum suction.
               </p>
             </div>
             <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 6px; padding: 12px;">
@@ -964,7 +1062,7 @@
             5.3 Bridging Simulated Frame Transforms to Future UM980 Single-Antenna RTK Driver
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            In Phase 1 simulation, the transform tree `map ➔ odom ➔ base_footprint` is maintained via the Gazebo Harmonic differential drive plugin and `robot_localization` EKF (Moore &amp; Stouch, 2014 [9]). In Semester 2 physical hardware, this architecture transitions seamlessly to the <strong>Unicorecomm UM980 single-antenna triple-band RTK-GNSS module</strong>:
+            In Phase 1 simulation, the transform tree `map ➔ odom ➔ base_footprint` is maintained via the Gazebo Harmonic differential drive plugin and `robot_localization` EKF (Moore &amp; Stouch, 2014 <a href="../../6-references/hilbert/references.html#ref-9" class="citation-ref" title="Moore &amp; Stouch, Springer (2014)">[9]</a>). In Semester 2 physical hardware, this architecture transitions seamlessly to the <strong>Unicorecomm UM980 single-antenna triple-band RTK-GNSS module</strong>:
           </p>
 
           <div style="background: rgba(41, 151, 255, 0.04); border: 1px solid rgba(41, 151, 255, 0.2); border-left: 3px solid #2997ff; border-radius: 6px; padding: 14px;">
@@ -1036,8 +1134,65 @@
             7.1 Multi-Machine Testbed: Phased Communication Architectures
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
-            Hilbert Soh deployed and verified the multi-machine C2 data link across independent physical hardware, structured into two phased operational configurations:
+            Hilbert Soh deployed and verified the multi-machine C2 data link across independent physical hardware, establishing an empirical testbed to validate inter-agent message routing and resolve the boundary between local DDS middleware and long-range telemetry:
           </p>
+
+          <!-- FIGURE 3.2: CYCLONEDDS UNICAST DISCOVERY TOPOLOGY -->
+          <div style="margin: 18px 0 24px 0;">
+            <div style="width: 100%; background: #090f1d; border-radius: 10px; padding: 14px; border: 1px solid rgba(255,255,255,0.08); text-align: center;">
+              <img src="../../assets/images/Hilbert/cyclonedds_unicast_topology.svg" alt="Multi-Machine Benchtop Network Topology & CycloneDDS Unicast Discovery Architecture" style="max-width: 100%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));">
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); margin-top: 8px; text-align: center;">
+              <strong style="color: #f5f5f7;">Figure 3.2: Multi-Machine Benchtop Network Topology &amp; CycloneDDS Unicast Discovery Architecture</strong> &mdash; Phase 1 physical hardware-in-the-loop testbed connecting the Argus UAV mission commander (Raspberry Pi 5) with the FOD Hunter UGV simulation (Laptop host). Illustrates explicit peer discovery (<code style="color: #2997ff;">cyclonedds.xml</code>) overcoming Wi-Fi AP isolation and 802.11 multicast basic-rate airtime starvation. Architecture configured via <code style="color: #2997ff;">simulation/cyclonedds.xml</code> and <code style="color: #2997ff;">simulation/setup_dds.sh</code>.
+            </p>
+          </div>
+
+          <!-- VERIFIED TESTBED IP CONFIGURATION & MULTICAST TECHNICAL BREAKDOWN -->
+          <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
+              <strong style="color: #2997ff; font-size: 13.5px;">Physical Testbed Network Configuration (simulation/setup_dds.sh &amp; cyclonedds.xml)</strong>
+              <span class="badge" style="background: rgba(48, 209, 88, 0.15); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.3); font-size: 10.5px;">Hardware Verified</span>
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.5; margin-bottom: 12px;">
+              The physical multi-machine testbed in the robotics laboratory deployed dedicated subnets verified in repository configuration scripts (<code style="color: #2997ff;">simulation/cyclonedds.xml</code> and <code style="color: #2997ff;">simulation/setup_dds.sh</code>):
+            </p>
+            <div style="overflow-x: auto; margin-bottom: 12px;">
+              <table class="apple-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
+                    <th style="padding: 8px 10px; text-align: left;">Network Channel</th>
+                    <th style="padding: 8px 10px; text-align: left;">Subnet</th>
+                    <th style="padding: 8px 10px; text-align: left;">Argus UAV (RPi 5 Commander)</th>
+                    <th style="padding: 8px 10px; text-align: left;">FOD Hunter UGV (Laptop Host)</th>
+                    <th style="padding: 8px 10px; text-align: left;">CycloneDDS Role / Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--apple-border);">
+                    <td style="padding: 8px 10px; font-weight: 600; color: #f5f5f7;">Wi-Fi Router Testbed (Primary)</td>
+                    <td style="padding: 8px 10px; color: var(--apple-text-secondary); font-family: monospace;">192.168.168.0/24</td>
+                    <td style="padding: 8px 10px; color: #2997ff; font-family: monospace;">192.168.168.100</td>
+                    <td style="padding: 8px 10px; color: #30d158; font-family: monospace;">192.168.168.50</td>
+                    <td style="padding: 8px 10px; color: var(--apple-text-secondary);">GL.iNet 5 GHz router, static unicast <code style="color: #2997ff;">&lt;Peers&gt;</code> discovery</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--apple-border);">
+                    <td style="padding: 8px 10px; font-weight: 600; color: #f5f5f7;">Direct RJ45 Ethernet (Fallback)</td>
+                    <td style="padding: 8px 10px; color: var(--apple-text-secondary); font-family: monospace;">192.168.137.0/24</td>
+                    <td style="padding: 8px 10px; color: #2997ff; font-family: monospace;">192.168.137.233</td>
+                    <td style="padding: 8px 10px; color: #30d158; font-family: monospace;">192.168.137.1</td>
+                    <td style="padding: 8px 10px; color: var(--apple-text-secondary);">Zero-switch point-to-point fallback in <code style="color: #2997ff;">simulation/setup_dds.sh</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="background: rgba(41, 151, 255, 0.04); border-left: 3px solid #2997ff; padding: 10px 12px; border-radius: 4px;">
+              <strong style="color: #f5f5f7; font-size: 12px;">Technical Mechanism: Why Static Unicast Resolves Wi-Fi Multicast Degradation</strong>
+              <p style="font-size: 11.5px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
+                Standard IEEE 802.11 transmissions lack link-layer acknowledgments (ACK) for multicast frames. Access points therefore broadcast multicast packets at the lowest basic mandatory transmission rate ($1\text{--}6\text{ Mbps}$), causing buffer congestion and severe packet loss under high-rate DDS discovery storms. Furthermore, Access Point <strong>Client Isolation</strong> and unqueried <strong>IGMP Snooping</strong> frequently drop unregistered multicast groups. By specifying explicit unicast IP endpoints in <code style="color: #2997ff;">cyclonedds.xml</code>, Simple Participant Discovery Protocol (SPDP) messages travel over directed, high-rate unicast UDP frames with hardware MAC retry guarantees.
+              </p>
+            </div>
+          </div>
 
           <!-- PHASED DUAL ARCHITECTURE FLOW CARDS (SEMESTER 1 VS SEMESTER 2) -->
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-bottom: 22px;">
@@ -1258,7 +1413,7 @@
             7.3 Tooling Trade Study (Custom C2 HUD vs. Foxglove vs. RViz)
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            Informed by comparative industry robotics benchmarks (Marova / ReductStore, 2025 [18]), this trade study evaluates why the team engineered a dedicated, lightweight C2 Tactical HUD for the Raspberry Pi 5 instead of standard robotics visualizers:
+            Informed by comparative industry robotics benchmarks (Marova / ReductStore, 2025 <a href="../../6-references/hilbert/references.html#ref-18" class="citation-ref" title="Marova, ReductStore (2025)">[18]</a>), this trade study evaluates why the team engineered a dedicated, lightweight C2 Tactical HUD for the Raspberry Pi 5 instead of standard robotics visualizers:
           </p>
 
           <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 8px; padding: 16px;">

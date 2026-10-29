@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 340" width="100%" height="auto" style="background: transparent; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="c2-shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="c2-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+    <marker id="c2-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+    <marker id="c2-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <rect x="10" y="10" width="660" height="320" rx="12" fill="#090f1d" stroke="#334155" stroke-width="1.5" filter="url(#c2-shadow)"/>
+
+  <!-- Title -->
+  <text x="340" y="34" text-anchor="middle" fill="#f8fafc" font-size="15" font-weight="700">Case 2: Slope Climbing (5.0° Incline at 15 km/h)</text>
+  <text x="340" y="52" text-anchor="middle" fill="#94a3b8" font-size="11.5">Gravitational Grade Resistance + Rolling &amp; Aerodynamic Drag</text>
+
+  <!-- Incline Plane (Rotated 5 deg) -->
+  <g transform="translate(60, 260) rotate(-5)">
+    <!-- Road Surface -->
+    <line x1="-20" y1="0" x2="560" y2="0" stroke="#475569" stroke-width="2.5" stroke-dasharray="6,4"/>
+    <text x="540" y="24" fill="#64748b" font-size="10" text-anchor="end">Incline Angle theta = 5.0° (sin 5° = 0.08715)</text>
+
+    <!-- Chassis Body -->
+    <rect x="110" y="-120" width="300" height="90" rx="10" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="260" y="-88" text-anchor="middle" fill="#f8fafc" font-size="12" font-weight="700">FOD HUNTER (m = 65.0 kg)</text>
+    <text x="260" y="-70" text-anchor="middle" fill="#94a3b8" font-size="10.5">4WD Slope Grade: F_slope = 55.57 N</text>
+
+    <!-- Wheels -->
+    <circle cx="160" cy="-30" r="36" fill="#020617" stroke="#10b981" stroke-width="2.8"/>
+    <circle cx="160" cy="-30" r="14" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+    <circle cx="360" cy="-30" r="36" fill="#020617" stroke="#10b981" stroke-width="2.8"/>
+    <circle cx="360" cy="-30" r="14" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+
+    <!-- Tractive Force Arrow (Uphill) -->
+    <line x1="360" y1="0" x2="480" y2="0" stroke="#10b981" stroke-width="3" marker-end="url(#c2-green)"/>
+    <text x="485" y="-6" fill="#10b981" font-size="11" font-weight="700">F_tractive = 74.44 N</text>
+    <text x="485" y="10" fill="#6ee7b7" font-size="9.5">(tau_motor = 2.88 Nm)</text>
+
+    <!-- Downhill Resistive Forces -->
+    <line x1="160" y1="0" x2="60" y2="0" stroke="#f43f5e" stroke-width="2.5" marker-end="url(#c2-rose)"/>
+    <text x="55" y="-8" fill="#f43f5e" font-size="10" font-weight="700" text-anchor="end">F_slope (55.57 N) + F_rr (15.94 N)</text>
+  </g>
+
+  <!-- Summary Badge Box -->
+  <rect x="50" y="280" width="580" height="35" rx="6" fill="rgba(245,158,11,0.08)" stroke="#f59e0b" stroke-width="1"/>
+  <text x="340" y="302" text-anchor="middle" fill="#f8fafc" font-size="11">
+    <tspan font-weight="700" fill="#f59e0b">Total Force:</tspan> 74.44 N | 
+    <tspan font-weight="700" fill="#f59e0b">Torque / Motor:</tspan> 2.88 Nm | 
+    <tspan font-weight="700" fill="#38bdf8">P_mech:</tspan> 310.2 W | 
+    <tspan font-weight="700" fill="#10b981">Headroom:</tspan> 5.2x margin below 15.0 Nm continuous
+  </text>
+</svg>

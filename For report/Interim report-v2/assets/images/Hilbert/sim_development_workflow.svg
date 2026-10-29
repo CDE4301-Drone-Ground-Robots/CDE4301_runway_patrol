@@ -1,0 +1,243 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 560" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#0e172a"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#162038"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="560" fill="url(#bgGrad)" rx="16"/>
+  <rect x="2" y="2" width="1076" height="556" fill="none" stroke="#334155" stroke-width="1.5" rx="15"/>
+
+  <!-- Title & Subtitle -->
+  <text x="40" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="21" font-weight="700" fill="#f8fafc">
+    Closed-Loop Robotics Simulation Development Workflow
+  </text>
+  <text x="40" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="400" fill="#94a3b8">
+    Systematic 6-stage engineering iteration pipeline from CAD model importation to SIL validation (Slide 29)
+  </text>
+
+  <!-- Flow Arrows -->
+  <path d="M 195 280 L 215 280" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M 375 280 L 395 280" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M 555 280 L 575 280" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M 735 280 L 755 280" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M 915 280 L 935 280" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- STAGE 1: ROBOT MODEL -->
+  <g transform="translate(35, 95)" filter="url(#shadow)">
+    <rect width="160" height="410" rx="12" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect x="0" y="0" width="160" height="36" rx="12" fill="url(#blueGrad)"/>
+    <text x="80" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">1. ROBOT MODEL</text>
+
+    <rect x="12" y="48" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#38bdf8">Scout 2.0 Proxy</text>
+    <text x="20" y="86" font-family="monospace" font-size="9.5" fill="#cbd5e1">• scout_v2.xacro</text>
+    <text x="20" y="102" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Mass: 52.4 kg</text>
+    <text x="20" y="118" font-family="monospace" font-size="9.5" fill="#cbd5e1">• R = 0.1646 m</text>
+    <text x="20" y="134" font-family="monospace" font-size="9.5" fill="#cbd5e1">• W = 0.583 m</text>
+    <text x="20" y="150" font-family="monospace" font-size="9.5" fill="#cbd5e1">• L = 0.498 m</text>
+
+    <rect x="12" y="168" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#38bdf8">URDF &amp; Kinematics</text>
+    <text x="20" y="206" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Diff-drive plugin</text>
+    <text x="20" y="222" font-family="monospace" font-size="9.5" fill="#cbd5e1">• 4 skid joints</text>
+    <text x="20" y="238" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Base mesh STL</text>
+    <text x="20" y="254" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Collision box</text>
+    <text x="20" y="270" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Inertia tensor</text>
+
+    <rect x="12" y="288" width="136" height="110" rx="8" fill="#0c4a6e" stroke="#0284c7" stroke-width="1"/>
+    <text x="20" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#bae6fd">Rationale:</text>
+    <text x="20" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#e0f2fe">Unblocks Nav2 &amp;</text>
+    <text x="20" y="342" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#e0f2fe">C2 software while</text>
+    <text x="20" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#e0f2fe">physical custom CAD</text>
+    <text x="20" y="374" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#e0f2fe">is in development.</text>
+  </g>
+
+  <!-- STAGE 2: PHYSICS ENGINE -->
+  <g transform="translate(215, 95)" filter="url(#shadow)">
+    <rect width="160" height="410" rx="12" fill="url(#cardGrad)" stroke="#c084fc" stroke-width="1.5"/>
+    <rect x="0" y="0" width="160" height="36" rx="12" fill="url(#purpleGrad)"/>
+    <text x="80" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">2. PHYSICS ENGINE</text>
+
+    <rect x="12" y="48" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#c084fc">DART Solver</text>
+    <text x="20" y="86" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Gazebo Harmonic</text>
+    <text x="20" y="102" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Step: 1.0 ms</text>
+    <text x="20" y="118" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Rate: 1000 Hz</text>
+    <text x="20" y="134" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Target RTF = 1.0</text>
+    <text x="20" y="150" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Rigid body dyn</text>
+
+    <rect x="12" y="168" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#c084fc">Tarmac Friction</text>
+    <text x="20" y="206" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Coulomb model</text>
+    <text x="20" y="222" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Friction mu = 0.8</text>
+    <text x="20" y="238" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Contact kp/kd</text>
+    <text x="20" y="254" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Slip surface</text>
+    <text x="20" y="270" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Slope up to 5°</text>
+
+    <rect x="12" y="288" width="136" height="110" rx="8" fill="#3b0764" stroke="#9333ea" stroke-width="1"/>
+    <text x="20" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#f3e8ff">Limitation:</text>
+    <text x="20" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#f5d0fe">Rigid Coulomb does</text>
+    <text x="20" y="342" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#f5d0fe">not model pneumatic</text>
+    <text x="20" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#f5d0fe">tire carcass shear or</text>
+    <text x="20" y="374" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#f5d0fe">rubber deformation.</text>
+  </g>
+
+  <!-- STAGE 3: SYNTHETIC SENSORS -->
+  <g transform="translate(395, 95)" filter="url(#shadow)">
+    <rect width="160" height="410" rx="12" fill="url(#cardGrad)" stroke="#fbbf24" stroke-width="1.5"/>
+    <rect x="0" y="0" width="160" height="36" rx="12" fill="url(#amberGrad)"/>
+    <text x="80" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">3. SYNTH SENSORS</text>
+
+    <rect x="12" y="48" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fbbf24">Sensor Suite</text>
+    <text x="20" y="86" font-family="monospace" font-size="9.5" fill="#cbd5e1">• GPU LiDAR (/scan)</text>
+    <text x="20" y="102" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Camera (/image)</text>
+    <text x="20" y="118" font-family="monospace" font-size="9.5" fill="#cbd5e1">• IMU (/imu/data)</text>
+    <text x="20" y="134" font-family="monospace" font-size="9.5" fill="#cbd5e1">• NavSat (/gps/fix)</text>
+    <text x="20" y="150" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Wheel odometry</text>
+
+    <rect x="12" y="168" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fbbf24">Noise Modeling</text>
+    <text x="20" y="206" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Gaussian IMU</text>
+    <text x="20" y="222" font-family="monospace" font-size="9.5" fill="#cbd5e1">• GPS ±2cm noise</text>
+    <text x="20" y="238" font-family="monospace" font-size="9.5" fill="#cbd5e1">• LiDAR beam sigma</text>
+    <text x="20" y="254" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Wheel slip drift</text>
+    <text x="20" y="270" font-family="monospace" font-size="9.5" fill="#cbd5e1">• 10/20/30/100 Hz</text>
+
+    <rect x="12" y="288" width="136" height="110" rx="8" fill="#451a03" stroke="#d97706" stroke-width="1"/>
+    <text x="20" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#fef3c7">Limitation:</text>
+    <text x="20" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fed7aa">No solar glare</text>
+    <text x="20" y="342" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fed7aa">(100k lux), rain,</text>
+    <text x="20" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fed7aa">heat mirage, or</text>
+    <text x="20" y="374" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#fed7aa">multipath bounce.</text>
+  </g>
+
+  <!-- STAGE 4: ROS 2 CONTROL -->
+  <g transform="translate(575, 95)" filter="url(#shadow)">
+    <rect width="160" height="410" rx="12" fill="url(#cardGrad)" stroke="#34d399" stroke-width="1.5"/>
+    <rect x="0" y="0" width="160" height="36" rx="12" fill="url(#emeraldGrad)"/>
+    <text x="80" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">4. ROS 2 CONTROL</text>
+
+    <rect x="12" y="48" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#34d399">ros_gz_bridge</text>
+    <text x="20" y="86" font-family="monospace" font-size="9.5" fill="#cbd5e1">• /clock synch</text>
+    <text x="20" y="102" font-family="monospace" font-size="9.5" fill="#cbd5e1">• use_sim_time: true</text>
+    <text x="20" y="118" font-family="monospace" font-size="9.5" fill="#cbd5e1">• /cmd_vel bridge</text>
+    <text x="20" y="134" font-family="monospace" font-size="9.5" fill="#cbd5e1">• /tf &amp; /tf_static</text>
+    <text x="20" y="150" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Zero drop bridge</text>
+
+    <rect x="12" y="168" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#34d399">Nav2 Autonomy</text>
+    <text x="20" y="206" font-family="monospace" font-size="9.5" fill="#cbd5e1">• SmacHybrid</text>
+    <text x="20" y="222" font-family="monospace" font-size="9.5" fill="#cbd5e1">• RPP controller</text>
+    <text x="20" y="238" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Dual-EKF fusion</text>
+    <text x="20" y="254" font-family="monospace" font-size="9.5" fill="#cbd5e1">• 5cm Costmaps</text>
+    <text x="20" y="270" font-family="monospace" font-size="9.5" fill="#cbd5e1">• BT Navigator</text>
+
+    <rect x="12" y="288" width="136" height="110" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+    <text x="20" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#a7f3d0">Advantage:</text>
+    <text x="20" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d1fae5">100% identical ROS 2</text>
+    <text x="20" y="342" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d1fae5">interface topics &amp;</text>
+    <text x="20" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d1fae5">action servers as</text>
+    <text x="20" y="374" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#d1fae5">physical robot.</text>
+  </g>
+
+  <!-- STAGE 5: SIL EVALUATION -->
+  <g transform="translate(755, 95)" filter="url(#shadow)">
+    <rect width="160" height="410" rx="12" fill="url(#cardGrad)" stroke="#f43f5e" stroke-width="1.5"/>
+    <rect x="0" y="0" width="160" height="36" rx="12" fill="url(#roseGrad)"/>
+    <text x="80" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">5. SIL EVALUATION</text>
+
+    <rect x="12" y="48" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fb7185">World Testbeds</text>
+    <text x="20" y="86" font-family="monospace" font-size="9.5" fill="#cbd5e1">• EKAH Runway</text>
+    <text x="20" y="102" font-family="monospace" font-size="9.5" fill="#cbd5e1">• NUS EA Field</text>
+    <text x="20" y="118" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Waypoint patrols</text>
+    <text x="20" y="134" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Obstacle cubes</text>
+    <text x="20" y="150" font-family="monospace" font-size="9.5" fill="#cbd5e1">• 25 formal trials</text>
+
+    <rect x="12" y="168" width="136" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="20" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fb7185">Quantitative Log</text>
+    <text x="20" y="206" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Cross-track error</text>
+    <text x="20" y="222" font-family="monospace" font-size="9.5" fill="#cbd5e1">• Scrubbing energy</text>
+    <text x="20" y="238" font-family="monospace" font-size="9.5" fill="#cbd5e1">• RAM: 38 MB</text>
+    <text x="20" y="254" font-family="monospace" font-size="9.5" fill="#cbd5e1">• RTF: 0.85-1.0</text>
+    <text x="20" y="270" font-family="monospace" font-size="9.5" fill="#cbd5e1">• C2 transfer &lt;15ms</text>
+
+    <rect x="12" y="288" width="136" height="110" rx="8" fill="#4c0519" stroke="#be123c" stroke-width="1"/>
+    <text x="20" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#fecdd3">Result:</text>
+    <text x="20" y="326" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#ffe4e6">Proves software</text>
+    <text x="20" y="342" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#ffe4e6">architecture &amp; Nav2</text>
+    <text x="20" y="358" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#ffe4e6">stability prior to</text>
+    <text x="20" y="374" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#ffe4e6">physical hardware.</text>
+  </g>
+
+  <!-- STAGE 6: SIM2REAL ITERATION -->
+  <g transform="translate(935, 95)" filter="url(#shadow)">
+    <rect width="110" height="410" rx="12" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect x="0" y="0" width="110" height="36" rx="12" fill="url(#blueGrad)"/>
+    <text x="55" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">6. SIM2REAL</text>
+
+    <rect x="10" y="48" width="90" height="110" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="16" y="68" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="700" fill="#38bdf8">Hardware</text>
+    <text x="16" y="86" font-family="monospace" font-size="8.5" fill="#cbd5e1">• Custom UGV</text>
+    <text x="16" y="102" font-family="monospace" font-size="8.5" fill="#cbd5e1">• 4x BLDC hubs</text>
+    <text x="16" y="118" font-family="monospace" font-size="8.5" fill="#cbd5e1">• STM32 CAN</text>
+    <text x="16" y="134" font-family="monospace" font-size="8.5" fill="#cbd5e1">• ZLLG80ASM</text>
+    <text x="16" y="150" font-family="monospace" font-size="8.5" fill="#cbd5e1">• R = 0.1315m</text>
+
+    <rect x="10" y="168" width="90" height="110" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="16" y="188" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="700" fill="#38bdf8">Calibration</text>
+    <text x="16" y="206" font-family="monospace" font-size="8.5" fill="#cbd5e1">• Hesai LiDAR</text>
+    <text x="16" y="222" font-family="monospace" font-size="8.5" fill="#cbd5e1">• RTK F9P base</text>
+    <text x="16" y="238" font-family="monospace" font-size="8.5" fill="#cbd5e1">• Tire scrub</text>
+    <text x="16" y="254" font-family="monospace" font-size="8.5" fill="#cbd5e1">• CAN timing</text>
+    <text x="16" y="270" font-family="monospace" font-size="8.5" fill="#cbd5e1">• RPP tuning</text>
+
+    <rect x="10" y="288" width="90" height="110" rx="6" fill="#0c4a6e" stroke="#0284c7" stroke-width="1"/>
+    <text x="16" y="308" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" font-weight="700" fill="#bae6fd">Proving:</text>
+    <text x="16" y="324" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" fill="#e0f2fe">NUS EA Field</text>
+    <text x="16" y="338" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" fill="#e0f2fe">tarmac runs</text>
+    <text x="16" y="352" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" fill="#e0f2fe">compare Sim</text>
+    <text x="16" y="366" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" fill="#e0f2fe">vs Real track</text>
+    <text x="16" y="380" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="8" fill="#e0f2fe">accuracy.</text>
+  </g>
+
+  <!-- Bottom Legend -->
+  <text x="40" y="535" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">
+    Core Principle: Simulation validates software architecture, message topology, and navigation algorithms early, but does NOT guarantee real-world physical performance without sensor &amp; tire calibration.
+  </text>
+</svg>

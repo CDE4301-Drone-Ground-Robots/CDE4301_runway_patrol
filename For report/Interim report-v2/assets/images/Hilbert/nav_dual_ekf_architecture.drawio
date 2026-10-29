@@ -1,0 +1,42 @@
+<mxfile host="app.diagrams.net" modified="2026-10-28T07:00:00.000Z" agent="Mozilla/5.0" version="24.0.0">
+  <diagram id="dual_ekf" name="Dual EKF State Estimation Architecture">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Dual-EKF State Estimation Architecture &amp; REP-105 Coordinate Frame Topology" style="text;html=1;fontSize=18;fontStyle=1;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="800" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="wheel_odom" value="Wheel Encoders (50 Hz)&#xa;Topic: /odom&#xa;v_x, v_y, omega_z" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#38BDF8;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="180" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="imu" value="9-DOF IMU (100 Hz)&#xa;Topic: /imu/data&#xa;omega_z, a_x, absolute yaw" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#C084FC;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="180" width="180" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="rtk_gps" value="RTK-GNSS (5 Hz)&#xa;Topic: /gps/fix&#xa;lat, lon, alt (±2 cm theoretical)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#34D399;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="180" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="ekf_local" value="ekf_filter_node_odom (Local EKF)&#xa;Fused: /odom + /imu/data&#xa;Publishes: /odometry/local&#xa;TF: odom -&gt; base_footprint (30 Hz)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#38BDF8;strokeWidth=2;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="300" y="100" width="240" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="navsat" value="navsat_transform_node&#xa;WGS84 lat/lon -&gt; UTM Cartesian /odometry/gps" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1E293B;strokeColor=#34D399;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="300" y="260" width="240" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="ekf_global" value="ekf_filter_node_map (Global EKF)&#xa;Fused: /odometry/local + /odometry/gps + IMU yaw&#xa;Publishes: /odometry/global&#xa;TF: map -&gt; odom (30 Hz)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#C084FC;strokeWidth=2;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="300" y="360" width="240" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="tf_tree" value="REP-105 Coordinate Frame Ownership&#xa;&#xa;map ---[ekf_map]--&gt; odom ---[ekf_odom]--&gt; base_footprint ---&gt; base_link&#xa;                                                                  |--&gt; lidar_link&#xa;                                                                  |--&gt; imu_link&#xa;                                                                  |--&gt; gps_link" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#64748B;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="600" y="100" width="460" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="equations" value="Discrete EKF Equations&#xa;&#xa;1. Time Update: x̂_k|k-1 = f(x̂_k-1, u_k),  P_k|k-1 = F P F^T + Q&#xa;2. Innovation: y_k = z_k - h(x̂_k|k-1),  S_k = H P H^T + R&#xa;3. Kalman Gain: K_k = P H^T S^-1&#xa;4. State &amp; Covariance Update: x̂_k|k = x̂_k|k-1 + K y_k,  P_k|k = (I - K H) P" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0B1329;strokeColor=#1E3A8A;fontColor=#93C5FD;" vertex="1" parent="1">
+          <mxGeometry x="600" y="260" width="460" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_odom" edge="1" source="wheel_odom" target="ekf_local" parent="1"/>
+        <mxCell id="e_imu_local" edge="1" source="imu" target="ekf_local" parent="1"/>
+        <mxCell id="e_gps_navsat" edge="1" source="rtk_gps" target="navsat" parent="1"/>
+        <mxCell id="e_navsat_global" edge="1" source="navsat" target="ekf_global" parent="1"/>
+        <mxCell id="e_local_global" edge="1" source="ekf_local" target="ekf_global" parent="1"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

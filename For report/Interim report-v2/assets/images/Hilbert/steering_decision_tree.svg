@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 620" width="100%" height="auto" style="background: transparent; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="card-shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="emerald-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="rose-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#be123c"/>
+    </linearGradient>
+    <linearGradient id="amber-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#10b981"/>
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- Title & Subtitle -->
+  <text x="540" y="32" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="700" letter-spacing="-0.02em">Airside Steering Architecture Selection Decision Matrix</text>
+  <text x="540" y="52" text-anchor="middle" fill="#94a3b8" font-size="13" font-weight="500">Autonomous Airfield Inspection &amp; FOD Remediation • CDE4301 Runway Patrol</text>
+
+  <!-- ROOT REQUIREMENTS CARD -->
+  <g transform="translate(380, 75)" filter="url(#card-shadow)">
+    <rect width="320" height="115" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+    <rect width="320" height="28" rx="10" fill="#0369a1" opacity="0.4"/>
+    <text x="160" y="20" text-anchor="middle" fill="#38bdf8" font-size="13" font-weight="700">🎯 Airside FOD Mission Constraints</text>
+    <text x="20" y="48" fill="#e2e8f0" font-size="11.5" font-weight="600">• High Transit Speed: 10–15 km/h (Clearance Windows)</text>
+    <text x="20" y="66" fill="#e2e8f0" font-size="11.5" font-weight="600">• Environment: Grooved Asphalt &amp; Loose Bitumen Aggregates</text>
+    <text x="20" y="84" fill="#e2e8f0" font-size="11.5" font-weight="600">• Debris Targeting: Zero-Radius Micro-Positioning (R = 0)</text>
+    <text x="20" y="102" fill="#e2e8f0" font-size="11.5" font-weight="600">• Remediator: Constant 45 mm Vacuum Suction Standoff</text>
+  </g>
+
+  <!-- CONNECTING ARROWS FROM ROOT TO CANDIDATES -->
+  <!-- Left branch (Ackermann) -->
+  <path d="M 430 190 L 430 220 L 195 220 L 195 245" fill="none" stroke="#f43f5e" stroke-width="2" marker-end="url(#arrow-rose)"/>
+  <!-- Middle branch (4WD Differential) -->
+  <path d="M 540 190 L 540 245" fill="none" stroke="#10b981" stroke-width="3" marker-end="url(#arrow-green)"/>
+  <!-- Right branch (Mecanum) -->
+  <path d="M 650 190 L 650 220 L 885 220 L 885 245" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow-amber)"/>
+
+  <!-- CANDIDATE 1: ACKERMANN STEERING (LEFT) -->
+  <g transform="translate(45, 250)" filter="url(#card-shadow)">
+    <!-- Header -->
+    <rect width="300" height="42" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5"/>
+    <text x="15" y="26" fill="#f43f5e" font-size="14" font-weight="700">1. Ackermann Steering</text>
+    <rect x="210" y="10" width="78" height="22" rx="4" fill="rgba(244,63,94,0.2)"/>
+    <text x="249" y="25" text-anchor="middle" fill="#fda4af" font-size="10.5" font-weight="700">2-DOF (vx, δ)</text>
+
+    <!-- Eval Body -->
+    <rect y="48" width="300" height="152" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="72" fill="#94a3b8" font-size="11" font-weight="700" text-transform="uppercase">Kinematic Evaluation:</text>
+    <text x="14" y="94" fill="#cbd5e1" font-size="11.5">• Min Radius: R_min ≥ 0.79 m (Swept &gt; 2.4 m)</text>
+    <text x="14" y="114" fill="#cbd5e1" font-size="11.5">• Multi-point shunting required to realign</text>
+    <text x="14" y="134" fill="#cbd5e1" font-size="11.5">• Body lean alters vacuum suction height</text>
+    <text x="14" y="154" fill="#cbd5e1" font-size="11.5">• Steering kingpins prone to joint fatigue</text>
+    <text x="14" y="174" fill="#cbd5e1" font-size="11.5">• Pure rolling traction, but mechanically complex</text>
+
+    <!-- Verdict -->
+    <rect y="206" width="300" height="60" rx="8" fill="url(#rose-grad)" stroke="#f43f5e" stroke-width="1.5"/>
+    <text x="150" y="230" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="800">REJECTED</text>
+    <text x="150" y="248" text-anchor="middle" fill="#ffe4e6" font-size="10.5">Cannot pivot in-place; suction seal fails in turns.</text>
+  </g>
+
+  <!-- CANDIDATE 2: 4WD DIFFERENTIAL DRIVE (MIDDLE - SELECTED) -->
+  <g transform="translate(385, 250)" filter="url(#card-shadow)">
+    <!-- Header -->
+    <rect width="310" height="42" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2.5"/>
+    <text x="12" y="26" fill="#10b981" font-size="12.5" font-weight="700">2. 4WD Differential Drive</text>
+    <rect x="220" y="10" width="78" height="22" rx="4" fill="rgba(16,185,129,0.2)"/>
+    <text x="259" y="25" text-anchor="middle" fill="#6ee7b7" font-size="10.5" font-weight="700">2-DOF (vx, ωz)</text>
+
+    <!-- Eval Body -->
+    <rect y="48" width="310" height="152" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+    <text x="14" y="72" fill="#10b981" font-size="11" font-weight="700" text-transform="uppercase">Kinematic Evaluation:</text>
+    <text x="14" y="94" fill="#e2e8f0" font-size="11.5">• <tspan font-weight="700" fill="#10b981">Zero-Radius Turn (R = 0 m):</tspan> Micro repositioning</text>
+    <text x="14" y="114" fill="#e2e8f0" font-size="11.5">• <tspan font-weight="700" fill="#10b981">Fixed 45 mm Standoff:</tspan> Preserves suction seal</text>
+    <text x="14" y="134" fill="#e2e8f0" font-size="11.5">• <tspan font-weight="700" fill="#10b981">Direct-Drive Hubs:</tspan> Sealed against grit &amp; gravel</text>
+    <text x="14" y="154" fill="#e2e8f0" font-size="11.5">• <tspan font-weight="700" fill="#10b981">Stability Window:</tspan> 0.80 ≤ L/B ≤ 1.00 envelope</text>
+    <text x="14" y="174" fill="#e2e8f0" font-size="11.5">• <tspan font-weight="700" fill="#38bdf8">Slip Management:</tspan> Corrected by Dual EKF Fusion</text>
+
+    <!-- Verdict -->
+    <rect y="206" width="310" height="60" rx="8" fill="url(#emerald-grad)" stroke="#10b981" stroke-width="2"/>
+    <text x="155" y="230" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="800">SELECTED ARCHITECTURE</text>
+    <text x="155" y="248" text-anchor="middle" fill="#ecfdf5" font-size="10.5">Meets all 5 airside criteria with high mechanical reliability.</text>
+  </g>
+
+  <!-- CANDIDATE 3: MECANUM WHEEL DRIVE (RIGHT) -->
+  <g transform="translate(735, 250)" filter="url(#card-shadow)">
+    <!-- Header -->
+    <rect width="300" height="42" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="15" y="26" fill="#f59e0b" font-size="14" font-weight="700">3. Mecanum Wheel Drive</text>
+    <rect x="210" y="10" width="78" height="22" rx="4" fill="rgba(245,158,11,0.2)"/>
+    <text x="249" y="25" text-anchor="middle" fill="#fde68a" font-size="10.5" font-weight="700">3-DOF Holonomic</text>
+
+    <!-- Eval Body -->
+    <rect y="48" width="300" height="152" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="14" y="72" fill="#94a3b8" font-size="11" font-weight="700" text-transform="uppercase">Kinematic Evaluation:</text>
+    <text x="14" y="94" fill="#cbd5e1" font-size="11.5">• High-freq micro-vibration (30–80 Hz)</text>
+    <text x="14" y="114" fill="#cbd5e1" font-size="11.5">• Corrupts IMU state estimation &amp; LiDAR</text>
+    <text x="14" y="134" fill="#cbd5e1" font-size="11.5">• Runway bitumen &amp; gravel jams 45° rollers</text>
+    <text x="14" y="154" fill="#cbd5e1" font-size="11.5">• Poor traction on sloped/wet tarmac</text>
+    <text x="14" y="174" fill="#cbd5e1" font-size="11.5">• High maintenance; split sub-roller fatigue</text>
+
+    <!-- Verdict -->
+    <rect y="206" width="300" height="60" rx="8" fill="url(#amber-grad)" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="150" y="230" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="800">REJECTED</text>
+    <text x="150" y="248" text-anchor="middle" fill="#fef3c7" font-size="10.5">High failure rate from roller jamming &amp; SLAM degradation.</text>
+  </g>
+
+  <!-- Summary Footer Note -->
+  <text x="540" y="585" text-anchor="middle" fill="#64748b" font-size="11.5" font-style="italic">
+    Trade study derived from FAA AC 150/5220-24 airside operational metrics and physical tarmac testing.
+  </text>
+</svg>

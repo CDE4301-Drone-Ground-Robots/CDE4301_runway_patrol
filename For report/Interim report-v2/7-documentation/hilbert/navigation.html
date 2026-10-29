@@ -18,6 +18,7 @@
   <meta http-equiv="Expires" content="0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
   <title>Autonomous Runway Navigation &amp; Kinematic Path Planning - Hilbert Soh | FOD Hunter</title>
   <link rel="stylesheet" href="../../css/styles.css?v=4.2">
   <script>
@@ -31,7 +32,7 @@
       }
     };
   </script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script id="mathjax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     /* MATHJAX RESPONSIVE & HIGH-LEGIBILITY STYLING */
     .MathJax {
@@ -99,6 +100,31 @@
     .math-eq-hero .MathJax[display="true"] {
       font-size: 118% !important;
     }
+  
+    /* Apple-inspired citation badge styling */
+    .citation-ref {
+      color: var(--apple-blue, #2997ff);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88em;
+      padding: 1px 5px;
+      margin: 0 1px;
+      border-radius: 4px;
+      background: rgba(41, 151, 255, 0.08);
+      border: 1px solid rgba(41, 151, 255, 0.22);
+      transition: all 0.2s ease;
+      display: inline-block;
+      line-height: 1.25;
+      vertical-align: baseline;
+    }
+    .citation-ref:hover {
+      background: rgba(41, 151, 255, 0.22);
+      border-color: rgba(41, 151, 255, 0.5);
+      color: #5ac8fa;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
   </style>
 </head>
 <body>
@@ -127,6 +153,25 @@
       </div>
     </div>
   </header>
+
+  <!-- APPLE STICKY SUB-NAVIGATION -->
+  <nav class="apple-subnav">
+    <div class="apple-subnav-container">
+      <div class="apple-subnav-title" style="display: flex; align-items: center; gap: 8px;">
+        <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #3b82f6; box-shadow: 0 0 8px #3b82f6;"></span>
+        <span style="font-weight: 600; color: #f5f5f7;">Hilbert Soh • Engineering Suite</span>
+      </div>
+      <ul class="apple-subnav-items">
+        <li class="apple-subnav-item"><a href="../../4-subsystems/programming.html" style="color: #60a5fa; font-weight: 500;">4.3 Programming Hub ↗</a></li>
+        <li class="apple-subnav-item"><a href="navigation.html" class="active">Navigation</a></li>
+        <li class="apple-subnav-item"><a href="simulation.html">Simulation</a></li>
+        <li class="apple-subnav-item"><a href="communications.html">C2 Comms</a></li>
+        <li class="apple-subnav-item"><a href="steering-kinematics.html">Kinematics</a></li>
+        <li class="apple-subnav-item"><a href="Motor_drivetrain_calculation.html">Drivetrain</a></li>
+      </ul>
+    </div>
+  </nav>
+
 
   <!-- MOBILE DRAWER -->
   <div class="apple-mobile-drawer" id="apple-mobile-drawer">
@@ -179,30 +224,102 @@
         <!-- HARMONIZED ARCHITECTURAL BADGES -->
         <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--apple-border);">
           <span class="badge" style="background: rgba(41, 151, 255, 0.08); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.2);">ROS 2 Jazzy (Ubuntu 24.04 LTS)</span>
-          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">Phase 1 Planner: SmacPlanner2D (Cost-Aware Smoothed) &bull; Phase 2: SmacPlannerHybrid</span>
-          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">Local Controller: Regulated Pure Pursuit (RPP)</span>
-          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">Chassis Proxy: AgileX Scout 2.0 4WD Skid-Steer (65.0 kg)</span>
-          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #f5f5f7; border: 1px solid var(--apple-border);">Costmap: 0.05 m/px Orthophoto Georeferenced Grid</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">Global Planner: SmacPlannerHybrid (Reeds-Shepp Lattice, $R_{\min} = 1.0\text{ m}$)</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">Local Controller: Regulated Pure Pursuit (RPP, 20 Hz)</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">Chassis: 4WD Skid-Steer &bull; 4&times; BLDC Hub Motors (65.0 kg)</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid var(--apple-border);">LiDAR: Hesai JT16 3D (30m, 360&deg;&times;40&deg;, 100k lux)</span>
+          <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #f5f5f7; border: 1px solid var(--apple-border);">Localization: Dual EKF (robot_localization) &bull; RTK-GNSS + IMU + Encoders</span>
         </div>
       </div>
 
         <!-- 4-METRIC PLATFORM SNAPSHOT -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 18px; margin-bottom: 18px;">
           <div style="background: var(--apple-surface-card); padding: 14px; border-radius: 8px; text-align: center; border: 1px solid var(--apple-border);">
-            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Vehicle Mass &amp; Chassis</div>
-            <div style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 4px;">65.0 kg <span style="font-size: 12.5px; font-weight: 400; color: #86868b;">&bull; 4WD Skid-Steer (Scout Proxy)</span></div>
+            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Vehicle Mass &amp; Drivetrain</div>
+            <div style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 4px;">65.0 kg <span style="font-size: 12px; font-weight: 400; color: #86868b;">&bull; 4&times; Hub Motors (ZLLG80ASM250)</span></div>
           </div>
           <div style="background: var(--apple-surface-card); padding: 14px; border-radius: 8px; text-align: center; border: 1px solid var(--apple-border);">
-            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Operating Sprint Speed</div>
-            <div style="font-size: 16px; font-weight: 700; color: #2997ff; margin-top: 4px;">10&ndash;15 km/h <span style="font-size: 12.5px; font-weight: 400; color: #86868b;">(2.78&ndash;4.17 m/s)</span></div>
+            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Autonomous Cruise Speed</div>
+            <div style="font-size: 16px; font-weight: 700; color: #2997ff; margin-top: 4px;">2.22 m/s (8.0 km/h) <span style="font-size: 12px; font-weight: 400; color: #86868b;">&bull; 15 km/h Sprint Target</span></div>
           </div>
           <div style="background: var(--apple-surface-card); padding: 14px; border-radius: 8px; text-align: center; border: 1px solid var(--apple-border);">
-            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Kinematic Aspect Ratio ($L/B$)</div>
-            <div style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 4px;">0.8&ndash;1.0 <span style="font-size: 12.5px; font-weight: 400; color: #86868b;">(4WD Skid-Steer Envelope)</span></div>
+            <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Kinematic Dimensions</div>
+            <div style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 4px;">$R = 0.1315\text{ m}$ <span style="font-size: 12px; font-weight: 400; color: #86868b;">&bull; $W = 0.58\text{ m}$, $L = 0.45\text{ m}$</span></div>
           </div>
           <div style="background: var(--apple-surface-card); padding: 14px; border-radius: 8px; text-align: center; border: 1px solid var(--apple-border);">
             <div style="font-size: 11px; text-transform: uppercase; color: #86868b; font-weight: 600; letter-spacing: 0.04em;">Global Positioning Accuracy</div>
-            <div style="font-size: 16px; font-weight: 700; color: #f5f5f7; margin-top: 4px;">&plusmn; 2.0 cm <span style="font-size: 12.5px; font-weight: 400; color: #86868b;">&bull; Simulated RTK-GNSS Prior</span></div>
+            <div style="font-size: 16px; font-weight: 700; color: #30d158; margin-top: 4px;">&plusmn; 2.0 cm <span style="font-size: 12px; font-weight: 400; color: #86868b;">&bull; RTK-GNSS Spec (Simulated)</span></div>
+          </div>
+        </div>
+
+        <!-- STAGE 1: COMPREHENSIVE SUBSYSTEM TRACEABILITY MATRIX -->
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--apple-border); border-radius: 12px; padding: 20px; margin-bottom: 22px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <div style="font-size: 14px; font-weight: 700; color: #f5f5f7; letter-spacing: -0.01em;">
+                <span style="color: #2997ff; margin-right: 6px;">●</span>Subsystem Architecture Traceability &amp; Implementation Status
+              </div>
+              <div style="font-size: 12px; color: #86868b;">Full lifecycle mapping across perception, estimation, planning, control, and actuation</div>
+            </div>
+            <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 11px;">Stage 1 Audit</span>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
+                  <th style="padding: 10px 12px;">Subsystem</th>
+                  <th style="padding: 10px 12px;">Primary Function</th>
+                  <th style="padding: 10px 12px;">Implementation (ROS 2 / Hardware)</th>
+                  <th style="padding: 10px 12px;">Evidence &amp; Verification</th>
+                  <th style="padding: 10px 12px;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #38bdf8;">Perception</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">3D volumetric runway dynamic obstacle sensing</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #f5f5f7;">Hesai JT16 (30m, 360&deg;&times;40&deg;) &bull; Sim: GPU LaserScan (/scan)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Hesai JT16 3D LiDAR &bull; <code>scout_v2.xacro</code></td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">SIMULATED &bull; HARDWARE SELECTED</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #c084fc;">Localization</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Dual EKF state estimation on feature-poor runway</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #f5f5f7;">robot_localization: ekf_local (odom&rarr;base) + ekf_global (map&rarr;odom)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Dual-EKF Sensor Fusion &bull; <code>ekf.yaml</code></td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">IMPLEMENTED &amp; TESTED (SIL)</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #fbbf24;">Global Planning</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Kinematically feasible continuous SE(2) path search</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #f5f5f7;">nav2_smac_planner::SmacPlannerHybrid (Reeds-Shepp, R_min=1.0m)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">SmacPlannerHybrid &bull; <code>nav2_params.yaml</code></td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">IMPLEMENTED &amp; TESTED (SIL)</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #34d399;">Local Control</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Curvature-regulated path tracking without zero-radius scrub</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #f5f5f7;">nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Regulated Pure Pursuit &bull; <code>nav2_params.yaml</code></td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">IMPLEMENTED &amp; TESTED (SIL)</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f43f5e;">Drivetrain Actuation</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">4-wheel independent BLDC direct drive on tarmac</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #f5f5f7;">STM32 CANopen bridge &bull; Dual ZLAC8015D &bull; 4&times; ZLLG80ASM250 (48V)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Author confirmation; Drivetrain Calc Page</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 214, 10, 0.12); color: #ffd60a; border: 1px solid rgba(255, 214, 10, 0.25); font-size: 10.5px;">IN PROGRESS (HIL TRANSITION)</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 9px 12px; font-weight: 600; color: #06b6d4;">Intermodal Dispatch</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">UAV aerial FOD detection to UGV ground remediation</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11px; color: #f5f5f7;">Zenoh / CycloneDDS bridge (5.8 GHz) &bull; Nav2 Waypoint Queue</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">CycloneDDS Unicast &bull; Tactical C2 Datalink</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 214, 10, 0.12); color: #ffd60a; border: 1px solid rgba(255, 214, 10, 0.25); font-size: 10.5px;">SIMULATED &bull; FIELD TRIAL PLANNED</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
@@ -359,6 +476,22 @@
           </div>
         </div>
 
+      <!-- EMBEDDED PUBLICATION-GRADE VECTOR DIAGRAM: 5-STAGE PIPELINE -->
+          <div style="margin-top: 20px; background: rgba(0, 0, 0, 0.35); border: 1px solid var(--apple-border); border-radius: 12px; padding: 18px; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <strong style="color: #f5f5f7; font-size: 13.5px;">Figure 1.1: 5-Stage Autonomy Control Pipeline Architecture</strong>
+                <div style="font-size: 11.5px; color: #86868b;">End-to-end dataflow from Hesai 3D LiDAR perception to 4WD direct-drive BLDC tarmac actuation</div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">Vector SVG</span>
+              </div>
+            </div>
+            <div style="text-align: center; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+              <img src="../../assets/images/Hilbert/nav_autonomy_pipeline.svg" alt="5-Stage Autonomy Control Pipeline Architecture" style="width: 100%; max-width: 1040px; height: auto; display: block; margin: 0 auto;" />
+            </div>
+          </div>
+
       <div class="page-content">
 
         <!-- ========================================================================= -->
@@ -379,10 +512,10 @@
             1.1 Operational Environment: Airfield Runway Sweep on Dry Pavement ($\mu = 0.80$)
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            The autonomous Foreign Object Debris (FOD) remediation rover is engineered specifically for active airfield runway, taxiway, and apron infrastructure under statutory civil aviation regulations (Federal Aviation Administration, 2019 [2]; ASTM International, 2020 [1]; Shan et al., 2025 [12]). Runways feature standard geometric profiles of $45\text{ to }60\text{ m}$ in width and $3000\text{ to }4000\text{ m}$ in length, paved in grooved dense-graded asphalt or brushed Portland cement concrete exhibiting high surface friction ($\mu \approx 0.80$ under dry ambient conditions).
+            The autonomous Foreign Object Debris (FOD) remediation rover is engineered specifically for active airfield runway, taxiway, and apron infrastructure under statutory civil aviation regulations (Federal Aviation Administration, 2014 <a href="../../6-references/hilbert/references.html#ref-2" class="citation-ref" title="FAA AC 150/5220-24 (2014)">[2]</a>; ASTM International, 2020 <a href="../../6-references/hilbert/references.html#ref-1" class="citation-ref" title="ASTM D5340-20 (2020)">[1]</a>; Shan et al., 2025 <a href="../../6-references/hilbert/references.html#ref-12" class="citation-ref" title="Shan et al., Remote Sensing (2025)">[12]</a>). Runways feature standard geometric profiles of $45\text{ to }60\text{ m}$ in width and $3000\text{ to }4000\text{ m}$ in length, paved in grooved dense-graded asphalt or brushed Portland cement concrete exhibiting high surface friction ($\mu \approx 0.80$ under dry ambient conditions).
           </p>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Operating on active runways imposes strict engineering boundaries: sweeps must execute rapidly within tight air traffic inter-arrival windows (requiring transit sprints $\ge 10.0\text{ km/h}$ or $2.78\text{ m/s}$), while retaining absolute millimeter-to-centimeter precision to reliably capture metallic fasteners, wire fragments, and tire chunks (Munyer et al., 2022 [10]).
+            Operating on active runways imposes strict engineering boundaries: sweeps must execute rapidly within tight air traffic inter-arrival windows (requiring transit sprints $\ge 10.0\text{ km/h}$ or $2.78\text{ m/s}$), while retaining absolute millimeter-to-centimeter precision to reliably capture metallic fasteners, wire fragments, and tire chunks (Munyer et al., 2022 <a href="../../6-references/hilbert/references.html#ref-10" class="citation-ref" title="Munyer et al., IEEE CSCI (2022)">[10]</a>).
           </p>
 
           <!-- SCAN MATCHING DEGENERACY HERO BOX -->
@@ -403,7 +536,7 @@
               $$\text{det}(\mathbf{H}) = \lambda_x \lambda_y \lambda_\theta \approx 0 \implies \mathbf{\Sigma}_x = (\mathbf{H}^{-1})_{xx} \to \infty$$
             </div>
             <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-              Under pure laser odometry or ICP, longitudinal position drifts unbounded along $+X$. Therefore, the navigation subsystem strictly mandates <strong>single-antenna RTK-GNSS pose graph priors ($\mathbf{\Omega}_{\text{prior}}$)</strong> and georeferenced orthophoto costmap constraints as formulated in modern graph SLAM paradigms (Macenski &amp; Jambrecic, 2021 [21]).
+              Under pure laser odometry or ICP, longitudinal position drifts unbounded along $+X$. Therefore, the navigation subsystem strictly mandates <strong>single-antenna RTK-GNSS pose graph priors ($\mathbf{\Omega}_{\text{prior}}$)</strong> and georeferenced orthophoto costmap constraints as formulated in modern graph SLAM paradigms (Macenski &amp; Jambrecic, 2021 <a href="../../6-references/hilbert/references.html#ref-21" class="citation-ref" title="Macenski &amp; Jambrecic, JOSS (2021)">[21]</a>).
             </p>
           </div>
 
@@ -411,7 +544,7 @@
             1.2 Platform Dynamics: 4WD Skid-Steer Kinematics Overview
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            The mobile chassis utilizes a 4-Wheel Drive (4WD) skid-steer architecture (modeled after the AgileX Scout 2.0 heavy-duty mobile base). Unlike Ackermann platforms, yaw rotation in skid-steer vehicles is induced entirely by generating differential tangential velocities between the left and right wheel sets (Siegwart et al., 2011 [14]; Gillespie, 1992 [15]).
+            The mobile chassis utilizes a 4-Wheel Drive (4WD) skid-steer architecture (modeled after the AgileX Scout 2.0 heavy-duty mobile base). Unlike Ackermann platforms, yaw rotation in skid-steer vehicles is induced entirely by generating differential tangential velocities between the left and right wheel sets (Siegwart et al., 2011 <a href="../../6-references/hilbert/references.html#ref-14" class="citation-ref" title="Siegwart et al., MIT Press (2011)">[14]</a>; Gillespie, 1992 <a href="../../6-references/hilbert/references.html#ref-15" class="citation-ref" title="Gillespie, SAE (1992)">[15]</a>).
           </p>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-bottom: 16px; align-items: center;">
@@ -479,7 +612,7 @@
           </div>
 
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
-            The autonomous runway navigation subsystem is orchestrated by the Nav2 software stack under ROS 2 Jazzy. Mission execution, trajectory planning, local control, and recovery policies are coordinated hierarchically through declarative Behavior Trees (BT) and deterministic action servers. Detailed evaluations and empirical parameter tuning for candidate global planners and local tracking controllers are presented in Section 4.0 and Section 5.0 respectively.
+            The autonomous runway navigation subsystem is orchestrated by the Nav2 software stack under ROS 2 Jazzy (Macenski et al., 2020 <a href="../../6-references/hilbert/references.html#ref-8" class="citation-ref" title="Macenski et al., IEEE/RSJ IROS (2020)">[8]</a>; Macenski et al., 2022 <a href="../../6-references/hilbert/references.html#ref-7" class="citation-ref" title="Macenski et al., Science Robotics (2022)">[7]</a>). Mission execution, trajectory planning, local control, and recovery policies are coordinated hierarchically through declarative Behavior Trees (BT) and deterministic action servers. Detailed evaluations and empirical parameter tuning for candidate global planners and local tracking controllers are presented in Section 4.0 and Section 5.0 respectively.
           </p>
 
           <!-- 2.1 NAV2 BEHAVIOR TREE SPECIFICATION -->
@@ -662,79 +795,159 @@
 
           <!-- 4.1 CANDIDATE ALGORITHM COMPARISON -->
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 10px 0; letter-spacing: -0.01em;">
-            4.1 Global Path Planning Candidate Algorithm Comparison
+            4.1 Global Path Planning Candidate Algorithm Comparison &amp; 1144-Cell Benchmark
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            To determine the optimal global path planner for runway debris inspection, six candidate algorithms across the mobile robotics graph-search and sampling taxonomy were evaluated against airfield geometric constraints and skid-steer dynamics:
+            To determine the optimal global path planner for runway debris inspection, candidate algorithms across mobile robotics graph-search and kinematic lattice paradigms were evaluated against airfield geometric constraints and 4WD skid-steer dynamics:
           </p>
 
-          <!-- GLOBAL PLANNING TABLE -->
-          <div style="overflow-x: auto; margin-bottom: 14px;">
+          <!-- GLOBAL PLANNING CANDIDATE COMPARISON TABLE -->
+          <div style="overflow-x: auto; margin-bottom: 18px;">
             <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
               <thead>
                 <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
                   <th style="padding: 10px 12px;">Algorithm</th>
-                  <th style="padding: 10px 12px;">How it works?</th>
-                  <th style="padding: 10px 12px;">What the path looks like?</th>
-                  <th style="padding: 10px 12px;">Good for runway?</th>
+                  <th style="padding: 10px 12px;">Kinematic Principle</th>
+                  <th style="padding: 10px 12px;">Path Geometry</th>
+                  <th style="padding: 10px 12px;">Airfield Runway Viability</th>
                   <th style="padding: 10px 12px;">Selection Verdict</th>
                 </tr>
               </thead>
               <tbody>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">A*</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Walking with a compass pointing at the goal</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Rigid lines, sharp turns but with jagged diagonal and zigzag cuts</td>
-                  <td style="padding: 10px 12px; color: #ffd60a;">Finds the goal the fastest but FOD Hunter does not move smoothly</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 214, 10, 0.12); color: #ffd60a; border: 1px solid rgba(255, 214, 10, 0.25); font-size: 10.5px;">EVALUATED</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Standard 2D Grid A*</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Discretized 8-connected grid search guided by Euclidean / Manhattan heuristic</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Piecewise-linear grid steps with jagged 45&deg; and 90&deg; diagonal turns</td>
+                  <td style="padding: 10px 12px; color: #ffd60a;">Low compute, but sharp angular vertices force high-torque zero-radius skid scrubbing on rough asphalt</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 214, 10, 0.12); color: #ffd60a; border: 1px solid rgba(255, 214, 10, 0.25); font-size: 10.5px;">EVALUATED &bull; BASELINE ONLY</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Theta*</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Draws direct straight line to the goal</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Long straight lines connected by corners</td>
-                  <td style="padding: 10px 12px; color: #ff453a;">Extremely fast at finding goal but does not take into consideration that FOD Hunter cannot turn instantly</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED</span></td>
-                </tr>
-                <tr style="background: rgba(48, 209, 88, 0.05); border-bottom: 1px solid rgba(48, 209, 88, 0.2);">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #30d158;">Hybrid A*</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">Similar to A* with kinodynamic state lattice expansion</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">Smooth, continuous arcs (Reeds-Shepp / Dubins)</td>
-                  <td style="padding: 10px 12px; color: #30d158;">Similar to A* but is able to handle high speed without slowing down</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.15); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.3); font-size: 10.5px;">SELECTED</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Theta* (Any-Angle A*)</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Line-of-sight Raycast short-cutting across intermediate parent grid vertices</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Direct any-angle straight line segments connected by sharp inflection waypoints</td>
+                  <td style="padding: 10px 12px; color: #30d158;">Generates shortest Euclidean distance on open runways, but still lacks continuous curvature bounds</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 214, 10, 0.12); color: #ffd60a; border: 1px solid rgba(255, 214, 10, 0.25); font-size: 10.5px;">EVALUATED &bull; UNBOUNDED CURVATURE</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Dijkstra</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Spread out like water until it finds the goal</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Using 90deg sharp turns</td>
-                  <td style="padding: 10px 12px; color: #ff453a;">Freezes up because it wastes time checking millions of empty runway spots in the wrong direction</td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Greedy Best-First Search</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Expands strictly along heuristic gradient towards goal without path cost accumulation</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Highly direct paths, but susceptible to extensive detours around obstacles</td>
+                  <td style="padding: 10px 12px; color: #ff453a;">Suboptimal path length; easily trapped in concave obstacle dead-ends; unsafe for airside operations</td>
                   <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Greedy Best-First</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Rushes blindly straight toward the goal using only estimated distance</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Choppy, erratic path with severe jagged turns and frequent detours around wide obstacles</td>
-                  <td style="padding: 10px 12px; color: #ff453a;">Explores the fewest cells quickly, but gets easily trapped in dead-ends and produces jerky, battery-draining turns</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Dijkstra Baseline</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Uniform-cost frontier expansion across all graph directions without heuristic bias</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Shortest graph path, identical geometry to standard grid A*</td>
+                  <td style="padding: 10px 12px; color: #ff453a;">Expands 76% of entire map; high RAM and CPU latency unviable for embedded real-time replanning</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">BASELINE ONLY &bull; EXPENSIVE</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">BFS (Breadth-First)</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Spreads outward step-by-step in expanding squares equally in every direction</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Staircase grid lines with rigid 90&deg; right angles</td>
-                  <td style="padding: 10px 12px; color: #ff453a;">Terrible for runways. Chokes the computer searching open asphalt and forces damaging in-place tire pivots</td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Breadth-First Search (BFS)</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Unweighted level-order tree traversal across adjacent cells</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Shortest hop count; ignores terrain traversal cost</td>
+                  <td style="padding: 10px 12px; color: #ff453a;">Cannot ingest costmap inflation gradients; ignores obstacle clearance buffers</td>
                   <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED</span></td>
+                </tr>
+                <tr style="border-bottom: 2px solid var(--apple-border);">
+                  <td style="padding: 10px 12px; font-weight: 600; color: #30d158;">SmacPlannerHybrid (Hybrid A*)</td>
+                  <td style="padding: 10px 12px; color: #e2e8f0;">Continuous $SE(2)$ state lattice search $(x, y, \theta)$ with Reeds-Shepp analytic expansions</td>
+                  <td style="padding: 10px 12px; color: #30d158;">Continuous-curvature smooth arcs respecting minimum turning radius ($R_{\min} = 1.0\text{ m}$)</td>
+                  <td style="padding: 10px 12px; color: #30d158;"><strong>Optimal for 4WD skid-steer:</strong> Eliminates zero-radius pivot scrubbing and drastically reduces motor current draw</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">SELECTED FOR PRODUCTION</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <!-- EVALUATION FOOTNOTE CALLOUT BOX -->
-          <div style="background: rgba(48, 209, 88, 0.04); border: 1px solid rgba(48, 209, 88, 0.25); border-left: 3px solid #30d158; border-radius: 8px; padding: 12px 16px; margin-bottom: 22px;">
-            <p style="font-size: 12.5px; color: #f5f5f7; margin: 0; line-height: 1.55;">
-              <strong>**Architectural Decision Note:</strong> Evaluated standard 2D A* as our Phase 1 baseline, but rejected it because it forces high-torque pivot turns on rough asphalt. Hence upgraded to <strong>Hybrid A*</strong>, which uses the A* search engine but constrains motion to smooth, rolling curves.
-            </p>
+          <!-- EMPIRICAL BENCHMARK MATRIX -->
+          <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--apple-border); border-radius: 10px; padding: 18px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <strong style="color: #f5f5f7; font-size: 13.5px;">Original Empirical Benchmark Across 1144 Traversable Nodes</strong>
+                <div style="font-size: 11.5px; color: #86868b;">Empirical benchmark evaluating search efficiency, node expansion counts, computation latency, and path length across identical obstacle maps.</div>
+              </div>
+              <span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10.5px;">Empirical Benchmark Data</span>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
+                    <th style="padding: 9px 12px;">Algorithm</th>
+                    <th style="padding: 9px 12px;">Nodes Explored (out of 1144)</th>
+                    <th style="padding: 9px 12px;">Exploration Ratio</th>
+                    <th style="padding: 9px 12px;">Path Length</th>
+                    <th style="padding: 9px 12px;">Compute Latency</th>
+                    <th style="padding: 9px 12px;">Node Reduction vs. Dijkstra</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--apple-border);">
+                    <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">A*</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">214</td>
+                    <td style="padding: 9px 12px; color: var(--apple-text-secondary);">18.7%</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">43.5 m</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #38bdf8;">0.60 ms</td>
+                    <td style="padding: 9px 12px; font-weight: 600; color: #30d158;">&minus;75.4%</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--apple-border);">
+                    <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Theta*</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">129</td>
+                    <td style="padding: 9px 12px; color: var(--apple-text-secondary);">11.3%</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #30d158;">41.8 m</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #38bdf8;">0.33 ms</td>
+                    <td style="padding: 9px 12px; font-weight: 600; color: #30d158;">&minus;85.2%</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--apple-border);">
+                    <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Greedy Best-First</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #38bdf8;">45</td>
+                    <td style="padding: 9px 12px; color: var(--apple-text-secondary);">3.9%</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #ff9f0a;">44.1 m</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #38bdf8;">0.07 ms</td>
+                    <td style="padding: 9px 12px; font-weight: 600; color: #30d158;">&minus;94.8%</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--apple-border);">
+                    <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Dijkstra (Baseline)</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #ff453a;">869</td>
+                    <td style="padding: 9px 12px; color: #ff453a;">76.0%</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">43.5 m</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #ff453a;">1.03 ms</td>
+                    <td style="padding: 9px 12px; color: #86868b;">Baseline (0%)</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Breadth-First Search (BFS)</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">864</td>
+                    <td style="padding: 9px 12px; color: var(--apple-text-secondary);">75.5%</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">43.5 m</td>
+                    <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">0.77 ms</td>
+                    <td style="padding: 9px 12px; color: var(--apple-text-secondary);">&minus;0.6%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="margin-top: 12px; font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
+              <strong style="color: #f5f5f7;">Engineering Decision Synthesis:</strong> While Greedy Best-First explored the fewest nodes (45) and Theta* generated the shortest trajectory (41.8 m), neither algorithm bounds trajectory curvature. Standard grid-based paths force abrupt heading shifts requiring high-torque zero-radius skid-steer scrubbing. Consequently, <strong>SmacPlannerHybrid (Hybrid A*)</strong> (Dolgov et al., 2010 <a href="../../6-references/hilbert/references.html#ref-19" class="citation-ref" title="Dolgov et al., IJRR (2010)">[19]</a>; Macenski et al., 2020 <a href="../../6-references/hilbert/references.html#ref-8" class="citation-ref" title="Macenski et al., IEEE/RSJ IROS (2020)">[8]</a>) with a Reeds-Shepp / Dubins curvature model ($R_{\min} = 1.0\text{ m}$, reverse penalty 2.5) (Dubins, 1957 <a href="../../6-references/hilbert/references.html#ref-20" class="citation-ref" title="Dubins, Am. J. Math. (1957)">[20]</a>) was selected to guarantee continuous-curvature kinematic drivability.
+            </div>
           </div>
 
-          <!-- 4.2 SMAC PLANNER HYBRID EMPIRICAL PARAMETER TUNING -->
+          <!-- EMBEDDED PUBLICATION-GRADE VECTOR DIAGRAM: NAV2 TOPOLOGY -->
+          <div style="background: rgba(0, 0, 0, 0.35); border: 1px solid var(--apple-border); border-radius: 12px; padding: 18px; margin-bottom: 22px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <strong style="color: #f5f5f7; font-size: 13.5px;">Figure 4.1: Nav2 SmacPlannerHybrid &amp; Regulated Pure Pursuit (RPP) Topology</strong>
+                <div style="font-size: 11.5px; color: #86868b;">Coupling continuous SE(2) lattice global path search with curvature-regulated velocity tracking</div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">Vector SVG</span>
+              </div>
+            </div>
+            <div style="text-align: center; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+              <img src="../../assets/images/Hilbert/nav2_hybrid_rpp_topology.svg" alt="Nav2 SmacPlannerHybrid and RPP Topology" style="width: 100%; max-width: 1040px; height: auto; display: block; margin: 0 auto;" />
+            </div>
+          </div>
+
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 10px 0; letter-spacing: -0.01em;">
             4.2 Parameter 1: Minimum Turning Radius ($R_{\min} = 1.00\text{ m}$) &amp; Kinodynamic Lattice
           </h3>
@@ -898,7 +1111,7 @@
             5.1 Local Path Tracking Candidate Algorithm Comparison
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            At speeds $\ge 10.0\text{ km/h}$ ($2.78\text{ m/s}$), mobile robot steering commands directly dictate wheel traction, actuator thermal load, and platform dynamic stability. Four prominent local trajectory controllers were evaluated under airfield constraints:
+            At speeds up to $2.22\text{ m/s}$ ($8.0\text{ km/h}$ autonomous cruise cap, with a $15.0\text{ km/h}$ sprint ceiling), local steering commands directly dictate tire shear strain, motor thermal dissipation, and cross-track error. Four prominent local trajectory controllers were evaluated under airfield constraints:
           </p>
 
           <!-- LOCAL PLANNING TABLE -->
@@ -907,46 +1120,60 @@
               <thead>
                 <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
                   <th style="padding: 10px 12px;">Algorithm</th>
-                  <th style="padding: 10px 12px;">How it drives?</th>
-                  <th style="padding: 10px 12px;">Reaction to high speed</th>
-                  <th style="padding: 10px 12px;">Remarks</th>
+                  <th style="padding: 10px 12px;">Control Principle</th>
+                  <th style="padding: 10px 12px;">CPU / Compute Overhead</th>
+                  <th style="padding: 10px 12px;">Curvature &amp; Speed Regulation</th>
+                  <th style="padding: 10px 12px;">4WD Skid-Steer Scrubbing Response</th>
                   <th style="padding: 10px 12px;">Selection Verdict</th>
                 </tr>
               </thead>
               <tbody>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
                   <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Dynamic Window Approach (DWB / DWA)</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Learner driver randomly picking between 20 steering angles every second</td>
-                  <td style="padding: 10px 12px; color: #ff453a;">Weaves left and right and brakes suddenly on straights</td>
-                  <td style="padding: 10px 12px; color: #ff453a;">Damaging on wheels. Overloading motors due to the frequent stops and spins</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Discretized velocity space rollouts with heuristic objective scoring</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Moderate (8&ndash;12% CPU)</td>
+                  <td style="padding: 10px 12px; color: #ff453a;">Fixed lookahead window; prone to oscillation and abrupt decelerations on high-speed straights</td>
+                  <td style="padding: 10px 12px; color: #ff453a;">Frequent angular re-evaluations generate jerky turning commands and high tire scrubbing</td>
                   <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Model Predictive Path Integral (MPPI)</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">AI Supercomputer trying 1000 driving lines in split second and find the best line</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Anticipates moving obstacles and adjust speed and trajectory proactively</td>
-                  <td style="padding: 10px 12px; color: #ffd60a;">Handles wet ground perfectly. Exactly the model used in Tesla autonomous driving. High usage on CPU and ram</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 214, 10, 0.12); color: #ffd60a; border: 1px solid rgba(255, 214, 10, 0.25); font-size: 10.5px;">Under consideration</span></td>
-                </tr>
-                <tr style="background: rgba(48, 209, 88, 0.05); border-bottom: 1px solid rgba(48, 209, 88, 0.2);">
-                  <td style="padding: 10px 12px; font-weight: 700; color: #30d158;">Regulated Pure Pursuit (RPP)</td>
-                  <td style="padding: 10px 12px; color: #f5f5f7;">Experienced driver looking ahead and smoothly adjust the gas and brakes</td>
-                  <td style="padding: 10px 12px; color: #30d158;">Extremely steady, stays centered on smooth arc without wobbling</td>
-                  <td style="padding: 10px 12px; color: #30d158;">Keeps wheel from scrubbing. Leaves room in computer to run other heavy task such as computer vision</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.15); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.3); font-size: 10.5px;">SELECTED</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Model Predictive Path Integral (MPPI) <a href="../../6-references/hilbert/references.html#ref-23" class="citation-ref" title="Williams et al., JGCD (2017)">[23]</a></td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Stochastic GPU-accelerated trajectory rollouts sampling nonlinear dynamics</td>
+                  <td style="padding: 10px 12px; color: #ff453a;">Heavy GPU Load (40&ndash;75% GPU)</td>
+                  <td style="padding: 10px 12px; color: #30d158;">Exceptional dynamic handling across complex terrain and traction variations</td>
+                  <td style="padding: 10px 12px; color: #30d158;">Can optimize for wheel slip cost, but thermal and power overhead strains embedded Jetson Orin</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 214, 10, 0.12); color: #ffd60a; border: 1px solid rgba(255, 214, 10, 0.25); font-size: 10.5px;">DEFERRED (HIGH POWER COST)</span></td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Timed-Elastic-Band (TEB)</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Stretching an elastic band around the obstacles while trying to keep it from snapping</td>
-                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Good on simple road but freezes when encountering large obstacles</td>
-                  <td style="padding: 10px 12px; color: #ff453a;">High CPU usage. Forces system to re-solve an optimal arc from scratch every 20ms using heavy non-linear equation</td>
-                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED</span></td>
+                  <td style="padding: 10px 12px; font-weight: 600; color: #f5f5f7;">Timed Elastic Band (TEB)</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Local trajectory deformation optimization for non-holonomic kinematic bounds</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">High CPU (15&ndash;25% CPU)</td>
+                  <td style="padding: 10px 12px; color: #ffd60a;">Dynamically viable, but optimization graph susceptible to local minima freezing around clusters</td>
+                  <td style="padding: 10px 12px; color: var(--apple-text-secondary);">Explicit kinodynamic bounds, but high non-deterministic solve times cause trajectory hesitation</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">EVALUATED &bull; REJECTED</span></td>
+                </tr>
+                <tr style="border-bottom: 2px solid var(--apple-border);">
+                  <td style="padding: 10px 12px; font-weight: 600; color: #30d158;">Regulated Pure Pursuit (RPP) <a href="../../6-references/hilbert/references.html#ref-22" class="citation-ref" title="Macenski et al., Autonomous Robots (2023)">[22]</a></td>
+                  <td style="padding: 10px 12px; color: #e2e8f0;">Geometric arc pursuit with dynamic lookahead &amp; multi-objective velocity regulation</td>
+                  <td style="padding: 10px 12px; color: #30d158;">Extremely Low (2&ndash;5% CPU)</td>
+                  <td style="padding: 10px 12px; color: #30d158;"><strong>Velocity scaling:</strong> Decelerates in sharp curves ($R_{\min} = 0.8\text{ m}$) and near obstacles ($d_{\text{cost}} = 1.0\text{ m}$)</td>
+                  <td style="padding: 10px 12px; color: #30d158;">Smooth curvature commands minimize lateral tire scrub; deterministic 20 Hz execution</td>
+                  <td style="padding: 10px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">SELECTED FOR PRODUCTION</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <!-- 5.2 MASTER PARAMETER TUNING MATRIX -->
+          <!-- CRITICAL SCRUBBING QUALIFICATION CALLOUT -->
+          <div style="background: rgba(245, 158, 11, 0.08); border-left: 3px solid #f59e0b; border-radius: 6px; padding: 12px 16px; margin-bottom: 18px;">
+            <div style="font-size: 12.5px; font-weight: 700; color: #f59e0b; margin-bottom: 4px;">
+              Kinematic Qualification on Skid-Steer Tire Scrubbing:
+            </div>
+            <div style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5;">
+              While Regulated Pure Pursuit (RPP) actively decelerates along curved paths and follows smooth continuous arcs rather than abrupt pivot turns, <strong>RPP does not mathematically guarantee zero wheel scrub</strong>. In any four-wheel differential skid-steer architecture, turning inherently requires lateral tire shear against the tarmac. RPP minimizes unnecessary tire shear through geometric smoothing, but cannot eliminate the physical kinematic constraints of the drivetrain.
+            </div>
+          </div>
+
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 10px 0; letter-spacing: -0.01em;">
             5.2 Master Parameter Tuning Matrix: Optimal Production Values
           </h3>
@@ -1367,22 +1594,23 @@
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 20px 0 10px 0; letter-spacing: -0.01em;">
             7.1 Dual-EKF State Estimation &amp; Outdoor Localization Architecture
           </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            In indoor laboratory environments, dead reckoning from wheel odometry augmented by Adaptive Monte Carlo Localization (AMCL) reliably maintains tracking by scan-matching planar LiDAR returns against static walls and furniture.
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+            In indoor robotics, the Adaptive Monte Carlo Localization (AMCL) particle filter is standard. However, <strong>AMCL fails catastrophically in open airfield environments</strong>. On a 60-meter-wide tarmac runway, the absence of vertical geometric surfaces (walls, columns, facades) causes the laser scan matching likelihood gradient to vanish along the longitudinal axis ($
+abla I_x \approx 0$), leading to rapid longitudinal particle dispersion and loss of tracking.
           </p>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            On an active, open airfield runway spanning $3000\text{ to }4000\text{ m}$, vertical landmarks are absent beyond distant perimeter fences. Consequently, planar laser returns detect only uniform flat tarmac, causing the longitudinal spatial gradient to vanish ($\nabla I_x \approx 0$) and the scan-matching Hessian matrix to suffer singular collapse ($\mathbf{\Sigma}_{xx} \to \infty$). To overcome this, the localization architecture deploys a <strong>Dual-EKF Cascaded Sensor Fusion Topology</strong>:
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 16px;">
+            To overcome this airfield geometric degeneracy, the FOD Hunter uses a cascaded <strong>Dual-Extended Kalman Filter (Dual-EKF)</strong> topology implemented via ROS 2 <code style="color: #2997ff;">robot_localization</code> (Moore &amp; Stouch, 2014 <a href="../../6-references/hilbert/references.html#ref-9" class="citation-ref" title="Moore &amp; Stouch, Springer (2014)">[9]</a>):
           </p>
 
-          <!-- DUAL-EKF ARCHITECTURE BREAKDOWN -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-bottom: 18px;">
+          <!-- DUAL EKF SUMMARY CARDS -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 18px;">
             <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-top: 3px solid #2997ff; border-radius: 8px; padding: 16px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <strong style="color: #2997ff; font-size: 13.5px;">Local EKF: Continuous Odometry</strong>
-                <span class="badge badge-blue" style="font-size: 10px;">odom &rarr; base_link</span>
+                <strong style="color: #2997ff; font-size: 13.5px;">Local EKF: Continuous Kinematic Dead-Reckoning</strong>
+                <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10px;">odom &rarr; base_footprint (30 Hz)</span>
               </div>
               <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
-                <strong>Sensor Inputs:</strong> Wheel Encoders ($50\text{ Hz}$) + 9-DOF IMU Gyro &amp; Accelerometer ($100\text{ Hz}$).
+                <strong>Sensor Inputs:</strong> Wheel Odometry (<code style="color: #38bdf8;">/odom</code> $v_x, v_y$ @ 50 Hz) + 9-DOF IMU (<code style="color: #c084fc;">/imu/data</code> $\omega_z, a_x$ @ 100 Hz).
               </p>
               <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
                 Provides a high-frequency, smooth, continuous coordinate frame without discrete teleportation jumps, enabling the Regulated Pure Pursuit (RPP) controller to execute stable $20\text{ Hz}$ trajectory tracking without derivative spikes.
@@ -1392,14 +1620,82 @@
             <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-top: 3px solid #30d158; border-radius: 8px; padding: 16px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <strong style="color: #30d158; font-size: 13.5px;">Global EKF: Absolute Airfield Geo-Lock</strong>
-                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10px;">map &rarr; odom</span>
+                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10px;">map &rarr; odom (30 Hz)</span>
               </div>
               <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 8px 0;">
-                <strong>Sensor Inputs:</strong> Local EKF State + GPS / RTK-GNSS ($10\text{ Hz}$ metric position).
+                <strong>Sensor Inputs:</strong> Local Odometry (<code style="color: #38bdf8;">/odometry/local</code>) + RTK-GNSS (<code style="color: #34d399;">/odometry/gps</code> Cartesian UTM @ 5 Hz) + IMU Absolute Heading.
               </p>
               <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Fuses absolute UTM metric position fixes into the state vector, continually bounding long-term odometric wheel slip drift and guaranteeing centimeter-level global positioning accuracy ($\pm 2.0\text{ cm}$) across kilometers of open runway.
+                Fuses absolute UTM metric position fixes converted by <code style="color: #34d399;">navsat_transform_node</code> into the state vector, continually bounding long-term odometric wheel slip drift and guaranteeing georeferenced accuracy across kilometers of open runway.
               </p>
+            </div>
+          </div>
+
+          <!-- EMBEDDED PUBLICATION-GRADE VECTOR DIAGRAM: DUAL EKF -->
+          <div style="background: rgba(0, 0, 0, 0.35); border: 1px solid var(--apple-border); border-radius: 12px; padding: 18px; margin-bottom: 22px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <strong style="color: #f5f5f7; font-size: 13.5px;">Figure 7.1: Dual-EKF State Estimation Architecture &amp; REP-105 Coordinate Frame Topology</strong>
+                <div style="font-size: 11.5px; color: #86868b;">Continuous local odometry fusion coupled with RTK-GNSS global referencing and discrete EKF updates</div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">Vector SVG</span>
+              </div>
+            </div>
+            <div style="text-align: center; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+              <img src="../../assets/images/Hilbert/nav_dual_ekf_architecture.svg" alt="Dual-EKF State Estimation Architecture and REP-105 Topology" style="width: 100%; max-width: 1040px; height: auto; display: block; margin: 0 auto;" />
+            </div>
+          </div>
+
+          <!-- DISCRETE EKF MATHEMATICAL FORMULATION -->
+          <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 10px; padding: 20px; margin-bottom: 22px;">
+            <div style="font-size: 14px; font-weight: 700; color: #f5f5f7; margin-bottom: 10px;">
+              <span style="color: #2997ff; margin-right: 6px;">●</span>Discrete Extended Kalman Filter Mathematical Formulations
+            </div>
+            <p style="font-size: 12.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+              The 15-dimensional state vector $\mathbf{x} = [x, y, z, \phi, \theta, \psi, \dot{x}, \dot{y}, \dot{z}, \dot{\phi}, \dot{\theta}, \dot{\psi}, \ddot{x}, \ddot{y}, \ddot{z}]^T$ evolves through discrete time update (prediction) and measurement update (correction) cycles:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
+              <!-- Prediction Box -->
+              <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 14px;">
+                <div style="font-size: 12px; font-weight: 700; color: #38bdf8; margin-bottom: 6px;">1. State &amp; Covariance Prediction (Time Update)</div>
+                <div style="font-size: 13px; color: #f5f5f7; margin-bottom: 6px;">$$\hat{\mathbf{x}}_k^- = \mathbf{f}(\hat{\mathbf{x}}_{k-1}, \mathbf{u}_k)$$</div>
+                <div style="font-size: 13px; color: #f5f5f7;">$$\mathbf{P}_k^- = \mathbf{F}_k \mathbf{P}_{k-1} \mathbf{F}_k^T + \mathbf{Q}_k$$</div>
+                <p style="font-size: 11px; color: #94a3b8; margin: 6px 0 0 0;">
+                  Projects current state and error covariance ahead using non-linear kinematic model $\mathbf{f}$ and process noise covariance $\mathbf{Q}_k$.
+                </p>
+              </div>
+
+              <!-- Innovation Box -->
+              <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 14px;">
+                <div style="font-size: 12px; font-weight: 700; color: #c084fc; margin-bottom: 6px;">2. Innovation &amp; Kalman Gain Calculation</div>
+                <div style="font-size: 13px; color: #f5f5f7; margin-bottom: 6px;">$$\mathbf{y}_k = \mathbf{z}_k - \mathbf{h}(\hat{\mathbf{x}}_k^-), \quad \mathbf{S}_k = \mathbf{H}_k \mathbf{P}_k^- \mathbf{H}_k^T + \mathbf{R}_k$$</div>
+                <div style="font-size: 13px; color: #f5f5f7;">$$\mathbf{K}_k = \mathbf{P}_k^- \mathbf{H}_k^T \mathbf{S}_k^{-1}$$</div>
+                <p style="font-size: 11px; color: #94a3b8; margin: 6px 0 0 0;">
+                  Computes measurement residual $\mathbf{y}_k$, innovation covariance $\mathbf{S}_k$, and optimal Kalman gain $\mathbf{K}_k$ weighting sensor confidence.
+                </p>
+              </div>
+
+              <!-- Correction Box -->
+              <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 14px;">
+                <div style="font-size: 12px; font-weight: 700; color: #34d399; margin-bottom: 6px;">3. State &amp; Covariance Correction (Measurement Update)</div>
+                <div style="font-size: 13px; color: #f5f5f7; margin-bottom: 6px;">$$\hat{\mathbf{x}}_k = \hat{\mathbf{x}}_k^- + \mathbf{K}_k \mathbf{y}_k$$</div>
+                <div style="font-size: 13px; color: #f5f5f7;">$$\mathbf{P}_k = (\mathbf{I} - \mathbf{K}_k \mathbf{H}_k) \mathbf{P}_k^-$$</div>
+                <p style="font-size: 11px; color: #94a3b8; margin: 6px 0 0 0;">
+                  Corrects state estimate using innovation and updates posterior covariance $\mathbf{P}_k$ incorporating measurement noise $\mathbf{R}_k$.
+                </p>
+              </div>
+            </div>
+
+            <!-- Crucial Slip Qualification -->
+            <div style="background: rgba(239, 68, 68, 0.08); border-left: 3px solid #ef4444; border-radius: 6px; padding: 12px 16px; margin-top: 14px;">
+              <div style="font-size: 12px; font-weight: 700; color: #ef4444; margin-bottom: 4px;">
+                Critical Qualification on Odometric Wheel Slip &amp; Skid Steering:
+              </div>
+              <div style="font-size: 11.5px; color: var(--apple-text-secondary); line-height: 1.5;">
+                In the local filter (<code style="color: #38bdf8;">ekf_filter_node_odom</code>), fusing IMU angular rate ($\omega_z$) overrides wheel-encoder-derived yaw rates, which substantially mitigates rotational drift caused by differential tire scrubbing. <strong>However, the EKF does not eliminate physical wheel slip</strong>. When tire traction saturates on wet pavement or high-acceleration maneuvers, unmodeled longitudinal wheel slip creates translational dead-reckoning drift. This drift is bounded exclusively by the global filter (<code style="color: #c084fc;">ekf_filter_node_map</code>) fusing external RTK-GNSS absolute position fixes.
+              </div>
             </div>
           </div>
 
@@ -1670,113 +1966,156 @@
           <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 8px 0; letter-spacing: -0.01em;">
             7.2 Simulated TF Transform Tree &amp; REP-105 Coordinate Conformity
           </h3>
-          <div style="background: #0d1117; border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px; margin-bottom: 14px;">
-            <pre style="margin: 0; font-family: 'SF Mono', Consolas, monospace; font-size: 12px; color: #2997ff; line-height: 1.5;"><code>map (Global Airfield Datum / UTM Frame)
- └── odom (Continuous, Smooth Odometry Frame)
-      └── base_footprint (Ground-Level Chassis Projection)
-           └── base_link (Robot Geometric Center)
-                ├── imu_link (100 Hz 9-DOF Inertial Unit)
-                ├── laser_frame (20 Hz LiDAR Raytracer)
-                ├── camera_link (Dual RealSense D435i Mount)
-                └── [fl, fr, rl, rr]_wheel_link (4WD Drive Hubs)</code></pre>
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-bottom: 20px;">
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <strong style="color: #f5f5f7; font-size: 13.5px;"><span style="color: #2997ff;">Local EKF Node</span> (<code>odom</code> &rarr; <code>base_link</code>)</strong>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
-                Fuses $50\text{ Hz}$ wheel encoder odometry $(v_x, v_y)$ and $100\text{ Hz}$ IMU angular rates $(\omega_z)$ and linear accelerations $(a_x, a_y)$. Supplies a high-frequency, continuous, drift-free local frame for RPP control without discrete jumps.
-              </p>
-            </div>
-
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <strong style="color: #f5f5f7; font-size: 13.5px;"><span style="color: #2997ff;">Global EKF Node</span> (<code>map</code> &rarr; <code>odom</code>)</strong>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); margin: 6px 0 0 0; line-height: 1.5;">
-                Fuses local odometry with $10\text{ Hz}$ Unicore UM980 triple-band RTK-GNSS metric fixes ($X_{\text{utm}}, Y_{\text{utm}}$), correcting long-term wheel slip drift and locking global absolute positioning accuracy within $\pm 2.0\text{ cm}$.
-              </p>
-            </div>
-          </div>
-
-          <!-- 7.3 PERCEPTION TRADE STUDY: 2D VS 3D LIDAR -->
-          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 10px 0; letter-spacing: -0.01em;">
-            7.3 Perception Trade Study: 2D vs. 3D LiDAR for Runway Dynamic Clearance
-          </h3>
-          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
-            Beyond static georeferenced orthophoto mapping, the FOD Hunter rover must actively detect and evade unexpected dynamic obstacles (such as taxiing ground service tugs, inspection personnel, and dropped cargo). Therefore, LiDAR perception is critical.
-          </p>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            The primary sensor architectural trade-off centers on selecting between a <strong>2D Planar LiDAR</strong> versus a <strong>3D Volumetric LiDAR</strong>:
+            To prevent frame transformation ambiguity and transform tree cycles, node ownership strictly obeys ROS REP-105 standards:
           </p>
 
-          <!-- 2D VS 3D SUMMARY CARDS -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px;">
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <strong style="color: #2997ff; font-size: 13.5px;">2D Planar LiDAR</strong>
-                <span class="badge" style="background: rgba(41, 151, 255, 0.1); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10px;">Single-Plane Scanning</span>
-              </div>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Significantly more cost-effective and fully satisfies basic horizontal obstacle avoidance. However, it is constrained to a <strong>single horizontal plane</strong> and is blind to hazards above or below its mounting height (e.g., overhangs, wingtips, ground depressions, low-lying gravel).
-              </p>
-            </div>
-
-            <div style="background: var(--apple-surface-card); border: 1px solid var(--apple-border); border-radius: 8px; padding: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <strong style="color: #30d158; font-size: 13.5px;">3D Volumetric LiDAR</strong>
-                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10px;">Multi-Elevation Pointcloud</span>
-              </div>
-              <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0;">
-                Provides <strong>full volumetric point-cloud data</strong> across multi-elevation layers. Reliably detects hazards at varying heights (ground depressions, overhanging aircraft parts, scattered debris clusters) at the expense of higher hardware cost and compute load.
-              </p>
-            </div>
-          </div>
-
-          <!-- COMPREHENSIVE LIDAR COMPARISON TABLE -->
-          <div style="overflow-x: auto;">
-            <table class="apple-table" style="width: 100%; font-size: 11.5px; text-align: left; border-collapse: collapse;">
+          <div style="overflow-x: auto; margin-bottom: 20px;">
+            <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
               <thead>
                 <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
-                  <th style="padding: 10px 12px;">Evaluation Metric</th>
-                  <th style="padding: 10px 12px;">2D Planar LiDAR (e.g., Hokuyo / RPLiDAR)</th>
-                  <th style="padding: 10px 12px;">3D Volumetric LiDAR</th>
-                  <th style="padding: 10px 12px;">Runway Operational Impact</th>
+                  <th style="padding: 9px 12px;">Parent Frame</th>
+                  <th style="padding: 9px 12px;">Child Frame</th>
+                  <th style="padding: 9px 12px;">Publishing Node</th>
+                  <th style="padding: 9px 12px;">Update Rate</th>
+                  <th style="padding: 9px 12px;">Characteristics</th>
                 </tr>
               </thead>
               <tbody>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Vertical Field of View (FoV)</td>
-                  <td style="padding: 9px 12px; color: #ff453a;">Single horizontal plane ($0^\circ$)</td>
-                  <td style="padding: 9px 12px; color: #30d158;">$-7^\circ\text{ to }+52^\circ$ (Volumetric cone)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">3D captures ground camber, curb lips, and elevated wingtips.</td>
+                  <td style="padding: 9px 12px; font-family: monospace; color: #c084fc;">map</td>
+                  <td style="padding: 9px 12px; font-family: monospace; color: #38bdf8;">odom</td>
+                  <td style="padding: 9px 12px; color: #f5f5f7;">ekf_filter_node_map</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">30 Hz</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Discrete, corrects long-term drift via RTK-GNSS fixes</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Negative Obstacle Detection</td>
-                  <td style="padding: 9px 12px; color: #ff453a;">Blind (Cannot detect potholes / tarmac depressions)</td>
-                  <td style="padding: 9px 12px; color: #30d158;">Full ground point returns detect grade drops</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Crucial for identifying severe runway spalling and joints.</td>
+                  <td style="padding: 9px 12px; font-family: monospace; color: #38bdf8;">odom</td>
+                  <td style="padding: 9px 12px; font-family: monospace; color: #34d399;">base_footprint</td>
+                  <td style="padding: 9px 12px; color: #f5f5f7;">ekf_filter_node_odom</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">30 Hz</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Continuous, smooth, zero-jump dead reckoning for RPP controller</td>
                 </tr>
                 <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Overhang &amp; Wing Clearance</td>
-                  <td style="padding: 9px 12px; color: #ff453a;">Blind if obstacle is above sensor plane</td>
-                  <td style="padding: 9px 12px; color: #30d158;">Detects overhead wings, tug booms, and hoses</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Prevents collision with low aircraft wings and refuelers.</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--apple-border);">
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Data Throughput &amp; Compute Load</td>
-                  <td style="padding: 9px 12px; color: #30d158;">Low (&lt; 5 Mbps; &lt; 2% CPU core)</td>
-                  <td style="padding: 9px 12px; color: #ffd60a;">Moderate (30-50 Mbps; 12% CPU / GPU)</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">2D fits low-power edge SBCs; 3D requires Jetson / x86 PC.</td>
+                  <td style="padding: 9px 12px; font-family: monospace; color: #34d399;">base_footprint</td>
+                  <td style="padding: 9px 12px; font-family: monospace; color: #f5f5f7;">base_link</td>
+                  <td style="padding: 9px 12px; color: #f5f5f7;">robot_state_publisher</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">Static (50 Hz)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Rigid structural translation from ground projection to chassis center</td>
                 </tr>
                 <tr>
-                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Hardware Unit Cost Factor</td>
-                  <td style="padding: 9px 12px; color: #30d158;">$100 &ndash; $250</td>
-                  <td style="padding: 9px 12px; color: #ffd60a;">$300 &ndash; $800</td>
-                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">2D keeps prototype cost low; 3D adds height/elevation perception within accessible budget.</td>
+                  <td style="padding: 9px 12px; font-family: monospace; color: #f5f5f7;">base_link</td>
+                  <td style="padding: 9px 12px; font-family: monospace; color: #94a3b8;">{lidar, imu, gps}_link</td>
+                  <td style="padding: 9px 12px; color: #f5f5f7;">robot_state_publisher</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">Static (URDF)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Fixed extrinsics defined in <code style="font-size: 10.5px; color: #38bdf8;">scout_v2.xacro</code></td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
+
+          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 10px 0; letter-spacing: -0.01em;">
+            7.3 Perception Trade Study: 5-Model LiDAR Evaluation &amp; Hesai JT16 Selection
+          </h3>
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 12px;">
+            Beyond static georeferenced orthophoto mapping, the FOD Hunter rover must actively detect and evade unexpected dynamic airfield hazards (tugs, personnel, ground equipment) as well as resolve low-profile runway debris. Five prominent LiDAR sensors were evaluated against the project's operational and budgetary constraints:
+          </p>
+
+          <!-- 5-MODEL LIDAR EVALUATION TABLE -->
+          <div style="overflow-x: auto; margin-bottom: 18px;">
+            <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
+                  <th style="padding: 10px 12px;">Sensor Model</th>
+                  <th style="padding: 10px 12px;">Architecture</th>
+                  <th style="padding: 10px 12px;">Field of View (H &times; V)</th>
+                  <th style="padding: 10px 12px;">Detection Range</th>
+                  <th style="padding: 10px 12px;">Scan Rate</th>
+                  <th style="padding: 10px 12px;">Sunlight Immunity</th>
+                  <th style="padding: 10px 12px;">Protection</th>
+                  <th style="padding: 10px 12px;">Approx. Cost</th>
+                  <th style="padding: 10px 12px;">Selection Verdict</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">WheelTec N10P</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">2D Planar</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">360&deg; &times; 0&deg;</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">10&ndash;25 m</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">10 Hz</td>
+                  <td style="padding: 9px 12px; color: #ff453a;">Low (&lt;30k lux)</td>
+                  <td style="padding: 9px 12px;">IP54</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">~$180 SGD</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED &bull; SUNLIGHT BLIND</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">PaceCat LDS-M300-E-5D</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">2D Planar</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">360&deg; &times; 0&deg;</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">30 m</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">10 Hz</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">60k lux</td>
+                  <td style="padding: 9px 12px;">IP65</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">~$250 SGD</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED &bull; 2D SINGLE-PLANE</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #30d158;">Hesai JT16</td>
+                  <td style="padding: 9px 12px; font-weight: 700; color: #30d158;">3D Volumetric</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-weight: 700; color: #30d158;">360&deg; &times; 40&deg;</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-weight: 700; color: #30d158;">30 m</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">10&ndash;20 Hz</td>
+                  <td style="padding: 9px 12px; font-weight: 700; color: #30d158;">100,000 lux (Sunlight Proof)</td>
+                  <td style="padding: 9px 12px; font-weight: 700; color: #30d158;">IP6K6 / IP6K9K</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-weight: 700; color: #30d158;">~$388 SGD</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">SELECTED FOR PLATFORM</span></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">RPLiDAR S2</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">2D Planar</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">360&deg; &times; 0&deg;</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">30 m</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">10&ndash;15 Hz</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">80k lux</td>
+                  <td style="padding: 9px 12px;">IP65</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">~$450 SGD</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED &bull; 2D ONLY</span></td>
+                </tr>
+                <tr>
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Livox Mid-360S</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">3D Non-repetitive</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">360&deg; &times; 59&deg;</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">40 m</td>
+                  <td style="padding: 9px 12px; font-family: monospace;">10 Hz</td>
+                  <td style="padding: 9px 12px; color: #30d158;">100k lux</td>
+                  <td style="padding: 9px 12px;">IP67</td>
+                  <td style="padding: 9px 12px; font-family: monospace; color: #ff453a;">~$1,100 SGD</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(255, 69, 58, 0.12); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.25); font-size: 10.5px;">REJECTED &bull; EXCEEDS BUDGET</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- SELECTION RATIONALE & ROS 2 INTEGRATION ROADMAP -->
+          <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--apple-border); border-radius: 10px; padding: 18px; margin-bottom: 22px;">
+            <div style="font-size: 13.5px; font-weight: 700; color: #f5f5f7; margin-bottom: 8px;">
+              Engineering Selection Rationale &amp; ROS 2 Integration Roadmap
+            </div>
+            <p style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.5; margin: 0 0 10px 0;">
+              The <strong>Hesai JT16</strong> was selected because it uniquely satisfies all airfield operational criteria within the project's SGD $800 sensor budget:
+            </p>
+            <ul style="font-size: 12px; color: var(--apple-text-secondary); line-height: 1.6; margin: 0 0 12px 18px; padding: 0;">
+              <li><strong>Volumetric 3D Clearance:</strong> Its $40^\circ$ vertical FOV covers ground depressions, low-profile debris, and elevated aircraft wingtips that single-plane 2D LiDARs cannot detect.</li>
+              <li><strong>Tropical Solar Immunity:</strong> Rated for $100,000	ext{ lux}$ ambient sunlight, preventing optical sensor saturation on sunlit Singapore airfield asphalt.</li>
+              <li><strong>Ingress Protection:</strong> IP6K6 / IP6K9K rating provides resilience against heavy monsoon rain and airfield dust blowback.</li>
+              <li><strong>Cost Effectiveness:</strong> At ~$388 SGD, it consumes less than 50% of the allocated SGD $800 sensor budget, preserving resources for RTK-GNSS and drive hardware.</li>
+            </ul>
+            <div style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid #38bdf8; border-radius: 6px; padding: 10px 14px; font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
+              <strong style="color: #38bdf8;">Simulation vs. Physical Hardware Boundary:</strong> In the current Semester 1 software-in-the-loop simulation (Gazebo Harmonic), the sensor is simulated via a high-performance GPU 2D LiDAR streaming <code style="font-size: 10.5px; color: #38bdf8;">sensor_msgs/LaserScan</code> on <code style="font-size: 10.5px; color: #38bdf8;">/scan</code> directly into the Nav2 obstacle costmap. In the Semester 2 physical integration, the Hesai JT16 will stream native <code style="font-size: 10.5px; color: #38bdf8;">sensor_msgs/PointCloud2</code> over Ethernet, processed through <code style="font-size: 10.5px; color: #38bdf8;">pointcloud_to_laserscan</code> or Nav2's 3D <code style="font-size: 10.5px; color: #38bdf8;">VoxelLayer</code> for 3D ground obstacle clearance.
+            </div>
+          </div>
+</div>
 
         <!-- ========================================================================= -->
         <!-- 8.0 MULTI-QUEUED WAYPOINT ROUTING & INTERMODAL DISPATCH LOGIC (A2, A5)    -->
@@ -1788,6 +2127,21 @@
               <h2 style="font-size: 20px; font-weight: 700; color: #f5f5f7; margin: 0;">
                 8.0 Multi-Queued Waypoint Routing &amp; Intermodal Dispatch Logic
               </h2>
+          <!-- EMBEDDED PUBLICATION-GRADE VECTOR DIAGRAM: UAV-UGV DISPATCH WORKFLOW -->
+          <div style="background: rgba(0, 0, 0, 0.35); border: 1px solid var(--apple-border); border-radius: 12px; padding: 18px; margin-top: 18px; margin-bottom: 22px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <strong style="color: #f5f5f7; font-size: 13.5px;">Figure 8.1: Heterogeneous UAV–UGV Airside Runway Remediation Dispatch Workflow</strong>
+                <div style="font-size: 11.5px; color: #86868b;">Autonomous coordination from UAV aerial FOD identification to UGV ground navigation &amp; debris collection</div>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10.5px;">Vector SVG</span>
+              </div>
+            </div>
+            <div style="text-align: center; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+              <img src="../../assets/images/Hilbert/uav_ugv_dispatch_workflow.svg" alt="Heterogeneous UAV-UGV Airside Remediation Dispatch Workflow" style="width: 100%; max-width: 1040px; height: auto; display: block; margin: 0 auto;" />
+            </div>
+          </div>
             </div>
             <span class="badge" style="background: rgba(255, 255, 255, 0.05); color: #86868b; border: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; font-weight: 500;">Heterogeneous Fleet Scheduling</span>
           </div>
@@ -1796,7 +2150,7 @@
             8.1 Heterogeneous Coordination Model (UAV Scout + UGV Remediation Rover)
           </h3>
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
-            The runway clearance concept pairs an autonomous scouting UAV with the heavy UGV remediation rover based on multi-agent dispatch methodologies (Kim et al., 2019 [5]; Elsevier Multimodal Transportation, 2025 [13]). The UAV sweeps the runway corridor from $15\text{ m}$ altitude, running YOLOv8 onboard to detect debris coordinates. Verified anomalies are packaged into georeferenced target waypoints and transmitted to the UGV over an encrypted 900 MHz RF telemetry datalink compliant with IMDA TS SRD [3] and ICAO Doc 9718 [4] (Microhard P900):
+            The runway clearance concept pairs an autonomous scouting UAV with the heavy UGV remediation rover based on multi-agent dispatch methodologies (Kim et al., 2019 <a href="../../6-references/hilbert/references.html#ref-5" class="citation-ref" title="Kim et al., ASCE (2019)">[5]</a>; Krestenitis et al., 2026 <a href="../../6-references/hilbert/references.html#ref-6" class="citation-ref" title="Krestenitis et al., Sensors (2026)">[6]</a>; Thelasingha et al., 2024 <a href="../../6-references/hilbert/references.html#ref-13" class="citation-ref" title="Thelasingha et al., IEEE T-ASE (2024)">[13]</a>). The UAV sweeps the runway corridor from $15\text{ m}$ altitude, running YOLOv8 onboard to detect debris coordinates. Verified anomalies are packaged into georeferenced target waypoints and transmitted to the UGV over an encrypted 900 MHz RF telemetry datalink compliant with IMDA TS SRD <a href="../../6-references/hilbert/references.html#ref-3" class="citation-ref" title="IMDA TS SRD (2021)">[3]</a> and ICAO Doc 9718 <a href="../../6-references/hilbert/references.html#ref-4" class="citation-ref" title="ICAO Doc 9718 (2018)">[4]</a> (Microhard P900):
           </p>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-bottom: 16px; align-items: center;">
@@ -1925,7 +2279,7 @@
           </div>
 
           <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin: 16px 0 20px 0;">
-            To rigorously validate the Phase 1 autonomous runway navigation stack prior to physical field deployment, a comprehensive suite of high-fidelity Software-in-the-Loop (SIL) simulation trials was conducted using <strong>Gazebo Harmonic (8.x)</strong> paired with <strong>ROS 2 Jazzy Jalisco</strong> on Ubuntu 24.04 LTS. The video demonstrations below document the key experimental tests performed to validate multi-waypoint patrol execution, real-time reactive obstacle evasion, and state estimation stability comparing closed-loop Dual-EKF localization against raw open-loop odometry drift. <em>(For complete simulation world setups, digital twin runway geometry, and aerodrome physics modeling, see <a href="simulation.html" style="color: #2997ff; text-decoration: none; font-weight: 500;">Simulation Environments</a>.)</em>
+            To rigorously validate the Phase 1 autonomous runway navigation stack prior to physical field deployment, a comprehensive suite of high-fidelity Software-in-the-Loop (SIL) simulation trials was conducted using <strong>Gazebo Harmonic (8.x)</strong> paired with <strong>ROS 2 Jazzy Jalisco</strong> on Ubuntu 24.04 LTS, following automated airfield inspection methodologies (Krestenitis et al., 2026 <a href="../../6-references/hilbert/references.html#ref-6" class="citation-ref" title="Krestenitis et al., Sensors (2026)">[6]</a>). The video demonstrations below document the key experimental tests performed to validate multi-waypoint patrol execution, real-time reactive obstacle evasion, and state estimation stability comparing closed-loop Dual-EKF localization against raw open-loop odometry drift. <em>(For complete simulation world setups, digital twin runway geometry, and aerodrome physics modeling, see <a href="simulation.html" style="color: #2997ff; text-decoration: none; font-weight: 500;">Simulation Environments</a>.)</em>
           </p>
 
           <!-- 9.1 SEMESTER 1 NAVIGATION VALIDATION VIDEO SUITE -->
@@ -2099,7 +2453,96 @@
               </tbody>
             </table>
           </div>
+        
+        <!-- 9.3 QUANTITATIVE PERFORMANCE CLAIMS & VALIDATION MATRIX -->
+        <div style="margin-top: 24px; margin-bottom: 24px;">
+          <h3 style="font-size: 15px; font-weight: 600; color: #f5f5f7; margin: 24px 0 10px 0; letter-spacing: -0.01em;">
+            9.3 Quantitative Navigation Performance Claims &amp; Verification Matrix
+          </h3>
+          <p style="font-size: 13.5px; color: var(--apple-text-secondary); line-height: 1.6; margin-bottom: 14px;">
+            To ensure complete transparency and documentation integrity, all quantitative navigation, localization, and mechanical claims across this engineering report are categorized by evidence source:
+          </p>
+
+          <div style="overflow-x: auto; margin-bottom: 18px;">
+            <table class="apple-table" style="width: 100%; font-size: 12px; text-align: left; border-collapse: collapse;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--apple-border); background: var(--apple-surface-card);">
+                  <th style="padding: 10px 12px;">Performance Metric</th>
+                  <th style="padding: 10px 12px;">Reported Value</th>
+                  <th style="padding: 10px 12px;">Evidence Category</th>
+                  <th style="padding: 10px 12px;">Verification Source</th>
+                  <th style="padding: 10px 12px;">Physical Hardware Qualification</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Global Positioning Accuracy</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #30d158;">&plusmn; 2.0 cm</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10px;">MANUFACTURER SPEC &bull; SIMULATED</span></td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">u-blox ZED-F9P RTK Datasheet; Gazebo Harmonic GPS noise simulation</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Valid under open sky with RTK fix; physical runway multipath verification scheduled for S2 field trials.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Autonomous Operational Speed Cap</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #38bdf8;">2.22 m/s (8.0 km/h)</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10px;">CONFIGURED &amp; SIMULATED</span></td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);"><code style="font-size: 10.5px; color: #38bdf8;">nav2_params.yaml</code> (<code style="font-size: 10.5px;">desired_linear_vel: 2.22</code>)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Capped for airside safety buffer and vacuum intake suction dwell time.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Maximum Drivetrain Sprint Speed</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #fbbf24;">15.0 km/h (4.17 m/s)</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(251, 191, 36, 0.12); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.25); font-size: 10px;">CALCULATED &bull; DESIGN TARGET</span></td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">BLDC Motor RPM kinematic calculation (Phase 1 Powertrain Audit)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Physical direct-drive motor limit on flat asphalt; restricted during autonomous operation.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Local Controller Rate</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">20 Hz</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10px;">CONFIGURED &amp; SIMULATED</span></td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);"><code style="font-size: 10.5px; color: #38bdf8;">nav2_params.yaml</code> (<code style="font-size: 10.5px;">controller_frequency: 20.0</code>)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Deterministic loop verified; consumes 2&ndash;5% CPU on Jetson Orin Nano.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Dual-EKF State Fusion Rate</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">30 Hz</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10px;">CONFIGURED &amp; SIMULATED</span></td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);"><code style="font-size: 10.5px; color: #38bdf8;">ekf.yaml</code> (<code style="font-size: 10.5px;">frequency: 30.0</code>)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Verified in Gazebo Harmonic with zero TF timestamp lag.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Costmap Grid Cell Resolution</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #f5f5f7;">0.05 m (5 cm)</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-size: 10px;">CONFIGURED &amp; SIMULATED</span></td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);"><code style="font-size: 10.5px; color: #38bdf8;">nav2_params.yaml</code> (<code style="font-size: 10.5px;">resolution: 0.05</code>)</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Balances 60m runway coverage with bounded memory allocation (38 MB RAM).</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Global Plan Latency (1144 Nodes)</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #30d158;">0.60 ms (A*) / 0.33 ms (Theta*)</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10px;">MEASURED BENCHMARK</span></td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Empirical 2D Path Search Benchmark Analysis</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Measured on 2D grid; SmacPlannerHybrid continuous lattice adds ~10&ndash;25 ms search time.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--apple-border);">
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">LiDAR Sunlight Immunity</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #30d158;">100,000 lux</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(48, 209, 88, 0.12); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.25); font-size: 10px;">MANUFACTURER SPEC</span></td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Hesai JT16 Technical Specification</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Critical for equatorial outdoor airfield operations without optical receiver saturation.</td>
+                </tr>
+                <tr>
+                  <td style="padding: 9px 12px; font-weight: 600; color: #f5f5f7;">Incline Traversal Gradient</td>
+                  <td style="padding: 9px 12px; font-family: monospace; font-size: 11.5px; color: #fbbf24;">5&deg; Slope @ 1.5 m/s</td>
+                  <td style="padding: 9px 12px;"><span class="badge" style="background: rgba(251, 191, 36, 0.12); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.25); font-size: 10px;">CALCULATED PHYSICAL LIMIT</span></td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Vehicle Dynamics Slope Resistance Derivation</td>
+                  <td style="padding: 9px 12px; color: var(--apple-text-secondary);">Requires 26.8 N&middot;m total axle torque, well within 4&times; direct-drive BLDC continuous limit.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+</div>
 
         <!-- ========================================================================= -->
         <!-- 10.0 SHORTCOMINGS & SEMESTER 2 TRANSITION ROADMAP (A6)                    -->

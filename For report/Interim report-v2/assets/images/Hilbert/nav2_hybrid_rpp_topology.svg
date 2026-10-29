@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 580" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090f1d"/>
+      <stop offset="100%" stop-color="#0e172a"/>
+    </linearGradient>
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#162038"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="shadow3" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrowGreen2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="580" fill="url(#bgGrad3)" rx="16"/>
+  <rect x="2" y="2" width="1076" height="576" fill="none" stroke="#334155" stroke-width="1.5" rx="15"/>
+
+  <!-- Title & Subtitle -->
+  <text x="40" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="21" font-weight="700" fill="#f8fafc">
+    Nav2 SmacPlannerHybrid &amp; Regulated Pure Pursuit (RPP) Topology
+  </text>
+  <text x="40" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="400" fill="#94a3b8">
+    Kinematically feasible SE(2) global path search coupled with curvature-regulated path following
+  </text>
+
+  <!-- BEHAVIOR TREE DISPATCH (TOP) -->
+  <g transform="translate(40, 95)" filter="url(#shadow3)">
+    <rect width="1000" height="85" rx="10" fill="url(#cardGrad3)" stroke="#38bdf8" stroke-width="1.5"/>
+    <rect x="0" y="0" width="1000" height="28" rx="10" fill="#0284c7"/>
+    <text x="500" y="19" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">NAV2 BEHAVIOR TREE NAVIGATOR (nav2_bt_navigator)</text>
+    
+    <text x="30" y="52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="600" fill="#38bdf8">Action Interface: NavigateToPose</text>
+    <text x="30" y="70" font-family="monospace" font-size="10" fill="#94a3b8">Goal Pose (x, y, yaw) from GCS or UAV</text>
+
+    <text x="360" y="52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="600" fill="#fbbf24">Recovery Branch Sequence:</text>
+    <text x="360" y="70" font-family="monospace" font-size="10" fill="#cbd5e1">ClearGlobalCostmap → ClearLocalCostmap → Spin (in-place) → Wait (5s) → BackUp (0.3m)</text>
+
+    <text x="820" y="52" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="600" fill="#34d399">Feedback Rate:</text>
+    <text x="820" y="70" font-family="monospace" font-size="10" fill="#cbd5e1">10 Hz Status &amp; Distance</text>
+  </g>
+
+  <!-- GLOBAL PLANNER (LEFT) -->
+  <g transform="translate(40, 205)" filter="url(#shadow3)">
+    <rect width="480" height="295" rx="12" fill="url(#cardGrad3)" stroke="#fbbf24" stroke-width="1.5"/>
+    <rect x="0" y="0" width="480" height="32" rx="12" fill="#d97706"/>
+    <text x="240" y="21" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">GLOBAL PLANNER: SmacPlannerHybrid (Hybrid A*)</text>
+
+    <!-- Specs -->
+    <rect x="18" y="44" width="444" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="64" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#fbbf24">Kinodynamic State Lattice Search Configuration</text>
+    <text x="30" y="82" font-family="monospace" font-size="10" fill="#e2e8f0">• Motion Model: REEDS_SHEPP (Continuous SE(2) lattice)</text>
+    <text x="30" y="98" font-family="monospace" font-size="10" fill="#e2e8f0">• Minimum Turning Radius: R_min = 1.0 m</text>
+    <text x="30" y="114" font-family="monospace" font-size="10" fill="#e2e8f0">• Reverse Penalty: 2.5 (Heavily penalizes reverse gear on airfield)</text>
+    <text x="30" y="130" font-family="monospace" font-size="10" fill="#e2e8f0">• Angular Discretization: 64 orientation bins (5.625° resolution)</text>
+    <text x="30" y="146" font-family="monospace" font-size="10" fill="#34d399">• Smooth Path: True (Continuous spline interpolation)</text>
+
+    <!-- Global Costmap -->
+    <rect x="18" y="164" width="444" height="115" rx="8" fill="#451a03" stroke="#b45309" stroke-width="1"/>
+    <text x="30" y="184" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#fde68a">Global Costmap Pipeline (nav2_costmap_2d)</text>
+    <text x="30" y="202" font-family="monospace" font-size="10" fill="#fed7aa">• Resolution: 0.05 m (5 cm cell size)</text>
+    <text x="30" y="218" font-family="monospace" font-size="10" fill="#fed7aa">• Static Layer: Airfield orthophoto boundary map</text>
+    <text x="30" y="234" font-family="monospace" font-size="10" fill="#fed7aa">• Obstacle Layer: Hesai JT16 3D LiDAR scan raytracing</text>
+    <text x="30" y="250" font-family="monospace" font-size="10" fill="#fed7aa">• Inflation Layer: Inflation radius = 0.55 m, cost_scaling = 3.0</text>
+    <text x="30" y="268" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#fef08a">Result: Completely eliminates angular zig-zag paths and avoids high-torque pivot turns.</text>
+  </g>
+
+  <!-- LOCAL CONTROLLER (RIGHT) -->
+  <g transform="translate(560, 205)" filter="url(#shadow3)">
+    <rect width="480" height="295" rx="12" fill="url(#cardGrad3)" stroke="#34d399" stroke-width="1.5"/>
+    <rect x="0" y="0" width="480" height="32" rx="12" fill="#059669"/>
+    <text x="240" y="21" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">LOCAL CONTROLLER: Regulated Pure Pursuit (RPP)</text>
+
+    <!-- RPP Parameters -->
+    <rect x="18" y="44" width="444" height="120" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="64" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#34d399">Adaptive Lookahead &amp; Velocity Scaling</text>
+    <text x="30" y="82" font-family="monospace" font-size="10" fill="#e2e8f0">• Lookahead Distance: L = 1.2 m (scaled by speed: L = max(0.4, v · 1.2s))</text>
+    <text x="30" y="98" font-family="monospace" font-size="10" fill="#e2e8f0">• Max Linear Velocity: 2.22 m/s (8.0 km/h autonomous operational cap)</text>
+    <text x="30" y="114" font-family="monospace" font-size="10" fill="#e2e8f0">• Regulated Curvature Radius: R_min = 0.80 m (slows in sharp bends)</text>
+    <text x="30" y="130" font-family="monospace" font-size="10" fill="#e2e8f0">• Proximity Cost Scaling: d_cost = 1.0 m (slows near runway obstacles)</text>
+    <text x="30" y="146" font-family="monospace" font-size="10" fill="#38bdf8">• Control Loop Frequency: 20 Hz deterministic update</text>
+    <text x="30" y="158" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#a7f3d0">CPU Footprint: Only 2–5% (leaves full CPU for vision and SLAM)</text>
+
+    <!-- Local Costmap & Output -->
+    <rect x="18" y="174" width="444" height="105" rx="8" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+    <text x="30" y="194" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#a7f3d0">Local Rolling Costmap &amp; Velocity Dispatch</text>
+    <text x="30" y="212" font-family="monospace" font-size="10" fill="#d1fae5">• Rolling Window: 6.0 m × 6.0 m @ 0.05 m resolution</text>
+    <text x="30" y="228" font-family="monospace" font-size="10" fill="#d1fae5">• Collision Checking: Collision check lookahead = 2.0 s</text>
+    <text x="30" y="246" font-family="monospace" font-size="10.5" font-weight="700" fill="#38bdf8">→ Output Command: /cmd_vel (v_x, ω_z)</text>
+    <text x="30" y="266" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#fcd34d">
+      Notice: While RPP minimizes tire scrub, physical 4WD skid steering still experiences friction.
+    </text>
+  </g>
+
+  <!-- Connectors -->
+  <path d="M 280 180 L 280 205" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowAmber)"/>
+  <path d="M 520 290 L 560 290" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen2)"/>
+  <text x="540" y="280" font-family="monospace" font-size="9" fill="#94a3b8" text-anchor="middle">nav_msgs/Path</text>
+
+  <!-- Bottom Legend -->
+  <text x="40" y="545" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" fill="#64748b">
+    Nav2 Configuration Source: simulation/src/runway_navigation/config/nav2_params.yaml • Empirically tuned for 65 kg direct-drive UGV on dry asphalt.
+  </text>
+</svg>

@@ -1,0 +1,24 @@
+<mxfile host="app.diagrams.net" modified="2026-10-28T07:00:00.000Z" agent="Mozilla/5.0" version="24.0.0">
+  <diagram id="uav_ugv_dispatch" name="UAV-UGV Remediation Dispatch Workflow">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="title" value="Heterogeneous UAV–UGV Airside Runway Remediation Dispatch Workflow" style="text;html=1;fontSize=18;fontStyle=1;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="800" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="uav" value="1. UAV AIRBORNE SURVEY&#xa;&#xa;• Aerial Runway Sweep (15m AGL, 12 m/s)&#xa;• YOLOv8 Real-time FOD Detection&#xa;  (Jetson Orin Nano, bolts/metal/gravel)&#xa;• Optical Projection to GPS (lat, lon)&#xa;• JSON Anomaly Payload Output" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#06B6D4;strokeWidth=2;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="300" height="380" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2" value="2. C2 DISPATCH &amp; ROUTING&#xa;&#xa;• Zenoh / DDS 5.8 GHz Airside RF Bridge&#xa;• Latency: &lt;15 ms transfer&#xa;• WGS84 GPS -&gt; UTM Zone 48N -&gt; Map Frame&#xa;• Waypoint Queue Optimization:&#xa;  1. Monotonic 1D Sweep along axis&#xa;  2. Dynamic 2-Opt TSP for clusters&#xa;• Action: /navigate_to_pose Goal Dispatch" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#F59E0B;strokeWidth=2;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="390" y="80" width="300" height="380" as="geometry"/>
+        </mxCell>
+        <mxCell id="ugv" value="3. UGV GROUND REMEDIATION&#xa;&#xa;• Autonomous Transit (SmacPlannerHybrid + RPP)&#xa;  Speed: 2.22 m/s (8.0 km/h)&#xa;• Dual-EKF Localization &amp; Obstacle Evasion&#xa;• Precision Approach (0.5 m/s) over Target&#xa;• Rear Vacuum Intake Activation&#xa;• FOD Cleared &amp; Telemetry Updated&#xa;• Monotonic Sweep Resumed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F172A;strokeColor=#10B981;strokeWidth=2;fontColor=#F8FAFC;" vertex="1" parent="1">
+          <mxGeometry x="740" y="80" width="300" height="380" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_uav_c2" edge="1" source="uav" target="c2" parent="1"/>
+        <mxCell id="e_c2_ugv" edge="1" source="c2" target="ugv" parent="1"/>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
