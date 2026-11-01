@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg style="display: block; margin: 0 auto; max-width: 100%; min-width: 760px; height: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;" viewBox="-100 0 1200 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <style>
+    .ekf-text-p { fill: #FFFFFF; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ekf-text-s { fill: #CBD5E1; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  </style>
+  <marker id="arrow-blue-ekf" markerHeight="6" markerWidth="6" orient="auto-start-reverse" refX="6" refY="5" viewBox="0 0 10 10">
+    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3b82f6" />
+  </marker>
+  <marker id="arrow-gray-ekf" markerHeight="6" markerWidth="6" orient="auto-start-reverse" refX="6" refY="5" viewBox="0 0 10 10">
+    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#94a3b8" />
+  </marker>
+</defs>
+<!-- Red Alert Box Top Right -->
+<rect fill="rgba(239, 68, 68, 0.12)" height="46" rx="6" stroke="rgba(239, 68, 68, 0.45)" stroke-width="1.5" width="285" x="680" y="14"></rect>
+<text fill="#f87171" font-size="12" font-weight="700" text-anchor="middle" x="822" y="32">No feedback loop</text>
+<text fill="#fca5a5" font-size="11" text-anchor="middle" x="822" y="48">Uncorrected drift accumulates over time.</text>
+<!-- Left Inputs -->
+<text class="ekf-text-p" fill="#FFFFFF" font-size="13" font-weight="600" text-anchor="end" x="245" y="75">Wheel speed (v)</text>
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="2" x1="255" x2="315" y1="71" y2="71"></line>
+<text class="ekf-text-p" fill="#FFFFFF" font-size="13" font-weight="600" text-anchor="end" x="245" y="125">Wheel turning (ω)</text>
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="2" x1="255" x2="315" y1="121" y2="121"></line>
+<!-- Non-linear Integrator Box (White background with high contrast) -->
+<rect fill="#FFFFFF" height="118" rx="8" stroke="#3b82f6" stroke-width="2" width="270" x="320" y="36"></rect>
+<text fill="#0f172a" font-size="13" font-weight="700" text-anchor="middle" x="455" y="62">Non-linear kinematic integrator</text>
+<text fill="#1d4ed8" font-family="'SF Mono', Consolas, monospace" font-size="12.5" font-weight="600" text-anchor="middle" x="455" y="88">ẋ = v · cos(θ)</text>
+<text fill="#1d4ed8" font-family="'SF Mono', Consolas, monospace" font-size="12.5" font-weight="600" text-anchor="middle" x="455" y="110">ẏ = v · sin(θ)</text>
+<text fill="#1d4ed8" font-family="'SF Mono', Consolas, monospace" font-size="12.5" font-weight="600" text-anchor="middle" x="455" y="132">θ̇ = ω</text>
+<!-- Bottom Disturbance Arrow -->
+<line marker-end="url(#arrow-gray-ekf)" stroke="#94a3b8" stroke-dasharray="4,4" stroke-width="1.5" x1="455" x2="455" y1="184" y2="158"></line>
+<text class="ekf-text-s" fill="#CBD5E1" font-size="11" font-style="italic" text-anchor="middle" x="455" y="196">Wheel slip, pavement shear, mechanical bias</text>
+<!-- Output Arrow & Text -->
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="2" x1="590" x2="665" y1="95" y2="95"></line>
+<text class="ekf-text-p" fill="#FFFFFF" font-size="13.5" font-weight="700" x="680" y="86">Estimated pose</text>
+<text class="ekf-text-s" fill="#CBD5E1" font-family="'SF Mono', Consolas, monospace" font-size="12.5" x="680" y="106">(x, y, θ)</text>
+<text fill="#f87171" font-size="11.5" font-weight="600" x="680" y="126">Unbounded drift</text>
+</svg>

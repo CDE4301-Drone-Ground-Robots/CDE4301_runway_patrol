@@ -1,0 +1,254 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680">
+  <defs>
+    <linearGradient id="bg-grad-c6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080B12"/>
+      <stop offset="100%" stop-color="#0D131F"/>
+    </linearGradient>
+
+    <linearGradient id="panel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141C2B"/>
+      <stop offset="100%" stop-color="#0F1622"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="shadow-c6" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arr-bronze" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#D6A45D"/>
+    </marker>
+    <marker id="arr-sapphire" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#5278D8"/>
+    </marker>
+    <marker id="arr-cyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#4CC9D8"/>
+    </marker>
+    <marker id="arr-emerald" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#42B883"/>
+    </marker>
+    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#E57373"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1200" height="680" rx="16" fill="url(#bg-grad-c6)" stroke="#1F2937" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <g transform="translate(40, 24)">
+    <rect width="1120" height="52" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1"/>
+    
+    <rect x="16" y="12" width="200" height="28" rx="6" fill="#D6A45D" fill-opacity="0.15" stroke="#D6A45D" stroke-opacity="0.4"/>
+    <text x="26" y="30" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="0.06em">FIGURE 3.3 &#8226; MESSAGE FLOW</text>
+
+    <text x="230" y="31" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700">JSON Target Alert Serialization, Schema Validation &amp; Queueing</text>
+    
+    <!-- Status Badges -->
+    <g transform="translate(860, 13)">
+      <rect width="244" height="26" rx="6" fill="#5278D8" fill-opacity="0.15" stroke="#5278D8" stroke-opacity="0.3"/>
+      <text x="14" y="17" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">SCHEMA TEMPLATE (ILLUSTRATIVE)</text>
+    </g>
+  </g>
+
+  <!-- Context Sub-banner -->
+  <g transform="translate(40, 84)">
+    <rect width="1120" height="28" rx="6" fill="#182233" stroke="#1F2937" stroke-width="1"/>
+    <circle cx="16" cy="14" r="3.5" fill="#4CC9D8"/>
+    <text x="28" y="18" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11.5">
+      <tspan fill="#4CC9D8" font-weight="600">Pipeline Stages:</tspan> Reconnaissance Alert Assembly &#8594; JSON String Serialization &#8594; CycloneDDS Reliable Transport &#8594; Ingestion, Syntax &amp; Duplicate Check &#8594; Waypoint Queueing &#8594; Nav2 Dispatch.
+    </text>
+  </g>
+
+  <!-- ==================== LEFT: JSON PAYLOAD SPECIFICATION CARD ==================== -->
+  <g transform="translate(40, 126)" filter="url(#shadow-c6)">
+    <rect width="360" height="518" rx="12" fill="url(#panel-grad)" stroke="#D6A45D" stroke-width="1.2"/>
+    
+    <!-- Card Header -->
+    <rect width="360" height="42" rx="12" fill="#D6A45D" fill-opacity="0.12"/>
+    <path d="M 0 42 L 360 42" stroke="#D6A45D" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="16" y="26" fill="#D6A45D" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700">1. Downlink Payload Schema (Table 5.1)</text>
+
+    <!-- Schema Code Box -->
+    <g transform="translate(16, 52)">
+      <rect width="328" height="364" rx="8" fill="#0A0E17" stroke="#1F2937"/>
+      
+      <!-- Code Header -->
+      <rect width="328" height="24" rx="8" fill="#111827"/>
+      <circle cx="14" cy="12" r="3.5" fill="#E57373"/>
+      <circle cx="26" cy="12" r="3.5" fill="#E9AD58"/>
+      <circle cx="38" cy="12" r="3.5" fill="#42B883"/>
+      <text x="54" y="16" fill="#86868b" font-family="monospace" font-size="9.5">/c2/target_alert payload (JSON)</text>
+
+      <!-- Code Contents -->
+      <g transform="translate(14, 38)" font-family="monospace" font-size="10.5" xml:space="preserve">
+        <text y="0" fill="#86868b">{</text>
+        <text y="18" fill="#79A4F8">  "mission_id": <tspan fill="#D6A45D">"RUNWAY_INSPECT_0923"</tspan>,</text>
+        <text y="36" fill="#79A4F8">  "threat_id": <tspan fill="#D6A45D">"FOD_THREAT_001"</tspan>,</text>
+        <text y="54" fill="#79A4F8">  "object_class": <tspan fill="#4CC9D8">"metal_bolt"</tspan>,</text>
+        <text y="72" fill="#79A4F8">  "coordinates": {</text>
+        <text y="90" fill="#A8B3C5">    "x": <tspan fill="#42B883">-15.0</tspan>,  <tspan fill="#86868b">// map frame (m)</tspan></text>
+        <text y="108" fill="#A8B3C5">    "y": <tspan fill="#42B883">5.0</tspan>,   <tspan fill="#86868b">// map frame (m)</tspan></text>
+        <text y="126" fill="#A8B3C5">    "z": <tspan fill="#42B883">0.0</tspan>,   <tspan fill="#86868b">// ground plane</tspan></text>
+        <text y="144" fill="#A8B3C5">    "yaw": <tspan fill="#42B883">0.0</tspan>  <tspan fill="#86868b">// approach heading</tspan></text>
+        <text y="162" fill="#79A4F8">  },</text>
+        <text y="180" fill="#79A4F8">  "confidence": <tspan fill="#42B883">0.96</tspan>, <tspan fill="#86868b">// YOLO score</tspan></text>
+        <text y="198" fill="#79A4F8">  "priority_level": <tspan fill="#E9AD58">"URGENT"</tspan>,</text>
+        <text y="216" fill="#79A4F8">  "timestamp_utc": <tspan fill="#A8B3C5">"2026-09-23T14:32:00Z"</tspan>,</text>
+        <text y="234" fill="#79A4F8">  "cryptographic_sig": <tspan fill="#86868b">"a3f5b8..."</tspan></text>
+        <text y="252" fill="#86868b">}</text>
+      </g>
+    </g>
+
+    <!-- Transport Wrapper Badge -->
+    <g transform="translate(16, 428)">
+      <rect width="328" height="74" rx="8" fill="#0D1522" stroke="#5278D8" stroke-opacity="0.4"/>
+      <text x="14" y="20" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">ROS 2 Transport Wrapper</text>
+      <text x="14" y="38" fill="#A8B3C5" font-family="monospace" font-size="10.5">std_msgs/msg/String</text>
+      <text x="14" y="56" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">Serialized via <tspan fill="#F3F4F6">json.dumps()</tspan> into UTF-8 string payload</text>
+    </g>
+  </g>
+
+  <!-- ==================== RIGHT: UGV PARSING & INGESTION PIPELINE ==================== -->
+  <g transform="translate(425, 126)" filter="url(#shadow-c6)">
+    <rect width="735" height="518" rx="12" fill="url(#panel-grad)" stroke="#4CC9D8" stroke-width="1.2"/>
+    
+    <!-- Card Header -->
+    <rect width="735" height="42" rx="12" fill="#4CC9D8" fill-opacity="0.12"/>
+    <path d="M 0 42 L 735 42" stroke="#4CC9D8" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="16" y="26" fill="#4CC9D8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700">2. UGV Ingestion, Multi-Stage Validation &amp; Queue Management Pipeline</text>
+
+    <!-- STAGE 1: Callback Reception -->
+    <g transform="translate(20, 56)">
+      <rect width="180" height="72" rx="8" fill="#111827" stroke="#5278D8" stroke-opacity="0.5"/>
+      <text x="12" y="20" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">Step 1: Ingestion</text>
+      <text x="12" y="38" fill="#A8B3C5" font-family="monospace" font-size="10">target_alert_cb()</text>
+      <text x="12" y="54" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">Unpack String.data</text>
+    </g>
+
+    <!-- Arrow 1 -> 2 -->
+    <path d="M 200 92 L 236 92" stroke="#5278D8" stroke-width="2" marker-end="url(#arr-sapphire)"/>
+
+    <!-- STAGE 2: JSON Deserialization & Syntax Check -->
+    <g transform="translate(240, 56)">
+      <rect width="210" height="72" rx="8" fill="#111827" stroke="#4CC9D8" stroke-opacity="0.5"/>
+      <text x="12" y="20" fill="#4CC9D8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">Step 2: Syntax Parse</text>
+      <text x="12" y="38" fill="#F3F4F6" font-family="monospace" font-size="10">json.loads(payload)</text>
+      <text x="12" y="54" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">Malformed JSON check</text>
+    </g>
+
+    <!-- Syntax Failure Drop -->
+    <path d="M 345 128 L 345 158" stroke="#E57373" stroke-width="1.8" stroke-dasharray="3 2" marker-end="url(#arr-red)"/>
+    <g transform="translate(270, 162)">
+      <rect width="150" height="36" rx="6" fill="#1C1113" stroke="#E57373" stroke-opacity="0.4"/>
+      <text x="10" y="16" fill="#E57373" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5" font-weight="600">Parse Failure</text>
+      <text x="10" y="28" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="8.5">Log error &amp; discard</text>
+    </g>
+
+    <!-- Arrow 2 -> 3 -->
+    <path d="M 450 92 L 486 92" stroke="#4CC9D8" stroke-width="2" marker-end="url(#arr-cyan)"/>
+
+    <!-- STAGE 3: Semantic Schema Validation -->
+    <g transform="translate(490, 56)">
+      <rect width="225" height="72" rx="8" fill="#111827" stroke="#4CC9D8" stroke-opacity="0.5"/>
+      <text x="12" y="20" fill="#4CC9D8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">Step 3: Schema Validation</text>
+      <text x="12" y="38" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">Check keys: coord, id, prio</text>
+      <text x="12" y="54" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">Range &amp; bounds verification</text>
+    </g>
+
+    <!-- Schema Failure Drop -->
+    <path d="M 602 128 L 602 158" stroke="#E57373" stroke-width="1.8" stroke-dasharray="3 2" marker-end="url(#arr-red)"/>
+    <g transform="translate(530, 162)">
+      <rect width="150" height="36" rx="6" fill="#1C1113" stroke="#E57373" stroke-opacity="0.4"/>
+      <text x="10" y="16" fill="#E57373" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5" font-weight="600">Missing Key / Bounds</text>
+      <text x="10" y="28" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="8.5">Reject alert payload</text>
+    </g>
+
+    <!-- Arrow 3 down to Stage 4 -->
+    <path d="M 700 92 L 720 92 L 720 230 L 700 230" stroke="#4CC9D8" stroke-width="2" fill="none"/>
+    <path d="M 700 230 L 684 230" stroke="#4CC9D8" stroke-width="2" marker-end="url(#arr-cyan)"/>
+
+    <!-- STAGE 4: Threat Deduplication -->
+    <g transform="translate(460, 210)">
+      <rect width="220" height="70" rx="8" fill="#111827" stroke="#E9AD58" stroke-opacity="0.5"/>
+      <text x="12" y="20" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">Step 4: De-duplication Filter</text>
+      <text x="12" y="38" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">Check threat_id vs history</text>
+      <text x="12" y="54" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">Distance threshold &#916;d &lt; 0.5m</text>
+    </g>
+
+    <!-- Duplicate Rejection -->
+    <path d="M 570 280 L 570 306" stroke="#E57373" stroke-width="1.8" stroke-dasharray="3 2" marker-end="url(#arr-red)"/>
+    <g transform="translate(495, 310)">
+      <rect width="150" height="34" rx="6" fill="#1C1113" stroke="#E57373" stroke-opacity="0.4"/>
+      <text x="10" y="16" fill="#E57373" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5" font-weight="600">Duplicate Alert</text>
+      <text x="10" y="27" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="8.5">Ignore redundant goal</text>
+    </g>
+
+    <!-- Arrow 4 -> 5 -->
+    <path d="M 460 245 L 396 245" stroke="#4CC9D8" stroke-width="2" marker-end="url(#arr-cyan)"/>
+
+    <!-- STAGE 5: Priority Routing Branch -->
+    <g transform="translate(180, 210)">
+      <rect width="210" height="70" rx="8" fill="#111827" stroke="#79A4F8" stroke-opacity="0.5"/>
+      <text x="12" y="20" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">Step 5: Priority Evaluator</text>
+      <text x="12" y="38" fill="#F3F4F6" font-family="monospace" font-size="10">priority_level field</text>
+      <text x="12" y="54" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">ABORT | URGENT | NORMAL</text>
+    </g>
+
+    <!-- Branch A: ABORT -->
+    <path d="M 180 230 L 100 230 L 100 260" stroke="#E57373" stroke-width="2" fill="none" marker-end="url(#arr-red)"/>
+    <g transform="translate(20, 264)">
+      <rect width="160" height="64" rx="6" fill="#200E11" stroke="#E57373" stroke-width="1.2"/>
+      <text x="10" y="18" fill="#E57373" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="700">ABORT COMMAND</text>
+      <text x="10" y="34" fill="#F3F4F6" font-family="monospace" font-size="9.5">cancel_goal_async()</text>
+      <text x="10" y="48" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9">cmd_vel &#8594; [0, 0] stop</text>
+    </g>
+
+    <!-- Branch B & C: URGENT / NORMAL to Queue -->
+    <path d="M 285 280 L 285 365" stroke="#42B883" stroke-width="2" marker-end="url(#arr-emerald)"/>
+    <text x="295" y="330" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5" font-weight="600">Valid Waypoint</text>
+
+    <!-- STAGE 6: Waypoint FIFO Buffer & Queue Reorder -->
+    <g transform="translate(180, 370)">
+      <rect width="535" height="74" rx="8" fill="#0D1A16" stroke="#42B883" stroke-width="1.2"/>
+      
+      <rect x="14" y="14" width="150" height="46" rx="6" fill="#11241E" stroke="#42B883" stroke-opacity="0.4"/>
+      <text x="24" y="32" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="700">Head of Queue</text>
+      <text x="24" y="48" fill="#F3F4F6" font-family="monospace" font-size="10">Active: FOD_001</text>
+
+      <rect x="180" y="14" width="150" height="46" rx="6" fill="#0A1814" stroke="#1F2937"/>
+      <text x="190" y="32" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Queue Pos 2</text>
+      <text x="190" y="48" fill="#86868b" font-family="monospace" font-size="10">Buffered: FOD_002</text>
+
+      <rect x="346" y="14" width="175" height="46" rx="6" fill="#0A1814" stroke="#1F2937"/>
+      <text x="356" y="30" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="600">Preemption Rule:</text>
+      <text x="356" y="46" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">URGENT prepends to queue</text>
+    </g>
+
+    <!-- STAGE 7: Dual Output Execution -->
+    <g transform="translate(20, 460)">
+      <!-- Left: RViz Marker Broadcast -->
+      <g transform="translate(0, 0)">
+        <rect width="335" height="44" rx="6" fill="#111827" stroke="#5278D8" stroke-opacity="0.5"/>
+        <text x="12" y="18" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="700">Visualization Broadcast:</text>
+        <text x="12" y="32" fill="#A8B3C5" font-family="monospace" font-size="9.5">/c2/goal_markers (MarkerArray &#8594; RViz2)</text>
+      </g>
+
+      <!-- Right: Nav2 Action Dispatch -->
+      <g transform="translate(355, 0)">
+        <rect width="340" height="44" rx="6" fill="#0E231B" stroke="#42B883" stroke-width="1.2"/>
+        <text x="12" y="18" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="700">Nav2 Action Goal Dispatch:</text>
+        <text x="12" y="32" fill="#F3F4F6" font-family="monospace" font-size="9.5">NavigateToPose.send_goal_async()</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Connect Stage 6 to Execution -->
+  <path d="M 350 444 L 350 475 L 200 475" stroke="#79A4F8" stroke-width="1.8" fill="none" marker-end="url(#arr-sapphire)"/>
+  <path d="M 540 444 L 540 475 L 525 475" stroke="#42B883" stroke-width="1.8" fill="none" marker-end="url(#arr-emerald)"/>
+
+  <!-- Bridging Arrow from Payload to Ingestion -->
+  <path d="M 400 380 L 425 380" stroke="#5278D8" stroke-width="2.5" marker-end="url(#arr-sapphire)"/>
+
+</svg>

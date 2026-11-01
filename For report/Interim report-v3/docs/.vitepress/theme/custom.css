@@ -1,0 +1,631 @@
+/* =========================================================================
+   FOD Hunter - Liquid Glass documentation theme (extends VitePress default)
+   Glass is reserved for floating chrome. Prose sits directly on the page.
+   ========================================================================= */
+
+/* ---------- 1. Tokens ---------- */
+:root {
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI Variable Text', 'Segoe UI', sans-serif;
+  --vp-font-family-mono: 'SF Mono', 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+
+  --vp-c-brand-1: #2563eb;
+  --vp-c-brand-2: #1d4ed8;
+  --vp-c-brand-3: #3b82f6;
+  --vp-c-brand-soft: rgba(59, 130, 246, 0.14);
+
+  --vp-c-bg: #f5f5f7;
+  --vp-c-bg-alt: #ececf0;
+  --vp-c-bg-soft: #ffffff;
+  --vp-c-text-1: #1d1d1f;
+  --vp-c-text-2: #48484d;
+  --vp-c-text-3: #6e6e73;
+  --vp-c-divider: rgba(0, 0, 0, 0.1);
+  --vp-c-gutter: rgba(0, 0, 0, 0.06);
+
+  /* Bar height. VitePress reuses this for internal line-heights, so the 8px float gap is added separately. */
+  --vp-nav-height: 56px;
+  --nav-gap: 8px;
+  --vp-layout-max-width: 1440px;
+
+  /* Glass material */
+  --lg-tint: rgba(255, 255, 255, 0.62);
+  --lg-tint-strong: rgba(255, 255, 255, 0.82);
+  --lg-blur: 22px;
+  --lg-saturate: 180%;
+  --lg-edge: rgba(255, 255, 255, 0.9);
+  --lg-edge-shade: rgba(0, 0, 0, 0.08);
+  --lg-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.28), 0 1px 2px rgba(15, 23, 42, 0.06);
+  --lg-radius: 18px;
+
+  /* Ambient field: gives the glass something to refract without decorating content */
+  --ambient-a: rgba(59, 130, 246, 0.16);
+  --ambient-b: rgba(168, 85, 247, 0.1);
+
+  --plate-bg: #0b0b10;
+  --table-head: rgba(0, 0, 0, 0.035);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark {
+  --vp-c-brand-1: #60a5fa;
+  --vp-c-brand-2: #3b82f6;
+  --vp-c-brand-3: #2563eb;
+  --vp-c-brand-soft: rgba(59, 130, 246, 0.18);
+
+  --vp-c-bg: #0b0b10;
+  --vp-c-bg-alt: #101015;
+  --vp-c-bg-soft: #15151c;
+  --vp-c-text-1: #f5f5f7;
+  --vp-c-text-2: #b4b4bd;
+  --vp-c-text-3: #8a8a94;
+  --vp-c-divider: rgba(255, 255, 255, 0.1);
+  --vp-c-gutter: rgba(255, 255, 255, 0.06);
+
+  --lg-tint: rgba(28, 28, 36, 0.52);
+  --lg-tint-strong: rgba(24, 24, 32, 0.84);
+  --lg-edge: rgba(255, 255, 255, 0.22);
+  --lg-edge-shade: rgba(0, 0, 0, 0.5);
+  --lg-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.4);
+
+  --ambient-a: rgba(59, 130, 246, 0.2);
+  --ambient-b: rgba(168, 85, 247, 0.12);
+
+  --table-head: rgba(255, 255, 255, 0.04);
+}
+
+/* ---------- 2. Page canvas ---------- */
+body {
+  background: var(--vp-c-bg);
+  -webkit-font-smoothing: antialiased;
+}
+/* The page background itself is AmbientBackground.vue (styles in motion.css). */
+.VPContent,
+.VPFooter {
+  background: transparent !important;
+}
+
+/* ---------- 3. Floating navigation bar ---------- */
+.VPNav {
+  background: transparent !important;
+}
+.VPNavBar,
+.VPNavBar.has-sidebar,
+.VPNavBar:not(.home),
+.VPNavBar.screen-open {
+  position: relative;
+  isolation: isolate;
+  height: var(--vp-nav-height);
+  width: min(calc(100% - 24px), calc(var(--vp-layout-max-width) - 24px));
+  margin: var(--nav-gap) auto 0;
+  border-radius: var(--lg-radius);
+  background: transparent !important;
+  border-bottom: 0 !important;
+}
+.VPNavBar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--lg-tint);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  box-shadow:
+    inset 0 1px 0 var(--lg-edge),
+    inset 0 -1px 0 var(--lg-edge-shade),
+    inset 0 0 0 1px var(--vp-c-divider),
+    var(--lg-shadow);
+  transition: background-color 0.3s;
+}
+.VPNavBar .wrapper,
+.VPNavBar.has-sidebar .wrapper {
+  padding: 0 8px 0 20px !important;
+  height: 100%;
+}
+/* Child combinators: VPNavBarHamburger also has an inner .container that must keep its size */
+.VPNavBar > .wrapper > .container {
+  max-width: 100% !important;
+  height: 100%;
+}
+/* !important: VitePress's scoped [data-v] selectors out-rank plain class selectors here */
+.VPNavBar .container > .title,
+.VPNavBar.has-sidebar .container > .title {
+  position: static !important;
+  flex-shrink: 0;
+  width: auto !important;
+  height: 100% !important;
+  padding: 0 !important;
+  margin-right: 16px;
+  background: transparent !important;
+}
+.VPNavBarTitle,
+.VPNavBarTitle .title {
+  width: auto;
+  height: 100% !important;
+}
+
+/* Offsets: everything VitePress positions below the nav also clears the float gap */
+.VPNavScreen {
+  top: calc(var(--vp-layout-top-height, 0px) + var(--vp-nav-height) + var(--nav-gap) * 2) !important;
+}
+@media (min-width: 960px) {
+  .VPContent {
+    padding-top: calc(var(--vp-nav-height) + var(--nav-gap));
+  }
+  .VPSidebar {
+    padding-top: calc(var(--vp-nav-height) + var(--nav-gap) * 3) !important;
+  }
+}
+.VPNavBar .content,
+.VPNavBar.has-sidebar .content {
+  padding: 0 !important;
+}
+.VPNavBar .content-body,
+.VPNavBar:not(.home.top) .content-body {
+  height: 100%;
+  background: transparent !important;
+}
+.VPNavBar .divider {
+  display: none;
+}
+.VPNavBarTitle .title {
+  border: 0 !important;
+  height: 100%;
+  gap: 12px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+/* NUS logo (white artwork tile) and the AIS-406 course-code chip */
+.VPNavBarTitle .logo {
+  height: 32px !important;
+  width: auto;
+  margin: 0 !important;
+  padding: 2px 5px;
+  border-radius: 7px;
+  background: #fff;
+}
+.VPNavBarTitle .title > span {
+  padding: 5px 11px;
+  border-radius: 9px;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: #f3eee7;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+.VPNavBarMenuLink,
+.VPNavBarMenuGroup .button {
+  border-radius: 10px;
+  transition: background-color 0.2s, color 0.2s;
+}
+.VPNavBarMenuLink:hover,
+.VPNavBarMenuGroup .button:hover {
+  background: var(--vp-c-brand-soft);
+}
+.VPNavBarMenuLink.active {
+  background: var(--vp-c-brand-soft);
+}
+/* Links become 32px pills centred in the bar instead of full-height strips */
+@media (min-width: 768px) {
+  .VPNavBarMenuLink,
+  .VPNavBarMenuGroup .button {
+    padding: 0 10px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+  }
+  .VPNavBarMenu,
+  .VPNavBarMenuGroup {
+    align-items: center;
+    height: 100%;
+  }
+  .VPNavBarMenuGroup.VPFlyout {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Tablet (768–959px): the five inline menu items do not fit inside the floating bar
+   (measured 874px scroll width at 768px), so this range uses the hamburger sheet like phones. */
+@media (min-width: 768px) and (max-width: 959px) {
+  .VPNavBarMenu,
+  .VPNavBarExtra {
+    display: none !important;
+  }
+  .VPNavBarHamburger {
+    display: flex !important;
+  }
+  .VPNavScreen {
+    display: block !important;
+  }
+}
+
+/* Dropdown flyouts: same material, stronger tint because they cover content */
+.VPMenu {
+  background: var(--lg-tint-strong) !important;
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  border: 1px solid var(--vp-c-divider) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--lg-shadow) !important;
+}
+
+/* Mobile full-screen menu and the sticky local (sidebar / outline) bar */
+.VPNavScreen {
+  background: var(--lg-tint-strong) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(var(--lg-saturate));
+  backdrop-filter: blur(28px) saturate(var(--lg-saturate));
+}
+.VPLocalNav {
+  background: var(--lg-tint) !important;
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  border-bottom: 1px solid var(--vp-c-divider) !important;
+}
+@media (min-width: 960px) {
+  .VPLocalNav {
+    top: calc(var(--vp-nav-height) + var(--nav-gap));
+  }
+}
+
+/* Sidebar sits on the canvas; glass is not used for long lists */
+.VPSidebar {
+  background: transparent !important;
+  border-right: 1px solid var(--vp-c-gutter);
+}
+.VPSidebar .curtain {
+  display: none;
+}
+@media (max-width: 959px) {
+  .VPSidebar {
+    background: var(--lg-tint-strong) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(var(--lg-saturate));
+    backdrop-filter: blur(28px) saturate(var(--lg-saturate));
+  }
+}
+.VPSidebarItem.level-1 .text:not(a .text) {
+  color: var(--vp-c-text-3);
+}
+
+/* Outline ("On this page") as a restrained sticky glass card */
+.VPDocAsideOutline.has-outline {
+  padding: 14px 16px !important;
+  border: 0 !important;
+  border-radius: 14px;
+}
+.VPDocAsideOutline.has-outline {
+  position: relative;
+  isolation: isolate;
+}
+.VPDocAsideOutline.has-outline::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--lg-tint);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 1px 0 var(--lg-edge), inset 0 0 0 1px var(--vp-c-divider);
+}
+
+/* ---------- 5. GlassSurface component ---------- */
+.glass-surface {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--lg-radius);
+}
+.lg-defs {
+  position: fixed;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.glass-surface__warp,
+.glass-surface__rim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.glass-surface__warp {
+  z-index: -2;
+  background: var(--lg-tint);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-saturate));
+}
+/* Refraction lens (html.lg-refract is set only when GlassFilterDefs may run). The lens is a
+   separate layer above the CSS blur glass so it can fade out during scroll (html.lg-scrolling).
+   It must end at `display: none`: measured on the homepage, a lens hidden with opacity or
+   visibility still costs ~half the frame rate (62 vs 114 fps), display:none restores it.
+   allow-discrete + @starting-style keep the hide/show a crossfade rather than a pop. */
+.glass-surface__lens,
+.VPNavBar::after {
+  display: none;
+}
+html.lg-refract .glass-surface__lens,
+html.lg-refract .VPNavBar::after {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 1;
+  transition:
+    opacity 200ms ease-out,
+    display 200ms allow-discrete;
+}
+@starting-style {
+  html.lg-refract .glass-surface__lens,
+  html.lg-refract .VPNavBar::after {
+    opacity: 0;
+  }
+}
+html.lg-refract.lg-scrolling .glass-surface__lens,
+html.lg-refract.lg-scrolling .VPNavBar::after {
+  display: none;
+  opacity: 0;
+  transition:
+    opacity 120ms ease-out,
+    display 120ms allow-discrete;
+}
+/* The lens has no tint of its own (the glass below provides it, so fading the lens never changes
+   brightness). A minimal backdrop-filter makes the backdrop part of the lens's own painting,
+   which is what the displacement filter then bends. */
+/* The displacement filter's region is -35%…170% of the box, so its output spills past the
+   rounded corners; clip-path is applied after filter and trims it back to the shape. */
+html.lg-refract .glass-surface__lens {
+  clip-path: inset(0 round 999px);
+}
+html.lg-refract .VPNavBar::after {
+  clip-path: inset(0 round var(--lg-radius));
+}
+html.lg-refract .glass-surface__lens {
+  filter: url(#lg-control);
+  -webkit-backdrop-filter: saturate(105%);
+  backdrop-filter: saturate(105%);
+}
+/* Desktop nav: gentle lens over the ambient field (visible at the bar's rounded ends). */
+@media (min-width: 960px) {
+  html.lg-refract .VPNavBar::after {
+    content: '';
+    filter: url(#lg-nav);
+    -webkit-backdrop-filter: saturate(105%);
+    backdrop-filter: saturate(105%);
+  }
+}
+/* Over light pages the backdrop is dark body text; keep control tint dense enough for legibility. */
+html.lg-refract:not(.dark) .glass-surface.lg-refract-control .glass-surface__warp {
+  background: rgba(255, 255, 255, 0.78);
+}
+.glass-surface__rim {
+  z-index: -1;
+  box-shadow:
+    inset 0 1px 0 var(--lg-edge),
+    inset 0 -1px 0 var(--lg-edge-shade),
+    inset 0 0 0 1px var(--vp-c-divider),
+    var(--lg-shadow);
+}
+.glass-surface__content {
+  position: relative;
+}
+.glass-surface--toolbar {
+  border-radius: 999px;
+}
+
+.only-light,
+.dark .only-dark {
+  display: inline;
+}
+.only-dark,
+.dark .only-light {
+  display: none;
+}
+/* Keep the last lines of a page clear of the floating toolbar */
+.VPDoc {
+  padding-bottom: 112px !important;
+}
+
+/* ---------- 7. Documentation content ---------- */
+.vp-doc h1 {
+  letter-spacing: -0.025em;
+}
+.vp-doc h2 {
+  border-top-color: var(--vp-c-gutter);
+  letter-spacing: -0.015em;
+}
+
+.doc-ownership {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+}
+.doc-ownership__label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  color: var(--vp-c-text-3);
+}
+.doc-ownership__owner {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+.doc-ownership__source {
+  margin-left: auto;
+  font-size: 12px;
+}
+
+/* Callout used for PoC / provenance notes */
+.vp-doc .custom-block.info {
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+}
+
+/* Display equations: scroll horizontally instead of overflowing the column */
+.vp-doc mjx-container[display='true'] {
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 6px 0;
+  margin: 1.1em 0;
+}
+.vp-doc .equation {
+  margin: 1.2em 0;
+  padding: 2px 16px;
+  border-left: 2px solid var(--vp-c-brand-3);
+  background: linear-gradient(90deg, var(--vp-c-brand-soft), transparent 70%);
+  border-radius: 0 10px 10px 0;
+}
+
+/* Technical tables: restrained, legible, tabular figures */
+.vp-doc table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+}
+.vp-doc tr {
+  background: transparent !important;
+  border-top: 0;
+}
+.vp-doc th,
+.vp-doc td {
+  border: 0;
+  border-bottom: 1px solid var(--vp-c-gutter);
+  padding: 9px 14px;
+  vertical-align: top;
+}
+.vp-doc tbody tr:last-child td {
+  border-bottom: 0;
+}
+.vp-doc th {
+  background: var(--table-head);
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: none;
+  white-space: nowrap;
+}
+.vp-doc td:first-child {
+  white-space: nowrap;
+}
+/* Numeric tables: one line per cell, horizontal scroll on narrow screens instead of ragged wraps */
+.vp-doc .data-table td {
+  white-space: nowrap;
+}
+.table-caption {
+  margin: 1.6em 0 0.5em;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
+}
+.table-note {
+  font-size: 12.5px;
+  color: var(--vp-c-text-3);
+  line-height: 1.6;
+}
+
+/* Status badges */
+.badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-green {
+  background: rgba(16, 185, 129, 0.14);
+  color: #059669;
+}
+.badge-amber {
+  background: rgba(245, 158, 11, 0.16);
+  color: #b45309;
+}
+.dark .badge-green {
+  color: #34d399;
+}
+.dark .badge-amber {
+  color: #fbbf24;
+}
+
+/* Figures */
+.tech-figure {
+  margin: 2em 0;
+}
+.tech-figure__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
+}
+.tech-figure__tag {
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--vp-c-text-3);
+}
+/* The figure plate itself is .xm-inline--plate (ExpandableMedia, motion.css). */
+.tech-figure__caption {
+  margin: 8px 0 0 !important;
+  font-size: 12.5px;
+  color: var(--vp-c-text-3);
+}
+
+/* Citation markers */
+.vp-doc a.cite {
+  font-size: 0.85em;
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 8. Fallbacks and accessibility ---------- */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --lg-tint: rgba(255, 255, 255, 0.96);
+  }
+  .dark {
+    --lg-tint: rgba(20, 20, 26, 0.96);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --lg-tint: var(--vp-c-bg-soft);
+    --lg-tint-strong: var(--vp-c-bg-soft);
+    --lg-blur: 0px;
+  }
+  .ambient {
+    display: none;
+  }
+}
+@media (prefers-contrast: more) {
+  :root,
+  .dark {
+    --vp-c-divider: currentColor;
+    --lg-tint: var(--vp-c-bg-soft);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .VPNavBar::before {
+    transition: none;
+  }
+}

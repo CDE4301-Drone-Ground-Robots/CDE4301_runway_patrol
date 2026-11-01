@@ -1,0 +1,253 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680">
+  <defs>
+    <linearGradient id="bg-grad-c9" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080B12"/>
+      <stop offset="100%" stop-color="#0D131F"/>
+    </linearGradient>
+
+    <!-- State Card Gradients -->
+    <linearGradient id="normal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D241C"/>
+      <stop offset="100%" stop-color="#081813"/>
+    </linearGradient>
+    <linearGradient id="degraded-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#241E10"/>
+      <stop offset="100%" stop-color="#18140B"/>
+    </linearGradient>
+    <linearGradient id="lost-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#261214"/>
+      <stop offset="100%" stop-color="#190C0D"/>
+    </linearGradient>
+    <linearGradient id="holding-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#171C2B"/>
+      <stop offset="100%" stop-color="#0E131E"/>
+    </linearGradient>
+    <linearGradient id="recon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#13232C"/>
+      <stop offset="100%" stop-color="#0C171E"/>
+    </linearGradient>
+
+    <!-- Filter Shadows -->
+    <filter id="shadow-c9" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Marker Arrows -->
+    <marker id="arr-green" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#42B883"/>
+    </marker>
+    <marker id="arr-amber" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#E9AD58"/>
+    </marker>
+    <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#E57373"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#5278D8"/>
+    </marker>
+    <marker id="arr-cyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#4CC9D8"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1200" height="680" rx="16" fill="url(#bg-grad-c9)" stroke="#1F2937" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <g transform="translate(40, 24)">
+    <rect width="1120" height="52" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1"/>
+    
+    <rect x="16" y="12" width="220" height="28" rx="6" fill="#4CC9D8" fill-opacity="0.15" stroke="#4CC9D8" stroke-opacity="0.4"/>
+    <text x="26" y="30" fill="#4CC9D8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="0.06em">FIGURE 6.1 &#8226; FAIL-SAFE FLOW</text>
+
+    <text x="250" y="31" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700">Datalink Loss &amp; Autonomy Recovery Finite State Machine</text>
+    
+    <!-- Status Badges -->
+    <g transform="translate(860, 13)">
+      <rect width="244" height="26" rx="6" fill="#42B883" fill-opacity="0.12" stroke="#42B883" stroke-opacity="0.3"/>
+      <circle cx="12" cy="13" r="4" fill="#42B883"/>
+      <text x="24" y="17" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">ROS 2 FSM ARCHITECTURE</text>
+    </g>
+  </g>
+
+  <!-- Notice Sub-banner -->
+  <g transform="translate(40, 84)">
+    <rect width="1120" height="28" rx="6" fill="#182233" stroke="#1F2937" stroke-width="1"/>
+    <circle cx="16" cy="14" r="3.5" fill="#E9AD58"/>
+    <text x="28" y="18" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11.5">
+      <tspan fill="#E9AD58" font-weight="600">Implementation Boundary:</tspan> Solid cards &amp; arrows represent demonstrated Semester 1 testbed autonomy (active goal continuation, waypoint holding, auto-reconnect). Dashed cards represent Semester 2 proposed watchdog return-to-base (RTB).
+    </text>
+  </g>
+
+  <!-- ==================== MAIN STATE MACHINE DIAGRAM ==================== -->
+
+  <!-- STATE 1: CONNECTED_NORMAL -->
+  <g transform="translate(60, 134)" filter="url(#shadow-c9)">
+    <rect width="320" height="150" rx="10" fill="url(#normal-grad)" stroke="#42B883" stroke-width="1.8"/>
+    <rect width="320" height="30" rx="10" fill="#42B883" fill-opacity="0.18"/>
+    <circle cx="16" cy="15" r="5" fill="#42B883"/>
+    <text x="28" y="20" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700">STATE 1: CONNECTED_NORMAL</text>
+    
+    <g transform="translate(16, 42)">
+      <text x="0" y="14" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; C2 Heartbeat Active:</text>
+      <text x="145" y="14" fill="#A8B3C5" font-family="monospace" font-size="10.5">1.0 Hz exchange</text>
+
+      <text x="0" y="34" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Goal Queueing:</text>
+      <text x="145" y="34" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Accepts new /c2/target_alert</text>
+
+      <text x="0" y="54" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Nav2 Autonomy:</text>
+      <text x="145" y="54" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="600">Active trajectory tracking</text>
+
+      <text x="0" y="74" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Watchdog Timer:</text>
+      <text x="145" y="74" fill="#A8B3C5" font-family="monospace" font-size="10.5">&#916;t &lt; 3.0s (Reset on RX)</text>
+    </g>
+  </g>
+
+  <!-- Arrow 1 -> 2: Timeout Trigger -->
+  <path d="M 380 200 L 460 200" stroke="#E9AD58" stroke-width="2.5" marker-end="url(#arr-amber)"/>
+  <g transform="translate(385, 172)">
+    <text x="35" y="12" text-anchor="middle" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="700">Heartbeat Loss</text>
+    <text x="35" y="24" text-anchor="middle" fill="#A8B3C5" font-family="monospace" font-size="9.5">&#916;t &gt; 3.0 s</text>
+  </g>
+
+  <!-- STATE 2: LINK_LOST_DEGRADED -->
+  <g transform="translate(465, 134)" filter="url(#shadow-c9)">
+    <rect width="320" height="150" rx="10" fill="url(#degraded-grad)" stroke="#E9AD58" stroke-width="1.8"/>
+    <rect width="320" height="30" rx="10" fill="#E9AD58" fill-opacity="0.18"/>
+    <circle cx="16" cy="15" r="5" fill="#E9AD58"/>
+    <text x="28" y="20" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700">STATE 2: LINK_LOST_DEGRADED</text>
+
+    <g transform="translate(16, 42)">
+      <text x="0" y="14" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Link Status:</text>
+      <text x="115" y="14" fill="#E57373" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="600">Datalink Disconnected</text>
+
+      <text x="0" y="34" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Goal Ingestion:</text>
+      <text x="115" y="34" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Queue FROZEN (No new goals)</text>
+
+      <text x="0" y="54" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Active Goal:</text>
+      <text x="115" y="54" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="600">CONTINUES to current target</text>
+
+      <text x="0" y="74" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Reason:</text>
+      <text x="115" y="74" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">Nav2 runs entirely onboard</text>
+    </g>
+  </g>
+
+  <!-- Arrow 2 -> 3: Target Arrival -->
+  <path d="M 785 200 L 865 200" stroke="#4CC9D8" stroke-width="2.5" marker-end="url(#arr-cyan)"/>
+  <g transform="translate(790, 172)">
+    <text x="35" y="12" text-anchor="middle" fill="#4CC9D8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="700">Target Reached</text>
+    <text x="35" y="24" text-anchor="middle" fill="#A8B3C5" font-family="monospace" font-size="9.5">dist &lt; 0.3 m</text>
+  </g>
+
+  <!-- STATE 3: HOLDING_SAFE_PAUSE -->
+  <g transform="translate(870, 134)" filter="url(#shadow-c9)">
+    <rect width="270" height="150" rx="10" fill="url(#holding-grad)" stroke="#4CC9D8" stroke-width="1.8"/>
+    <rect width="270" height="30" rx="10" fill="#4CC9D8" fill-opacity="0.18"/>
+    <circle cx="16" cy="15" r="5" fill="#4CC9D8"/>
+    <text x="28" y="20" fill="#4CC9D8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700">STATE 3: HOLDING_SAFE</text>
+
+    <g transform="translate(14, 42)">
+      <text x="0" y="14" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Motion State:</text>
+      <text x="105" y="14" fill="#4CC9D8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="700">STATIONARY</text>
+
+      <text x="0" y="34" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Command:</text>
+      <text x="105" y="34" fill="#F3F4F6" font-family="monospace" font-size="10">/cmd_vel = [0, 0]</text>
+
+      <text x="0" y="54" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Queue Lock:</text>
+      <text x="105" y="54" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">Prevents next goal</text>
+
+      <text x="0" y="74" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Drivetrain:</text>
+      <text x="105" y="74" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">Active zero torque</text>
+    </g>
+  </g>
+
+  <!-- ==================== RECOVERY & RECONNECTION (LOWER TIER) ==================== -->
+
+  <!-- Branch down from State 3 to Reconnecting: Link Restored -->
+  <path d="M 980 284 L 980 370 L 860 370" stroke="#79A4F8" stroke-width="2.5" fill="none" marker-end="url(#arr-blue)"/>
+  <g transform="translate(885, 345)">
+    <text x="35" y="12" text-anchor="middle" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="700">Wi-Fi / Datalink Restored</text>
+    <text x="35" y="24" text-anchor="middle" fill="#A8B3C5" font-family="monospace" font-size="9.5">SPDP Discovery Ping OK</text>
+  </g>
+
+  <!-- Direct shortcut from State 2: Link Restored while Still En Route -->
+  <path d="M 600 284 L 600 370 L 610 370" stroke="#79A4F8" stroke-width="2" stroke-dasharray="4 2" fill="none"/>
+  <g transform="translate(520, 310)">
+    <text x="45" y="12" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5" font-weight="600">Restored mid-transit</text>
+  </g>
+
+  <!-- STATE 4: RECONNECTING_DISCOVERY -->
+  <g transform="translate(480, 325)" filter="url(#shadow-c9)">
+    <rect width="370" height="135" rx="10" fill="url(#recon-grad)" stroke="#5278D8" stroke-width="1.8"/>
+    <rect width="370" height="30" rx="10" fill="#5278D8" fill-opacity="0.18"/>
+    <circle cx="16" cy="15" r="5" fill="#79A4F8"/>
+    <text x="28" y="20" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700">STATE 4: RECONNECTING_HANDSHAKE</text>
+
+    <g transform="translate(16, 42)">
+      <text x="0" y="14" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; DDS Re-discovery:</text>
+      <text x="140" y="14" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Static peer handshake</text>
+
+      <text x="0" y="34" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Telemetry Burst:</text>
+      <text x="140" y="34" fill="#4CC9D8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Transmit queued state &amp; pose</text>
+
+      <text x="0" y="54" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Sequence Validation:</text>
+      <text x="140" y="54" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Flush obsolete stale targets</text>
+    </g>
+  </g>
+
+  <!-- Arrow 4 -> 1: Full Restoration -->
+  <path d="M 480 390 L 220 390 L 220 290" stroke="#42B883" stroke-width="2.5" fill="none" marker-end="url(#arr-green)"/>
+  <g transform="translate(230, 365)">
+    <text x="50" y="12" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10" font-weight="700">Connection Re-established</text>
+    <text x="50" y="24" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">Queue unfreezes, normal dispatch resumes</text>
+  </g>
+
+  <!-- ==================== SEMESTER 2 PROPOSED WATCHDOG RTB ==================== -->
+  <!-- Branch from State 3 to State 5 (Long Timeout) -->
+  <path d="M 1040 284 L 1040 480 L 1000 480" stroke="#E9AD58" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#arr-amber)"/>
+  <g transform="translate(1048, 350)">
+    <text x="0" y="14" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5" font-weight="700">TIMEOUT</text>
+    <text x="0" y="28" fill="#A8B3C5" font-family="monospace" font-size="9">T &gt; 60 s</text>
+    <text x="0" y="42" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="8.5">(Proposed)</text>
+  </g>
+
+  <!-- STATE 5: SEMESTER 2 AUTONOMOUS RETURN-TO-BASE (PROPOSED) -->
+  <g transform="translate(560, 480)" filter="url(#shadow-c9)">
+    <rect width="440" height="160" rx="10" fill="url(#lost-grad)" stroke="#E9AD58" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <rect width="440" height="30" rx="10" fill="#E9AD58" fill-opacity="0.15"/>
+    <circle cx="16" cy="15" r="5" fill="#E9AD58"/>
+    <text x="28" y="20" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700">STATE 5: AUTONOMOUS RETURN-TO-BASE (SEM 2 PROPOSED)</text>
+
+    <g transform="translate(16, 42)">
+      <text x="0" y="14" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Outage Threshold:</text>
+      <text x="140" y="14" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Sustained datalink loss &gt; 60.0 s</text>
+
+      <text x="0" y="34" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Safe RTB Path:</text>
+      <text x="140" y="34" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Nav2 plans back to runway edge staging / dock</text>
+
+      <text x="0" y="54" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Vacuum System:</text>
+      <text x="140" y="54" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Centrifugal suction shuts down to conserve LiFePO4</text>
+
+      <text x="0" y="74" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">&#8226; Development Scope:</text>
+      <text x="140" y="74" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="600">Pending physical UGV &amp; 900 MHz radio integration</text>
+    </g>
+  </g>
+
+  <!-- ==================== LEFT SUMMARY CARD: SEMESTER 1 VS 2 ==================== -->
+  <g transform="translate(60, 480)" filter="url(#shadow-c9)">
+    <rect width="480" height="160" rx="10" fill="#0A0E17" stroke="#1F2937" stroke-width="1.2"/>
+    <rect width="480" height="28" rx="10" fill="#111827"/>
+    <text x="16" y="19" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11.5" font-weight="700">Engineering Evaluation &amp; Academic Integrity Standard</text>
+
+    <g transform="translate(16, 42)">
+      <text x="0" y="14" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="700">&#10003; Demonstrated in Sem 1 Testbed:</text>
+      <text x="0" y="30" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; Software decoupling allows UGV to complete actively assigned FOD goal safely.</text>
+      <text x="0" y="44" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; Stationary hold prevents hazardous blind navigation across runway surface.</text>
+      <text x="0" y="58" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; Automatic re-peering verified across WSL2 / Ubuntu 24.04 subnet.</text>
+
+      <text x="0" y="80" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="700">&#9654; Semester 2 Physical Milestone:</text>
+      <text x="0" y="96" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; Hardware watchdog relay &amp; Microhard P900 V2 long-range RF validation.</text>
+    </g>
+  </g>
+
+</svg>

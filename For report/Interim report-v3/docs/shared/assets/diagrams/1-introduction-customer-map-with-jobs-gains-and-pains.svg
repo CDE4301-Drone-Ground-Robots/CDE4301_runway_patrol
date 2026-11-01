@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 400 400" role="img" aria-label="Customer map with jobs, gains and pains" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="10" width="380" height="380" class="vpc-shape"></rect>
+                <line x1="10" y1="200" x2="200" y2="200" class="vpc-line"></line>
+                <line x1="200" y1="200" x2="390" y2="10" class="vpc-line"></line>
+                <line x1="200" y1="200" x2="390" y2="390" class="vpc-line"></line>
+                <text x="105" y="186" class="vpc-head">Gains</text>
+                <text x="105" y="60" class="vpc-t">Meaningful deployment</text><text x="105" y="74" class="vpc-t">of manpower</text>
+                <text x="105" y="112" class="vpc-t">Safer runways</text>
+                <text x="105" y="146" class="vpc-t">Increased productivity</text>
+                <text x="105" y="222" class="vpc-head">Pains</text>
+                <text x="105" y="252" class="vpc-t">Extremely laborious</text><text x="105" y="266" class="vpc-t">FOD process</text>
+                <text x="105" y="296" class="vpc-t">Manpower-intensive</text><text x="105" y="310" class="vpc-t">FOD process</text>
+                <text x="105" y="340" class="vpc-t">Repetitive, mundane tasks</text>
+                <text x="105" y="368" class="vpc-t">Expensive cost of FOD</text>
+                <text x="332" y="160" class="vpc-head">Jobs</text>
+                <text x="326" y="190" class="vpc-t">Runway</text><text x="326" y="204" class="vpc-t">maintenance team</text>
+                <text x="330" y="232" class="vpc-t">Ground operations</text><text x="330" y="246" class="vpc-t">operator</text>
+                <text x="336" y="274" class="vpc-t">FOD remediation</text><text x="340" y="288" class="vpc-t">team</text>
+              </svg>

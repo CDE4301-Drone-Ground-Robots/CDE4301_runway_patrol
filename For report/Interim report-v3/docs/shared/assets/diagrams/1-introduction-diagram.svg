@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg class="apple-rings-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background Tracks (6 non-bright, muted tones) -->
+                <circle cx="200" cy="200" r="180" stroke="rgba(184, 66, 96, 0.16)" stroke-width="10" class="apple-ring-track"></circle>
+                <circle cx="200" cy="200" r="154" stroke="rgba(125, 91, 140, 0.16)" stroke-width="10" class="apple-ring-track"></circle>
+                <circle cx="200" cy="200" r="128" stroke="rgba(72, 114, 148, 0.16)" stroke-width="10" class="apple-ring-track"></circle>
+                <circle cx="200" cy="200" r="102" stroke="rgba(54, 130, 120, 0.16)" stroke-width="10" class="apple-ring-track"></circle>
+                <circle cx="200" cy="200" r="76" stroke="rgba(166, 124, 72, 0.16)" stroke-width="10" class="apple-ring-track"></circle>
+                <circle cx="200" cy="200" r="50" stroke="rgba(74, 126, 88, 0.16)" stroke-width="10" class="apple-ring-track"></circle>
+
+                <!-- Animated Progress Rings (6 concentric rings, all 100% completed) -->
+                <!-- 1. Primary & Secondary research (r=180, C=1130.97) -->
+                <circle id="ring-1" cx="200" cy="200" r="180" stroke="#b84260" stroke-width="10" stroke-dasharray="1130.97" stroke-dashoffset="1130.97" class="apple-ring-fill"></circle>
+                <!-- 2. System Architecture Design (r=154, C=967.61) -->
+                <circle id="ring-2" cx="200" cy="200" r="154" stroke="#7d5b8c" stroke-width="10" stroke-dasharray="967.61" stroke-dashoffset="967.61" class="apple-ring-fill"></circle>
+                <!-- 3. Mechanical prototype design (r=128, C=804.25) -->
+                <circle id="ring-3" cx="200" cy="200" r="128" stroke="#487294" stroke-width="10" stroke-dasharray="804.25" stroke-dashoffset="804.25" class="apple-ring-fill"></circle>
+                <!-- 4. FOD remidation module (r=102, C=640.88) -->
+                <circle id="ring-4" cx="200" cy="200" r="102" stroke="#368278" stroke-width="10" stroke-dasharray="640.88" stroke-dashoffset="640.88" class="apple-ring-fill"></circle>
+                <!-- 5. Electrical diagrams (r=76, C=477.52) -->
+                <circle id="ring-5" cx="200" cy="200" r="76" stroke="#a67c48" stroke-width="10" stroke-dasharray="477.52" stroke-dashoffset="477.52" class="apple-ring-fill"></circle>
+                <!-- 6. Navigation & Communications with UAV simulation (r=50, C=314.16) -->
+                <circle id="ring-6" cx="200" cy="200" r="50" stroke="#4a7e58" stroke-width="10" stroke-dasharray="314.16" stroke-dashoffset="314.16" class="apple-ring-fill"></circle>
+              </svg>

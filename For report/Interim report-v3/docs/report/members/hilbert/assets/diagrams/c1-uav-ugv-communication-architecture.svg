@@ -1,0 +1,360 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <!-- Background & Panel Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080B12"/>
+      <stop offset="50%" stop-color="#0C101B"/>
+      <stop offset="100%" stop-color="#080B12"/>
+    </linearGradient>
+    <linearGradient id="zoneBronze" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E1912"/>
+      <stop offset="100%" stop-color="#12100C"/>
+    </linearGradient>
+    <linearGradient id="zoneSapphire" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#101A2E"/>
+      <stop offset="100%" stop-color="#0B111E"/>
+    </linearGradient>
+    <linearGradient id="zoneCyan" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F2228"/>
+      <stop offset="100%" stop-color="#0A161A"/>
+    </linearGradient>
+    <linearGradient id="zoneEmerald" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F231D"/>
+      <stop offset="100%" stop-color="#0A1613"/>
+    </linearGradient>
+
+    <!-- Card Inner Gradients -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#172033"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Marker Arrows -->
+    <marker id="arrowBronze" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#D6A45D"/>
+    </marker>
+    <marker id="arrowCyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#4CC9D8"/>
+    </marker>
+    <marker id="arrowSapphire" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#5278D8"/>
+    </marker>
+    <marker id="arrowEmerald" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#42B883"/>
+    </marker>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="675" fill="url(#bgGrad)" rx="14"/>
+  <rect x="2" y="2" width="1196" height="671" fill="none" stroke="#1E293B" stroke-width="1.5" rx="13"/>
+
+  <!-- Header Block -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#F3F4F6" letter-spacing="-0.3">
+      FOD Hunter — Heterogeneous UAV–UGV Communications Architecture
+    </text>
+    <text x="0" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="400" fill="#A8B3C5">
+      End-to-end dataflow from UAV aerial target dispatch to CycloneDDS unicast transport, UGV bridge ingestion, and Nav2 waypoint execution
+    </text>
+  </g>
+
+  <!-- ==================== ZONE 1: UAV COMMAND SYSTEM ==================== -->
+  <g transform="translate(30, 85)" filter="url(#shadow)">
+    <!-- Zone Container -->
+    <rect width="265" height="510" rx="12" fill="url(#zoneBronze)" stroke="#D6A45D" stroke-width="1.5" stroke-opacity="0.8"/>
+    <!-- Zone Header Banner -->
+    <path d="M 0 12 Q 0 0 12 0 L 253 0 Q 265 0 265 12 L 265 38 L 0 38 Z" fill="#2A2015"/>
+    <text x="132" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#D6A45D" text-anchor="middle" letter-spacing="0.5">
+      ZONE 1: UAV C2 TERMINAL
+    </text>
+
+    <!-- Subtitle / Hardware Spec -->
+    <text x="132" y="56" font-family="monospace" font-size="11" fill="#E2E8F0" text-anchor="middle" font-weight="600">
+      Raspberry Pi 5 (ARM64)
+    </text>
+    <text x="132" y="72" font-family="monospace" font-size="10" fill="#94A3B8" text-anchor="middle">
+      IP: 192.168.137.233 · Ubuntu 24.04
+    </text>
+
+    <!-- Implementation Boundary Badge -->
+    <rect x="20" y="85" width="225" height="26" rx="6" fill="#451A03" stroke="#F59E0B" stroke-width="1"/>
+    <text x="132" y="102" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" font-weight="700" fill="#FDE68A" text-anchor="middle">
+      ⚠ Sem 1: Simulated UAV Input
+    </text>
+
+    <!-- Box 1.1: Simulated Target Generator -->
+    <rect x="18" y="125" width="229" height="90" rx="8" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="146" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC">
+      1.1 FOD Target Emulation
+    </text>
+    <text x="30" y="165" font-family="monospace" font-size="10.5" fill="#D6A45D">DemoComs_C2.py</text>
+    <text x="30" y="183" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#94A3B8">• Synthetic airfield sweep tags</text>
+    <text x="30" y="199" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#94A3B8">• WGS84 + Cartesian grid coords</text>
+
+    <!-- Downward Internal Arrow -->
+    <line x1="132" y1="215" x2="132" y2="238" stroke="#D6A45D" stroke-width="1.5" marker-end="url(#arrowBronze)"/>
+
+    <!-- Box 1.2: JSON Serialization -->
+    <rect x="18" y="240" width="229" height="90" rx="8" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="261" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC">
+      1.2 JSON Message Assembly
+    </text>
+    <text x="30" y="280" font-family="monospace" font-size="10" fill="#CBD5E1">• Schema formatting (Table 5.1)</text>
+    <text x="30" y="296" font-family="monospace" font-size="10" fill="#CBD5E1">• SHA-256 digest computation</text>
+    <text x="30" y="312" font-family="monospace" font-size="10" fill="#CBD5E1">• Priority assignment (P1/P2)</text>
+
+    <!-- Downward Internal Arrow -->
+    <line x1="132" y1="330" x2="132" y2="353" stroke="#D6A45D" stroke-width="1.5" marker-end="url(#arrowBronze)"/>
+
+    <!-- Box 1.3: ROS 2 Alert Publisher -->
+    <rect x="18" y="355" width="229" height="75" rx="8" fill="url(#cardGrad)" stroke="#D6A45D" stroke-width="1.2"/>
+    <text x="30" y="376" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC">
+      1.3 ROS 2 Publisher
+    </text>
+    <text x="30" y="395" font-family="monospace" font-size="10.5" fill="#38BDF8">std_msgs/msg/String</text>
+    <text x="30" y="413" font-family="monospace" font-size="10" fill="#A8B3C5">QoS: Reliable · Depth: 10</text>
+
+    <!-- Telemetry Ingestion Card (Bottom) -->
+    <rect x="18" y="445" width="229" height="50" rx="8" fill="#172554" stroke="#3B82F6" stroke-width="1" stroke-dasharray="3 3"/>
+    <text x="30" y="465" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#93C5FD">
+      Telemetry Ingestion
+    </text>
+    <text x="30" y="482" font-family="monospace" font-size="9.5" fill="#BFDBFE">Parses 1 Hz UGV Pose &amp; State</text>
+  </g>
+
+  <!-- ==================== ZONE 2: DDS TRANSPORT ==================== -->
+  <g transform="translate(325, 85)" filter="url(#shadow)">
+    <!-- Zone Container -->
+    <rect width="250" height="510" rx="12" fill="url(#zoneSapphire)" stroke="#5278D8" stroke-width="1.5" stroke-opacity="0.8"/>
+    <!-- Zone Header Banner -->
+    <path d="M 0 12 Q 0 0 12 0 L 238 0 Q 250 0 250 12 L 250 38 L 0 38 Z" fill="#172554"/>
+    <text x="125" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#93C5FD" text-anchor="middle" letter-spacing="0.5">
+      ZONE 2: TRANSPORT &amp; DDS
+    </text>
+
+    <!-- Subtitle / Network Specs -->
+    <text x="125" y="56" font-family="monospace" font-size="11" fill="#E2E8F0" text-anchor="middle" font-weight="600">
+      Dedicated Indoor Wi-Fi LAN
+    </text>
+    <text x="125" y="72" font-family="monospace" font-size="10" fill="#94A3B8" text-anchor="middle">
+      2.4 / 5.0 GHz · Subnet: 192.168.137.0/24
+    </text>
+
+    <!-- Middleware Stack Details -->
+    <rect x="15" y="90" width="220" height="85" rx="8" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <text x="25" y="110" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC">
+      Eclipse CycloneDDS
+    </text>
+    <text x="25" y="128" font-family="monospace" font-size="10" fill="#60A5FA">• rmw_cyclonedds_cpp</text>
+    <text x="25" y="144" font-family="monospace" font-size="10" fill="#94A3B8">• cyclonedds.xml configuration</text>
+    <text x="25" y="160" font-family="monospace" font-size="10" fill="#94A3B8">• Latency: &lt;15.0 ms bench test</text>
+
+    <!-- Peering Architecture Box -->
+    <rect x="15" y="190" width="220" height="150" rx="8" fill="#0B132B" stroke="#5278D8" stroke-width="1.2"/>
+    <text x="25" y="212" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#93C5FD">
+      Static Unicast Discovery
+    </text>
+    <text x="25" y="232" font-family="monospace" font-size="9.5" fill="#E2E8F0">&lt;Peers&gt;</text>
+    <text x="35" y="248" font-family="monospace" font-size="9.5" fill="#FDE68A">&lt;Peer address="192.168.137.1"/&gt;</text>
+    <text x="35" y="264" font-family="monospace" font-size="9.5" fill="#93C5FD">&lt;Peer address="192.168.137.233"/&gt;</text>
+    <text x="25" y="280" font-family="monospace" font-size="9.5" fill="#E2E8F0">&lt;/Peers&gt;</text>
+    <text x="25" y="304" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#A8B3C5">
+      ✓ Bypasses Hyper-V NAT drop
+    </text>
+    <text x="25" y="322" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" fill="#A8B3C5">
+      ✓ Deterministic UDP unicast
+    </text>
+
+    <!-- Topic Flow 1: Alert Downlink -->
+    <rect x="15" y="355" width="220" height="60" rx="8" fill="#1E293B" stroke="#D6A45D" stroke-width="1.2"/>
+    <text x="25" y="375" font-family="monospace" font-size="10.5" font-weight="700" fill="#F59E0B">
+      /c2/target_alert
+    </text>
+    <text x="25" y="393" font-family="monospace" font-size="9.5" fill="#E2E8F0">Downlink: UAV → UGV</text>
+    <text x="25" y="407" font-family="monospace" font-size="9" fill="#94A3B8">Reliable · Transient Local</text>
+
+    <!-- Topic Flow 2: Telemetry Uplink -->
+    <rect x="15" y="430" width="220" height="60" rx="8" fill="#1E293B" stroke="#3B82F6" stroke-width="1.2"/>
+    <text x="25" y="450" font-family="monospace" font-size="10.5" font-weight="700" fill="#60A5FA">
+      /c2/ugv_telemetry
+    </text>
+    <text x="25" y="468" font-family="monospace" font-size="9.5" fill="#E2E8F0">Uplink: UGV → UAV (1 Hz)</text>
+    <text x="25" y="482" font-family="monospace" font-size="9" fill="#94A3B8">Pose, Battery, State, Heartbeat</text>
+  </g>
+
+  <!-- ==================== ZONE 3: UGV PROCESSING ==================== -->
+  <g transform="translate(605, 85)" filter="url(#shadow)">
+    <!-- Zone Container -->
+    <rect width="265" height="510" rx="12" fill="url(#zoneCyan)" stroke="#4CC9D8" stroke-width="1.5" stroke-opacity="0.8"/>
+    <!-- Zone Header Banner -->
+    <path d="M 0 12 Q 0 0 12 0 L 253 0 Q 265 0 265 12 L 265 38 L 0 38 Z" fill="#0E2E3B"/>
+    <text x="132" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#4CC9D8" text-anchor="middle" letter-spacing="0.5">
+      ZONE 3: UGV COMMAND BRIDGE
+    </text>
+
+    <!-- Subtitle / Hardware Specs -->
+    <text x="132" y="56" font-family="monospace" font-size="11" fill="#E2E8F0" text-anchor="middle" font-weight="600">
+      UGV Host Workstation (WSL2)
+    </text>
+    <text x="132" y="72" font-family="monospace" font-size="10" fill="#94A3B8" text-anchor="middle">
+      IP: 192.168.137.1 · Ubuntu 24.04 LTS
+    </text>
+
+    <!-- Node Title -->
+    <rect x="18" y="90" width="229" height="75" rx="8" fill="url(#cardGrad)" stroke="#4CC9D8" stroke-width="1"/>
+    <text x="30" y="112" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC">
+      ugv_c2_bridge_node
+    </text>
+    <text x="30" y="131" font-family="monospace" font-size="10.5" fill="#38BDF8">rclpy · MultiThreaded</text>
+    <text x="30" y="149" font-family="monospace" font-size="10" fill="#A8B3C5">Subscriber: /c2/target_alert</text>
+
+    <!-- Downward Internal Arrow -->
+    <line x1="132" y1="165" x2="132" y2="185" stroke="#4CC9D8" stroke-width="1.5" marker-end="url(#arrowCyan)"/>
+
+    <!-- Processing Pipeline Subcards -->
+    <rect x="18" y="185" width="229" height="65" rx="8" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="205" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#F8FAFC">
+      3.1 Schema &amp; SHA-256 Check
+    </text>
+    <text x="30" y="223" font-family="monospace" font-size="10" fill="#94A3B8">• Verifies JSON mandatory keys</text>
+    <text x="30" y="239" font-family="monospace" font-size="10" fill="#94A3B8">• Validates payload integrity hash</text>
+
+    <line x1="132" y1="250" x2="132" y2="268" stroke="#4CC9D8" stroke-width="1.5" marker-end="url(#arrowCyan)"/>
+
+    <rect x="18" y="268" width="229" height="65" rx="8" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="288" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#F8FAFC">
+      3.2 Duplicate Target Filter
+    </text>
+    <text x="30" y="306" font-family="monospace" font-size="10" fill="#94A3B8">• Deduplication by target_id</text>
+    <text x="30" y="322" font-family="monospace" font-size="10" fill="#94A3B8">• Spatial radius thresholding</text>
+
+    <line x1="132" y1="333" x2="132" y2="351" stroke="#4CC9D8" stroke-width="1.5" marker-end="url(#arrowCyan)"/>
+
+    <rect x="18" y="351" width="229" height="75" rx="8" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="371" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#F8FAFC">
+      3.3 Coordinate Conversion
+    </text>
+    <text x="30" y="389" font-family="monospace" font-size="10" fill="#94A3B8">• Lat/Lon → Local ENU / map frame</text>
+    <text x="30" y="405" font-family="monospace" font-size="10" fill="#94A3B8">• Builds PoseStamped messages</text>
+    <text x="30" y="419" font-family="monospace" font-size="9" fill="#F59E0B">※ Geographic frame: TBC in Sem 2</text>
+
+    <line x1="132" y1="426" x2="132" y2="443" stroke="#4CC9D8" stroke-width="1.5" marker-end="url(#arrowCyan)"/>
+
+    <!-- Queue Management -->
+    <rect x="18" y="445" width="229" height="50" rx="8" fill="#164E63" stroke="#06B6D4" stroke-width="1"/>
+    <text x="30" y="465" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#E0F2FE">
+      3.4 FIFO Waypoint Queue
+    </text>
+    <text x="30" y="482" font-family="monospace" font-size="9.5" fill="#BAE6FD">Priority re-sort · Dispatch to Nav2</text>
+  </g>
+
+  <!-- ==================== ZONE 4: NAVIGATION INTERFACE ==================== -->
+  <g transform="translate(900, 85)" filter="url(#shadow)">
+    <!-- Zone Container -->
+    <rect width="270" height="510" rx="12" fill="url(#zoneEmerald)" stroke="#42B883" stroke-width="1.5" stroke-opacity="0.8"/>
+    <!-- Zone Header Banner -->
+    <path d="M 0 12 Q 0 0 12 0 L 258 0 Q 270 0 270 12 L 270 38 L 0 38 Z" fill="#0A3324"/>
+    <text x="135" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="700" fill="#42B883" text-anchor="middle" letter-spacing="0.5">
+      ZONE 4: NAV2 &amp; AUTONOMY
+    </text>
+
+    <!-- Subtitle / Stack Specs -->
+    <text x="135" y="56" font-family="monospace" font-size="11" fill="#E2E8F0" text-anchor="middle" font-weight="600">
+      ROS 2 Jazzy Nav2 Stack
+    </text>
+    <text x="135" y="72" font-family="monospace" font-size="10" fill="#94A3B8" text-anchor="middle">
+      Lifecycle: Active · BT Navigator
+    </text>
+
+    <!-- Action Client Interface -->
+    <rect x="18" y="90" width="234" height="85" rx="8" fill="url(#cardGrad)" stroke="#42B883" stroke-width="1"/>
+    <text x="30" y="110" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#F8FAFC">
+      NavigateToPose Action Client
+    </text>
+    <text x="30" y="128" font-family="monospace" font-size="10" fill="#6EE7B7">• nav2_msgs/action/NavigateToPose</text>
+    <text x="30" y="144" font-family="monospace" font-size="10" fill="#94A3B8">• Goal Pose: geometry_msgs/PoseStamped</text>
+    <text x="30" y="160" font-family="monospace" font-size="10" fill="#94A3B8">• Asynchronous feedback handling</text>
+
+    <line x1="135" y1="175" x2="135" y2="198" stroke="#42B883" stroke-width="1.5" marker-end="url(#arrowEmerald)"/>
+
+    <!-- Nav2 Execution Server -->
+    <rect x="18" y="200" width="234" height="95" rx="8" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="222" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#F8FAFC">
+      Nav2 Planners &amp; Controllers
+    </text>
+    <text x="30" y="242" font-family="monospace" font-size="10" fill="#E2E8F0">• Global: Smac Planner 2D (A*)</text>
+    <text x="30" y="258" font-family="monospace" font-size="10" fill="#E2E8F0">• Local: Regulated Pure Pursuit (RPP)</text>
+    <text x="30" y="274" font-family="monospace" font-size="10" fill="#94A3B8">• Velocity Output: /cmd_vel</text>
+
+    <line x1="135" y1="295" x2="135" y2="318" stroke="#42B883" stroke-width="1.5" marker-end="url(#arrowEmerald)"/>
+
+    <!-- Simulation Proxy Vehicle -->
+    <rect x="18" y="320" width="234" height="85" rx="8" fill="url(#cardGrad)" stroke="#334155" stroke-width="1"/>
+    <text x="30" y="340" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#F8FAFC">
+      Gazebo Harmonic Simulator
+    </text>
+    <text x="30" y="358" font-family="monospace" font-size="10" fill="#F59E0B">Proxy: AgileX Scout 2.0 (SIL)</text>
+    <text x="30" y="374" font-family="monospace" font-size="10" fill="#94A3B8">• DiffDrive Plugin &amp; Sensors</text>
+    <text x="30" y="390" font-family="monospace" font-size="10" fill="#94A3B8">• ros_gz_bridge clock &amp; TF sync</text>
+
+    <!-- Visual Markers -->
+    <rect x="18" y="415" width="234" height="80" rx="8" fill="#1C1917" stroke="#78716C" stroke-width="1"/>
+    <text x="30" y="435" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#E7E5E4">
+      RViz2 Goal Markers
+    </text>
+    <text x="30" y="453" font-family="monospace" font-size="9.5" fill="#D6D3D1">/c2/goal_markers</text>
+    <text x="30" y="470" font-family="monospace" font-size="9.5" fill="#A8A29E">visualization_msgs/MarkerArray</text>
+    <text x="30" y="486" font-family="monospace" font-size="9" fill="#F59E0B">Displays active &amp; queued targets</text>
+  </g>
+
+  <!-- ==================== HORIZONTAL FLOW ARROWS BETWEEN ZONES ==================== -->
+
+  <!-- Flow 1: Alert from Zone 1 to Zone 2 -->
+  <path d="M 295 470 L 320 470" fill="none" stroke="#D6A45D" stroke-width="2.5" marker-end="url(#arrowBronze)"/>
+
+  <!-- Flow 2: Alert from Zone 2 to Zone 3 -->
+  <path d="M 575 385 L 600 385" fill="none" stroke="#D6A45D" stroke-width="2.5" marker-end="url(#arrowBronze)"/>
+
+  <!-- Flow 3: Dispatch from Zone 3 to Zone 4 -->
+  <path d="M 870 132 L 895 132" fill="none" stroke="#4CC9D8" stroke-width="2.5" marker-end="url(#arrowCyan)"/>
+
+  <!-- REVERSE TELEMETRY FLOW: From Zone 4 bottom -> Zone 2 -> Zone 1 -->
+  <g>
+    <!-- Line from Zone 4 (Telemetry out) down to bus -->
+    <path d="M 900 480 L 880 480 L 880 540 L 580 540" fill="none" stroke="#3B82F6" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowSapphire)"/>
+    <text x="730" y="532" font-family="monospace" font-size="10" fill="#93C5FD" text-anchor="middle">
+      /c2/ugv_telemetry (1 Hz Status &amp; Heartbeat)
+    </text>
+
+    <!-- Line from Zone 2 to Zone 1 -->
+    <path d="M 325 540 L 250 540 L 250 495" fill="none" stroke="#3B82F6" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowSapphire)"/>
+  </g>
+
+  <!-- Footer Legend Bar -->
+  <g transform="translate(40, 618)">
+    <rect width="1120" height="36" rx="8" fill="#0F172A" stroke="#1E293B" stroke-width="1"/>
+    
+    <circle cx="25" cy="18" r="5" fill="#D6A45D"/>
+    <text x="38" y="22" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#CBD5E1">UAV C2 Pipeline (Bronze)</text>
+
+    <circle cx="215" cy="18" r="5" fill="#5278D8"/>
+    <text x="228" y="22" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#CBD5E1">CycloneDDS Transport (Sapphire)</text>
+
+    <circle cx="445" cy="18" r="5" fill="#4CC9D8"/>
+    <text x="458" y="22" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#CBD5E1">UGV Command Bridge (Cyan)</text>
+
+    <circle cx="655" cy="18" r="5" fill="#42B883"/>
+    <text x="668" y="22" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#CBD5E1">Nav2 Autonomy Stack (Emerald)</text>
+
+    <line x1="860" y1="18" x2="885" y2="18" stroke="#3B82F6" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="895" y="22" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" fill="#93C5FD">Reverse Telemetry Stream</text>
+
+    <text x="1105" y="22" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" fill="#64748B" text-anchor="end">FOD Hunter V3 · CDE4301</text>
+  </g>
+</svg>
+

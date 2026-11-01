@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D7FCP8K9WV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-D7FCP8K9WV');
+    </script>
+
+    <link rel="canonical" href="https://www.ardusimple.cn/" />
+    <link rel="alternate" hreflang="zh-Hans" href="https://www.ardusimple.cn/" />
+    <link rel="alternate" hreflang="en" href="https://www.ardusimple.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.ardusimple.com/" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArduSimple - 高精度厘米级GNSS RTK解决方案 </title>
+    <meta name="description"
+        content="ArduSimple 为中国市场提供简单、实惠且具备厘米级精度的 GNSS RTK 解决方案。提供 u-blox 接收机、多频天线及技术支持，助力精准农业、无人机和机器人应用。">
+    <meta name="keywords" content="ArduSimple, RTK, GNSS, 高精度GPS, 厘米级定位, u-blox, 机器人GPS, 精准农业">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ardusimple.cn/">
+    <meta property="og:title" content="ArduSimple China - 高精度厘米级 GNSS RTK">
+    <meta property="og:description" content="厘米级定位技术从未如此简单。直接发货至中国，提供完整技术支持。">
+    <meta property="og:image" content="ardusimple_logo.svg">
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #333;
+            background: #fff;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Preheader */
+        .preheader {
+            background: #1a1a1a;
+            color: #ccc;
+            font-size: 13px;
+            padding: 8px 0;
+        }
+
+        .preheader .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .preheader-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .preheader-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .china-flag {
+            width: 20px;
+            height: auto;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+
+        /* Header */
+        .main-header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .main-header .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo img {
+            height: 42px;
+            width: auto;
+            display: block;
+        }
+
+        .main-menu {
+            display: flex;
+            gap: 36px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .main-menu a:hover {
+            color: #6ec1e4;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            font-size: 14px;
+        }
+
+        .search-box {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 9px 14px;
+            width: 240px;
+            font-size: 14px;
+            color: #999;
+            background: #f9f9f9;
+        }
+
+        .cart {
+            position: relative;
+            font-size: 20px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -12px;
+            background: #e74c3c;
+            color: white;
+            font-size: 10px;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+
+        /* Main content */
+        .main-content {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .notice-box {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            padding: 32px;
+            border-radius: 8px;
+            margin-bottom: 50px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 40px 0;
+        }
+
+        .product-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            background: #fff;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .btn-quote {
+            display: inline-block;
+            background: #6ec1e4;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 500;
+            margin: 30px 0;
+            font-size: 16px;
+        }
+
+        .btn-quote:hover {
+            background: #5aa8d0;
+            text-decoration: none;
+        }
+
+        /* Footer - estil inline tal com l'has proporcionat */
+        footer {
+            background: #000;
+            color: #aaa;
+            padding: 60px 0 30px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+
+            .preheader .container,
+            .main-header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .main-menu {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .header-right {
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .search-box {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            footer .footer-container>div:first-child>div:first-child {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .preheader {
+                font-size: 12px;
+                padding: 10px 0;
+            }
+
+            .preheader-left {
+                flex-direction: column;
+                text-align: center;
+                gap: 6px;
+            }
+
+            .logo img {
+                height: 36px;
+            }
+
+            .main-menu {
+                flex-direction: column;
+                gap: 12px;
+                font-size: 14px;
+            }
+
+            .header-right {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .main-content {
+                margin: 30px auto;
+                padding: 0 15px;
+            }
+
+            .notice-box {
+                padding: 24px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-quote {
+                width: 100%;
+                text-align: center;
+            }
+
+            footer {
+                padding: 40px 0 20px;
+            }
+
+            footer [style*="display:grid"] {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            footer [style*="display:flex"] {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .preheader {
+                font-size: 11px;
+            }
+
+            .china-flag {
+                width: 18px;
+            }
+
+            footer h4 {
+                font-size: 15px;
+            }
+
+            footer input,
+            footer button {
+                font-size: 13px;
+                padding: 9px 12px;
+            }
+        }
+    </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ArduSimple China",
+  "url": "https://www.ardusimple.cn",
+  "logo": "https://www.ardusimple.cn/ardusimple_logo.svg",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+86-183-6737-5467",
+    "contactType": "customer service",
+    "areaServed": "CN",
+    "availableLanguage": "Chinese"
+  }
+}
+</script>
+</head>
+
+<body>
+
+    <!-- Preheader -->
+    <div class="preheader">
+        <div class="container">
+            <div class="preheader-left">
+                <svg class="china-flag" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="900" height="600" fill="#de2910" />
+                    <polygon points="125,150 200,150 155,200 170,120 125,80 80,120 95,200" fill="#ffde00" />
+                    <polygon points="250,100 300,100 275,150 290,80 250,50 210,80 225,150" fill="#ffde00"
+                        transform="translate(100,0) scale(0.5)" />
+                    <polygon points="250,100 300,100 275,150 290,80 250,50 210,80 225,150" fill="#ffde00"
+                        transform="translate(150,-30) scale(0.4) rotate(18)" />
+                    <polygon points="250,100 300,100 275,150 290,80 250,50 210,80 225,150" fill="#ffde00"
+                        transform="translate(180,20) scale(0.3) rotate(-36)" />
+                    <polygon points="250,100 300,100 275,150 290,80 250,50 210,80 225,150" fill="#ffde00"
+                        transform="translate(120,60) scale(0.3) rotate(72)" />
+                </svg>
+                <strong>Shipping to China</strong>
+                <span>We deliver to China in 2-4 business days.</span>
+                <span>Need help? Contact our team at <strong>+86 183 6737 5467</strong></span>
+            </div>
+            <div class="preheader-right">
+                <!--<span>English ▼</span>
+                <span>LOGIN</span> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <img src="ardusimple_logo.svg" alt="ArduSimple">
+            </div>
+
+            <nav class="main-menu">
+                <!-- <a href="#">PRODUCTS</a>
+                <a href="#">NEWS</a>
+                <a href="#">SUPPORT</a>
+                <a href="#">STORE</a> -->
+            </nav>
+
+            <div class="header-right">
+                <!-- <input type="text" class="search-box" placeholder="Search product name, sku, keyword..." readonly>
+                <span>EUR USD ▼</span>
+                <div class="cart">
+                    🛒 <span class="cart-count">0</span> -->
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <!-- Contingut principal -->
+    <main class="main-content">
+        <div class="notice-box">
+            <h1>欢迎来到 ArduSimple</h1>
+            <p>您看到此页面是因为您所在地区（中国）对我们完整网站的访问受到限制。</p>
+            <p>非常抱歉给您带来不便，我们很乐意直接为您提供帮助和服务。</p>
+
+            <h2 style="margin:35px 0 20px;">请通过以下方式联系我们：</h2>
+            <ul style="margin-left:24px; line-height:1.9;">
+                <li>获取完整网站访问权限</li>
+                <li>获取 GNSS 天线、RTK 接收机、配件等的报价</li>
+                <li>直接下单购买</li>
+                <li>技术咨询与支持</li>
+            </ul>
+
+            <p style="margin:30px 0 10px;">
+                <strong>电子邮件：</strong> <a href="mailto:info@ardusimple.com"
+                    style="color:#0066cc;">info@ardusimple.com</a><br>
+                <strong>电话（中国）：</strong> +86 183 6737 5467
+            </p>
+        </div>
+
+        <h2>热门推荐产品</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <h4>u-blox ANN-MB-00 Multiband GNSS Antenna</h4>
+                <p>市场上性价比最高的双频（L1/L2）天线</p>
+                <img src="ardusimple__ANN-MB-00_SMA.jpg" alt="u-blox ANN-MB-00 GNSS RTK Antenna">
+            </div>
+            <div class="product-card">
+                <h4>u-blox ANN-MB2-00 Tripleband GNSS Antenna</h4>
+                <p>市场上最实惠的全频段天线</p>
+                <img src="u-blox_GNSS_Tripleband_2B_L-band_antenna_ANN-MB2-00_00-1_copia.jpg"
+                    alt="u-blox ANN-MB2-00 Tripleband GNSS Antenna">
+            </div>
+            <div class="product-card">
+                <h4>u-blox ANN-MB1-00 Dualband (L1/L5) GNSS Antenna</h4>
+                <p>市场上最具竞争力的双频（L1/L5）天线</p>
+                <img src="ANN-MB-00-1.jpg" alt="u-blox ANN-MB1-00 Dualband (L1/L5) GNSS Antenna">
+            </div>
+        </div>
+
+        <a href="mailto:info@ardusimple.com" class="btn-quote">立即索取报价</a>
+    </main>
+
+    <!-- Footer definitiu tal com l'has proporcionat -->
+    <footer style="background:#000; color:#aaa; padding:60px 0 30px; font-size:14px; line-height:1.6;">
+        <div style="max-width:1400px; margin:0 auto; padding:0 20px;">
+
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:40px 30px;">
+                <div>
+                    <img src="ardusimple_logo_final-horizont-WhiteText-PNG-for-footer.png" alt="ArduSimple"
+                        style="height:50px; width:auto; margin-bottom:16px; display:block;">
+
+                    <p style="color:#aaa; margin-bottom:16px;">
+                        The vision of ArduSimple is to make GNSS RTK technology simple, affordable and accessible to
+                        everyone with a series of starter kits, tutorials, engineering services and OEM products.
+                    </p>
+                    <p style="color:#aaa;">
+                        You can always contact us at <a href="mailto:info@ardusimple.com"
+                            style="color:#6ec1e4;">info@ardusimple.com</a>
+                    </p>
+                </div>
+
+                <div>
+                    <!--
+                    <h4 style="color:#fff; margin-bottom:16px; font-size:16px; font-weight:600;">Products</h4>
+                    <ul style="list-style:none; padding:0;">
+                        <li><a href="#" style="color:#aaa;">RTK Boards</a></li>
+                        <li><a href="#" style="color:#aaa;">GPS Compass</a></li>
+                        <li><a href="#" style="color:#aaa;">Submeter and Timing Boards</a></li>
+                        <li><a href="#" style="color:#aaa;">RTK Development Kits</a></li>
+                        <li><a href="#" style="color:#aaa;">Survey and Mapping Kits</a></li>
+                        <li><a href="#" style="color:#aaa;">RTK Antennas</a></li>
+                        <li><a href="#" style="color:#aaa;">Communication Pluggins</a></li>
+                        <li><a href="#" style="color:#aaa;">RTK Correction Services</a></li>
+                        <li><a href="#" style="color:#aaa;">All products</a></li>
+                        <li><a href="#" style="color:#aaa;">Compatible Software</a></li>
+                        <li><a href="#" style="color:#aaa;">RTK Applications</a></li>
+                        <li><a href="#" style="color:#aaa;">Product Selector</a></li>
+                    </ul>-->
+                </div>
+
+                <div> <!--
+                    <h4 style="color:#fff; margin-bottom:16px; font-size:16px; font-weight:600;">Support</h4>
+                    <ul style="list-style:none; padding:0;">
+                        <li><a href="#" style="color:#aaa;">RTK in 5 minutes</a></li>
+                        <li><a href="#" style="color:#aaa;">RTK in detail</a></li>
+                        <li><a href="#" style="color:#aaa;">Tutorials</a></li>
+                        <li><a href="#" style="color:#aaa;">How to configure ZED-X20P</a></li>
+                        <li><a href="#" style="color:#aaa;">How to configure ZED-F9P</a></li>
+                        <li><a href="#" style="color:#aaa;">How to configure mosaic-G5</a></li>
+                        <li><a href="#" style="color:#aaa;">How to configure mosaic-X5</a></li>
+                        <li><a href="#" style="color:#aaa;">How to configure UM98x</a></li>
+                        <li><a href="#" style="color:#aaa;">Product Selector</a></li>
+                    </ul>-->
+                </div>
+
+                <div>
+                    <!--<h4 style="color:#fff; margin-bottom:16px; font-size:16px; font-weight:600;">About ArduSimple</h4>
+                    <ul style="list-style:none; padding:0; margin-bottom:24px;">
+                        <li><a href="#" style="color:#aaa;">Our Values</a></li>
+                        <li><a href="#" style="color:#aaa;">Work with Us</a></li>
+                        <li><a href="#" style="color:#aaa;">Blog</a></li>
+                        <li><a href="#" style="color:#aaa;">Contact Us</a></li>
+                        <li><a href="#" style="color:#aaa;">Universities and Public Organizations</a></li>
+                        <li><a href="#" style="color:#aaa;">Shipping Rates</a></li>
+                        <li><a href="#" style="color:#aaa;">Returns and Order Issues</a></li>
+                        <li><a href="#" style="color:#aaa;">Terms and Conditions</a></li>
+                    </ul> -->
+
+                    <div style="margin-top:20px;">
+
+                    </div>
+                </div>
+            </div>
+
+            <div
+                style="border-top:1px solid #222; margin-top:50px; padding-top:30px; text-align:center; font-size:13px;">
+
+
+
+
+
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

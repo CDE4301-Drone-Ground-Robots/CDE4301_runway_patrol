@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440" style="display: block; margin: 0 auto; max-width: 100%; height: auto; background: rgba(15, 23, 42, 0.4); border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <!-- Gradients & Glows -->
+    <linearGradient id="grad-astar" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0.8" />
+    </linearGradient>
+    <linearGradient id="grad-hybrid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2997ff" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#00f2fe" stop-opacity="0.9" />
+    </linearGradient>
+    <filter id="glow-astar" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow-hybrid" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <pattern id="grid-pattern" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- PANEL 1: STANDARD 2D A* -->
+  <g transform="translate(16, 16)">
+    <!-- Card Frame -->
+    <rect x="0" y="0" width="456" height="408" rx="10" fill="rgba(255, 255, 255, 0.015)" stroke="rgba(239, 68, 68, 0.25)" stroke-width="1.2" />
+    
+    <!-- Header -->
+    <rect x="0" y="0" width="456" height="42" rx="10" fill="rgba(239, 68, 68, 0.08)" />
+    <text x="18" y="26" fill="#f87171" font-size="13.5" font-weight="700">Standard 2D A* (8-Connected Grid)</text>
+    <rect x="330" y="10" width="112" height="22" rx="4" fill="rgba(239, 68, 68, 0.15)" stroke="rgba(239, 68, 68, 0.3)" stroke-width="1" />
+    <text x="386" y="25" fill="#fca5a5" font-size="10" font-weight="600" text-anchor="middle">Discontinuous SE(2)</text>
+
+    <!-- Grid Canvas Area -->
+    <rect x="18" y="52" width="420" height="240" rx="6" fill="#070b14" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+    <rect x="18" y="52" width="420" height="240" fill="url(#grid-pattern)" rx="6" />
+
+    <!-- Obstacles (Runway light stanchions / FOD) -->
+    <rect x="158" y="108" width="56" height="84" rx="4" fill="rgba(239, 68, 68, 0.25)" stroke="#ef4444" stroke-width="1.5" />
+    <text x="186" y="154" fill="#fca5a5" font-size="10.5" font-weight="600" text-anchor="middle">Obstacle</text>
+
+    <rect x="270" y="80" width="56" height="56" rx="4" fill="rgba(239, 68, 68, 0.25)" stroke="#ef4444" stroke-width="1.5" />
+    <text x="298" y="112" fill="#fca5a5" font-size="10.5" font-weight="600" text-anchor="middle">Obstacle</text>
+
+    <!-- Jagged 2D A* Path -->
+    <path d="M 52 240 L 108 240 L 136 212 L 136 100 L 220 72 L 248 72 L 248 156 L 360 212 L 406 212" 
+          fill="none" stroke="#ef4444" stroke-width="3" stroke-linejoin="round" stroke-dasharray="6,4" />
+    
+    <!-- Path Waypoint Nodes -->
+    <circle cx="52" cy="240" r="5" fill="#10b981" />
+    <circle cx="108" cy="240" r="3.5" fill="#f87171" />
+    <circle cx="136" cy="212" r="3.5" fill="#f87171" />
+    <circle cx="136" cy="100" r="4.5" fill="#f87171" stroke="#fff" stroke-width="1.2" />
+    <circle cx="220" cy="72" r="4.5" fill="#f87171" stroke="#fff" stroke-width="1.2" />
+    <circle cx="248" cy="72" r="3.5" fill="#f87171" />
+    <circle cx="248" cy="156" r="4.5" fill="#f87171" stroke="#fff" stroke-width="1.2" />
+    <circle cx="360" cy="212" r="3.5" fill="#f87171" />
+    <circle cx="406" cy="212" r="5" fill="#3b82f6" />
+
+    <!-- Start & Goal Labels -->
+    <text x="52" y="262" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle">Start (x, y)</text>
+    <text x="406" y="234" fill="#60a5fa" font-size="11" font-weight="700" text-anchor="middle">Goal (x, y)</text>
+
+    <!-- Pivot Discontinuity Callout Bubble -->
+    <rect x="150" y="60" width="150" height="22" rx="4" fill="rgba(239, 68, 68, 0.9)" stroke="#fff" stroke-width="0.8" />
+    <text x="225" y="75" fill="#fff" font-size="9.5" font-weight="700" text-anchor="middle">Pivot 90° Turn (κ → ∞)</text>
+
+    <rect x="18" y="302" width="420" height="96" rx="6" fill="rgba(239, 68, 68, 0.04)" stroke="rgba(239, 68, 68, 0.15)" stroke-width="1" />
+    <text x="32" y="324" fill="#fca5a5" font-size="11" font-weight="700">Kinematic Deficiencies in Autonomous Patrol:</text>
+    <text x="32" y="344" fill="#94a3b8" font-size="10.5">&#8226; Waypoints ignore robot heading θ; treats chassis as a holonomic point mass.</text>
+    <text x="32" y="362" fill="#94a3b8" font-size="10.5">&#8226; Sharp turns force zero-radius pivot (15.78 Nm) &#8594; severe tire scrub &amp; yaw chatter.</text>
+    <text x="32" y="380" fill="#94a3b8" font-size="10.5">&#8226; Regulated Pure Pursuit (RPP) decelerates to zero repeatedly at vertex corners.</text>
+  </g>
+
+  <!-- PANEL 2: SMAC PLANNER HYBRID A* -->
+  <g transform="translate(488, 16)">
+    <!-- Card Frame -->
+    <rect x="0" y="0" width="456" height="408" rx="10" fill="rgba(255, 255, 255, 0.015)" stroke="rgba(41, 151, 255, 0.3)" stroke-width="1.2" />
+    
+    <!-- Header -->
+    <rect x="0" y="0" width="456" height="42" rx="10" fill="rgba(41, 151, 255, 0.08)" />
+    <text x="18" y="26" fill="#60a5fa" font-size="13.5" font-weight="700">SmacPlannerHybrid (SE(2) Reeds-Shepp)</text>
+    <rect x="330" y="10" width="112" height="22" rx="4" fill="rgba(41, 151, 255, 0.15)" stroke="rgba(41, 151, 255, 0.35)" stroke-width="1" />
+    <text x="386" y="25" fill="#93c5fd" font-size="10" font-weight="600" text-anchor="middle">R_min ≥ 1.0 m Lattice</text>
+
+    <!-- Grid Canvas Area -->
+    <rect x="18" y="52" width="420" height="240" rx="6" fill="#070b14" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+    <rect x="18" y="52" width="420" height="240" fill="url(#grid-pattern)" rx="6" />
+
+    <!-- Obstacles -->
+    <rect x="158" y="108" width="56" height="84" rx="4" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="186" y="154" fill="#93c5fd" font-size="10.5" font-weight="600" text-anchor="middle">Obstacle</text>
+
+    <rect x="270" y="80" width="56" height="56" rx="4" fill="rgba(59, 130, 246, 0.15)" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="298" y="112" fill="#93c5fd" font-size="10.5" font-weight="600" text-anchor="middle">Obstacle</text>
+
+    <!-- Smooth Hybrid A* Reeds-Shepp Trajectory -->
+    <!-- Start: (52, 240, theta=0) -> arc up around obstacle 1 -> arc right -> arc down around obstacle 2 -> Goal (406, 212, theta=0) -->
+    <path d="M 52 240 C 90 240, 110 230, 116 195 C 122 155, 118 88, 155 76 C 185 66, 220 66, 238 88 C 255 110, 250 170, 280 195 C 310 220, 360 212, 406 212" 
+          fill="none" stroke="#2997ff" stroke-width="3.2" stroke-linecap="round" filter="url(#glow-hybrid)" />
+
+    <!-- Heading Orientation Arrows along Path -->
+    <!-- Start arrow -->
+    <circle cx="52" cy="240" r="5" fill="#10b981" />
+    <line x1="52" y1="240" x2="72" y2="240" stroke="#10b981" stroke-width="2.5" />
+    
+    <!-- Intermediate poses (x, y, theta) -->
+    <circle cx="116" cy="195" r="3.5" fill="#00f2fe" />
+    <line x1="116" y1="195" x2="118" y2="175" stroke="#00f2fe" stroke-width="2" />
+
+    <circle cx="155" cy="76" r="3.5" fill="#00f2fe" />
+    <line x1="155" y1="76" x2="175" y2="72" stroke="#00f2fe" stroke-width="2" />
+
+    <circle cx="238" cy="88" r="3.5" fill="#00f2fe" />
+    <line x1="238" y1="88" x2="248" y2="105" stroke="#00f2fe" stroke-width="2" />
+
+    <circle cx="280" cy="195" r="3.5" fill="#00f2fe" />
+    <line x1="280" y1="195" x2="300" y2="205" stroke="#00f2fe" stroke-width="2" />
+
+    <!-- Goal pose -->
+    <circle cx="406" cy="212" r="5" fill="#3b82f6" />
+    <line x1="406" y1="212" x2="426" y2="212" stroke="#3b82f6" stroke-width="2.5" />
+
+    <!-- Radius of Curvature Arc Visualization -->
+    <path d="M 125 105 A 35 35 0 0 1 175 72" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,3" />
+    <text x="145" y="55" fill="#fbbf24" font-size="9.5" font-family="'SF Mono', Consolas, monospace" font-weight="600">R ≥ 1.0 m</text>
+
+    <!-- Start & Goal Labels -->
+    <text x="52" y="262" fill="#34d399" font-size="11" font-weight="700" text-anchor="middle">Start (x, y, θ₀)</text>
+    <text x="406" y="234" fill="#60a5fa" font-size="11" font-weight="700" text-anchor="middle">Goal (x, y, θ_f)</text>
+
+    <!-- Smooth Curvature Advantage Bubble -->
+    <rect x="230" y="60" width="170" height="22" rx="4" fill="rgba(16, 185, 129, 0.9)" stroke="#fff" stroke-width="0.8" />
+    <text x="315" y="75" fill="#fff" font-size="9.5" font-weight="700" text-anchor="middle">Continuous Curvature (C¹)</text>
+
+    <rect x="18" y="302" width="420" height="96" rx="6" fill="rgba(41, 151, 255, 0.04)" stroke="rgba(41, 151, 255, 0.15)" stroke-width="1" />
+    <text x="32" y="324" fill="#93c5fd" font-size="11" font-weight="700">Engineering Advantages in Autonomous Patrol:</text>
+    <text x="32" y="344" fill="#cbd5e1" font-size="10.5">&#8226; Plans directly in SE(2) manifold (x, y, θ) matching non-holonomic kinematics.</text>
+    <text x="32" y="362" fill="#cbd5e1" font-size="10.5">&#8226; Enforces minimum turning radius R_min = 1.0 m &#8594; 0.73 Nm cruise rolling torque.</text>
+    <text x="32" y="380" fill="#cbd5e1" font-size="10.5">&#8226; Perfectly feeds RPP lookahead arc: zero chassis chatter, continuous sweep.</text>
+  </g>
+</svg>

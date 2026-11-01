@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 340 330" role="img" aria-label="Free body diagram with road profile input x(t) and chassis displacement output y(t)" style="width: 100%; max-width: 360px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;" xmlns="http://www.w3.org/2000/svg">
+                <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"></path></marker></defs>
+                <g fill="none" stroke="#e5e7eb" stroke-width="2">
+                  <rect x="125" y="90" width="90" height="50" rx="4" fill="rgba(245, 158, 11, 0.16)" stroke="#f59e0b"></rect>
+                  <path d="M170 140 V160 M130 160 H210 M130 160 V180 L120 187 L140 201 L120 215 L140 229 L130 236 V280 M210 160 V185 M195 185 H225 M198 185 V220 H222 V185 M210 205 V280"></path>
+                  <rect x="20" y="280" width="300" height="45" fill="rgba(59, 130, 246, 0.4)" stroke="none"></rect>
+                </g>
+                <g stroke="#e5e7eb" stroke-width="2" marker-end="url(#arr)">
+                  <line x1="170" y1="85" x2="170" y2="45" stroke="#3b82f6"></line>
+                  <line x1="110" y1="95" x2="110" y2="135"></line>
+                  <line x1="105" y1="185" x2="105" y2="225"></line>
+                  <line x1="240" y1="170" x2="240" y2="210"></line>
+                  <line x1="290" y1="275" x2="290" y2="235"></line>
+                </g>
+                <g fill="#e5e7eb" font-size="13" text-anchor="middle">
+                  <text x="170" y="112">Corner</text><text x="170" y="128">Mass</text>
+                  <text x="250" y="20">Chassis displacement</text><text x="250" y="37" font-style="italic">y(t) (output)</text>
+                  <text x="60" y="120" font-style="italic">F<tspan font-size="10" dy="3">acceleration</tspan></text>
+                  <text x="70" y="210" font-style="italic">F<tspan font-size="10" dy="3">spring</tspan></text>
+                  <text x="283" y="166" font-style="italic">F<tspan font-size="10" dy="3">dampener</tspan></text>
+                  <text x="282" y="232">Road profile <tspan font-style="italic">x(t)</tspan></text>
+                  <text x="170" y="308">Ground</text>
+                </g>
+                <text x="285" y="262" fill="#e5e7eb" font-size="12" text-anchor="end">(input)</text>
+              </svg>

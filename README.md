@@ -1,14 +1,13 @@
-# FOD Hunter: Autonomous Airfield Inspection & FOD Remediation System
+# FOD Hunter
 
 ### CDE4301 Innovation & Design Capstone Project (Robotics)
 
 **National University of Singapore (NUS) • College of Design and Engineering (CDE)**  
-_In Collaboration with the Republic of Singapore Air Force (RSAF) & RAiD_  
 **Academic Supervisors:** Dr. Tang Kok Zuea
 
 ---
 
-## 👥 Project Team Roster
+## Project Team Roster
 
 | Member             | Matric No.  | Subsystem Scope                                                      |
 | :----------------- | :---------- | :------------------------------------------------------------------- |
@@ -20,110 +19,110 @@ _In Collaboration with the Republic of Singapore Air Force (RSAF) & RAiD_
 
 ---
 
-## 🌐 For Non-Team Members
+## For Non-Team Members
 
-To view our live interactive capstone report dashboard, please visit:  
-👉 **[FOD Hunter Interim Report (GitHub Pages)](https://cde4301-drone-ground-robots.github.io/CDE4301_runway_patrol/)**
+To view our live interactive capstone report, please visit:  
+**[FOD Hunter Report (GitHub Pages)](https://cde4301-drone-ground-robots.github.io/CDE4301_runway_patrol/)**
 
 ---
 
-## 📢 For Team Members
+## For Team Members: Editing the Website
 
 > [!IMPORTANT]
 >
-> ### 📁 Report Documentation Working Directory
+> ### Where to edit
 >
-> **All team members should edit, contribute, and add content inside the `For report/Interim report-v2/` folder.**  
-> The report is built as a responsive, standalone Apple Keynote-inspired HTML/CSS/JS dashboard.
+> **The website lives in `For report/Interim report-v3/`.** Everything on it is written in **Markdown** (`.md`); you never touch HTML.
+> Each piece of text lives in exactly one file. The Report, the Overview and Meet the Team pull it in from there.
+> Push your changes to `main` and the site rebuilds and goes live by itself (see [Publishing](#-publishing)).
 
-### 🗺️ Interim Report File Tree
+All paths below are inside `For report/Interim report-v3/docs/`.
 
-Below is the directory map of `For report/Interim report-v2/`. Locate your assigned HTML files to edit your technical content:
+### Your files
 
-> [!TIP]
-> **Architecture Guideline:**
->
-> - **`4-subsystems/`** is for **Summaries, short explanations, block diagrams, and key pointers**
-> - **`7-documentation/`** is where **members store their full technical documentations for their respective subsystems**
+Your folder is `report/members/<your-name>/`. Put your images, videos, CAD models and spreadsheets in its `assets/` folder.
+Every member also has a `references.md` (their reference list in Report chapter 7) and a `semester-2-plan.md` (shown on the Overview and Meet the Team).
 
-```text
-For report/Interim report-v2/
-├── index.html                               # 🌟 Executive Summary Dashboard & 3D Model
-├── 1-introduction.html                      # Problem statement, threat matrix & progress
-├── 2-design-overview.html                   # UAV-UGV concept of operations & architecture
-├── 3-individual-scopes.html                 # 3D Stack Deck of team roles & deliverables
-├── 4-subsystems/                            # ⚙️ Subsystem Summaries (Short Explanations & Key Pointers)
-│   ├── index.html                           # ── Subsystems Landing Hub
-│   ├── mechanical.html                      # ── 4.1 Mechanical Summary & Key Pointers (Asuka & Zacarias)
-│   ├── electrical.html                      # ── 4.2 Electrical Summary & Key Pointers (Bryan & Gabriel)
-│   ├── programming.html                     # ── 4.3 Programming & Autonomy Summary (Hilbert)
-│   └── computer-vision.html                 # ── 4.4 Computer Vision & Perception Summary (Gabriel)
-├── 5-timeline.html                          # 📅 Gantt Matrix & Phased Milestone Roadmap
-├── 6-references.html                        # 📚 Consolidated References & FAA Standards
-├── 6-references/                            # 📚 Member Citation Files
-│   ├── asuka/references.html                # ── Asuka References
-│   ├── zacarias/references.html             # ── Zacarias References
-│   ├── bryan/references.html                # ── Bryan References
-│   ├── gabriel/references.html              # ── Gabriel References
-│   ├── hilbert/references.html              # ── Hilbert References
-│   └── literature/references.html           # ── Literature References
-├── 7-documentation.html                     # 📖 Central In-Depth Documentation Hub
-├── 7-documentation/                         # 📁 In-Depth Work Topics & Member Engineering Specifications
-│   ├── asuka/                               # ── Asuka's In-Depth Work Topics
-│   │   ├── suspension.html                  # ──── In-Depth Suspension & Vibration Isolation Spec
-│   │   └── vacuum-module.html               # ──── In-Depth Vacuum & Magnetic Cleaning Module Spec
-│   ├── zacarias/                            # ── Zacarias' In-Depth Work Topics
-│   │   ├── chassis-fea.html                 # ──── In-Depth Structural Chassis FEA & Load Analysis
-│   │   ├── drivetrain-kinematics.html       # ──── In-Depth Differential Drive Kinematics & Sizing
-│   │   └── motor-calculations.html          # ──── In-Depth Motor Torque & Battery Sizing Math
-│   ├── bryan/                               # ── Bryan's In-Depth Work Topics
-│   │   ├── components-bom.html              # ──── In-Depth 35-Item Master Component BOM & Wiring Specs
-│   │   └── power-calculations.html          # ──── In-Depth Power Consumption & Runtime Calculations
-│   ├── gabriel/                             # ── Gabriel's In-Depth Work Topics
-│   │   ├── vision-calculations.html         # ──── In-Depth Lens, FOV, GSD & Pixel Size Calculations
-│   │   ├── vision-research.html             # ──── In-Depth Lighting & Environmental Sensor Research
-│   │   └── yolo-comparison.html             # ──── In-Depth YOLO Model Benchmarks & Comparison
-│   ├── hilbert/                             # ── Hilbert's In-Depth Work Topics
-│   │   ├── communications.html              # ──── In-Depth UAV-UGV Telemetry & C2 Protocol Spec
-│   │   ├── navigation.html                  # ──── In-Depth Nav2 Controller, Costmaps & SLAM Tuning
-│   │   └── simulation.html                  # ──── In-Depth ROS 2 Jazzy & Gazebo Harmonic Simulation
-│   └── literature/                          # ── In-Depth Literature & Airfield Research
-│       ├── primary-research.html            # ──── In-Depth Airfield Practitioner Survey & Testing
-│       └── problem-statement.html           # ──── In-Depth Airfield FOD Economic & Safety Analysis
-├── css/styles.css                           # 🎨 Apple Design System Tokens & Animations
-└── js/main.js                               # ⚡ Interactive Mega Menus, Swipers & Video
+| Member       | File                              | Appears in the Report as                                   |
+| :----------- | :-------------------------------- | :--------------------------------------------------------- |
+| **Hilbert**  | `navigation.md`                   | 3.1 Navigation                                             |
+|              | `communications.md`               | 3.2 Communication                                          |
+|              | `simulation.md`                   | 3.3 Simulation                                             |
+|              | `motor-drivetrain-calculation.md` | 4.3 Motor Drivetrain Calculations                          |
+|              | `steering-kinematics.md`          | 4.4 Steering Kinematics                                    |
+|              | `semester-2-plan.md`              | also 3.1 (the `programming-tasks` region)                  |
+| **Asuka**    | `suspension.md`                   | 4.2 Suspension                                             |
+|              | `vacuum-module.md`                | 4.5.1 Vacuum Module, incl. the Critical Function Prototype |
+|              | `fod-sweep-box-v2.md`             | 4.5.2 FOD Sweep Box                                        |
+| **Zacarias** | `chassis-design.md`               | 4.1.1 Chassis Design                                       |
+|              | `fea-simulation.md`               | 4.1.2 FEA Simulation                                       |
+|              | `material-selection.md`           | 4.1.3 Material Selection                                   |
+| **Gabriel**  | `vision-research.md`              | 3.4.1 Vision Research                                      |
+|              | `vision-calculations.md`          | 3.4.2 Vision Calculations                                  |
+|              | `yolo-comparison.md`              | 3.4.3 YOLO Comparison                                      |
+|              | `sensor-fusion.md`                | 3.4.4 Sensor Fusion                                        |
+|              | `stm32-hardware.md`               | 5.2.1 STM32 Hardware                                       |
+|              | `stm32-firmware.md`               | 5.2.2 STM32 Firmware                                       |
+| **Bryan**    | `power-calculations.md`           | 5.1.1 Power Calculations                                   |
+|              | `components-bom.md`               | 5.1.2 Components & BOM                                     |
+
+Each technical file is also published as its own page, at `/members/<your-name>/<file>`.
+
+### Files for everyone
+
+| File                                                             | What it is                                                                                                                                                                |
+| :--------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `report/preliminary/acknowledgements.md`, `executive-summary.md` | The Report's opening pages (also on the Overview)                                                                                                                         |
+| `report/introduction/`                                           | 1.1 Problem Statement, 1.2 Primary Research, 1.3 Secondary Research, 1.4 Problem Scope, 1.5 Competitive Analysis, 1.6 User Journey, and `references.md` (literature list) |
+| `report/design-overview/`                                        | 2.1 Features, 2.2 Requirements, 2.3 Specifications, 2.4 Subsystem Division (also the Mechanical / Electrical chapter openings and the Overview roadmap text)              |
+| `report/conclusion.md`                                           | Chapter 6 Conclusion                                                                                                                                                      |
+| `report/references.md`                                           | Chapter 7 reference catalogue                                                                                                                                             |
+| `team.md`                                                        | Meet the Team: edit **only your own** `<TeamProfile member="…">` block                                                                                                    |
+| `shared/assets/data/timeline.json`                               | The Timeline's schedule: tasks, owners, dates and statuses                                                                                                                |
+| `index.md`, `timeline.md`, `report.md`                           | Page layouts of the Overview, Timeline and Report: change only when restructuring a page                                                                                  |
+
+Names, matric numbers and photos (Meet the Team and the Report's Subsystem Lead plates) come from `.vitepress/theme/data/team.ts`. Never type them into Markdown.
+
+### How to Preview Locally
+
+Run once from `For report/Interim report-v3/`:
+
+```bash
+npm install
+npm run docs:dev        # live preview at http://127.0.0.1:4174 (updates as you save)
 ```
 
 ---
 
-### 🛠️ How to Preview & Edit Locally
-
-1. **Local HTTP Server:**
-
-   ```bash
-   # From repository root
-   python -m http.server 8000
-   ```
-
-2. **Local HTTP Server (Recommended):**
-   Navigate to [http://localhost:8000](http://localhost:8000) to preview with full font and asset loading.
-
----
-
-## 🏗️ Repository Architecture
+## Repository Architecture
 
 ```text
 CDE4301_runway_patrol/
-├── assets/                     # Shared media, photos, diagrams, and logos
-│   └── images/                 # Subsystem hardware and team photo assets
-├── Backup/                     # Versioned README backups and legacy markdown files
-│   ├── 180926 README.md        # Comprehensive pre-interim README backup
-│   ├── 280726 README.md
-│   └── 250726 README (HTML).md
+├── .github/workflows/
+│   └── deploy.yml               # Builds the website and publishes it to GitHub Pages on every push to main
 ├── For report/
-│   └── Interim report-v2/      # 🌟 ACTIVE INTERIM REPORT WEB APPLICATION (See file tree above)
-├── simulation/                 # ROS 2 Jazzy & Gazebo Harmonic workspace
-│   ├── README.md               # Simulation setup, launch instructions & worlds
-│   └── src/                    # Scout V2 rover URDF, worlds & Nav2 configs
-└── index.html                  # Root landing portal (redirects to Interim report-v2)
+│   └── Interim report-v3/       # 🌟 THE WEBSITE (VitePress: Markdown + Vue)
+│       ├── docs/
+│       │   ├── index.md         # Overview page
+│       │   ├── team.md          # Meet the Team
+│       │   ├── timeline.md      # Timeline (data: shared/assets/data/timeline.json)
+│       │   ├── report.md        # The Report (orders the sections)
+│       │   ├── report/
+│       │   │   ├── preliminary/      # acknowledgements, executive summary
+│       │   │   ├── introduction/     # problem statement, primary & secondary research, scope, competition, user journey
+│       │   │   ├── design-overview/  # features, requirements, specifications, subsystem division
+│       │   │   ├── members/          # one folder per member: technical pages, references, Semester 2 plan, assets/
+│       │   │   ├── lead/             # Subsystem Lead plates
+│       │   │   ├── conclusion.md
+│       │   │   └── references.md
+│       │   ├── shared/assets/   # shared images, videos, models, documents and data
+│       │   ├── public/          # files served as-is (3D model, favicon, Overview images)
+│       │   └── .vitepress/      # site code: config, theme, components, widgets
+│       └── package.json         # npm scripts: docs:dev, docs:build, docs:preview
+├── Backup/                      # README backups; Interim report-v2 (the old site) is kept locally only, not in git
+├── simulation/                  # ROS 2 Jazzy & Gazebo Harmonic workspace
+│   ├── README.md                # Simulation setup, launch instructions & worlds
+│   └── src/                     # Scout V2 rover URDF, worlds & Nav2 configs
+├── CDE4301Stm32/                # STM32F446RE motor-control firmware (CubeMX / PlatformIO) and GUI controller
+└── index.html                   # Points to the live website when the repository is opened locally
 ```

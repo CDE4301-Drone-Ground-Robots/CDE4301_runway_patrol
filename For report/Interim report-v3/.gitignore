@@ -1,0 +1,7 @@
+node_modules/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+screenshots/*.tmp.png
+
+# The repository root ignores lockfiles; v3 needs its own for reproducible `npm ci`.
+!package-lock.json

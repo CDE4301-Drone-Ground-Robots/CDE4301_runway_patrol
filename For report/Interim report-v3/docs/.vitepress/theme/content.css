@@ -1,0 +1,471 @@
+/* =========================================================================
+   Author-facing content components (Card, CardGrid, Stat, Figure, VideoClip, AssetLink,
+   MissingAsset) and the interactive widgets. Work on light and dark documentation pages (VitePress tokens)
+   and inside the always-dark Overview report.
+   ========================================================================= */
+:root {
+  --fh-surface: var(--vp-c-bg-soft);
+  --fh-border: var(--vp-c-divider);
+  --fh-accent: #d98a3d;
+}
+.dark {
+  --fh-surface: rgba(255, 255, 255, 0.035);
+  --fh-accent: #e9a35c;
+}
+
+/* grid */
+.fh-grid {
+  --fh-cols: 3;
+  display: grid;
+  grid-template-columns: repeat(var(--fh-cols), minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+@media (max-width: 1100px) {
+  .fh-grid {
+    grid-template-columns: repeat(min(var(--fh-cols), 2), minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .fh-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* card */
+.fh-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 20px 22px;
+  border: 1px solid var(--fh-border);
+  border-radius: 14px;
+  background: var(--fh-surface);
+}
+.fh-card[data-accent]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--fh-card-accent);
+}
+.fh-card[data-accent='blue'] { --fh-card-accent: #5b9bff; }
+.fh-card[data-accent='emerald'] { --fh-card-accent: #34c08b; }
+.fh-card[data-accent='amber'] { --fh-card-accent: #e9a35c; }
+.fh-card[data-accent='rose'] { --fh-card-accent: #f2667a; }
+.fh-card[data-accent='purple'] { --fh-card-accent: #a98bf5; }
+.fh-card__head {
+  margin-bottom: 8px;
+}
+.fh-card__tag {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fh-card-accent, var(--fh-accent));
+}
+.fh-card__title {
+  margin: 0 !important;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--vp-c-text-1);
+}
+.fh-card__body {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--vp-c-text-2);
+}
+.fh-card__body > :first-child {
+  margin-top: 0 !important;
+}
+.fh-card__body > :last-child {
+  margin-bottom: 0 !important;
+}
+.fh-card__body .fh-grid {
+  margin: 12px 0;
+}
+
+/* stat */
+.fh-stat {
+  padding: 18px 20px;
+  border: 1px solid var(--fh-border);
+  border-radius: 14px;
+  background: var(--fh-surface);
+}
+.fh-stat__value {
+  margin: 0 !important;
+  font-family: var(--ov-display, inherit);
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.1;
+  color: var(--vp-c-text-1);
+}
+.fh-stat__label {
+  margin: 8px 0 0 !important;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--vp-c-text-2);
+}
+
+/* figures and video */
+.fh-figure {
+  width: fit-content;
+  max-width: 100%;
+  margin: 28px 0;
+}
+.fh-figure img,
+.fh-figure video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--fh-border);
+  background: #0a0a0d;
+}
+.fh-video video {
+  width: min(100%, 960px);
+}
+.fh-figure figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--vp-c-text-2);
+}
+.vp-doc img,
+.rpt img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* downloads */
+.fh-asset {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 8px;
+  border: 1px solid var(--fh-border);
+  border-radius: 999px;
+  font-size: 0.92em;
+  text-decoration: none !important;
+}
+.fh-asset svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* missing file placeholder */
+.fh-missing {
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  min-height: 120px;
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px dashed var(--fh-border);
+  border-radius: 12px;
+  font-size: 13px;
+  text-align: center;
+  color: var(--vp-c-text-3);
+}
+
+/* complex tables kept as HTML (spans) */
+table.data-table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+table.data-table :is(td, th) {
+  padding: 10px 12px;
+  border: 1px solid var(--fh-border);
+  vertical-align: top;
+}
+
+/* interactive widgets: dark interactive panels on any page theme */
+.wgt {
+  --vp-c-text-1: #f3eee7;
+  margin: 24px 0;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: #0b0b10;
+  color: #e5e7eb;
+  font-size: 14.5px;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+.wgt :where(p, li) {
+  color: inherit;
+}
+.wgt.wgt-app {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ---------- Overview report: Markdown chapters (dark editorial) ---------- */
+.rpt .vp-doc,
+.rpt .rpt-md {
+  --vp-c-text-1: var(--ov-ink);
+  --vp-c-text-2: rgba(243, 238, 231, 0.86);
+  --vp-c-text-3: rgba(243, 238, 231, 0.55);
+  --vp-c-divider: rgba(255, 255, 255, 0.1);
+  --vp-c-bg-soft: rgba(255, 255, 255, 0.035);
+  --vp-c-brand-1: #f0b878;
+  --vp-c-brand-2: #f0b878;
+  --vp-code-bg: rgba(255, 255, 255, 0.06);
+  --vp-code-color: #f3c48d;
+  --vp-custom-block-info-bg: rgba(255, 255, 255, 0.04);
+  --vp-custom-block-info-border: rgba(255, 255, 255, 0.1);
+  --vp-custom-block-tip-bg: rgba(52, 192, 139, 0.07);
+  --vp-custom-block-tip-border: rgba(52, 192, 139, 0.28);
+  --vp-custom-block-warning-bg: rgba(233, 163, 92, 0.08);
+  --vp-custom-block-warning-border: rgba(233, 163, 92, 0.3);
+  --vp-custom-block-danger-bg: rgba(242, 102, 122, 0.08);
+  --vp-custom-block-danger-border: rgba(242, 102, 122, 0.3);
+  --vp-custom-block-details-bg: rgba(255, 255, 255, 0.035);
+  --vp-custom-block-details-border: rgba(255, 255, 255, 0.1);
+  --fh-surface: rgba(255, 255, 255, 0.035);
+  --fh-border: rgba(255, 255, 255, 0.1);
+  --vp-c-default-soft: rgba(255, 255, 255, 0.08);
+  --vp-badge-info-bg: rgba(255, 255, 255, 0.07);
+  --vp-badge-info-text: #c3cad4;
+  color: var(--vp-c-text-2);
+  font-size: 16.5px;
+  line-height: 1.75;
+}
+
+/* chapters and subsections are plain Markdown headings; numbers come from counters (authors never type them) */
+.rpt .rpt-md {
+  counter-reset: rpt-ch;
+}
+.rpt .rpt-chapter {
+  counter-increment: rpt-ch;
+  counter-reset: rpt-sub;
+  padding-top: clamp(88px, 8vw, 128px);
+}
+.rpt .rpt-chapter > h2 {
+  margin: 0 0 clamp(32px, 4vw, 56px);
+  padding: 0 0 28px;
+  border-top: 0;
+  border-bottom: 1px solid var(--rpt-line);
+  font-family: var(--ov-display);
+  font-weight: 400;
+  font-size: clamp(40px, 3.4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+  color: var(--ov-ink);
+  scroll-margin-top: calc(var(--vp-nav-height) + 24px);
+}
+.rpt .rpt-chapter > h2::before {
+  content: counter(rpt-ch, decimal-leading-zero);
+  display: block;
+  margin-bottom: 6px;
+  font-size: clamp(40px, 3.6vw, 60px);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(233, 163, 92, 0.75);
+}
+.rpt .rpt-chapter > h3 {
+  counter-increment: rpt-sub;
+  counter-reset: rpt-doc;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: clamp(48px, 5vw, 72px) 0 28px;
+  font-family: var(--ov-display);
+  font-weight: 400;
+  font-size: clamp(28px, 2.4vw, 38px);
+  line-height: 1.1;
+  color: var(--ov-ink);
+  scroll-margin-top: calc(var(--vp-nav-height) + 24px);
+}
+.rpt .rpt-chapter > h3::before {
+  content: counter(rpt-ch) '.' counter(rpt-sub);
+  flex: none;
+  font-size: 0.55em;
+  letter-spacing: 0.08em;
+  color: var(--rpt-bronze);
+}
+/* third level: one technical document inside a section (`#### Title {#id .rpt-l3}`) → 3.4.1 */
+.rpt .rpt-chapter > h4.rpt-l3 {
+  counter-increment: rpt-doc;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: clamp(40px, 4vw, 60px) 0 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rpt-line);
+  font-family: var(--ov-display);
+  font-weight: 400;
+  font-size: clamp(23px, 1.9vw, 30px);
+  line-height: 1.15;
+  scroll-margin-top: calc(var(--vp-nav-height) + 24px);
+}
+.rpt .rpt-chapter > h4.rpt-l3::before {
+  content: counter(rpt-ch) '.' counter(rpt-sub) '.' counter(rpt-doc);
+  flex: none;
+  font-size: 0.6em;
+  letter-spacing: 0.08em;
+  color: var(--rpt-bronze);
+}
+
+/* every other anchor in the Report (deep-linked h4–h6, composed-page and CFP spans) also lands below the nav */
+.rpt .rpt-md :is(h4, h5, h6, span[id]) {
+  scroll-margin-top: calc(var(--vp-nav-height) + 24px);
+}
+.rpt .rpt-md :is(h4, h5, h6) {
+  font-family: var(--ov-sans);
+  color: var(--ov-ink);
+  letter-spacing: -0.005em;
+  border-top: 0;
+}
+.rpt .rpt-md h4 {
+  margin-top: 2.2em;
+  font-size: clamp(20px, 1.5vw, 24px);
+  font-weight: 500;
+}
+.rpt .rpt-md h5 {
+  font-size: 18px;
+}
+.rpt .rpt-pre > h2 {
+  margin: 0 0 32px;
+  border-top: 0;
+  padding-top: clamp(72px, 9vw, 120px);
+  font-family: var(--ov-display);
+  font-weight: 400;
+  font-size: clamp(40px, 3.8vw, 60px);
+  line-height: 1.04;
+  color: var(--ov-ink);
+  scroll-margin-top: calc(var(--vp-nav-height) + 24px);
+}
+.rpt .rpt-md :is(h2, h3, h4) :is(.header-anchor) {
+  display: none;
+}
+.rpt .rpt-md :is(p, li) {
+  max-width: var(--rpt-measure);
+}
+.rpt .rpt-md :is(.fh-card, .fh-stat, td, th, .custom-block) :is(p, li) {
+  max-width: none;
+}
+.rpt .rpt-md table:not(.ozt__table) {
+  display: block;
+  overflow-x: auto;
+  font-size: 14px;
+}
+/* full-width technical elements: Markdown tables fill the column (and scroll inside their
+   wrapper when wider); raw HTML tables keep the block + local scroll behaviour above */
+.rpt .rpt-md .md-table {
+  max-width: 100%;
+  margin: 16px 0;
+  overflow-x: auto;
+}
+.rpt .rpt-md .md-table > table:not(.ozt__table) {
+  display: table;
+  width: 100%;
+  margin: 0;
+}
+/* the site-wide "first column on one line" rule would starve the other columns of a full-width table */
+.rpt .rpt-md .md-table td:first-child {
+  min-width: 9em;
+  white-space: normal;
+}
+.rpt .rpt-md .custom-block {
+  max-width: 100%;
+}
+.rpt .rpt-md h2:focus,
+.rpt .rpt-md h3:focus {
+  outline: none;
+}
+.rpt .rpt-md h2:focus-visible,
+.rpt .rpt-md h3:focus-visible {
+  outline: 2px solid var(--rpt-bronze);
+  outline-offset: 6px;
+}
+/* 7.2 member reference lists: one collapsed dropdown per list */
+.rpt .rpt-md details.rpt-refs {
+  margin: 10px 0;
+  padding: 0;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow: inset 0 0 0 1px var(--rpt-line);
+}
+.rpt .rpt-md details.rpt-refs > summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  margin: 0;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ov-ink);
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 0.2s ease;
+}
+.rpt .rpt-md details.rpt-refs > summary::-webkit-details-marker {
+  display: none;
+}
+.rpt .rpt-md details.rpt-refs > summary::before {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid var(--rpt-bronze);
+  border-bottom: 1.5px solid var(--rpt-bronze);
+  transform: rotate(-45deg);
+  transition: transform 0.3s var(--ov-ease);
+}
+.rpt .rpt-md details.rpt-refs[open] > summary::before {
+  transform: rotate(45deg);
+}
+.rpt .rpt-md details.rpt-refs > summary::after {
+  content: 'References';
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ov-ink-3);
+}
+.rpt .rpt-md details.rpt-refs > summary:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+.rpt .rpt-md details.rpt-refs > summary:focus-visible {
+  outline: 2px solid var(--rpt-bronze);
+  outline-offset: 2px;
+}
+.rpt .rpt-md details.rpt-refs[open] > summary {
+  border-bottom: 1px solid var(--rpt-line);
+  border-radius: 14px 14px 0 0;
+}
+.rpt .rpt-md details.rpt-refs > :not(summary) {
+  margin-left: 18px;
+  margin-right: 18px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rpt .rpt-md details.rpt-refs > summary::before {
+    transition: none;
+  }
+}
+@media (max-width: 959px) {
+  .rpt .rpt-chapter > h2,
+  .rpt .rpt-chapter > h3,
+  .rpt .rpt-chapter > h4.rpt-l3,
+  .rpt .rpt-md :is(h4, h5, h6, span[id]),
+  .rpt .rpt-pre > h2 {
+    scroll-margin-top: 76px;
+  }
+}

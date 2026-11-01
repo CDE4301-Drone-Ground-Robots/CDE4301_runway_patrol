@@ -1,0 +1,1080 @@
+/* Shared widget styles, scoped to .wgt and limited to the classes the widgets use. */
+/* ==========================================================================
+   FOD HUNTER - APPLE DESIGN SYSTEM
+   Inspired by Apple iPhone 15 Pro & sanidhyy/apple-clone
+   ========================================================================== */
+
+/* ── Apple Design Tokens ─────────────────────────────────────────────── */
+/* Space Tech / Aerospace & Motion Tokens */
+.wgt {
+  /* Surface & Titanium Palette */
+  --apple-bg: #0b0b10;
+  --apple-surface: #101015;
+  --apple-surface-card: #15151c;
+  --apple-surface-card-hover: #1c1c25;
+  --apple-surface-glass: rgba(18, 18, 24, 0.72);
+
+  /* Typography Colors */
+  --apple-text-primary: #f8fafc;
+  --apple-text-secondary: #94a3b8;
+  --apple-text-tertiary: #64748b;
+  --apple-text-muted: #94a3b8;
+
+  /* Accent & Titanium Highlights */
+  --apple-blue: #3b82f6;
+  --apple-blue-hover: #2563eb;
+  --apple-blue-tint: rgba(59, 130, 246, 0.16);
+  
+  --apple-purple: #a855f7;
+  --apple-purple-tint: rgba(168, 85, 247, 0.16);
+
+  --apple-green: #10b981;
+  --apple-green-tint: rgba(16, 185, 129, 0.16);
+
+  --apple-amber: #f59e0b;
+  --apple-amber-tint: rgba(245, 158, 11, 0.16);
+
+  --apple-red: #ef4444;
+  --apple-red-tint: rgba(239, 68, 68, 0.16);
+
+  --apple-titanium-silver: #e2e8f0;
+  --apple-titanium-gray: #334155;
+
+  /* Borders & Glass Dividers */
+  --apple-border: rgba(255, 255, 255, 0.08);
+  --apple-border-light: rgba(255, 255, 255, 0.04);
+  --apple-border-highlight: rgba(59, 130, 246, 0.4);
+
+  /* Elevation Shadows */
+  --apple-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --apple-shadow-md: 0 12px 32px rgba(0, 0, 0, 0.65);
+  --apple-shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.8);
+  --apple-shadow-glow: 0 0 40px rgba(59, 130, 246, 0.22);
+
+  /* Motion Smooth Spring */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, monospace;
+
+  /* Navigation Heights */
+  --nav-height: 52px;
+  --subnav-height: 48px;
+
+  /* Compatibility Mapping for legacy report classes */
+  --bg-body: var(--apple-bg);
+  --bg-surface: var(--apple-surface);
+  --bg-sidebar: var(--apple-surface);
+  --bg-header: rgba(0, 0, 0, 0.85);
+  --bg-hover: var(--apple-surface-card-hover);
+  --bg-terminal: #09090b;
+
+  --text-main: var(--apple-text-primary);
+  --text-muted: var(--apple-text-secondary);
+  --text-light: var(--apple-text-tertiary);
+  --text-terminal: #e6edf3;
+
+  --accent-green: var(--apple-green);
+  --accent-green-light: var(--apple-green-tint);
+  --accent-purple: var(--apple-purple);
+  --accent-purple-light: var(--apple-purple-tint);
+  --accent-blue: var(--apple-blue);
+  --accent-blue-light: var(--apple-blue-tint);
+  --accent-amber: var(--apple-amber);
+  --accent-amber-light: var(--apple-amber-tint);
+  --accent-rose: var(--apple-red);
+  --accent-rose-light: var(--apple-red-tint);
+  --accent-emerald: var(--apple-green);
+  --accent-emerald-light: var(--apple-green-tint);
+
+  --border-color: var(--apple-border);
+  --border-dark: var(--apple-border);
+  --card-bg: var(--apple-surface-card);
+  --card-shadow: var(--apple-shadow-md);
+  --card-shadow-hover: var(--apple-shadow-lg);
+
+  --font-body: var(--font-apple);
+}
+
+/* ── Light Theme ────────────────────────────────────────────────────── */
+
+/* ── Reset & Global Typography ───────────────────────────────────────── */
+
+.wgt {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--apple-bg);
+  color: var(--apple-text-primary);
+}
+
+.wgt {
+  font-family: var(--font-apple);
+  background-color: var(--apple-bg);
+  color: var(--apple-text-primary);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Apple-style compact slider placed at the top-left of every report page. */
+
+/* ── Apple Translucent Frosted Top Navigation Bar ────────────────────── */
+
+/* ── Apple-Style Nav Mega Menu Dropdown ─────────────────────────────── */
+
+/* Subsystems 2-Column Flyout Grid */
+
+/* Documentation 6-Column Grid */
+
+@keyframes appleFadeIn {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Admin / Technical Comparison Tables (Reduced Font Size) ──────── */
+.wgt .admin-table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--apple-border);
+  background: rgba(18, 18, 20, 0.6);
+  backdrop-filter: blur(12px);
+  margin-bottom: 18px;
+}
+
+.wgt .admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+  text-align: left;
+}
+
+.wgt .admin-table thead th {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--apple-text-primary);
+  font-weight: 600;
+  font-size: 11px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 12px !important;
+  border-bottom: 1px solid var(--apple-border);
+  white-space: nowrap;
+}
+
+.wgt .admin-table tbody td {
+  padding: 8px 12px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--apple-text-secondary);
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+  vertical-align: middle;
+}
+
+.wgt .admin-table tbody td strong {
+  font-size: 11.5px !important;
+}
+
+.wgt .admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.wgt .admin-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.wgt .admin-table .badge {
+  display: inline-block;
+  padding: 2px 7px;
+  font-size: 10px !important;
+  font-weight: 600;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.wgt .admin-table .badge-emerald {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.wgt .admin-table .badge-blue {
+  background: rgba(0, 102, 204, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(0, 102, 204, 0.3);
+}
+
+.wgt .admin-table .badge-amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.wgt .apple-btn-pill {
+  background: var(--apple-blue);
+  color: #ffffff;
+  padding: 5px 13px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 980px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.wgt .apple-btn-pill:hover {
+  background: var(--apple-blue-hover);
+  color: #ffffff;
+  transform: scale(1.02);
+}
+
+/* ── Apple Site-Wide Search Bar & Spotlight Modal ── */
+
+/* ── Apple Spotlight Search Modal ── */
+
+/* Mobile search trigger in drawer */
+
+/* Mobile Nav Toggle */
+
+/* ── Apple Sticky Sub-Navigation (Hidden - Consolidated into Top Nav Dropdown) ── */
+
+/* ── Content Layout Wrappers ─────────────────────────────────────────── */
+
+.wgt .apple-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Apple Keynote Hero Section ──────────────────────────────────────── */
+
+/* ── Apple Video Showcase Frame (Titanium Bezel) ─────────────────────── */
+
+/* ── Apple Metric Highlights Ribbon ─────────────────────────────────── */
+
+/* ── Apple Bento Grid Section ────────────────────────────────────────── */
+
+.wgt .apple-section-title {
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+/* ── Interactive Subsystems Hardware Tabs ───────────────────────────── */
+
+/* ── Content Sections (For Report Inner Pages) ───────────────────────── */
+
+/* ── Tables & Spec Matrix (Apple High-Legibility) ─────────────────────── */
+
+/* ── Badges & Chips ─────────────────────────────────────────────────── */
+.wgt .badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 980px;
+  letter-spacing: 0.02em;
+}
+
+.wgt .badge-blue    { background: var(--apple-blue-tint); color: var(--apple-blue); border: 1px solid rgba(41, 151, 255, 0.3); }
+.wgt .badge-purple  { background: var(--apple-purple-tint); color: var(--apple-purple); border: 1px solid rgba(191, 90, 242, 0.3); }
+.wgt .badge-emerald { background: var(--apple-green-tint); color: var(--apple-green); border: 1px solid rgba(48, 209, 88, 0.3); }
+.wgt .badge-amber   { background: var(--apple-amber-tint); color: var(--apple-amber); border: 1px solid rgba(255, 159, 10, 0.3); }
+
+/* ── Callouts ───────────────────────────────────────────────────────── */
+
+/* ── Figures & Media Cards ───────────────────────────────────────────── */
+
+.wgt .figure-caption {
+  padding: 10px 16px;
+  background: var(--apple-surface-card);
+  border-top: 1px solid var(--apple-border-light);
+  font-size: 12.5px;
+  color: var(--apple-text-secondary);
+}
+
+/* ── Apple Footer ────────────────────────────────────────────────────── */
+
+/* ── Modals (Preserved with Apple Glass Aesthetic) ────────────────────── */
+
+/* ── Mobile Responsive Overrides ─────────────────────────────────────── */
+
+/* ==========================================================================
+   REPORT SUBPAGE COMPONENT COMPATIBILITY (DARK TITANIUM THEMED)
+   ========================================================================== */
+
+/* ── App Container & Sidebar ─────────────────────────────────────────── */
+
+/* ── Main Wrapper ────────────────────────────────────────────────────── */
+
+/* ── Cards & Callouts ────────────────────────────────────────────────── */
+.wgt .card-box {
+  background: var(--apple-surface-card);
+  border: 1px solid var(--apple-border);
+  border-radius: 20px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: var(--apple-shadow-sm);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.wgt .card-box:hover {
+  border-color: var(--apple-border-highlight);
+}
+
+.wgt .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--apple-border-light);
+}
+
+.wgt .card-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+}
+
+/* ── Deep Dive Buttons ───────────────────────────────────────────────── */
+
+.wgt .btn-outline {
+  background: transparent;
+  border: 1px solid var(--apple-border);
+  color: var(--apple-text-secondary);
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 500;
+  border-radius: 980px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.wgt .btn-outline:hover {
+  color: #ffffff;
+  border-color: var(--apple-text-secondary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── KPI Grid ────────────────────────────────────────────────────────── */
+
+/* ── Card Containers & Subpage Blocks ────────────────────────────────── */
+.wgt .card-box {
+  background: var(--apple-surface-card);
+  border: 1px solid var(--apple-border);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.wgt .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--apple-border-light);
+}
+
+.wgt .card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--apple-text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* ── Gantt Timeline Styles (Apple Dark Mode) ─────────────────────────── */
+.wgt .gantt-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+  background: var(--apple-surface-card);
+  border: 1px solid var(--apple-border);
+  padding: 14px 18px;
+  border-radius: 14px;
+}
+
+.wgt .gantt-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.wgt .filter-label {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--apple-text-primary, #ffffff);
+  margin-right: 10px;
+}
+
+.wgt .owner-filter-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--apple-text-secondary, #cbd5e1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 22px;
+  border-radius: 980px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.wgt .owner-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.wgt .owner-filter-btn.active {
+  background: var(--apple-blue, #2997ff);
+  color: #ffffff;
+  border-color: var(--apple-blue, #2997ff);
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(41, 151, 255, 0.35);
+}
+
+.wgt .gantt-search-box {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 11px 22px;
+  font-size: 15px;
+  outline: none;
+  min-width: 320px;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wgt .gantt-search-box:focus {
+  border-color: var(--apple-blue, #2997ff);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 3px rgba(41, 151, 255, 0.25);
+}
+
+/* ── Gantt Table Container & Matrix (Section 5) ───────────────────────── */
+.wgt .gantt-table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  width: 100%;
+  margin: 12px 0;
+  border-radius: 12px;
+  border: 1px solid var(--apple-border);
+  background: #09090b;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.wgt .gantt-matrix {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: center;
+  font-size: 12.5px;
+  font-family: var(--font-mono);
+  table-layout: auto;
+}
+
+.wgt .gantt-matrix thead {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.wgt .gantt-matrix thead th {
+  background: #141418;
+  color: var(--apple-text-primary);
+  font-weight: 700;
+  padding: 10px 8px;
+  font-size: 12.5px;
+  border-bottom: 2px solid var(--apple-border);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+  min-width: 76px;
+  box-sizing: border-box;
+}
+
+.wgt .th-sticky-owner {
+  position: sticky;
+  left: 0;
+  z-index: 35 !important;
+  background: #181820 !important;
+  border-right: 2px solid var(--apple-border) !important;
+  min-width: 150px;
+  max-width: 150px;
+  width: 150px;
+}
+
+.wgt .th-sticky-cat {
+  position: sticky;
+  left: 150px;
+  z-index: 34 !important;
+  background: #181820 !important;
+  border-right: 2px solid var(--apple-border) !important;
+  min-width: 180px;
+  max-width: 180px;
+  width: 180px;
+}
+
+.wgt .gantt-owner-cell {
+  position: sticky;
+  left: 0;
+  z-index: 15 !important;
+  background: #101014 !important;
+  border-right: 2px solid var(--apple-border) !important;
+  border-bottom: 1px solid var(--apple-border) !important;
+  min-width: 150px;
+  max-width: 150px;
+  width: 150px;
+  text-align: left !important;
+  padding: 12px 10px !important;
+  vertical-align: middle;
+}
+
+.wgt .gantt-cat-cell {
+  position: sticky;
+  left: 150px;
+  z-index: 14 !important;
+  background: #101014 !important;
+  border-right: 2px solid var(--apple-border) !important;
+  border-bottom: 1px solid var(--apple-border) !important;
+  min-width: 180px;
+  max-width: 180px;
+  width: 180px;
+  text-align: left !important;
+  padding: 10px 12px !important;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: normal;
+  word-break: break-word;
+  vertical-align: middle;
+}
+
+.wgt .gantt-matrix tbody td {
+  padding: 3px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle;
+  min-width: 76px;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.wgt .gantt-task-cell {
+  padding: 3px 4px !important;
+  vertical-align: middle !important;
+}
+
+.wgt .gantt-task-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  min-height: 28px;
+  padding: 5px 8px;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.wgt .gantt-task-box:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.25);
+  z-index: 5;
+}
+
+.wgt .gantt-task-asuka   { background: rgba(191, 90, 242, 0.18); border: 1px solid rgba(191, 90, 242, 0.45); color: #e9b3ff; }
+.wgt .gantt-task-zac     { background: rgba(41, 151, 255, 0.18); border: 1px solid rgba(41, 151, 255, 0.45); color: #8ec5fc; }
+.wgt .gantt-task-hilbert { background: rgba(99, 102, 241, 0.18); border: 1px solid rgba(99, 102, 241, 0.45); color: #a5b4fc; }
+.wgt .gantt-task-bryan   { background: rgba(255, 159, 10, 0.18); border: 1px solid rgba(255, 159, 10, 0.45); color: #ffd182; }
+.wgt .gantt-task-gabriel { background: rgba(48, 209, 88, 0.18); border: 1px solid rgba(48, 209, 88, 0.45); color: #86efac; }
+.wgt .gantt-task-milestone { background: rgba(255, 69, 58, 0.2) !important; border: 1px solid rgba(255, 69, 58, 0.6) !important; color: #ff9994 !important; font-weight: 700; }
+
+.wgt .th-milestone {
+  background: rgba(255, 69, 58, 0.15) !important;
+  color: #ff8b85 !important;
+}
+
+/* Semester Filtering */
+
+/* ── Responsive Media Queries ────────────────────────────────────────── */
+
+/* ── Apple-Style Return To Top Button ────────────────────────────── */
+
+/* ── Interactive Reference System Cards ─────────────────────────── */
+
+/* ── Reference System Popout Modal / Lightbox ────────────────────── */
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPopUp {
+  from { opacity: 0; transform: scale(0.92) translateY(18px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Apple Watch Activity Rings (Progress To Date) ─────────────────── */
+
+/* Floating Percentage Badges on Ring Tips */
+
+/* Legend Next to Rings */
+
+/* ==========================================================================
+   3. INDIVIDUAL SCOPES: TINDER-STYLE 3D STACKED SWIPE DECK
+   ========================================================================== */
+
+/* Background ambient glowing aura */
+
+/* Base Card - Fixed to top:0, left:0 so cards NEVER drop into vertical flow or push controls */
+
+/* Center Active Card (Upright, Flat, Interactive, Elevated) */
+
+/* Left Card (Tilted Outward Counter-Clockwise like Reference Image) */
+
+/* Right Card (Tilted Outward Clockwise like Reference Image) */
+
+/* Inactive Cards in Stack (Completely tucked away & invisible) */
+
+/* Tinder Controls - Completely Static & Fixed Position */
+
+/* Fixed-width counter pill: NEVER moves left or right regardless of name length */
+
+/* Card Face (Cover: Name, ID, Badges, Image) - Fixed 410px height across all members */
+
+/* Member Social Links Row (LinkedIn & Instagram) */
+
+/* Individual face alignment per member so portraits are clearly visible and centered */
+
+/* Swipe Down / Expand Toggle Pill */
+
+@keyframes bounceDown {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(3px); }
+  60% { transform: translateY(2px); }
+}
+
+/* Scope Details Drawer (Unfolds downwards) */
+
+/* ── INTERACTIVE TIMELINE & GANTT STYLES ─────────────────────────── */
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+/* Edit Mode Banner */
+
+/* Column Header Details (Week Mode) */
+
+/* Highlight Current Week (S1 Wk6 - 20 Sep 2026) */
+
+/* Month Mode Columns */
+
+/* Edit Mode Task Indicators */
+
+/* Modals */
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Modal Action Buttons (Cancel, Save, Delete) */
+
+/* Floating Task Tooltip (Rich Notes on Hover) */
+
+@keyframes fadeInTooltip {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shakeInput {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* Timeline Toast Notification */
+
+/* ── SINGLE PERIOD (7-DAY WEEK & MONTH) STYLES ───────────────────── */
+
+/* 7-Day Column Header & Day Cells */
+
+/* Today (Sunday 20 Sep 2026) Highlight */
+
+/* 7-Day Task Spanning Bar */
+
+/* Status Tags */
+
+/* ── Subsystem Management & Category Action Buttons ────────────────────── */
+
+
+
+/* ── Merged Gantt Cells & Continuous Task Bars ───────────────────────── */
+
+/* ── All Members Full-Column Vertical Merged Milestone Cells ──────────── */
+
+/* ── Light-mode readability and metallic hero treatment ─────────────── */
+
+/* ── Full Width Timeline Layout ───────────────────────────────────────── */
+
+
+/* ==========================================================================
+   COMPREHENSIVE LIGHT THEME RULES ACROSS ALL REPORT SUBPAGES
+   ========================================================================== */
+
+/* ── Navigation & Megamenu ───────────────────────────────────────────── */
+
+/* ── Content Cards & Surfaces ────────────────────────────────────────── */
+
+/* ── Interactive Timeline & Master Gantt ──────────────────────────────── */
+
+/* ── Modals & Popups ─────────────────────────────────────────────────── */
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+
+/* ── Code, Equations & Mathematical Formulas ─────────────────────────── */
+
+/* ── Inputs & Selects ────────────────────────────────────────────────── */
+
+/* ── Scientific Paper Fig. 24 Styling (Exact Reproduction) ───────────── */
+/* ==========================================================================
+   SCENARIO COMPARISON TABLE (EXECUTIVE STYLE)
+   ========================================================================== */
+
+/* Th & Td common */
+
+/* Strong vertical group divider lines between ASP3, ASP2, ASP1, and MS */
+
+/* Group Headers: ASP3, ASP2, ASP1, MS */
+
+/* Sub-headers: fleet sizes */
+
+/* Left Metric Column (Sticky) */
+
+/* Data value cells */
+
+/* Row hover highlight */
+
+/* AnyChart Heatmap integration */
+
+.wgt #anychart-heatmap-container {
+  width: 100%;
+  min-height: 580px;
+  height: 600px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   UX ENHANCEMENT LAYER — Reading Progress, Back-to-Top, Breadcrumbs,
+   Section Anchors, Improved Cards, Mobile Icons, Search Tooltip
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Reading Progress Bar ──────────────────────────────────────────── */
+
+/* ── Back-to-Top Button ────────────────────────────────────────────── */
+
+/* ── Breadcrumb Bar ────────────────────────────────────────────────── */
+
+/* ── Section Heading Anchor Links ──────────────────────────────────── */
+
+/* ── Enhanced Card Hover ───────────────────────────────────────────── */
+.wgt .card-box {
+  transition: border-color 0.25s ease,
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease !important;
+}
+
+.wgt .card-box:hover {
+  border-color: rgba(41, 151, 255, 0.3) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22), 0 2px 10px rgba(41, 151, 255, 0.08) !important;
+}
+
+/* ── Search Icon Tooltip ───────────────────────────────────────────── */
+
+/* ── Mobile Drawer Icon Pill ───────────────────────────────────────── */
+
+/* ==========================================================================
+   Apple-Style Cinematic Hero & Subsystem HUD Enhancements (ui-ux-pro-max + motion)
+   ========================================================================== */
+
+@keyframes chrome-shimmer {
+  0%, 100% { background-position: 200% center; }
+  50% { background-position: -200% center; }
+}
+
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Upgraded Bento Box & Telemetry HUD */
+
+/* High-Tech Telemetry Chips */
+
+
+/* ==========================================================================
+   GLOBAL PREMIUM POLISH (ui-ux-pro-max + motion)
+   ========================================================================== */
+
+/* 1. Liquid Glass Navigation */
+
+/* 2. Glassmorphic Card Containers */
+.wgt .card-box {
+  background: linear-gradient(145deg, rgba(22, 22, 29, 0.72) 0%, rgba(14, 14, 20, 0.86) 100%) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5) !important;
+  transition: border-color 0.3s ease, transform 0.35s var(--ease-spring), box-shadow 0.35s ease !important;
+}
+
+.wgt .card-box:hover {
+  border-color: rgba(59, 130, 246, 0.38) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7), 0 0 30px rgba(59, 130, 246, 0.14) !important;
+}
+
+/* 3. Upgraded High-Legibility Technical Tables */
+.wgt .admin-table {
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+.wgt .admin-table thead th {
+  background: rgba(255, 255, 255, 0.06) !important;
+  font-size: 11.5px !important;
+  letter-spacing: 0.05em !important;
+  color: var(--apple-text-primary) !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.wgt .admin-table tbody td {
+  font-size: 13px !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  transition: background 0.2s ease;
+}
+
+.wgt .admin-table tbody tr:hover td {
+  background: rgba(59, 130, 246, 0.04) !important;
+}
+
+.wgt .admin-table tbody td code {
+  background: rgba(59, 130, 246, 0.12) !important;
+  color: #93c5fd !important;
+  border: 1px solid rgba(59, 130, 246, 0.25) !important;
+  border-radius: 5px !important;
+  padding: 2px 7px !important;
+  font-family: var(--font-mono) !important;
+  font-size: 12px !important;
+}
+
+/* 4. Sleek Badges & Interactive Buttons */
+.wgt .badge {
+  font-family: var(--font-mono);
+  font-size: 11px !important;
+  letter-spacing: 0.04em !important;
+  padding: 5px 12px !important;
+  border-radius: 999px !important;
+  transition: transform 0.2s var(--ease-spring), box-shadow 0.2s ease;
+}
+
+.wgt .badge:hover {
+  transform: translateY(-1px);
+}
+
+.wgt .apple-btn-pill {
+  transition: all 0.25s var(--ease-spring) !important;
+}
+
+.wgt .apple-btn-pill:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35) !important;
+}
+
+/* 5. Custom Sleek Scrollbar */
+
+/* 6. Smooth Image Hover */
+
+
+/* 7. Technical Math & Equation Glass Containers */
+
+/* MathJax Display Overrides */
+
+/* 8. Subsystems Sub-Navigation Sticky Enhancements */
+
+
+/* 9. Field Intelligence Dialogue & Chat Micro-Interactions */
+
+
+/* 10. System Architecture & Engineering Specifications (Design Overview) */
+
+
+/* ==========================================================================
+   CULT UI x APPLE DESIGN SYSTEM ENHANCEMENTS
+   Inspired by Cult UI & Apple WWDC Fluid Interfaces
+   - Dynamic Island Mission HUD
+   - Direction-Aware Sliding Subnav Pill
+   - Cursor Spotlight on Glass Cards
+   - Specular Shimmer Action Buttons
+   ========================================================================== */
+
+/* 1. DYNAMIC ISLAND MISSION HUD */
+
+@keyframes hudPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+/* 2. DIRECTION-AWARE SLIDING PILL FOR SUBNAVS */
+
+/* 3. CURSOR SPOTLIGHT ON GLASS CARDS */
+.wgt .card-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.wgt .card-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    380px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgba(255, 255, 255, 0.07),
+    transparent 45%
+  );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.wgt .card-box:hover::before {
+  opacity: 1;
+}
+
+/* 4. SUBTLE SHIMMER PILL BUTTONS */
+.wgt .apple-btn-pill {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s ease,
+              background-color 0.2s ease,
+              border-color 0.2s ease;
+}
+
+.wgt .apple-btn-pill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.14) 45%,
+    rgba(255, 255, 255, 0.24) 50%,
+    rgba(255, 255, 255, 0.14) 55%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  transition: none;
+}
+
+.wgt .apple-btn-pill:hover::after {
+  left: 150%;
+  transition: left 0.75s ease;
+}
+
+.wgt .apple-btn-pill:active {
+  transform: scale(0.97);
+}
+
+/* Hide legacy static back-to-top button in favor of unified Dynamic Island HUD */
+
+/* ==========================================================================
+   STITCH OBSIDIAN TELEMETRY SECTION STYLES
+   Synthesizes Precision Dark Minimalism with Tactile Glassmorphism
+   ========================================================================== */
+
+/* 1. Telemetry Bento Grid */
+
+/* 2. Collaborative Showcase Widescreen Card */
+
+/* 3. Rover Chassis & Suction Grid */
+
+/* 4. Subsystems 2x2 Grid */
+
+/* 5. SITL Simulation Terminal Card */
+
+/* 6. Closing CTA Banner */
+
+/* Responsive adjustments */
+
+
+
+
+
+/* 3D Model Viewer Orbit Controls & HUD */
+

@@ -1,0 +1,57 @@
+# Builds the FOD Hunter report site (VitePress, For report/Interim report-v3) and publishes it to GitHub Pages:
+# https://cde4301-drone-ground-robots.github.io/CDE4301_runway_patrol/
+# Requires Settings → Pages → Build and deployment → Source: "GitHub Actions".
+# Pull requests build the site (a check that nothing is broken) but do not deploy.
+name: Build and deploy report
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'For report/Interim report-v3/**'
+      - '.github/workflows/deploy.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'For report/Interim report-v3/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'For report/Interim report-v3'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: 'For report/Interim report-v3/package-lock.json'
+      - run: npm ci
+      - run: npm run docs:build
+        env:
+          VP_BASE: /CDE4301_runway_patrol/
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: 'For report/Interim report-v3/docs/.vitepress/dist'
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

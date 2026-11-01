@@ -10,7 +10,8 @@ desktop.ini
 
 # Node, Web Dependencies & Builds
 node_modules/
-package-lock.json
+/package-lock.json
+!For report/Interim report-v3/package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -18,12 +19,20 @@ yarn-error.log*
 dist/
 build/
 .cache/
+**/.vitepress/dist/
+**/.vitepress/cache/
 
 # Playwright & Browser Automation Artifacts
 .playwright-mcp/
+**/.playwright-mcp/
 test-results/
 playwright-report/
 blob-report/
+# Root-level temporary test screenshots
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp
 
 # Python Virtual Environments & Caches
 __pycache__/
@@ -41,6 +50,12 @@ env/
 .claude/
 .gemini/
 skills-lock.json
+# Local MCP server configuration (may contain access tokens)
+.mcp.json
+
+# Archived Interim Report V2 (kept locally in Backup/, not published).
+# V3 (For report/Interim report-v3, built into v3/) is the live site.
+Backup/Interim report-v2/
 
 # ROS 2 & Robotics Build Artifacts
 install/

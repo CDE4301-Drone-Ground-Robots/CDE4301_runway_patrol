@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 400 400" role="img" aria-label="Value map with products and services, gain creators and pain relievers" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="200" cy="200" r="190" class="vpc-shape"></circle>
+                <line x1="200" y1="200" x2="390" y2="200" class="vpc-line"></line>
+                <line x1="200" y1="200" x2="105" y2="35.5" class="vpc-line"></line>
+                <line x1="200" y1="200" x2="105" y2="364.5" class="vpc-line"></line>
+                <text x="78" y="196" class="vpc-head">Products &amp;</text><text x="78" y="212" class="vpc-head">services</text>
+                <text x="78" y="244" class="vpc-t">Automated swarm</text><text x="78" y="258" class="vpc-t">of FOD detection</text><text x="78" y="272" class="vpc-t">and collection</text>
+                <text x="250" y="60" class="vpc-t">Staff can be released</text><text x="250" y="74" class="vpc-t">for more critical roles</text>
+                <text x="272" y="104" class="vpc-t">Higher accuracy of</text><text x="272" y="118" class="vpc-t">FOD detection</text>
+                <text x="300" y="144" class="vpc-t">Higher frequency</text><text x="300" y="158" class="vpc-t">of inspection</text>
+                <text x="318" y="188" class="vpc-head">Gain creators</text>
+                <text x="318" y="222" class="vpc-head">Pain relievers</text>
+                <text x="312" y="248" class="vpc-t">Less laborious</text><text x="312" y="262" class="vpc-t">FOD process</text>
+                <text x="298" y="288" class="vpc-t">Less manpower</text><text x="298" y="302" class="vpc-t">required for FOD</text>
+                <text x="274" y="320" class="vpc-t">Fewer mundane</text><text x="274" y="334" class="vpc-t">tasks</text>
+                <text x="240" y="352" class="vpc-t">Cost less overall</text><text x="240" y="366" class="vpc-t">in 5 years</text>
+              </svg>

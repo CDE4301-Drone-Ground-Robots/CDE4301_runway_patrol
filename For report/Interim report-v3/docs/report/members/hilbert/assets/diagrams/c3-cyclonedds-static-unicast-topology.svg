@@ -1,0 +1,228 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="c3Bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080B12"/>
+      <stop offset="50%" stop-color="#0C101B"/>
+      <stop offset="100%" stop-color="#080B12"/>
+    </linearGradient>
+
+    <!-- Panel Gradients -->
+    <linearGradient id="panelFail" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1F1315"/>
+      <stop offset="100%" stop-color="#120A0B"/>
+    </linearGradient>
+    <linearGradient id="panelPass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F2228"/>
+      <stop offset="100%" stop-color="#091417"/>
+    </linearGradient>
+
+    <!-- Component Cards -->
+    <linearGradient id="devCard" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="c3Shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#E57373"/>
+    </marker>
+    <marker id="arrowCyanC3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#4CC9D8"/>
+    </marker>
+    <marker id="arrowAmberC3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#D6A45D"/>
+    </marker>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="640" fill="url(#c3Bg)" rx="14"/>
+  <rect x="2" y="2" width="1196" height="636" fill="none" stroke="#1E293B" stroke-width="1.5" rx="13"/>
+
+  <!-- Title & Subtitle -->
+  <g transform="translate(40, 24)">
+    <text x="0" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#F3F4F6" letter-spacing="-0.3">
+      CycloneDDS Static Unicast vs. Default Multicast Discovery Topology
+    </text>
+    <text x="0" y="46" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="400" fill="#A8B3C5">
+      Comparative networking analysis: Hyper-V NAT virtual switch multicast isolation versus deterministic peer-to-peer peering in Semester 1
+    </text>
+  </g>
+
+  <!-- ==================== LEFT PANEL: DEFAULT MULTICAST (FAIL) ==================== -->
+  <g transform="translate(40, 85)" filter="url(#c3Shadow)">
+    <rect width="540" height="470" rx="12" fill="url(#panelFail)" stroke="#E57373" stroke-width="1.5" stroke-opacity="0.8"/>
+    
+    <!-- Header -->
+    <path d="M 0 12 Q 0 0 12 0 L 528 0 Q 540 0 540 12 L 540 38 L 0 38 Z" fill="#3B1215"/>
+    <text x="270" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13.5" font-weight="700" fill="#FCA5A5" text-anchor="middle" letter-spacing="0.5">
+      INITIAL ATTEMPT: DEFAULT DDS MULTICAST DISCOVERY
+    </text>
+
+    <!-- Status Badge -->
+    <rect x="160" y="50" width="220" height="24" rx="6" fill="#7F1D1D" stroke="#EF4444" stroke-width="1"/>
+    <text x="270" y="66" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700" fill="#FECACA" text-anchor="middle">
+      ✕ Multicast Discovery Failure (Nodes Silent)
+    </text>
+
+    <!-- UAV Raspberry Pi 5 Card -->
+    <g transform="translate(30, 90)">
+      <rect width="210" height="110" rx="8" fill="url(#devCard)" stroke="#334155" stroke-width="1"/>
+      <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC">Raspberry Pi 5 (UAV)</text>
+      <text x="15" y="42" font-family="monospace" font-size="10.5" fill="#D6A45D">192.168.137.233</text>
+      <text x="15" y="62" font-family="monospace" font-size="9.5" fill="#94A3B8">• Node: DemoComs_C2</text>
+      <text x="15" y="78" font-family="monospace" font-size="9.5" fill="#94A3B8">• Sends Multicast: 239.255.0.1</text>
+      <text x="15" y="94" font-family="monospace" font-size="9.5" fill="#94A3B8">• Standard DDS Port 7400</text>
+    </g>
+
+    <!-- Wi-Fi AP Box -->
+    <g transform="translate(290, 90)">
+      <rect width="220" height="110" rx="8" fill="url(#devCard)" stroke="#334155" stroke-width="1"/>
+      <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC">Wi-Fi Router / AP</text>
+      <text x="15" y="42" font-family="monospace" font-size="10.5" fill="#A8B3C5">192.168.137.1/24</text>
+      <text x="15" y="62" font-family="monospace" font-size="9.5" fill="#CBD5E1">• 2.4 / 5.0 GHz Indoor WLAN</text>
+      <text x="15" y="78" font-family="monospace" font-size="9.5" fill="#F87171">⚠ IGMP Snooping packet drop</text>
+      <text x="15" y="94" font-family="monospace" font-size="9.5" fill="#94A3B8">• Broadcast rate-limiting active</text>
+    </g>
+
+    <!-- Flow Arrow 1: Pi -> AP -->
+    <path d="M 240 145 L 290 145" fill="none" stroke="#D6A45D" stroke-width="2" marker-end="url(#arrowAmberC3)"/>
+
+    <!-- Hyper-V / Host Boundary Container -->
+    <g transform="translate(30, 230)">
+      <rect width="480" height="215" rx="8" fill="#181116" stroke="#991B1B" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <text x="20" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#FCA5A5">
+        Windows Workstation Host (192.168.137.1)
+      </text>
+
+      <!-- NAT Virtual Switch Barrier -->
+      <rect x="20" y="40" width="440" height="42" rx="6" fill="#450A0A" stroke="#EF4444" stroke-width="1.2"/>
+      <text x="240" y="58" font-family="monospace" font-size="10.5" font-weight="700" fill="#FECACA" text-anchor="middle">
+        Hyper-V Virtual Ethernet Adapter (Default NAT Switch)
+      </text>
+      <text x="240" y="72" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#F87171" text-anchor="middle">
+        Drops UDP Multicast (239.255.0.1) across guest/host boundary
+      </text>
+
+      <!-- Dropped Arrow from AP into NAT -->
+      <path d="M 400 200 L 400 270" fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="3 3"/>
+      <circle cx="400" cy="270" r="10" fill="#7F1D1D" stroke="#EF4444" stroke-width="1.5"/>
+      <text x="400" y="274" font-family="sans-serif" font-size="12" font-weight="900" fill="#FECACA" text-anchor="middle">✕</text>
+
+      <!-- WSL2 Guest Subnet -->
+      <g transform="translate(20, 100)">
+        <rect width="440" height="95" rx="6" fill="#1E293B" stroke="#475569" stroke-width="1"/>
+        <text x="15" y="22" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#E2E8F0">
+          WSL2 Guest OS: Ubuntu 24.04 (Isolated Internal IP: 172.28.x.x)
+        </text>
+        <text x="15" y="42" font-family="monospace" font-size="10" fill="#EF4444">
+          ✕ ugv_c2_bridge_node never discovers /c2/target_alert publisher
+        </text>
+        <text x="15" y="60" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#94A3B8">
+          • ROS 2 Jazzy participant discovery packets fail to bridge the NAT interface.
+        </text>
+        <text x="15" y="76" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" fill="#94A3B8">
+          • Result: rqt_graph shows disconnected nodes; zero alert telemetry received.
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== RIGHT PANEL: STATIC UNICAST (PASS) ==================== -->
+  <g transform="translate(620, 85)" filter="url(#c3Shadow)">
+    <rect width="540" height="470" rx="12" fill="url(#panelPass)" stroke="#4CC9D8" stroke-width="1.5" stroke-opacity="0.8"/>
+    
+    <!-- Header -->
+    <path d="M 0 12 Q 0 0 12 0 L 528 0 Q 540 0 540 12 L 540 38 L 0 38 Z" fill="#0E2E3B"/>
+    <text x="270" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13.5" font-weight="700" fill="#4CC9D8" text-anchor="middle" letter-spacing="0.5">
+      SELECTED CONFIGURATION: CYCLONEDDS STATIC UNICAST
+    </text>
+
+    <!-- Status Badge -->
+    <rect x="145" y="50" width="250" height="24" rx="6" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+    <text x="270" y="66" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5" font-weight="700" fill="#A7F3D0" text-anchor="middle">
+      ✓ Selected Semester 1 Baseline (&lt;15ms Latency)
+    </text>
+
+    <!-- UAV Raspberry Pi 5 Card -->
+    <g transform="translate(30, 90)">
+      <rect width="210" height="110" rx="8" fill="url(#devCard)" stroke="#334155" stroke-width="1"/>
+      <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC">Raspberry Pi 5 (UAV)</text>
+      <text x="15" y="42" font-family="monospace" font-size="10.5" fill="#D6A45D">192.168.137.233</text>
+      <text x="15" y="60" font-family="monospace" font-size="9" fill="#4CC9D8">cyclonedds.xml configured</text>
+      <text x="15" y="76" font-family="monospace" font-size="9" fill="#94A3B8">• Direct Peer: 192.168.137.1</text>
+      <text x="15" y="92" font-family="monospace" font-size="9" fill="#94A3B8">• Unicast UDP Ports: 7410-7411</text>
+    </g>
+
+    <!-- Wi-Fi AP Box -->
+    <g transform="translate(290, 90)">
+      <rect width="220" height="110" rx="8" fill="url(#devCard)" stroke="#334155" stroke-width="1"/>
+      <text x="15" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC">Wi-Fi Router / AP</text>
+      <text x="15" y="42" font-family="monospace" font-size="10.5" fill="#A8B3C5">192.168.137.1/24</text>
+      <text x="15" y="60" font-family="monospace" font-size="9" fill="#34D399">✓ Direct Point-to-Point UDP</text>
+      <text x="15" y="76" font-family="monospace" font-size="9" fill="#94A3B8">• No multicast flooding</text>
+      <text x="15" y="92" font-family="monospace" font-size="9" fill="#94A3B8">• Unicast forward without drop</text>
+    </g>
+
+    <!-- Bidirectional Unicast Flow -->
+    <path d="M 240 145 L 290 145" fill="none" stroke="#4CC9D8" stroke-width="2.2" marker-end="url(#arrowCyanC3)"/>
+    <path d="M 290 155 L 240 155" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-dasharray="3 3"/>
+
+    <!-- Hyper-V / Host Boundary Container -->
+    <g transform="translate(30, 230)">
+      <rect width="480" height="215" rx="8" fill="#0A1820" stroke="#0891B2" stroke-width="1.5"/>
+      <text x="20" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5" font-weight="700" fill="#E0F2FE">
+        Windows Workstation Host (192.168.137.1)
+      </text>
+
+      <!-- Port Proxy / Direct Peering Declaration -->
+      <rect x="20" y="38" width="440" height="52" rx="6" fill="#0E2E3B" stroke="#06B6D4" stroke-width="1.2"/>
+      <text x="240" y="55" font-family="monospace" font-size="9.5" font-weight="700" fill="#A5F3FC" text-anchor="middle">
+        &lt;Peers&gt;&lt;Peer address="192.168.137.233"/&gt;&lt;/Peers&gt;
+      </text>
+      <text x="240" y="70" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#67E8F9" text-anchor="middle">
+        Point-to-point unicast packets bypass NAT virtual multicast filtering entirely
+      </text>
+      <text x="240" y="83" font-family="monospace" font-size="8.5" fill="#94A3B8" text-anchor="middle">
+        WSLg DirectX D3D12 vGPU hardware passthrough enabled (45–60 FPS Gazebo)
+      </text>
+
+      <!-- Successful Arrow from AP into Host -->
+      <path d="M 400 200 L 400 268" fill="none" stroke="#10B981" stroke-width="2.5" marker-end="url(#arrowCyanC3)"/>
+
+      <!-- WSL2 Guest Subnet -->
+      <g transform="translate(20, 100)">
+        <rect width="440" height="105" rx="6" fill="#1E293B" stroke="#06B6D4" stroke-width="1"/>
+        <text x="15" y="20" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="700" fill="#38BDF8">
+          WSL2 Guest: Ubuntu 24.04 LTS (CycloneDDS Participant Active)
+        </text>
+        <text x="15" y="38" font-family="monospace" font-size="9.5" fill="#34D399">
+          ✓ ugv_c2_bridge_node receives /c2/target_alert immediately
+        </text>
+        <text x="15" y="54" font-family="monospace" font-size="9.5" fill="#38BDF8">
+          ✓ Nav2 NavigateToPose action dispatched successfully
+        </text>
+        <text x="15" y="70" font-family="monospace" font-size="9.5" fill="#60A5FA">
+          ✓ /c2/ugv_telemetry heartbeat returns to Pi 5 at 1.0 Hz (&lt;15 ms latency)
+        </text>
+        <text x="15" y="88" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="9" fill="#94A3B8">
+          • Deterministic connection; eliminated enterprise broadcast packet storms.
+        </text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== BOTTOM KEY TAKEAWAY BANNER ==================== -->
+  <g transform="translate(40, 575)">
+    <rect width="1120" height="42" rx="8" fill="#111827" stroke="#334155" stroke-width="1.2"/>
+    <text x="560" y="26" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="700" fill="#F8FAFC" text-anchor="middle">
+      <tspan fill="#D6A45D">Key Engineering Takeaway:</tspan> Static peer configuration bypassed the observed multicast discovery limitation in the Semester 1 testbed without modifying host firewall rules.
+    </text>
+  </g>
+</svg>
+

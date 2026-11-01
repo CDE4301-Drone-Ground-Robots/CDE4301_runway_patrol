@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 220 380" role="img" aria-label="Airflow drawn up a vertical intake tube lifting an object off the ground" style="width: 100%; max-width: 220px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;" xmlns="http://www.w3.org/2000/svg">
+                <defs><marker id="vac-arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#3b82f6"></path></marker></defs>
+                <g stroke="#e5e7eb" stroke-width="2.5"><line x1="62" y1="10" x2="62" y2="298"></line><line x1="158" y1="10" x2="158" y2="298"></line></g>
+                <text x="110" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="#3b82f6">Airflow</text>
+                <g stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#vac-arr)">
+                  <line x1="85" y1="125" x2="85" y2="55"></line><line x1="110" y1="125" x2="110" y2="55"></line><line x1="135" y1="125" x2="135" y2="55"></line>
+                  <line x1="85" y1="255" x2="85" y2="200"></line><line x1="110" y1="255" x2="110" y2="200"></line><line x1="135" y1="255" x2="135" y2="200"></line>
+                  <path d="M20 312 Q78 306 84 270"></path><path d="M110 300 V272"></path><path d="M200 312 Q142 306 136 270"></path>
+                </g>
+                <ellipse cx="110" cy="162" rx="38" ry="22" fill="rgba(239, 68, 68, 0.16)" stroke="#ef4444" stroke-width="1.5"></ellipse>
+                <text x="110" y="167" text-anchor="middle" font-size="13" fill="#e5e7eb">Object</text>
+                <rect x="0" y="318" width="220" height="62" fill="rgba(59, 130, 246, 0.4)"></rect>
+                <text x="110" y="355" text-anchor="middle" font-size="15" fill="#e5e7eb">Ground</text>
+              </svg>

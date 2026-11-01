@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680">
+  <defs>
+    <linearGradient id="bg-grad-c8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080B12"/>
+      <stop offset="100%" stop-color="#0D131F"/>
+    </linearGradient>
+
+    <linearGradient id="panel-abort" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A1215"/>
+      <stop offset="100%" stop-color="#120D10"/>
+    </linearGradient>
+    <linearGradient id="panel-step" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141C2B"/>
+      <stop offset="100%" stop-color="#0F1622"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="shadow-c8" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arr-red-c8" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#E57373"/>
+    </marker>
+    <marker id="arr-cyan-c8" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#4CC9D8"/>
+    </marker>
+    <marker id="arr-emerald-c8" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 1 1 L 7 4 L 1 7 Z" fill="#42B883"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1200" height="680" rx="16" fill="url(#bg-grad-c8)" stroke="#1F2937" stroke-width="1.5"/>
+
+  <!-- Top Title Banner -->
+  <g transform="translate(40, 24)">
+    <rect width="1120" height="52" rx="10" fill="#111827" stroke="#1F2937" stroke-width="1"/>
+    
+    <rect x="16" y="12" width="190" height="28" rx="6" fill="#E57373" fill-opacity="0.15" stroke="#E57373" stroke-opacity="0.4"/>
+    <text x="26" y="30" fill="#E57373" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="0.06em">FIGURE 5.2 &#8226; ABORT LOGIC</text>
+
+    <text x="220" y="31" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="700">Multi-Tier Emergency Abort Flow &amp; Nav2 Goal Preemption Architecture</text>
+    
+    <!-- Status Badges -->
+    <g transform="translate(860, 13)">
+      <rect width="244" height="26" rx="6" fill="#42B883" fill-opacity="0.12" stroke="#42B883" stroke-opacity="0.3"/>
+      <circle cx="12" cy="13" r="4" fill="#42B883"/>
+      <text x="24" y="17" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="600">VERIFIED IN SEM 1 SIL TESTBED</text>
+    </g>
+  </g>
+
+  <!-- Notice Sub-banner -->
+  <g transform="translate(40, 84)">
+    <rect width="1120" height="28" rx="6" fill="#182233" stroke="#1F2937" stroke-width="1"/>
+    <circle cx="16" cy="14" r="3.5" fill="#E9AD58"/>
+    <text x="28" y="18" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11.5">
+      <tspan fill="#E9AD58" font-weight="600">Safety Scope Boundary:</tspan> Solid lines trace verified software cancellation and zero-velocity override in SIL testbed. Dashed lines delineate Semester 2 proposed physical hardware E-stop &amp; mechanical brake interlocks.
+    </text>
+  </g>
+
+  <!-- ==================== LEFT COLUMN: SOFTWARE ABORT EXECUTION (SEM 1 TESTBED) ==================== -->
+  <g transform="translate(40, 126)" filter="url(#shadow-c8)">
+    <rect width="720" height="518" rx="12" fill="url(#panel-step)" stroke="#1F2937" stroke-width="1.2"/>
+    
+    <!-- Section Header -->
+    <rect width="720" height="42" rx="12" fill="#5278D8" fill-opacity="0.12"/>
+    <path d="M 0 42 L 720 42" stroke="#5278D8" stroke-opacity="0.3" stroke-width="1"/>
+    <circle cx="20" cy="21" r="5" fill="#42B883"/>
+    <text x="34" y="26" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700">Tier 1: Software Mission Abort &amp; Nav2 Action Cancellation (Implemented &amp; Verified)</text>
+
+    <!-- STEP 1: INITIAL STATE -->
+    <g transform="translate(24, 56)">
+      <rect width="190" height="80" rx="8" fill="#0B0F19" stroke="#4CC9D8" stroke-opacity="0.5"/>
+      <text x="12" y="20" fill="#4CC9D8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">1. Normal Operation</text>
+      <text x="12" y="38" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Nav2 tracking waypoint</text>
+      <text x="12" y="54" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">State: <tspan fill="#42B883" font-weight="600">EN_ROUTE</tspan></text>
+      <text x="12" y="70" fill="#86868b" font-family="monospace" font-size="9.5">/cmd_vel active</text>
+    </g>
+
+    <!-- Arrow 1 -> 2 -->
+    <path d="M 214 96 L 254 96" stroke="#E57373" stroke-width="2" marker-end="url(#arr-red-c8)"/>
+
+    <!-- STEP 2: ABORT TRIGGER -->
+    <g transform="translate(260, 56)">
+      <rect width="210" height="80" rx="8" fill="#1C1113" stroke="#E57373" stroke-width="1.5"/>
+      <text x="12" y="20" fill="#E57373" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">2. Abort Signal Ingested</text>
+      <text x="12" y="38" fill="#F3F4F6" font-family="monospace" font-size="10">/c2/target_alert</text>
+      <text x="12" y="54" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">priority_level == <tspan fill="#E57373" font-weight="700">"ABORT"</tspan></text>
+      <text x="12" y="70" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">C2 operator / GUI trigger</text>
+    </g>
+
+    <!-- Arrow 2 -> 3 -->
+    <path d="M 470 96 L 510 96" stroke="#E57373" stroke-width="2" marker-end="url(#arr-red-c8)"/>
+
+    <!-- STEP 3: QUEUE FLUSH -->
+    <g transform="translate(516, 56)">
+      <rect width="180" height="80" rx="8" fill="#0B0F19" stroke="#E9AD58" stroke-opacity="0.5"/>
+      <text x="12" y="20" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">3. Queue Preemption</text>
+      <text x="12" y="38" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Flush FIFO waypoint queue</text>
+      <text x="12" y="54" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Clear pending targets</text>
+      <text x="12" y="70" fill="#86868b" font-family="monospace" font-size="9.5">queued_goals_count = 0</text>
+    </g>
+
+    <!-- Arrow down to Step 4 -->
+    <path d="M 606 136 L 606 172" stroke="#E57373" stroke-width="2" marker-end="url(#arr-red-c8)"/>
+
+    <!-- STEP 4: ACTION CLIENT CANCEL -->
+    <g transform="translate(24, 180)">
+      <rect width="672" height="92" rx="8" fill="#0E1624" stroke="#5278D8" stroke-width="1.2"/>
+      <rect width="672" height="26" rx="8" fill="#5278D8" fill-opacity="0.15"/>
+      <text x="14" y="18" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">4. Asynchronous Goal Cancellation (ugv_c2_bridge_node &#8594; Nav2 BT Navigator)</text>
+
+      <g transform="translate(14, 34)">
+        <text x="0" y="16" fill="#F3F4F6" font-family="monospace" font-size="10.5">future = action_client.cancel_goal_async()</text>
+        <text x="0" y="34" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; Sends ROS 2 action cancellation request to active NavigateToPose goal handle</text>
+        <text x="0" y="48" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; Nav2 Behavior Tree transitions from Active &#8594; Canceling &#8594; Canceled</text>
+      </g>
+    </g>
+
+    <!-- Arrow down to Step 5 -->
+    <path d="M 360 272 L 360 302" stroke="#E57373" stroke-width="2" marker-end="url(#arr-red-c8)"/>
+
+    <!-- STEP 5: ACTIVE VELOCITY ZEROING -->
+    <g transform="translate(24, 308)">
+      <rect width="672" height="92" rx="8" fill="#1C1113" stroke="#E57373" stroke-width="1.2"/>
+      <rect width="672" height="26" rx="8" fill="#E57373" fill-opacity="0.15"/>
+      <text x="14" y="18" fill="#E57373" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">5. Commanded Stop: Direct Zero-Velocity Override</text>
+
+      <g transform="translate(14, 34)">
+        <text x="0" y="16" fill="#F3F4F6" font-family="monospace" font-size="10.5">cmd_vel_pub.publish(Twist(linear.x=0.0, angular.z=0.0))</text>
+        <text x="0" y="34" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; Immediately overrides residual controller inertia commands</text>
+        <text x="0" y="48" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; AgileX Scout 2.0 simulation proxy decelerates to complete stop in Gazebo Harmonic</text>
+      </g>
+    </g>
+
+    <!-- Arrow down to Step 6 -->
+    <path d="M 360 400 L 360 428" stroke="#42B883" stroke-width="2" marker-end="url(#arr-emerald-c8)"/>
+
+    <!-- STEP 6: STATE UPDATE & TELEMETRY -->
+    <g transform="translate(24, 434)">
+      <rect width="672" height="68" rx="8" fill="#0A1814" stroke="#42B883" stroke-width="1.2"/>
+      <text x="14" y="20" fill="#42B883" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">6. Safe Stopped State Confirmation &amp; Telemetry Feedback</text>
+      <text x="14" y="38" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5">Uplink telemetry broadcast: <tspan fill="#F3F4F6" font-family="monospace">{"task_state": "SAFE_STOPPED", "distance_to_target_m": 0.0}</tspan></text>
+      <text x="14" y="54" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">C2 Tactical Radar GUI visualizes vehicle status change from GREEN (En Route) to RED (Stopped)</text>
+    </g>
+  </g>
+
+  <!-- ==================== RIGHT COLUMN: HARDWARE E-STOP (SEM 2 PROPOSED) ==================== -->
+  <g transform="translate(780, 126)" filter="url(#shadow-c8)">
+    <rect width="380" height="518" rx="12" fill="url(#panel-abort)" stroke="#E9AD58" stroke-width="1.5" stroke-dasharray="6 4"/>
+    
+    <!-- Section Header -->
+    <rect width="380" height="42" rx="12" fill="#E9AD58" fill-opacity="0.12"/>
+    <path d="M 0 42 L 380 42" stroke="#E9AD58" stroke-opacity="0.3" stroke-width="1"/>
+    <circle cx="20" cy="21" r="5" fill="#E9AD58"/>
+    <text x="34" y="26" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="700">Tier 2: Hardware E-Stop (Semester 2)</text>
+
+    <!-- Scope Warning Card -->
+    <g transform="translate(16, 54)">
+      <rect width="348" height="60" rx="8" fill="#0E0A08" stroke="#E9AD58" stroke-opacity="0.4"/>
+      <text x="12" y="18" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="700">PROPOSED HARDWARE SAFETY ARCHITECTURE</text>
+      <text x="12" y="34" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">Not present in Sem 1 software SIL testbed.</text>
+      <text x="12" y="48" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">Mandatory for physical outdoor airfield prototype.</text>
+    </g>
+
+    <!-- Sub-component 1: Physical E-stop Button -->
+    <g transform="translate(16, 124)">
+      <rect width="348" height="88" rx="8" fill="#140D0E" stroke="#E57373" stroke-width="1" stroke-dasharray="3 3"/>
+      <circle cx="26" cy="26" r="12" fill="#E57373" fill-opacity="0.2" stroke="#E57373" stroke-width="1.5"/>
+      <text x="26" y="30" text-anchor="middle" fill="#E57373" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">E</text>
+      <text x="50" y="24" fill="#F3F4F6" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">Physical Mushroom E-Stop Button</text>
+      <text x="50" y="40" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">External dual-channel latching switch</text>
+      <text x="12" y="62" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">&#8226; Hard-wired cut to main 25.6V contactor coil</text>
+      <text x="12" y="78" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">&#8226; Independent of microcontrollers or OS software</text>
+    </g>
+
+    <!-- Sub-component 2: RF Watchdog Remote Abort -->
+    <g transform="translate(16, 222)">
+      <rect width="348" height="88" rx="8" fill="#140D0E" stroke="#E9AD58" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="14" y="20" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">Dedicated Wireless RF Heartbeat Link</text>
+      <text x="14" y="36" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">Fail-safe RC / Microhard auxiliary line</text>
+      <text x="14" y="56" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">&#8226; Hardware watchdog times out after &gt; 500 ms loss</text>
+      <text x="14" y="72" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">&#8226; Opens power relay without ROS 2 intervention</text>
+    </g>
+
+    <!-- Sub-component 3: Motor Controller Interlock -->
+    <g transform="translate(16, 320)">
+      <rect width="348" height="88" rx="8" fill="#140D0E" stroke="#5278D8" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="14" y="20" fill="#79A4F8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">ZLAC8015D Motor Controller Interlock</text>
+      <text x="14" y="36" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">Dual 8-inch hub motor drivers</text>
+      <text x="14" y="56" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">&#8226; Hardware STO (Safe Torque Off) pin activation</text>
+      <text x="14" y="72" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5">&#8226; Electrodynamic shorting provides active holding torque</text>
+    </g>
+
+    <!-- Sub-component 4: Suction Impeller Interlock -->
+    <g transform="translate(16, 418)">
+      <rect width="348" height="84" rx="8" fill="#0E0A08" stroke="#1F2937" stroke-dasharray="3 3"/>
+      <text x="14" y="20" fill="#A8B3C5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700">Centrifugal Suction Power Relay</text>
+      <text x="14" y="38" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; De-energizes 24V brushless vacuum impeller</text>
+      <text x="14" y="54" fill="#86868b" font-family="ui-sans-serif, system-ui, sans-serif" font-size="10">&#8226; Prevents aerodynamic debris ingestion during halt</text>
+      <text x="14" y="70" fill="#E9AD58" font-family="ui-sans-serif, system-ui, sans-serif" font-size="9.5" font-weight="600">&#8594; Assigned to Bryan &amp; Asuka for physical prototype</text>
+    </g>
+  </g>
+
+</svg>

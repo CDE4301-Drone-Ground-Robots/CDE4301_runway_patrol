@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg style="display: block; margin: 0 auto; max-width: 100%; min-width: 760px; height: auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;" viewBox="-100 0 1200 320" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <style>
+    .ekf-text-p { fill: #FFFFFF; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .ekf-text-s { fill: #CBD5E1; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  </style>
+  <marker id="arrow-blue-ekf" markerHeight="6" markerWidth="6" orient="auto-start-reverse" refX="6" refY="5" viewBox="0 0 10 10">
+    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#3b82f6" />
+  </marker>
+  <marker id="arrow-green-ekf" markerHeight="6" markerWidth="6" orient="auto-start-reverse" refX="6" refY="5" viewBox="0 0 10 10">
+    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981" />
+  </marker>
+</defs>
+<!-- Top Rail: Input Wheel speed (vx, vy) -->
+<text class="ekf-text-p" fill="#FFFFFF" font-size="12.5" font-weight="600" text-anchor="end" x="245" y="58">Wheel speed (v<tspan dy="2" font-size="10">x</tspan><tspan dy="-2">, v</tspan><tspan dy="2" font-size="10">y</tspan><tspan dy="-2">)</tspan></text>
+<text class="ekf-text-s" fill="#CBD5E1" font-family="'SF Mono', Consolas, monospace" font-size="10.5" text-anchor="end" x="245" y="74">/odom (50 Hz)</text>
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="2" x1="255" x2="295" y1="65" y2="65"></line>
+
+<!-- Kinematic prediction f(x, u) (White block) -->
+<rect fill="#FFFFFF" height="54" rx="6" stroke="#3b82f6" stroke-width="2" width="185" x="300" y="38"></rect>
+<text fill="#0f172a" font-size="12.5" font-weight="700" text-anchor="middle" x="392" y="60">Kinematic prediction</text>
+<text fill="#1d4ed8" font-family="'SF Mono', Consolas, monospace" font-size="11" font-weight="600" text-anchor="middle" x="392" y="78">x̂⁻ = f(x̂ₖ₋₁, uₖ)</text>
+
+<!-- Arrow from Kinematic prediction to Summing Junction -->
+<line stroke="#3b82f6" stroke-width="2" x1="485" x2="540" y1="65" y2="65"></line>
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="2" x1="540" x2="710" y1="65" y2="65"></line>
+<text class="ekf-text-s" fill="#CBD5E1" font-family="'SF Mono', Consolas, monospace" font-size="11" text-anchor="middle" x="625" y="54">Prior x̂⁻</text>
+
+<!-- Downward branch into Observation model H -->
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="1.8" x1="540" x2="540" y1="65" y2="108"></line>
+
+<!-- Observation Model H (White block) -->
+<rect fill="#FFFFFF" height="48" rx="6" stroke="#3b82f6" stroke-width="2" width="150" x="465" y="112"></rect>
+<text fill="#0f172a" font-size="12" font-weight="700" text-anchor="middle" x="540" y="132">Observation model</text>
+<text fill="#1d4ed8" font-family="'SF Mono', Consolas, monospace" font-size="12" font-weight="600" text-anchor="middle" x="540" y="148">H (predicts Hx̂⁻)</text>
+
+<!-- Downward arrow from Observation model to Subtraction Junction -->
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="1.8" x1="540" x2="540" y1="160" y2="216"></line>
+<text fill="#93c5fd" font-size="10.5" x="552" y="190">Estimated measurement Hx̂⁻</text>
+
+<!-- Subtraction Junction (-) (White circle) -->
+<circle fill="#FFFFFF" cx="540" cy="232" r="14" stroke="#3b82f6" stroke-width="2"></circle>
+<text fill="#1d4ed8" font-size="18" font-weight="bold" text-anchor="middle" x="540" y="238">−</text>
+
+<!-- Bottom Left Input: IMU gyro -->
+<text class="ekf-text-p" fill="#FFFFFF" font-size="12.5" font-weight="600" text-anchor="end" x="245" y="222">9-DOF IMU (ω<tspan dy="2" font-size="9">z</tspan><tspan dy="-2">, a</tspan><tspan dy="2" font-size="9">x</tspan><tspan dy="-2">)</tspan></text>
+<text class="ekf-text-s" fill="#CBD5E1" font-family="'SF Mono', Consolas, monospace" font-size="10.5" text-anchor="end" x="245" y="238">/imu/data (100 Hz, z)</text>
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="2" x1="255" x2="518" y1="232" y2="232"></line>
+
+<!-- Innovation Residual Arrow pointing to Kalman Gain -->
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="2" x1="555" x2="648" y1="232" y2="232"></line>
+<text fill="#93c5fd" font-size="10.5" text-anchor="middle" x="601" y="220">Innovation</text>
+<text fill="#93c5fd" font-family="'SF Mono', Consolas, monospace" font-size="10" text-anchor="middle" x="601" y="246">y = z − Hx̂⁻</text>
+
+<!-- Kalman Gain Block (K) (White block with emerald stroke) -->
+<rect fill="#FFFFFF" height="48" rx="6" stroke="#10b981" stroke-width="2" width="156" x="650" y="208"></rect>
+<text fill="#047857" font-size="12" font-weight="700" text-anchor="middle" x="728" y="228">Kalman gain (K)</text>
+<text fill="#065f46" font-family="'SF Mono', Consolas, monospace" font-size="9.5" font-weight="600" text-anchor="middle" x="728" y="244">K = P⁻Hᵀ(HP⁻Hᵀ+R)⁻¹</text>
+
+<!-- Arrow from Kalman Gain up to Summing Junction -->
+<line marker-end="url(#arrow-green-ekf)" stroke="#10b981" stroke-width="2" x1="728" x2="728" y1="208" y2="82"></line>
+<text fill="#34d399" font-size="11" font-weight="600" x="740" y="142">Correction</text>
+<text fill="#34d399" font-family="'SF Mono', Consolas, monospace" font-size="11.5" x="740" y="158">K · y</text>
+
+<!-- Summing Junction (+) (White circle with emerald stroke) -->
+<circle fill="#FFFFFF" cx="728" cy="65" r="14" stroke="#10b981" stroke-width="2"></circle>
+<text fill="#047857" font-size="16" font-weight="bold" text-anchor="middle" x="728" y="70">+</text>
+
+<!-- Output Arrow & Local pose -->
+<line marker-end="url(#arrow-blue-ekf)" stroke="#3b82f6" stroke-width="2" x1="742" x2="795" y1="65" y2="65"></line>
+<text class="ekf-text-p" fill="#FFFFFF" font-size="13" font-weight="700" x="805" y="54">Local Pose (30 Hz)</text>
+<text fill="#34d399" font-family="'SF Mono', Consolas, monospace" font-size="11.5" x="805" y="72">/odometry/local</text>
+<rect fill="rgba(16, 185, 129, 0.15)" height="24" rx="4" stroke="rgba(16, 185, 129, 0.45)" stroke-width="1" width="134" x="803" y="82"></rect>
+<text fill="#34d399" font-family="'SF Mono', monospace" font-size="9.5" font-weight="700" text-anchor="middle" x="870" y="98">odom → base_footprint</text>
+<text class="ekf-text-s" fill="#CBD5E1" font-size="10.5" x="805" y="122">Smooth setpoint for RPP</text>
+</svg>

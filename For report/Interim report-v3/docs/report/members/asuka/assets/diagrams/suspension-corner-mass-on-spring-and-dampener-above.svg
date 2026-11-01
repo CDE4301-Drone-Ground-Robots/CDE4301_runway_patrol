@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 300 330" role="img" aria-label="Corner mass on spring and dampener above a rigid wheel" style="width: 100%; max-width: 320px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#e5e7eb" stroke-width="2">
+                  <rect x="105" y="10" width="90" height="50" rx="4" fill="rgba(245, 158, 11, 0.16)" stroke="#f59e0b"></rect>
+                  <path d="M150 60 V80 M110 80 H190 M110 80 V100 L100 107 L120 121 L100 135 L120 149 L110 156 V170 M190 80 V105 M175 105 H205 M178 105 V140 H202 V105 M190 125 V170 M110 170 H190 M150 170 V190"></path>
+                  <circle cx="150" cy="235" r="45"></circle>
+                  <rect x="20" y="280" width="260" height="45" fill="rgba(59, 130, 246, 0.4)" stroke="none"></rect>
+                </g>
+                <g fill="#e5e7eb" font-size="13" text-anchor="middle">
+                  <text x="150" y="32">Corner</text><text x="150" y="48">Mass</text>
+                  <text x="62" y="133">Spring</text><text x="245" y="128">Dampener</text>
+                  <text x="150" y="228">Wheel</text><text x="150" y="245">(100% rigid)</text>
+                  <text x="150" y="308">Ground</text>
+                </g>
+              </svg>
