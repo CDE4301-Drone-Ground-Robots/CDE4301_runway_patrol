@@ -3,7 +3,7 @@
 ### CDE4301 Innovation & Design Capstone Project (Robotics)
 
 **National University of Singapore (NUS) • College of Design and Engineering (CDE)**  
-**Academic Supervisors:** Dr. Tang Kok Zuea
+**Academic Supervisors:** Dr. Tang Kok Zuea & Dr Mark DeLessio
 
 ---
 
