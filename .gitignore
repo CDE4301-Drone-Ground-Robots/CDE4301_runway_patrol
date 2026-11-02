@@ -44,12 +44,14 @@ venv/
 ENV/
 env/
 
-# AI Agent & Local Tooling Skills
-# (Prevents local skill markdown/CSV files and lockfiles from cluttering the Git report)
+# Local Tooling & Extension Artifacts
+.freebuff/
 .agents/
 .claude/
 .gemini/
 skills-lock.json
+CLAUDE.md
+AGENTS.md
 # Local MCP server configuration (may contain access tokens)
 .mcp.json
 
