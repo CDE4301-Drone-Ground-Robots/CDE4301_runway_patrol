@@ -1,100 +1,80 @@
 ---
 title: "STM32 Low-Level Control Unit"
+description: "Two-tier embedded control architecture, STM32 NUCLEO-F446RE selection rationale, peripheral pin allocation, and hardware safety interlocks."
 owner: "Gabriel Tan"
-outline: [2,3]
+outline: [2, 3]
 ---
+
 # STM32 Low-Level Control Unit
 
-<Badge type="info" text="ELECTRICAL & EMBEDDED SUBSYSTEM • GABRIEL" />
+> **Semester 1 engineering documentation · Gabriel Tan**  
+> **Evidence boundary:** This page documents the STM32 NUCLEO-F446RE low-level controller architecture, worst-case compute budget, and benchtop hardware integration (CAN motor drivers, USB Host gamepad, and 5 V current-sinking stepper drive). Semester 2 expansion sensors (BMS, RTK GPS, IMU, telemetry radio, ToF) have pre-allocated pins and buses but remain to be integrated on the final carrier PCB.
 
 <!-- #region microcontrollers -->
 
 <!-- #region report -->
 
-## Why a Dedicated ECU {#why-dedicated-ecu}
+## 1. Objectives & Role as the Real-Time "Spinal Cord" {#why-dedicated-ecu}
 
-The STM32 is the robot’s real-time “spinal cord”. It drives the wheels, runs the vacuum-head stepper, and handles safety, so the Jetson can focus on vision and autonomy. If the Jetson or the controller link drops, the STM32 stops the robot on its own.
+The STM32 is the robot’s real-time “spinal cord”. It drives the four wheels, runs the vacuum-head stepper actuator, and handles low-level safety so the Jetson companion computer can focus on computer vision and high-level autonomy. If the Jetson or the wireless controller link drops, the STM32 stops the robot on its own.
 
-<Figure src="./assets/diagrams/stm32-hardware-two-tier-computing-split-architecture-di.svg" alt="Two-Tier Computing Split Architecture Diagram" />
+Splitting the UGV compute stack into a high-level autonomy processor (NVIDIA Jetson) and a bare-metal microcontroller (STM32 NUCLEO-F446RE) follows the proven industry pattern used in Pixhawk flight controllers and ROBOTIS TurtleBot3 (OpenCR). It guarantees **failsafe isolation** (an OS crash or frame drop on the Jetson triggers an independent CiA 402 Quick-Stop on the STM32) and **deterministic timing** (microsecond step pulses and a 50 Hz velocity control loop execute without Linux OS preemption).
 
-::: tip Failsafe isolation
-If the Jetson's OS crashes, reboots, or drops frames — or if the wireless controller link drops — the STM32 detects the communication timeout and independently stops all four wheels on its own.
-:::
+<Figure
+  src="./assets/diagrams/stm32-hardware-two-tier-computing-split-architecture-di.svg"
+  alt="Two-Tier Computing Split Architecture Diagram"
+  caption="**Figure 1.1: Two-Tier Computing Split Architecture.** High-level perception and ROS 2 path planning execute on the Jetson companion computer, while the bare-metal STM32F446RE handles deterministic 500 kbps CAN motor control, microsecond stepper timing, USB Host teleoperation, and hardware/firmware safety watchdogs."
+/>
 
-::: info Deterministic timing
-No OS preemption. Control loops (50 Hz velocity ramping) and step pulses run with microsecond-level, predictable timing, and hardware peripherals (CAN, timers, UART, USB Host) handle I/O without loading the CPU.
-:::
-
-::: info Proven industry pattern
-The same high-level / low-level split is used by Pixhawk flight controllers (STM32 + companion computer) and ROBOTIS TurtleBot3's OpenCR board (STM32).
-:::
-
-### Hardware Architecture at a Glance {#hardware-at-a-glance}
+::: details Detailed architectural rationale and hardware summary
 
 | Subsystem | Hardware Implementation | Key Specifications & Role |
-| --- | --- | --- |
-| **Microcontroller** | **STM32 NUCLEO-F446RE** (ARM Cortex-M4 with FPU) | Chosen for its **2 hardware CAN buses** and **6 UARTs**, 180 MHz clock, and 5 V-tolerant I/O. |
-| **Drive** | **2× ZLAC8015D** dual-channel motor drivers | Connected on a shared **CAN bus (500 kbps)**, powering **4 hub motors** (**263 mm wheels**, **400 RPM max**). |
+| :--- | :--- | :--- |
+| **Microcontroller** | **STM32 NUCLEO-F446RE** (ARM Cortex-M4 with FPU) | 180 MHz clock, chosen for its **2 hardware CAN buses** and **6 UARTs** plus 5 V-tolerant I/O. |
+| **Drive** | **2× ZLAC8015D** motor drivers on shared CAN bus | **500 kbps CAN1** (`PB8`/`PB9`), powering **4 hub motors** (**263 mm wheels**, **400 RPM max**). |
 | **Operator Control** | **Wireless gamepad (GameSir)** | Plugged straight into the STM32 over **USB host** (`PA11`/`PA12`); **no laptop needed**. |
-| **Vacuum Head** | **Stepper motor + TB6600 driver** (110 mm linear actuator) | Uses **5 V current-sinking** (`PC2` PUL−, `PC3` DIR− open-drain) so the **3.3 V STM32** can switch it reliably without a level shifter. |
+| **Vacuum Head** | **Stepper motor + TB6600 driver** (110 mm stroke) | Uses **5 V current-sinking** (`PC2` PUL−, `PC3` DIR− open-drain) so the **3.3 V STM32** can switch it reliably. |
 | **Power & Safety** | **48 V LiFePO4 battery** + wireless kill switch + contactor | A **wireless kill switch** triggers the motor drivers’ built-in emergency stop, and a **safety contactor** cuts motor power while keeping the computers alive. |
-| **Ready for Semester 2** | Pre-allocated expansion interfaces | Pins already allocated for the **battery BMS** (`USART1`), **UM980 RTK GPS** (`USART3`), **9-DOF IMU** (`I2C1`), **telemetry radio** (`UART4`), **ToF sensor** (`UART5`), **vacuum relay** (`PC0`), and **lights** (`PB4`/`PB5`). |
+| **Ready for Semester 2** | Pre-allocated expansion pins & serial buses | Pins already allocated for the **battery BMS** (`USART1`), **UM980 RTK GPS** (`USART3`), **IMU** (`I2C1`), **telemetry radio** (`UART4`), **ToF sensor** (`UART5`), **vacuum relay** (`PC0`), and **lights** (`PB4`/`PB5`). |
+
+:::
 
 <!-- #endregion microcontrollers -->
 
-## Requirements & Selection {#requirements-selection}
+## 2. Design Methodology & Microcontroller Selection {#requirements-selection}
 
-<Badge type="tip" text="STEP A" />
+Selecting the low-level controller required matching the UGV's concurrent peripheral demands — dual-node CANopen motor control, standalone USB Host teleoperation, microsecond stepper pulse generation, and four concurrent asynchronous UART streams — without relying on fragile software bit-banging or external protocol bridges.
 
-### Hard Requirements Specification
+The **STM32 NUCLEO-F446RE** (ARM Cortex-M4 with FPU at 180 MHz) was selected over five alternative boards primarily for its **2 hardware CAN buses** and **6 hardware UARTs**, native USB 2.0 OTG Full-Speed Host support, and **5 V-tolerant I/O pins**. Worst-case cycle budgeting across all active peripherals totals **17.16 MHz** (9.5% of the 180 MHz clock), or **34.32 MHz** (19.1%) with a conservative $2\times$ industrial safety margin, leaving **>80% compute headroom** (145.68 MHz) for Semester 2 sensor fusion and micro-ROS serial framing.
+
+::: details Hard requirements specification and worst-case compute budget
+
+**Table 2.1: Hard Peripheral & Compute Requirements**
 
 | Requirement | Target Specification | Peripheral Allocation | Engineering Justification |
-| --- | --- | --- | --- |
-| **Hardware Serial Ports** | **≥ 4 UART / USART** (6 available) | BMS (`USART1`), ST-Link / Jetson (`USART2`), UM980 RTK GPS (`USART3`), Microhard Telemetry Radio (`UART4`), ToF Sensor (`UART5`) | Enables concurrent, non-blocking DMA serial streaming without software serial emulation or bus multiplexing. |
-| **CAN Bus Controller** | **≥ 1 bxCAN @ 500 kbps** (2 available) | `CAN1` (`PB8`/`PB9`) → Two ZLAC8015D motor drivers powering 4 hub motors (263 mm wheels, 400 RPM max) | Native differential industrial bus with hardware message ID filtering for real-time CiA 402 velocity commands. |
-| **USB Host Interface** | **USB 2.0 OTG FS Host** | `PA11` (`DM`), `PA12` (`DP`) → Wireless GameSir gamepad plugged directly into the STM32 | Permits direct standalone teleoperation and field diagnostics with no laptop or ROS 2 network stack needed. |
-| **Compute Clock Budget** | **≥ 35 MHz (FPU core)** | STM32F446RE ARM Cortex-M4 with FPU operating at 180 MHz | Comfortably absorbs peak peripheral interrupt loads (17.16 MHz raw + 2× margin = 34.32 MHz) with &gt;80% headroom. |
+| :--- | :--- | :--- | :--- |
+| **Hardware Serial Ports** | **≥ 4 UART / USART** (6 available) | BMS (`USART1`), Jetson / Debug (`USART2`), UM980 RTK GPS (`USART3`), Telemetry Radio (`UART4`), ToF (`UART5`) | Enables concurrent, non-blocking DMA serial streaming without software serial emulation or bus multiplexing. |
+| **CAN Bus Controller** | **≥ 1 bxCAN @ 500 kbps** (2 available) | `CAN1` (`PB8`/`PB9`) → Two ZLAC8015D drivers (4 hub motors, 263 mm wheels, 400 RPM max) | Native differential industrial bus with hardware message ID filtering for real-time CiA 402 velocity commands. |
+| **USB Host Interface** | **USB 2.0 OTG FS Host** | `PA11` (`DM`), `PA12` (`DP`) → Wireless GameSir gamepad plugged directly into the STM32 | Permits direct standalone manual driving and diagnostics with no laptop or ROS 2 network stack needed. |
+| **Compute Clock Budget** | **≥ 35 MHz (FPU core)** | STM32F446RE ARM Cortex-M4F operating at 180 MHz | Comfortably absorbs peak peripheral interrupt loads (17.16 MHz raw + 2× margin = 34.32 MHz) with &gt;80% headroom. |
 
-<Badge type="info" text="STEP B" />
+**Table 2.2: Worst-Case Compute Cycle Budget (180 MHz Cortex-M4F)**
 
-### Worst-Case Compute Budget
-
-Cortex-M4F 180 MHz Frequency Budget Allocation
-
-Peak throughput under concurrent CAN saturation, 4× UART DMA streaming, 10 kHz stepper interrupts, and IMU polling.
-
-<Badge type="tip" text="> 80% Headroom Available" />
-
-9.5%
-
-+9.5%
-
-&gt; 80% headroom for sensor fusion, telemetry and RTOS overhead (145.68 MHz)
-
-**17.16 MHz (9.5%)** Base Worst-Case Load
-
-**34.32 MHz (19.1%)** Peak Load (2× Safety Margin)
-
-**&gt; 80% Headroom** for sensor fusion, telemetry and RTOS overhead
-
-::: details Show breakdown: task assumptions & cycle budget
-
-| Task | Assumption | Load |
-| --- | --- | --- |
+| Task | Assumption | CPU Load |
+| :--- | :--- | :--- |
 | **4× UART (BMS, GPS, radio, ToF)** | 4 ch × 11,520 B/s (115,200 baud ÷ 10 bits) = 46,080 B/s | × 150 cycles/byte = **6.91 MHz** |
-| **CAN to ZLAC8015D** | 9,000 frames/s (1 Mbps bus saturation) | × 350 cycles/frame = **3.15 MHz** |
+| **CAN to ZLAC8015D** | 9,000 frames/s (1 Mbps bus saturation ceiling) | × 350 cycles/frame = **3.15 MHz** |
 | **GPS parsing** | 10 Hz × 5 sentences × 80 B = 4,000 B/s | × 100 cycles/byte = **0.40 MHz** |
-| **Stepper pulses** | 20,000 interrupts/s (10 kHz, 2 per pulse) | × 75 cycles = **1.50 MHz** |
+| **Stepper pulses** | 20,000 interrupts/s (10 kHz, 2 edges per pulse) | × 75 cycles = **1.50 MHz** |
 | **IMU over I2C** | 100 reads/s | × 2,000 cycles = **0.20 MHz** |
-| **USB host + main loop** | — | **5.00 MHz** |
-| **Total** | Worst-case unscaled sum across active peripherals | **17.16 MHz** |
-| **With 2× safety margin** | Conservative industrial doubling for RTOS jitter & telemetry spikes | **34.32 MHz** |
+| **USB host + main loop** | Polling, HID parsing & 50 Hz kinematics/ramping | **5.00 MHz** |
+| **Total Base Load** | Worst-case unscaled sum across active peripherals | **17.16 MHz (9.5%)** |
+| **With 2× Safety Margin** | Conservative industrial doubling for jitter & telemetry spikes | **34.32 MHz (19.1%)** |
+| **Available Headroom** | Remaining clock budget on 180 MHz Cortex-M4F | **145.68 MHz (>80%)** |
 
 :::
 
-<Badge type="info" text="STEP C" />
-
-### Candidate Evaluation
+::: details Candidate microcontroller evaluation matrix
 
 <table class="data-table"><tbody>
 <tr><th>Board</th><th>UART</th><th>CAN</th><th>Logic / Clock</th><th>Verdict</th></tr>
@@ -106,63 +86,59 @@ Peak throughput under concurrent CAN saturation, 4× UART DMA streaming, 10 kHz 
 <tr><td><strong>NUCLEO-F446RE</strong> <Badge type="tip" text="SELECTED" /></td><td>6</td><td>2</td><td><strong>3.3 V (5 V-tolerant I/O), 180 MHz</strong></td><td><Badge type="tip" text="✓ Selected" /></td></tr>
 </tbody></table>
 
-::: tip
-<Badge type="tip" text="SELECTION VERDICT" />
+**Selection Rationale:** While the Teensy 4.1 offers a higher clock frequency on paper, its 3.3 V-only GPIOs are not 5 V-tolerant. The **STM32 NUCLEO-F446RE** provides 5 V-tolerant open-drain pins (enabling direct 5 V current-sinking for the TB6600 stepper optocouplers), STM32CubeMX pin/clock configuration, industry-standard HAL drivers, and an integrated ST-Link hardware debugger with Virtual COM Port telemetry.
 
-**Microcontroller Selection Rationale**
-
-The **STM32 NUCLEO-F446RE** (ARM Cortex-M4 with FPU) was chosen for its **2 hardware CAN buses** and **6 UARTs**, alongside 5 V-tolerant I/O pins that support 5 V current-sinking for the TB6600 stepper driver. While the Teensy 4.1 out-specs the F446RE on raw clock speed, the STM32 provides STM32CubeMX pin/clock configuration, HAL libraries, an on-board ST-Link debugger, and >80% compute headroom.
 :::
 
-## Interface & Wiring {#interface-wiring}
+## 3. Hardware Architecture, Power & Safety Interlocks {#interface-wiring}
 
-Complete hardware mapping for all 11 external devices connected to the STM32 NUCLEO-F446RE, covering both the active Semester 1 drive/actuation bench and the pre-allocated Semester 2 sensor and power expansion pins:
+The low-level hardware architecture integrates five functional groups around the STM32 NUCLEO-F446RE, separating high-power 48 V traction lines from 3.3 V / 5 V logic and ensuring that hardware emergency stops function even if software freezes:
 
-- **Drive & Vacuum-Head Actuation:** Two **ZLAC8015D** motor drivers share `CAN1` (`PB8`/`PB9` at 500 kbps) to power the four 263 mm, 400 RPM max hub motors, while the vacuum-head stepper motor is driven through a **TB6600** driver using **5 V current-sinking** (`PC2` PUL−, `PC3` DIR−) so the 3.3 V STM32 can switch it reliably.
-- **Power & Hardware Safety Interlocks:** Powered by the **48 V LiFePO4 battery**. A **wireless kill switch** triggers the motor drivers’ built-in emergency stop (`PB1` monitor), and a **safety contactor** cuts high-voltage motor power while keeping the STM32 and Jetson computers alive.
-- **Ready for Semester 2:** Pins are already allocated and routed for the **battery BMS** (`USART1`), **UM980 RTK GPS** (`USART3`), **9-DOF IMU** (`I2C1`), **telemetry radio** (`UART4`), **ToF sensor** (`UART5`), **vacuum relay** (`PC0`), and **lights** (`PB4`, `PB5`).
+1. **4WD CAN Bus Drivetrain:** Two **ZLAC8015D** dual-channel FOC servo drivers share a single **500 kbps CAN bus** (`CAN1` on `PB8` RX / `PB9` TX via an external CAN transceiver), powering the **four 263 mm, 400 RPM max hub motors** (Node 1 = front axle, Node 2 = rear axle). For drivetrain torque sizing, see [Motor Drivetrain Calculations](../hilbert/motor-drivetrain-calculation.md).
+2. **Standalone USB Host Operator Control:** A wireless **GameSir** gamepad receiver plugs straight into the STM32's **USB 2.0 OTG FS Host** port (`PA11` DM / `PA12` DP), allowing an operator to drive the robot and jog the vacuum head directly without a laptop.
+3. **Vacuum-Head Stepper Drive (5 V Current-Sinking):** The 110 mm linear actuator stepper motor is driven through a **TB6600** microstep driver. Because a 3.3 V GPIO cannot source enough current through the TB6600's internal optocoupler LEDs + series resistors, `PUL+` and `DIR+` are tied to the **5 V rail** and the STM32 sinks `PUL−` (`PC2`) and `DIR−` (`PC3`) in **open-drain mode**, switching the full 5 V swing reliably without an external level shifter.
+4. **48 V Power & Dual-Tier Hardware Safety:** The traction system runs off a **48 V LiFePO4 battery**. A **wireless kill switch** triggers the ZLAC8015D motor drivers' built-in emergency stop input (monitored on `PB1`), while a **safety contactor** cuts 48 V motor power completely while keeping the STM32 and Jetson computers alive for diagnostics and logging. For the full power distribution schematic, see [Components & BOM](../bryan/components-bom.md).
+5. **Pre-Allocated Semester 2 Expansion:** Pins and hardware buses are already assigned in the pinout map for the **battery BMS** (`USART1`), **UM980 RTK GPS** (`USART3`), **9-DOF IMU** (`I2C1`), **telemetry radio** (`UART4`), **ToF distance sensor** (`UART5`), **vacuum relay** (`PC0`), and **headlights / status lights** (`PB4`, `PB5`).
 
-![NUCLEO-F446RE wiring diagram grouped by Sensor, Power, Motor, Visual and User Input subsystems](./assets/images/comm-diagram.jpeg)
+<Figure
+  src="./assets/images/comm-diagram.jpeg"
+  alt="NUCLEO-F446RE wiring diagram grouped by Sensor, Power, Motor, Visual and User Input subsystems"
+  caption="**Figure 3.1: STM32 NUCLEO-F446RE Complete Pin & Interface Allocation.** Hardware wiring map covering all 11 external devices across Motor, User Input, Power, Sensor, Actuator, and Visual subsystems."
+/>
 
-Click to Enlarge
+::: details Interactive pinout & peripheral interface table (11 devices)
 
-NUCLEO-F446RE wiring diagram grouped by Sensor, Power, Motor, Visual and User Input subsystems (Click image to open full-size lightbox preview)
+Use the search bar or subsystem filter pills below to inspect the exact protocol and pin assignment for each connected device:
 
 <Stm32HardwareWidget1 />
 
 <Stm32HardwareWidget2 />
 
-<Badge type="warning" text="WIP · Semester 2" />
-
-## Carrier PCB (Work in Progress) {#carrier-pcb}
-
-A custom carrier board is being designed in KiCad so the Nucleo, CAN transceiver and sensor harnesses plug into locking JST connectors instead of loose jumper wires — improving reliability under runway vibration.
-
-![KiCad carrier board schematic and layout placeholder](./assets/images/kicad-schematic.png)
-
-Click to Enlarge
-
-KiCad carrier board schematic placeholder (lockable JST-XH/PA connectors, isolated CAN transceiver, and low-noise LDO rails)
-
-::: info
-<Badge type="info" text="SOFTWARE ARCHITECTURE" /> <Badge type="tip" text="PHASES 1–5 COMPLETED" />
-
-**STM32 Firmware Architecture & Control**
-
-Explore the unified gamepad/ROS 2 firmware architecture, 3-mode differential-drive steering, 50 Hz velocity ramping loop, multi-layer safety watchdogs, and the 5 tested development stages.
-
-[Open STM32 Firmware →](./stm32-firmware.md)
 :::
 
+## 4. Limitations & Semester 2 Plan (Carrier PCB & Sensor Bring-Up) {#carrier-pcb}
+
+During Semester 1 benchtop and chassis testing, interconnections between the Nucleo board, CAN transceiver, TB6600 stepper driver, and USB Host port were routed using breadboard and DuPont jumper harnesses. While sufficient for laboratory verification, loose jumper headers are susceptible to fretting corrosion and disconnection under runway pavement vibration.
+
+For Semester 2, a custom **KiCad carrier PCB** is being designed to seat the NUCLEO-F446RE headers and route all 11 interfaces — including the pre-allocated BMS, UM980 RTK GPS, IMU, telemetry radio, ToF sensor, vacuum relay, and indicator lights — to **lockable JST-XH / JST-PA connectors** with an onboard isolated CAN transceiver and regulated 5 V rail.
+
+<Figure
+  src="./assets/images/kicad-schematic.png"
+  alt="KiCad carrier board schematic and layout placeholder"
+  caption="**Figure 4.1: Custom STM32 Carrier PCB (Work in Progress for Semester 2).** Replaces loose jumper wires with locking JST-XH/PA connectors, an onboard CAN transceiver, and dedicated 5 V common-anode pull-ups for the TB6600 stepper driver."
+/>
+
+**Related documentation:** [STM32 Firmware Architecture & Control →](./stm32-firmware.md) · [Motor Drivetrain Calculations →](../hilbert/motor-drivetrain-calculation.md) · [Steering Kinematics →](../hilbert/steering-kinematics.md) · [Electrical Components & BOM →](../bryan/components-bom.md)
+
 <!-- #endregion report -->
+
+National University of Singapore · CDE4301 Capstone Project
 
 <CardGrid :cols="2">
 
 <Card>
 
-←
-
-[Previous Documentation](./vision-research.md)
+← [Previous Documentation](./vision-research.md)
 
 Computer Vision Research
 
@@ -170,9 +146,9 @@ Computer Vision Research
 
 <Card>
 
-[Next Architecture](./stm32-firmware.md)
+[Next Architecture](./stm32-firmware.md) →
 
-STM32 Firmware Architecture →
+STM32 Firmware Architecture & Control
 
 </Card>
 
