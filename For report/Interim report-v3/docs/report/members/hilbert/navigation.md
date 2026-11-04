@@ -111,11 +111,27 @@ The demonstration illustrates two reasons for separating local and global estima
 
 :::
 
-::: details Planner and controller comparison
+### 3.1 Global Planner Selection: A*, Theta* and Hybrid A* {#nav-planner-tradeoffs}
 
-**Global planning:** Conventional 2D A* produces piecewise-linear paths that may require abrupt heading changes. Curvature-constrained Hybrid A* can reduce these maneuvers, but increases search complexity. The documents describe both SmacPlanner2D and SmacPlannerHybrid at different stages; confirm which planner generated each reported result.
+We used **A*** as a grid-search baseline because it is straightforward to implement and provides a useful reference for path length and search effort. **Theta*** was also considered: its line-of-sight checks can produce shorter, any-angle paths, but add computational work and do not enforce the UGV's turning radius. Whether Theta* is slower than A* in our test conditions must be established from comparable benchmarks, not assumed.
 
-**Local tracking:** RPP was selected for its relatively modest computational demands and speed regulation around curves ([\[22\]](./references.md#ref-22)). MPPI remains an evaluated alternative rather than a demonstrated field controller ([\[23\]](./references.md#ref-23)).
+For the four-wheel skid-steer UGV, the main concern is **path geometry**. A short path is not necessarily easy to follow: abrupt heading changes can require strong steering corrections and tire scrub. **Hybrid A*** was therefore considered for curvature-constrained planning, accepting the cost of searching position and heading rather than grid position alone. Its motion-model and reverse-path settings must agree with the controller configuration ([\[19\]](./references.md#ref-19), [\[20\]](./references.md#ref-20)).
+
+### 3.2 Local Controller Selection: RPP and MPPI {#nav-controller-tradeoffs}
+
+**Regulated Pure Pursuit (RPP)** was used for the **8 km/h software-in-the-loop baseline** because it tracks a planned path with relatively low computational demand and regulates speed around curves ([\[22\]](./references.md#ref-22)). Its lookahead setting affects tracking: a short lookahead can produce frequent steering corrections, while a longer lookahead generally smooths commands but can increase corner cutting. Lookahead must therefore be tuned together with speed, curvature limits and obstacle clearance; increasing it alone is not a complete high-speed solution.
+
+RPP is primarily a **geometric controller**. It does not explicitly predict the full dynamics of the proposed 65 kg skid-steer vehicle, including tire slip, motor torque limits and actuator response. **MPPI** is a possible alternative because it evaluates predicted control sequences and can penalize tracking error, obstacles and abrupt commands ([\[23\]](./references.md#ref-23)). However, standard MPPI configurations also depend on the chosen motion model: mass, momentum and tire friction are **not automatically represented**. MPPI also requires more computation and tuning. We have not established that it performs better on physical FOD Hunter hardware.
+
+::: details Planner comparison, supporting media and limitations
+
+| Approach | Benefit | Limitation / decision |
+| --- | --- | --- |
+| A* | Simple, useful grid-search baseline | Grid-constrained headings; path smoothing may be needed |
+| Theta* | Any-angle, potentially shorter paths | Line-of-sight checks; no built-in vehicle turning-radius constraint |
+| Hybrid A* | Incorporates heading and curvature constraints | Larger search space; motion-model and controller compatibility must be checked |
+| RPP | Lightweight tracking with curvature-based speed regulation | Lookahead trade-off; no full vehicle-dynamics prediction |
+| MPPI | Predictive trajectory sampling and configurable costs | Higher computation/tuning demand; dynamics depend on the model used |
 
 <VideoClip 
   src="./assets/videos/Global Path Planning Comparison.mov" 
@@ -128,17 +144,7 @@ The demonstration illustrates two reasons for separating local and global estima
   caption="Figure 3.2.2 (V8): Side-by-side route comparison between standard 2D discrete A* (8-connected grid) and SmacPlannerHybrid (SE(2) Reeds-Shepp lattice). Note: This is an analytical illustration comparing trajectory geometry and kinematic heading continuity; not an empirical physical runtime benchmark." 
 />
 
-| Decision                   | Alternative                               | Reason for selection / unresolved point                                              |
-| -------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------ |
-| Curvature-aware Hybrid A\* | 2D grid A\*                               | Avoids sharp discrete turns; higher computational cost                               |
-| RPP                        | MPPI                                      | Lower compute burden in Semester 1 environment; MPPI retained for further evaluation |
-| Dual-EKF                   | Pure wheel odometry / LiDAR scan matching | Maintains smooth local odometry while correcting long-term drift with GNSS           |
-
-**Kinematic trade-off:** Unsmoothed 2D A\* paths produce sharp, discontinuous turns ($\kappa \to \infty$) at grid boundaries, forcing in-place pivot maneuvers and tire scrub. SmacPlannerHybrid plans directly in the $SE(2)$ manifold $(x, y, \theta)$ with continuous Reeds-Shepp curves ($R_{\min} \ge 1.0\text{ m}$ [\[19\]](./references.md#ref-19), [\[20\]](./references.md#ref-20)), preserving forward linear momentum for stable Regulated Pure Pursuit tracking ([\[22\]](./references.md#ref-22)).
-
-_This is an analytical path-shape comparison, not a measurement of physical tire wear._
-
-The original source states a 78% reduction in cumulative angular rotation in simulation; the precise scenario and logs should be checked in [Simulation & Validation →](./simulation.md#sec-1-summary).
+The original source reports a 78% reduction in cumulative yaw rotation for a simulation comparison. This figure needs its test route and logs verified before it is treated as a measured improvement. It does not establish reduced physical tire wear. See [Simulation & Validation](./simulation.md#sec-1-summary).
 
 :::
 
@@ -243,7 +249,6 @@ We adjusted Nav2 planner, controller and costmap parameters to examine path trac
 For each adjustment, the sections below state the problem, parameter change, reason and reported result. Numerical outcomes require the original configuration and test logs for verification.
 
 #### 1. RPP Lookahead Distance & Adaptive Scaling
-
 - **Problem:** Fixed short lookahead distances ($L < 0.60\text{ m}$) caused frequent steering oscillations ($\dot{\omega}^2 > 38\text{ rad}^2/\text{s}^4$) and tire scrubbing on high-speed sprints ($2.22\text{ m/s}$), while excessively large lookahead ($L > 2.00\text{ m}$) caused corner cutting across taxiway bend boundaries.
 - **Parameter:** `lookahead_dist: 1.20 m`, `min_lookahead_dist: 0.50 m`, `max_lookahead_dist: 2.50 m`, `lookahead_time: 1.50 s`.
 - **Engineering Rationale:** Dynamic lookahead scales with linear velocity $v$:
@@ -252,7 +257,6 @@ For each adjustment, the sections below state the problem, parameter change, rea
 - **Observed Result:** Steering chatter metric $\dot{\omega}^2$ reduced from $38.4\text{ rad}^2/\text{s}^4$ to $< 4.2\text{ rad}^2/\text{s}^4$, reducing reported yaw oscillations; verify against recorded runs.
 
 #### 2. Cross-Track Error & Steering Oscillation Damping
-
 - **Problem:** Discontinuous goal pose switching along the discrete global path induced limit-cycle heading oscillations across corridor centerlines.
 - **Parameter:** `use_interpolation: true`, `transform_tolerance: 0.10 s`, `max_angular_accel: 2.5 rad/s²`.
 - **Engineering Rationale:** Dense cubic spline interpolation along the Reeds-Shepp trajectory smooths target lookahead poses, eliminating heading step changes.
@@ -265,7 +269,6 @@ For each adjustment, the sections below state the problem, parameter change, rea
 />
 
 #### 3. Curvature-Regulated Velocity Scaling
-
 - **Problem:** Attempting to traverse acute taxiway bends at nominal cruise velocity ($2.22\text{ m/s}$) induces excessive lateral acceleration ($a_y = v^2 \kappa > 4.5\text{ m/s}^2$), breaking tire friction limits ($\mu = 0.80$) and triggering severe lateral skid.
 - **Parameter:** `use_regulated_linear_velocity_scaling: true`, `regulated_linear_scaling_min_radius: 1.0 m`, `regulated_linear_scaling_min_speed: 0.50 m/s`.
 - **Engineering Rationale:** Command velocity regulates against path curvature $\kappa$:
@@ -273,8 +276,7 @@ For each adjustment, the sections below state the problem, parameter change, rea
   decelerating smoothly prior to entering sharp corners.
 - **Observed Result:** Automatic deceleration to $0.50 - 0.75\text{ m/s}$ along sharp bends ($R \le 1.5\text{ m}$), maintaining lateral acceleration $< 1.8\text{ m/s}^2$ and reducing the risk of wheel slip, followed by acceleration upon exiting into straight corridors.
 
-#### 4. Hybrid A\* Turning Radius & Heuristic LUT Tuning
-
+#### 4. Hybrid A* Turning Radius & Heuristic LUT Tuning
 - **Problem:** Unconstrained discrete grid search produces jagged point-turn waypoints requiring zero-radius pivot turns ($15.78\text{ Nm}$ scrub torque).
 - **Parameter:** `minimum_turning_radius: 1.0 m`, `analytic_expansion_ratio: 3.5`, `reverse_penalty: 2.0`.
 - **Engineering Rationale:** Restricting path curvature to continuous Reeds-Shepp segments ($R_{\min} \ge 1.0\text{ m}$) limits planned curvature; actual skid-steer slip remains outside the idealized model.
@@ -284,20 +286,20 @@ For each adjustment, the sections below state the problem, parameter change, rea
 
 The complete parameter configuration applied across the Semester 1 SIL prototype is summarized below. For multi-run empirical trajectory logs, spatial tracking sweeps, and full-scale validation plots, refer to [Simulation & Validation Results →](./simulation.md#sec-6-testing).
 
-| Component          | Parameter                                    | Default Value    | Tuned Value                           | Engineering Justification                                                              |
-| :----------------- | :------------------------------------------- | :--------------- | :------------------------------------ | :------------------------------------------------------------------------------------- |
-| **RPP Controller** | `desired_linear_vel`                         | $0.5\text{ m/s}$ | $2.22\text{ m/s}$ ($8.0\text{ km/h}$) | Target Semester 1 baseline cruise speed for runway corridor sweep.                     |
-| **RPP Controller** | `lookahead_dist`                             | $0.6\text{ m}$   | $1.20\text{ m}$                       | Eliminates underdamped steering chatter on high-speed sprints.                         |
-| **RPP Controller** | `min_lookahead_dist`                         | $0.3\text{ m}$   | $0.50\text{ m}$                       | Prevents vehicle stalling and singularity near terminal waypoints.                     |
-| **RPP Controller** | `max_lookahead_dist`                         | $0.9\text{ m}$   | $2.50\text{ m}$                       | Caps lookahead to prevent severe corner-cutting around taxiway edges.                  |
-| **RPP Controller** | `lookahead_time`                             | $1.0\text{ s}$   | $1.50\text{ s}$                       | Velocity-scaled lookahead gain providing stable lead time at $2.22\text{ m/s}$.        |
-| **RPP Controller** | `use_regulated_linear_velocity_scaling`      | `false`          | `true`                                | Enables automatic corner deceleration based on instantaneous path curvature.           |
-| **RPP Controller** | `regulated_linear_scaling_min_radius`        | $0.9\text{ m}$   | $1.00\text{ m}$                       | Matches vehicle minimum turning radius capability.                                     |
-| **RPP Controller** | `use_cost_regulated_linear_velocity_scaling` | `false`          | `true`                                | Decelerates vehicle proportionally when traversing high-cost obstacle proximity zones. |
-| **Smac Planner**   | `minimum_turning_radius`                     | $0.4\text{ m}$   | $1.00\text{ m}$                       | Suppresses zero-radius point turns and reduces lateral tire scrub torque.              |
-| **Smac Planner**   | `analytic_expansion_ratio`                   | $3.5$            | $3.5$                                 | Balances Reeds-Shepp analytic shot frequency with Voronoi collision checking.          |
-| **Costmap 2D**     | `inflation_radius`                           | $0.55\text{ m}$  | $0.85\text{ m}$                       | Enforces safe standoff margin exceeding UGV half-width ($0.33\text{ m}$) on taxiways.  |
-| **Costmap 2D**     | `cost_scaling_factor`                        | $10.0$           | $3.0$                                 | Provides smooth exponential cost decay for gradual proximity deceleration.             |
+| Component | Parameter | Default Value | Tuned Value | Engineering Justification |
+| :--- | :--- | :--- | :--- | :--- |
+| **RPP Controller** | `desired_linear_vel` | $0.5\text{ m/s}$ | $2.22\text{ m/s}$ ($8.0\text{ km/h}$) | Target Semester 1 baseline cruise speed for runway corridor sweep. |
+| **RPP Controller** | `lookahead_dist` | $0.6\text{ m}$ | $1.20\text{ m}$ | Eliminates underdamped steering chatter on high-speed sprints. |
+| **RPP Controller** | `min_lookahead_dist` | $0.3\text{ m}$ | $0.50\text{ m}$ | Prevents vehicle stalling and singularity near terminal waypoints. |
+| **RPP Controller** | `max_lookahead_dist` | $0.9\text{ m}$ | $2.50\text{ m}$ | Caps lookahead to prevent severe corner-cutting around taxiway edges. |
+| **RPP Controller** | `lookahead_time` | $1.0\text{ s}$ | $1.50\text{ s}$ | Velocity-scaled lookahead gain providing stable lead time at $2.22\text{ m/s}$. |
+| **RPP Controller** | `use_regulated_linear_velocity_scaling` | `false` | `true` | Enables automatic corner deceleration based on instantaneous path curvature. |
+| **RPP Controller** | `regulated_linear_scaling_min_radius` | $0.9\text{ m}$ | $1.00\text{ m}$ | Matches vehicle minimum turning radius capability. |
+| **RPP Controller** | `use_cost_regulated_linear_velocity_scaling` | `false` | `true` | Decelerates vehicle proportionally when traversing high-cost obstacle proximity zones. |
+| **Smac Planner** | `minimum_turning_radius` | $0.4\text{ m}$ | $1.00\text{ m}$ | Suppresses zero-radius point turns and reduces lateral tire scrub torque. |
+| **Smac Planner** | `analytic_expansion_ratio` | $3.5$ | $3.5$ | Balances Reeds-Shepp analytic shot frequency with Voronoi collision checking. |
+| **Costmap 2D** | `inflation_radius` | $0.55\text{ m}$ | $0.85\text{ m}$ | Enforces safe standoff margin exceeding UGV half-width ($0.33\text{ m}$) on taxiways. |
+| **Costmap 2D** | `cost_scaling_factor` | $10.0$ | $3.0$ | Provides smooth exponential cost decay for gradual proximity deceleration. |
 
 :::
 
@@ -326,13 +328,15 @@ The browser pathfinding visualizer and MATLAB educational video illustrate princ
 
 ## 6. Engineering Discussion {#sec-7-evaluation}
 
-**Planner feasibility versus computation:** Hybrid A* can produce paths that better respect steering constraints than raw grid A*, but searches a larger state space. **Planner–controller compatibility:** Reverse-capable Reeds–Shepp paths require matching tracking behavior or a forward-only planner setting. **Localization:** Dual-EKF frame separation helps prevent GNSS correction jumps from destabilizing local control. **Sim-to-real uncertainty:** Tire slip, pavement friction, GNSS quality and actuator latency remain to be measured on the actual FOD Hunter chassis.
+**Limits at higher speeds:** The 8 km/h SIL controller settings cannot be assumed suitable for the 15 km/h physical design target. At a fixed turning radius, lateral acceleration increases with the square of speed, $a_y=v^2/R$. Increasing speed from 8 to 15 km/h raises the required lateral acceleration by about **3.5 times** for the same radius. This is a kinematic estimate, not a measured tire-force result. The physical UGV will need progressive speed testing, lookahead and curvature tuning, and checks of traction, braking and actuator limits. MPPI can be compared with RPP if the available computing hardware and model fidelity justify it.
+
+**Other limitations:** Hybrid A* searches a larger state space than grid A*, and reverse-capable paths must match the tracking controller. Dual-EKF separates smooth local odometry from global corrections, but physical GNSS quality and wheel slip remain unverified. The planner and controller should be evaluated as a pair rather than selected independently.
 
 Path planning, localization and skid-steer control need to be tested together. Detailed scrub-force and motor-current calculations are intentionally not repeated here; see [Motor Drivetrain Calculations →](./motor-drivetrain-calculation.md#sec-1-requirements) and [Steering Kinematics →](./steering-kinematics.md#sec-4-iterations).
 
 ## 7. Limitations & Semester 2 Plan {#sec-9-semester-2}
 
-The main limitations are the absence of physical airfield validation, unconfirmed navigation configuration differences between source documents, and unverified accuracy claims. Semester 2 should prioritize physical sensor bring-up, coordinate-frame calibration, planner/controller compatibility, progressive speed tuning, and logged field tests with explicit pass/fail criteria.
+The main limitations are the absence of physical airfield validation, unconfirmed planner and controller settings across source documents, and unverified high-speed tracking and localization accuracy. Semester 2 should prioritize physical sensor bring-up, coordinate-frame calibration, planner/controller compatibility, progressive speed tuning, and logged field tests with explicit pass/fail criteria.
 
 The detailed owner-specific work breakdown is maintained in [Hilbert's Semester 2 Plan →](./semester-2-plan.md#programming-semester-2).
 
