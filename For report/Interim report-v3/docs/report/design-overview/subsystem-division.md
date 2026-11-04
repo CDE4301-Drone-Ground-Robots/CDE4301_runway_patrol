@@ -226,7 +226,7 @@ Integrated a BMS for battery monitoring and protection, alongside dedicated fuse
 The power distribution architecture supports reliable power delivery, electrical isolation and protection against overcurrent and short-circuit faults.
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#components-bom">Components Selection, BOM &amp; Integration <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#power-distribution">Components Selection, BOM &amp; Integration <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>
@@ -236,11 +236,19 @@ The power distribution architecture supports reliable power delivery, electrical
 
 <div class="ov-contrib">
 
+#### Component Selection and BOM {#ov-component-BOM}
+
+<div class="ov-doc-links">
+  <a class="ovx-more" href="/report#components-bom">Power Budget &amp; Calculations <span aria-hidden="true">↗</span></a>
+</div>
+
+</div>
+
+<div class="ov-contrib">
+
 #### Microcontroller Hardware {#ov-microcontroller-hardware}
 
-Selected the STM32 NUCLEO-F446RE (ARM Cortex-M4F at 180 MHz) as the robot's real-time low-level controller for its dual hardware CAN buses, six UARTs and 5 V-tolerant I/O, leaving over 80% compute headroom under worst-case peripheral load.
-
-Integrated two ZLAC8015D motor drivers on a shared 500 kbps CAN bus (driving four 263 mm, 400 RPM hub motors), a standalone USB Host wireless GameSir gamepad, a 5 V current-sinking TB6600 stepper interface for the vacuum head, and hardware kill-switch/contactor interlocks.
+<p class="ov-placeholder">*To Be Filled*</p>
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#stm32-hardware">STM32 Microcontroller Hardware <span aria-hidden="true">↗</span></a>
@@ -252,9 +260,7 @@ Integrated two ZLAC8015D motor drivers on a shared 500 kbps CAN bus (driving fou
 
 #### Embedded Firmware {#ov-embedded-firmware}
 
-Developed and bench-verified a bare-metal STM32 firmware stack across five progressive stages: CAN bus physical diagnostics, DWT microsecond stepper timing, multi-node CiA 402 motor control, a 5-state fault-handling state machine, and full wireless gamepad teleoperation.
-
-Implemented a unified control API shared by manual gamepad teleop and ROS 2 autonomy, featuring 3-mode differential-drive steering with minimum turn radius clamping and proportional anti-saturation scaling, a 50 Hz velocity ramping loop, a 250 ms comms watchdog, and neutral-gated re-arming.
+<p class="ov-placeholder">*To Be Filled*</p>
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#stm32-firmware">Embedded Firmware &amp; Actuation Control <span aria-hidden="true">↗</span></a>
