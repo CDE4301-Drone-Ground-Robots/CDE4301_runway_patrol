@@ -230,7 +230,7 @@ Integrated a BMS for battery monitoring and protection, alongside dedicated fuse
 The power distribution architecture supports reliable power delivery, electrical isolation and protection against overcurrent and short-circuit faults.
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#components-bom">Components Selection, BOM &amp; Integration <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#power-distribution">Components Selection, BOM &amp; Integration <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>
@@ -240,13 +240,27 @@ The power distribution architecture supports reliable power delivery, electrical
 
 <div class="ov-contrib">
 
+#### Component Selection and BOM {#ov-component-BOM}
+
+<div class="ov-doc-links">
+  <a class="ovx-more" href="/report#components-bom">Power Budget &amp; Calculations <span aria-hidden="true">↗</span></a>
+</div>
+
+</div>
+
+<div class="ov-contrib">
+
 #### Microcontroller Hardware {#ov-microcontroller-hardware}
 
+<<<<<<< HEAD
 Selected and integrated the STM32 NUCLEO-F446RE as the real-time Embedded Control Unit (ECU), utilizing dual hardware bxCAN controllers, six UART/USART channels, and an ARM Cortex-M4F core to manage actuation, sensing, and safety loops with >80% CPU headroom.
 
 Designed a conflict-free 64-pin Morpho electrical map, implementing 5 V current-sinking open-drain topology for optocoupled stepper control without level-shifters, isolated 500 kbps CAN motor bus routing, and pre-allocated interfaces for RTK GNSS, IMU, ToF ranging, and BMS telemetry.
 
 Validated physical transceiver signal integrity and bus termination via automated DC loopback sweeps and hardware diagnostics prior to live drivetrain bring-up.
+=======
+<p class="ov-placeholder">*To Be Filled*</p>
+>>>>>>> 7c4535423b29d4fdd1711f194351d7f33562d8b1
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#stm32-hardware">STM32 Hardware <span aria-hidden="true">↗</span></a>
@@ -258,11 +272,15 @@ Validated physical transceiver signal integrity and bus termination via automate
 
 #### Embedded Firmware {#ov-embedded-firmware}
 
+<<<<<<< HEAD
 Developed production-grade embedded firmware in a 5-stage V&V pipeline, progressing from CAN physical layer diagnostics and DWT sub-microsecond pulse timing to dual-driver CiA 402 motion control and fault recovery.
 
 Implemented a deterministic 50 Hz control loop executing differential-drive kinematics (forward, coordinated arc, and spot turns) with dynamic wheel-speed scaling and asymmetric acceleration/deceleration S-curve ramping (35 / 15 RPM/s).
 
 Built a comprehensive multi-tier safety architecture featuring a 6-state CiA 402 FSM, 250 ms communication watchdog, USB gamepad disconnect auto-stop, zero-latency hardware emergency braking, and neutral-interlock rearming.
+=======
+<p class="ov-placeholder">*To Be Filled*</p>
+>>>>>>> 7c4535423b29d4fdd1711f194351d7f33562d8b1
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#stm32-firmware">STM32 Firmware <span aria-hidden="true">↗</span></a>
