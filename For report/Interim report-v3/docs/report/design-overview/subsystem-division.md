@@ -106,7 +106,11 @@ The simulation environment provides a repeatable testbed for evaluating navigati
 
 #### Computer Vision &amp; Sensor Fusion {#ov-computer-vision}
 
-<p class="ov-placeholder">*To Be Filled*</p>
+Modeled high-speed perception kinematics and optical projection geometry to establish a real-time edge processing ceiling that maintains throughput and leaves ample compute headroom for upstream ROS 2 navigation and vehicle control.
+
+Benchmarked real-time single-stage CNN backbones against transformer-based architectures on an HPC cluster; selected YOLO11-S for superior speed and fine localization while ruling out heavy transformers due to severe latency and memory-bandwidth penalties. 
+
+Diagnosed small-hardware detection failure modes using confusion matrix analysis, establishing that missed detections stem from deep convolutional downsampling feature loss rather than class confusion; introduced targeted mitigations combining sub-millimeter GSD optical compensation, functional remediation superclasses, and high-resolution inference.
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#cv-sensor-fusion">Sensor Fusion &amp; Depth Estimation <span aria-hidden="true">↗</span></a>
@@ -238,12 +242,14 @@ The power distribution architecture supports reliable power delivery, electrical
 
 #### Microcontroller Hardware {#ov-microcontroller-hardware}
 
-Selected the STM32 NUCLEO-F446RE (ARM Cortex-M4F at 180 MHz) as the robot's real-time low-level controller for its dual hardware CAN buses, six UARTs and 5 V-tolerant I/O, leaving over 80% compute headroom under worst-case peripheral load.
+Selected and integrated the STM32 NUCLEO-F446RE as the real-time Embedded Control Unit (ECU), utilizing dual hardware bxCAN controllers, six UART/USART channels, and an ARM Cortex-M4F core to manage actuation, sensing, and safety loops with >80% CPU headroom.
 
-Integrated two ZLAC8015D motor drivers on a shared 500 kbps CAN bus (driving four 263 mm, 400 RPM hub motors), a standalone USB Host wireless GameSir gamepad, a 5 V current-sinking TB6600 stepper interface for the vacuum head, and hardware kill-switch/contactor interlocks.
+Designed a conflict-free 64-pin Morpho electrical map, implementing 5 V current-sinking open-drain topology for optocoupled stepper control without level-shifters, isolated 500 kbps CAN motor bus routing, and pre-allocated interfaces for RTK GNSS, IMU, ToF ranging, and BMS telemetry.
+
+Validated physical transceiver signal integrity and bus termination via automated DC loopback sweeps and hardware diagnostics prior to live drivetrain bring-up.
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#stm32-hardware">STM32 Microcontroller Hardware <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#stm32-hardware">STM32 Hardware <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>
@@ -252,12 +258,14 @@ Integrated two ZLAC8015D motor drivers on a shared 500 kbps CAN bus (driving fou
 
 #### Embedded Firmware {#ov-embedded-firmware}
 
-Developed and bench-verified a bare-metal STM32 firmware stack across five progressive stages: CAN bus physical diagnostics, DWT microsecond stepper timing, multi-node CiA 402 motor control, a 5-state fault-handling state machine, and full wireless gamepad teleoperation.
+Developed production-grade embedded firmware in a 5-stage V&V pipeline, progressing from CAN physical layer diagnostics and DWT sub-microsecond pulse timing to dual-driver CiA 402 motion control and fault recovery.
 
-Implemented a unified control API shared by manual gamepad teleop and ROS 2 autonomy, featuring 3-mode differential-drive steering with minimum turn radius clamping and proportional anti-saturation scaling, a 50 Hz velocity ramping loop, a 250 ms comms watchdog, and neutral-gated re-arming.
+Implemented a deterministic 50 Hz control loop executing differential-drive kinematics (forward, coordinated arc, and spot turns) with dynamic wheel-speed scaling and asymmetric acceleration/deceleration S-curve ramping (35 / 15 RPM/s).
+
+Built a comprehensive multi-tier safety architecture featuring a 6-state CiA 402 FSM, 250 ms communication watchdog, USB gamepad disconnect auto-stop, zero-latency hardware emergency braking, and neutral-interlock rearming.
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#stm32-firmware">Embedded Firmware &amp; Actuation Control <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#stm32-firmware">STM32 Firmware <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>
