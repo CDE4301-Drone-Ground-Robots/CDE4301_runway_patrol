@@ -13,21 +13,32 @@ outline: [2,3]
 
 ## Why a Dedicated ECU {#why-dedicated-ecu}
 
-The UGV splits computing into two tiers: a high-level computer for computing and a microcontroller for autonomy.
+The STM32 is the robot’s real-time “spinal cord”. It drives the wheels, runs the vacuum-head stepper, and handles safety, so the Jetson can focus on vision and autonomy. If the Jetson or the controller link drops, the STM32 stops the robot on its own.
 
 <Figure src="./assets/diagrams/stm32-hardware-two-tier-computing-split-architecture-di.svg" alt="Two-Tier Computing Split Architecture Diagram" />
 
 ::: tip Failsafe isolation
-If the Jetson's OS crashes, reboots or drops frames, the STM32 detects the communication timeout and independently triggers a CiA 402 Quick-Stop on all four wheels.
+If the Jetson's OS crashes, reboots, or drops frames — or if the wireless controller link drops — the STM32 detects the communication timeout and independently stops all four wheels on its own.
 :::
 
 ::: info Deterministic timing
-No OS preemption. Control loops and step pulses run with microsecond-level, predictable timing, and hardware peripherals (CAN, timers, UART) handle I/O without loading the CPU.
+No OS preemption. Control loops (50 Hz velocity ramping) and step pulses run with microsecond-level, predictable timing, and hardware peripherals (CAN, timers, UART, USB Host) handle I/O without loading the CPU.
 :::
 
 ::: info Proven industry pattern
 The same high-level / low-level split is used by Pixhawk flight controllers (STM32 + companion computer) and ROBOTIS TurtleBot3's OpenCR board (STM32).
 :::
+
+### Hardware Architecture at a Glance {#hardware-at-a-glance}
+
+| Subsystem | Hardware Implementation | Key Specifications & Role |
+| --- | --- | --- |
+| **Microcontroller** | **STM32 NUCLEO-F446RE** (ARM Cortex-M4 with FPU) | Chosen for its **2 hardware CAN buses** and **6 UARTs**, 180 MHz clock, and 5 V-tolerant I/O. |
+| **Drive** | **2× ZLAC8015D** dual-channel motor drivers | Connected on a shared **CAN bus (500 kbps)**, powering **4 hub motors** (**263 mm wheels**, **400 RPM max**). |
+| **Operator Control** | **Wireless gamepad (GameSir)** | Plugged straight into the STM32 over **USB host** (`PA11`/`PA12`); **no laptop needed**. |
+| **Vacuum Head** | **Stepper motor + TB6600 driver** (110 mm linear actuator) | Uses **5 V current-sinking** (`PC2` PUL−, `PC3` DIR− open-drain) so the **3.3 V STM32** can switch it reliably without a level shifter. |
+| **Power & Safety** | **48 V LiFePO4 battery** + wireless kill switch + contactor | A **wireless kill switch** triggers the motor drivers’ built-in emergency stop, and a **safety contactor** cuts motor power while keeping the computers alive. |
+| **Ready for Semester 2** | Pre-allocated expansion interfaces | Pins already allocated for the **battery BMS** (`USART1`), **UM980 RTK GPS** (`USART3`), **9-DOF IMU** (`I2C1`), **telemetry radio** (`UART4`), **ToF sensor** (`UART5`), **vacuum relay** (`PC0`), and **lights** (`PB4`/`PB5`). |
 
 <!-- #endregion microcontrollers -->
 
@@ -39,10 +50,10 @@ The same high-level / low-level split is used by Pixhawk flight controllers (STM
 
 | Requirement | Target Specification | Peripheral Allocation | Engineering Justification |
 | --- | --- | --- | --- |
-| **Hardware Serial Ports** | **≥ 4 UART / USART** | BMS (USART1), RTK GNSS (USART3), Microhard Radio (UART4), ToF (UART5) | Enables concurrent, non-blocking DMA serial streaming without software serial emulation or bus multiplexing. |
-| **CAN Bus Controller** | **≥ 1 bxCAN (500 kbps)** | CAN1 (PB8/PB9) → Dual ZLAC8015D dual-channel hub motor drivers | Native differential industrial bus with hardware message ID filtering for real-time CiA 402 motion commands. |
-| **USB Host Interface** | **USB 2.0 OTG FS** | PA11 (DM), PA12 (DP) → Direct USB gamepad joystick input | Permits direct manual emergency jog control and diagnostics without relying on host PC or ROS 2 network stack. |
-| **Compute Clock Budget** | **≥ 35 MHz (FPU core)** | STM32F446RE Cortex-M4F operating at 180 MHz | Comfortably absorbs peak peripheral interrupt loads (17.16 MHz raw + 2× margin = 34.32 MHz) with &gt;80% headroom. |
+| **Hardware Serial Ports** | **≥ 4 UART / USART** (6 available) | BMS (`USART1`), ST-Link / Jetson (`USART2`), UM980 RTK GPS (`USART3`), Microhard Telemetry Radio (`UART4`), ToF Sensor (`UART5`) | Enables concurrent, non-blocking DMA serial streaming without software serial emulation or bus multiplexing. |
+| **CAN Bus Controller** | **≥ 1 bxCAN @ 500 kbps** (2 available) | `CAN1` (`PB8`/`PB9`) → Two ZLAC8015D motor drivers powering 4 hub motors (263 mm wheels, 400 RPM max) | Native differential industrial bus with hardware message ID filtering for real-time CiA 402 velocity commands. |
+| **USB Host Interface** | **USB 2.0 OTG FS Host** | `PA11` (`DM`), `PA12` (`DP`) → Wireless GameSir gamepad plugged directly into the STM32 | Permits direct standalone teleoperation and field diagnostics with no laptop or ROS 2 network stack needed. |
+| **Compute Clock Budget** | **≥ 35 MHz (FPU core)** | STM32F446RE ARM Cortex-M4 with FPU operating at 180 MHz | Comfortably absorbs peak peripheral interrupt loads (17.16 MHz raw + 2× margin = 34.32 MHz) with &gt;80% headroom. |
 
 <Badge type="info" text="STEP B" />
 
@@ -100,12 +111,16 @@ Peak throughput under concurrent CAN saturation, 4× UART DMA streaming, 10 kHz 
 
 **Microcontroller Selection Rationale**
 
-Teensy 4.1 out-specs the F446RE on paper, but the STM32 was chosen for its toolchain and industry adoption: STM32CubeMX pin/clock configuration, HAL libraries, an on-board ST-Link debugger, and direct relevance to industrial embedded work. It meets every requirement with &gt;80% headroom.
+The **STM32 NUCLEO-F446RE** (ARM Cortex-M4 with FPU) was chosen for its **2 hardware CAN buses** and **6 UARTs**, alongside 5 V-tolerant I/O pins that support 5 V current-sinking for the TB6600 stepper driver. While the Teensy 4.1 out-specs the F446RE on raw clock speed, the STM32 provides STM32CubeMX pin/clock configuration, HAL libraries, an on-board ST-Link debugger, and >80% compute headroom.
 :::
 
 ## Interface & Wiring {#interface-wiring}
 
-Complete hardware mapping for all 11 external devices connected to the STM32 NUCLEO-F446RE, detailing communication protocol, pin assignments, and electrical characteristics.
+Complete hardware mapping for all 11 external devices connected to the STM32 NUCLEO-F446RE, covering both the active Semester 1 drive/actuation bench and the pre-allocated Semester 2 sensor and power expansion pins:
+
+- **Drive & Vacuum-Head Actuation:** Two **ZLAC8015D** motor drivers share `CAN1` (`PB8`/`PB9` at 500 kbps) to power the four 263 mm, 400 RPM max hub motors, while the vacuum-head stepper motor is driven through a **TB6600** driver using **5 V current-sinking** (`PC2` PUL−, `PC3` DIR−) so the 3.3 V STM32 can switch it reliably.
+- **Power & Hardware Safety Interlocks:** Powered by the **48 V LiFePO4 battery**. A **wireless kill switch** triggers the motor drivers’ built-in emergency stop (`PB1` monitor), and a **safety contactor** cuts high-voltage motor power while keeping the STM32 and Jetson computers alive.
+- **Ready for Semester 2:** Pins are already allocated and routed for the **battery BMS** (`USART1`), **UM980 RTK GPS** (`USART3`), **9-DOF IMU** (`I2C1`), **telemetry radio** (`UART4`), **ToF sensor** (`UART5`), **vacuum relay** (`PC0`), and **lights** (`PB4`, `PB5`).
 
 ![NUCLEO-F446RE wiring diagram grouped by Sensor, Power, Motor, Visual and User Input subsystems](./assets/images/comm-diagram.jpeg)
 
@@ -134,7 +149,7 @@ KiCad carrier board schematic placeholder (lockable JST-XH/PA connectors, isolat
 
 **STM32 Firmware Architecture & Control**
 
-Explore the progressive bottom-up verification (DC loopback, DWT microsecond timing, CiA 402 multi-node CAN, 5-state machine, and wireless gamepad teleoperation).
+Explore the unified gamepad/ROS 2 firmware architecture, 3-mode differential-drive steering, 50 Hz velocity ramping loop, multi-layer safety watchdogs, and the 5 tested development stages.
 
 [Open STM32 Firmware →](./stm32-firmware.md)
 :::

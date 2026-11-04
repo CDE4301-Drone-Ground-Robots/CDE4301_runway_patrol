@@ -9,45 +9,45 @@ outline: [2,3]
 
 <!-- #region report -->
 
-## Built Bottom-Up, Verified at Every Layer {#section-1-method}
+## Built Step by Step, Verified at Every Layer {#section-1-method}
 
-Every layer of the firmware was verified on the bench before the next was built on top of it — from proving the physical wire carries a signal, to driving the full robot with a wireless gamepad.
+Every layer of the firmware was developed and tested on the bench in **5 progressive stages** before the next was built on top of it — from proving the physical CAN wire carries a signal, to driving the full robot with a wireless GameSir gamepad.
 
 Step 1
 
 Prove the Wire
 
-CAN bring-up & physical diagnostics
+CAN bus diagnostics & physical loopback
 
 Step 2
 
 Precise Timing
 
-Stepper actuator microsecond control
+Stepper timing & 5 V current-sinking
 
 Step 3
 
 Move Four Wheels
 
-Multi-node CAN, CiA 402 profile velocity
+Dual motor drivers on shared CAN bus
 
 Step 4
 
 Make It Safe
 
-5-state machine, GUI & fault recovery
+Fault-handling 5-state machine & GUI
 
 Step 5
 
 Drive It
 
-Gamepad teleop, kinematics & ramping
+Full teleoperation, 3-mode steering & 50 Hz ramping
 
 Click any step above to jump directly to its verification phase below.
 
 ## How the Final Firmware Fits Together {#section-2-architecture}
 
-The firmware executes a bare-metal, deterministic main loop on the Cortex-M4F core, decoupling high-level operator kinematics from physical closed-loop Field-Oriented Control (FOC) running inside the motor drivers.
+The firmware executes a bare-metal, deterministic super-loop on the Cortex-M4F core, decoupling high-level kinematics and safety arbitration on the STM32 from closed-loop Field-Oriented Control (FOC) running inside the ZLAC8015D motor drivers.
 
 <Card>
 
@@ -56,12 +56,25 @@ The firmware executes a bare-metal, deterministic main loop on the Cortex-M4F co
 </Card>
 
 ::: tip
-**Architecture Overview:** Bare-metal, deterministic main loop on the STM32F446RE. The ZLAC8015D drivers run the closed-loop FOC current/velocity control; the STM32 commands velocity setpoints and supervises driver state.
+**Architecture Overview — One Controller, Two Jobs:** Every gamepad input maps directly to a high-level firmware API function (`Robot_Set_CmdVel`, `Robot_Emergency_Stop`, `Robot_Controlled_Stop`, `Robot_Actuator_Toggle`). In autonomous mode, **ROS 2 calls the exact same functions** (`CONTROL_SOURCE_ROS`), so every manual teleoperation test on the bench or runway also tests the autonomy execution path.
 :::
+
+### Core Software Capabilities {#software-capabilities}
+
+- **One Controller, Two Jobs (Unified Teleop & Autonomy API):** Gamepad triggers, stick deflections, and buttons invoke the same internal motion and actuator API (`Robot_Set_CmdVel()`, `Robot_Actuator_Lower()`, `Robot_Actuator_Retract()`, `Robot_Emergency_Stop()`) that the Jetson calls over ROS 2. Switching between manual and autonomous control (`Robot_Set_Control_Source()`) requires zero changes to the underlying kinematics, ramping, or safety state machine.
+- **Differential-Drive Steering (`Map_Controller_Inputs` & `Drive_UGV_With_Mode`):**
+  - **Three explicit modes:** **Straight** ($\omega_z = 0$ locked for crisp tracking), **Arc Turn** (simultaneous throttle + steering), and **Spot Turn** (zero-radius in-place pivot when stationary).
+  - **Minimum turn radius clamp:** During arc turns, yaw rate is bounded by $|\omega_z| \le |v_x| / R_{\min}$ so the inner wheels never reverse mid-arc or scrub the tyres.
+  - **Proportional anti-saturation scaling:** When a commanded turn pushes either wheel past `g_motor_max_rpm`, both left and right wheel speeds are scaled down together so the turning curvature is preserved at the motor limit.
+- **Smooth Motion (50 Hz Control Loop):** A deterministic **50 Hz (`20 ms`)** control loop (`Update_Ramp_Channel`) ramps wheel speeds smoothly up and down and transitions cleanly through zero on direction reversals, preventing jerking, gear shock, or chassis tipping.
+- **Safety First:**
+  - **250 ms Watchdog & Instant USB Disconnect Stop:** Automatically stops the robot within **250 ms** (`CONTROLLER_TIMEOUT_MS`) if wireless controller packets stop arriving, and stops **immediately** if the USB host link drops (`HOST_USER_DISCONNECTION`).
+  - **Latched Emergency Stop:** Pressing `[B]` (or `BACK`) triggers a CiA 402 Quick-Stop (`0x0002`) and latches `ROBOT_STATE_ESTOP_LATCHED` until explicitly cleared.
+  - **Neutral-Gated Re-Arming:** The robot only re-arms (`ROBOT_STATE_READY`) when all triggers and sticks are back at neutral inside their deadzones, preventing sudden lurches on recovery.
 
 <Badge type="info" text="PHASE 1" />
 
-## Prove the Wire {#phase-1}
+## Stage 1: CAN Bus Diagnostics {#phase-1}
 
 `can_debugging_check.c`
 
@@ -101,7 +114,7 @@ Phase 1 Video Demo `/assets/images/Gabriel/phase1-can.mp4` Place recording here 
 
 **Code (C)**
 
-```
+```c
 uint32_t esr = hcan1.Instance->ESR;
 uint8_t tec = (esr & CAN_ESR_TEC) >> CAN_ESR_TEC_Pos;
 uint8_t lec = (esr & CAN_ESR_LEC) >> CAN_ESR_LEC_Pos;
@@ -126,33 +139,33 @@ if (esr & CAN_ESR_BOFF) {
 
 <Badge type="info" text="PHASE 2" />
 
-## Precise Timing {#phase-2}
+## Stage 2: Stepper Timing {#phase-2}
 
-`steppermotor_w_user_input.c`
+`steppermotor_w_user_input.c` / `stepper.c`
 
-**Problem Statement:** “Drive a TB6600 microstep driver with clean, sub-millisecond pulses from 3.3 V logic.”
+**Problem Statement:** “Drive the vacuum-head stepper motor through a TB6600 driver with clean microsecond pulses from 3.3 V STM32 logic.”
 
-## 1 5 V Common-Anode Sinking
+## 1 5 V Current-Sinking (Common-Anode)
 
-PUL+/DIR+ tied to 5 V; the STM32 sinks PUL−/DIR− (PC2/PC3, open-drain), giving the driver's optocouplers full drive current without a level shifter.
+PUL+/DIR+ are tied to the 5 V rail; the STM32 sinks PUL−/DIR− (`PC2`/`PC3` in open-drain mode), giving the TB6600 optocouplers full 5 V drive current so the 3.3 V STM32 switches them reliably without an external level shifter.
 
 ::: details Details
 
-Sourcing from 3.3 V leaves only ~1.7 V across the opto's internal resistor after the LED drop — not enough current. Sinking puts the full 5 V across it while the GPIO just switches to ground.
+Sourcing from 3.3 V leaves only ~1.7 V across the opto's internal resistor after the LED drop — not enough current. Sinking puts the full 5 V across it while the 5 V-tolerant GPIO simply switches to ground.
 
 :::
 
 ## 2 Microsecond Timing via DWT
 
-The Cortex-M4 cycle counter replaces HAL\_Delay(), whose 1 ms tick is too coarse for 200–800 µs step pulses.
+The Cortex-M4 cycle counter (`DWT->CYCCNT`) replaces `HAL_Delay()`, whose 1 ms tick is too coarse for sub-millisecond step pulses.
 
 ## 3 Direction Setup Guard
 
-A 20 µs guard after every DIR change (TB6600 needs ≥5 µs) prevents lost steps on reversal.
+A 20 µs guard after every DIR change (TB6600 requires ≥5 µs) prevents lost steps on reversal across the 110 mm vacuum-head actuator stroke.
 
-## 4 Interactive Tuning
+## 4 Interactive Tuning & Non-Blocking Execution
 
-UART console: W/S jog ±400 steps, +/− adjusts step delay (200–5000 µs) live to find resonance and top speed.
+Tuned live over UART (`W`/`S` jog, `+`/`−` pulse delay adjustment) and wrapped into a non-blocking state machine (`Stepper_Update()`) so raising or lowering the vacuum head never stalls CAN motor updates.
 
 <MissingAsset name="phase2-stepper.mp4" alt="video" />
 
@@ -160,7 +173,7 @@ Phase 2 Video Demo `/assets/images/Gabriel/phase2-stepper.mp4` Place recording h
 
 **Code (C)**
 
-```
+```c
 /* Enable Cortex-M4 DWT cycle counter */
 CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
 DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
@@ -182,23 +195,23 @@ void Stepper_DelayUs(uint32_t us) {
 
 <Badge type="tip" text="PHASE 3" />
 
-## Move Four Wheels {#phase-3}
+## Stage 3: Dual Motor Drivers {#phase-3}
 
-`2_motor_w_user_input.c`
+`2_motor_w_user_input.c` / `zlac8015d.c`
 
-**Problem Statement:** “Run two ZLAC8015D drivers (four hub motors) on one shared 2-wire CAN bus, smoothly and safely.”
+**Problem Statement:** “Run two ZLAC8015D drivers (four 263 mm, 400 RPM max hub motors) on one shared 500 kbps CAN bus, smoothly and safely.”
 
 ## 1 Multi-Node Addressing
 
-CANopen SDO IDs route each command to the right driver: Node 1 listens on 0x601 (replies 0x581), Node 2 on 0x602 (replies 0x582). No extra pins needed.
+CANopen SDO IDs route each command to the right driver on the shared 500 kbps bus: Node 1 (front axle) listens on `0x601` (replies `0x581`), Node 2 (rear axle) on `0x602` (replies `0x582`). No extra pins needed.
 
 ## 2 CiA 402 Power-Up Handshake
 
-Each driver is set to Profile Velocity Mode with 100 ms accel/decel ramps, then armed via Shutdown (0x06) → Switch On (0x07) → Enable Operation (0x0F), with targets initialised at 0 RPM.
+Each driver is set to Profile Velocity Mode with hardware accel/decel ramps, then armed via Shutdown (`0x06`) → Switch On (`0x07`) → Enable Operation (`0x0F`), with targets initialised at 0 RPM.
 
 ## 3 Synchronised Drive & Two-Tier Braking
 
-All four wheels commanded together. \[Q\] = gentle ramped stop; \[E\] = CiA 402 Quick-Stop (Controlword 0x0002) that locks the wheels immediately.
+All four wheels are commanded together. Controlled stop ramps velocity to 0 RPM while keeping coils enabled; Emergency Stop sends CiA 402 Quick-Stop (`Controlword 0x0002`) to lock all four wheels immediately.
 
 <MissingAsset name="phase3-four-wheels.mp4" alt="video" />
 
@@ -206,7 +219,7 @@ Phase 3 Video Demo `/assets/images/Gabriel/phase3-four-wheels.mp4` Place recordi
 
 **Code (C)**
 
-```
+```c
 /* CiA 402 power-enable handshake, per driver node */
 ZLAC8015D_Write16_Node(nodeId, ZLAC_OBJ_CONTROLWORD, ZLAC_SUB_ALL, 0x0006); /* Shutdown         */
 ZLAC8015D_Write16_Node(nodeId, ZLAC_OBJ_CONTROLWORD, ZLAC_SUB_ALL, 0x0007); /* Switch On        */
@@ -223,11 +236,11 @@ ZLAC8015D_Write16_Node(nodeId, ZLAC_OBJ_CONTROLWORD, ZLAC_SUB_ALL, 0x000F); /* E
 
 <Badge type="warning" text="PHASE 4" />
 
-## Make It Safe to Command {#phase-4}
+## Stage 4: Fault-Handling State Machine {#phase-4}
 
 `state_machine_check.c + GUI.py`
 
-**Problem Statement:** “Stop guessing what the driver is doing — track its real state and reject unsafe commands before they reach the bus.”
+**Problem Statement:** “Stop guessing what the driver is doing — track its real state, latch faults, and reject unsafe commands before they reach the CAN bus.”
 
 ![Five-state motor state machine: Disengage, Lock, Movement, Jerk, Error](./assets/images/fsm-diagram.png)
 
@@ -239,15 +252,15 @@ Python desktop GUI with speed slider streaming commands to the STM32
 
 ## 1 Five Explicit States
 
-DISENGAGE (freewheel), LOCK (holding 0 RPM), MOVEMENT (−350 to +350 RPM), JERK (Quick-Stop), ERR (driver fault).
+`DISENGAGE` (freewheel), `LOCK` (holding 0 RPM), `MOVEMENT` (active velocity control), `JERK` (latched Quick-Stop), `ERR` (driver hardware fault).
 
 ## 2 Enforced Transitions + GUI
 
-You can't jump from DISENGAGE straight to MOVEMENT; the motor must be locked at 0 RPM first. Invalid inputs are rejected before any CAN frame is sent. A Python GUI streams target speeds from a slider.
+You cannot jump from `DISENGAGE` straight to `MOVEMENT`; the motor must be locked at 0 RPM first. Invalid inputs are rejected before any CAN frame is sent. A Python desktop GUI streams target speeds from a slider for bench validation.
 
 ## 3 Statusword Polling & Fault Recovery
 
-The driver's Statusword (0x6041) is polled every 150 ms; a set fault bit (bit 3) forces STATE\_ERR and zero speed automatically. \[C\] clears the fault with the CiA 402 rising edge on Controlword bit 7 — no reboot needed.
+The driver's Statusword (`0x6041`) is monitored over CAN; a set fault bit (bit 3) forces `STATE_ERR` and zeros speed automatically. Faults latch until cleared with the CiA 402 Fault Reset rising edge (`0x0080` on Controlword bit 7) — no reboot needed.
 
 <MissingAsset name="phase4-fsm-gui.mp4" alt="video" />
 
@@ -255,7 +268,7 @@ Phase 4 Video Demo `/assets/images/Gabriel/phase4-fsm-gui.mp4` Place recording h
 
 **Code (C)**
 
-```
+```c
 case STATE_LOCK:
   if (ch == 'w' || ch == 'W') {
     currentSpeedRpm = SPEED_STEP_RPM;
@@ -278,69 +291,92 @@ case STATE_LOCK:
 
 <Badge type="info" text="PHASE 5" />
 
-## Drive It {#phase-5}
+## Stage 5: Full Teleoperation & Autonomy-Ready Control {#phase-5}
 
 `controller.c`
 
-**Problem Statement:** “Bring everything together: a wireless gamepad plugged straight into the STM32 drives the full robot — no laptop in the loop.”
+**Problem Statement:** “Bring everything together: a wireless GameSir gamepad plugged straight into the STM32 drives the full robot and vacuum-head actuator with no laptop needed — while exposing the exact same functions for ROS 2 autonomy.”
 
-## 1 Boot-Time Node Probe
+## 1 One Controller, Two Jobs (Unified API & USB Host Gamepad)
 
-Each driver is pinged at startup; if one doesn't reply within 60 ms, the console prints exactly what to check (DIP switch, power, CAN wiring).
+The GameSir wireless dongle plugs directly into the STM32's USB OTG FS Host port (`PA11`/`PA12`). Every gamepad action calls the same firmware API functions that ROS 2 invokes in autonomous mode (`Robot_Set_CmdVel()`, `Robot_Actuator_Toggle()`, `Robot_Emergency_Stop()`, `Robot_Clear_Faults_And_Enable()`). Pulling both `LT` and `RT` triggers simultaneously cancels throttle to `0.0 m/s`, and button `[X]` raises or lowers the 110 mm vacuum-head stepper actuator non-blockingly.
 
-## 2 Mirrored-Motor Correction
+## 2 Three-Mode Differential-Drive Steering & Anti-Saturation
 
-The right-side hub motors are mounted facing the opposite way, so their direction is inverted in software. Higher layers think only in “vehicle forward”.
+Using the robot's physical geometry (**575.0 mm track width**, **488.75 mm wheelbase**, **263 mm wheel diameter** / 131.5 mm radius), `Map_Controller_Inputs()` and `Drive_UGV_With_Mode()` implement three steering modes:
 
-## 3 USB Host Gamepad
+1. **Straight (`DRIVE_MODE_STRAIGHT`):** When throttle is active and the steering stick is within the 8% deadband, yaw rate is locked to $\omega_z = 0\text{ rad/s}$ with identical left/right RPMs.
+2. **Arc Turn (`DRIVE_MODE_ARC_TURN`):** When moving and steering simultaneously, the firmware enforces a **minimum turn radius clamp** ($|\omega_z| \le |v_x| / R_{\min}$) so the inner wheels never reverse mid-arc.
+3. **Spot Turn (`DRIVE_MODE_SPOT_TURN`):** When stationary ($v_x = 0$) and the stick is deflected, the robot pivots in place ($RPM_R = -RPM_L$) with cubic exponential stick shaping for fine heading adjustments.
 
-XInput packets parsed directly on the STM32. RT = forward, LT = reverse; pulling both at once forces 0 RPM.
+If a combined arc command pushes the outer wheels past the speed limit (`g_motor_max_rpm`), **kinematic anti-saturation** scales both left and right wheel speeds proportionally so the exact turning curve is preserved. Left-channel polarity is inverted in `Motor_Set_Velocity_All(-left_rpm, right_rpm)` to account for the mirrored hub motor mounting.
 
-## 4 Differential Steering & Ramping
+## 3 50 Hz Smooth Velocity Ramping
 
-Track width 381.2 mm, wheel radius 100 mm, turn rate 0.80 rad/s → ≈14.6 RPM left/right difference. A 25 ms ramp loop accelerates at 35 RPM/s (0→30 RPM in ~0.85 s) and coasts down at 15 RPM/s. Gamepad \[B\] triggers a software CiA 402 Quick-Stop on all four wheels; \[A\] re-arms.
+A deterministic **50 Hz (`20 ms`)** control loop runs `Update_Ramp_Channel()` on both wheel channels, ramping speed up and down (e.g., `35 RPM/s` accel, `20–28 RPM/s` decel) and decelerating cleanly through `0 RPM` before reversing direction — eliminating jerking, wheel slip, and chassis tipping.
+
+## 4 Watchdogs, Latched E-Stop & Neutral-Gated Re-Arming
+
+- **250 ms Comms Watchdog & Instant USB Disconnect Stop:** If no valid gamepad packet arrives within **250 ms** (`CONTROLLER_TIMEOUT_MS`), the STM32 enters `ROBOT_STATE_WATCHDOG_STOP` and brings the motors to a controlled stop. Unplugging the USB receiver triggers `HOST_USER_DISCONNECTION`, stopping the robot **immediately**.
+- **Latched Emergency Stop:** Pressing `[B]` (or `BACK`) calls `Robot_Emergency_Stop()`, firing a CiA 402 Quick-Stop (`0x0002`) on both ZLAC8015D nodes, halting the stepper, and latching `ROBOT_STATE_ESTOP_LATCHED`.
+- **Neutral-Gated Re-Arming:** Pressing `[A]` (or `START`) to clear faults and re-arm is only accepted when `controls_neutral` is true (both triggers released and stick centered), ensuring the robot never lurches upon re-arming.
 
 <MissingAsset name="phase5-drive.mp4" alt="video" />
 
 Phase 5 Full Teleoperation Demo `/assets/images/Gabriel/phase5-drive.mp4` Featured live verification capture (largest video in firmware scope)
 
-**Code (C)**
+**Code (C) — Three-Mode Steering & Proportional Anti-Saturation (`controller.c`)**
 
-```
-static int32_t Calculate_Base_RPM(uint8_t lt_pct, uint8_t rt_pct) {
-  /* Safety: both triggers pulled -> force stop */
-  if (lt_pct > TRIGGER_DEADZONE_PCT && rt_pct > TRIGGER_DEADZONE_PCT)
-    return 0;
-  if (rt_pct > TRIGGER_DEADZONE_PCT)               /* RT: forward */
-    return  (int32_t)((rt_pct * MOTOR_MAX_RPM) / 100);
-  if (lt_pct > TRIGGER_DEADZONE_PCT)               /* LT: reverse */
-    return -(int32_t)((lt_pct * MOTOR_MAX_RPM) / 100);
-  return 0;
+```c
+/* Regime 2: Arc Turn While Moving — enforce minimum turn radius so inner wheels never reverse */
+if (throttle_moving && steer_active) {
+  mode = DRIVE_MODE_ARC_TURN;
+  float shaped_steer = Process_Analog_Stick(raw_steer, STICK_DEADZONE, CONFIG_STEERING_EXPO);
+  float unconstrained_wz = shaped_steer * g_turn_angular_velocity;
+  float max_wz = fabsf(vx) / g_min_turn_radius; /* |wz| <= |vx| / R_min */
+  wz = (fabsf(unconstrained_wz) > max_wz) ? copysignf(max_wz, unconstrained_wz) : unconstrained_wz;
+}
+
+/* Differential-drive inverse kinematics + proportional anti-saturation scaling */
+float v_left  = vx - (wz * ROBOT_TRACK_WIDTH_M) / 2.0f;
+float v_right = vx + (wz * ROBOT_TRACK_WIDTH_M) / 2.0f;
+float rpm_left  = (v_left  * 60.0f) / (2.0f * 3.14159265f * ROBOT_WHEEL_RADIUS_M);
+float rpm_right = (v_right * 60.0f) / (2.0f * 3.14159265f * ROBOT_WHEEL_RADIUS_M);
+
+float max_wheel_rpm = fmaxf(fabsf(rpm_left), fabsf(rpm_right));
+if (max_wheel_rpm > (float)g_motor_max_rpm && max_wheel_rpm > 0.0001f) {
+  float scale = (float)g_motor_max_rpm / max_wheel_rpm;
+  rpm_left  *= scale; /* Scale both wheels together to preserve turning curve */
+  rpm_right *= scale;
 }
 ```
 
 **Console Output**
 
 ```
->>> [INIT] Probing CAN Node 1 & Node 2...
-  >>> [CAN OK] Driver Node 1 DETECTED!
-  >>> [CAN OK] Driver Node 2 DETECTED!
+>>> [INIT] Connecting to ZLAC8015D Motor Drivers...
+  >>> [CAN OK] Node 1 acknowledged (Statusword: 0x0237)
+  >>> [CAN OK] Node 2 acknowledged (Statusword: 0x0237)
+>>> [USB] Controller Dongle Attached & Class Active!
+>>> [SYSTEM READY] Controls neutral & controller linked! Ready to drive.
+[READY|ARC] v:+0.34 m/s w:+0.45 | L:+18 R:+25 (Tgt:+18 +25) | StkX: +65% RT:100% LT:  0% | CAN:N1[O] N2[O] | WD: 12ms
 ```
 
 ## Safety Is Layered, Not Bolted On {#section-8-safety}
 
-A multi-layer safety matrix enforces determinism at the driver protocol, software state machine, and hardware interlock levels.
+A multi-layer safety matrix enforces determinism across the hardware interlocks, USB/CAN watchdogs, and firmware state machine.
 
-| Hazard | Mitigation | Layer | Phase |
+| Hazard | Mitigation | Layer | Stage |
 | --- | --- | --- | --- |
-| **No ACK locks the CAN TX mailboxes** | Auto-retransmit off; stalled mailboxes aborted | <Badge type="info" text="Firmware" /> | [Phase 1](#phase-1) |
-| **Driver not powered / miswired at boot** | Node probe with actionable diagnostics | <Badge type="info" text="Firmware" /> | [Phase 5](#phase-5) |
-| **Command sent while coils disengaged** | State machine rejects invalid transitions | <Badge type="info" text="Firmware" /> | [Phase 4](#phase-4) |
-| **Driver fault (stall, overvoltage)** | Statusword polled every 150 ms → STATE\_ERR, speed zeroed | <Badge type="info" text="Firmware" /> | [Phase 4](#phase-4) |
-| **Both triggers pulled at once** | Forced 0 RPM | <Badge type="info" text="Firmware" /> | [Phase 5](#phase-5) |
-| **Sudden speed jumps (tipping, gear shock)** | Driver ramps + 25 ms software ramp | <Badge type="info" text="Firmware" /> | [Phase 3](#phase-3), [5](#phase-5) |
-| **Operator emergency** | Gamepad \[B\] → CiA 402 Quick-Stop | <Badge type="info" text="Firmware" /> | [Phase 3](#phase-3), [5](#phase-5) |
-| **Firmware or comms failure** | Wireless NC kill switch acts directly on drivers; contactor cuts motor power | <Badge type="warning" text="Hardware" /> | [Hardware → Power & Safety](./stm32-hardware.md#interface-wiring) |
+| **Controller signals stop arriving** | **250 ms watchdog** (`CONTROLLER_TIMEOUT_MS`) triggers `ROBOT_STATE_WATCHDOG_STOP` and zeroes wheel speed; **500 ms watchdog** on ROS 2 `cmd_vel` | <Badge type="info" text="Firmware" /> | [Stage 5](#phase-5) |
+| **USB receiver link drops** | `HOST_USER_DISCONNECTION` interrupt immediately enters `ROBOT_STATE_DISCONNECTED` and stops all four wheels | <Badge type="info" text="Firmware" /> | [Stage 5](#phase-5) |
+| **Operator emergency** | Gamepad `[B]` / `BACK` latches `ROBOT_STATE_ESTOP_LATCHED` and sends CiA 402 Quick-Stop (`0x0002`) + halts stepper until cleared | <Badge type="info" text="Firmware" /> | [Stage 3](#phase-3), [5](#phase-5) |
+| **Unsafe re-arm while throttle held** | Re-arming (`[A]` / `START`) is rejected unless all triggers and sticks are back at neutral (`controls_neutral`) | <Badge type="info" text="Firmware" /> | [Stage 5](#phase-5) |
+| **Inner-wheel reversal / tyre scrubbing** | Minimum turn radius clamp ($|\omega_z| \le |v_x| / R_{\min}$) and proportional anti-saturation scaling preserve curvature | <Badge type="info" text="Firmware" /> | [Stage 5](#phase-5) |
+| **Sudden speed jumps (jerking / tipping)** | **50 Hz (`20 ms`)** software velocity ramping loop + ZLAC8015D hardware accel/decel profiles | <Badge type="info" text="Firmware" /> | [Stage 3](#phase-3), [5](#phase-5) |
+| **No ACK locks the CAN TX mailboxes** | Auto-retransmit disabled; stalled mailboxes aborted; automatic Bus-Off recovery | <Badge type="info" text="Firmware" /> | [Stage 1](#phase-1), [5](#phase-5) |
+| **Driver fault (stall, overvoltage)** | Statusword (`0x6041`) monitored → latches fault state and zeros speed | <Badge type="info" text="Firmware" /> | [Stage 4](#phase-4), [5](#phase-5) |
+| **Firmware or comms failure** | Wireless kill switch triggers the motor drivers' built-in emergency stop; safety contactor cuts 48 V motor power while keeping computers alive | <Badge type="warning" text="Hardware" /> | [Hardware → Power & Safety](./stm32-hardware.md#interface-wiring) |
 
 ## Problems We Hit {#section-9-problems}
 
@@ -350,45 +386,45 @@ Key benchtop troubleshooting lessons learned during actuator and motor driver in
 
 Symptom Driver didn't respond reliably.
 
-Cause 3.3 V GPIO couldn't push enough current through the driver's optocoupler LEDs (~1.7 V left after the LED drop).
+Cause 3.3 V GPIO couldn't push enough current through the TB6600 driver's optocoupler LEDs (~1.7 V left after the LED drop).
 
-Fix Rewired common-anode to 5 V and sinked the negative inputs with open-drain GPIO.
+Fix Rewired common-anode to 5 V and used 5 V current-sinking on the negative inputs (`PC2`/`PC3` open-drain GPIO) so the 3.3 V STM32 switches it reliably.
 
 #### “The wheels fought each other”
 
-Symptom +30 RPM to all motors locked the chassis.
+Symptom Commanding positive RPM to all motors locked the chassis.
 
-Cause Right-side hub motors are mounted mirrored.
+Cause Left and right hub motors are mounted mirrored on opposite sides of the chassis.
 
-Fix Per-channel direction inversion inside Motor\_Set\_Velocity().
+Fix Per-side polarity inversion inside `Motor_Set_Velocity_All(-left_rpm, right_rpm)` so higher layers command strictly in ROS REP 103 vehicle-forward coordinates.
 
 #### “Step timing was too coarse”
 
-Symptom Motor couldn't reach usable speed smoothly.
+Symptom Stepper motor couldn't reach usable speed smoothly along its 110 mm stroke.
 
-Cause HAL\_Delay() has 1 ms resolution; pulses needed 200–800 µs.
+Cause `HAL_Delay()` has 1 ms resolution; microstep pulses needed microsecond-level timing.
 
-Fix DWT cycle-counter microsecond delay.
+Fix DWT cycle-counter microsecond timing paired with a non-blocking `Stepper_Update()` super-loop task.
 
-## Semester 2 Firmware Roadmap {#section-10-roadmap}
+## Next: Semester 2 Firmware Roadmap {#section-10-roadmap}
 
-Target enhancements scheduled for integration upon delivery of the runway chassis and companion autonomy computer.
+Target enhancements scheduled for Semester 2 integration with the Jetson companion computer and pre-allocated sensor buses:
 
-IMU Sensor Fusion <Badge type="info" text="Planned" />
+ROS 2 Link to the Jetson for Autonomous Driving <Badge type="info" text="Planned" />
 
-Complementary/EKF filter on the STM32 for attitude and tilt estimation on uneven runway surfaces.
+Connect the Jetson to the STM32 over serial/micro-ROS so `cmd_vel` and actuator service calls drive the existing `Robot_Set_CmdVel()` and `Robot_Actuator_Toggle()` functions, guarded by the 500 ms autonomy watchdog.
 
-Jetson & ROS 2 Integration <Badge type="info" text="Planned" />
+IMU and Wheel-Odometry Fusion <Badge type="info" text="Planned" />
 
-micro-ROS link: publish odometry and status, subscribe to cmd\_vel; add a comms-timeout watchdog so the STM32 Quick-Stops if the Jetson goes silent.
+Fuse 9-DOF IMU (`I2C1`) attitude/yaw-rate measurements with ZLAC8015D dual-axle wheel encoder feedback to publish drift-corrected odometry (`/odom`) on uneven runway surfaces.
 
-BMS Telemetry <Badge type="info" text="Planned" />
+Live Battery Telemetry <Badge type="info" text="Planned" />
 
-Cell voltages, SoC and temperature over USART1, with automatic power throttling and cutoffs.
+Ingest 48 V LiFePO4 BMS telemetry (pack voltage, current, SoC, and cell temperatures) over `USART1`, with automatic low-battery power throttling and fault cutoffs.
 
-Closed-Loop Slip Compensation <Badge type="info" text="Planned" />
+Closed-Loop Speed Control <Badge type="info" text="Planned" />
 
-Use driver encoder feedback to correct heading drift and wheel slip in turns.
+Use real-time velocity feedback from the ZLAC8015D motor drivers (`0x606C`) to close an outer slip- and heading-compensation loop on the STM32.
 
 <!-- #endregion report -->
 
