@@ -85,41 +85,46 @@ Names, matric numbers and photos (Meet the Team and the Report's Subsystem Lead 
 
 ### How to Preview Locally
 
-#### 1. First-time Setup (Run Once)
+#### 🪟 Windows
 
-If you do not have Node.js installed on your machine:
+1. **Install Node.js LTS** (run once if not installed):
+   ```bash
+   winget install -e --id OpenJS.NodeJS.LTS
+   ```
+   *(Close and reopen your terminal after installation so `npm` is added to PATH. Alternatively, download the installer from [nodejs.org](https://nodejs.org/))*
 
-- **Windows**:
+2. **Install & Run Dev Server** (from repository root):
+   ```bash
+   cd "For report/Interim report-v3"
+   npm install
+   npm run docs:dev
+   ```
+   *(If `npm` is not recognized in PowerShell or Command Prompt, use `npm.cmd install` and `npm.cmd run docs:dev`)*
 
-  ```bash
-  winget install -e --id OpenJS.NodeJS.LTS
-  ```
+---
 
-  _(Close and reopen your terminal after installing so `npm` is recognized in your PATH)_
+#### 🍎 macOS
 
-- **macOS** (via [Homebrew](https://brew.sh/)):
-  ```bash
-  brew install node
-  ```
+1. **Install Node.js** (run once if not installed):
+   - **Via Homebrew** (recommended):
+     ```bash
+     brew install node
+     ```
+   - **Or direct installer**: Download the macOS `.pkg` installer from [nodejs.org](https://nodejs.org/) (LTS version).
 
-#### 2. Install & Run Dev Server
+2. **Install & Run Dev Server** (from repository root):
+   ```bash
+   cd "For report/Interim report-v3"
+   npm install
+   npm run docs:dev
+   ```
 
-From the repository root (both Windows and macOS):
+---
 
-```bash
-cd "For report/Interim report-v3"
-npm install
-npm run docs:dev        # or 'npm.cmd run docs:dev' on Windows
-```
+#### 🌐 View the Website
 
-> [!TIP]
-> On some Windows setups (e.g. PowerShell or Command Prompt), if `npm` is not recognized or fails to launch, use `npm.cmd` instead:
-> ```bash
-> npm.cmd install
-> npm.cmd run docs:dev
-> ```
-
-Open **[http://127.0.0.1:4174](http://127.0.0.1:4174)** in your browser (the preview reloads automatically as you save edits to Markdown files).
+- Open **[http://127.0.0.1:4174](http://127.0.0.1:4174)** in your browser (the preview updates live as you edit and save Markdown files).
+- To stop the dev server at any time: press `Ctrl + C` in your terminal.
 
 ---
 
