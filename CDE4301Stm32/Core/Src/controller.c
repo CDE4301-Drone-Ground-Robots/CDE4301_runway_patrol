@@ -59,8 +59,8 @@ volatile float    g_stepper_travel_mm     = 110.0f;   /* Full stroke travel dist
 #elif defined(USE_POWER_PRESET_3)
   /* PRESET 3: 32V 10.4A Benchtop Power Supply (Current-Safe Mode) */
   #define CONFIG_MOTOR_MAX_RPM             25       /* Safe controllable top speed (~0.34 m/s) */
-  #define CONFIG_MOTOR_ACCEL_RPM_PER_SEC   35.0f    /* Ramping acceleration (RPM/s) */
-  #define CONFIG_MOTOR_DECEL_RPM_PER_SEC   28.0f    /* Software braking ramp (RPM/s) */
+  #define CONFIG_MOTOR_ACCEL_RPM_PER_SEC   40.0f    /* Ramping acceleration (RPM/s) */
+  #define CONFIG_MOTOR_DECEL_RPM_PER_SEC   40.0f    /* Software braking ramp (RPM/s) */
   #define CONFIG_DRIVER_HW_ACCEL_MS        300      /* Driver internal acceleration profile (ms) */
   #define CONFIG_DRIVER_HW_DECEL_MS        200      /* Driver decel profile (ms) */
   #define CONFIG_DEFAULT_TURN_OMEGA_RAD_S  0.45f    /* Scrub-safe angular velocity (rad/s) */
