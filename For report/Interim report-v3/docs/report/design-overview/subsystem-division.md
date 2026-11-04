@@ -214,7 +214,7 @@ Evaluated LiFePO4 battery configurations based on energy capacity, operating dur
 The selected battery configuration balances operating duration, system weight and energy reserves while supporting the UGV's intended operational requirements.
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#power-calculations">Power Budget &amp; Calculations <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#power-calculations">Power Calculations &amp; Battery Selection <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>
@@ -230,7 +230,7 @@ Integrated a BMS for battery monitoring and protection, alongside dedicated fuse
 The power distribution architecture supports reliable power delivery, electrical isolation and protection against overcurrent and short-circuit faults.
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#power-distribution">Components Selection, BOM &amp; Integration <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#power-distribution">Power Distribution &amp; Electrical Protection <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>
@@ -243,7 +243,7 @@ The power distribution architecture supports reliable power delivery, electrical
 #### Component Selection and BOM {#ov-component-BOM}
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#components-bom">Power Budget &amp; Calculations <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#components-bom">Components Selection, BOM &amp; Integration <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>
