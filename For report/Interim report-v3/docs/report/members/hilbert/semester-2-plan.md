@@ -10,9 +10,9 @@ description: "Planned physical UGV integration and validation tasks."
 <!-- Edit your plan between the region markers; the Overview and the Meet the Team page show this text. -->
 <!-- #region plan -->
 
-- Configure, tune and test Nav2 path planning and kinematic steering models on FOD Hunter.
-- Integrate RTK-GNSS, tactical IMU and 3D LiDAR for outdoor airside localization.
-- Deploy the UAV–UGV RF datalink and execute coordinated multi-agent field operations.
+- Integrate the tested Hybrid A\* and RPP navigation stack with the physical FOD Hunter, then tune it using measured steering and stopping behaviour.
+- Connect physical GNSS, IMU and LiDAR sensors to the Dual-EKF localization system and measure localization error.
+- Select and test a compliant UAV–UGV radio link, then carry out coordinated outdoor trials.
 
 <!-- #endregion plan -->
 
@@ -23,9 +23,9 @@ description: "Planned physical UGV integration and validation tasks."
 
 <Badge type="info" text="Hilbert's Autonomy Scope • Physical UGV" />
 
-The ROS 2 navigation stack and UAV-side communications were developed using a Gazebo simulation and a local network testbed. The next step is to integrate these systems with the **physical FOD Hunter** and test them outdoors. The AgileX Scout 2.0 was the simulation proxy; it is not the physical UGV.
+The ROS 2 navigation stack, including Hybrid A\*, RPP and Dual-EKF, has been run in Gazebo. UAV–UGV target dispatch was tested between a Raspberry Pi 5 and a laptop over an indoor Wi-Fi network. The next step is to connect these systems to the physical FOD Hunter and test them outdoors. The simulation robot is not a one-to-one model of the final UGV.
 
-The work is divided into four autonomy tasks: navigation, RF communications, sensor fusion and physical field validation (low-level motor firmware and driver bring-up are led under Gabriel's subsystem). **All settings and performance figures below are proposed targets unless explicitly stated otherwise.**
+The four tasks below cover navigation, radio communications, physical sensor integration and field testing. **Values described as targets or starting settings have not been verified on the physical UGV.** Gabriel leads STM32 firmware and motor-driver integration; Hilbert leads navigation, localization and UAV–UGV communications.
 
 [Navigation methodology](./navigation.md) · [Communications implementation](./communications.md) · [Simulation evidence](./simulation.md) · [Steering kinematics](./steering-kinematics.md) · [Motor sizing](./motor-drivetrain-calculation.md)
 
@@ -33,59 +33,61 @@ The work is divided into four autonomy tasks: navigation, RF communications, sen
 
 ::: details 01 — Navigation & Kinematics
 
-**Physical Nav2 configuration and steering calibration** ([\[19\]](./references.md#ref-19), [\[20\]](./references.md#ref-20))
+**Transfer Nav2 to the physical UGV and tune its steering** ([\[15\]](./references.md#ref-15), [\[16\]](./references.md#ref-16))
 
-Configure and test SmacPlannerHybrid on FOD Hunter, then tune the planner and controller based on measured steering behaviour.
+The simulation uses SmacPlannerHybrid with a Reeds–Shepp motion model and RPP for path tracking. We will start from the tested configuration, then adjust it using the physical UGV's measured behaviour.
 
-- **Turning radius:** Start with a proposed minimum planning radius of 1.50 m to reduce unnecessary skid-steer pivots. Reconcile this with the steering model and measured turning performance.
-- **Heading resolution:** Evaluate 72 orientation bins (5° increments) on a 0.05 m costmap.
-- **Motion penalties:** Evaluate reverse and direction-change penalties of 2.0 and 3.0, respectively. Confirm compatibility with the selected Dubins or Reeds–Shepp motion model.
-- **Planning performance:** Test analytical goal connections and measure planning time. The proposed target is under 25 ms for the specified test scenario; this is not yet verified.
-- **Speed:** Assess the proposed 10 km/h operating target only after low-speed control and safety testing.
+- **Turning radius:** Start from the simulated 1.0 m planner setting. Measure actual turning behaviour before deciding whether a larger planning radius, such as 1.5 m, is needed.
+- **Planner settings:** Recheck heading resolution, reverse penalties and planning time on the onboard computer. The simulation used 64 heading bins; proposed changes must be tested rather than assumed to improve performance.
+- **Reverse-path limitation:** Reeds–Shepp can plan reverse segments, but the current RPP configuration has `allow_reversing: false`. Resolve this mismatch before allowing reverse-path execution on hardware; retain Reeds–Shepp as the selected planner motion model.
+- **Speed and lookahead:** Begin at low speed and retune RPP lookahead, curvature-based speed limits and stopping distance. The 8 km/h simulation setting does not establish safe operation at the 15 km/h design target ([\[18\]](./references.md#ref-18)).
+- **ROS 2 to STM32 interface:** Work with Gabriel to connect Nav2 `/cmd_vel` to the existing `Robot_Set_CmdVel(vx, wz)` firmware interface. Select and test the transport method; micro-ROS is not a fixed requirement.
 
 :::
 
 ::: details 02 — RF Telemetry & Datalink
 
-**UAV–UGV radio communication**
+**Test UAV–UGV communication without the indoor router**
 
-Replace the local Wi-Fi test connection with a suitable radio link for target alerts and UGV telemetry. The Microhard P900 V2 is a candidate, not an approved or installed system ([\[24\]](./references.md#ref-24)).
+The indoor test used CycloneDDS static unicast between a Raspberry Pi 5 and a laptop. The Microhard P900 V2 is a proposed radio candidate; it has not been purchased or tested ([\[20\]](./references.md#ref-20)).
 
-- **Regulatory review:** Confirm permitted frequencies, output power, equipment approval and test-site authorization under the applicable IMDA requirements ([\[3\]](./references.md#ref-3), [\[11\]](./references.md#ref-11)) and relevant aviation guidance ([\[4\]](./references.md#ref-4)). The proposed 917–925 MHz and 100 mW ERP settings require verification.
-- **Serial bridge:** Develop a UART-to-ROS 2 bridge using COBS framing for JSON messages.
-- **Message integrity:** Evaluate HMAC-SHA-256 authentication with secure shared-key management.
-- **Link-loss response:** Test a proposed 2 Hz heartbeat and 1.5 s loss timeout, including a safe stop and operator warning. Confirm the braking response on the actual vehicle.
+- **Radio selection:** Check available hardware, range, power needs and whether it can be used legally at the test site. Verify applicable IMDA frequency, power and approval requirements before transmitting ([\[3\]](./references.md#ref-3), [\[10\]](./references.md#ref-10)).
+- **Message transport:** Build and test the bridge needed for the chosen radio. UART framing with COBS is one option, not a confirmed implementation.
+- **Message handling:** Test alert delivery, acknowledgements, duplicate handling and compatible ROS 2 QoS settings. Evaluate message authentication if required by the final design.
+- **Link loss:** Define and test a heartbeat timeout and safe response on the physical UGV. Do not assume the proposed 2 Hz heartbeat and 1.5 s timeout are already validated.
 
 :::
 
 ::: details 03 — Sensor Fusion & State Estimation
 
-**RTK-GNSS, IMU and LiDAR integration**
+**Connect physical sensors to the working ROS 2 localization setup**
 
-Integrate the physical sensors and configure localization for outdoor navigation. The aim is to reduce accumulated odometry drift; centimetre-level accuracy remains a target dependent on GNSS conditions.
+The local EKF, global EKF and `navsat_transform_node` were observed running in the Gazebo simulation, with odometry messages and the `map → odom → base_footprint` transform chain present. This confirms runtime operation, **not localization accuracy**.
 
-- **RTK-GNSS:** Connect the proposed UM980 receiver, process NMEA data and obtain RTCM3 corrections through NTRIP where available.
-- **Dual-EKF:** Configure local wheel-odometry/IMU fusion and global GNSS-corrected localization using `robot_localization` ([\[9\]](./references.md#ref-9), [\[26\]](./references.md#ref-26)). The proposed local filter rate is 100 Hz.
-- **LiDAR:** Filter ground points and supply obstacle data to the Nav2 voxel costmap.
-- **Collision monitor:** Test proposed stop, slowdown and approach zones at 0.40 m, 1.20 m and 2.50 m. Adjust these using actual stopping-distance measurements.
+- **GNSS:** Integrate the selected physical receiver and correction service, if available. Confirm coordinate frames and datum handling before using GNSS-derived navigation goals.
+- **Dual-EKF:** Reuse the `robot_localization` architecture with physical wheel odometry, IMU and GNSS measurements. Tune covariances and filter rates based on real sensor data ([\[9\]](./references.md#ref-9), [\[22\]](./references.md#ref-22)). The simulated EKFs were configured at 30 Hz; any proposed 100 Hz physical rate requires testing.
+- **Wheel odometry:** Coordinate with Gabriel to add motor velocity feedback and odometry output. The current STM32 firmware sends velocity commands but does not yet integrate encoder odometry.
+- **LiDAR and safety:** Configure obstacle detection and test collision-monitor stop/slowdown distances against measured stopping behaviour. The proposed 0.40 m, 1.20 m and 2.50 m zones are starting points only.
+- **Validation:** Compare filtered position and heading against a suitable reference during motion. Record error, drift and behaviour during temporary GNSS loss.
 
 :::
 
 ::: details 04 — Physical Integration & Validation
 
-**Outdoor testing on FOD Hunter**
+**Test the complete system on FOD Hunter**
 
-Integrate the software stack on the proposed 65 kg four-wheel skid-steer UGV and verify its behaviour in controlled outdoor tests.
+Gabriel has demonstrated ground movement with the preliminary four-motor chassis under an estimated 30 kg load, using a 32 V supply with an approximately 10 A current limit. The intended 48 V battery was delayed. These tests support basic motor operation, but do not verify the 65 kg design calculations or 15 km/h target.
 
-- **Steering calibration:** Compare encoder-derived heading with an independent heading estimate to determine effective track width and the slip correction factor $\chi = c_{\text{eff}}/c_{\text{nominal}}$ ([\[14\]](./references.md#ref-14)).
-- **RPP tuning:** Test lookahead and curvature-based speed control. Proposed starting values are $L=1.80\text{ m}$ and lookahead time $t=0.6\text{ s}$ ([\[22\]](./references.md#ref-22)).
-- **Target approach:** Measure final positioning error relative to FOD targets. The proposed cross-track error target is $\pm 5.0\text{ cm}$.
-- **Integrated trial:** Demonstrate UAV target detection, RF coordinate transfer, UGV navigation and FOD clearance, recording both successes and failures.
+- **Drivetrain readiness:** Coordinate with Gabriel on 48 V power integration, motor-driver limits, feedback and safe stop behaviour before autonomous driving. Gabriel owns the embedded implementation and motor tests.
+- **Steering calibration:** Measure yaw response and effective track width using encoder-based odometry and an independent heading reference. Compare results with the analytical skid-steer model ([\[13\]](./references.md#ref-13)).
+- **Navigation tests:** Start with low-speed straight runs and turns, then measure cross-track error, obstacle clearance, stopping distance and controller behaviour as speed increases.
+- **Target approach:** Measure final position error at FOD targets. The proposed ±5 cm target remains unverified.
+- **Integrated trial:** Test the full chain from UAV target coordinates through communication and UGV navigation to FOD clearance. Record successful runs, failures and the conditions of each test.
 
 :::
 
-::: warning Items to verify before implementation
-Reconcile the 1.50 m planning radius with physical Steering Kinematics, and verify RF telemetry requirements with current IMDA regulations and site authorizations. All proposed filter rates, timeouts, transit speeds, and accuracy targets must be validated empirically against physical hardware during Semester 2 field trials.
+::: warning Items to verify before physical testing
+The final chassis mass and geometry are not yet confirmed; 65 kg remains the drivetrain sizing baseline. Check planner–controller reverse compatibility, physical steering limits, sensor accuracy, radio approval and safe stopping distances before outdoor trials. The simulated navigation results and preliminary 32 V ground test do not establish full-load performance.
 :::
 
 <!-- #endregion programming-tasks -->

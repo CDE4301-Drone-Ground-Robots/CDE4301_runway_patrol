@@ -7,7 +7,7 @@ outline: [2, 3]
 # Autonomous Navigation Simulation & Validation
 
 > **Hilbert Soh · Semester 1 software-in-the-loop (SIL)**  
-> **Scope:** AgileX Scout 2.0 is the simulation proxy, not the final FOD Hunter physical chassis. Results reported below are source-documented SIL findings; underlying logs and configurations should be checked before final academic submission.
+> **Scope:** AgileX Scout 2.0 is the simulation proxy, not the final FOD Hunter physical chassis. Results are from simulation, configuration files and recorded tuning evidence. Physical vehicle performance has not been verified.
 
 <!-- #region report -->
 
@@ -33,7 +33,7 @@ Development was hosted on Hilbert's engineering laptop running Ubuntu 24.04 LTS 
 
 First, WSL2 executes inside a lightweight virtual machine behind a virtualized Network Address Translation (NAT) vSwitch. Because standard DDS multicast discovery (`239.255.0.1`) is dropped across virtualized NAT boundaries, standard ROS 2 multicast fails between the host laptop and external computing nodes (such as the companion Raspberry Pi 5). To overcome this, Eclipse CycloneDDS was configured via `cyclonedds.xml` with explicit static unicast peering, delivering deterministic discovery and &lt;15 ms message latency.
 
-Second, the production NVIDIA Jetson Orin companion computer was unavailable during Semester 1 development. Consequently, the host laptop had to execute the Gazebo physics engine, GPU camera shaders, raytraced LiDAR sensors, Dual-EKF localization, and the entire Nav2 stack simultaneously on a single CPU/vGPU budget. DirectX D3D12 paravirtualization (WSLg) provided hardware acceleration for Gazebo GUI rendering, maintaining real-time factor stability ($RTF = 0.98 \pm 0.02$).
+Second, the production NVIDIA Jetson Orin companion computer was unavailable during Semester 1 development. Consequently, the host laptop had to execute the Gazebo physics engine, GPU camera shaders, raytraced LiDAR sensors, Dual-EKF localization, and the entire Nav2 stack simultaneously on a single CPU/vGPU budget. DirectX D3D12 paravirtualization (WSLg) provided hardware acceleration for Gazebo GUI rendering, but real-time performance depends on the host and simulation load. A later WSL2 verification run measured $RTF \approx 0.31\text{–}0.33$; this does not necessarily represent earlier test sessions.
 
 #### Environment and Safety Constraints
 
@@ -41,19 +41,19 @@ Development transitioned across two distinct environments: the initial macro-sca
 
 The project was initially conceptualized around an active commercial aerodrome runway ($2,702\text{ m} \times 45\text{ m}$). However, because our industry partner was unable to secure statutory aerodrome access permits for undergraduate robotic trials, testing was proactively migrated to the NUS EA Field courtyard ($52.2\text{ m} \times 29.1\text{ m}$). This physical proving ground provided identical outdoor concrete pavers, paved walkways, non-traversable grass verges, and concrete building pillars.
 
-To guarantee safety within the narrower campus walkways, the autonomous cruise velocity was clamped to a configured development baseline of **8.0 km/h ($2.22\text{ m/s}$)**. Total stopping distance is derived from the kinematic equation accounting for end-to-end control latency and maximum deceleration:
+For the narrower campus simulation routes, the autonomous cruise velocity was clamped to a configured development baseline of **8.0 km/h ($2.22\text{ m/s}$)**. Total stopping distance is derived from the kinematic equation accounting for end-to-end control latency and maximum deceleration:
 
 $$
 d_{\text{stop}} = v \cdot \Delta t_{\text{lat}} + \frac{v^2}{2|a_{\text{decel}}|}
 $$
 
-Where $\Delta t_{\text{lat}} \approx 0.07\text{ s}$ represents total pipeline latency ($0.05\text{ s}$ controller cycle at $20\text{ Hz}$ plus $0.02\text{ s}$ velocity smoother and transport delay), and $a_{\text{decel}} = -2.5\text{ m/s}^2$ is the configured maximum linear deceleration limit. At the development cruise baseline ($v = 2.22\text{ m/s}$):
+Where $\Delta t_{\text{lat}} \approx 0.07\text{ s}$ represents total pipeline latency (assumed $0.05\text{ s}$ controller cycle at $20\text{ Hz}$ plus $0.02\text{ s}$ additional delay), and $a_{\text{decel}} = -2.5\text{ m/s}^2$ is the deceleration assumption used in this calculation; verify against the active velocity smoother configuration. At the development cruise baseline ($v = 2.22\text{ m/s}$):
 
 $$
 d_{\text{stop}} = (2.22\text{ m/s})(0.07\text{ s}) + \frac{(2.22\text{ m/s})^2}{2(2.5\text{ m/s}^2)} = 0.155\text{ m} + 0.986\text{ m} \approx \mathbf{1.14\text{ m}} \le 1.15\text{ m}
 $$
 
-This stopping distance falls comfortably within the $25\text{ m}$ LiDAR sensor horizon. In contrast, operating at the hardware rating of $15.0\text{ km/h}$ ($4.17\text{ m/s}$) increases braking distance substantially:
+This is a theoretical stopping-distance estimate, not a measured braking test. In contrast, operating at the hardware rating of $15.0\text{ km/h}$ ($4.17\text{ m/s}$) increases braking distance substantially:
 
 $$
 d_{\text{stop, 15km/h}} = (4.17)(0.07) + \frac{4.17^2}{2(2.5)} = 0.292\text{ m} + 3.478\text{ m} \approx 3.77\text{ m}
@@ -71,6 +71,8 @@ Meaningful navigation testing required: (1) a verified 4WD skid-steer chassis mo
 
 We connected **Gazebo Harmonic** to **ROS 2 Jazzy** ([\[7\]](./references.md#ref-7)) using `ros_gz_bridge`. Gazebo supplied simulated odometry, LiDAR, IMU and GNSS data to Nav2 ([\[8\]](./references.md#ref-8)). Nav2 sent `/cmd_vel` commands back to the simulated drivetrain. We used the simulation `/clock` and consistent TF frames to keep the nodes synchronized.
 
+**Runtime localization check (4 November 2026):** Antigravity launched the NUS EA Field simulation in WSL2 and observed `ekf_filter_node_odom`, `ekf_filter_node_map` and `navsat_transform_node` publishing `/odometry/local`, `/odometry/global` and `/odometry/gps`. The `map → odom → base_footprint` TF chain was present. This confirms the Dual-EKF pipeline was running; it does **not** establish position accuracy or drift reduction without a moving ground-truth comparison. The simulated IMU and odometry were configured at 50 Hz, GPS and LiDAR at 10 Hz, and EKF outputs at 30 Hz in simulation time. During that run, $RTF \approx 0.31\text{–}0.33$, so wall-clock publication rates were lower.
+
 <Figure src="./assets/diagrams/ros2-gazebo-architecture.svg" alt="ROS 2, Gazebo Harmonic and Nav2 simulation architecture" />
 
 ::: details ROS–Gazebo bridge topic schemas and development workflow
@@ -79,9 +81,9 @@ We connected **Gazebo Harmonic** to **ROS 2 Jazzy** ([\[7\]](./references.md#ref
 
 We used simulation for three purposes before testing on hardware:
 
-1. **Kinematic & Dynamic Verification:** Validates multi-body contact dynamics, lateral tire slip, and skid-steer turning scrub moments under realistic asphalt friction ($\mu = 0.8$) ([\[14\]](./references.md#ref-14)), ensuring path planners respect non-holonomic turning radius bounds ($R \ge 1.0\text{ m}$) before physical testing.
-2. **Accelerated Parameter Sweeps:** Executes hundreds of automated mission dispatches across acute $90^\circ$ taxiway bends, straight sprint corridors, and cluttered obstacle fields at an accelerated physics stepping rate ($1000\text{ Hz}$, $\Delta t = 1.0\text{ ms}$) without battery recharge interruptions or thermal degradation.
-3. **Software-in-the-Loop (SIL) Protocol Enforcement:** Validates exact ROS 2 message schemas (`geometry_msgs/msg/Twist`, `sensor_msgs/msg/LaserScan`, `sensor_msgs/msg/Imu`, `nav_msgs/msg/Odometry`, `tf2_msgs/msg/TFMessage`), action servers, and CycloneDDS network bridges, ensuring that autonomy code developed in simulation transfers to the physical onboard computer with zero architectural refactoring.
+1. **Kinematic and physics checks:** Simulates contact, turning and path-following behaviour using assumed asphalt friction ($\mu = 0.8$) ([\[13\]](./references.md#ref-13)), ensuring path planners respect non-holonomic turning radius bounds ($R \ge 1.0\text{ m}$) before physical testing.
+2. **Parameter sweeps:** Compares navigation settings over repeated simulated routes across acute $90^\circ$ taxiway bends, straight sprint corridors, and cluttered obstacle fields at an accelerated physics stepping rate ($1000\text{ Hz}$, $\Delta t = 1.0\text{ ms}$) without battery recharge interruptions or thermal degradation.
+3. **Software-in-the-Loop (SIL) Protocol Enforcement:** Validates exact ROS 2 message schemas (`geometry_msgs/msg/Twist`, `sensor_msgs/msg/LaserScan`, `sensor_msgs/msg/Imu`, `nav_msgs/msg/Odometry`, `tf2_msgs/msg/TFMessage`), action servers, and CycloneDDS network bridges, allowing the software interfaces to be tested before physical integration.
 
 #### ROS 2–Gazebo–Nav2 Architecture
 
@@ -93,15 +95,15 @@ The table below documents the verified bridge topic schema deployed in `sim_and_
 
 **Table 2.1: `ros_gz_bridge` Topic Schemas, Directions & Quality of Service (QoS)**
 
-| ROS 2 Topic         | Gazebo Message Type | ROS 2 Message Type          | Direction | QoS Reliability           | Rate / Role                                               |
-| ------------------- | ------------------- | --------------------------- | --------- | ------------------------- | --------------------------------------------------------- |
-| `/cmd_vel`          | `gz.msgs.Twist`     | `geometry_msgs/msg/Twist`   | ROS → GZ  | Reliable, Volatile        | $20\text{ Hz}$ Nav2 RPP velocity commands                 |
-| `/odom`             | `gz.msgs.Odometry`  | `nav_msgs/msg/Odometry`     | GZ → ROS  | Best Effort, SensorData   | $50\text{ Hz}$ Wheel encoder kinematic odometry           |
-| `/scan`             | `gz.msgs.LaserScan` | `sensor_msgs/msg/LaserScan` | GZ → ROS  | Best Effort, SensorData   | $10\text{ Hz}$ GPU ray LiDAR planar scans ($25\text{ m}$) |
-| `/camera/image_raw` | `gz.msgs.Image`     | `sensor_msgs/msg/Image`     | GZ → ROS  | Best Effort, SensorData   | $30\text{ Hz}$ ($640\times 480$) Forward RGB stream       |
-| `/imu/data`         | `gz.msgs.IMU`       | `sensor_msgs/msg/Imu`       | GZ → ROS  | Best Effort, SensorData   | $100\text{ Hz}$ 9-DOF orientation, yaw rate & accel       |
-| `/gps/fix`          | `gz.msgs.NavSat`    | `sensor_msgs/msg/NavSatFix` | GZ → ROS  | Best Effort, SensorData   | $5\text{ Hz}$ WGS84 absolute geodetic fix                 |
-| `/clock`            | `gz.msgs.Clock`     | `rosgraph_msgs/msg/Clock`   | GZ → ROS  | Reliable, Transient Local | $1000\text{ Hz}$ Physics time synchronization             |
+| ROS 2 Topic         | Gazebo Message Type | ROS 2 Message Type          | Direction | QoS Reliability           | Rate / Role                                                         |
+| ------------------- | ------------------- | --------------------------- | --------- | ------------------------- | ------------------------------------------------------------------- |
+| `/cmd_vel`          | `gz.msgs.Twist`     | `geometry_msgs/msg/Twist`   | ROS → GZ  | Reliable, Volatile        | $20\text{ Hz}$ Nav2 RPP velocity commands                           |
+| `/odom`             | `gz.msgs.Odometry`  | `nav_msgs/msg/Odometry`     | GZ → ROS  | Best Effort, SensorData   | $50\text{ Hz}$ Wheel encoder kinematic odometry                     |
+| `/scan`             | `gz.msgs.LaserScan` | `sensor_msgs/msg/LaserScan` | GZ → ROS  | Best Effort, SensorData   | $10\text{ Hz}$ GPU ray LiDAR planar scans ($25\text{ m}$)           |
+| `/camera/image_raw` | `gz.msgs.Image`     | `sensor_msgs/msg/Image`     | GZ → ROS  | Best Effort, SensorData   | $30\text{ Hz}$ ($640\times 480$) Forward RGB stream                 |
+| `/imu/data`         | `gz.msgs.IMU`       | `sensor_msgs/msg/Imu`       | GZ → ROS  | Best Effort, SensorData   | $50\text{ Hz}$ simulated IMU orientation, yaw rate and acceleration |
+| `/gps/fix`          | `gz.msgs.NavSat`    | `sensor_msgs/msg/NavSatFix` | GZ → ROS  | Best Effort, SensorData   | $10\text{ Hz}$ simulated WGS84 geodetic fix                         |
+| `/clock`            | `gz.msgs.Clock`     | `rosgraph_msgs/msg/Clock`   | GZ → ROS  | Reliable, Transient Local | $1000\text{ Hz}$ Physics time synchronization                       |
 
 **Clock Synchronization Mandate:** Setting `use_sim_time: True` across all Nav2, EKF, and robot state publisher nodes locks ROS time to the physics step timestamp on `/clock`. This prevents false watchdog aborts and transform lookup exceptions when intensive GPU raytracing causes transient real-time factor dips ($RTF < 1.0$).
 
@@ -129,7 +131,7 @@ The navigation algorithm selection rationale belongs in [Navigation](./navigatio
 
 During early Semester 1 development, the **Hunter UGV** was still in the design phase. Autonomy software could not wait for hardware completion.
 
-The commercial **AgileX Scout 2.0** 4WD mobile robot was selected as an interim simulation proxy because of its broadly comparable dimensions, identical four-wheel skid-steering kinematic architecture ([\[14\]](./references.md#ref-14)), and 48V electrical bus domain. The Scout 2.0 allowed the team to develop and tune the complete ROS 2 Jazzy Nav2 stack, sensor bridge interfaces, and C2 mission handlers months before physical hardware became available.
+The commercial **AgileX Scout 2.0** 4WD mobile robot was selected as an interim simulation proxy because of its broadly comparable dimensions, identical four-wheel skid-steering kinematic architecture ([\[13\]](./references.md#ref-13)), and 48V electrical bus domain. The Scout 2.0 allowed the team to develop and tune the complete ROS 2 Jazzy Nav2 stack, sensor bridge interfaces, and C2 mission handlers months before physical hardware became available.
 
 However, the AgileX simulation model is an **interim kinematic proxy**, not an identical digital twin. The table below delineates verified dimensional, mechanical, and electrical distinctions between the simulation model (`scout_v2.xacro`) and the physical custom Hunter UGV:
 
@@ -145,34 +147,34 @@ AgileX Scout 2.0 Kinematic Simulation Proxy
 
 <Card tag="Kinematic Discrepancy Analysis">
 
-**Table 4.2: Hardware Parity Audit: AgileX Scout 2.0 Simulation Proxy vs Physical Custom Hunter UGV**
+**Table 4.2: Simulation Proxy Versus Preliminary Physical Design Assumptions**
 
 | Parameter            | AgileX Scout 2.0 Proxy (`scout_v2.xacro`)                                                                                                                                                                 | Physical Custom Hunter UGV                                                                                               | Discrepancy ($\Delta$) & Engineering Mitigation                                                                                                                         |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Chassis Mass ($m$)   | $52.37\text{ kg}$ ($40\text{ kg}$ base + $12\text{ kg}$ wheels + sensors)                                                                                                                                 | $65.0\text{ kg}$ (chassis + dual batteries + impeller + payload)                                                         | $+24.1\%$ mass increase. Requires lower Nav2 linear acceleration limits ($a_{\max} \le 2.0\text{ m/s}^2$) to preserve traction.                                         |
 | Drivetrain           | Paired left/right skid plugin (`gz-sim-diff-drive-system`)                                                                                                                                                | 4× Independent Direct-Drive BLDC Hub Motors (ZLLG80ASM250)                                                               | Simulation commands track velocities; physical hardware uses CANopen dual ZLAC8015D drivers with individual current monitoring.                                         |
 | Wheel Radius ($R$)   | $0.1646\text{ m}$ ($329.2\text{ mm}$ tire diameter)                                                                                                                                                       | $0.1315\text{ m}$ ($263.0\text{ mm}$ tire diameter)                                                                      | $-20.1\%$ radius reduction. Physical motors require $1.25\times$ higher RPM for equivalent linear speed ($v = \omega R$).                                               |
-| Wheelbase ($L$)      | $0.498\text{ m}$ ($498\text{ mm}$) axle span                                                                                                                                                              | $0.450\text{ m}$ ($450\text{ mm}$) custom chassis wheelbase                                                              | $-9.6\%$ shorter wheelbase. Shorter wheelbase reduces the lateral tire scrubbing moment arm during turns.                                                               |
-| Track Width ($W$)    | $0.5831\text{ m}$ ($583.1\text{ mm}$) lateral centerline                                                                                                                                                  | $0.580\text{ m}$ ($580.0\text{ mm}$) lateral centerline                                                                  | $-0.5\%$ difference (nearly identical). Angular velocity mapping $\omega = \frac{v_R - v_L}{W}$ transfers directly.                                                     |
-| Aspect Ratio ($L/W$) | $0.854$ (favorable for differential steering)                                                                                                                                                             | $0.776$ (closer to square footprint)                                                                                     | $-9.1\%$ ratio. Maintaining $\frac{L}{W} < 1.0$ guarantees trackwidth leverage over tire-ground scrubbing friction.                                                     |
-| Bus Voltage          | $48.0\text{ V}$ nominal bus model                                                                                                                                                                         | $48.0\text{ V}$ nominal LiFePO4 battery (54.6V peak, 70A BMS cutoff)                                                     | Identical electrical voltage domain. Simulation current projections validate physical BMS protection margins.                                                           |
+| Wheelbase ($L$)      | $0.498\text{ m}$ ($498\text{ mm}$) axle span                                                                                                                                                              | **Not finalized**                                                                                                        | The final chassis geometry must be measured before transferring simulation kinematics.                                                                                  |
+| Track Width ($W$)    | $0.5831\text{ m}$ ($583.1\text{ mm}$) lateral centerline                                                                                                                                                  | **Not finalized**                                                                                                        | The final chassis geometry must be measured before transferring simulation kinematics.                                                                                  |
+| Aspect Ratio ($L/W$) | $0.854$ (favorable for differential steering)                                                                                                                                                             | **Not finalized**                                                                                                        | The final chassis geometry must be measured before transferring simulation kinematics.                                                                                  |
+| Bus Voltage          | $48.0\text{ V}$ nominal bus model                                                                                                                                                                         | **Proposed power architecture; not validated at full voltage**                                                           | Simulation electrical settings do not verify battery or BMS performance.                                                                                                |
 | Speed Rating         | $5.0\text{ m/s}$ ($18.0\text{ km/h}$) Gazebo DiffDrive plugin limit (`scout_v2.xacro`); Nav2 cruise clamped to $2.22\text{ m/s}$ ($8.0\text{ km/h}$); smoother cap $2.78\text{ m/s}$ ($10.0\text{ km/h}$) | $15.0\text{ km/h}$ ($4.17\text{ m/s}$) hardware sprint rating / $2.22\text{ m/s}$ ($8.0\text{ km/h}$) autonomous ceiling | Autonomous cruise baseline clamped to $2.22\text{ m/s}$ ($8.0\text{ km/h}$) across simulation configs for safety margins. $15.0\text{ km/h}$ unvalidated in Semester 1. |
 
 </Card>
 
-**Governing Kinematic Ratio:** In 4WD skid-steer mobile robotics, executing yaw rotation requires tires to slip laterally against ground friction ([\[14\]](./references.md#ref-14)). The ratio of wheelbase $L$ to track width $W$ is the fundamental governing parameter:
+**Governing Kinematic Ratio:** In 4WD skid-steer mobile robotics, executing yaw rotation requires tires to slip laterally against ground friction ([\[13\]](./references.md#ref-13)). The ratio of wheelbase $L$ to track width $W$ is the fundamental governing parameter:
 
 $$
 \text{Ratio} = \frac{L}{W} = \frac{0.498\text{ m}}{0.583\text{ m}} \approx \mathbf{0.854} < 1.0
 $$
 
-If $\frac{L}{W} > 1.0$ (a long, narrow chassis), the resistive scrubbing torque dominates over the tractive steering leverage of the tires, causing severe wheel stall, excessive current draw, and violent chassis shaking. Maintaining $\frac{L}{W} < 1.0$ (ideally $0.75 - 0.88$) provides sufficient lateral leverage to overcome asphalt friction, ensuring responsive yaw maneuverability.
+If $\frac{L}{W} > 1.0$ (a long, narrow chassis), the resistive scrubbing torque dominates over the tractive steering leverage of the tires, causing severe wheel stall, excessive current draw, and violent chassis shaking. The wheelbase-to-track-width ratio affects turning resistance, but no single threshold guarantees traction or yaw response.
 
 #### Initial Environment — Aarhus Airport (EKAH)
 
 The initial simulation was modeled after Aarhus Airport Runway 10R/28L ($2,702\text{ m} \times 45\text{ m}$) with centerline markings and edge lighting. Testing in this environment produced a critical engineering discovery:
 
-**2D LiDAR SLAM Failure:** In vast, flat airfield corridors, there are zero vertical walls, columns, or laser-reflective structures within the $25\text{ m}$ range of the LiDAR. As a result, 2D laser scan matching diverges longitudinally ($\Sigma_{xx} \to \infty$), causing SLAM pose estimation to slip and fail ([\[21\]](./references.md#ref-21)). This finding explicitly proved that LiDAR-only odometry is non-viable for runway inspection, directly motivating our Dual-EKF localization architecture fusing wheel odometry, tactical IMU gyro rates, and absolute RTK-GNSS fixes ([\[9\]](./references.md#ref-9), [\[26\]](./references.md#ref-26)).
+**2D LiDAR SLAM Failure:** In vast, flat airfield corridors, there are zero vertical walls, columns, or laser-reflective structures within the $25\text{ m}$ range of the LiDAR. As a result, 2D laser scan matching diverges longitudinally ($\Sigma_{xx} \to \infty$), causing SLAM pose estimation to slip and fail ([\[17\]](./references.md#ref-17)). This finding explicitly proved that LiDAR-only odometry is non-viable for runway inspection, directly motivating our Dual-EKF localization architecture fusing wheel odometry, tactical IMU gyro rates, and absolute RTK-GNSS fixes ([\[9\]](./references.md#ref-9), [\[22\]](./references.md#ref-22)).
 
 #### Revised Environment — NUS EA Field
 
@@ -186,10 +188,6 @@ When statutory aerodrome trial permits were unavailable, development shifted to 
 
 <Card tag="Initial Proving Ground">
 
-<Card>
-
-</Card>
-
 **Aarhus Airport Runway (EKAH)**
 
 Macro-scale operational aerodrome corridor ($5000\text{ m} \times 60\text{ m}$ total world). Validated long-distance trajectory execution and demonstrated 2D LiDAR SLAM failure in open spaces.
@@ -197,10 +195,6 @@ Macro-scale operational aerodrome corridor ($5000\text{ m} \times 60\text{ m}$ t
 </Card>
 
 <Card tag="Approved Campus Benchmark Target">
-
-<Card>
-
-</Card>
 
 **NUS EA Field Courtyard Proving Ground**
 
@@ -262,7 +256,7 @@ Below is an interactive 3D WebGL viewer of the authentic AgileX Scout 2.0 simula
 
 The complete navigation testbench launches via `bringup_nav2.launch.py` and `sim_and_nav.launch.py`. Sensor data streams from Gazebo Harmonic into the ROS 2 computational graph:
 
-- **State Estimation:** Dual Extended Kalman Filters (`robot_localization`) fuse $50\text{ Hz}$ wheel odometry and $100\text{ Hz}$ IMU yaw rates to broadcast the continuous `odom → base_footprint` transform, while $5\text{ Hz}$ RTK-GNSS fixes anchor the `map → odom` global reference.
+- **State Estimation:** Dual Extended Kalman Filters (`robot_localization`) fuse $50\text{ Hz}$ wheel odometry and $50\text{ Hz}$ IMU yaw rates to broadcast the continuous `odom → base_footprint` transform, while $10\text{ Hz}$ simulated GNSS fixes anchor the `map → odom` global reference.
 - **Costmap Ingestion:** Static orthophoto layers provide free corridor geometry and lethal grass keepouts, while dynamic LiDAR returns ($10\text{ Hz}$) inflate obstacles via the costmap inflation layer.
 - **Planning & Control:** `SmacPlannerHybrid` evaluates the 2D costmap at 1 Hz, generating kinematically feasible Reeds-Shepp waypoints. `RegulatedPurePursuitController` executes at $20\text{ Hz}$, tracking the path while regulating speed based on path curvature and obstacle proximity.
 - **Safety Interlock:** `collision_monitor` projects vehicle bounding polygons ahead along the velocity vector, commanding proactive deceleration or emergency stops if time-to-collision drops below $1.0\text{ second}$.
@@ -309,9 +303,9 @@ where $y'$ is the lateral cross-track error to the selected lookahead point on t
 | --------------------------------------------------------------- | ----------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `desired_linear_vel`                                            | `2.22 m/s (8.0 km/h)`         | Baseline autonomous cruise velocity along clear straightaways.                                 | Provides rapid corridor sweeps while preserving safe stopping distance ($d_{\text{stop}} \le 1.15\text{ m}$).                        | Reduces 100m transit time from $200\text{ s}$ (at $0.5\text{ m/s}$) to $48.2\text{ s}$.          | $4.1\times$ faster patrol throughput with stable tracking on asphalt.                                                                        | Hardware rated for $15\text{ km/h}$; will evaluate progressive increases in Semester 2.                                                                                                  |
 | `lookahead_dist` ($L$)                                          | `1.20 m`                      | Base lookahead distance when dynamic scaling is disabled or at nominal speed.                  | Tuned via empirical parameter sweep across $L \in [0.3, 4.0]\text{ m}$.                                                              | Eliminates high-frequency steering oscillation while avoiding corner cutting.                    | **$99.5\%$ drop in steering chatter** ($\dot{\omega}^2 = 0.42\text{ rad}^2/\text{s}^4$ vs $92.4\text{ rad}^2/\text{s}^4$ at $0.3\text{ m}$). | Static $L$ cannot handle both low-speed docking and high-speed sprints; requires velocity scaling.                                                                                       |
-| `min_lookahead_dist` / `max_lookahead_dist`                     | `0.40 m / 2.50 m`             | Clamps dynamic lookahead distance $L(v)$ within physical limits.                               | $L_{\min} = 0.4\text{ m}$ matches chassis wheelbase ($0.498\text{ m}$); $L_{\max} = 2.5\text{ m}$ bounds corner clipping.            | Maintains responsiveness at low speeds; guarantees stability at cruise.                          | Zero hunting at low crawl speeds; smooth arc entry on high-speed taxiway bends.                                                              | $L_{\max}$ may need expansion to $3.5\text{ m}$ when operating at $15\text{ km/h}$.                                                                                                      |
-| `lookahead_time`                                                | `1.20 s`                      | Lookahead time horizon scaling distance with velocity ($L(v) = v \cdot t_{\text{lookahead}}$). | Matches human reaction and actuator delay margins at $2.22\text{ m/s}$.                                                              | Provides seamless lookahead adaptation across acceleration and deceleration.                     | Lookahead expands from $0.4\text{ m}$ at crawl ($0.33\text{ m/s}$) to $2.5\text{ m}$ at sprint ($2.22\text{ m/s}$).                          | Values $> 1.5\text{ s}$ cause excessive corner cutting on sharp bends.                                                                                                                   |
-| `use_velocity_scaled_lookahead_dist`                            | `True`                        | Enables velocity-proportional lookahead adaptation.                                            | Essential for multi-speed autonomy spanning micro-docking and high-speed sprints.                                                    | Eliminates the trade-off between corner cutting and high-speed instability.                      | Enables rover to track tight obstacles tightly while remaining rock-solid on sprints.                                                        | Must be paired with proper $L_{\min}$ and $L_{\max}$ bounds to prevent clamping windup.                                                                                                  |
+| `min_lookahead_dist` / `max_lookahead_dist`                     | `0.40 m / 2.50 m`             | Clamps dynamic lookahead distance $L(v)$ within physical limits.                               | $L_{\min} = 0.4\text{ m}$ matches chassis wheelbase ($0.498\text{ m}$); $L_{\max} = 2.5\text{ m}$ bounds corner clipping.            | Maintains responsiveness at low speeds; supports tracking at the tested cruise setting.          | Zero hunting at low crawl speeds; smooth arc entry on high-speed taxiway bends.                                                              | $L_{\max}$ may need expansion to $3.5\text{ m}$ when operating at $15\text{ km/h}$.                                                                                                      |
+| `lookahead_time`                                                | `1.20 s`                      | Lookahead time horizon scaling distance with velocity ($L(v) = v \cdot t_{\text{lookahead}}$). | Matches human reaction and actuator delay margins at $2.22\text{ m/s}$.                                                              | Adapts lookahead distance continuously across acceleration and deceleration.                     | Lookahead expands from $0.4\text{ m}$ at crawl ($0.33\text{ m/s}$) to $2.5\text{ m}$ at sprint ($2.22\text{ m/s}$).                          | Values $> 1.5\text{ s}$ cause excessive corner cutting on sharp bends.                                                                                                                   |
+| `use_velocity_scaled_lookahead_dist`                            | `True`                        | Enables velocity-proportional lookahead adaptation.                                            | Essential for multi-speed autonomy spanning micro-docking and high-speed sprints.                                                    | Balances corner cutting against high-speed steering response.                                    | Enables rover to track tight obstacles tightly while maintaining smoother steering on straight routes.                                       | Must be paired with proper $L_{\min}$ and $L_{\max}$ bounds to prevent clamping windup.                                                                                                  |
 | `regulated_linear_scaling_min_radius`                           | `0.80 m`                      | Threshold curvature radius below which linear speed is scaled down.                            | Bounds centripetal acceleration ($a_c = \frac{v^2}{R}$) to prevent chassis rollover and lateral skid.                                | Automatically decelerates vehicle when entering tight curves.                                    | Limits lateral acceleration to $a_c \le 1.8\text{ m/s}^2 < 0.2g$, preventing wheel skid.                                                     | Deceleration increases total transit time around serpentine curves by $\approx 8\%$.                                                                                                     |
 | `regulated_linear_scaling_min_speed`                            | `0.40 m/s`                    | Floor velocity during curvature-regulated deceleration.                                        | Prevents vehicle from stalling or stopping completely on sharp turns.                                                                | Maintains positive forward momentum through curve apexes.                                        | Smooth continuous turn execution without jerky stop-and-go motion.                                                                           | If set too high ($> 0.8\text{ m/s}$), centrifugal force can break wheel traction on wet tarmac.                                                                                          |
 | `use_cost_regulated_linear_velocity_scaling`                    | `True`                        | Modulates speed based on proximity to obstacles in the local costmap.                          | Slows vehicle ahead of obstacles, providing longer reaction time for replanning.                                                     | Smooth proximity deceleration; eliminates emergency braking shocks.                              | Slowing from $2.22\text{ m/s}$ to $0.40\text{ m/s}$ within $1.0\text{ m}$ of obstacle halos.                                                 | Requires properly tuned inflation cost decay to prevent premature slowing.                                                                                                               |
@@ -353,6 +347,7 @@ Tracking-error values also vary by test (including a 0.042 m mean and a 0.115 m 
 
 <VideoClip 
   src="./assets/videos/131026-ugv-object-avoidance.mov" 
+  poster="./assets/images/posters/131026-ugv-object-avoidance-poster.jpg"
   caption="Video 3.4.3 (S7): Dynamic obstacle avoidance test in Gazebo SIL: real-time obstacle detection via 3D LiDAR raytracing, dynamic costmap cell marking, and reactive speed scaling/re-planning." 
 />
 
@@ -420,10 +415,6 @@ The master navigation parameter tuning matrix consolidates empirical findings ac
 
 **📍 Primary Demo: NUS EA Field Autonomous Navigation**
 
-<Card>
-
-</Card>
-
 AgileX Scout 2.0 proxy executing multi-waypoint navigation across paved campus walkways, demonstrating cost-regulated obstacle circumnavigation and path tracking on the high-resolution aerial orthophoto map.
 
 </Card>
@@ -432,32 +423,28 @@ AgileX Scout 2.0 proxy executing multi-waypoint navigation across paved campus w
 
 **🛫 Secondary Demo: Aarhus Airport Runway Sweep**
 
-<Card>
-
-</Card>
-
 High-speed asphalt runway corridor sweep ($2.22\text{ m/s}$), centerline tracking, and multi-obstacle avoidance simulation modeled after Aarhus Airport Runway 10R/28L ($2,702\text{ m} \times 45\text{ m}$).
 
 </Card>
 
 </CardGrid>
 
-**Software-in-the-Loop (SIL) Validation Matrix:** Across 8 core test cases spanning model spawning, TF hierarchy, costmap ingestion, path tracking, obstacle evasion, Dual-EKF fusion, skid scrub reduction, and C2 unicast dispatch, all quantitative acceptance criteria were **PASSED in SIL simulation**:
+**Software-in-the-Loop (SIL) evidence matrix:** The following table separates observed operation from quantitative targets that still require supporting logs or measurements. A successful demonstration does not by itself establish that every numerical acceptance threshold was met:
 
-<Card tag="8 / 8 Tests Verified">
+<Card tag="Simulation Evidence & Verification Status">
 
-**Table 6.1: Software-in-the-Loop (SIL) Simulation Validation Results**
+**Table 6.1: Software-in-the-Loop Tests, Targets and Evidence Status**
 
-| SIL Test Case                        | Target Subsystem        | Acceptance Criteria                                              | Status                              | Empirical Verification Result                                                                                          |
-| ------------------------------------ | ----------------------- | ---------------------------------------------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| 1. Physics Stability                 | Gazebo Harmonic DART    | $RTF \ge 0.95$, zero jitter on flat plane                        | <Badge type="info" text="PASSED" /> | $RTF = 0.98 \pm 0.02$; Scout proxy spawned stably without mesh vibration.                                              |
-| 2. TF Hierarchy                      | `robot_state_publisher` | Lookup latency $< 20\text{ ms}$, zero broken frames              | <Badge type="info" text="PASSED" /> | Unbroken chain: `map → odom → base_footprint → base_link → sensors`.                                                   |
-| 3. Costmap Ingestion                 | Nav2 Costmap2D Server   | Grass cost 254 lethal penalty, memory $< 15\text{ MB}$           | <Badge type="info" text="PASSED" /> | `nus_ea_field.yaml` correctly constrained planner inside paved walking corridors.                                      |
-| 4. Path Execution                    | SmacPlanner + RPP       | Goal position error $< 0.15\text{ m}$, heading error $< 5^\circ$ | <Badge type="info" text="PASSED" /> | Smooth trajectory execution across 12-waypoint campus route cued from C2.                                              |
-| 5. Obstacle Evasion                  | Collision Monitor       | Obstacle clearance $\ge 0.60\text{ m}$, zero collisions          | <Badge type="info" text="PASSED" /> | Safely circumnavigated dynamic cylinders and barrels placed in active corridor.                                        |
-| 6. Dual-EKF Fusion                   | `robot_localization`    | Global position drift $< 0.10\text{ m}$ over 5-minute run        | <Badge type="info" text="PASSED" /> | Eliminated wheel-slip drift by fusing RTK-GNSS with wheel encoders and 9-DOF IMU.                                      |
-| 7. Normalized Yaw-Rotation Reduction | SmacPlannerHybrid       | Minimum radius $R_{\min} \ge 1.0\text{ m}$, zero stall           | <Badge type="info" text="PASSED" /> | $78\%$ reduction in normalized cumulative absolute yaw rotation; pure rolling Reeds-Shepp arcs ($R \ge 1.0\text{ m}$). |
-| 8. C2 Unicast Dispatch               | CycloneDDS Static XML   | JSON alert latency $< 50\text{ ms}$, packet drop $0.0\%$         | <Badge type="info" text="PASSED" /> | RPi 5 ground station successfully dispatched targets to Gazebo Nav2 action server.                                     |
+| SIL Test Case                        | Target Subsystem        | Acceptance Criteria                                              | Status                                                          | Empirical Verification Result                                                                                                                   |
+| ------------------------------------ | ----------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. Physics Stability                 | Gazebo Harmonic DART    | $RTF \ge 0.95$, zero jitter on flat plane                        | <Badge type="warning" text="Needs quantitative verification" /> | An earlier run reported $RTF = 0.98 \pm 0.02$; a separate WSL2 audit observed $RTF \approx 0.31\text{–}0.33$. Test conditions differ.           |
+| 2. TF Hierarchy                      | `robot_state_publisher` | Lookup latency $< 20\text{ ms}$, zero broken frames              | <Badge type="warning" text="Needs quantitative verification" /> | Unbroken chain: `map → odom → base_footprint → base_link → sensors`.                                                                            |
+| 3. Costmap Ingestion                 | Nav2 Costmap2D Server   | Grass cost 254 lethal penalty, memory $< 15\text{ MB}$           | <Badge type="warning" text="Needs quantitative verification" /> | `nus_ea_field.yaml` correctly constrained planner inside paved walking corridors.                                                               |
+| 4. Path Execution                    | SmacPlanner + RPP       | Goal position error $< 0.15\text{ m}$, heading error $< 5^\circ$ | <Badge type="warning" text="Needs quantitative verification" /> | Smooth trajectory execution across 12-waypoint campus route cued from C2.                                                                       |
+| 5. Obstacle Evasion                  | Collision Monitor       | Obstacle clearance $\ge 0.60\text{ m}$, zero collisions          | <Badge type="warning" text="Needs quantitative verification" /> | Safely circumnavigated dynamic cylinders and barrels placed in active corridor.                                                                 |
+| 6. Dual-EKF Fusion                   | `robot_localization`    | Global position drift $< 0.10\text{ m}$ over 5-minute run        | <Badge type="warning" text="Needs quantitative verification" /> | Local and global EKFs were verified publishing odometry and TF at runtime; accuracy and drift reduction were not measured against ground truth. |
+| 7. Normalized Yaw-Rotation Reduction | SmacPlannerHybrid       | Minimum radius $R_{\min} \ge 1.0\text{ m}$, zero stall           | <Badge type="warning" text="Needs quantitative verification" /> | $78\%$ reduction in normalized cumulative absolute yaw rotation; curvature-constrained Reeds-Shepp paths ($R \ge 1.0\text{ m}$).                |
+| 8. C2 Unicast Dispatch               | CycloneDDS Static XML   | JSON alert latency $< 50\text{ ms}$, packet drop $0.0\%$         | <Badge type="warning" text="Needs quantitative verification" /> | RPi 5 ground station successfully dispatched targets to Gazebo Nav2 action server.                                                              |
 
 </Card>
 
@@ -542,7 +529,7 @@ Advancing to each speed tier requires satisfying mandatory safety gates: expandi
 
 #### Conditional MPPI Evaluation
 
-The Model Predictive Path Integral (MPPI) controller ([\[23\]](./references.md#ref-23)) will be evaluated on the NVIDIA Jetson Orin **only if RPP ([\[22\]](./references.md#ref-22)) fails to meet trajectory tracking accuracy at speeds $> 10\text{ km/h}$** and if adequate computing budget is available.
+The Model Predictive Path Integral (MPPI) controller ([\[19\]](./references.md#ref-19)) will be evaluated on the NVIDIA Jetson Orin **only if RPP ([\[18\]](./references.md#ref-18)) fails to meet trajectory tracking accuracy at speeds $> 10\text{ km/h}$** and if adequate computing budget is available.
 
 _Technical Clarification on MPPI:_ MPPI does not inherently require GPU acceleration; CPU SIMD multithreading implementations exist in Nav2. However, GPU tensor acceleration allows evaluating thousands of trajectory rollouts per control cycle. If RPP's geometric formulation provides sufficient tracking fidelity at lower computational cost, RPP will be retained as the production controller to preserve CPU cycles for real-time edge vision (YOLO).
 
@@ -552,7 +539,7 @@ Transitioning from the AgileX Scout 2.0 proxy to the physical custom Hunter UGV 
 
 <Figure src="./assets/diagrams/sim2real-transition-roadmap.svg" alt="Sim2Real Transition Strategy and Phased Roadmap" caption="**Figure 9.1: Sim2Real Transition Strategy &amp; Phased Verification Roadmap.** Methodical 4-stage pipeline translating Gazebo Harmonic SIL algorithms to the physical custom 4-wheel hub-motor FOD Hunter UGV. Hardware parameter calibration, CANopen driver abstractions, and EKF noise covariance tuning systematically bridge the physical reality gap." />
 
-1. **URDF Calibration:** Update robot description with measured physical parameters ($m = 65.0\text{ kg}$, $L = 0.450\text{ m}$, $W = 0.580\text{ m}$, $R = 0.1315\text{ m}$).
+1. **URDF Calibration:** Update robot description with measured physical parameters (65 kg assumed mass, 263 mm purchased wheel diameter, and measured wheelbase/track width once the chassis is finalized).
 2. **CANopen Actuator Bridge:** Replace Gazebo diff-drive plugin with ROS 2 CANopen driver nodes communicating with dual ZLAC8015D motor controllers via STM32 firmware, implementing deadband compensation and feedforward anti-cogging.
 3. **Sensor Driver Integration:** Interface physical Hesai JT16 3D LiDAR, ArduSimple SimpleRTK2B GPS, and BNO085 9-DOF IMU with calibrated empirical covariance matrices ($Q$ and $R$).
 4. **Impeller Vibration Filtering:** Deploy 4th-order Butterworth low-pass filters on IMU accelerometer topics to isolate $24,000\text{ RPM}$ vacuum impeller vibration from vehicle state estimation.

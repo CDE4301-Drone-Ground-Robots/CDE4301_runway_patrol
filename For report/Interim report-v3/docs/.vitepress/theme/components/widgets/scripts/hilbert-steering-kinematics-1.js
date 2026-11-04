@@ -271,12 +271,38 @@ export default function init() {
       svg.innerHTML = html;
     }
 
+    // Expose handlers globally so inline oninput/onclick attributes work in browser
+    if (typeof window !== 'undefined') {
+      window.updateLBSimulation = updateLBSimulation;
+      window.setPresetLB = setPresetLB;
+      window.openSteeringModal = openSteeringModal;
+      window.closeSteeringModal = closeSteeringModal;
+    }
+
+    // Attach event listeners directly to DOM elements
+    function bindSteeringWidgetEvents() {
+      var inputL = document.getElementById('input-wheelbase');
+      var inputB = document.getElementById('input-trackwidth');
+      var selectMu = document.getElementById('select-friction');
+      if (inputL) {
+        inputL.removeEventListener('input', updateLBSimulation);
+        inputL.addEventListener('input', updateLBSimulation);
+      }
+      if (inputB) {
+        inputB.removeEventListener('input', updateLBSimulation);
+        inputB.addEventListener('input', updateLBSimulation);
+      }
+      if (selectMu) {
+        selectMu.removeEventListener('change', updateLBSimulation);
+        selectMu.addEventListener('change', updateLBSimulation);
+      }
+      updateLBSimulation();
+    }
+
     // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      updateLBSimulation();
-    });
+    document.addEventListener('DOMContentLoaded', bindSteeringWidgetEvents);
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      updateLBSimulation();
+      bindSteeringWidgetEvents();
     }
   
 }

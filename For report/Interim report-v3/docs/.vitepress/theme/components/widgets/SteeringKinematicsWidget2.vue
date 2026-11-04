@@ -3,9 +3,8 @@
 import { useWidgetScript } from './useWidgetScript'
 
 import s0 from './scripts/hilbert-steering-kinematics-1.js'
-import s1 from './scripts/hilbert-steering-kinematics-2.js'
 
-useWidgetScript([['hilbert-steering-kinematics-1', s0], ['hilbert-steering-kinematics-2', s1]])
+useWidgetScript([['hilbert-steering-kinematics-1', s0]])
 </script>
 
 <template>
@@ -43,7 +42,7 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0], ['hilbert-steering-kinem
                   <span>Wheelbase (L)</span>
                   <span id="val-wheelbase" style="font-weight: 700; color: #60a5fa;">488.8 mm (0.489 m)</span>
                 </label>
-                <input type="range" id="input-wheelbase" min="300" max="800" step="5" value="488.8" oninput="updateLBSimulation()" style="width: 100%; accent-color: #3b82f6;">
+                <input type="range" id="input-wheelbase" min="300" max="800" step="0.1" value="488.8" oninput="updateLBSimulation()" style="width: 100%; accent-color: #3b82f6;">
                 <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: var(--apple-text-tertiary); margin-top: 4px;">
                   <span>300 mm (Pitch Risk)</span>
                   <span>Physical: 488.8 mm</span>
@@ -56,7 +55,7 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0], ['hilbert-steering-kinem
                   <span>Track Width (B)</span>
                   <span id="val-trackwidth" style="font-weight: 700; color: #c084fc;">575.0 mm (0.575 m)</span>
                 </label>
-                <input type="range" id="input-trackwidth" min="400" max="850" step="5" value="575.0" oninput="updateLBSimulation()" style="width: 100%; accent-color: #a855f7;">
+                <input type="range" id="input-trackwidth" min="400" max="850" step="0.1" value="575.0" oninput="updateLBSimulation()" style="width: 100%; accent-color: #a855f7;">
                 <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: var(--apple-text-tertiary); margin-top: 4px;">
                   <span>400 mm (Narrow)</span>
                   <span>Physical: 575.0 mm</span>

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@docs/*": ["For report/Interim report-v3/docs/*"],
+      "@theme/*": ["For report/Interim report-v3/docs/.vitepress/theme/*"]
+    },
+    "strict": false,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": [
+    "For report/Interim report-v3/env.d.ts",
+    "For report/Interim report-v3/docs/.vitepress/env.d.ts",
+    "For report/Interim report-v3/**/*"
+  ]
+}
+

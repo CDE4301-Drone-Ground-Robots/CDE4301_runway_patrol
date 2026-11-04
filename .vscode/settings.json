@@ -1,5 +1,5 @@
 {
-  "cmake.sourceDirectory": "C:/Users/admin/OneDrive - National University of Singapore/Documents/NUS/Y4S1/CDE4301 Innovation & Design Capstone (Robotics)/Github report/simulation/src/runway_description",
+  "cmake.sourceDirectory": "C:/Users/admin/OneDrive - National University of Singapore/Documents/NUS/Y4S1/CDE4301 Innovation & Design Capstone (Robotics)/Github report/runway_sim_ws/src/runway_description",
   "terminal.integrated.env.windows": {
     "Path": "C:\\Program Files\\nodejs;${env:Path}"
   }

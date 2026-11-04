@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@docs/*": ["docs/*"],
+      "@theme/*": ["docs/.vitepress/theme/*"]
+    },
+    "strict": false,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": [
+    "env.d.ts",
+    "docs/.vitepress/**/*"
+  ]
+}
+
