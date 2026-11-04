@@ -237,7 +237,7 @@ The power distribution architecture supports reliable power delivery, electrical
 
 <div class="ov-contrib">
 
-#### Component Selection and BOM {#ov-component-BOM}
+#### Component Selection, BOM and Integration {#ov-component-BOM}
 
 <p class="ov-placeholder">*To Be Filled*</p>
 
