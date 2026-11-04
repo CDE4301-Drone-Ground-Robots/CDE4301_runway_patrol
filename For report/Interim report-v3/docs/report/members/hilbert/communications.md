@@ -12,7 +12,7 @@ _Semester 1 engineering documentation — ROS 2 Jazzy, CycloneDDS, command-and-c
 
 ## 1. Objectives & Requirements {#com-objectives}
 
-The communications subsystem connects aerial FOD reconnaissance ([\[5\]](./references.md#ref-5), [\[6\]](./references.md#ref-6), [\[12\]](./references.md#ref-12)) to ground remediation without coupling the UAV detection software to the UGV's motion controller, following cooperative multi-agent task dispatch principles ([\[13\]](./references.md#ref-13)). It must accept target alerts, preserve their coordinates and priorities, dispatch valid goals to Nav2, return vehicle status and support mission interruption. The Semester 1 objective was to prove this command pipeline across **two physical computers on an indoor local network**, with the UGV represented in Gazebo. It was **not** an outdoor UAV-to-physical-UGV radio demonstration.
+The communication system allows the UAV-side computer to send FOD target coordinates to the UGV without directly controlling its motors ([\[5\]](./references.md#ref-5), [\[6\]](./references.md#ref-6), [\[12\]](./references.md#ref-12), [\[13\]](./references.md#ref-13)). The UGV checks incoming alerts, sends valid goals to Nav2 and returns status updates. We tested this workflow between **two physical computers on an indoor local network**, with the UGV simulated in Gazebo. We did **not** test a radio link between a flying UAV and a physical UGV.
 
 The implemented streams were `/c2/target_alert` (event-driven alerts) and `/c2/ugv_telemetry` (1 Hz UGV status). Operational requirements for longer-range, infrastructure-independent transmission remain Semester 2 work.
 
@@ -63,7 +63,7 @@ Fail-safe logic must account for anomalous communications events:
 
 ## 2. System Architecture {#com-architecture}
 
-The Semester 1 testbed used a **Raspberry Pi 5 as the UAV-side C2 terminal** and an **Ubuntu 24.04/WSL2 workstation** running the Gazebo UGV and Nav2. The Pi generated synthetic target alerts; the receiver decoded and validated messages, converted the target into a map-frame pose and queued a `NavigateToPose` goal. Telemetry returned status and heartbeat information. The real UAV detection stage was emulated, so the successful demonstration establishes the communications-to-navigation integration rather than airborne end-to-end validation.
+We used a **Raspberry Pi 5** to represent the UAV-side command computer and an **Ubuntu 24.04/WSL2 workstation** to run the simulated UGV and Nav2. The Pi sent test target alerts. The UGV-side node checked each message, converted it into a map-frame goal and sent it to Nav2 using `NavigateToPose`. Status and heartbeat messages travelled back to the Pi. Because target detection was simulated, this test verifies the communication-to-navigation workflow, not an end-to-end UAV flight demonstration.
 
 <Figure
   src="./assets/diagrams/c1-uav-ugv-communication-architecture.svg"
@@ -75,12 +75,12 @@ The Semester 1 testbed used a **Raspberry Pi 5 as the UAV-side C2 terminal** and
 
 ::: details ROS 2 nodes, topics and communication interface
 
-| Interface            | Direction           | Purpose                                       |
-| -------------------- | ------------------- | --------------------------------------------- |
-| `/c2/target_alert`   | C2 terminal → UGV   | Structured FOD target and priority            |
-| `/c2/ugv_telemetry`  | UGV → C2 terminal   | Vehicle state and heartbeat at 1 Hz           |
-| `ugv_c2_bridge_node` | UGV-side processing | Validate, queue and dispatch navigation goals |
-| `NavigateToPose`     | UGV bridge → Nav2   | Execute target waypoint                       |
+| Interface            | Direction           | Purpose                                                              |
+| -------------------- | ------------------- | -------------------------------------------------------------------- |
+| `/c2/target_alert`   | C2 terminal → UGV   | Structured FOD target and priority                                   |
+| `/c2/ugv_telemetry`  | UGV → C2 terminal   | Vehicle state and heartbeat at 1 Hz                                  |
+| `ugv_c2_bridge_node` | UGV-side processing | Validate, queue and dispatch navigation goals                        |
+| `NavigateToPose`     | UGV bridge → Nav2   | Execute target waypoint                                              |
 | `/c2/goal_markers`   | UGV → RViz          | Visualize queued and active goals ([\[18\]](./references.md#ref-18)) |
 
 <Figure src="./assets/diagrams/c5-ros2-publisher-subscriber-architecture.svg" alt="ROS 2 Node Graph and Communication Architecture" caption="**Figure 2.2: ROS 2 Publisher–Subscriber and Action Interface Architecture.** Conceptual node graph depicting bidirectional communication between the companion Raspberry Pi 5 C2 commander and the UGV onboard mission controller (`ugv_c2_bridge_node`), with goal dispatch to the Nav2 `NavigateToPose` action server." />
@@ -101,7 +101,7 @@ ROS 2's DDS-based publisher–subscriber model was selected to keep mission mess
 
 **5.2 CycloneDDS Configuration (Static Unicast Peering)**
 
-To resolve NAT multicast drops between the WSL2 guest and external physical SBCs, Eclipse CycloneDDS was configured with identical static unicast discovery peering on both machines via `cyclonedds.xml`:
+We configured `cyclonedds.xml` on both computers with explicit peer addresses because multicast discovery was unreliable across the WSL2 network:
 
 <Figure src="./assets/diagrams/cyclonedds-unicast-topology.svg" alt="CycloneDDS Static Unicast Peering Architecture" caption="**Figure 5.1: CycloneDDS Static Unicast Peering Configuration.** Elimination of UDP multicast discovery drops across the virtualized Windows Hyper-V NAT vSwitch. Static IP declarations establish direct point-to-point participant discovery between laptop and Raspberry Pi 5." />
 
@@ -121,7 +121,7 @@ The team used JSON dictionaries carried in `std_msgs/msg/String` to simplify ins
 
 **5.3 JSON Message Payload Specifications**
 
-To avoid cross-compilation dependency hurdles with custom ROS 2 `.msg` packages across heterogeneous operating systems, all tactical communication was encapsulated in standard `std_msgs/msg/String` topics carrying rigorously defined JSON dictionaries.
+We used JSON inside `std_msgs/msg/String` so both computers could exchange messages without installing a custom ROS 2 message package.
 
 The table below documents the verified schema deployed in `DemoComs_C2.py` and `ugv_c2_bridge_node.py`:
 
@@ -129,17 +129,17 @@ The table below documents the verified schema deployed in `DemoComs_C2.py` and `
 
 **Table 5.1: Downlink Reconnaissance Alert Schema (`/c2/target_alert`)**
 
-| JSON Field                | Data Type           | Example Value                     | Role & Semantic Definition                                                         |
-| ------------------------- | ------------------- | --------------------------------- | ---------------------------------------------------------------------------------- |
-| `mission_id`              | `string`            | `"RUNWAY_INSPECT_2026_0923"`      | Global unique identifier linking reconnaissance sorties to remediation records.    |
-| `threat_id`               | `string`            | `"FOD_THREAT_001"`                | Sequential debris identifier used for tracking remediation task states.            |
+| JSON Field                | Data Type           | Example Value                     | Role & Semantic Definition                                                                          |
+| ------------------------- | ------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `mission_id`              | `string`            | `"RUNWAY_INSPECT_2026_0923"`      | Global unique identifier linking reconnaissance sorties to remediation records.                     |
+| `threat_id`               | `string`            | `"FOD_THREAT_001"`                | Sequential debris identifier used for tracking remediation task states.                             |
 | `object_class`            | `string`            | `"metal_bolt"`                    | YOLO AI object classification label ([\[10\]](./references.md#ref-10)) for prioritizing collection. |
-| `coordinates.x` / `.y`    | `float`             | `-15.0, 5.0`                      | Target coordinate in metric Cartesian `map` coordinate frame (meters).             |
-| `coordinates.z` / `.yaw`  | `float`             | `0.0, 0.0`                        | Elevation relative to ground plane ($Z=0$) and approach orientation (radians).     |
-| `confidence`              | `float`             | `0.96`                            | Normalized machine learning inference confidence score ($0.00 - 1.00$).            |
-| `priority_level`          | `string`            | `"NORMAL" \| "URGENT" \| "ABORT"` | Queue priority. `ABORT` triggers immediate velocity zeroing and goal cancellation. |
-| `timestamp_utc`           | `string (ISO 8601)` | `"2026-09-23T14:32:00.123Z"`      | Precision Coordinated Universal Time stamp for latency and timeout monitoring.     |
-| `cryptographic_signature` | `string (hex)`      | `"a3f5b8..." (SHA-256)`           | Hash over payload and timestamp to detect transmission corruption or spoofing.     |
+| `coordinates.x` / `.y`    | `float`             | `-15.0, 5.0`                      | Target coordinate in metric Cartesian `map` coordinate frame (meters).                              |
+| `coordinates.z` / `.yaw`  | `float`             | `0.0, 0.0`                        | Elevation relative to ground plane ($Z=0$) and approach orientation (radians).                      |
+| `confidence`              | `float`             | `0.96`                            | Normalized machine learning inference confidence score ($0.00 - 1.00$).                             |
+| `priority_level`          | `string`            | `"NORMAL" \| "URGENT" \| "ABORT"` | Queue priority. `ABORT` triggers immediate velocity zeroing and goal cancellation.                  |
+| `timestamp_utc`           | `string (ISO 8601)` | `"2026-09-23T14:32:00.123Z"`      | Precision Coordinated Universal Time stamp for latency and timeout monitoring.                      |
+| `cryptographic_signature` | `string (hex)`      | `"a3f5b8..." (SHA-256)`           | Hash over payload and timestamp to detect transmission corruption or spoofing.                      |
 
 </Card>
 
@@ -175,7 +175,7 @@ Indoor Wi-Fi was suitable for Semester 1 integration but not established as an a
 
 **4.4 Long-Range Airfield Technology Comparison**
 
-For Semester 2 outdoor airfield operations, five candidate wireless communications technologies were evaluated against the Runway Patrol operational envelope:
+We compared five wireless options for the planned outdoor communication link:
 
 <Card tag="Airfield Technology Evaluation">
 
@@ -287,7 +287,7 @@ The Holybro Microhard P900 V2 represents our \*\*preliminary preferred design ba
 
 ### 4.1 Two-machine integration {#com-network}
 
-The Pi-side mission dispatcher and workstation-side receiver were connected over an isolated Wi-Fi subnet. On the workstation, ROS 2 nodes operated alongside the Gazebo/Nav2 software-in-the-loop UGV. The static-unicast CycloneDDS configuration enabled cross-machine discovery despite the virtualized networking boundary. The actual addresses and network settings are retained below for reproducibility, not as universal settings.
+We connected the Raspberry Pi and workstation over a local Wi-Fi network. The workstation ran ROS 2, Gazebo and Nav2. CycloneDDS static peers allowed the two machines to discover each other. The addresses below describe this test setup and are not general configuration defaults.
 
 ::: details Testbed hardware and network configuration
 
@@ -302,7 +302,7 @@ The Semester 1 multi-machine testbed connected two distinct physical computing n
 
 ### 4.2 Alert ingestion, coordinates and goal queue {#com-dispatch}
 
-The UGV bridge interpreted map-frame target coordinates, converted yaw to a quaternion and submitted a `PoseStamped` goal to Nav2. An internal FIFO queue supported sequential targets, while RViz markers displayed mission progress. **Geographic-to-map georeferencing of real UAV detections must not be inferred from this map-frame synthetic-target test.** The navigation planner and controller are documented separately.
+The UGV bridge read target coordinates in the `map` frame, converted the requested heading to a quaternion and sent a `PoseStamped` goal to Nav2. A FIFO queue handled multiple targets, and RViz markers showed queued and active goals. **These tests used synthetic map-frame targets; they did not verify conversion of real UAV GPS detections into UGV map coordinates.**
 
 ::: details Coordinate conversion and Nav2 dispatch implementation
 
@@ -324,7 +324,7 @@ Goals are appended to an internal FIFO queue (`goal_queue`). The node concurrent
 
 ### 4.3 Proposed serial-radio gateway {#com-future-gateway}
 
-The planned P900 V2 radio is a serial transport, so it cannot transparently carry native ROS 2 DDS discovery and topics without a gateway. A proposed gateway would frame and check mission messages before re-publishing them on the receiving agent. This is a design proposal, **not Semester 1 implementation evidence**.
+The proposed P900 V2 uses a serial interface, so ROS 2 messages would need a gateway rather than being sent as native DDS traffic. The gateway would frame and validate messages before publishing them on the receiving computer. **This gateway has not yet been implemented or tested.**
 
 ::: details Proposed COBS, CRC-32 and acknowledgement design
 
@@ -393,7 +393,7 @@ _Raspberry Pi 5 terminal recording, workstation Nav2 recording, and multi-queue 
 
 ## 6. Engineering Discussion {#com-discussion}
 
-The principal Semester 1 achievement was separating the C2 mission layer from the UGV autonomy stack while making distributed ROS 2 communication work across a virtualized host network. Static unicast peering resolved a practical discovery obstacle; JSON messages were easy to debug and integrate. The trade-offs are dependence on a known peer configuration, application-managed schema integrity, and limited evidence about performance beyond the indoor network. A message hash alone is not proof of sender authenticity unless keyed authentication or a signature scheme is actually implemented.
+We separated target dispatch from the UGV navigation software and connected ROS 2 nodes across two computers. Static unicast peers solved the discovery problem in our WSL2 setup. JSON messages were straightforward to inspect during testing, but they require validation in the application. Static peers also need to be updated when network addresses change. The indoor tests do not establish outdoor radio reliability. A plain message hash does not authenticate the sender; that requires keyed authentication or a digital signature.
 
 ::: details Additional evaluation and lessons learned
 
@@ -401,7 +401,7 @@ The principal Semester 1 achievement was separating the C2 mission layer from th
 
 **7.1 Evaluation of Semester 1 Implementation**
 
-The Semester 1 indoor communication architecture completely satisfied its engineering goals. It successfully decoupled the development of high-level C2 mission logic from low-level mobile robot motion planning, validated multi-threaded Nav2 action handling, and proved that lightweight JSON serialization over standard ROS 2 topics provides a robust, easily debugged software interface.
+The indoor tests showed that the Raspberry Pi could send target alerts to the simulated UGV and that the bridge could pass goals to Nav2. The separation between mission messages and robot motion control made the system easier to test. These results do not establish reliability on a long-range radio link.
 
 **7.2 Limitations of Indoor Wi-Fi & DDS Transport**
 
@@ -419,7 +419,7 @@ The Holybro Microhard P900 V2 represents a highly pragmatic, cost-effective cand
 
 **8.1 DDS Discovery Under Virtualized NAT**
 
-The primary architectural lesson of Semester 1 was navigating the virtualized Hyper-V networking layer of WSL2. Standard multicast DDS configurations led to silent discovery failures that were initially mistaken for firewall blocks. Deploying declarative CycloneDDS XML files with explicit static unicast peer declarations resolved the issue entirely, delivering deterministic peer binding with zero network latency penalty.
+The main networking issue was ROS 2 discovery across WSL2 and the external Raspberry Pi. Multicast discovery was unreliable, so we configured explicit CycloneDDS peers in XML. This allowed the two computers to discover each other in our test setup. The configuration does not by itself prove zero added latency.
 
 **8.2 JSON String vs Custom ROS 2 IDL Messages**
 
@@ -433,7 +433,7 @@ Preparing for long-range radio integration revealed that transparent serial link
 
 ## 7. Limitations & Semester 2 Plan {#com-semester-two}
 
-The next stage is to verify regulatory feasibility, select and procure an appropriate radio, implement the serial gateway, measure packet loss and latency under controlled conditions, and then test actual UAV-to-UGV mission exchange. Wireless-link failure, stale alerts and emergency commands require explicit, testable safety behavior. No RF field-range or full physical mission results are claimed for Semester 1.
+Next, we need to confirm the radio regulations, select suitable hardware and implement the serial-to-ROS 2 gateway. We then plan to measure packet loss and latency, test communication loss and stale-message handling, and verify target dispatch between the physical UAV and UGV. Outdoor radio range and full physical mission performance have not yet been tested.
 
 ::: details Detailed proposed milestones
 

@@ -1,6 +1,6 @@
 ---
 title: "Software & Development Environment"
-description: "Core robotics software stack, ROS 2 Jazzy selection rationale, and Semester 1 WSL2 SIL environment."
+description: "Software stack, ROS 2 selection and WSL2 development setup."
 owner: "Hilbert Soh"
 outline: [2, 3]
 ---
@@ -9,39 +9,36 @@ outline: [2, 3]
 
 <Badge type="info" text="ROS 2 Jazzy Jalisco • Ubuntu 24.04 LTS • Gazebo Harmonic" />
 
-The autonomous runway inspection UGV requires a robust, long-term computational middleware stack to orchestrate real-time sensor processing, state estimation, path planning, and inter-agent command-and-control (C2) communications. For Semester 1 development, the software stack was standardized on **Ubuntu 24.04 LTS (Noble Numbat)**, **ROS 2 Jazzy Jalisco** ([\[7\]](./references.md#ref-7)), **Gazebo Harmonic (GZ 8.x)**, the **Nav2** autonomous navigation stack ([\[8\]](./references.md#ref-8)), and **Eclipse CycloneDDS**.
+We used **Ubuntu 24.04 LTS**, **ROS 2 Jazzy** ([\[7\]](./references.md#ref-7)), **Gazebo Harmonic**, **Nav2** ([\[8\]](./references.md#ref-8)) and **CycloneDDS** to develop the UGV navigation and UAV–UGV communication software. ROS 2 handles data exchange between sensors, localization, planning and control nodes. Gazebo provides the simulation environment used before physical UGV integration.
 
-#### Middleware Selection Rationale {#ros2-selection-rationale}
+#### Why ROS 2 Jazzy? {#ros2-selection-rationale}
 
-Architectural selection follows a five-tier engineering dependency chain:
+We selected **ROS 2 Jazzy** for three reasons:
 
-<div class="dependency-chain">
+1. **Long-term support:** Jazzy is an LTS release supported through May 2029. It runs on Ubuntu 24.04 LTS, providing a stable development baseline.
+2. **Simulation compatibility:** Jazzy integrates with Gazebo Harmonic through `ros_gz_bridge`, allowing simulated sensors and robot commands to communicate with ROS 2 nodes.
+3. **Navigation tools:** Jazzy supports the Nav2 planners and controllers used in our work, including Smac Planner ([\[19\]](./references.md#ref-19)) and Regulated Pure Pursuit ([\[22\]](./references.md#ref-22)).
 
-**ROS 2 Jazzy (LTS)** → **Ubuntu 24.04 LTS** → **Gazebo Harmonic (GZ 8.x)** → **Nav2 Stack Maturity** → **Hardware Drivers & micro-ROS**
+We considered other ROS 2 releases, but chose Jazzy to avoid changing the operating system and software dependencies during development. The comparison is available below.
 
-</div>
+#### Development Setup (WSL2) {#wsl2-development-environment}
 
-ROS 2 Jazzy was selected as the foundational baseline over alternative releases based on multi-criteria engineering evaluation:
+We ran Ubuntu 24.04 inside **Windows Subsystem for Linux 2 (WSL2)** on the development laptop. This allowed us to develop ROS 2 packages and run Gazebo Harmonic without a separate Linux computer. The original setup notes report approximately **45–60 FPS** for Gazebo rendering through WSLg; this is a reported observation, not a standardized performance benchmark.
 
-1. **LTS Longevity & Kernel Alignment:** Released in May 2024 with official support through May 2029, Jazzy aligns natively with Ubuntu 24.04 LTS and Linux Kernel 6.8+, guaranteeing five years of upstream security patches and API stability for multi-year capstone continuity.
-2. **First-Party Simulation Integration:** Jazzy is the native LTS pairing for Gazebo Harmonic via `ros_gz_bridge`, eliminating the fragile dependency shims and deprecated transport layers of legacy Gazebo Classic.
-3. **Ecosystem & Driver Maturity:** Nav2's Smac Planner ([\[19\]](./references.md#ref-19)) and Regulated Pure Pursuit (RPP) controllers ([\[22\]](./references.md#ref-22)) are fully validated on Jazzy binaries, alongside stable micro-ROS firmware bridges and RTK-GNSS sensor interfaces.
-
-#### Development Environment (WSL2 SIL) {#wsl2-development-environment}
-
-During Semester 1, software-in-the-loop (SIL) development and high-fidelity simulation were hosted on an engineering workstation running Ubuntu 24.04 LTS inside **Windows Subsystem for Linux (WSL2)**. Graphics-intensive Gazebo Harmonic simulation achieves 45–60 FPS rendering via WSLg DirectX D3D12 GPU paravirtualization without CPU bottlenecking. Virtualized NAT limitations on standard DDS multicast were resolved by configuring Eclipse CycloneDDS static unicast peering, establishing deterministic inter-process communication between simulation nodes and the UAV companion computer.
+We encountered a networking issue when connecting ROS 2 nodes in WSL2 to the external Raspberry Pi 5: DDS multicast discovery did not work reliably across the virtualized network. We configured **CycloneDDS static unicast peers** so the machines could discover each other using known addresses. The configuration and tests are documented in [Communications](./communications.md).
 
 ::: details ROS 2 Distribution Comparison
 
+The following summarizes the alternatives considered when the software baseline was chosen. Support dates and compatibility statements reflect the original project comparison and should be checked against official release documentation before submission.
+
 <table class="data-table"><tbody>
-<tr><th>ROS 2 Distribution</th><th>Support Window</th><th>Target OS & Kernel</th><th>Simulation & Nav2 Integration</th><th>Selection Evaluation</th></tr>
-<tr><td><img src="./assets/images/lyrical-small.png" alt="Lyrical Luth"> Lyrical Luth (LTS) Released May 2026 LTS</td><td>May 2026 – May 2031</td><td>Ubuntu 26.04 LTS (Kernel 6.14+)</td><td>Unreleased during baseline architecture; vendor hardware drivers and micro-ROS packages remain unported to Ubuntu 26.04. Migrating mid-project introduces critical driver instability ("ecosystem lag").</td><td><Badge type="info" text="Deferred (Ecosystem Stability)" /></td></tr>
-<tr><td><img src="./assets/images/kilted-small.png" alt="Kilted Kaiju"> Kilted Kaiju (STS) Short-Term Support</td><td>May 2025 – Nov 2026</td><td>Ubuntu 24.04 LTS (Kernel 6.8+)</td><td>Non-LTS stepping stone; 18-month lifecycle reaches EOL during the project timeline. Lacks vendor long-term maintenance.</td><td><Badge type="info" text="Rejected (18-Month STS)" /></td></tr>
-<tr><td><img src="./assets/images/jazzy-small.png" alt="Jazzy Jalisco"> Jazzy Jalisco (LTS) Current Capstone Baseline</td><td>May 2024 – May 2029</td><td>Ubuntu 24.04 LTS (Kernel 6.8+)</td><td>Official LTS pairing with Gazebo Harmonic (GZ 8.x) via <code>ros_gz_bridge</code>; mature Nav2 Smac & RPP binaries; validated micro-ROS and RTK sensor drivers.</td><td><Badge type="info" text="SELECTED (Capstone Baseline)" /></td></tr>
-<tr><td><img src="./assets/images/humble-small.png" alt="Humble Hawksbill"> Humble Hawksbill (LTS) Legacy LTS</td><td>May 2022 – May 2027</td><td>Ubuntu 22.04 LTS (Kernel 5.15)</td><td>Paired with deprecated Gazebo Classic 11 / Fortress; nearing EOL.</td><td><Badge type="info" text="Evaluated &amp; Superseded" /></td></tr>
+<tr><th>ROS 2 Distribution</th><th>Support Window</th><th>Target OS</th><th>Assessment</th><th>Decision</th></tr>
+<tr><td><img src="./assets/images/lyrical-small.png" alt="Lyrical Luth"> Lyrical Luth (LTS)</td><td>May 2026 – May 2031</td><td>Ubuntu 26.04 LTS</td><td>Newer LTS release, but changing the OS and checking driver compatibility would add migration work.</td><td><Badge type="info" text="Deferred" /></td></tr>
+<tr><td><img src="./assets/images/kilted-small.png" alt="Kilted Kaiju"> Kilted Kaiju (STS)</td><td>May 2025 – Nov 2026</td><td>Ubuntu 24.04 LTS</td><td>Short-term release with a support window that ends during the project.</td><td><Badge type="info" text="Not selected" /></td></tr>
+<tr><td><img src="./assets/images/jazzy-small.png" alt="Jazzy Jalisco"> Jazzy Jalisco (LTS)</td><td>May 2024 – May 2029</td><td>Ubuntu 24.04 LTS</td><td>Matches our development OS and Gazebo Harmonic setup; supports the Nav2 tools used in the project.</td><td><Badge type="info" text="Selected" /></td></tr>
+<tr><td><img src="./assets/images/humble-small.png" alt="Humble Hawksbill"> Humble Hawksbill (LTS)</td><td>May 2022 – May 2027</td><td>Ubuntu 22.04 LTS</td><td>Would require an older Ubuntu baseline and offers a shorter remaining support period.</td><td><Badge type="info" text="Not selected" /></td></tr>
 </tbody></table>
 
 :::
 
 <!-- #endregion report -->
-

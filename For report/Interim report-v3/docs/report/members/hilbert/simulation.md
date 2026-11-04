@@ -13,9 +13,9 @@ outline: [2, 3]
 
 ## 1. Objectives & Requirements {#sim-objectives}
 
-Simulation enabled development of the autonomy stack while FOD Hunter's custom chassis, electronics and sensor integration were still in progress. The main goal was to exercise the ROS 2–Gazebo–Nav2 control loop in repeatable environments before hardware deployment, measuring path feasibility, tracking, collision avoidance and recovery rather than assuming simulated success guarantees runway performance.
+We used Gazebo to develop and test navigation while the custom FOD Hunter chassis and electronics were still being built. The tests covered path planning, path tracking, obstacle avoidance and recovery. Results from simulation do not establish how the physical robot will perform.
 
-The Semester 1 development baseline was **8.0 km/h** for navigation tests, while **15.0 km/h** remained a later physical-platform objective. Test acceptance criteria included real-time physics stability, bounded tracking error, feasible turning trajectories and safe obstacle responses. The original report also includes some 10 km/h demonstrations; these must be treated as distinct test conditions, not a replacement for the 8 km/h baseline.
+Most navigation tests used an **8.0 km/h** speed setting. Some demonstrations used **10 km/h**; these are separate test conditions. The proposed **15.0 km/h** physical-vehicle speed has not been validated. We assessed simulation speed, tracking error, turning paths and obstacle response.
 
 ::: details Simulation requirements, operating constraints and safety calculations
 
@@ -69,7 +69,7 @@ Meaningful navigation testing required: (1) a verified 4WD skid-steer chassis mo
 
 ## 2. Simulation Architecture {#sim-architecture}
 
-The Semester 1 testbed connected **Gazebo Harmonic** physics and simulated sensors to **ROS 2 Jazzy** ([\[7\]](./references.md#ref-7)) through `ros_gz_bridge`. The Nav2 stack ([\[8\]](./references.md#ref-8)) consumed simulated odometry, LiDAR, IMU and GNSS inputs and issued `/cmd_vel` commands back to the simulated drivetrain. Consistent `/clock` and TF frame handling were essential for repeatable tests.
+We connected **Gazebo Harmonic** to **ROS 2 Jazzy** ([\[7\]](./references.md#ref-7)) using `ros_gz_bridge`. Gazebo supplied simulated odometry, LiDAR, IMU and GNSS data to Nav2 ([\[8\]](./references.md#ref-8)). Nav2 sent `/cmd_vel` commands back to the simulated drivetrain. We used the simulation `/clock` and consistent TF frames to keep the nodes synchronized.
 
 <Figure src="./assets/diagrams/ros2-gazebo-architecture.svg" alt="ROS 2, Gazebo Harmonic and Nav2 simulation architecture" />
 
@@ -77,7 +77,7 @@ The Semester 1 testbed connected **Gazebo Harmonic** physics and simulated senso
 
 #### Purpose of the Simulation Environment
 
-The simulation environment functions as a deterministic development, integration, and stress-testing platform for the complete autonomous navigation stack. In mobile robotics, simulation serves three indispensable engineering functions prior to hardware sign-off:
+We used simulation for three purposes before testing on hardware:
 
 1. **Kinematic & Dynamic Verification:** Validates multi-body contact dynamics, lateral tire slip, and skid-steer turning scrub moments under realistic asphalt friction ($\mu = 0.8$) ([\[14\]](./references.md#ref-14)), ensuring path planners respect non-holonomic turning radius bounds ($R \ge 1.0\text{ m}$) before physical testing.
 2. **Accelerated Parameter Sweeps:** Executes hundreds of automated mission dispatches across acute $90^\circ$ taxiway bends, straight sprint corridors, and cluttered obstacle fields at an accelerated physics stepping rate ($1000\text{ Hz}$, $\Delta t = 1.0\text{ ms}$) without battery recharge interruptions or thermal degradation.
@@ -117,7 +117,7 @@ The robotics simulation workflow follows a structured six-stage closed-loop life
 
 ## 3. Design Methodology & Selection {#sim-methodology}
 
-**AgileX Scout 2.0** was selected as a temporary 4WD skid-steer kinematic proxy because the custom FOD Hunter chassis was not ready at the start of software development. It supported early ROS 2 interface and navigation testing, but its geometry, tire contact, drivetrain and mass distribution cannot be assumed identical to the final UGV. Gazebo Harmonic provided repeatable physics and synthetic sensor streams; the simulated NUS EA Field allowed route and obstacle testing in a campus-scale environment.
+We used the **AgileX Scout 2.0** model because the custom FOD Hunter chassis was not yet ready. Both use four-wheel skid steering, so the model was useful for testing ROS 2 interfaces and navigation. However, its dimensions, mass and drivetrain differ from FOD Hunter. We also built a simulated NUS EA Field environment to test routes and obstacles at a smaller scale.
 
 The navigation algorithm selection rationale belongs in [Navigation](./navigation.md), while this document focuses on the simulation assumptions and measured effects of tuning. The software distribution comparison belongs in [Software & Development Environment](/report#software-environment).
 
@@ -127,7 +127,7 @@ The navigation algorithm selection rationale belongs in [Navigation](./navigatio
 
 #### AgileX Scout 2.0 Model Selection as Kinematic Proxy
 
-During early Semester 1 development, the custom Hunter UGV chassis and custom motor control PCBA were undergoing mechanical CNC milling, waterjet cutting, and board bring-up. Autonomy software could not wait for hardware completion.
+During early Semester 1 development, the **Hunter UGV** was still in the design phase. Autonomy software could not wait for hardware completion.
 
 The commercial **AgileX Scout 2.0** 4WD mobile robot was selected as an interim simulation proxy because of its broadly comparable dimensions, identical four-wheel skid-steering kinematic architecture ([\[14\]](./references.md#ref-14)), and 48V electrical bus domain. The Scout 2.0 allowed the team to develop and tune the complete ROS 2 Jazzy Nav2 stack, sensor bridge interfaces, and C2 mission handlers months before physical hardware became available.
 
@@ -226,7 +226,7 @@ To resolve this, our custom Python generator (`generate_map.py`) implements an *
 
 ## 4. Implementation & Prototype {#sim-implementation}
 
-The implemented SIL prototype used the AgileX proxy in Gazebo, an environment map, simulated sensors, `ros_gz_bridge`, Nav2 planning and control, and recovery behaviour. These components provided a reproducible way to inspect complete mission execution without claiming physical FOD Hunter validation.
+Our simulation combined the AgileX model, a Gazebo environment, simulated sensors, `ros_gz_bridge` and Nav2. We used it to run complete navigation tasks and inspect how the planner, controller and recovery actions behaved.
 
 **S1 — Complete Gazebo demonstration**
 
@@ -345,9 +345,9 @@ Localization is supported by the Dual-EKF pipeline (Moore & Stouch, 2014 [\[9\]]
 
 ## 5. Testing & Results {#sim-testing}
 
-Testing covered four route profiles: a straight sprint, a 90-degree bend, obstacle-rich S-curves and a narrow campus passage. The source documentation reports **RTF 0.98 ± 0.02**, a **78% reduction in normalized cumulative yaw rotation** against its point-turn comparison, and **7/8 successful recovery trials**. These are SIL results, not measured tire wear or validated field safety performance. The detailed methods, figures and test matrix remain available below.
+We tested four route types: a straight section, a 90° bend, S-curves with obstacles and a narrow passage. The existing records report a **real-time factor of 0.98 ± 0.02**, **78% less normalized cumulative yaw rotation** than the point-turn comparison, and **7 successful recovery trials out of 8**. These figures describe simulation tests; they do not measure physical tire wear or field safety.
 
-The source also reports different tracking-error figures for different tests (including 0.042 m mean and 0.115 m bounds); retain their test context rather than treating them as interchangeable. All numerical results require traceable logs or plots for final submission.
+Tracking-error values also vary by test (including a 0.042 m mean and a 0.115 m bound). These values should remain linked to their specific test conditions. The underlying logs and plots still need to be checked.
 
 **S7 — Dynamic obstacle avoidance:**
 
@@ -467,7 +467,7 @@ _Additional Verification Archive:_ Downloadable milestone video recordings are p
 
 ## 6. Engineering Discussion {#sim-discussion}
 
-The SIL experiments support the value of curvature-aware planning, speed-regulated tracking and recovery supervision under the tested simulation conditions. The reported yaw-rotation reduction is a **geometric path metric**, not direct evidence of lower motor current or reduced physical tire wear. The AgileX proxy and synthetic sensing also limit how far these findings can be generalized to the custom FOD Hunter chassis.
+The tests suggest that curvature-aware planning, RPP speed control and recovery actions can improve navigation in the simulated scenarios. The reported reduction in yaw rotation measures **path geometry**, not motor current or tire wear. We still need physical tests because the AgileX model and simulated sensors differ from FOD Hunter.
 
 For the mathematical planner rationale see [Navigation](./navigation.md); for the physical skid-steer model see [Steering Kinematics](./steering-kinematics.md); and for motor sizing see [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md).
 
@@ -475,7 +475,7 @@ For the mathematical planner rationale see [Navigation](./navigation.md); for th
 
 #### Hybrid A\* Performance
 
-`SmacPlannerHybrid` proved highly effective in generating kinematically feasible trajectories. Constraining paths to continuous Reeds-Shepp arcs ($R \ge 1.0\text{ m}$) prevented in-place zero-radius turns on simulated asphalt, replacing them with rolling arcs. The trade-off between detour path length ($+1.5\text{ m}$ on a 52 m run) and tire-scrubbing reduction is negligible compared to the operational benefits of preventing motor stalls.
+`SmacPlannerHybrid` generated kinematically feasible trajectories. Constraining paths to continuous Reeds-Shepp arcs ($R \ge 1.0\text{ m}$) prevented in-place zero-radius turns on simulated asphalt, replacing them with rolling arcs. The trade-off between detour path length ($+1.5\text{ m}$ on a 52 m run) and tire-scrubbing reduction is negligible compared to the operational benefits of preventing motor stalls.
 
 However, an operational trade-off exists regarding directionality: while `reverse_penalty = 2.5` strongly prefers forward driving ($100\%$ forward ratio on benchmark runs), reversing is _not strictly prohibited_ by the planner. Because our local controller (RPP) is configured with `allow_reversing: False`, any plan containing a reverse gear segment cannot be executed, creating an operational limitation that must be monitored in cluttered dead-ends.
 
@@ -491,7 +491,7 @@ The standard Nav2 `NavigateToPose` Behavior Tree demonstrated reliable recovery 
 
 #### Simulation Limitations (The Sim2Real Gap)
 
-While the simulation environment provided a rigorous software testing ground, four critical physical discrepancies delineate the "Sim-to-Real Gap":
+While the simulation environment provided a software test environment, four main differences between simulation and physical hardware:
 
 1. **Chassis Mass & Center of Gravity:** The simulation model mass ($52.37\text{ kg}$) is $24.1\%$ lighter than the physical custom Hunter UGV ($65.0\text{ kg}$). The higher physical mass increases momentum, braking distances, and lateral tire slip.
 2. **Actuator Mechanics & CAN Bus Latency:** In Gazebo, joint velocities respond instantaneously via the diff-drive plugin. In reality, the four direct-drive hub motors communicate over a physical CANopen bus through dual ZLAC8015D drivers and STM32 firmware, introducing $10-20\text{ ms}$ loop latency, low-speed cogging torque, and motor deadbands.
@@ -500,7 +500,7 @@ While the simulation environment provided a rigorous software testing ground, fo
 
 #### Hybrid A\* Improvements
 
-Two major improvements transformed global planner performance during Semester 1:
+Two parameter changes affected global planner performance during Semester 1:
 
 First, tuning the precomputed heuristic lookup table (`lookup_table_size: 10.0 m` with `downsampling_factor: 2`) reduced Nav2 node initialization time from $35.4\text{ s}$ to \*\*$2.1\text{ s}$\*\* ($94\%$ reduction) and slashed static memory allocation from $210\text{ MB}$ to $38\text{ MB}$. This optimization ensures the stack initializes rapidly and operates comfortably within edge computer RAM limits.
 
@@ -508,7 +508,7 @@ Second, tuning directional penalties (`reverse_penalty = 2.5`, `change_penalty =
 
 #### RPP Tuning Improvements
 
-Initial testing with static lookahead ($L = 0.60\text{ m}$) produced severe steering chatter ($\dot{\omega}^2 = 38.6\text{ rad}^2/\text{s}^4$). Upgrading to dynamic velocity-scaled lookahead ($L(v) \in [0.4, 2.5]\text{ m}$, $t_{\text{lookahead}} = 1.2\text{ s}$) achieved rock-solid tracking stability ($0.42\text{ rad}^2/\text{s}^4$) while allowing the vehicle to track tight turn apexes. Coupling this with cost-regulated proximity scaling ($\gamma = 1.0$, $d_{\text{cost}} = 1.0\text{ m}$) eliminated abrupt emergency braking shocks, replacing them with smooth linear deceleration profiles ahead of obstacles.
+Initial testing with static lookahead ($L = 0.60\text{ m}$) produced steering oscillation ($\dot{\omega}^2 = 38.6\text{ rad}^2/\text{s}^4$). Upgrading to dynamic velocity-scaled lookahead ($L(v) \in [0.4, 2.5]\text{ m}$, $t_{\text{lookahead}} = 1.2\text{ s}$) achieved more stable path tracking ($0.42\text{ rad}^2/\text{s}^4$) while allowing the vehicle to track tight turn apexes. Coupling this with cost-regulated proximity scaling ($\gamma = 1.0$, $d_{\text{cost}} = 1.0\text{ m}$) eliminated abrupt emergency braking shocks, replacing them with smooth linear deceleration profiles ahead of obstacles.
 
 #### Behavior Tree Improvements
 
@@ -516,17 +516,17 @@ Bounding recovery spin rotational velocity to $1.0\text{ rad/s}$ with accelerati
 
 #### Environment and Computing Challenges
 
-Two critical architectural hurdles were resolved:
+We addressed two development problems:
 
-**WSL2 Multicast Resolution:** Resolved the virtualized NAT multicast block by deploying Eclipse CycloneDDS with explicit static unicast peering (`cyclonedds.xml`), ensuring deterministic communication between laptop simulation and physical companion SBCs.
+**WSL2 networking:** DDS multicast discovery did not work reliably across the virtualized network. We configured CycloneDDS static unicast peers in `cyclonedds.xml` to connect the laptop and companion computer.
 
-**Costmap Memory Explosion:** Overcame full-runway 500+ MB RAM exhaustion by designing `generate_map.py` to create analytically bounded active zones ($300\text{ m} \times 200\text{ m}$, $0.10\text{ m/px}$, 6.0 MB RAM), reducing static memory consumption by $95.0\%$.
+**Costmap memory:** Full-runway maps used more than 500 MB of memory. We changed `generate_map.py` to generate bounded active areas ($300\text{ m} \times 200\text{ m}$ at $0.10\text{ m/px}$). The source reports 6.0 MB for the revised map and a 95.0% reduction; these figures require verification against the saved configurations.
 
 :::
 
 ## 7. Limitations & Semester 2 Plan {#sim-future-work}
 
-The next validation stage must replace proxy assumptions with measured physical parameters: mass distribution, wheel radius, effective track width, motor response, sensor noise and real surface friction. Planned work includes controlled low-speed commissioning, recalibration of Nav2 and EKF parameters, then progressive outdoor testing against explicit tracking and stopping-distance criteria. These activities are **planned**, not Semester 1 accomplishments.
+Next, we need to measure the physical robot's mass distribution, wheel radius, effective track width, motor response and sensor behaviour. We will start with low-speed tests, adjust Nav2 and EKF settings, then test outdoors against tracking-error and stopping-distance criteria. This work has **not yet been completed**.
 
 [View Hilbert's Semester 2 Implementation Plan →](./semester-2-plan.md#programming-semester-2)
 

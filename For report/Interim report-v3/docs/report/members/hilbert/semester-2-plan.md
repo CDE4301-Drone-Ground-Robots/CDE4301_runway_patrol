@@ -2,7 +2,7 @@
 title: "Semester 2 Implementation Plan"
 owner: "Hilbert Soh Yong Tai"
 role: "Autonomous navigation, SLAM & C2 communications"
-description: "Hilbert's Semester 2 (Phase 2) deliverables."
+description: "Planned physical UGV integration and validation tasks."
 ---
 
 # Semester 2 plan — Hilbert Soh Yong Tai
@@ -10,103 +10,82 @@ description: "Hilbert's Semester 2 (Phase 2) deliverables."
 <!-- Edit your plan between the region markers; the Overview and the Meet the Team page show this text. -->
 <!-- #region plan -->
 
-- Navigation implementation on actual UGV via STM32 F446RE
-- Communications with UAV using RF module
+- Configure, tune and test Nav2 path planning and kinematic steering models on FOD Hunter.
+- Integrate RTK-GNSS, tactical IMU and 3D LiDAR for outdoor airside localization.
+- Deploy the UAV–UGV RF datalink and execute coordinated multi-agent field operations.
 
 <!-- #endregion plan -->
 
-<!-- Programming Semester 2 task breakdown; included by the Report composition system. -->
+<!-- Detailed task breakdown; retain this region for existing composition references. -->
 <!-- #region programming-tasks -->
 
 ## Semester 2 Tasks & Physical Implementation Scope {#programming-semester-2}
 
 <Badge type="info" text="Hilbert's Autonomy Scope • Physical UGV" />
 
-Semester 1 established a ROS 2/Gazebo software-in-the-loop testbed and a UAV-side-to-workstation communications workflow. Semester 2 focuses on transferring those interfaces to the **physical FOD Hunter**, then validating navigation, steering and mission coordination under controlled outdoor conditions. The AgileX Scout 2.0 remains the Semester 1 simulation proxy, not the physical prototype.
+The ROS 2 navigation stack and UAV-side communications were developed using a Gazebo simulation and a local network testbed. The next step is to integrate these systems with the **physical FOD Hunter** and test them outdoors. The AgileX Scout 2.0 was the simulation proxy; it is not the physical UGV.
 
-**Planned work packages:** embedded motor control and odometry; physical Nav2 tuning; UAV–UGV RF communication; GNSS/IMU/LiDAR fusion; and integrated field testing. The values and equipment below are **design targets or proposed configurations**, not verified physical performance.
+The work is divided into four autonomy tasks: navigation, RF communications, sensor fusion and physical field validation (low-level motor firmware and driver bring-up are led under Gabriel's subsystem). **All settings and performance figures below are proposed targets unless explicitly stated otherwise.**
 
 [Navigation methodology](./navigation.md) · [Communications implementation](./communications.md) · [Simulation evidence](./simulation.md) · [Steering kinematics](./steering-kinematics.md) · [Motor sizing](./motor-drivetrain-calculation.md)
 
 <ProgrammingWidget5 />
 
-::: details 01 — Firmware & Actuation
-<Badge type="info" text="Task 1 • Firmware &amp; Actuation" />
+::: details 01 — Navigation & Kinematics
 
-**STM32 F446RE Microcontroller Actuation Bridge & CAN Bus Motor Control**
+**Physical Nav2 configuration and steering calibration** ([\[19\]](./references.md#ref-19), [\[20\]](./references.md#ref-20))
 
-<Badge type="info" text="Laptop Proxy → STM32 F446RE" />
+Configure and test SmacPlannerHybrid on FOD Hunter, then tune the planner and controller based on measured steering behaviour.
 
-Transition from laptop-based software command streaming to a dedicated real-time embedded microcontroller running micro-ROS under FreeRTOS, establishing deterministic motor control:
+- **Turning radius:** Start with a proposed minimum planning radius of 1.50 m to reduce unnecessary skid-steer pivots. Reconcile this with the steering model and measured turning performance.
+- **Heading resolution:** Evaluate 72 orientation bins (5° increments) on a 0.05 m costmap.
+- **Motion penalties:** Evaluate reverse and direction-change penalties of 2.0 and 3.0, respectively. Confirm compatibility with the selected Dubins or Reeds–Shepp motion model.
+- **Planning performance:** Test analytical goal connections and measure planning time. The proposed target is under 25 ms for the specified test scenario; this is not yet verified.
+- **Speed:** Assess the proposed 10 km/h operating target only after low-speed control and safety testing.
 
-- **micro-ROS Client Node:** Flash and tune micro-ROS client over high-speed USB-CDC serial (`/dev/ttyACM0`) to subscribe to `/cmd_vel` geometry messages at 100 Hz.
-- **Isolated CAN 2.0B / RS-485 Drivetrain Bus:** Implement CAN framing at 500 kbps to command the dual ZLAC8015D dual-channel hub motor drivers with precise velocity and current setpoints.
-- **High-Resolution Encoder Odometry:** Ingest incremental optical encoder pulses from all 4 hub motors, execute forward differential kinematics with calibrated track width, and publish `/odom` with full covariance matrices.
-- **Hardware E-Stop & Heartbeat Watchdog:** Implement hardware emergency stop line monitoring and an automatic zero-velocity cut-off if serial heartbeats cease for &gt; 150 ms.
-  :::
+:::
 
-::: details 02 — Navigation & Kinematics
-<Badge type="info" text="Task 2 • Navigation &amp; Kinematics" />
+::: details 02 — RF Telemetry & Datalink
 
-**Nav2 SmacPlannerHybrid Upgrade ($SE(2)$ Dubins State Lattice)** ([\[19\]](./references.md#ref-19), [\[20\]](./references.md#ref-20))
+**UAV–UGV radio communication**
 
-<Badge type="info" text="SmacPlanner2D → SmacPlannerHybrid" />
+Replace the local Wi-Fi test connection with a suitable radio link for target alerts and UGV telemetry. The Microhard P900 V2 is a candidate, not an approved or installed system ([\[24\]](./references.md#ref-24)).
 
-Upgrade the global path planner from Phase 1 2D smoothed A\* to full non-holonomic $SE(2)$ Dubins state lattice to eliminate asphalt tire scrubbing at high speeds:
+- **Regulatory review:** Confirm permitted frequencies, output power, equipment approval and test-site authorization under the applicable IMDA requirements ([\[3\]](./references.md#ref-3), [\[11\]](./references.md#ref-11)) and relevant aviation guidance ([\[4\]](./references.md#ref-4)). The proposed 917–925 MHz and 100 mW ERP settings require verification.
+- **Serial bridge:** Develop a UART-to-ROS 2 bridge using COBS framing for JSON messages.
+- **Message integrity:** Evaluate HMAC-SHA-256 authentication with secure shared-key management.
+- **Link-loss response:** Test a proposed 2 Hz heartbeat and 1.5 s loss timeout, including a safe stop and operator warning. Confirm the braking response on the actual vehicle.
 
-- **Kinematic Minimum Turning Radius:** Hardcode $R_{\min} \ge 1.50\text{ m}$ directly into the Dubins motion primitive expansion, discouraging in-place pivot turns during nominal path planning and bounding yaw scrub resistance ($M_{z,\text{scrub}} \le 18.2\text{ N}\cdot\text{m}$).
-- **72 Angular Search Discretizations:** Configure 72 discrete orientation angular bins ($5^\circ$ heading resolution) for full 3D state lattice exploration $(x, y, \theta)$ on 0.05 m/px costmaps.
-- **Motion Cost Penalties:** Calibrate reverse penalty ($k_{\text{rev}} = 2.0$) and change-of-direction penalty ($k_{\text{dir}} = 3.0$) to enforce continuous forward sweeping trajectories at $\ge 10.0\text{ km/h}$.
-- **Analytical Shot-to-Goal Expansions:** Enable Reed-Shepp / Dubins analytical heuristic shots to accelerate global path generation across 500 m runway corridors to &lt; 25 ms compute time.
-  :::
+:::
 
-::: details 03 — RF Telemetry & Datalink
-<Badge type="info" text="Task 3 • Telemetry &amp; Datalink" />
+::: details 03 — Sensor Fusion & State Estimation
 
-**Airfield-Compliant Long-Range RF Datalink Integration (Microhard P900 V2)**
+**RTK-GNSS, IMU and LiDAR integration**
 
-<Badge type="info" text="Local Wi-Fi → 915 MHz FHSS RF" />
+Integrate the physical sensors and configure localization for outdoor navigation. The aim is to reduce accumulated odometry drift; centimetre-level accuracy remains a target dependent on GNSS conditions.
 
-Replace interim 5 GHz Wi-Fi peering with an industrial frequency-hopping transceiver (Microhard P900 V2 [\[24\]](./references.md#ref-24)) adhering to civil aviation ([\[4\]](./references.md#ref-4)) and local statutory radio requirements ([\[3\]](./references.md#ref-3), [\[11\]](./references.md#ref-11)):
+- **RTK-GNSS:** Connect the proposed UM980 receiver, process NMEA data and obtain RTCM3 corrections through NTRIP where available.
+- **Dual-EKF:** Configure local wheel-odometry/IMU fusion and global GNSS-corrected localization using `robot_localization` ([\[9\]](./references.md#ref-9), [\[26\]](./references.md#ref-26)). The proposed local filter rate is 100 Hz.
+- **LiDAR:** Filter ground points and supply obstacle data to the Nav2 voxel costmap.
+- **Collision monitor:** Test proposed stop, slowdown and approach zones at 0.40 m, 1.20 m and 2.50 m. Adjust these using actual stopping-distance measurements.
 
-- **Singapore IMDA TS SRD Regulatory Compliance:** Restrict frequency hopping channels to 917–925 MHz with $\le 100\text{ mW}$ ERP output power, subject to equipment approval, applicable spectrum rules and site authorization.
-- **Serial Packet Bridge Daemon:** Develop a high-speed UART-to-ROS-2 bridge daemon using Consistent Overhead Byte Stuffing (COBS) packet framing for reliable serial JSON telemetry.
-- **Cryptographic Packet Signing:** Preserve SHA-256 HMAC message integrity checking on all incoming UAV detection alerts to authenticate packets when a properly managed shared key is used.
-- **Heartbeat Fail-Safe Failsafe:** Implement a 2.0 Hz ping/pong telemetry watchdog; upon RF signal loss exceeding 1.5 s, command autonomous rover pause, apply mechanical braking, and sound audio-visual warning beacons.
-  :::
+:::
 
-::: details 04 — Sensor Fusion & State Estimation
-<Badge type="info" text="Task 4 • Sensor Fusion &amp; State Estimation" />
+::: details 04 — Physical Integration & Validation
 
-**Centimeter-Level RTK-GNSS & 3D LiDAR Sensor Fusion (Dual-EKF)**
+**Outdoor testing on FOD Hunter**
 
-<Badge type="info" text="Simulation Ground-Truth → Dual-EKF Physical Fusion" />
+Integrate the software stack on the proposed 65 kg four-wheel skid-steer UGV and verify its behaviour in controlled outdoor tests.
 
-Deploy physical localization hardware to achieve drift-free centimeter-level positioning and active 3D volumetric obstacle perception across open runway corridors:
+- **Steering calibration:** Compare encoder-derived heading with an independent heading estimate to determine effective track width and the slip correction factor $\chi = c_{\text{eff}}/c_{\text{nominal}}$ ([\[14\]](./references.md#ref-14)).
+- **RPP tuning:** Test lookahead and curvature-based speed control. Proposed starting values are $L=1.80\text{ m}$ and lookahead time $t=0.6\text{ s}$ ([\[22\]](./references.md#ref-22)).
+- **Target approach:** Measure final positioning error relative to FOD targets. The proposed cross-track error target is $\pm 5.0\text{ cm}$.
+- **Integrated trial:** Demonstrate UAV target detection, RF coordinate transfer, UGV navigation and FOD clearance, recording both successes and failures.
 
-- **Unicorecomm UM980 RTK-GNSS Integration:** Ingest NMEA GGA messages and stream RTCM3 differential corrections via NTRIP client, targeting centimeter-level positioning under suitable correction and reception conditions.
-- **Cascaded Dual-EKF (robot_localization):** Configure continuous 100 Hz local EKF (wheel odometry + IMU angular rate) for smooth `odom` → `base_link` transforms, cascaded into global EKF fusing RTK-GNSS UTM coordinates for absolute `map` → `odom` pose ([\[9\]](./references.md#ref-9), [\[26\]](./references.md#ref-26)).
-- **3D LiDAR Pointclouds:** Stream pointclouds with ground-plane filtering, feeding `nav2_costmap_2d` voxel layers.
-- **nav2_collision_monitor Polygons:** Define layered stop ($0.40\text{ m}$), slowdown ($1.20\text{ m}$), and approach ($2.50\text{ m}$) dynamic safety polygons directly projected from 3D LiDAR data.
-  :::
+:::
 
-::: details 05 — Physical Integration & Validation
-<Badge type="info" text="Task 5 • Field Integration &amp; Validation" />
-
-**Physical Chassis Kinematic Calibration & Real-World Airfield Field Trials**
-
-<Badge type="info" text="Digital Twin SIL → Outdoor Runway Validation" />
-
-Commission the full software stack onto the custom 65.0 kg 4WD skid-steer rover chassis and conduct rigorous outdoor tarmac field verification:
-
-- **Effective Track Width Calibration:** Empirically identify the asphalt slip correction coefficient $\chi = c_{\text{eff}} / c_{\text{nominal}}$ by comparing encoder-derived yaw integration against RTK-GNSS heading truth ([\[14\]](./references.md#ref-14)).
-- **Regulated Pure Pursuit High-Speed Tuning:** Calibrate lookahead distance ($L = 1.80\text{ m}$), velocity-scaled lookahead time ($t = 0.6\text{ s}$), and curvature braking heuristics for stable $\ge 10.0\text{ km/h}$ sprints ([\[22\]](./references.md#ref-22)).
-- **FOD Target Docking Verification:** Validate final approach precision to ensure the rover docks directly over detected FOD fasteners within $\pm 5.0\text{ cm}$ cross-track error for mechanical remediation.
-- **Live Multi-Agent "Detect-to-Clear" Trials:** Conduct integrated field demonstrations with the aerial UAV scout detecting ground targets, transmitting RF alert coordinates, and verifying autonomous UGV interception and clearance.
-  :::
-
-::: warning Evidence and configuration checks
-Before final submission, reconcile the proposed 1.50 m turning radius with the steering document, confirm the motor-driver interface (CAN versus RS-485) from actual hardware manuals, verify RF frequency/power requirements with current IMDA rules and campus permissions, and verify the claimed firmware rates, safety timeouts and performance targets against implementation records. Do not treat these as completed tests.
+::: warning Items to verify before implementation
+Reconcile the 1.50 m planning radius with physical Steering Kinematics, and verify RF telemetry requirements with current IMDA regulations and site authorizations. All proposed filter rates, timeouts, transit speeds, and accuracy targets must be validated empirically against physical hardware during Semester 2 field trials.
 :::
 
 <!-- #endregion programming-tasks -->

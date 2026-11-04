@@ -13,8 +13,8 @@
   --rpt-toc: clamp(240px, 15vw, 270px);
   --rpt-gap: clamp(24px, 2vw, 36px);
   --rpt-gutter: clamp(16px, 1.5vw, 32px);
-  /* width system: reading measure for prose; tables, figures and diagrams use the full column */
-  --rpt-measure: 62ch; /* ≈ 82–88 characters per line in Outfit (ch is the wide "0") */
+  /* width system: full width for prose, tables, figures and diagrams */
+  --rpt-measure: 100%;
   --rpt-body: rgba(243, 238, 231, 0.88);
   --rpt-secondary: #c3cad4;
   --rpt-line: rgba(255, 255, 255, 0.1);

@@ -12,25 +12,25 @@ Individual engineering documentation · CDE4301 Runway Patrol · Semester 1
 
 ## 1. Objectives & Requirements {#steer-objectives}
 
-FOD Hunter needs efficient straight-line runway patrol and accurate low-speed positioning over detected foreign object debris (FOD). Steering architecture selection therefore considered turning clearance, debris exposure, mechanical complexity, traction and compatibility with ROS 2 velocity commands. The design basis in the existing engineering analysis is **65 kg**, **263 mm wheel diameter**, **488.8 mm wheelbase** and **575 mm track width**. These are design assumptions, not measured performance of the assembled vehicle.
+FOD Hunter must travel along paved runway routes and position itself over detected foreign object debris (FOD). We compared steering options based on turning space, mechanical complexity, traction and compatibility with ROS 2 velocity commands. The design basis in the existing engineering analysis is **65 kg**, **263 mm wheel diameter**, **488.8 mm wheelbase** and **575 mm track width**. These values are design assumptions, not measurements from the assembled vehicle.
 
 :::: details Detailed steering requirements and assumptions
 
-The intended patrol speed is 8 km/h, with a 15 km/h sprint design target. A zero-radius _commanded_ pivot is desirable for tight repositioning; real four-wheel skid steering requires lateral tire slip and therefore cannot be treated as an ideal frictionless differential-drive model. Environmental protection and reliable outdoor traction were considered during architecture selection.
+The intended patrol speed is 8 km/h, with a 15 km/h sprint design target. Opposite wheel-bank speeds can command an in-place turn, but real skid steering involves tire slip. The ideal differential-drive model does not capture this effect. Environmental protection and reliable outdoor traction were considered during architecture selection.
 
-For the full original requirement tables, stability calculations and supporting references, expand **Original technical derivations and decision evidence** below on the individual documentation page.
+The full requirement tables and stability calculations are available in the detailed appendix on the individual page.
 
 ::::
 
 ## 2. Steering Architecture {#steer-architecture}
 
-The selected concept is **four independently driven hub motors**, controlled as left and right wheel banks. Equal wheel speeds produce straight motion; unequal speeds produce curved motion; opposing bank speeds command an in-place pivot. The physical layout is documented in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md), including the top-view FOD Hunter CAD. This avoids displaying the same CAD twice in the composed Report.
+We selected **four independently driven hub motors**, operated as left and right wheel banks. Equal bank speeds move the UGV straight; different speeds produce a turn; opposite speeds command an in-place pivot. The physical layout is documented in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md), including the top-view FOD Hunter CAD. The CAD is linked here rather than repeated.
 
 ![Four-wheel skid-steer kinematic schematic](./assets/diagrams/steering-architecture-comparison.svg)
 
 ## 3. Design Methodology & Selection {#steer-selection}
 
-Three concepts were evaluated: **skid steer**, **Ackermann**, and **Mecanum**. Skid steer was preferred for compact turning and reduced steering linkage complexity; Ackermann provides efficient rolling turns but cannot pivot in place, while Mecanum provides lateral motion but introduces exposed rollers and additional outdoor-maintenance concerns. The decision is a trade-off, not proof that the alternatives cannot operate outdoors.
+We compared **skid-steer, Ackermann and Mecanum** steering. We chose skid-steer because it supports tight turns without separate steering linkages. Ackermann reduces tire scrub during turns but cannot pivot in place. Mecanum allows sideways motion, but its exposed rollers add maintenance concerns for outdoor use.
 
 :::: details Architecture comparison and weighted selection evidence
 
@@ -40,22 +40,22 @@ Three concepts were evaluated: **skid steer**, **Ackermann**, and **Mecanum**. S
 
 ![Mecanum drive](./assets/images/mecanum-drive.webp)
 
-The original weighted decision matrix, scoring assumptions and alternative kinematic formulations are preserved in the detailed source appendix below. Scores should be interpreted as engineering judgements unless backed by measured comparative testing.
+The weighted selection matrix and alternative kinematic models are in the appendix. The scores reflect our design assessment, not comparative physical testing.
 
 ::::
 
 ## 4. Engineering Calculations & Interactive Kinematics {#steer-kinematics}
 
-For wheel radius $r$ and effective track width $B_{\mathrm{eff}}$, the idealized left/right wheel angular-speed commands are:
+We convert the commanded forward speed $v_x$ and yaw rate $\omega_z$ into left and right wheel speeds using wheel radius $r$ and effective track width $B_{\mathrm{eff}}$:
 
 $$
 \omega_L=\frac{v_x-\omega_z B_{\mathrm{eff}}/2}{r},\qquad
 \omega_R=\frac{v_x+\omega_z B_{\mathrm{eff}}/2}{r}
 $$
 
-For $\omega_z\ne0$, the nominal turning radius is $R=v_x/\omega_z$. With $v_x=0$ and opposite bank speeds, the commanded instantaneous centre of rotation is at the robot centre. Real turning depends on tire scrub and slip; $B_{\mathrm{eff}}$ must be calibrated against physical yaw measurements rather than assumed equal to geometric track width.
+For $\omega_z\ne0$, the ideal turning radius is $R=v_x/\omega_z$. When $v_x=0$ and the wheel banks rotate in opposite directions, the model predicts an in-place turn. Actual turning depends on tire slip, so $B_{\mathrm{eff}}$ must be calibrated using measured yaw motion.
 
-**Interactive 3D kinematics demonstration** — the existing viewer uses the **AgileX Scout 2.0 simulation proxy**, not the custom FOD Hunter physical CAD. It illustrates the steering model rather than validating final hardware performance.
+**Interactive 3D demonstration:** The viewer uses the **AgileX Scout 2.0 simulation proxy**, not the FOD Hunter CAD. It shows the steering equations in action; it does not validate physical steering performance.
 
 <SteeringKinematicsWidget1 />
 
@@ -65,13 +65,13 @@ For $\omega_z\ne0$, the nominal turning radius is $R=v_x/\omega_z$. With $v_x=0$
 
 ![Skid-steer tire-scrub free-body diagram](./assets/diagrams/skid-steer-forces-fbd.svg)
 
-The original detailed friction model, wheelbase-to-track-width study, pitch dynamics and analytical scenarios are preserved below. Treat friction-dependent torque estimates as predictions requiring physical testing. Detailed hub-motor torque sizing is addressed in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md).
+The appendix contains the friction model, geometry comparison, pitch analysis and calculated scenarios. Torque estimates depend on assumed friction and require physical testing. Detailed hub-motor torque sizing is addressed in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md).
 
 ::::
 
 ## 5. Testing & Results {#steer-testing}
 
-Semester 1 evidence includes analytical kinematic scenarios, the AgileX-based simulation and limited STM32/motor bench work. **Full-scale physical turning-radius, tire-scrub and high-speed steering tests have not been demonstrated.** Do not equate a commanded zero-radius pivot with measured zero-radius behaviour.
+The available evidence consists of kinematic calculations, AgileX simulation and limited STM32/motor bench work. **Turning radius, tire scrub and high-speed steering have not yet been measured on the complete FOD Hunter.** A commanded in-place turn is not a measured turning result.
 
 [Add video of K8 — Existing physical steering demonstration showing coordinated left/right wheel commands and the resulting motion. If the recording only shows unloaded motors, label it as a bench actuation demonstration instead.]
 
@@ -79,25 +79,25 @@ Semester 1 evidence includes analytical kinematic scenarios, the AgileX-based si
 
 :::: details Original analytical scenarios and verification status
 
-The original five operating scenarios and numerical prediction table are retained in the expanded technical appendix below. Any claimed encoder, CAN, simulation or physical-test outcome must be supported by the team's logs or recordings.
+The appendix retains the five calculated operating scenarios and prediction table. Encoder, CAN and test results should be checked against logs or recordings.
 
 ::::
 
 ## 6. Engineering Discussion {#steer-discussion}
 
-The principal trade-off is **maneuverability versus tire scrub**. Tight pivots increase lateral friction, tire wear and drivetrain demand; smooth curvature-constrained paths can reduce unnecessary pivots during normal patrol. Ideal differential-drive equations are useful for command generation but are not sufficient to predict skid-steer motion on real asphalt. The effective track-width correction and its sensitivity to surface conditions remain validation priorities.
+The main trade-off is **turning ability versus tire scrub**. Tight pivots increase friction, tire wear and motor load. Curved paths can reduce the need for these pivots. The differential-drive equations are suitable for generating wheel commands, but real skid-steer motion requires an experimentally calibrated effective track width.
 
 For motor torque and electrical demand, see [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md). For planner configuration and localization, see [Navigation](./navigation.md). For AgileX simulation evidence, see [Simulation](./simulation.md).
 
 ## 7. Limitations & Semester 2 Plan {#steer-future}
 
-Next steps are to validate steering on the physical FOD Hunter platform, measure actual turning radius and yaw tracking, calibrate $B_{\mathrm{eff}}$ using wheel odometry and independent heading measurements, and evaluate current draw and tire scrub under controlled surface conditions. High-speed trials should only follow safe low-speed validation. Detailed scheduling belongs in the [Semester 2 Plan](./semester-2-plan.md).
+Next, we will measure turning radius and yaw tracking on FOD Hunter, calibrate $B_{\mathrm{eff}}$ using odometry and independent heading measurements, and assess motor current and tire scrub. We will begin with low-speed tests before attempting higher speeds. Detailed scheduling belongs in the [Semester 2 Plan](./semester-2-plan.md).
 
 <!-- #endregion report -->
 
 ## Detailed Engineering Evidence (Original Source)
 
-The material below preserves the original technical calculations, figures, comparison tables and source wording for examiner review. It is **supporting evidence**, not an additional chapter in the main composed Report. Some historical numerical claims and implementation descriptions still require checking against current code and test records.
+The appendix retains the detailed calculations, figures and comparison tables for reference. It is not part of the main composed Report. Some older values and implementation claims still need checking against code and test records.
 
 ::::: details Original technical derivations and decision evidence
 
@@ -109,19 +109,19 @@ The material below preserves the original technical calculations, figures, compa
 
 The steering architecture was evaluated to balance rapid runway traversal ($\ge 10\text{ km/h}$) with precise low-speed positioning of the vacuum intake directly over detected FOD coordinates. Three candidate drivetrains were shortlisted and benchmarked across turning envelope, tarmac traction, outdoor debris tolerance, mechanical reliability, sensor platform stability, and ROS 2 Nav2 compatibility: **4WD Differential / Skid Steering**, **Ackermann Steering**, and **Mecanum Wheel Omnidirectional Drive**.
 
-| Steering Architecture             | Kinematic Envelope                                                               | Speed Requirement ($\ge 10\text{ km/h}$)                                                 | Runway Traction & Debris Immunity                                                                   | Mechanical Complexity                                                            | Selection Decision                          |
-| --------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------- |
-| **4WD Differential / Skid-Steer** | <Badge type="tip" text="Zero Radius ($R = 0\text{ m}$, in-place pivot)" />       | <Badge type="tip" text="Met ($v \approx 10\text{--}12\text{ km/h}$ at nominal RPM)" />   | <Badge type="tip" text="High (Pneumatic rubber on asphalt, $\mu \approx 0.85$)" />                  | <Badge type="tip" text="High (Direct-drive hubs, zero tie-rod play)" />          | <Badge type="tip" text="SELECTED" />        |
-| **Ackermann Steering**            | Constrained ($R_{\text{kinematic}} \ge 0.79\text{ m}$, swept $\ge 1.2\text{ m}$) | <Badge type="tip" text="Met ($v \ge 15\text{ km/h}$, pure rolling)" />                   | <Badge type="tip" text="High (Pure rolling, minimal tire scrub)" />                                 | <Badge type="danger" text="Low (Linkages, kingpins, steering servo)" />          | <Badge type="danger" text="NOT SELECTED" /> |
-| **Mecanum Drive**                 | <Badge type="tip" text="Zero Radius ($R = 0\text{ m}$, omnidirectional)" />      | <Badge type="danger" text="Unmet / High Losses ($v &lt; 6\text{ km/h}$, roller slip)" /> | <Badge type="danger" text="Poor (Exposed rollers, $\mu_{\text{eff}} \approx 0.35\text{--}0.45$)" /> | <Badge type="warning" text="Moderate (4 motors, complex multi-roller wheels)" /> | <Badge type="danger" text="NOT SELECTED" /> |
+| Steering Architecture             | Kinematic Envelope                                                               | Speed Requirement ($\ge 10\text{ km/h}$)                                          | Runway Traction & Debris Immunity                                                    | Mechanical Complexity                                           | Selection Decision                          |
+| --------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------- | ------------------------------------------- |
+| **4WD Differential / Skid-Steer** | Zero Radius ($R = 0\text{ m}$, in-place pivot)                                   | Met ($v \approx 10\text{--}12\text{ km/h}$ at nominal RPM)                        | High (Pneumatic rubber on asphalt, $\mu \approx 0.85$)                               | Low (Direct-drive hubs, zero tie-rod play)                       | <Badge type="tip" text="SELECTED" />        |
+| **Ackermann Steering**            | Constrained ($R_{\text{kinematic}} \ge 0.79\text{ m}$, swept $\ge 1.2\text{ m}$) | Met ($v \ge 15\text{ km/h}$, pure rolling)                                        | High (Pure rolling, minimal tire scrub)                                              | High (Linkages, kingpins, steering servo)                       | <Badge type="danger" text="NOT SELECTED" /> |
+| **Mecanum Drive**                 | Zero Radius ($R = 0\text{ m}$, omnidirectional)                                  | Unmet / High Losses ($v < 6\text{ km/h}$, roller slip)                            | Poor (Exposed rollers, $\mu_{\text{eff}} \approx 0.35\text{--}0.45$)                 | Moderate (4 motors, complex multi-roller wheels)                | <Badge type="danger" text="NOT SELECTED" /> |
 
-**4WD Differential / Skid Steering** was selected because it enables true zero-radius in-place rotation (\$R=0\$) to eliminate multi-point repositioning over detected FOD, delivers robust rubber-on-asphalt traction ($\mu \approx 0.85$) for $15^\circ$ drainage slopes, eliminates delicate steering linkages prone to vibration fatigue, and directly maps body-velocity commands $(v_x, \omega_z)$ to ROS 2 Nav2. The accepted trade-off of lateral tire scrub during high-friction pivots is mitigated through calibrated effective track width ($W_{\text{eff}}$) parameterization and IMU/LiDAR EKF sensor fusion.
+**4WD Differential / Skid Steering** was selected because it enables true zero-radius in-place rotation ($R=0$) to eliminate multi-point repositioning over detected FOD, delivers robust rubber-on-asphalt traction ($\mu \approx 0.85$) for $15^\circ$ drainage slopes, eliminates delicate steering linkages prone to vibration fatigue, and directly maps body-velocity commands $(v_x, \omega_z)$ to ROS 2 Nav2. The accepted trade-off of lateral tire scrub during high-friction pivots is mitigated through calibrated effective track width ($W_{\text{eff}}$) parameterization and IMU/LiDAR EKF sensor fusion.
 
 ### 1. Executive Summary
 
-During the initial conceptual design phase of the CDE4301 Runway Patrol robotic system, we conducted a comprehensive mechanical and kinematic investigation to establish the optimal steering and locomotive architecture for autonomous foreign object debris (FOD) inspection on active airfield pavements ([\[1\]](./references.md#ref-1), [\[2\]](./references.md#ref-2)). An effective runway patrol platform must reconcile high cruising speeds up to 15.0 km/h with zero-point maneuvering agility around runway edge fixtures and perimeter aprons, all while operating in harsh outdoor environments subject to fine debris and jet blast turbulence.
+We compared steering architectures for the FOD Hunter UGV ([\[1\]](./references.md#ref-1), [\[2\]](./references.md#ref-2)). An effective runway patrol platform must reconcile high cruising speeds up to 15.0 km/h with zero-point maneuvering agility around runway edge fixtures and perimeter aprons, all while operating in harsh outdoor environments subject to fine debris and jet blast turbulence.
 
-We evaluated three primary drive topologies: four-wheel independent differential / skid-steer drive, car-like front-wheel Ackermann steering, and Mecanum wheel omnidirectional drive ([\[14\]](./references.md#ref-14), [\[17\]](./references.md#ref-17)). Four-wheel independent skid steering was selected because it delivers zero-radius turning, complete mechanical simplicity with zero steering linkages or kingpins, symmetrical bidirectional dynamics, and superior environmental sealing. This structural decision was finalized prior to motor-sizing torque calculations, embedded STM32 firmware development, or simulation model selection, and directly dictated the subsequent drivetrain requirements.
+We evaluated three primary drive topologies: four-wheel independent differential / skid-steer drive, car-like front-wheel Ackermann steering, and Mecanum wheel omnidirectional drive ([\[14\]](./references.md#ref-14), [\[17\]](./references.md#ref-17)). We selected four-wheel skid steering because it can command in-place turns and does not require steering linkages. This choice set the requirements for motor sizing, embedded control and simulation.
 
 ### 2. Subsystem Overview
 
@@ -135,7 +135,7 @@ This decentralized powertrain provides direct, symmetrical actuation across all 
 
 Skid steering operates on the principle of differential wheel speed control across the vehicle's lateral track. Forward linear velocity is generated by rotating all four wheels in the same direction, whereas heading yaw rotation is produced by commanding a velocity differential between the left and right wheel banks ([\[14\]](./references.md#ref-14)).
 
-Unlike an idealized two-wheel differential drive platform whose wheel contact patches are strictly collinear with the center of mass, a four-wheel skid-steer vehicle has two axles separated by a finite longitudinal wheelbase $L$. Consequently, any rotational maneuver requires the tires to slide and scrub laterally across the asphalt surface perpendicular to their rolling direction. This lateral scrub produces a resisting moment that the powertrain must overcome.
+Unlike an ideal two-wheel differential-drive robot, a four-wheel skid-steer UGV has front and rear axles separated by wheelbase $L$. Consequently, any rotational maneuver requires the tires to slide and scrub laterally across the asphalt surface perpendicular to their rolling direction. This tire scrub adds a resisting torque that the motors must overcome.
 
 #### 2.3 Straight, Curved and Zero-Radius Turning
 
@@ -147,7 +147,7 @@ The four-wheel skid-steer kinematics accommodate three discrete operational regi
 
 #### 2.4 Steering Interfaces with ROS 2 and Embedded Control
 
-The steering subsystem bridges high-level path planning with low-level electrical actuation through a strictly bounded control pipeline:
+The steering subsystem bridges high-level path planning with low-level electrical actuation through a control pipeline:
 
 - **Upstream Autonomy:** The ROS 2 Navigation stack (Nav2) publishes target velocity twist commands on topic `/cmd_vel` comprising linear velocity $v_x$ and yaw angular velocity $\omega_z$.
 - **Kinematic Decomposition:** The embedded inverse kinematic solver translates $(v_x, \omega_z)$ into target angular velocities for the left bank $(\omega_{FL}, \omega_{RL})$ and right bank $(\omega_{FR}, \omega_{RR})$, applying an effective track width correction factor $B_{\text{eff}}$.
@@ -167,7 +167,7 @@ Schematic illustrating the 4-wheel independent hub-motor layout with differentia
 
 #### 3.1 Runway Operating Requirements
 
-Civil aviation runway corridors impose severe environmental, spatial, and dynamic operational constraints ([\[2\]](./references.md#ref-2)). The CDE4301 autonomous runway patrol robot must monitor an operational pavement sector measuring $120\text{ m} \times 40\text{ m}$ (modeled after civil airfield aprons and the NUS EA engineering field). To complete debris sweeps within designated runway clearance windows without interrupting flight operations, the chassis requires a target sprint capability of $15.0\text{ km/h}$ ($4.17\text{ m/s}$), with a nominal sweeping cruise speed of $8.0\text{ km/h}$ ($2.22\text{ m/s}$).
+Civil aviation runway corridors impose environmental and operating constraints ([\[2\]](./references.md#ref-2)). The CDE4301 autonomous runway patrol robot must monitor an operational pavement sector measuring $120\text{ m} \times 40\text{ m}$ (modeled after civil airfield aprons and the NUS EA engineering field). To complete debris sweeps within designated runway clearance windows without interrupting flight operations, the chassis requires a target sprint capability of $15.0\text{ km/h}$ ($4.17\text{ m/s}$), with a nominal sweeping cruise speed of $8.0\text{ km/h}$ ($2.22\text{ m/s}$).
 
 Furthermore, civil runways feature a standard transverse crown drainage slope of approximately $1.5\% - 2.0\%$, with apron access ramps exhibiting gradients up to $5.0^\circ$ ($8.7\%$ grade). The steering architecture must remain directionally stable against gravity-induced downhill lateral side-slip.
 
@@ -321,10 +321,10 @@ Having selected 4WD skid steering, the primary geometric challenge is sizing the
 **Critical Engineering Re-examination:** We must emphasize that $0.80 \le L/B \le 1.00$ is _not_ an immutable physical law or universal stability guarantee. It represents an analytically derived rule of thumb formulated under specific quasi-static assumptions:
 
 - **Upper Bound Derivation ($L/B \le 1.00$):** Sized from the traction limit during in-place pivoting. The yaw scrub resistance torque is $M_{\text{scrub}} = 0.5 \mu m g L$, and the driving torque generated by left/right tractive wheel forces is $M_{\text{drive}} = 2 F_w B$. Setting $M_{\text{drive}} = M_{\text{scrub}}$ requires each wheel to deliver longitudinal force $F_w = \mu (mg/4) (L/B)$. Under Coulomb friction, the maximum traction a wheel can produce without spinning out is $F_{x,\max} = \mu (mg/4)$. Enforcing $F_w \le F_{x,\max}$ directly yields $L/B \le 1.00$. If $L/B > 1.00$, the wheels will spin longitudinally before the vehicle can overcome its lateral scrub resistance. _Assumptions:_ Isotropic Coulomb friction ($\mu_x = \mu_y$), perfectly level ground, and equal four-wheel normal loading ($N_w = mg/4$).
-- **Lower Bound Derivation ($L/B \ge 0.70 - 0.80$):** Sized from dynamic longitudinal pitch stability during emergency braking. Decelerating at rate $a$ from high speed causes inertial load transfer $\Delta N = (m a h_{\text{cg}}) / L$. To prevent rear-axle wheel lift-off ($N_{\text{rear}} > 0$), the wheelbase must satisfy $L > 2 h_{\text{cg}} (a/g)$. Normalized by track width $B$, this requires $L/B > 2 (h_{\text{cg}}/B) (a/g)$. For our chassis geometry ({\\text{cg}} = 0.200\\text{ m}$,  = 0.575\text{ m}$):
-  - At friction-limited dry tarmac braking ( = 0.80 g$): /B > 0.557$ ( \\times 0.200 / 0.575 \\times 0.80\$), which is readily met.
-  - At a hypothetical .0 g$structural load case ( = 1.0 g$): /B &gt; 0.696 \\approx 0.70\$.
-  - Adding a \\% safety factor for dynamic pitch bounce and downward slope braking yields $L/B \ge 0.80$.
+- **Lower Bound Derivation ($L/B \ge 0.70 - 0.80$):** Sized from dynamic longitudinal pitch stability during emergency braking. Decelerating at rate $a$ from high speed causes inertial load transfer $\Delta N = (m a h_{\text{cg}}) / L$. To prevent rear-axle wheel lift-off ($N_{\text{rear}} > 0$), the wheelbase must satisfy $L > 2 h_{\text{cg}} (a/g)$. Normalized by track width $B$, this requires $L/B > 2 (h_{\text{cg}}/B) (a/g)$. For our chassis geometry ($h_{\text{cg}} = 0.200\text{ m}$, $B = 0.575\text{ m}$):
+  - At friction-limited dry tarmac braking ($a = 0.80 g$): $L/B > 0.557$ ($2 \times 0.200 / 0.575 \times 0.80$), which is readily met.
+  - At a hypothetical $1.0 g$ structural load case ($a = 1.0 g$): $L/B > 0.696 \approx 0.70$.
+  - Adding a $15\%$ safety factor for dynamic pitch bounce and downward slope braking yields $L/B \ge 0.80$.
 
 Our final physical platform dimensions ($L = 488.8\text{ mm}$, $B = 575.0\text{ mm}$) yield:
 
@@ -464,7 +464,7 @@ Figure 4: 4WD Skid-Steer Dynamic Free-Body Diagram (Counter-Clockwise Yaw Rotati
 
 ![4WD Skid Steer Dynamic Forces FBD](./assets/diagrams/skid-steer-forces-fbd.svg)
 
-Free-body diagram showing longitudinal driving forces $F_{x,i}$ and opposing lateral scrub friction forces $F_{y,i}$ during in-place counter-clockwise yawing ($\\omega_z > 0$).
+Free-body diagram showing longitudinal driving forces $F_{x,i}$ and opposing lateral scrub friction forces $F_{y,i}$ during in-place counter-clockwise yawing ($\omega_z > 0$).
 
 </Card>
 
@@ -474,7 +474,7 @@ Figure 5: Dynamic Longitudinal Pitch Moment & Axle Load Transfer Free-Body Diagr
 
 ![Longitudinal Pitch Dynamics Free-Body Diagram](./assets/diagrams/steering-pitch-dynamics.svg)
 
-Side-view dynamic FBD illustrating load transfer $\\Delta N = (m a h_{\\text{cg}})/L$ from rear to front axle during high-speed emergency braking ($a = 1.0 g$).
+Side-view dynamic FBD illustrating load transfer $\Delta N = (m a h_{\text{cg}})/L$ from rear to front axle during high-speed emergency braking ($a = 1.0 g$).
 
 </Card>
 

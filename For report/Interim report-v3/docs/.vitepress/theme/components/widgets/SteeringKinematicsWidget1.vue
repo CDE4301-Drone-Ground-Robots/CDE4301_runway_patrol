@@ -37,14 +37,14 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0], ['hilbert-steering-kinem
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; padding: 14px; background: rgba(255,255,255,0.02); border-radius: 8px;">
               <div>
                 <label style="font-size: 12px; color: var(--apple-text-secondary); display: flex; justify-content: space-between; margin-bottom: 6px;">
-                  <span>Forward Velocity ($v_x$)</span>
+                  <span>Forward Velocity (v<sub>x</sub>)</span>
                   <span id="scout-speed-val" style="color: #60a5fa; font-weight: 600;">1.00 m/s</span>
                 </label>
                 <input type="range" id="scout-speed-slider" min="-2.0" max="4.17" step="0.05" value="1.0" style="width: 100%; accent-color: #3b82f6;">
               </div>
               <div>
                 <label style="font-size: 12px; color: var(--apple-text-secondary); display: flex; justify-content: space-between; margin-bottom: 6px;">
-                  <span>Yaw Angular Velocity ($\omega_z$)</span>
+                  <span>Yaw Angular Velocity (&omega;<sub>z</sub>)</span>
                   <span id="scout-yaw-val" style="color: #c084fc; font-weight: 600;">0.80 rad/s</span>
                 </label>
                 <input type="range" id="scout-yaw-slider" min="-2.0" max="2.0" step="0.05" value="0.8" style="width: 100%; accent-color: #a855f7;">
@@ -67,7 +67,7 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0], ['hilbert-steering-kinem
                 <span id="hud-omega" style="font-size: 15px; font-weight: 700; color: #c084fc;">0.80 rad/s</span>
               </div>
               <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--apple-border); text-align: center;">
-                <span style="font-size: 11px; color: var(--apple-text-tertiary); display: block;">Turning Radius ($R$)</span>
+                <span style="font-size: 11px; color: var(--apple-text-tertiary); display: block;">Turning Radius (R)</span>
                 <span id="hud-radius" style="font-size: 15px; font-weight: 700; color: #fbbf24;">1.25 m</span>
               </div>
               <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--apple-border); text-align: center;">
@@ -96,7 +96,7 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0], ['hilbert-steering-kinem
               </label>
               <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
                 <input type="checkbox" id="toggle-dimensions" checked="" style="accent-color: #3b82f6;">
-                <span>Chassis Dimensions ($L = 0.498\text{ m}, B = 0.583\text{ m}$)</span>
+                <span>Chassis Dimensions (L = 0.498 m, B = 0.583 m)</span>
               </label>
               <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
                 <input type="checkbox" id="toggle-trajectory" checked="" style="accent-color: #06b6d4;">

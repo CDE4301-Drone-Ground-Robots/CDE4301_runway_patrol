@@ -58,11 +58,11 @@ The source describes local and global EKFs operating at 30 Hz, with wheel inputs
 
 ## 3. Design Methodology & Selection {#sec-4-iterations}
 
-The principal design decisions addressed three risks: **poor localization on featureless asphalt**, **tire scrubbing during abrupt steering**, and **computationally stable path tracking**. We evaluated 3D versus planar LiDAR, dead reckoning versus GNSS-corrected estimation, grid-based A\* versus curvature-constrained planning, and RPP versus MPPI. The rationale for each choice is provided below; a selected algorithm is not, by itself, evidence of physical deployment.
+We compared LiDAR types, localization methods, planners and path-tracking controllers. The main concerns were localization drift on open pavement, tire scrub during sharp turns and stable path tracking. The comparisons below explain our choices; they do not demonstrate physical UGV performance.
 
 ::: details LiDAR sensor trade study
 
-LiDAR selection represents a pivotal hardware decision for runway inspection. We compared five candidates: WheelTec N10P, PaceCat LDS-M300, Hesai JT16, RPLiDAR S2, and Livox Mid-360S. Planar 2D LiDARs were eliminated due to inability to detect low-profile debris (&lt; 5 cm) and vertical terrain undulations.
+We compared five LiDAR options: WheelTec N10P, PaceCat LDS-M300, Hesai JT16, RPLiDAR S2, and Livox Mid-360S. Planar 2D LiDARs were eliminated due to inability to detect low-profile debris (&lt; 5 cm) and vertical terrain undulations.
 
 <Card title="Commercial LiDAR Sensor Engineering Evaluation">
 
@@ -84,9 +84,9 @@ The Hesai JT16 3D LiDAR was selected for its 16-channel vertical coverage, 100,0
 
 ::: details Localization choice and Dual-EKF MATLAB demonstration
 
-Airfield corridors require continuous, high-accuracy state estimation. While indoor mobile robots rely on scan-matching 2D LiDAR SLAM ([\[21\]](./references.md#ref-21)), runways lack the vertical architectural landmarks necessary for point cloud registration, leading to rapid dead-reckoning drift under probabilistic motion models ([\[26\]](./references.md#ref-26)). Pure wheel odometry on a 4WD skid-steer chassis suffers from continuous wheel slip during turns, causing gyro bias $b_\omega$ to compound orientation error linearly ($\theta(t) = b_\omega \cdot t$) and positional error quadratically ($e(t) \propto t^2$).
+Open runway areas provide fewer landmarks for scan-matching localization. Although indoor robots often use 2D LiDAR SLAM ([\[21\]](./references.md#ref-21)), runways lack the vertical architectural landmarks necessary for point cloud registration, leading to dead-reckoning drift under probabilistic motion models ([\[26\]](./references.md#ref-26)). Pure wheel odometry on a 4WD skid-steer chassis suffers from continuous wheel slip during turns, causing gyro bias $b_\omega$ to compound orientation error linearly ($\theta(t) = b_\omega \cdot t$) and positional error quadratically ($e(t) \propto t^2$).
 
-To resolve this limitation, state estimation is decoupled into a Dual-EKF hierarchy using `robot_localization` ([\[9\]](./references.md#ref-9)). A local EKF fuses 50 Hz wheel speeds with 100 Hz tactical IMU gyroscopic yaw rates, producing smooth odometry on `odom → base_footprint` at 30 Hz without jump discontinuities. Concurrently, a global EKF integrates periodic 5 Hz RTK-GNSS Cartesian coordinates, limiting long-term drift subject to GNSS quality and publishing drift corrections on `map → odom` at 30 Hz.
+We chose a Dual-EKF arrangement using `robot_localization` ([\[9\]](./references.md#ref-9)). A local EKF fuses 50 Hz wheel speeds with 100 Hz tactical IMU gyroscopic yaw rates, producing smooth odometry on `odom → base_footprint` at 30 Hz without jump discontinuities. Concurrently, a global EKF integrates periodic 5 Hz RTK-GNSS Cartesian coordinates, limiting long-term drift subject to GNSS quality and publishing drift corrections on `map → odom` at 30 Hz.
 
 <Card title="Dual-EKF State Estimation — MATLAB Educational Simulation" tag="MATLAB Simulation">
 
@@ -104,10 +104,10 @@ To validate multi-rate sensor fusion before configuring ROS 2 Nav2, a kinematic 
 
 _Model Limitations:_ This simulation models kinematic differential drive behavior; physical tire slip on wet tarmac is not established by this educational MATLAB demonstration as detailed in [simulation.html](./simulation.md).
 
-The comparative results demonstrate why a decoupled Dual-EKF architecture was selected:
+The demonstration illustrates two reasons for separating local and global estimation:
 
-1. **Decoupling Smoothness from Global Accuracy:** Local high-rate control loops receive smooth velocity feedback without discrete GPS correction jumps.
-2. **Asynchronous Sensor Fault Tolerance:** If RTK-GNSS is temporarily degraded, the local filter maintains accurate dead-reckoning until satellite lock is re-established.
+1. **Smooth local estimates:** Local high-rate control loops receive smooth velocity feedback without discrete GPS correction jumps.
+2. **Temporary GNSS loss:** If RTK-GNSS is temporarily degraded, the local filter maintains accurate dead-reckoning until satellite lock is re-established.
 
 :::
 
@@ -134,7 +134,7 @@ The comparative results demonstrate why a decoupled Dual-EKF architecture was se
 | RPP                        | MPPI                                      | Lower compute burden in Semester 1 environment; MPPI retained for further evaluation |
 | Dual-EKF                   | Pure wheel odometry / LiDAR scan matching | Maintains smooth local odometry while correcting long-term drift with GNSS           |
 
-**Kinematic trade-off:** Unsmoothed 2D A\* paths produce sharp, discontinuous turns ($\kappa \to \infty$) at grid boundaries, forcing in-place pivot maneuvers and severe tire scrub. SmacPlannerHybrid plans directly in the $SE(2)$ manifold $(x, y, \theta)$ with continuous Reeds-Shepp curves ($R_{\min} \ge 1.0\text{ m}$ [\[19\]](./references.md#ref-19), [\[20\]](./references.md#ref-20)), preserving forward linear momentum for stable Regulated Pure Pursuit tracking ([\[22\]](./references.md#ref-22)).
+**Kinematic trade-off:** Unsmoothed 2D A\* paths produce sharp, discontinuous turns ($\kappa \to \infty$) at grid boundaries, forcing in-place pivot maneuvers and tire scrub. SmacPlannerHybrid plans directly in the $SE(2)$ manifold $(x, y, \theta)$ with continuous Reeds-Shepp curves ($R_{\min} \ge 1.0\text{ m}$ [\[19\]](./references.md#ref-19), [\[20\]](./references.md#ref-20)), preserving forward linear momentum for stable Regulated Pure Pursuit tracking ([\[22\]](./references.md#ref-22)).
 
 _This is an analytical path-shape comparison, not a measurement of physical tire wear._
 
@@ -144,7 +144,7 @@ The original source states a 78% reduction in cumulative angular rotation in sim
 
 ## 4. Implementation & Prototype {#sec-5-implementation}
 
-The Semester 1 prototype is a **ROS 2 Jazzy / Gazebo Harmonic SIL navigation stack**, not a completed physical airfield robot. Nav2 lifecycle nodes ([\[8\]](./references.md#ref-8)), costmaps, localization, a global planner, RPP ([\[22\]](./references.md#ref-22)) and behavior-tree recovery form the implementation. Correct transform ownership is essential: the local estimator must supply smooth odometry, while global corrections update the map relationship without causing abrupt control-frame jumps.
+We implemented the navigation stack in **ROS 2 Jazzy and Gazebo Harmonic** using software-in-the-loop (SIL) testing. This was not a test of the completed physical UGV. Nav2 lifecycle nodes ([\[8\]](./references.md#ref-8)), costmaps, localization, a global planner, RPP ([\[22\]](./references.md#ref-22)) and behavior-tree recovery form the implementation. Correct transform ownership is essential: the local estimator must supply smooth odometry, while global corrections update the map relationship without causing abrupt control-frame jumps.
 
 For the complete simulation environment, bridge topics and benchmark setup, see [Simulation Architecture →](./simulation.md#sec-2-overview).
 
@@ -238,19 +238,21 @@ These three existing interactive models are retained here temporarily to avoid l
 
 ### 4.5 Navigation Parameter Tuning {#sec-4-5-tuning}
 
-Airfield runway patrol requires high-speed trajectory tracking ($8.0 - 15.0\text{ km/h}$) while maintaining centimeter-level tracking accuracy and suppressing skid-steer heading oscillations. Nav2 parameters were tuned systematically across the global planner (`SmacPlannerHybrid`), local controller (`RegulatedPurePursuitController`), and costmap safety layers.
+We adjusted Nav2 planner, controller and costmap parameters to examine path tracking, turning and obstacle clearance. The documented SIL baseline was **8.0 km/h**; 15.0 km/h and centimetre-level tracking remain targets rather than verified physical results.
 
-Each parameter was tuned following the **Problem → Parameter → Engineering Rationale → Observed Result** methodology:
+For each adjustment, the sections below state the problem, parameter change, reason and reported result. Numerical outcomes require the original configuration and test logs for verification.
 
 #### 1. RPP Lookahead Distance & Adaptive Scaling
-- **Problem:** Fixed short lookahead distances ($L < 0.60\text{ m}$) caused violent high-frequency steering chatter ($\dot{\omega}^2 > 38\text{ rad}^2/\text{s}^4$) and tire scrubbing on high-speed sprints ($2.22\text{ m/s}$), while excessively large lookahead ($L > 2.00\text{ m}$) caused aggressive corner cutting across taxiway bend boundaries.
+
+- **Problem:** Fixed short lookahead distances ($L < 0.60\text{ m}$) caused frequent steering oscillations ($\dot{\omega}^2 > 38\text{ rad}^2/\text{s}^4$) and tire scrubbing on high-speed sprints ($2.22\text{ m/s}$), while excessively large lookahead ($L > 2.00\text{ m}$) caused corner cutting across taxiway bend boundaries.
 - **Parameter:** `lookahead_dist: 1.20 m`, `min_lookahead_dist: 0.50 m`, `max_lookahead_dist: 2.50 m`, `lookahead_time: 1.50 s`.
 - **Engineering Rationale:** Dynamic lookahead scales with linear velocity $v$:
   $$L(v) = \text{clamp}(v \cdot t_{\text{lookahead}},\, L_{\min},\, L_{\max})$$
   This extends the preview horizon at speed to dampen heading transients while retracting lookahead during tight maneuvers for geometric accuracy.
-- **Observed Result:** Steering chatter metric $\dot{\omega}^2$ reduced from $38.4\text{ rad}^2/\text{s}^4$ to $< 4.2\text{ rad}^2/\text{s}^4$, eliminating underdamped vehicle yaw hunting without corner clipping.
+- **Observed Result:** Steering chatter metric $\dot{\omega}^2$ reduced from $38.4\text{ rad}^2/\text{s}^4$ to $< 4.2\text{ rad}^2/\text{s}^4$, reducing reported yaw oscillations; verify against recorded runs.
 
 #### 2. Cross-Track Error & Steering Oscillation Damping
+
 - **Problem:** Discontinuous goal pose switching along the discrete global path induced limit-cycle heading oscillations across corridor centerlines.
 - **Parameter:** `use_interpolation: true`, `transform_tolerance: 0.10 s`, `max_angular_accel: 2.5 rad/s²`.
 - **Engineering Rationale:** Dense cubic spline interpolation along the Reeds-Shepp trajectory smooths target lookahead poses, eliminating heading step changes.
@@ -263,37 +265,39 @@ Each parameter was tuned following the **Problem → Parameter → Engineering R
 />
 
 #### 3. Curvature-Regulated Velocity Scaling
+
 - **Problem:** Attempting to traverse acute taxiway bends at nominal cruise velocity ($2.22\text{ m/s}$) induces excessive lateral acceleration ($a_y = v^2 \kappa > 4.5\text{ m/s}^2$), breaking tire friction limits ($\mu = 0.80$) and triggering severe lateral skid.
 - **Parameter:** `use_regulated_linear_velocity_scaling: true`, `regulated_linear_scaling_min_radius: 1.0 m`, `regulated_linear_scaling_min_speed: 0.50 m/s`.
 - **Engineering Rationale:** Command velocity regulates against path curvature $\kappa$:
   $$v(\kappa) = v_{\max} \cdot \sqrt{\kappa_{\max} / \kappa}$$
   decelerating smoothly prior to entering sharp corners.
-- **Observed Result:** Automatic deceleration to $0.50 - 0.75\text{ m/s}$ along sharp bends ($R \le 1.5\text{ m}$), maintaining lateral acceleration $< 1.8\text{ m/s}^2$ and preventing wheel slip, followed by rapid acceleration recovery upon exiting into straight corridors.
+- **Observed Result:** Automatic deceleration to $0.50 - 0.75\text{ m/s}$ along sharp bends ($R \le 1.5\text{ m}$), maintaining lateral acceleration $< 1.8\text{ m/s}^2$ and reducing the risk of wheel slip, followed by acceleration upon exiting into straight corridors.
 
-#### 4. Hybrid A* Turning Radius & Heuristic LUT Tuning
+#### 4. Hybrid A\* Turning Radius & Heuristic LUT Tuning
+
 - **Problem:** Unconstrained discrete grid search produces jagged point-turn waypoints requiring zero-radius pivot turns ($15.78\text{ Nm}$ scrub torque).
 - **Parameter:** `minimum_turning_radius: 1.0 m`, `analytic_expansion_ratio: 3.5`, `reverse_penalty: 2.0`.
-- **Engineering Rationale:** Restricting path curvature to continuous Reeds-Shepp segments ($R_{\min} \ge 1.0\text{ m}$) ensures that generated paths strictly comply with non-holonomic vehicle kinematics.
-- **Observed Result:** 78% reduction in normalized cumulative absolute yaw rotation compared to zero-radius pivot paths, eliminating in-place tire scrub during nominal airfield patrol.
+- **Engineering Rationale:** Restricting path curvature to continuous Reeds-Shepp segments ($R_{\min} \ge 1.0\text{ m}$) limits planned curvature; actual skid-steer slip remains outside the idealized model.
+- **Observed Result:** 78% reduction in normalized cumulative absolute yaw rotation compared to zero-radius pivot paths, reducing planned in-place turns in the reported simulation comparison.
 
 ::: details Complete Nav2 configuration parameters and master tuning matrix
 
 The complete parameter configuration applied across the Semester 1 SIL prototype is summarized below. For multi-run empirical trajectory logs, spatial tracking sweeps, and full-scale validation plots, refer to [Simulation & Validation Results →](./simulation.md#sec-6-testing).
 
-| Component | Parameter | Default Value | Tuned Value | Engineering Justification |
-| :--- | :--- | :--- | :--- | :--- |
-| **RPP Controller** | `desired_linear_vel` | $0.5\text{ m/s}$ | $2.22\text{ m/s}$ ($8.0\text{ km/h}$) | Target Semester 1 baseline cruise speed for runway corridor sweep. |
-| **RPP Controller** | `lookahead_dist` | $0.6\text{ m}$ | $1.20\text{ m}$ | Eliminates underdamped steering chatter on high-speed sprints. |
-| **RPP Controller** | `min_lookahead_dist` | $0.3\text{ m}$ | $0.50\text{ m}$ | Prevents vehicle stalling and singularity near terminal waypoints. |
-| **RPP Controller** | `max_lookahead_dist` | $0.9\text{ m}$ | $2.50\text{ m}$ | Caps lookahead to prevent severe corner-cutting around taxiway edges. |
-| **RPP Controller** | `lookahead_time` | $1.0\text{ s}$ | $1.50\text{ s}$ | Velocity-scaled lookahead gain providing stable lead time at $2.22\text{ m/s}$. |
-| **RPP Controller** | `use_regulated_linear_velocity_scaling` | `false` | `true` | Enables automatic corner deceleration based on instantaneous path curvature. |
-| **RPP Controller** | `regulated_linear_scaling_min_radius` | $0.9\text{ m}$ | $1.00\text{ m}$ | Matches vehicle minimum turning radius capability. |
-| **RPP Controller** | `use_cost_regulated_linear_velocity_scaling` | `false` | `true` | Decelerates vehicle proportionally when traversing high-cost obstacle proximity zones. |
-| **Smac Planner** | `minimum_turning_radius` | $0.4\text{ m}$ | $1.00\text{ m}$ | Suppresses zero-radius point turns and reduces lateral tire scrub torque. |
-| **Smac Planner** | `analytic_expansion_ratio` | $3.5$ | $3.5$ | Balances Reeds-Shepp analytic shot frequency with Voronoi collision checking. |
-| **Costmap 2D** | `inflation_radius` | $0.55\text{ m}$ | $0.85\text{ m}$ | Enforces safe standoff margin exceeding UGV half-width ($0.33\text{ m}$) on taxiways. |
-| **Costmap 2D** | `cost_scaling_factor` | $10.0$ | $3.0$ | Provides smooth exponential cost decay for gradual proximity deceleration. |
+| Component          | Parameter                                    | Default Value    | Tuned Value                           | Engineering Justification                                                              |
+| :----------------- | :------------------------------------------- | :--------------- | :------------------------------------ | :------------------------------------------------------------------------------------- |
+| **RPP Controller** | `desired_linear_vel`                         | $0.5\text{ m/s}$ | $2.22\text{ m/s}$ ($8.0\text{ km/h}$) | Target Semester 1 baseline cruise speed for runway corridor sweep.                     |
+| **RPP Controller** | `lookahead_dist`                             | $0.6\text{ m}$   | $1.20\text{ m}$                       | Eliminates underdamped steering chatter on high-speed sprints.                         |
+| **RPP Controller** | `min_lookahead_dist`                         | $0.3\text{ m}$   | $0.50\text{ m}$                       | Prevents vehicle stalling and singularity near terminal waypoints.                     |
+| **RPP Controller** | `max_lookahead_dist`                         | $0.9\text{ m}$   | $2.50\text{ m}$                       | Caps lookahead to prevent severe corner-cutting around taxiway edges.                  |
+| **RPP Controller** | `lookahead_time`                             | $1.0\text{ s}$   | $1.50\text{ s}$                       | Velocity-scaled lookahead gain providing stable lead time at $2.22\text{ m/s}$.        |
+| **RPP Controller** | `use_regulated_linear_velocity_scaling`      | `false`          | `true`                                | Enables automatic corner deceleration based on instantaneous path curvature.           |
+| **RPP Controller** | `regulated_linear_scaling_min_radius`        | $0.9\text{ m}$   | $1.00\text{ m}$                       | Matches vehicle minimum turning radius capability.                                     |
+| **RPP Controller** | `use_cost_regulated_linear_velocity_scaling` | `false`          | `true`                                | Decelerates vehicle proportionally when traversing high-cost obstacle proximity zones. |
+| **Smac Planner**   | `minimum_turning_radius`                     | $0.4\text{ m}$   | $1.00\text{ m}$                       | Suppresses zero-radius point turns and reduces lateral tire scrub torque.              |
+| **Smac Planner**   | `analytic_expansion_ratio`                   | $3.5$            | $3.5$                                 | Balances Reeds-Shepp analytic shot frequency with Voronoi collision checking.          |
+| **Costmap 2D**     | `inflation_radius`                           | $0.55\text{ m}$  | $0.85\text{ m}$                       | Enforces safe standoff margin exceeding UGV half-width ($0.33\text{ m}$) on taxiways.  |
+| **Costmap 2D**     | `cost_scaling_factor`                        | $10.0$           | $3.0$                                 | Provides smooth exponential cost decay for gradual proximity deceleration.             |
 
 :::
 
@@ -324,7 +328,7 @@ The browser pathfinding visualizer and MATLAB educational video illustrate princ
 
 **Planner feasibility versus computation:** Hybrid A* can produce paths that better respect steering constraints than raw grid A*, but searches a larger state space. **Planner–controller compatibility:** Reverse-capable Reeds–Shepp paths require matching tracking behavior or a forward-only planner setting. **Localization:** Dual-EKF frame separation helps prevent GNSS correction jumps from destabilizing local control. **Sim-to-real uncertainty:** Tire slip, pavement friction, GNSS quality and actuator latency remain to be measured on the actual FOD Hunter chassis.
 
-The primary lesson is that route geometry, localization and low-level skid-steer behavior must be engineered together. Detailed scrub-force and motor-current calculations are intentionally not repeated here; see [Motor Drivetrain Calculations →](./motor-drivetrain-calculation.md#sec-1-requirements) and [Steering Kinematics →](./steering-kinematics.md#sec-4-iterations).
+Path planning, localization and skid-steer control need to be tested together. Detailed scrub-force and motor-current calculations are intentionally not repeated here; see [Motor Drivetrain Calculations →](./motor-drivetrain-calculation.md#sec-1-requirements) and [Steering Kinematics →](./steering-kinematics.md#sec-4-iterations).
 
 ## 7. Limitations & Semester 2 Plan {#sec-9-semester-2}
 

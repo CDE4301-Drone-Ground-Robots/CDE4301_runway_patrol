@@ -121,13 +121,13 @@ class Scout2SteeringViewer {
           <!-- MODE PILLS -->
           <div class="scout-mode-pills" style="display: flex; gap: 6px; background: rgba(0, 0, 0, 0.4); padding: 3px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08); overflow-x: auto; max-width: 100%;">
             <button class="scout-mode-btn" data-mode="straight" style="background: transparent; border: none; padding: 6px 12px; border-radius: 6px; color: #94a3b8; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-              1. Straight ($v_L = v_R$)
+              1. Straight (v<sub>L</sub> = v<sub>R</sub>)
             </button>
             <button class="scout-mode-btn active" data-mode="turn" style="background: #3b82f6; border: none; padding: 6px 12px; border-radius: 6px; color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);">
-              2. Differential Turn ($v_L \neq v_R$)
+              2. Differential Turn (v<sub>L</sub> &ne; v<sub>R</sub>)
             </button>
             <button class="scout-mode-btn" data-mode="pivot" style="background: transparent; border: none; padding: 6px 12px; border-radius: 6px; color: #94a3b8; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-              3. Zero-Radius Pivot ($v_L = -v_R$)
+              3. Zero-Radius Pivot (v<sub>L</sub> = &minus;v<sub>R</sub>)
             </button>
           </div>
 
@@ -166,42 +166,42 @@ class Scout2SteeringViewer {
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; font-size: 11px; margin-bottom: 8px;">
               <div>
-                <span style="color: #94a3b8;">Linear $v_x$:</span>
+                <span style="color: #94a3b8;">Linear v<sub>x</sub>:</span>
                 <div id="in-hud-v" style="font-weight: 700; color: #f8fafc; font-family: 'JetBrains Mono', monospace;">1.00 m/s</div>
               </div>
               <div>
-                <span style="color: #94a3b8;">Yaw Rate $\omega_z$:</span>
+                <span style="color: #94a3b8;">Yaw Rate &omega;<sub>z</sub>:</span>
                 <div id="in-hud-omega" style="font-weight: 700; color: #c084fc; font-family: 'JetBrains Mono', monospace;">0.80 rad/s</div>
               </div>
               <div>
-                <span style="color: #94a3b8;">Left Wheels $v_L$:</span>
+                <span style="color: #94a3b8;">Left Wheels v<sub>L</sub>:</span>
                 <div id="in-hud-vl" style="font-weight: 700; color: #10b981; font-family: 'JetBrains Mono', monospace;">0.72 m/s</div>
               </div>
               <div>
-                <span style="color: #94a3b8;">Right Wheels $v_R$:</span>
+                <span style="color: #94a3b8;">Right Wheels v<sub>R</sub>:</span>
                 <div id="in-hud-vr" style="font-weight: 700; color: #10b981; font-family: 'JetBrains Mono', monospace;">1.28 m/s</div>
               </div>
               <div style="grid-column: span 2;">
-                <span style="color: #94a3b8;">Left Spin $\omega_L$:</span>
+                <span style="color: #94a3b8;">Left Spin &omega;<sub>L</sub>:</span>
                 <span id="in-hud-omegal" style="font-weight: 600; color: #e2e8f0; font-family: 'JetBrains Mono', monospace; font-size: 10.5px;">4.37 rad/s (42 rpm)</span>
               </div>
               <div style="grid-column: span 2;">
-                <span style="color: #94a3b8;">Right Spin $\omega_R$:</span>
+                <span style="color: #94a3b8;">Right Spin &omega;<sub>R</sub>:</span>
                 <span id="in-hud-omegar" style="font-weight: 600; color: #e2e8f0; font-family: 'JetBrains Mono', monospace; font-size: 10.5px;">7.78 rad/s (74 rpm)</span>
               </div>
             </div>
 
             <div style="font-size: 10.5px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 6px; display: flex; flex-direction: column; gap: 3px;">
               <div style="display: flex; justify-content: space-between;">
-                <span style="color: #94a3b8;">Turning Radius ($R=v/\omega$):</span>
+                <span style="color: #94a3b8;">Turning Radius (R = v/&omega;):</span>
                 <span id="in-hud-radius" style="font-weight: 600; color: #fbbf24; font-family: 'JetBrains Mono', monospace;">1.25 m</span>
               </div>
               <div style="display: flex; justify-content: space-between;">
-                <span style="color: #94a3b8;">Effective Track ($W_{\text{eff}}$):</span>
-                <span style="font-weight: 600; color: #e2e8f0; font-family: 'JetBrains Mono', monospace;">0.688 m ($\chi=1.18$)</span>
+                <span style="color: #94a3b8;">Effective Track (W<sub>eff</sub>):</span>
+                <span style="font-weight: 600; color: #e2e8f0; font-family: 'JetBrains Mono', monospace;">0.688 m (&chi; = 1.18)</span>
               </div>
               <div style="display: flex; justify-content: space-between;">
-                <span style="color: #94a3b8;">Est. Scrub Torque ($M_{\text{scrub}}$):</span>
+                <span style="color: #94a3b8;">Est. Scrub Torque (M<sub>scrub</sub>):</span>
                 <span id="in-hud-mscrub" style="font-weight: 600; color: #f43f5e; font-family: 'JetBrains Mono', monospace;">45.2 Nm</span>
               </div>
             </div>
