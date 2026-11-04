@@ -201,7 +201,13 @@ An interactive 3D demonstration was also developed to visualize steering behavio
 
 <div class="ov-contrib">
 
-#### Power Distribution {#ov-power-distribution}
+#### Power Calculation and Battery Selection {#ov-power-calculation}
+
+Conducted power consumption calculations to estimate the total electrical load and determine the battery capacity required to meet the UGV's operating requirements.
+
+Evaluated LiFePO4 battery configurations based on energy capacity, operating duration, weight and power demands, leading to the selection of a 48V 20Ah battery.
+
+The selected battery configuration balances operating duration, system weight and energy reserves while supporting the UGV's intended operational requirements.
 
 <p class="ov-placeholder">*To Be Filled*</p>
 
@@ -213,7 +219,13 @@ An interactive 3D demonstration was also developed to visualize steering behavio
 
 <div class="ov-contrib">
 
-#### Electrical Components &amp; Integration {#ov-electrical-components}
+#### Power Distribution & Electrical Protection {#ov-power-distribution}
+
+Developed a 48V power distribution architecture incorporating fuse protection, a main kill switch and DC-DC converters to supply the different voltage requirements of onboard components.
+
+Integrated a BMS for battery monitoring and protection, alongside dedicated fuse circuits for high-power loads such as the hub motors and vacuum system.
+
+The power distribution architecture supports reliable power delivery, electrical isolation and protection against overcurrent and short-circuit faults.
 
 <p class="ov-placeholder">*To Be Filled*</p>
 
@@ -225,6 +237,24 @@ An interactive 3D demonstration was also developed to visualize steering behavio
 
 <!-- 6.2 Microcontroller Hardware & Firmware — Gabriel -->
 <SubsystemLead member="gabriel" />
+
+<div class="ov-contrib">
+
+#### Power Calculation and Battery Selection {#ov-power-calculation}
+
+Conducted power consumption calculations to estimate the total electrical load and determine the battery capacity required to meet the UGV's operating requirements.
+
+Evaluated LiFePO4 battery configurations based on energy capacity, operating duration, weight and power demands, leading to the selection of a 48V 20Ah battery.
+
+The selected battery configuration balances operating duration, system weight and energy reserves while supporting the UGV's intended operational requirements.
+
+<p class="ov-placeholder">*To Be Filled*</p>
+
+<div class="ov-doc-links">
+  <a class="ovx-more" href="/report#power-calculations">Power Budget &amp; Calculations <span aria-hidden="true">↗</span></a>
+</div>
+
+</div>
 
 <div class="ov-contrib">
 
