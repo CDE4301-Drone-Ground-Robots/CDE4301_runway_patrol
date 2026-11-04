@@ -10,6 +10,15 @@ description: "Bryan's Semester 2 (Phase 2) deliverables."
 <!-- Edit your plan between the region markers; the Overview and the Meet the Team page show this text. -->
 <!-- #region plan -->
 
-(To Be Filled)
+- Updated Power calculation for new system
+- Wiring sensors and testing IMU
+- Implementing safety features
+- Final PCB design for breakout board
+- Design of charging platform for UAV  
 
 <!-- #endregion plan -->
+
+<!-- Programming Semester 2 task breakdown; included by the Report composition system. -->
+<!-- #region programming-tasks -->
+
+## Semester 2 Tasks & Physical Implementation Scope {#electrical-semester-2}
