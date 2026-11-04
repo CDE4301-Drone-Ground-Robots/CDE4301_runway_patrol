@@ -247,8 +247,6 @@ The power distribution architecture supports reliable power delivery, electrical
 
 </div>
 
-<div class="ov-contrib">
-
 <!-- 6.2 Microcontroller Hardware & Firmware — Gabriel -->
 <SubsystemLead member="gabriel" />
 
