@@ -85,12 +85,41 @@ Names, matric numbers and photos (Meet the Team and the Report's Subsystem Lead 
 
 ### How to Preview Locally
 
-Run once from `For report/Interim report-v3/`:
+#### 1. First-time Setup (Run Once)
+
+If you do not have Node.js installed on your machine:
+
+- **Windows**:
+
+  ```bash
+  winget install -e --id OpenJS.NodeJS.LTS
+  ```
+
+  _(Close and reopen your terminal after installing so `npm` is recognized in your PATH)_
+
+- **macOS** (via [Homebrew](https://brew.sh/)):
+  ```bash
+  brew install node
+  ```
+
+#### 2. Install & Run Dev Server
+
+From the repository root (both Windows and macOS):
 
 ```bash
+cd "For report/Interim report-v3"
 npm install
-npm run docs:dev        # live preview at http://127.0.0.1:4174 (updates as you save)
+npm run docs:dev        # or 'npm.cmd run docs:dev' on Windows
 ```
+
+> [!TIP]
+> On some Windows setups (e.g. PowerShell or Command Prompt), if `npm` is not recognized or fails to launch, use `npm.cmd` instead:
+> ```bash
+> npm.cmd install
+> npm.cmd run docs:dev
+> ```
+
+Open **[http://127.0.0.1:4174](http://127.0.0.1:4174)** in your browser (the preview reloads automatically as you save edits to Markdown files).
 
 ---
 
