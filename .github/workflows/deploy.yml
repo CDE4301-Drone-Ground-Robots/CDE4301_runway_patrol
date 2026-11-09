@@ -56,5 +56,5 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          # the site is large (videos, 3D models); 600000 ms (10 minutes) is the longest wait the action allows
+          # the site is large (videos, 3D models); 600000 ms (10 minutes) is the longest wait the action allows (retried after the GitHub Actions outage)
           timeout: 600000
