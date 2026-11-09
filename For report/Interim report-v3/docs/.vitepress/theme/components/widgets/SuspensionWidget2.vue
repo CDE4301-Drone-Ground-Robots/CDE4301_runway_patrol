@@ -17,8 +17,12 @@ useWidgetScript([['asuka-suspension-1', s0]])
 
 <style>
 
-    .wgt-asuka-suspension .step-grid--single { display: block; width: 100%; max-width: 400px; margin: 14px auto 0; }
+    .wgt-asuka-suspension .step-grid--single { display: block; width: 100%; max-width: none; margin: 14px 0 0; }
     .wgt-asuka-suspension .step-grid--single .step-panel { padding: 12px; }
+    .wgt-asuka-suspension .step-cols { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px; align-items: start; margin-top: 8px; }
+    .wgt-asuka-suspension .step-cols .step-ctrl:first-child { margin-top: 0; }
+    .wgt-asuka-suspension .step-cols .step-stats { margin-top: 12px; }
+    @media (max-width: 760px) { .wgt-asuka-suspension .step-cols { grid-template-columns: minmax(0, 1fr); } }
     .wgt-asuka-suspension .step-grid--single .step-title { font-size: 13px; }
     .wgt-asuka-suspension .step-grid--single .step-eq .eq-main { font-size: 16px; }
     .wgt-asuka-suspension .step-grid--single .step-eq .eq-vals { font-size: 13px; }

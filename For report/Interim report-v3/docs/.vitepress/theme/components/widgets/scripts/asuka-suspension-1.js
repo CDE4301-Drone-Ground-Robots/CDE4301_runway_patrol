@@ -131,11 +131,12 @@ export default function init() {
         var s0 = solve(lbf0, b0, M0), FN0 = s0.fn, Z0 = 1; // same f_n as the selected spring, damping raised to critical (xi = 1)
         panel.innerHTML =
           '<div class="step-head"><span class="step-title"></span><button type="button" class="step-reset">Reset to critically damped (&xi; = 1)</button></div>' +
+          '<div class="step-cols"><div class="step-col-l">' +
           '<svg class="step-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img"></svg>' +
-          '<div class="step-eq"></div>' +
+          '<div class="step-eq"></div></div><div class="step-col-r">' +
           '<label class="step-ctrl"><span>Natural frequency <i>f<sub>n</sub></i></span><output></output><input type="range" min="1" max="12" step="0.05" aria-label="Natural frequency in hertz"></label>' +
           '<label class="step-ctrl"><span>Damping ratio <i>&xi;</i></span><output></output><input type="range" min="0.05" max="2" step="0.01" aria-label="Damping ratio"></label>' +
-          '<div class="step-stats"></div>';
+          '<div class="step-stats"></div></div></div>';
         var title = panel.querySelector('.step-title'), svg = panel.querySelector('svg'), eq = panel.querySelector('.step-eq');
         var inputs = panel.querySelectorAll('input'), outs = panel.querySelectorAll('output'), stats = panel.querySelector('.step-stats');
         var fnIn = inputs[0], zIn = inputs[1];
