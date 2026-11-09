@@ -250,6 +250,8 @@ Figure 1.7.2 sets out the value map and customer map, and Figure 1.7.3 shows the
 
 ## Overview of Design {#overview-of-design}
 
+<SubsystemLead member="asuka" label="Chapter Author" />
+
 In this chapter, I discuss how the seven stakeholder needs from Chapter 1 become the design of the system. I first describe the system concept, in which FOD Argus surveys the runway, an operator confirms each flag and FOD Hunter removes and logs each item. I then state the six features of FOD Hunter and FOD Argus working together and the ten features of FOD Hunter alone, each justified by the interviews and tied to the needs it answers. Next, I set out the requirements for FOD Hunter by subsystem, with each requirement addressing a feature and mapped to the specification that meets it, and I flag the values that still conflict between pages. Finally, I show how the work is divided between the team, so that any number in Chapters 3 to 5 can be traced back to a need, a feature and a person in charge.
 
 <!--
