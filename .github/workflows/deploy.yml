@@ -55,3 +55,6 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # the site is large (videos, 3D models); give Pages up to 20 minutes to process it
+          timeout: 1200000
