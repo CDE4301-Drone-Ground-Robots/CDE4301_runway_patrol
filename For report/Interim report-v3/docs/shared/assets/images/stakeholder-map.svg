@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" font-family="'Helvetica Neue',Arial,sans-serif">
+  <rect width="640" height="480" fill="#0f1114"/>
+  <rect x="70" y="30" width="540" height="390" fill="none" stroke="#3a4048" stroke-width="2"/>
+  <line x1="340" y1="30" x2="340" y2="420" stroke="#3a4048" stroke-width="2" stroke-dasharray="6 6"/>
+  <line x1="70" y1="225" x2="610" y2="225" stroke="#3a4048" stroke-width="2" stroke-dasharray="6 6"/>
+  <g font-size="13" fill="#7d8791" text-anchor="middle">
+    <text x="205" y="52">Keep informed</text>
+    <text x="475" y="52">Manage closely</text>
+    <text x="205" y="408">Monitor</text>
+    <text x="475" y="408">Keep satisfied</text>
+  </g>
+  <g font-size="14" font-weight="600" fill="#fff" text-anchor="middle">
+    <ellipse cx="475" cy="120" rx="78" ry="30" fill="#c0504d"/><text x="475" y="125">RSAF</text>
+    <ellipse cx="490" cy="320" rx="78" ry="30" fill="#4a86c5"/><text x="490" y="325">CAAS</text>
+    <ellipse cx="205" cy="105" rx="92" ry="28" fill="#d6a53a"/><text x="205" y="110">Industry partner</text>
+    <ellipse cx="205" cy="165" rx="92" ry="28" fill="#d6a53a"/><text x="205" y="170">Insurance companies</text>
+    <ellipse cx="205" cy="310" rx="98" ry="38" fill="#7f6fa8"/><text x="205" y="305">RSAF servicemen</text><text x="205" y="323" font-size="12" font-weight="400">(clear FOD in NS)</text>
+  </g>
+  <g fill="#c9d1d9" font-size="14" text-anchor="middle">
+    <text x="340" y="456">Power →</text>
+    <text transform="translate(26 225) rotate(-90)" x="0" y="0">Interest →</text>
+  </g>
+  <g font-size="11" fill="#7d8791" text-anchor="middle">
+    <text x="105" y="440">Low</text><text x="575" y="440">High</text>
+    <text transform="translate(52 400) rotate(-90)">Low</text><text transform="translate(52 60) rotate(-90)">High</text>
+  </g>
+</svg>

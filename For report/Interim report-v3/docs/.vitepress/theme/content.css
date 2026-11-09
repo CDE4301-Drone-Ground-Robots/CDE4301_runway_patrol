@@ -571,3 +571,21 @@ table.data-table.fit-table img {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* four-column fit table (who / what they said / sentiment / insight); widths come from the header row */
+table.data-table.fit-table.fit-4 th:nth-child(1) { width: 16%; }
+table.data-table.fit-table.fit-4 th:nth-child(2) { width: 38%; }
+table.data-table.fit-table.fit-4 th:nth-child(3) { width: 11%; }
+table.data-table.fit-table.fit-4 th:nth-child(4) { width: 35%; }
+
+/* image + three text columns (competitor tables) */
+table.data-table.fit-table.fit-img th:nth-child(1) { width: 14%; }
+table.data-table.fit-table.fit-img th:nth-child(2) { width: 18%; }
+table.data-table.fit-table.fit-img th:nth-child(3) { width: 34%; }
+table.data-table.fit-table.fit-img th:nth-child(4) { width: 34%; }
+table.data-table.fit-table.fit-img td:first-child img { max-width: 90px; margin: 0 auto; }
+
+/* long text tables (traceability tables): wrap cells instead of scrolling */
+.rpt .wrap-table table { display: table; width: 100%; table-layout: auto; font-size: 13px; line-height: 1.45; }
+.rpt .wrap-table :is(td, th) { white-space: normal; overflow-wrap: break-word; vertical-align: top; padding: 6px 8px; }
+.rpt .wrap-table td:first-child { white-space: nowrap; font-weight: 600; }
