@@ -207,35 +207,36 @@ import ReportToc from '@theme/components/report/ReportToc.vue'
 
 <!--@compose: ./report/members/hilbert/steering-kinematics.md#report{shift=2,prefix=steer}-->
 
+<span id="vacuum-module"></span>
+
 ### FOD Remediation {#fod-remediation}
 
-#### Vacuum Module {#vacuum-module .rpt-l3}
-
 <!--@compose: ./report/lead/asuka-lead.md-->
 
-<!--@compose: ./report/members/asuka/vacuum-module.md#report{shift=3,prefix=vacuum}-->
+<!--@compose: ./report/members/asuka/vacuum-module.md#summary{shift=2,prefix=vac}-->
 
-##### Critical Function Prototype {#critical-function-prototype}
+#### Introduction and System Requirements {#vac-intro .rpt-l3}
 
-The critical-function prototype is the FOD-remediation vacuum module described above.
+<!--@compose: ./report/members/asuka/vacuum-module.md#s1{shift=1,prefix=vac1}-->
 
-<span id="cfp-design"></span>
+#### Selection of Remediation Method {#vac-selection .rpt-l3}
 
-<!--@compose: ./report/members/asuka/vacuum-module.md#cfp-design{shift=4}-->
+<!--@compose: ./report/members/asuka/vacuum-module.md#s2{shift=1,prefix=vac2}-->
 
-<span id="cfp-testing"></span>
+#### Airflow Analysis and Design Iteration {#vac-airflow .rpt-l3}
 
-<!--@compose: ./report/members/asuka/vacuum-module.md#cfp-testing{shift=4}-->
+<!--@compose: ./report/members/asuka/vacuum-module.md#s3{shift=1,prefix=vac3}-->
 
-<span id="cfp-future-work"></span>
+#### Prototyping, Testing, Analysis and Realisation {#vac-prototype .rpt-l3}
 
-<!--@compose: ./report/members/asuka/vacuum-module.md#cfp-future-work{shift=4}-->
+<!--@compose: ./report/members/asuka/vacuum-module.md#s4{shift=1,prefix=vac4}-->
 
-#### FOD Sweep Box {#fod-sweep-box .rpt-l3}
+#### Future Work {#vac-future-work .rpt-l3}
 
-<!--@compose: ./report/lead/asuka-lead.md-->
+<!--@compose: ./report/members/asuka/vacuum-module.md#s6{shift=1,prefix=vac6}-->
 
-<!--@compose: ./report/members/asuka/fod-sweep-box-v2.md#report-->
+<span id="fod-sweep-box"></span>
+
 
 </section>
 
@@ -310,8 +311,6 @@ The critical-function prototype is the FOD-remediation vacuum module described a
 
 <!--@compose: ./report/members/asuka/references.md{shift=3,prefix=refs-asuka}-->
 
-<!--@compose: ./report/members/asuka/vacuum-module.md#references{shift=2,prefix=refs-vacuum}-->
-
 </details>
 
 <details class="rpt-refs">
@@ -334,6 +333,24 @@ The critical-function prototype is the FOD-remediation vacuum module described a
 <!--@compose: ./report/members/bryan/references.md{shift=3,prefix=refs-bryan}-->
 
 </details>
+
+### Appendix {#appendix}
+
+#### Appendix A: Interview with Mr Harry Lim, Industry Partner {#appendix-a .rpt-l3}
+
+<!--@compose: ./report/appendix/interviews.md#a-->
+
+#### Appendix B: Interview with 3SG(NS) Prady, Paya Lebar Air Base {#appendix-b .rpt-l3}
+
+<!--@compose: ./report/appendix/interviews.md#b-->
+
+#### Appendix C: Interview with LTA(NS) Elnathan, Tengah Air Base {#appendix-c .rpt-l3}
+
+<!--@compose: ./report/appendix/interviews.md#c-->
+
+#### Appendix D: Conversation with Ms Cindy Koh, CAAS {#appendix-d .rpt-l3}
+
+<!--@compose: ./report/appendix/interviews.md#d-->
 
 </section>
 

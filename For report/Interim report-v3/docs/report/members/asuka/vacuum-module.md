@@ -4,273 +4,155 @@ owner: "Takeuchi Asuka"
 outline: [2,3]
 ---
 # FOD Remediation Vacuum Module
-<!-- #region report -->
-
-<!-- Report summary (the Report's section text). The detailed write-up follows. -->
 
 ## High-Flow Vacuum FOD Pickup Subsystem {#sec-4-1-7}
 
-<Badge type="danger" text="Asuka" /> <Badge type="danger" text="Aerodynamic Suction" />
+<!-- #region summary -->
+In this chapter, I discuss the design of the FOD remediation subsystem, which removes debris from the runway once the FOD Hunter has located it. I first define the size range the subsystem must handle, from a 25 g nut to a 300 g bird carcass, based on user interviews. I then compare three clearing methods and select a vacuum, as it is the only option that handles metallic, non-metallic and animate FOD with a single mechanism. From a drag model of each limiting case, I size the vacuum at a minimum of 1.1 kW, then test an off-the-shelf unit, which picked up small screws but failed on larger ones because its measured airspeed (42.6 m/s) fell short of the 67.2 m/s required. Finally, I present an in-progress redesign in which a bounding box lifts the FOD mechanically and an inclined tube carries it into the bin, removing the need for more suction power above a tube angle of 26.6°.
 
-The FOD pickup subsystem addresses the limitations of manual runway FOD walks, sweepers, magnetic bars, and independent blowers by combining a ground-sealing intake interface with contained vacuum extraction. The design target covers ferrous and non-ferrous debris from approximately 4-20 cm and 4-300 g, including small fasteners through to a 300 g bird carcass. The documentation compares grippers, vacuum, magnetic bars, friction mats, and sweepers, then derives pickup velocity, duct flow rate, pressure losses, and estimated motor power for 25 g and 300 g cases. It also records two design iterations, side-entry and top-down testing, the observed blockage caused by corrugated hose, and the improved pickup achieved through a temporary nozzle seal and velocity surge.
+<!-- #endregion summary -->
 
+<!-- #region s1 -->
+There is no single, agreed definition of FOD, and aviation authorities draw its boundaries differently [\[6, pp. 4–5\]](./references.md#ref-6). The FAA defines FOD as "any object, live or not, located in an inappropriate location in the airport environment that can injure airport or air carrier personnel and damage aircraft" [\[6, p. 4\]](./references.md#ref-6). EASA, by contrast, limits it to "an inanimate object within the movement area of an aerodrome which has no operational or aeronautical function" [\[6, p. 4\]](./references.md#ref-6). The distinction matters for this subsystem: under the EASA definition a bird carcass is not FOD, yet interviewees at both military and civilian airfields named birds among the items they clear most often. I therefore adopt the FAA definition, which covers both inanimate and animate debris (Figure 4.5.1.1).
 
+<Figure src="./assets/images/fod-classification.png" alt="Classification of FOD into inanimate and animate categories" style="max-width: 520px; margin: 28px auto;" caption="Figure 4.5.1.1: Classification of FOD by animate and inanimate categories, adapted from [6, Fig. 1.3]." />
 
-## Literature Review: Why Runway FOD Retrieval Needs a New Approach
+FOD can be further grouped by material into metal, stone, birds/bats and miscellaneous, or more simply into hard bodies such as fasteners and stones and soft bodies such as birds [\[6, p. 19\]](./references.md#ref-6). The Australasian Aviation Ground Safety Council lists the typical hard bodies explicitly: "metal (e.g., tools, nuts, bolts, and lock wire), wood, stones, pavement fragments, sand, plastic wrapping, and paper" [\[6, p. 4\]](./references.md#ref-6). This hard–soft split frames the requirements below, since a small, dense fastener and a large, soft carcass place very different demands on a pick-up mechanism.
 
-<Badge type="danger" text="Asuka" />
+To confirm which FOD types the subsystem must handle in Singapore, I interviewed four stakeholders across military and civilian airfields ([see interview transcripts](/report#appendix)). Table 4.5.1.2 summarises the FOD each interviewee reported.
 
-Foreign Object Debris (FOD) on movement surfaces is an operational and financial hazard to commercial and military aviation. Existing detection systems can localise millimetre-scale debris, but physical retrieval remains dependent on manual intervention and legacy sweeping equipment. Annual direct and indirect FOD damage is estimated at **\$12-\$14 billion**, with severe single-engine ingestion events exceeding **\$1 million** in direct repairs.
+*Table 4.5.1.2: FOD reported by interviewees.*
 
-::: warning Operational bottleneck
-A detection system only protects the runway when the debris is physically contained and removed. Manual dispatch cycles can take 10-27 minutes for one incident, while reported airports experience 200-240 minutes of monthly runway downtime.
-:::
-
-| Method | Mechanical limitation | Operational constraint |
+| Interviewee | Context | FOD reported |
 | --- | --- | --- |
-| **Rotary and vacuum sweepers** | High fuel or power draw; filters clog; leakage risk on tarmac. | Bulky footprint and slow active sweeping speed. |
-| **Friction or mat sweepers** | Rubber squeegees wear rapidly and struggle with heavy or embedded items. | Requires towing and restricts manoeuvrability. |
-| **Magnetic bars** | Cannot collect non-ferrous aluminium, titanium, rubber, plastic, or composite debris. | Cannot address biological hazards or non-magnetic hardware. |
-| **Independent blowers** | Expel debris without containment. | Vortex, crosswinds, and jet blast can return debris to active pavement. |
+| **Mr Harry Lim** | Industry partner (IOI Inspire); observed an RSAF FOD run, 10 Sep 2026 | "a small metal piece, about 2 cm"; "nuts and bolts … or some scrap metal"; palm-sized plastic |
+| **3SG(NS) Prady** | Air force technician, Paya Lebar Air Base; conducted FOD walks, 16 Sep 2026 | "Rocks, screws, rivets. Uh, actually, bones are quite common."; shattered glass |
+| **LTA(NS) Elnathan** | Air force officer, Tengah Air Base, 16 Sep 2026 | plastic, wood, "dead birds"; "a nut this big, we don't really find that" |
+| **Ms Cindy Koh** | CAAS; civil airfields (Changi and Seletar), 28 Sep 2026 | "a bird, uh which we get quite often"; "bolts and nuts quite often"; cloth, plastics, paper; loose runway premix |
 
-Current detection deployments also leave an open-loop response: operators must notify ground teams and track vehicles across multi-kilometre paths. A coordinated multi-robot system can reduce this response bottleneck by allocating nearby tasks across localised debris clusters.
+Three FOD types recur across the interviews. The first is small metal fasteners: three of the four interviewees named nuts, bolts, screws or rivets, and Ms Koh confirmed that at Changi "we get bolts and nuts quite often". This agrees with a one-year airport study cited by El-Sayed, in which over 60% of collected FOD was metal and a typical item measured 25 mm × 25 mm or smaller [\[6, p. 19\]](./references.md#ref-6). The second is animal remains. Ms Koh explained that whole bird carcasses "are more common for us" than fragments, although a bird strike can leave "50 pieces of like small little droppings all around the runway". Prady described rat bones left behind after the remains were "roasted by the engine". The third is pavement fragments: Prady reported rocks breaking off after lightning cracked the runway, and Ms Koh described loose premix from potholes disintegrating under jet blast.
 
-## FOD Types, Design Selection, and Project Scope
+The interviews also set the expected volume and the gap the subsystem must fill. Both interviewees who gave an estimate described a small quantity per run: Mr Lim said "it's like one palm", and Prady said "maybe a handful", as "the sweepers take care of most of it". However, Prady stressed that "the big sweeper does not pick up the small pieces", and that it is "the smaller stuff, right, like rivets, the ones that can actually cause damage" that the sweeper misses. Small fasteners are therefore both the most frequent FOD and the type that existing equipment handles worst.
 
-The pickup system is scoped to collect inanimate solid debris, including both ferrous and non-ferrous objects. The target range is approximately **4 cm to 20 cm** and **4 g to 300 g**, from a small screw or fastener through to a bird carcass.
+Not all accounts agree. Elnathan reported that at Tengah, "something the size of my fist or a nut this big, we don't really find that", which contrasts with the other three interviewees. This may reflect differences between air bases or between his role and Prady's hands-on FOD walks. I retain fasteners as a design case regardless, as CAAS confirms they are frequent at Changi and they are the items most likely to cause damage. Large sections of broken runway, such as the "piece of pavement this big" Prady carried off after a C-17 landing, were excluded from scope, as they require a works crew rather than a patrol vehicle.
 
-| FOD type | Gripper | Vacuum | Magnet | Mat / sweeper |
-| --- | --- | --- | --- | --- |
-| Inanimate solid | Yes | Yes | No | Yes |
-| Ferrous metal | Yes | Yes | Yes | Yes |
-| Non-ferrous metal | Yes | Yes | No | Yes |
-| Animate object | No | No | No | No |
+From the definitions and interviews, I set two limiting design cases: a small metal fastener, representing hard, dense and frequent FOD, and a whole bird carcass, representing soft, bulky and heavy FOD. The subsystem must therefore pick up objects ranging from a nut or bolt (25 g) to a bird carcass (300 g, approximately 150 mm × 80 mm × 60 mm), and remove each detected item completely so that nothing is left on the runway after a pass.
 
-<Figure src="./assets/images/wetndryvacuum.png" alt="Wet and dry vacuum used as a pickup-system reference" caption="Vacuum pickup reference used for the first concept." />
+<!-- #endregion s1 -->
 
-::: tip Selection decision
-A vacuum is preferred because a sufficiently powerful motor can address different FOD sizes and material types. The first concept combines a sweeping or sealing interface with localised vacuum extraction rather than relying on a gripper, magnet, or passive mat alone.
-:::
+<!-- #region s2 -->
+I compared three clearing methods [\[6, Sec. 8.4.3\]](./references.md#ref-6), [\[7\]](./references.md#ref-7) against the three FOD categories identified above: non-metallic objects (stones, leaves), metallic objects (nuts, bolts) and animate objects (birds).
 
-## FOD Remediation: Purpose and Requirements
+*Table 4.5.2.1: Comparison of FOD clearing methods.*
 
-::: info Purpose
-1. Collect FOD of varying sizes.
-2. Ensure 100% remediation of FOD.
-:::
-
-FOD
-
-Inanimate
-
-Solid stonesGoop RainsBaggage tags Food remainsVolcanic ash Snow, hailTrash Mechanic toolsFasteners DronesPersonal items Bomb fragmentsOthers
-
-Animate
-
-GrassInsectsWildlifeHumans
-
-Ground animals
-
-MammalsReptiles
-
-Airborne
-
-BirdsBats
-
-Classification of foreign object debris by animate and inanimate categories (adapted from El-Sayed, *Foreign Object Debris and Damage in Aviation*, Figure 1.3).
-
-::: info From our interviews, the common FOD in Singapore are
-1. Nuts and bolts.
-2. Bird carcasses, even bones.
-3. Chips of the runway (stones).
-4. "We usually get about a handful."
-5. Special case: a big section of the runway.
-:::
-
-::: tip Requirements
-1. Able to pick up objects as small as nuts and bolts, up to bird-sized FOD (up to 5" diameter, 300 g). Anything bigger cannot be picked up and is sent to the command centre for intervention.
-:::
-
-## Different Approaches
-
-| Clearing method | Able to pick up non-metallic objects? (e.g. stones, leaves) | Able to pick up metallic objects? (e.g. nuts, bolts) | Able to pick up animate objects? (e.g. birds) | Remarks | Final decision |
+| Method | Non-metallic | Metallic | Animate | Remarks | Decision |
 | --- | --- | --- | --- | --- | --- |
-| **Vacuum** | Yes | Yes | Yes | Vacuum must be strong enough. | **Select** |
-| **Robot gripper arm** | Yes | Yes | Yes | Mechanically complex, difficult to aim, and will struggle with smaller pieces. | Reject for now; keep in case the vacuum doesn't work |
-| **Magnetic bar** | No | Yes | No | Might be good for nuts and bolts, but definitely not for others. | Reject |
+| **Vacuum** | Yes | Yes | Yes | Needs high suction; large objects need a large duct | Selected |
+| **Robot gripper arm** | Yes | Yes | Yes | Mechanically complex; hard to aim; poor on small pieces | Reserve |
+| **Magnetic bar** | No | Yes | No | Collects ferrous fasteners only | Rejected |
 
-## Pickup Velocity and Motor Sizing
+The magnetic bar was rejected as it cannot collect stones or animal remains, which together make up two of the three most common FOD types reported in interviews. The gripper arm can handle every category but requires vision-guided aiming and struggles with small fragments, adding complexity to the most uncertain part of the system. I selected the vacuum, as it handles all three categories with a single mechanism, and kept the gripper arm in reserve should the vacuum fail to collect larger objects. In the later part of the report, I eventually integrate the methods together as part of my future work.
 
-<Figure src="./assets/diagrams/vacuum-module-airflow-drawn-up-a-vertical-intake-tube-.svg" alt="Airflow drawn up a vertical intake tube lifting an object off the ground" />
+<!-- #endregion s2 -->
 
-$$
-F_{Drag}=\frac{1}{2}\rho_{Air}V^2C_dA_{projected},\qquad W_{object}=mg
-$$
+<!-- #region s3 -->
+To size the vacuum, I modelled pick-up from first principles as a vertical lift-off problem (Figure 4.5.3.1). Air drawn into the intake accelerates from rest around the nozzle mouth and flows up the tube past the object. The object leaves the ground when the upward aerodynamic drag exceeds its weight. The model rests on four assumptions: the object sits directly beneath the intake, it experiences the full tube velocity, lift and ground friction are neglected, and drag acts on the object's projected area normal to the flow.
 
-In equilibrium:
+<Figure src="./assets/diagrams/vacuum-pickup-model.svg" alt="Airflow drawn up a vertical intake tube lifting an object off the ground" style="max-width: 300px; margin: 28px auto;" caption="Figure 4.5.3.1: First-principles pick-up model. Airflow enters the intake from ground level and acts on the object as drag opposing its weight." />
 
-$$
-mg=\frac{1}{2}\rho_{Air}V^2C_dA_{projected}
-$$
+The two forces acting on the object are the drag from the airflow and its weight [\[8\]](./references.md#ref-8):
 
-For pickup:
+$$F_{drag} = \tfrac{1}{2}\rho_{air}V^2 C_D A_{projected}, \qquad W_{object} = mg$$
 
-$$
-\frac{1}{2}\rho_{Air}V^2C_dA_{projected}>mg
-$$
+At equilibrium the object hovers, with drag exactly balancing weight:
 
-$$
-V_{min}>\sqrt{\frac{2mg}{\rho_{Air}C_dA_{projected}}}
-$$
+$$mg = \tfrac{1}{2}\rho_{air}V^2 C_D A_{projected}$$
 
-Flow rate:
+For pick-up, drag must exceed weight, which gives the minimum airspeed the intake must achieve:
 
-$$
-Q=A_{tube}V_{pick\,up}
-$$
+$$\tfrac{1}{2}\rho_{air}V^2 C_D A_{projected} > mg \quad\Rightarrow\quad V_{min} > \sqrt{\frac{2mg}{\rho_{air} C_D A_{projected}}}$$
 
-$$
-\eta_{total}=\eta_{blower}\times\eta_{motor}
-$$
+The volumetric flow rate the vacuum must deliver follows from the tube cross-section:
 
-- **Blower** efficiency refers to the efficiency of the fan itself (typically 50%).
-- **Motor** efficiency refers to the electrical-to-shaft efficiency (typically 80%).
+$$Q = A_{tube}V_{pick\,up}$$
 
-$$
-P_{elec}=\frac{P_{fluid}}{\eta_{total}}=\frac{Q\times\Delta Pressure_{Total}}{\eta_{blower}\times\eta_{motor}}
-$$
+The vacuum must then sustain this flow against the pressure losses along the flow path. The electrical power required is the fluid power divided by the combined efficiency of the blower (fan) and the motor (electrical to shaft):
 
-$$
-\Delta Pressure_{Total}=\sum Pressure\ Losses=\Delta P_{Entry}+\Delta P_{Friction}+\Delta P_{Elbow\ Loss}+\Delta P_{Filter}
-$$
+$$P_{elec} = \frac{P_{fluid}}{\eta_{total}} = \frac{Q\,\Delta P_{total}}{\eta_{blower}\,\eta_{motor}}$$
 
-$$
-\Delta P_{Entry}=K_{entry}\left(\frac{1}{2}\rho V^2\right)
-$$
+The total pressure the blower must generate is the dynamic pressure needed to accelerate the air from rest to $V$, plus the losses at the nozzle entry, along the duct, through the elbow and across the filter [\[8\]](./references.md#ref-8):
 
-$$
-\Delta P_{Friction}=f\times\frac{L}{D}\times\left(\frac{1}{2}\rho V^2\right)
-$$
+$$\Delta P_{total} = \tfrac{1}{2}\rho V^2 + \Delta P_{entry} + \Delta P_{friction} + \Delta P_{elbow} + \Delta P_{filter}$$
 
-$$
-\Delta P_{Elbow}=K_{bend}\left(\frac{1}{2}\rho V^2\right)
-$$
+$$\Delta P_{entry} = K_{entry}\left(\tfrac{1}{2}\rho V^2\right), \quad \Delta P_{friction} = f\frac{L}{D}\left(\tfrac{1}{2}\rho V^2\right), \quad \Delta P_{elbow} = K_{bend}\left(\tfrac{1}{2}\rho V^2\right)$$
 
-$$
-\Delta P_{Filter}=300\ \text{Pa (assumed)}
-$$
+I took $\rho_{air}$ = 1.2 kg/m³, $C_D$ = 0.8, $K_{entry}$ = 0.35, $K_{bend}$ = 0.4, a friction factor $f$ = 0.022, a duct length of 0.4 m and an assumed filter loss of 300 Pa. I assumed a blower efficiency of 50% and a motor efficiency of 80%, giving $\eta_{total}$ = 40%.<!-- TODO: cite a source for both efficiencies, e.g. a blower or vacuum motor datasheet --> Table 4.5.3.2 applies the model to the two limiting cases set in Section 4.5.1.
 
-## Component Selection and Specification Calculation
+*Table 4.5.3.2: Vacuum sizing for the two limiting cases (no safety factor applied).*
 
-| Parameter | Case A: Nut and bolts, 25 g | Case B: Bird carcass, 300 g | Units | Remarks |
-| --- | --- | --- | --- | --- |
-| Mass | 0.0250 | 0.3000 | kg |   |
-| Dimensions | D = 12 mm, L = 15 mm | 150 mm × 80 mm × 60 mm | mm |   |
-| Projected area | 0.0001131 | 0.0090 | m² |   |
-| Minimum duct diameter | 0.0381 | 0.1270 | m | 1.5 inch tube for case A, 5 inch tube for case B |
-| **Required pickup velocity** | **67.2129** | **26.1008** | m/s | Safety factor not accounted for |
-| Duct area | 0.0011 | 0.0127 | m² |   |
-| **Required flow rate Q** | **0.0766** | **0.3306** | m³/s |   |
-| Required static pressure (gauge) | 5669.5089 | 1100.2810 | Pa | Safety factor not accounted for |
-| Air power | 434.4481 | 363.7929 | W |   |
-| **Estimated motor power** | **1086.1202** | **909.4822** | W | Safety factor not accounted for |
+| Parameter | Case A: Nut/bolt | Case B: Bird carcass | Units |
+| --- | --- | --- | --- |
+| Mass | 0.025 | 0.300 | kg |
+| Dimensions | Ø12 × 15 | 150 × 80 × 60 | mm |
+| Projected area | 1.131 × 10⁻⁴ | 9.0 × 10⁻³ | m² |
+| Duct diameter | 0.0381 (1.5 in) | 0.127 (5 in) | m |
+| Required pick-up velocity | 67.2 | 26.1 | m/s |
+| Required flow rate Q | 0.0766 | 0.3306 | m³/s |
+| Total pressure loss | 5670 | 1044 | Pa |
+| Fluid power | 434 | 345 | W |
+| Estimated electrical power | 1086 | 863 | W |
 
-| Pressure loss | Case A: Nut and bolts, 25 g | Case B: Bird carcass, 300 g |
-| --- | --- | --- |
-| Dynamic pressure | 2710.54 Pa | 408.75 Pa |
-| Nozzle entry loss | 948.69 Pa | 143.06 Pa |
-| Duct friction loss (L = 0.4 m, d = 1.5 inches) | 626.06 Pa | 84.97 Pa |
-| Elbow bend (k = 0.4) | 1084.22 Pa | 163.50 Pa |
-| Pressure drop due to filter | 300.00 Pa | 300.00 Pa |
-| **Total pressure loss** | **5669.51 Pa** | **1100.28 Pa** |
+The nut-and-bolt case is the more demanding of the two: its small projected area relative to its mass requires 67.2 m/s at the intake, driving a pressure loss of 5.7 kPa and an electrical power of about 1.1 kW. The bird carcass needs a lower velocity but a much larger duct and therefore a higher flow rate. On this basis, I bought an off-the-shelf vacuum rated at 19 kPa gauge pressure (approximately SGD 80) to begin testing, rather than designing a blower from scratch.
 
-::: warning In conclusion
-, I need a motor that can meet the minimum power rating of **1.1 kW**.
-:::
+The model is optimistic in one important respect. It assumes the object experiences the full tube velocity, whereas an object resting on the ground sits outside the nozzle, where airspeed falls off rapidly with distance from the intake [\[10\]](./references.md#ref-10). The airspeed acting on the object is therefore lower than the tube velocity, so the values in Table 4.5.3.2 are lower bounds on the velocity the vacuum must reach.
 
-Change the object and duct to see the required pickup velocity, pressure losses and motor power. Constants: $\rho = 1.2\ \text{kg/m}^3$, $K_{entry} = 0.35$, $f = 0.022$, $L = 0.4\ \text{m}$, $K_{bend} = 0.4$, $\Delta P_{Filter} = 300\ \text{Pa}$, $\eta_{blower}\times\eta_{motor} = 0.5\times0.8$. Duct friction uses the selected duct diameter.
+The interactive calculator below changes the object and duct to show the required pickup velocity, pressure losses and motor power. The constants are $\rho = 1.2\ \text{kg/m}^3$, $K_{entry} = 0.35$, $f = 0.022$, $L = 0.4\ \text{m}$, $K_{bend} = 0.4$, $\Delta P_{Filter} = 300\ \text{Pa}$ and $\eta_{blower}\times\eta_{motor} = 0.5\times0.8$. Duct friction uses the selected duct diameter.
 
 <VacuumModuleWidget1 />
 
-Safety factor not accounted for.
+*Figure 4.5.3.3: Interactive calculator for pickup velocity, pressure losses and motor power.*
 
-::: tip Decision made
-buy a high-power vacuum off the shelf and start testing!
-:::
+Figures 4.5.3.4 and 4.5.3.5 show the first integration concepts. The vacuum canister sits on top of the chassis and doubles as the debris bin, with the 1.5 in hose routed down to a nozzle at the front of the vehicle. I considered two intake orientations: a side intake that sweeps debris in from the front, and a top-down nozzle positioned directly over the FOD.
 
-::: info Selected vacuum
-2800 W wet and dry vacuum, just over \$80 on Shopee, rated at 19 kPa gauge pressure.
-:::
+<div class="fig-row" style="max-width: 620px; margin-left: auto; margin-right: auto;">
 
-<!-- #endregion report -->
+<Figure src="./assets/images/vacuum-design-iteration-1.png" alt="Side intake concept: vacuum module on the chassis with the hose lowered beside the wheel" caption="Figure 4.5.3.4: Iteration 1, side intake with a lowering path." />
 
-<!-- #region cfp-design -->
+<Figure src="./assets/images/vacuum-design-iteration-2.png" alt="Top-down UFO concept: intake hood lowered vertically onto the ground" caption="Figure 4.5.3.5: Iteration 2, top-down &quot;UFO&quot; concept." />
 
-## Design and Iteration
+</div>
 
-<Figure src="./assets/images/vacuum-design-iteration-1.png" alt="Side intake concept: vacuum module on the chassis with the hose lowered beside the wheel" caption="**Iteration 1:** side intake with a lowering path." />
+<!-- #endregion s3 -->
 
-<Figure src="./assets/images/vacuum-design-iteration-2.png" alt="Top-down UFO concept: intake hood lowered vertically onto the ground" caption="**Iteration 2:** top-down &quot;UFO&quot; concept." />
+<!-- #region s4 -->
+I measured the intake airspeed with an anemometer at 42.6 m/s for the 1.5 in intake (Figure 4.5.4.1). In bench tests, the vacuum picked up small screws reliably but could not lift larger screws unless I applied a "surge"<!-- TODO: one sentence defining the surge effect and how it was produced -->. Testing also showed that a top-down intake picked up FOD more reliably than a side intake, so I adopted the top-down orientation for integration.
 
-## Initial Thoughts and Conclusions
+<Figure src="./assets/images/vacuum-anemometer-test.png" alt="Kestrel anemometer reading 95.3 mph at the vacuum intake" style="max-width: 340px; margin: 28px auto;" caption="Figure 4.5.4.1: Anemometer measurement of the intake airspeed. The display reads 95.3 mph." />
 
-1. The top-down approach works better than the side approach.
-2. The off-the-shelf vacuum system's efficiency is very low (10% of rated gauge pressure).
+The bench results agree with the model in Section 4.5.3: the measured 42.6 m/s is well below the 67.2 m/s predicted for the 25 g case. The vacuum also fell well short of its 19 kPa rating in operation. The measured airspeed corresponds to a dynamic pressure of about 1.09 kPa ($\tfrac{1}{2}\rho V^2$), roughly 6% of the rated value.
 
-::: warning Open question
-is spending more money on a bigger (or more powerful) motor going to solve the issue?
-:::
+This shortfall should not be read as poor efficiency alone. Manufacturers quote suction as sealed (zero-flow) vacuum, whereas an open intake operates at the high-flow end of the fan curve, where pressure is far lower [\[9\]](./references.md#ref-9). A larger motor would move the operating point upwards but would add mass and draw more from the 48 V battery.
 
-<!-- #endregion cfp-design -->
+To validate the integrated subsystem, I mounted the vacuum on the FOD Hunter with a custom-made bin sized to fit the chassis, and recorded a pick-up trial using the top-down intake. The FOD Hunter collected M3–M4 screws under 10 g, confirming that the vacuum, intake and bin work as an integrated system on the rover (Figure 4.5.4.2). Larger fasteners remained on the ground, consistent with the bench results and the model in Section 4.5.3. The trial therefore realises the subsystem for light FOD, but shows that lifting heavier FOD by suction alone would require a disproportionately larger motor. This raised the question of whether more suction power is the right solution at all, which led to the redesign in Section 4.5.5.
 
-<!-- #region cfp-testing -->
+<VideoClip src="./assets/videos/vacuum-rover-pickup-trial.mp4" caption="Figure 4.5.4.2: Pick-up trial on the FOD Hunter using the top-down intake." />
 
-## Testing and Evaluation
+Rather than increasing suction, I changed the pick-up method so that the vacuum no longer has to lift the object off the ground. The redesigned mechanism uses a bounding box that opens and sweeps the FOD inside, elevates above the canister's intake, then turns on the vacuum to draw the contents down an inclined tube into the bin (Figure 4.5.4.3). Lifting is now done mechanically by the Z-lift, and the airflow only needs to move the object along the tube.
 
-**Findings:**
+<div class="fig-eq">
 
-1. Pickup speed was measured with an anemometer at **42.47 m/s** for a 1.5 inch diameter intake.
-2. The vacuum was able to pick up many small-sized screws.
-3. It was unable to pick up larger-sized screws unless the "surge" effect was applied.
+<div class="fig-eq-l">
 
-<!-- #endregion cfp-testing -->
+<Figure src="./assets/diagrams/vacuum-redesign-inclined-tube.svg" alt="Bounding box and inclined tube leading into the bin, with the object, airflow, tube angle theta, axes x and y, and the free body diagram of the object" caption="Figure 4.5.4.3: Redesigned pick-up mechanism. Airflow carries the object from the bounding box down the inclined tube into the bin, with the free body diagram of the object." />
 
-<!-- #region cfp-future-work -->
+</div>
 
-## Future Work: Redesigning the Pickup Mechanism
-
-<Badge type="warning" text="In progress" />
-
-### 10.1 Redesigning the pickup mechanism
-
-The redesigned pickup mechanism works in three steps:
-
-<Figure src="./assets/images/vacuum-redesign-open-sweep.png" alt="CAD render: sweep box lowered and open in front of the robot" caption="1Open and sweep" />
-
-Image to be added
-
-<Figure src="./assets/images/vacuum-redesign-elevate.png" alt="CAD render: sweep box raised above the intake point" caption="2Elevate to above the intake point" />
-
-Image to be added
-
-<Figure src="./assets/images/vacuum-redesign-vacuum-on.png" alt="CAD render: sweep box docked at the intake with the vacuum on" caption="3Turn on the vacuum and remediate FOD" />
-
-Image to be added
-
-### 10.2 Working out the maths
-
-<Figure src="./assets/diagrams/vacuum-module-airflow-carries-the-object-from-the-boun.svg" alt="Airflow carries the object from the bounding box opening down a tube inclined at angle theta into the bin. Free body diagram: drag force along the tube, weight downwards, normal force perpendicular to the tube." />
+<div class="fig-eq-r">
 
 The force of drag is:
 
 $$
-F_D=\frac{1}{2}\rho C_DA\left(v_{air}-v_{obj}\right)^2
-$$
-
-Given that the object starts from rest:
-
-$$
-v_{obj}=0\ \Rightarrow\ F_D=\frac{1}{2}\rho C_DA\,v_{air}^2
+F_D=\frac{1}{2}\rho C_D A v_{air}^2
 $$
 
 In the $y$ direction, the object comes into contact with the tube:
@@ -292,36 +174,28 @@ $$
 As long as the acceleration in the $x$ direction is greater than 0, the FOD will be sucked in:
 
 $$
-\frac{1}{2}\rho C_DA\,v_{air}^2+W\sin\theta-\mu_sW\cos\theta>0
+\frac{1}{2}\rho C_D A v_{air}^2+W\sin\theta-\mu_sW\cos\theta>0
 $$
 
-The minimum pickup velocity is therefore:
+The minimum pick-up velocity is therefore:
 
 $$
-v_{air}>\sqrt{\frac{2W\left(\mu_s\cos\theta-\sin\theta\right)}{\rho C_DA}}
+v_{air}>\sqrt{\frac{2W(\mu_s\cos\theta-\sin\theta)}{\rho C_D A}}
 $$
 
 The object will be sucked in if:
 
 $$
-\frac{W}{C_DA}<\frac{\rho\,v_{air}^2}{2\left(\mu_s\cos\theta-\sin\theta\right)}
+\frac{W}{C_D A}<\frac{\rho v_{air}^2}{2(\mu_s\cos\theta-\sin\theta)}
 $$
 
-The object does **not** come into contact with the tube:
+</div>
 
-$$
-\sum F_y=0,\qquad \sum F_x=ma_x:\quad F_D+W\sin\theta=ma_x
-$$
+</div>
 
-$$
-a_x=\frac{\rho C_DA\left(v_{air}-v_{obj}\right)^2}{2m}+g\sin\theta
-$$
+*Table 4.5.4.4: Minimum air speed for the new set-up compared with the old set-up.*
 
-::: tip
-As long as $\theta>0$, objects that can fit in the tube will be sucked in: $a_x>0$ for all objects.
-:::
-
-| Parameter | Case A: Screw M8, 25 g | Case B: Bird carcass, 300 g | Units | Remarks |
+| Parameter | Case A: Nut/bolt, 25 g | Case B: Bird carcass, 300 g | Units | Remarks |
 | --- | --- | --- | --- | --- |
 | Mass | 0.0250 | 0.3000 | kg |   |
 | Dimensions | D = 12 mm, L = 15 mm | 150 mm × 80 mm × 60 mm | mm |   |
@@ -334,51 +208,36 @@ As long as $\theta>0$, objects that can fit in the tube will be sucked in: $a_x>
 | Limit, $\theta = 0°$ | 5421.1 | 817.5 | N/m² | $\rho v^2/2\mu_s$, with $v$ = 67.2 / 26.1 m/s |
 | Picked up? | Yes | Yes |   | Yes, $W/(C_DA)$ &lt; limit |
 
-::: tip Conclusion
-changing to this new set-up allows a significantly lower pickup speed to remediate the FOD, which leads to a high success rate of FOD remediation.
+In conclusion, changing to this new set-up allows a significantly lower pickup speed to remediate the FOD, which leads to a high success rate of FOD remediation. A caveat is that the new set-up has so far only been tried with the cardboard critical function prototype (Figure 4.5.5.1); a full-scale version is yet to be built and tested.
 
-*\* Caveat: the new set-up has not been tested yet; we will develop and test it as soon as we can.*
-:::
-
-Change the tube angle $\theta$ and the friction coefficient $\mu_s$ to see the minimum air speed needed to move the object into the bin, compared with the 42.47 m/s measured from the off-the-shelf vacuum. Uses $\rho = 1.2\ \text{kg/m}^3$ and $C_D = 0.8$.
+The interactive calculator below changes the tube angle $\theta$ and the friction coefficient $\mu_s$ to show the minimum air speed needed to move the object into the bin, compared with the 42.6 m/s measured from the off-the-shelf vacuum. It uses $\rho = 1.2\ \text{kg/m}^3$ and $C_D = 0.8$. The safety factor is not accounted for. Above the critical angle $\theta_c = \tan^{-1}\mu_s$, the object slides into the bin by gravity alone.
 
 <VacuumModuleWidget2 />
 
-Safety factor not accounted for. Above the critical angle $\theta_c = \tan^{-1}\mu_s$, the object slides into the bin by gravity alone.
+*Figure 4.5.4.5: Interactive calculator for the minimum air speed of the new set-up.*
 
-### 10.3 New design in CAD
 
-<Figure src="./assets/images/vacuum-cad-new-2.png" alt="CAD isometric view of the robot with the new sweep box, lift columns and vacuum bin" caption="Full assembly on the robot" />
+<!-- #endregion s4 -->
 
-Image to be added
+<!-- #region s6 -->
+To validate the inclined-tube concept before committing to a full build, I built a critical function prototype from a cardboard bounding box with an opening, a tube at angle $\theta$ and a bin (Figure 4.5.5.1). The prototype tests whether FOD in the box clears into the bin across a range of tube angles, with and without the vacuum running.
 
-### 10.4 Animation: sweep box v2
+<VideoClip src="./assets/videos/vacuum-critical-prototype-test.mp4" poster="./assets/images/vacuum-critical-prototype-test-poster.jpg" caption="Figure 4.5.5.1: Critical function prototype test." />
 
-One full pickup cycle: the box lowers to the asphalt while the scraper opens and the blade reaches out, the scraper sweeps the FOD up the ramp, the box lifts above the bin, and with the vacuum on the FOD slides down the 5" hose into the bin. Drag to orbit, scroll to zoom, tap a part for details, or scrub through the 8 phases.
+I redesigned the pick-up mechanism to lower the pick-up speed required. The redesign works in three steps: open and sweep, elevate to above the intake point, and turn on the vacuum to remediate the FOD.
+
+The new design in CAD is shown below, with the sweep box, lift columns and vacuum bin on the robot.
+
+<Figure src="./assets/images/vacuum-cad-new-2.png" alt="CAD isometric view of the robot with the new sweep box, lift columns and vacuum bin" style="max-width: 420px; margin: 28px auto;" caption="Figure 4.5.5.2: Full assembly on the robot (CAD)." />
+
+One full pickup cycle is animated below: the box lowers to the asphalt while the scraper opens and the blade reaches out, the scraper sweeps the FOD up the ramp, the box lifts above the bin, and with the vacuum on the FOD slides down the 5" hose into the bin. The model can be dragged to orbit, scrolled to zoom, or scrubbed through the 10 phases of the cycle.
 
 <VacuumModuleWidget3 />
 
-Animated model generated with Claude. The sweep box, top bridge and bin elbow follow the SolidWorks model; the chassis, wheels and bin are simplified stand-ins.
+*Figure 4.5.5.3: Animated model of the sweep box v2. The sweep box, top bridge and bin elbow follow the SolidWorks model; the chassis, wheels and bin are simplified stand-ins.*
 
-### 10.5 Testing: critical function prototype
+In the vacation break and semester 2, I will work towards a detailed design and fabrication of this system. I also acknowledge that the animation shows an overly optimistic version of this box, where even the smaller parts are able to be swept up. In reality this may not be the case, especially due to the surface of the runway.
 
-A cardboard bounding box connected to the vacuum hose was used as a critical function prototype to test the new set-up.
+Therefore, my other objective is to make two types of FOD remediation "tools". One is dedicated to smaller inanimate objects like screws, bolts, smaller stones and such. The other is for bigger and bulkier items that can go up to the size of a bird carcass. The fact that a vacuum cannot realistically be a one-size-fits-all solution has already been demonstrated through my analysis. To conclude, the future version of the FOD Remediation system will feature two tools.
 
-<VideoClip src="./assets/videos/vacuum-critical-prototype-test.mp4" poster="./assets/images/vacuum-critical-prototype-test-poster.jpg" caption="Critical function prototype test." />
-
-<!-- #endregion cfp-future-work -->
-
-<!-- #region references -->
-
-## References
-
-<Badge type="info" text="Literature Review" />
-
-1. Hilburn, B. G. and Pesmen, B. S., *Foreign Object Debris Detection System Cost-Benefit Analysis*, FAA Tech. Rep. DOT/FAA/TC-22/47, 2023.
-2. El-Sayed, A. F., *Foreign Object Debris and Damage in Aviation*, CRC Press, 2022.
-3. Jain, S., Prasad, M. S., and Gupta, R., “A Comparison of Manual and Automotive FOD Detection Systems at Airport Runways,” ICRITO, 2022.
-4. Vidal, Y. L. S. et al., “A Systematic Review of Methods for Cleaning FOD on Runways,” EMES, 2023.
-5. Yamamoto, H. et al., “Drone-enabled Foreign Object Debris Removal System in ad hoc Situations,” ACRP University Design Competition, 2016.
-6. Ozturk, S. and Kuzucuoglu, A. E., “A multi-robot coordination approach for autonomous runway FOD clearance,” *Robotics and Autonomous Systems*, 2016.
-
-<!-- #endregion references -->
+<!-- #endregion s6 -->

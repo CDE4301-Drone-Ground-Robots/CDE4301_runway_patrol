@@ -246,4 +246,12 @@ useWidgetScript([['asuka-fod-sweep-box-v2-1', s0]])
   .wgt-asuka-fod-sweep-box-v2 .steps .at{display:none}
 }
 
+
+/* Embedded in the report: the animation only (viewport, phase label, play/pause, scrubber, phase timeline) */
+.wgt-asuka-fod-sweep-box-v2.embedded{padding:0;background:transparent;max-width:780px;margin:24px auto}
+.wgt-asuka-fod-sweep-box-v2.embedded .top,.wgt-asuka-fod-sweep-box-v2.embedded main,.wgt-asuka-fod-sweep-box-v2.embedded footer,
+.wgt-asuka-fod-sweep-box-v2.embedded .hint,.wgt-asuka-fod-sweep-box-v2.embedded .readouts,.wgt-asuka-fod-sweep-box-v2.embedded .pick,
+.wgt-asuka-fod-sweep-box-v2.embedded .controls > .row:last-child{display:none !important}
+.wgt-asuka-fod-sweep-box-v2.embedded .wrap{max-width:none}
+.wgt-asuka-fod-sweep-box-v2.embedded .stage{max-height:none}
 </style>

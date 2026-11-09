@@ -549,3 +549,25 @@ table.data-table.fit-table img {
   height: auto;
   margin: 0;
 }
+
+/* highlighted passages in the interview transcripts */
+.rpt mark {
+  padding: 0 1px;
+  border-radius: 2px;
+  background: #fff176;
+  color: #1a1a1a;
+}
+
+/* figure with its derivation beside it; stacks on narrow screens */
+.fig-eq {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 36px;
+  align-items: center;
+  margin: 28px 0;
+}
+@media (max-width: 899px) {
+  .fig-eq {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
