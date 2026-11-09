@@ -26,8 +26,6 @@ Foreign Object Debris (FOD) on movement surfaces is an operational and financial
 A detection system only protects the runway when the debris is physically contained and removed. Manual dispatch cycles can take 10-27 minutes for one incident, while reported airports experience 200-240 minutes of monthly runway downtime.
 :::
 
-### Limitations of conventional clearing methods
-
 | Method | Mechanical limitation | Operational constraint |
 | --- | --- | --- |
 | **Rotary and vacuum sweepers** | High fuel or power draw; filters clog; leakage risk on tarmac. | Bulky footprint and slow active sweeping speed. |
@@ -105,8 +103,6 @@ Classification of foreign object debris by animate and inanimate categories (ada
 
 <Figure src="./assets/diagrams/vacuum-module-airflow-drawn-up-a-vertical-intake-tube-.svg" alt="Airflow drawn up a vertical intake tube lifting an object off the ground" />
 
-### Minimum pickup velocity
-
 $$
 F_{Drag}=\frac{1}{2}\rho_{Air}V^2C_dA_{projected},\qquad W_{object}=mg
 $$
@@ -132,8 +128,6 @@ Flow rate:
 $$
 Q=A_{tube}V_{pick\,up}
 $$
-
-### What size motor do I need?
 
 $$
 \eta_{total}=\eta_{blower}\times\eta_{motor}
@@ -181,8 +175,6 @@ $$
 | Air power | 434.4481 | 363.7929 | W |   |
 | **Estimated motor power** | **1086.1202** | **909.4822** | W | Safety factor not accounted for |
 
-### Pressure losses
-
 | Pressure loss | Case A: Nut and bolts, 25 g | Case B: Bird carcass, 300 g |
 | --- | --- | --- |
 | Dynamic pressure | 2710.54 Pa | 408.75 Pa |
@@ -195,8 +187,6 @@ $$
 ::: warning In conclusion
 , I need a motor that can meet the minimum power rating of **1.1 kW**.
 :::
-
-### Interactive pickup sizing calculator
 
 Change the object and duct to see the required pickup velocity, pressure losses and motor power. Constants: $\rho = 1.2\ \text{kg/m}^3$, $K_{entry} = 0.35$, $f = 0.022$, $L = 0.4\ \text{m}$, $K_{bend} = 0.4$, $\Delta P_{Filter} = 300\ \text{Pa}$, $\eta_{blower}\times\eta_{motor} = 0.5\times0.8$. Duct friction uses the selected duct diameter.
 
@@ -269,8 +259,6 @@ Image to be added
 
 ### 10.2 Working out the maths
 
-### Inclined tube to the bin, with friction
-
 <Figure src="./assets/diagrams/vacuum-module-airflow-carries-the-object-from-the-boun.svg" alt="Airflow carries the object from the bounding box opening down a tube inclined at angle theta into the bin. Free body diagram: drag force along the tube, weight downwards, normal force perpendicular to the tube." />
 
 The force of drag is:
@@ -319,8 +307,6 @@ $$
 \frac{W}{C_DA}<\frac{\rho\,v_{air}^2}{2\left(\mu_s\cos\theta-\sin\theta\right)}
 $$
 
-### If we were to ignore friction
-
 The object does **not** come into contact with the tube:
 
 $$
@@ -334,8 +320,6 @@ $$
 ::: tip
 As long as $\theta>0$, objects that can fit in the tube will be sucked in: $a_x>0$ for all objects.
 :::
-
-### Minimum pickup velocity: old and new set-up
 
 | Parameter | Case A: Screw M8, 25 g | Case B: Bird carcass, 300 g | Units | Remarks |
 | --- | --- | --- | --- | --- |
@@ -355,8 +339,6 @@ changing to this new set-up allows a significantly lower pickup speed to remedia
 
 *\* Caveat: the new set-up has not been tested yet; we will develop and test it as soon as we can.*
 :::
-
-### Interactive: tube angle and friction
 
 Change the tube angle $\theta$ and the friction coefficient $\mu_s$ to see the minimum air speed needed to move the object into the bin, compared with the 42.47 m/s measured from the off-the-shelf vacuum. Uses $\rho = 1.2\ \text{kg/m}^3$ and $C_D = 0.8$.
 

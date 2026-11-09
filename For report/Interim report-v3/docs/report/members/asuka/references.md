@@ -16,38 +16,33 @@ Mechanical
 List all references used in your documentation and subsystem reports below. Use IEEE citation format.
 
 ::: info
-<Badge type="info" text="[1]" /> <Badge type="tip" text="Vehicle Dynamics / SAE International" />
+<Badge type="info" text="[1]" /> <Badge type="tip" text="Active Suspension" />
 
-**Gillespie, T. D.** (1992). *Fundamentals of Vehicle Dynamics*. SAE International.<br> [https://doi.org/10.4271/R-114](https://doi.org/10.4271/R-114)
+**Yu, M., Evangelou, S. A., and Dini, D.** (2024). Advances in active suspension systems for road vehicles. *Engineering*, 33, 160–177.<br> [https://doi.org/10.1016/j.eng.2023.06.014](https://doi.org/10.1016/j.eng.2023.06.014)
 :::
 
 ::: info
-<Badge type="info" text="[2]" /> <Badge type="info" text="Aviation Safety / Elsevier" />
+<Badge type="info" text="[2]" /> <Badge type="info" text="Aviation Standard / Runway Grooving" />
 
-**El-Sayed, A. F.** (2022). *Foreign Object Debris and Damage in Aviation*. Academic Press / Elsevier.<br> [https://doi.org/10.1016/C2020-0-00108-7](https://doi.org/10.1016/C2020-0-00108-7)
+**Federal Aviation Administration.** (1997). *Measurement, construction, and maintenance of skid-resistant airport pavement surfaces* (Advisory Circular 150/5320-12C).
 :::
 
 ::: info
-<Badge type="info" text="[3]" /> <Badge type="info" text="Structural Dynamics / Vibration" />
+<Badge type="info" text="[3]" /> <Badge type="info" text="Wheel Hop / Suspension Control" />
 
-**Rao, S. S.** (2017). *Mechanical Vibrations* (6th ed.). Pearson Education.
+**Yeneneh, K., Walle, M., Mamo, T., and Yalew, Y.** (2025). Optimizing active suspension systems with robust H∞ control and adaptive techniques under uncertainties. *Applied Engineering Science*, 22, Art. no. 100225.
 :::
 
 ::: info
-<Badge type="info" text="[4]" /> <Badge type="info" text="Suspension Kinematics" />
+<Badge type="info" text="[4]" /> <Badge type="info" text="Mobile Robot Suspension" />
 
-**Lamerton Simulation Ltd.** (2020). *Kinematic modeling and simulation of MacPherson strut and multi-link suspensions*. Technical Whitepaper.
+**Li, Z., Jing, X., Sun, B., and Yu, J.** (2020). Autonomous navigation of a tracked mobile robot with novel passive bio-inspired suspension. *IEEE/ASME Transactions on Mechatronics*, 25(6), 2633–2644.
 :::
 
 ::: info
-<Badge type="info" text="[5]" /> <Badge type="warning" text="Vehicle Handling / Roll Center" />
+<Badge type="info" text="[5]" /> <Badge type="warning" text="Suspension Tuning / Static Sag" />
 
-**Kojima, M.** (2012). *The ultimate guide to suspension and handling: Roll center geometry and roll axis tuning*. MotoIQ Technical Series.
+**Thede, P., and Parks, L.** (2010). *Race Tech’s Motorcycle Suspension Bible*. Motorbooks.
 :::
 
-::: info
-<Badge type="info" text="[6]" /> <Badge type="tip" text="Internal Engineering Design Report" />
-
-**NUS CDE4301 Project Group.** (2026). *FOD vacuum motor design, duct fluid dynamics, and suction force calculations*. Department of Mechanical Engineering, National University of Singapore.
-:::
 ::::

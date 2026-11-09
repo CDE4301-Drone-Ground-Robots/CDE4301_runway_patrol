@@ -283,10 +283,10 @@ table.data-table :is(td, th) {
   align-items: baseline;
   gap: 16px;
   margin: clamp(48px, 5vw, 72px) 0 28px;
-  font-family: var(--ov-display);
-  font-weight: 400;
-  font-size: clamp(28px, 2.4vw, 38px);
-  line-height: 1.1;
+  font-family: var(--ov-sans);
+  font-weight: 700;
+  font-size: clamp(26px, 2.2vw, 32px);
+  line-height: 1.15;
   color: var(--ov-ink);
   scroll-margin-top: calc(var(--vp-nav-height) + 24px);
 }
@@ -306,10 +306,10 @@ table.data-table :is(td, th) {
   margin: clamp(40px, 4vw, 60px) 0 22px;
   padding-top: 20px;
   border-top: 1px solid var(--rpt-line);
-  font-family: var(--ov-display);
-  font-weight: 400;
-  font-size: clamp(23px, 1.9vw, 30px);
-  line-height: 1.15;
+  font-family: var(--ov-sans);
+  font-weight: 700;
+  font-size: clamp(21px, 1.7vw, 26px);
+  line-height: 1.2;
   scroll-margin-top: calc(var(--vp-nav-height) + 24px);
 }
 .rpt .rpt-chapter > h4.rpt-l3::before {
@@ -326,17 +326,17 @@ table.data-table :is(td, th) {
 }
 .rpt .rpt-md :is(h4, h5, h6) {
   font-family: var(--ov-sans);
+  font-weight: 700;
   color: var(--ov-ink);
   letter-spacing: -0.005em;
   border-top: 0;
 }
 .rpt .rpt-md h4 {
   margin-top: 2.2em;
-  font-size: clamp(20px, 1.5vw, 24px);
-  font-weight: 500;
+  font-size: clamp(18px, 1.35vw, 20px);
 }
 .rpt .rpt-md h5 {
-  font-size: 18px;
+  font-size: 17px;
 }
 .rpt .rpt-pre > h2 {
   margin: 0 0 32px;
@@ -468,4 +468,84 @@ table.data-table :is(td, th) {
   .rpt .rpt-pre > h2 {
     scroll-margin-top: 76px;
   }
+}
+
+/* two figures side by side; stacks on narrow screens */
+.fig-row {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+.fig-row > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+@media (max-width: 767px) {
+  .fig-row {
+    flex-direction: column;
+  }
+}
+
+/* derivations laid out as two logical halves side by side (left first, then right); stacks on narrow screens */
+.eq-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 48px;
+  align-items: start;
+}
+.eq-cell {
+  min-width: 0;
+}
+.eq-cell > :first-child {
+  margin-top: 0;
+}
+.eq-cell mjx-container[display='true'] {
+  margin: 0.6em 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+@media (max-width: 899px) {
+  .eq-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* compact data table (narrower columns, smaller type) */
+.compact-table table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+.compact-table th,
+.compact-table td {
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+/* fit-to-width variant: wrapped text, no horizontal scroll */
+table.data-table.fit-table {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+table.data-table.fit-table :is(td, th) {
+  padding: 6px 8px;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+table.data-table.fit-table :is(td, th):nth-child(1) { width: 11%; }
+table.data-table.fit-table :is(td, th):nth-child(2) { width: 11%; }
+table.data-table.fit-table :is(td, th):nth-child(3) { width: 23%; }
+table.data-table.fit-table :is(td, th):nth-child(4) { width: 26%; }
+table.data-table.fit-table :is(td, th):nth-child(5) { width: 18%; }
+table.data-table.fit-table :is(td, th):nth-child(6) { width: 11%; }
+table.data-table.fit-table img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
 }

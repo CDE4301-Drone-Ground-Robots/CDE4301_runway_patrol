@@ -169,7 +169,31 @@ import ReportToc from '@theme/components/report/ReportToc.vue'
 
 <!--@compose: ./report/lead/asuka-lead.md-->
 
-<!--@compose: ./report/members/asuka/suspension.md#report{shift=2,prefix=susp}-->
+<!--@compose: ./report/members/asuka/suspension.md#summary{shift=2,prefix=susp}-->
+
+#### Introduction and System Requirements {#susp-intro .rpt-l3}
+
+<!--@compose: ./report/members/asuka/suspension.md#s1{shift=1,prefix=susp1}-->
+
+#### First Principles Modelling {#susp-modelling .rpt-l3}
+
+<!--@compose: ./report/members/asuka/suspension.md#s2{shift=1,prefix=susp2}-->
+
+#### Suspension Design Evaluation {#susp-evaluation .rpt-l3}
+
+<!--@compose: ./report/members/asuka/suspension.md#s3{shift=1,prefix=susp3}-->
+
+#### Prototype and Realisation {#susp-prototype .rpt-l3}
+
+<!--@compose: ./report/members/asuka/suspension.md#s4{shift=1,prefix=susp4}-->
+
+#### Testing and Analysis {#susp-testing .rpt-l3}
+
+<!--@compose: ./report/members/asuka/suspension.md#s5{shift=1,prefix=susp5}-->
+
+#### Future Work {#susp-future-work .rpt-l3}
+
+<!--@compose: ./report/members/asuka/suspension.md#s6{shift=1,prefix=susp6}-->
 
 ### Motor Drivetrain Calculations {#motor-selection}
 

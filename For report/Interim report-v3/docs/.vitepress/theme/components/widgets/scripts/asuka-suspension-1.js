@@ -34,15 +34,21 @@ export default function init() {
 
       function f(x, n) { return x.toFixed(n); }
 
-      function eqTex(s) {
+      // Live equation as plain HTML (the site pre-renders Markdown maths at build time, so there is no MathJax at runtime)
+      function eqHtml(s) {
         var a = f(s.a, 2);
+        var E = '<i>e</i><sup>&minus;<i>at</i></sup>';
+        var vals = function (rest) { return '<div class="eq-vals">' + rest + '</div>'; };
+        var aDef = '<i>a</i> = <span class="frac"><span><i>b</i></span><span>2<i>m</i></span></span> = ' + a + ' s<sup>&minus;1</sup>';
         if (s.kind === 'under') {
-          return '$$y(t)=1-e^{-' + a + 't}\\cos(' + f(s.p, 2) + 't)+' + f(s.a / s.p, 3) + '\\,e^{-' + a + 't}\\sin(' + f(s.p, 2) + 't)$$';
+          return '<div class="eq-main"><i>y</i>(<i>t</i>) = 1 &minus; ' + E + ' cos <i>pt</i> + <span class="frac"><span><i>a</i></span><span><i>p</i></span></span> ' + E + ' sin <i>pt</i></div>' +
+            vals(aDef + ',&emsp;<i>p</i> = &radic;(<i>&omega;</i><sub>n</sub><sup>2</sup> &minus; <i>a</i><sup>2</sup>) = ' + f(s.p, 2) + ' rad/s');
         }
         if (s.kind === 'critical') {
-          return '$$y(t)=1-e^{-' + a + 't}\\left(1-' + a + 't\\right)\\quad\\text{(critically damped)}$$';
+          return '<div class="eq-main"><i>y</i>(<i>t</i>) = 1 &minus; ' + E + ' (1 &minus; <i>at</i>)&emsp;<span class="eq-note">critically damped</span></div>' + vals(aDef);
         }
-        return '$$y(t)=1-e^{-' + a + 't}\\cosh(' + f(s.q, 2) + 't)+' + f(s.a / s.q, 3) + '\\,e^{-' + a + 't}\\sinh(' + f(s.q, 2) + 't)\\quad\\text{(overdamped)}$$';
+        return '<div class="eq-main"><i>y</i>(<i>t</i>) = 1 &minus; ' + E + ' cosh <i>qt</i> + <span class="frac"><span><i>a</i></span><span><i>q</i></span></span> ' + E + ' sinh <i>qt</i>&emsp;<span class="eq-note">overdamped</span></div>' +
+          vals(aDef + ',&emsp;<i>q</i> = &radic;(<i>a</i><sup>2</sup> &minus; <i>&omega;</i><sub>n</sub><sup>2</sup>) = ' + f(s.q, 2) + ' rad/s');
       }
 
       function plot(svg, s) {
@@ -78,7 +84,8 @@ export default function init() {
         return '<div class="step-stat' + (cls ? ' ' + cls : '') + '">' + label + '<b>' + value + '</b></div>';
       }
 
-      document.querySelectorAll('.step-panel').forEach(function (panel, idx) {
+      // Panel A/B: sliders for corner mass m, spring rate k and dampener b.
+      function initMKB(panel) {
         var lbf0 = +panel.dataset.lbf, b0 = +panel.dataset.b;
         panel.innerHTML =
           '<div class="step-head"><span class="step-title"></span><button type="button" class="step-reset">Reset to ' + lbf0 + ' lbf/in</button></div>' +
@@ -90,22 +97,7 @@ export default function init() {
           '<div class="step-stats"></div>';
         var title = panel.querySelector('.step-title'), svg = panel.querySelector('svg'), eq = panel.querySelector('.step-eq');
         var inputs = panel.querySelectorAll('input'), outs = panel.querySelectorAll('output'), stats = panel.querySelector('.step-stats');
-        var mIn = inputs[0], kIn = inputs[1], bIn = inputs[2], pending = 0, lastTex = '';
-
-        function typeset() {
-          pending = 0;
-          var tex = eqTex(solve(+kIn.value, +bIn.value, +mIn.value));
-          if (tex === lastTex) return;
-          lastTex = tex;
-          if (window.MathJax && MathJax.typesetPromise) {
-            if (MathJax.typesetClear) MathJax.typesetClear([eq]);
-            eq.textContent = tex;
-            MathJax.typesetPromise([eq]).catch(function () {});
-          } else {
-            eq.textContent = tex;
-            lastTex = '';
-          }
-        }
+        var mIn = inputs[0], kIn = inputs[1], bIn = inputs[2];
 
         function update() {
           var lbf = +kIn.value, b = +bIn.value, M = +mIn.value, s = solve(lbf, b, M);
@@ -121,7 +113,7 @@ export default function init() {
             stat('Damping ratio ξ', f(s.zeta, 3)) +
             stat('Decay rate a = b/2m', f(s.a, 2) + ' s⁻¹') +
             stat('Peak overshoot', peak > 1.001 ? f((peak - 1) * 100, 1) + '%' : 'none');
-          if (!pending) pending = requestAnimationFrame(typeset);
+          eq.innerHTML = eqHtml(s);
         }
 
         function reset() { mIn.value = M0; kIn.value = lbf0; bIn.value = b0; update(); }
@@ -130,16 +122,54 @@ export default function init() {
         bIn.addEventListener('input', update);
         panel.querySelector('.step-reset').addEventListener('click', reset);
         reset();
-      });
+      }
 
-      // MathJax loads asynchronously from main.js; re-typeset once it is ready
-      window.addEventListener('load', function () {
-        var tries = 0, wait = setInterval(function () {
-          if ((window.MathJax && MathJax.typesetPromise) || ++tries > 50) {
-            clearInterval(wait);
-            document.querySelectorAll('.step-panel input').forEach(function (el) { el.dispatchEvent(new Event('input')); });
-          }
-        }, 100);
+      // Panel C: the same response driven by natural frequency f_n and damping ratio zeta instead of m, k, b.
+      // Corner mass stays at the 16.25 kg of the analysis, so k_w = m wn^2 and b = 2 zeta wn m follow from the two sliders.
+      function initFnZeta(panel) {
+        var lbf0 = +panel.dataset.lbf, b0 = +panel.dataset.b;
+        var s0 = solve(lbf0, b0, M0), FN0 = s0.fn, Z0 = 1; // same f_n as the selected spring, damping raised to critical (xi = 1)
+        panel.innerHTML =
+          '<div class="step-head"><span class="step-title"></span><button type="button" class="step-reset">Reset to critically damped (&xi; = 1)</button></div>' +
+          '<svg class="step-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img"></svg>' +
+          '<div class="step-eq"></div>' +
+          '<label class="step-ctrl"><span>Natural frequency <i>f<sub>n</sub></i></span><output></output><input type="range" min="1" max="12" step="0.05" aria-label="Natural frequency in hertz"></label>' +
+          '<label class="step-ctrl"><span>Damping ratio <i>&xi;</i></span><output></output><input type="range" min="0.05" max="2" step="0.01" aria-label="Damping ratio"></label>' +
+          '<div class="step-stats"></div>';
+        var title = panel.querySelector('.step-title'), svg = panel.querySelector('svg'), eq = panel.querySelector('.step-eq');
+        var inputs = panel.querySelectorAll('input'), outs = panel.querySelectorAll('output'), stats = panel.querySelector('.step-stats');
+        var fnIn = inputs[0], zIn = inputs[1];
+
+        function model() {
+          var fn = +fnIn.value, z = +zIn.value, wn = 2 * Math.PI * fn;
+          var kw = M0 * wn * wn, b = 2 * z * wn * M0;
+          return solve(kw / (LBF_IN * MR), b, M0);
+        }
+        function update() {
+          var s = model(), b = 2 * s.zeta * s.wn * M0;
+          title.textContent = 'f_n = ' + f(s.fn, 2) + ' Hz, ξ = ' + f(s.zeta, 2) + ' (m = ' + f(M0, 2) + ' kg)';
+          svg.setAttribute('aria-label', 'Step response for ' + title.textContent);
+          outs[0].textContent = f(s.fn, 2) + ' Hz';
+          outs[1].textContent = f(s.zeta, 2);
+          var peak = plot(svg, s), sagPct = s.sag / STROKE * 100;
+          stats.innerHTML =
+            stat('Natural freq. f<sub>n</sub> (&lt; 10 Hz)', f(s.fn, 3) + ' Hz ' + (s.fn < 10 ? '✅' : '❌'), s.fn < 10 ? 'ok' : 'bad') +
+            stat('Static sag (40–60% of stroke)', f(s.sag, 3) + ' mm · ' + f(sagPct, 0) + '% ' + (sagPct >= 40 && sagPct <= 60 ? '✅' : '❌'), sagPct >= 40 && sagPct <= 60 ? 'ok' : 'bad') +
+            stat('Wheel rate K<sub>w</sub> = mω<sub>n</sub><sup>2</sup>', f(s.kw, 0) + ' N/m') +
+            stat('Dampener b = 2ξω<sub>n</sub>m', f(b, 0) + ' Ns/m') +
+            stat('Peak overshoot', peak > 1.001 ? f((peak - 1) * 100, 1) + '%' : 'none');
+          eq.innerHTML = eqHtml(s);
+        }
+        function reset() { fnIn.value = FN0.toFixed(2); zIn.value = Z0.toFixed(2); update(); }
+        fnIn.addEventListener('input', update);
+        zIn.addEventListener('input', update);
+        panel.querySelector('.step-reset').addEventListener('click', reset);
+        reset();
+      }
+
+      document.querySelectorAll('.step-panel').forEach(function (panel) {
+        if (panel.dataset.mode === 'fnzeta') initFnZeta(panel);
+        else initMKB(panel);
       });
     })();
 

@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 300 330" role="img" aria-label="Corner mass on spring and dampener above a rigid wheel" style="width: 100%; max-width: 320px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;" xmlns="http://www.w3.org/2000/svg">
-                <g fill="none" stroke="#e5e7eb" stroke-width="2">
-                  <rect x="105" y="10" width="90" height="50" rx="4" fill="rgba(245, 158, 11, 0.16)" stroke="#f59e0b"></rect>
-                  <path d="M150 60 V80 M110 80 H190 M110 80 V100 L100 107 L120 121 L100 135 L120 149 L110 156 V170 M190 80 V105 M175 105 H205 M178 105 V140 H202 V105 M190 125 V170 M110 170 H190 M150 170 V190"></path>
-                  <circle cx="150" cy="235" r="45"></circle>
-                  <rect x="20" y="280" width="260" height="45" fill="rgba(59, 130, 246, 0.4)" stroke="none"></rect>
-                </g>
-                <g fill="#e5e7eb" font-size="13" text-anchor="middle">
-                  <text x="150" y="32">Corner</text><text x="150" y="48">Mass</text>
-                  <text x="62" y="133">Spring</text><text x="245" y="128">Dampener</text>
-                  <text x="150" y="228">Wheel</text><text x="150" y="245">(100% rigid)</text>
-                  <text x="150" y="308">Ground</text>
-                </g>
-              </svg>
+<svg viewBox="100 0 400 430" role="img" aria-label="Single-corner model: corner mass supported by a spring and damper in parallel on a rigid wheel resting on the ground" style="width: 100%; max-width: 400px; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', sans-serif;" xmlns="http://www.w3.org/2000/svg">
+  <rect x="235" y="40" width="130" height="50" fill="#f59e0b" fill-opacity="0.25" stroke="#f59e0b" stroke-width="2"/>
+  <g fill="none" stroke="#f8fafc" stroke-width="2.5">
+    <path d="M300 90 V115 M255 115 H345 M255 115 V128 l-10 6 l20 12 l-20 12 l20 12 l-10 6 V195 M345 115 V152 M335 152 H355 M333 138 V185 H357 V138 M345 185 V195 M255 195 H345 M300 195 V225"/>
+  </g>
+  <circle cx="300" cy="275" r="50" fill="#f8fafc"/>
+  <g fill="#0b0b10" font-size="14" font-weight="700" text-anchor="middle">
+    <text x="300" y="269">Wheel</text>
+    <text x="300" y="286">(100%</text>
+    <text x="300" y="303">Rigid)</text>
+  </g>
+  <rect x="110" y="325" width="380" height="95" fill="#a3a3a3"/>
+  <g fill="#f8fafc" font-size="16" font-weight="700" text-anchor="middle">
+    <text x="300" y="61">Corner</text>
+    <text x="300" y="80">Mass</text>
+  </g>
+  <g fill="#f8fafc" font-size="16" font-weight="700" text-anchor="middle">
+    <text x="190" y="165">Spring</text>
+    <text x="415" y="165">Damper</text>
+  </g>
+  <text x="300" y="378" fill="#111" font-size="16" font-weight="700" text-anchor="middle">Ground</text>
+</svg>
