@@ -244,6 +244,8 @@ Figure 1.7.2 sets out the value map and customer map, and Figure 1.7.3 shows the
 | N6 | Faster checks and runway recovery | Appendix [C](#appendix-c) | Aerial survey cues ground removal in parallel |
 | N7 | Operate within airspace restrictions | Appendices [B](#appendix-b) and [D](#appendix-d) | Drone flights limited to closure windows; ground-only fallback |
 
+These seven needs, together with the insights from our primary research (the interviews) and secondary research (the literature and existing solutions), are the starting point for the design. In Chapter 2, they are developed into the features, requirements and specifications that FOD Hunter and FOD Argus must meet to answer each need, and each of these is traced back to the need and the evidence behind it.
+
 </section>
 
 <section class="rpt-chapter">
