@@ -152,7 +152,11 @@ Diagnosed small-hardware detection failure modes using confusion matrix analysis
 
 #### Suspension System {#ov-suspension-system}
 
-<p class="ov-placeholder">*To Be Filled*</p>
+Selected a passive double wishbone suspension with a 100 lbf/in spring, after comparing it with the trailing arm and MacPherson strut.
+
+Modelled each corner as a spring–damper system to derive the transfer function and step response, giving a natural frequency of 4.7 Hz and a static sag of 55% of stroke.
+
+A video of the sheet-metal prototype shows all four wheels staying in contact with the ground over undulating terrain.
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#suspension">Suspension System Documentation <span aria-hidden="true">↗</span></a>
@@ -164,11 +168,15 @@ Diagnosed small-hardware detection failure modes using confusion matrix analysis
 
 #### FOD Remediation {#ov-fod-remediation}
 
-<p class="ov-placeholder">*To Be Filled*</p>
+Defined the FOD size range from stakeholder interviews and selected a vacuum, the only method that handles metallic, non-metallic and animate FOD.
+
+Sized the vacuum from a drag model at a minimum of 1.1 kW, then tested an off-the-shelf unit, which measured 42.6 m/s against the 67.2 m/s required.
+
+Redesigned the pick-up as a sweep box that lifts FOD mechanically and an inclined tube that carries it into the bin, with an interactive animation of the full cycle.
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#vacuum-module">Centrifugal Suction &amp; Vacuum Module <span aria-hidden="true">↗</span></a>
-  <a class="ovx-more" href="/report#fod-sweep-box">FOD Sweep Box &amp; Airflow Ducting <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#vacuum-module">FOD Remediation Documentation <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#fod-sweep-box">FOD Sweep Box Animation <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>

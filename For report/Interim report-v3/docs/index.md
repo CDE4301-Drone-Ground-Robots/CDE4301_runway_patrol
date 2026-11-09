@@ -137,7 +137,7 @@ const roadmap = [
   index="02"
   name="Takeuchi Asuka"
   role="FOD PICK-UP & SUSPENSION"
-  preview="(To Be Filled)"
+  preview="CNC-machined suspension redesign and two dedicated FOD remediation tools."
   docs="/members/asuka/vacuum-module"
   plan="/members/asuka/semester-2-plan"
 >
