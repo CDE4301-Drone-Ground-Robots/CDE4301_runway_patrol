@@ -6,7 +6,7 @@ export default function init() {
     // Pickup sizing: V_min = sqrt(2mg / (rho Cd A)), Q = A_duct V, losses as multiples of 1/2 rho V^2
     (function () {
       var RHO = 1.2, G = 9.81, K_ENTRY = 0.35, F = 0.022, L = 0.4, K_BEND = 0.4, P_FILTER = 300, ETA = 0.5 * 0.8;
-      var MEASURED = 42.47, DUCTS = [1.5, 2, 2.5, 3, 4, 5];
+      var MEASURED = 42.6, DUCTS = [1.5, 2, 2.5, 3, 4, 5];
       var A_MIN = 0.1, A_MAX = 300; // cm^2, log slider
       var PRESETS = { A: { m: 25, A: 1.1310, cd: 0.8, D: 0 }, B: { m: 300, A: 90, cd: 0.8, D: 5 } };
       var root = document.getElementById('vac-calc');

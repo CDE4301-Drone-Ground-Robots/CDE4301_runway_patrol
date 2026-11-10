@@ -15,7 +15,7 @@ Airborne UAV Scout (Macro Scanning) paired with Surface UGV Rover (Targeted Prec
 
 Derived from field interviews with an industry partner, an RSAF technician and an RSAF air traffic controller (names withheld)
 
-[🎙️ View Primary Field Research (3 Interviews) →](../introduction/primary-research.md)
+[🎙️ View Primary Field Research (3 Interviews) →](/report#primary-research)
 
 Based on direct stakeholder consultations with airfield operations personnel and operational airbase case studies, the FOD Hunter platform is engineered around five fundamental user needs:
 

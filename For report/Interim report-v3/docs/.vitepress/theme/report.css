@@ -9,10 +9,10 @@
   --vp-c-text-3: var(--ov-ink-3);
   --vp-c-divider: rgba(255, 255, 255, 0.1);
   --vp-c-brand-1: #f0b878;
-  /* the Report uses ~97% of the viewport: a 240–270px rail, a narrow gap, small gutters */
+  /* a 240–270px rail, a narrow gap, and generous side margins */
   --rpt-toc: clamp(240px, 15vw, 270px);
   --rpt-gap: clamp(24px, 2vw, 36px);
-  --rpt-gutter: clamp(16px, 1.5vw, 32px);
+  --rpt-gutter: clamp(24px, 6vw, 128px);
   /* width system: full width for prose, tables, figures and diagrams */
   --rpt-measure: 100%;
   --rpt-body: rgba(243, 238, 231, 0.88);

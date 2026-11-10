@@ -81,13 +81,13 @@ useWidgetScript([['programming-1', s0], ['programming-2', s1]])
       overflow: visible !important;
       padding: 0 !important;
       margin: 0 !important;
-      font-size: 100% !important;
+      font-size: 118% !important;
       vertical-align: -0.1em !important;
     }
     .wgt-programming .MathJax[display="true"] {
-      margin: 6px 0 !important;
+      margin: 8px 0 !important;
       display: block !important;
-      font-size: 105% !important;
+      font-size: 130% !important;
       overflow: visible !important;
     }
     .wgt-programming .math-eq-hero {

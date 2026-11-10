@@ -11,7 +11,7 @@ export default function init() {
 
     // Inclined tube: v_min = sqrt(2 W (mu cos(th) - sin(th)) / (rho Cd A)), zero once the object slides by gravity
     (function () {
-      var RHO = 1.2, G = 9.81, CD = 0.8, MEASURED = 42.47, TH_MAX = 60;
+      var RHO = 1.2, G = 9.81, CD = 0.8, MEASURED = 42.6, TH_MAX = 60;
       var OBJ = { A: { m: 0.025, A: 0.0001131 }, B: { m: 0.3, A: 0.009 } };
       var root = document.getElementById('incline-calc');
       if (!root) return;
@@ -46,7 +46,7 @@ export default function init() {
         h += '<text transform="translate(12 ' + ((T + B) / 2) + ') rotate(-90)" font-size="11" text-anchor="middle" fill="currentColor">Min. air speed (m/s)</text>';
         // measured vacuum speed reference
         h += '<line x1="' + L + '" x2="' + R + '" y1="' + Y(MEASURED) + '" y2="' + Y(MEASURED) + '" stroke="var(--text-main)" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.7"/>';
-        h += '<text x="' + (R - 4) + '" y="' + (Y(MEASURED) - 6) + '" font-size="10.5" text-anchor="end" fill="var(--text-main)">Measured vacuum: 42.47 m/s</text>';
+        h += '<text x="' + (R - 4) + '" y="' + (Y(MEASURED) - 6) + '" font-size="10.5" text-anchor="end" fill="var(--text-main)">Measured vacuum: 42.6 m/s</text>';
         // critical angle
         var thc = Math.atan(mu) * 180 / Math.PI;
         if (thc <= TH_MAX) {
@@ -77,9 +77,9 @@ export default function init() {
           stat('W / (C<sub>D</sub>A)', fmt(q, 1) + ' N/m²') +
           stat('Min. air speed v<sub>air</sub>', k > 0 ? fmt(v, 2) + ' m/s' : '0 m/s (slides)') +
           stat('Critical angle θ<sub>c</sub>', fmt(thc, 1) + '°') +
-          stat('Initial a<sub>x</sub> at 42.47 m/s', fmt(ax, 2) + ' m/s²') +
+          stat('Initial a<sub>x</sub> at 42.6 m/s', fmt(ax, 2) + ' m/s²') +
           stat('Picked up by measured vacuum?', ok ? 'Yes ✅' : 'No ❌', ok ? 'ok' : 'bad');
-        svg.setAttribute('aria-label', 'Minimum air speed against tube angle. At ' + th + ' degrees it is ' + fmt(v, 2) + ' metres per second, against 42.47 measured.');
+        svg.setAttribute('aria-label', 'Minimum air speed against tube angle. At ' + th + ' degrees it is ' + fmt(v, 2) + ' metres per second, against 42.6 measured.');
       }
 
       function setObj(o) {

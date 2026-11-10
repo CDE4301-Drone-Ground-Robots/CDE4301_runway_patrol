@@ -2,10 +2,9 @@
 <script setup lang="ts">
 import { useWidgetScript } from './useWidgetScript'
 
-import s0 from './scripts/hilbert-steering-kinematics-1.js'
 import s1 from './scripts/hilbert-steering-kinematics-2.js'
 
-useWidgetScript([['hilbert-steering-kinematics-1', s0], ['hilbert-steering-kinematics-2', s1]])
+useWidgetScript([['hilbert-steering-kinematics-2', s1]])
 </script>
 
 <template>
@@ -34,7 +33,7 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0], ['hilbert-steering-kinem
             </div>
 
             <!-- Simulation Controls Bar -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; padding: 14px; background: rgba(255,255,255,0.02); border-radius: 8px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; padding: 14px; background: rgba(255,255,255,0.02); border-radius: 8px;">
               <div>
                 <label style="font-size: 12px; color: var(--apple-text-secondary); display: flex; justify-content: space-between; margin-bottom: 6px;">
                   <span>Forward Velocity (v<sub>x</sub>)</span>
@@ -48,11 +47,6 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0], ['hilbert-steering-kinem
                   <span id="scout-yaw-val" style="color: #c084fc; font-weight: 600;">0.80 rad/s</span>
                 </label>
                 <input type="range" id="scout-yaw-slider" min="-2.0" max="2.0" step="0.05" value="0.8" style="width: 100%; accent-color: #a855f7;">
-              </div>
-              <div style="display: flex; gap: 8px; align-items: flex-end;">
-                <button id="scout-btn-follow" class="bt-toolbar-btn active" style="flex: 1; background: rgba(59, 130, 246, 0.25); border-color: #38bdf8; color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);" title="Lock camera to follow the UGV"><span>🎥</span> Follow UGV: ON</button>
-                <button id="scout-btn-pause" class="bt-toolbar-btn active" style="flex: 1;">Pause</button>
-                <button id="scout-btn-reset" class="bt-toolbar-btn" style="flex: 1;">Reset Pose</button>
               </div>
             </div>
 

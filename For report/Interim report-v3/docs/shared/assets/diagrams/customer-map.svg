@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 480" font-family="'Oswald','Arial Narrow','Helvetica Neue',Arial,sans-serif">
+<rect width="440" height="480" fill="#000"/>
+<rect x="20" y="40" width="400" height="360" fill="none" stroke="#fff" stroke-width="2.4"/>
+<line x1="20" y1="220" x2="250" y2="220" stroke="#fff" stroke-width="2.4"/>
+<line x1="250" y1="220" x2="420" y2="40" stroke="#fff" stroke-width="2.4"/>
+<line x1="250" y1="220" x2="420" y2="400" stroke="#fff" stroke-width="2.4"/>
+<text x="215" y="200" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff"><tspan x="215" dy="0">Gains</tspan></text>
+<text x="215" y="243" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff"><tspan x="215" dy="0">Pains</tspan></text>
+<text x="268" y="226" text-anchor="start" font-size="12.5" font-weight="700" fill="#fff"><tspan x="268" dy="0">Jobs</tspan></text>
+<text x="130" y="78" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="130" dy="0">Meaningful deployment</tspan><tspan x="130" dy="19">of manpower</tspan></text>
+<text x="115" y="130" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="115" dy="0">Safer runways</tspan></text>
+<text x="120" y="175" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="120" dy="0">Increased productivity</tspan></text>
+<text x="120" y="280" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="120" dy="0">Manpower-intensive</tspan><tspan x="120" dy="19">walks and patrols</tspan></text>
+<text x="115" y="330" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="115" dy="0">Small hard FOD</tspan><tspan x="115" dy="19">missed by sweepers</tspan></text>
+<text x="215" y="320" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="215" dy="0">No measure of</tspan><tspan x="215" dy="19">thoroughness</tspan></text>
+<text x="215" y="370" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="215" dy="0">Random coverage;</tspan><tspan x="215" dy="19">airspace restrictions</tspan></text>
+<text x="352" y="192" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="352" dy="0">Runway</tspan><tspan x="352" dy="19">maintenance team</tspan></text>
+<text x="352" y="238" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="352" dy="0">Ground operations</tspan><tspan x="352" dy="19">operator</tspan></text>
+<text x="352" y="292" text-anchor="middle" font-size="12" font-weight="600" fill="#fff"><tspan x="352" dy="0">FOD remediation</tspan><tspan x="352" dy="19">team</tspan></text>
+<text x="220" y="468" text-anchor="middle" font-size="24" fill="#fff">Customer Map</text>
+</svg>

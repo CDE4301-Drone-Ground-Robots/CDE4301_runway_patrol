@@ -144,7 +144,7 @@ export default defineConfig({
   themeConfig: {
     // nav bar: NUS logo + course code (styled as a chip in custom.css); the browser tab title stays "FOD Hunter"
     logo: { src: '/assets/images/nus-logo.png', alt: 'National University of Singapore', width: 75, height: 36 },
-    siteTitle: 'AIS-406',
+    siteTitle: 'ASI-406',
     // Research and Subsystem are dropdown buttons (VitePress flyouts: hover, keyboard and tap), not pages;
     // their items open sections of the Report (anchors are the Report's own heading ids).
     nav: [

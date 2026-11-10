@@ -36,8 +36,15 @@ useWidgetScript([['asuka-suspension-1', s0]])
     .wgt-asuka-suspension .step-reset { font: inherit; font-size: 12px; color: var(--accent-blue); background: none; border: 1px solid var(--apple-border-highlight); border-radius: 980px; padding: 4px 12px; cursor: pointer; }
     .wgt-asuka-suspension .step-reset:hover { background: var(--accent-blue-light); }
     .wgt-asuka-suspension .step-svg { width: 100%; display: block; margin-top: 8px; color: var(--text-muted); font-family: var(--font-apple); }
-    .wgt-asuka-suspension .step-eq { font-size: 14px; color: var(--accent-emerald); overflow-x: auto; overflow-y: hidden; min-height: 52px; }
-    .wgt-asuka-suspension .step-eq mjx-container { margin: 6px 0 !important; }
+    .wgt-asuka-suspension .step-eq { font-size: 14px; color: var(--text-main); overflow-x: auto; overflow-y: hidden; min-height: 96px; }
+    .wgt-asuka-suspension .step-eq { font-family: 'Times New Roman', Times, serif; text-align: center; margin-top: 8px; }
+    .wgt-asuka-suspension .step-eq .eq-main { font-size: 19px; line-height: 2; white-space: nowrap; }
+    .wgt-asuka-suspension .step-eq .eq-vals { font-size: 15px; line-height: 2; color: var(--text-muted); white-space: nowrap; }
+    .wgt-asuka-suspension .step-eq .eq-note { font-family: var(--font-apple); font-size: 12px; color: var(--text-muted); font-style: italic; }
+    .wgt-asuka-suspension .step-eq sup, .wgt-asuka-suspension .step-eq sub { font-size: 0.7em; line-height: 0; }
+    .wgt-asuka-suspension .step-eq .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1.15; margin: 0 2px; }
+    .wgt-asuka-suspension .step-eq .frac > span:first-child { border-bottom: 1px solid currentColor; padding: 0 3px; }
+    .wgt-asuka-suspension .step-eq .frac > span:last-child { padding: 0 3px; }
     .wgt-asuka-suspension .step-ctrl { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 10px; margin-top: 10px; font-size: 13px; color: var(--text-muted); }
     .wgt-asuka-suspension .step-ctrl output { font-family: var(--font-mono); color: var(--text-main); font-size: 12.5px; }
     .wgt-asuka-suspension .step-ctrl input[type="range"] { grid-column: 1 / -1; width: 100%; accent-color: var(--accent-green); margin: 2px 0 0; }

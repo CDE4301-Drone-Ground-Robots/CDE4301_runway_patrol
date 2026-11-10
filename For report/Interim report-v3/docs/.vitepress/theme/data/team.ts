@@ -8,11 +8,11 @@
  * the team's own records. Portraits are the members' own photos (report/members/<id>/assets/images/
  * <id>.jpg); <id>-portrait.jpg is the same photo resized to 1200 px for the web.
  */
-import hilbertPortrait from '@docs/report/members/hilbert/assets/images/hilbert-portrait.jpg'
-import asukaPortrait from '@docs/report/members/asuka/assets/images/asuka-portrait.jpg'
-import zacariasPortrait from '@docs/report/members/zacarias/assets/images/zacarias-portrait.jpg'
-import gabrielPortrait from '@docs/report/members/gabriel/assets/images/gabriel-portrait.jpg'
-import bryanPortrait from '@docs/report/members/bryan/assets/images/bryan-portrait.jpg'
+import hilbertPortrait from '../../../report/members/hilbert/assets/images/hilbert-portrait.jpg'
+import asukaPortrait from '../../../report/members/asuka/assets/images/asuka-portrait.jpg'
+import zacariasPortrait from '../../../report/members/zacarias/assets/images/zacarias-portrait.jpg'
+import gabrielPortrait from '../../../report/members/gabriel/assets/images/gabriel-portrait.jpg'
+import bryanPortrait from '../../../report/members/bryan/assets/images/bryan-portrait.jpg'
 
 export type MemberId = 'hilbert' | 'asuka' | 'zacarias' | 'gabriel' | 'bryan'
 
@@ -53,14 +53,15 @@ export const team: Member[] = [
     focus: '50% 55%',
     docs: [
       { label: 'Navigation', route: '/members/hilbert/navigation' },
-      { label: 'Communication', route: '/members/hilbert/communications' },
+      { label: 'Communications', route: '/members/hilbert/communications' },
       { label: 'Simulation', route: '/members/hilbert/simulation' },
       { label: 'Motor Drivetrain Calculations', route: '/members/hilbert/motor-drivetrain-calculation' },
-      { label: 'Steering Kinematics', route: '/members/hilbert/steering-kinematics' }
+      { label: 'Steering Kinematics', route: '/members/hilbert/steering-kinematics' },
+      { label: 'Semester 2 Plan', route: '/members/hilbert/semester-2-plan' }
     ],
     social: [
       { label: 'LinkedIn', href: 'https://www.linkedin.com/in/hilbert-soh' },
-      { label: 'Instagram', href: 'https://www.instagram.com/ollie_soh?stkn=dGx0eWJyanhhcGN4' }
+      { label: 'Instagram', href: 'https://www.instagram.com/ollie_soh' }
     ]
   },
   {
@@ -76,11 +77,12 @@ export const team: Member[] = [
     docs: [
       { label: 'Suspension', route: '/members/asuka/suspension' },
       { label: 'Vacuum Module', route: '/members/asuka/vacuum-module' },
-      { label: 'FOD Sweep Box', route: '/members/asuka/fod-sweep-box-v2' }
+      { label: 'FOD Sweep Box', route: '/members/asuka/fod-sweep-box-v2' },
+      { label: 'Semester 2 Plan', route: '/members/asuka/semester-2-plan' }
     ],
     social: [
       { label: 'LinkedIn', href: 'https://www.linkedin.com/in/takeuchiasuka' },
-      { label: 'Instagram', href: 'https://www.instagram.com/akasu.jpg?stkn=anJpNHZ4b2Zxdnd0' }
+      { label: 'Instagram', href: 'https://www.instagram.com/akasu.jpg' }
     ]
   },
   {
@@ -88,25 +90,26 @@ export const team: Member[] = [
     name: 'Zacarias Eleazar Ng Han En',
     shortName: 'Zacarias Ng',
     role: 'Mechanical',
-    subsystem: 'Chassis design & differential drive kinematics',
+    subsystem: 'Chassis design & FEA structural simulation',
     discipline: 'Mechanical Engineering',
-    matric: 'A0308821B',
+    matric: 'A0306899H',
     portrait: zacariasPortrait,
     focus: '50% 45%',
     docs: [
       { label: 'Chassis Design', route: '/members/zacarias/chassis-design' },
       { label: 'FEA Simulation', route: '/members/zacarias/fea-simulation' },
-      { label: 'Material Selection', route: '/members/zacarias/material-selection' }
+      { label: 'Material Selection', route: '/members/zacarias/material-selection' },
+      { label: 'Semester 2 Plan', route: '/members/zacarias/semester-2-plan' }
     ],
     // LinkedIn left out until Zacarias's own profile URL is known.
-    social: [{ label: 'Instagram', href: 'https://www.instagram.com/zacarias.eleazar?stkn=MWEzaTE4aWlmNGY4Mg==' }]
+    social: [{ label: 'Instagram', href: 'https://www.instagram.com/zacarias.eleazar' }]
   },
   {
     id: 'gabriel',
     name: 'Gabriel Tan Kai Jie',
     shortName: 'Gabriel Tan',
-    role: 'Computer vision',
-    subsystem: 'Computer vision & sensor fusion',
+    role: 'Computer vision & embedded systems',
+    subsystem: 'Computer vision, sensor fusion & STM32 firmware',
     discipline: 'Electrical Engineering',
     matric: 'A0308452H',
     portrait: gabrielPortrait,
@@ -117,28 +120,30 @@ export const team: Member[] = [
       { label: 'Sensor Fusion', route: '/members/gabriel/sensor-fusion' },
       { label: 'Vision Calculations', route: '/members/gabriel/vision-calculations' },
       { label: 'Vision Research', route: '/members/gabriel/vision-research' },
-      { label: 'YOLO Comparison', route: '/members/gabriel/yolo-comparison' }
+      { label: 'YOLO Comparison', route: '/members/gabriel/yolo-comparison' },
+      { label: 'Semester 2 Plan', route: '/members/gabriel/semester-2-plan' }
     ],
     // LinkedIn left out until Gabriel's own profile URL is known.
-    social: [{ label: 'Instagram', href: 'https://www.instagram.com/disgusting_sparkling_water?stkn=MWFycnFtMW0wYnN4Mg==' }]
+    social: [{ label: 'Instagram', href: 'https://www.instagram.com/disgusting_sparkling_water' }]
   },
   {
     id: 'bryan',
     name: 'Bryan Ng Rui Jie',
     shortName: 'Bryan Ng',
     role: 'Electrical',
-    subsystem: 'Electrical system & charging dock',
+    subsystem: '48V power distribution & electrical architecture',
     discipline: 'Mechanical Engineering (Robotics Specialisation)',
     matric: 'A0301661R',
     portrait: bryanPortrait,
     focus: '48% 50%',
     docs: [
       { label: 'Components & BOM', route: '/members/bryan/components-bom' },
-      { label: 'Power Calculations', route: '/members/bryan/power-calculations' }
+      { label: 'Power Calculations', route: '/members/bryan/power-calculations' },
+      { label: 'Semester 2 Plan', route: '/members/bryan/semester-2-plan' }
     ],
     social: [
       { label: 'LinkedIn', href: 'https://www.linkedin.com/in/bryan-ng-rj' },
-      { label: 'Instagram', href: 'https://www.instagram.com/bryann_nrj?stkn=NnY2YTJ1ZWJtbXpn' }
+      { label: 'Instagram', href: 'https://www.instagram.com/bryann_nrj' }
     ]
   }
 ]

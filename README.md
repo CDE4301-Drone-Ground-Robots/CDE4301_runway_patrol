@@ -154,7 +154,7 @@ CDE4301_runway_patrol/
 │       │   └── .vitepress/      # site code: config, theme, components, widgets
 │       └── package.json         # npm scripts: docs:dev, docs:build, docs:preview
 ├── Backup/                      # README backups; Interim report-v2 (the old site) is kept locally only, not in git
-├── simulation/                  # ROS 2 Jazzy & Gazebo Harmonic workspace
+├── runway_sim_ws/               # ROS 2 Jazzy & Gazebo Harmonic workspace
 │   ├── README.md                # Simulation setup, launch instructions & worlds
 │   └── src/                     # Scout V2 rover URDF, worlds & Nav2 configs
 ├── CDE4301Stm32/                # STM32F446RE motor-control firmware (CubeMX / PlatformIO) and GUI controller

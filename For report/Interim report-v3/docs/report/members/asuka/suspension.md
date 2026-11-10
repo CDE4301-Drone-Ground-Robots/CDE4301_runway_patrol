@@ -5,54 +5,48 @@ outline: [2,3]
 ---
 # Suspension Design and Calculations
 
-In this chapter, I discuss the design of the suspension subsystem, which keeps the FOD Hunter’s wheels in contact with the ground and limits the vibration reaching the camera and onboard electronics. I first model a single corner of the robot as a spring–damper system, assuming the load is evenly distributed across all four wheels. From this model, I derive the transfer function and analyse the step response to select a spring rate of 100 lbf/in, the only option that meets both the static sag and natural frequency criteria. I then compare three suspension types and select the double wishbone, keeping the trailing arm as a back-up in case the chassis width becomes a constraint. Finally, video analysis of the assembled suspension shows all four wheels stayed in contact with the ground over undulating terrain (simulated by obstacles).
 
-<!-- #region report -->
-
-<!-- Report summary (the Report's section text). The detailed write-up follows. -->
 
 ## Suspension Subsystem Architecture {#sec-4-1-6}
 
+<!-- #region summary -->
 <Badge type="danger" text="Asuka" /> <Badge type="danger" text="Terrain Compliance &amp; Dynamics" />
 
-The suspension subsystem filters out jitter so computer vision works reliably, minimises vibration to protect other hardware, and keeps the 65 kg FOD Hunter in even contact with the ground. It has two requirements: static sag of ½ the 20 mm stroke length (40–60% acceptable), and a natural frequency below 10 Hz. Each 16.25 kg corner is modelled as a mass-spring-damper system, from which the transfer function $\frac{bs+k}{ms^2+bs+k}$ and its unit step response are derived. With a 25° installation angle (motion ratio 0.821) and an assumed dampener value of 400 Ns/m, the **100 lbf/in spring** is selected, giving **11.087 mm static sag** and a **4.734 Hz natural frequency**. The double-wishbone architecture is selected over the MacPherson strut (rejected) and the trailing arm (kept as a back-up plan if width becomes an issue). Both requirements are met, pending real-life testing.
+In this chapter, I discuss the design of the suspension subsystem, which keeps the FOD Hunter’s wheels in contact with the ground and limits the vibration reaching the camera and onboard electronics. I first model a single corner of the robot as a spring–damper system, assuming the load is evenly distributed across all four wheels. From this model, I derive the transfer function and analyse the step response to select a spring rate of 100 lbf/in, the only option that meets both the static sag and natural frequency criteria. I then compare three suspension types and select the double wishbone, keeping the trailing arm as a back-up in case the chassis width becomes a constraint. Finally, a video of the assembled prototype shows all four wheels staying in contact with the ground over undulating terrain (simulated by obstacles).
 
-<Figure src="./assets/images/double-wishbone-on-chassis.jpg" alt="Double wishbone suspension mounted on the FOD Hunter chassis" caption="Double wishbone suspension mounted on the chassis." />
+<!-- #endregion summary -->
 
+### 4.2.1 Introduction and System Requirements
 
-## Purpose and Requirements
+<!-- #region s1 -->
+Before committing to a suspension design, I carried out a qualitative comparison between active and passive suspension. An active suspension introduces an independent force or torque between the unsprung mass (the wheels) and the sprung mass (the chassis), adjusting the suspension behavior to suit road conditions and the driver’s steering inputs [\[1\]](./references.md#ref-1). Such systems are found mainly in luxury and passenger vehicles, where ride comfort justifies their cost. The FOD Hunter, however, is an autonomous vehicle with no passengers, so ride comfort carries little weight. An active system would also require dynamic modelling, a dedicated controller, and additional sensors and actuators, adding complexity without a matching benefit. I therefore selected a passive suspension.
 
-<Badge type="danger" text="Asuka" />
+The passive suspension acts as a mechanical low-pass filter against vibration from the runway surface. Runways built to FAA standards are cut with transverse grooves at fixed intervals to reduce the risk of aquaplaning during aircraft landing [\[2\]](./references.md#ref-2). At operating speed, these grooves excite the FOD Hunter at high frequency, and the suspension must attenuate this vibration before it reaches the hardware housed in the chassis.
 
-::: info Purpose
-1. Filter out jitter to ensure computer vision works.
-2. Minimise vibration to protect other hardware parts.
-3. Give the FOD Hunter even contact with the ground.
-:::
+The spacing of the grooves at its lowest tolerance is 1 3/8 inch, which is 34.9 mm. Travelling at an operating speed of 10–15 km/h therefore gives an excitation frequency of 79.6 to 119.3 Hz. Using the condition $\omega/\omega_n > \sqrt{2}$, transmissibility at these frequencies is near zero. Choosing an appropriate value for the natural frequency is therefore important.
 
-::: tip Requirements
-1. Static sag = ½ of stroke length (40–60% of stroke length is acceptable).
-2. Natural frequency &lt; 10 Hz.
-:::
+Wheel hop must also be considered. For passenger vehicles, the wheel hop resonant frequency is around 15 Hz [\[3\]](./references.md#ref-3). Equivalent data for small mobile robots is scarce, as most use simple passive mass-spring-damper suspensions or none at all [\[4\]](./references.md#ref-4). In the absence of robot-specific data, I adopted the passenger vehicle value as a reference. A suspension only attenuates vibration when the ratio of excitation frequency to natural frequency exceeds $\sqrt{2}$. With a 15 Hz excitation, the natural frequency must be below approximately 10.6 Hz, so I set a design limit of 10 Hz.
 
-## Suspension Design Model
+Lastly, I set the static sag at 40–60% of stroke length. Motorcycles and similar systems typically run a static sag of 25–35% of total stroke [\[5\]](./references.md#ref-5), as they must reserve travel for heavy external loads. The FOD Hunter does not face loads of this kind, as user interviews indicated that it would carry no more than a handful of FOD at a time (See appendix).
 
-Each corner is modelled as a corner mass supported by a spring and a dampener in parallel, sitting on a wheel assumed to be 100% rigid. To describe the physical relationship between the input (road profile) and the output (position of the chassis), we find the transfer function.
+<!-- #endregion s1 -->
 
-::: warning Assumptions
-- The wheel and tyre are 100% rigid, so all compliance comes from the spring and dampener.
-- The 65 kg system mass is shared evenly across the four corners (16.25 kg per corner).
-- Dampener value $b = 400\ \text{Ns/m}$.
-- The shock absorber is installed at 25°, giving a motion ratio factor of 0.821.
-:::
+### 4.2.2 First Principles Modelling
 
-<Figure src="./assets/diagrams/suspension-corner-mass-on-spring-and-dampener-above.svg" alt="Corner mass on spring and dampener above a rigid wheel" caption="Single-corner model." />
+<!-- #region s2 -->
+Each corner is modelled as a corner mass supported by a spring and a dampener in parallel, sitting on a wheel assumed to be 100% rigid as the wheels of the motor are a solid piece of dense rubber. To describe the physical relationship between the input (road profile) and the output (position of the chassis), we find the transfer function.
 
-<Figure src="./assets/diagrams/suspension-free-body-diagram-with-road-profile-inpu.svg" alt="Free body diagram with road profile input x(t) and chassis displacement output y(t)" caption="Forces acting on the corner mass." />
+<div class="fig-row">
 
-## Static Sag and Transfer Function
+<Figure src="./assets/diagrams/suspension-corner-mass-on-spring-and-dampener-above.svg" alt="Corner mass on spring and dampener above a rigid wheel" caption="Figure 4.2.2.1: Single-corner model of the suspension." />
 
-### Static sag
+<Figure src="./assets/diagrams/suspension-free-body-diagram-with-road-profile-inpu.svg" alt="Free body diagram with road profile input x(t) and chassis displacement output y(t)" caption="Figure 4.2.2.2: Free body diagram of the corner mass with road profile input x(t) and chassis displacement output y(t)." />
+
+</div>
+
+<div class="eq-grid">
+
+<div class="eq-cell">
 
 Initial conditions: velocity = 0 and system acceleration = 0. Considering the vertical direction only:
 
@@ -70,7 +64,9 @@ $$
 F_{weight}=-F_{spring}
 $$
 
-### Transfer function
+</div>
+
+<div class="eq-cell">
 
 Input road profile = $x(t)$, output chassis displacement = $y(t)$. Using $F = ma$, at equilibrium $\sum F = 0$ after static sag:
 
@@ -110,11 +106,15 @@ $$
 \frac{Y(s)}{X(s)}=\frac{bs+k}{ms^2+bs+k}
 $$
 
-::: info second-order system
-This is a .
-:::
+This is a second order system.
 
-## Unit Step Response
+</div>
+
+</div>
+
+<div class="eq-grid">
+
+<div class="eq-cell">
 
 For a unit step response, $X(s)=\frac{1}{s}$:
 
@@ -147,6 +147,10 @@ Comparing coefficients, $A+B=0$, $A=1$, $C=0$:
 $$
 \frac{2as+\omega_n^2}{s\big(s^2+2as+\omega_n^2\big)}=\frac{1}{s}-\frac{s}{s^2+2as+\omega_n^2}
 $$
+
+</div>
+
+<div class="eq-cell">
 
 Completing the square:
 
@@ -186,70 +190,94 @@ $$
 \xi=\frac{a}{\omega_n}=\frac{b}{2\sqrt{km}}
 $$
 
-## Spring Rate Selection
+</div>
 
-<Badge type="tip" text="Selected: 100 lbf/in" />
+</div>
 
-Dampener value $b = 400\ \text{Ns/m}$ (assumption). $y(t)$ is plotted with a time step of 0.01 s (originally plotted in Excel).
+After obtaining the transfer function in the s-domain and converting it to the time domain, I can perform time-domain analysis using the unit step response:
 
-**Interactive:** drag the sliders to change the corner mass $m$, the spring rate $k$ and the dampener value $b$. The wheel rate uses $K_w = K_s \times 0.821$, and the static sag uses $F_{corner} = mg$.
+$$
+y(t)=1-e^{-at}\cos pt+\frac{a}{p}e^{-at}\sin pt,\qquad a=\frac{b}{2m},\quad p=\sqrt{\omega_n^2-a^2}
+$$
+
+The value of $b$ has to be an assumed value, as manufacturers do not usually tell consumers the damping constant. I searched online and asked Gemini AI to estimate the closest value, and eventually settled on $b = 400\ \text{Ns/m}$. I acknowledge that it may not be best practice to use a rough number for something as important as the suspension system. However, this value can be verified in testing when I perform a frequency response analysis.
+
+System mass = 65 kg, corner mass = 16.25 kg, $F_{corner}$ = 159.4125 N. Angle of installation = 25°, motion ratio = 0.821 ($K_w = K_s \times 0.821$), stroke length = 20 mm.
+
+<div class="compact-table">
+
+*Table 4.2.2.3: Spring rate evaluation against the natural frequency and static sag criteria.*
+
+| Spring rate (lbf/in) | K<sub>s</sub> (N/m) | K<sub>w</sub> (N/m) | K<sub>w</sub> (N/mm) | Sag (mm) | ω<sub>n</sub> (rad/s) | f<sub>n</sub> (Hz) | Result |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 30 | 5253.803 | 4313.372 | 4.313 | 36.958 | 16.292 | 2.593 | ❌ Static sag |
+| 50 | 8756.338 | 7188.954 | 7.189 | 22.175 | 21.033 | 3.348 | ❌ Static sag |
+| **100** | 17512.677 | 14377.908 | 14.378 | **11.087** | 29.745 | **4.734** | ✅ Both met |
+| 150 | 26269.015 | 21566.862 | 21.567 | 7.392 | 36.431 | 5.798 | ❌ Static sag |
+| 200 | 35025.354 | 28755.816 | 28.756 | 5.544 | 42.066 | 6.695 | ❌ Static sag |
+| 300 | 52538.031 | 43133.723 | 43.134 | 3.696 | 51.521 | 8.200 | ❌ Static sag |
+| 400 | 70050.708 | 57511.631 | 57.512 | 2.772 | 59.491 | 9.468 | ❌ Static sag |
+| 500 | 87563.385 | 71889.539 | 71.890 | 2.217 | 66.513 | 10.586 | ❌ Natural freq. |
+| 550 | 96319.723 | 79078.493 | 79.078 | 2.016 | 69.759 | 11.103 | ❌ Natural freq. |
+| 600 | 105076.062 | 86267.447 | 86.267 | 1.848 | 72.861 | 11.596 | ❌ Natural freq. |
+| 650 | 113832.400 | 93456.401 | 93.456 | 1.706 | 75.836 | 12.070 | ❌ Natural freq. |
+| 700 | 122588.739 | 100645.355 | 100.645 | 1.584 | 78.699 | 12.525 | ❌ Natural freq. |
+| 750 | 131345.077 | 107834.309 | 107.834 | 1.478 | 81.461 | 12.965 | ❌ Natural freq. |
+
+</div>
+
+Table 4.2.2.3 evaluates commercially available spring rates from 30 lbf/in to 750 lbf/in against two criteria: a natural frequency below 10 Hz and a static sag of 40–60% of stroke. The options from 30 lbf/in to 400 lbf/in meet the natural frequency criterion, whereas the only spring that meets the 40–60% static sag criterion is 100 lbf/in. The 150 lbf/in and 200 lbf/in springs have static sag percentages of 37.0% and 27.7% respectively. These stiffer springs reduce static sag and leave more compression travel. Should testing show that the suspension bottoms out or lacks headroom, I will swap to one of these stiffer springs. Below, I have prepared an interactive slider (Figure 4.2.2.4) that compares two springs of choice. It shows the time-domain response to a unit step input for comparison. I went ahead with the purchase of the 100 lbf/in spring.
 
 <SuspensionWidget1 />
 
-::: warning The spring must meet BOTH criteria
-: static sag of 40–60% of the stroke, and a natural frequency below 10 Hz.
-:::
+*Figure 4.2.2.4: Unit step response of the 100 lbf/in and 400 lbf/in springs for adjustable m, k and b.*
 
-### Spring rate comparison
+<!-- #endregion s2 -->
 
-System mass = 65 kg, corner mass = 16.25 kg, $F_{corner}$ = 159.4125 N. Angle of installation = 25°, stroke length = 20 mm.
+### 4.2.3 Suspension Design Evaluation
 
-| Spring rate (lbf/in) | K<sub>s</sub> (N/m) | Wheel rate K<sub>w</sub> (N/m) = K<sub>s</sub> × motion ratio \[0.821\] | K<sub>w</sub> (N/mm) | x steady state (mm) | Natural freq. (rad/s) | Natural freq. (Hz) | Result |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 30 | 5253.803 | 4313.372 | 4.313 | 36.958 | 16.292 | 2.593 | ❌ Does not meet static sag criteria |
-| 50 | 8756.338 | 7188.954 | 7.189 | 22.175 | 21.033 | 3.348 | ❌ Does not meet static sag criteria |
-| **100** | 17512.677 | 14377.908 | 14.378 | **11.087** | 29.745 | **4.734** | ✅ Meets both criteria |
-| 150 | 26269.015 | 21566.862 | 21.567 | 7.392 | 36.431 | 5.798 | ❌ Does not meet static sag criteria |
-| 200 | 35025.354 | 28755.816 | 28.756 | 5.544 | 42.066 | 6.695 | ❌ Does not meet static sag criteria |
-| 300 | 52538.031 | 43133.723 | 43.134 | 3.696 | 51.521 | 8.200 | ❌ Does not meet static sag criteria |
-| 400 | 70050.708 | 57511.631 | 57.512 | 2.772 | 59.491 | 9.468 | ❌ Does not meet static sag criteria |
-| 500 | 87563.385 | 71889.539 | 71.890 | 2.217 | 66.513 | 10.586 | ❌ Does not meet natural frequency criteria |
-| 550 | 96319.723 | 79078.493 | 79.078 | 2.016 | 69.759 | 11.103 | ❌ Does not meet natural frequency criteria |
-| 600 | 105076.062 | 86267.447 | 86.267 | 1.848 | 72.861 | 11.596 | ❌ Does not meet natural frequency criteria |
-| 650 | 113832.400 | 93456.401 | 93.456 | 1.706 | 75.836 | 12.070 | ❌ Does not meet natural frequency criteria |
-| 700 | 122588.739 | 100645.355 | 100.645 | 1.584 | 78.699 | 12.525 | ❌ Does not meet natural frequency criteria |
-| 750 | 131345.077 | 107834.309 | 107.834 | 1.478 | 81.461 | 12.965 | ❌ Does not meet natural frequency criteria |
+<!-- #region s3 -->
+*Table 4.2.3.1: Comparison of candidate suspension types.*
 
-Green cells meet a criterion: static sag of 8–12 mm (40–60% of the 20 mm stroke) or natural frequency &lt; 10 Hz. Red rows fail at least one criterion.
-
-::: tip Component selected: 100 lbf/in spring
-Static sag of 11.087 mm is 55% of the 20 mm stroke (within 40–60%), and the natural frequency of 4.734 Hz is below 10 Hz.
-:::
-
-## Cost Trade-off: Off-the-Shelf vs Adjustable Shock Absorbers
-
-Shock absorbers in this size range cost from about \$\[2\] to \$\[800\] each. The main difference between them is precision and adjustability. The spring rate is largely fixed once a spring is chosen, but the damping can vary significantly. In a hydraulic damper, the damping force comes from oil forced through small orifices as the shock compresses and extends. A smaller orifice resists the flow more, giving a higher damping coefficient and a slower, more controlled response. A larger orifice gives lower damping and a softer response. Higher-end shock absorbers allow these settings to be adjusted and tuned.
-
-For the FOD Hunter, the main innovations are the coordination between the FOD Argus and the FOD Hunter and the FOD pickup mechanism. To put more budget and time into these systems, I chose a low-cost, non-adjustable shock absorber (\[part name\], \$\[X\] each, \$\[4X\] for four corners) instead of an adjustable unit. The trade-off is that its damping coefficient is not published or adjustable, which is why my model assumes $b = 400\ \text{Ns/m}$ (Section 2). Despite this, the selected 100 lbf/in spring still meets the static sag and natural frequency requirements, as confirmed by testing (Section \[X\]). Measuring the actual damping coefficient, for example from the decay rate in a bounce test, is listed as future work.
-
-## Suspension Selection
-
-<table class="data-table"><tbody>
+<table class="data-table fit-table"><tbody>
 <tr><th></th><th>Suspension type</th><th>Advantages</th><th>Disadvantages</th><th>Remarks</th><th>Final decision</th></tr>
-<tr><td><img src="./assets/images/suspension-trailing-arm.jpg" alt="Trailing arm suspension CAD"></td><td><strong>Trailing arm</strong></td><td>Constant track width, zero camber angle change.<br><br>Maximum space efficiency, keeping robot width to the minimum.<br><br>Low vertical profile.</td><td>Transverse bending moments are concentrated on the main pivot shaft during spot turns.</td><td>Used as rear suspension on vehicles, but can also be used on the FOD Hunter with strict width constraints.</td><td>Keep as back-up plan in case width is an issue</td></tr>
-<tr><td><img src="./assets/images/suspension-macpherson-strut.jpg" alt="MacPherson strut suspension CAD"></td><td><strong>MacPherson strut</strong></td><td>Leaves space for other parts at the upper arm assembly.<br><br>Lower part count.</td><td>Higher wear on shock absorbers, as skid steering exerts large stress on them.</td><td>Usually used on Ackermann-steering vehicles (which we are not using).</td><td>Reject</td></tr>
-<tr><td><img src="./assets/images/suspension-double-wishbone.jpg" alt="Double wishbone suspension CAD"></td><td><strong>Double wishbone</strong></td><td>The dual-arm set-up easily absorbs lateral bending moments during skid-steering turns.<br><br>Maintains a stable tyre contact patch across the full stroke.</td><td>Mechanically complex.</td><td>Typically used in performance vehicles; a wide chassis width is available.</td><td><strong>Selected</strong></td></tr>
+<tr><td><img src="./assets/images/suspension-trailing-arm.jpg" alt="Trailing arm suspension CAD"></td><td><strong>Trailing arm</strong></td><td>Constant track width and zero camber change.<br>Most compact layout, keeping the track to a minimum.<br>Low vertical profile.</td><td>Resists the lateral load of skid steering through a single pivot, concentrating transverse bending on the main pivot shaft.</td><td>Used as rear suspension on vehicles; suits the FOD Hunter if width is constrained.</td><td>Back-up plan if width is an issue</td></tr>
+<tr><td><img src="./assets/images/suspension-macpherson-strut.jpg" alt="MacPherson strut suspension CAD"></td><td><strong>MacPherson strut</strong></td><td>Lower part count.<br>Leaves space at the upper arm assembly.</td><td>Its key advantage, integrating the steering pivot into the strut, only benefits Ackermann axles.<br>Adds strut height and tends to bind under side load.</td><td>Usually used on Ackermann-steered vehicles, which the FOD Hunter is not.</td><td>Reject</td></tr>
+<tr><td><img src="./assets/images/suspension-double-wishbone.jpg" alt="Double wishbone suspension CAD"></td><td><strong>Double wishbone</strong></td><td>Shares the lateral load of skid-steer turns between the upper and lower arms.<br>Maintains a stable tyre contact patch across the full stroke.</td><td>Extends the track, so the wheelbase-to-track-width ratio must stay within 0.8–1.<br>Mechanically complex.</td><td>Typically used in performance vehicles; the chassis can be re-made to fit it.</td><td><strong>Selected</strong></td></tr>
 </tbody></table>
 
-## Final Design and Status
+I selected the double wishbone for its two-arm layout. Skid steering drags the wheels sideways during turns, placing a large lateral load on the suspension. The double wishbone shares this load between the upper and lower arms, whereas the trailing arm resists it through a single pivot. I rejected the MacPherson strut because its key advantage, integrating the steering pivot into the strut, only benefits Ackermann-steered axles. The FOD Hunter uses skid steering, so it would gain nothing from this whilst still incurring the strut’s height and its tendency to bind under side load.
 
-<Figure src="./assets/images/double-wishbone-on-chassis.jpg" alt="Double wishbone suspension mounted on the FOD Hunter chassis" caption="Double wishbone suspension on the chassis (CAD)." />
+The drawback of the double wishbone is width: it extends the track, and the wheelbase-to-track-width ratio must stay within 0.8–1, as established in the Steering Kinematics chapter. The current chassis (wheelbase 488.8 mm, track width 575 mm) has a ratio of 0.85, so the track can only grow by about 36 mm before the ratio falls below 0.8. Should the chassis be unable to accommodate the extra width, I will fall back to the trailing arm, the most compact of the three layouts. Alternatively, the future chassis will be re-made to accommodate the double wishbone geometry.
 
-::: tip Requirements
-1. Static sag ½ of stroke length (40–60%) ✅
-2. Natural frequency &lt; 10 Hz ✅
+<!-- #endregion s3 -->
 
-*Pending real-life test.*
-:::
+### 4.2.4 Prototype and Realisation
 
-<!-- #endregion report -->
+<!-- #region s4 -->
+For the prototype, the 100 lbf/in spring was purchased and integrated with the design of the suspension system. Sheet metal was chosen as the prototype material as it is cheap to manufacture and it is able to demonstrate the benefit of the dual-arm set-up during skid steering. Attached here is a video demonstration of the suspension system working over extremely undulating terrain. It is imperative to keep all four wheels on the ground at all times to prevent any current spike in the motors, so that the electrical system is protected. Fewer wheels in contact means that the torque on each wheel for the same function will be greatly increased. This is hazardous and might cause the current to surge.
+
+<VideoClip src="./assets/videos/suspension-terrain-test.mp4" caption="Figure 4.2.4.1: Suspension prototype over undulating terrain." />
+
+<!-- #endregion s4 -->
+
+### 4.2.5 Testing and Analysis
+
+<!-- #region s5 -->
+<!-- TODO: add the real-life test (video analysis of all four wheels staying in contact over obstacles) and the bounce test results. -->
+In an engineering control theory class (that I am reading this semester), I learned that a second order system is critically damped when the damping ratio $\xi$ becomes 1. For my transfer function, the numerator contains a zero due to the term $bs$, so critical damping for this transfer function still has a percentage overshoot of 13.5%. It requires the wheel rate, $K_w$, to be 14378 N/m and the dampener value $b$ to be 967 Ns/m.
+
+<SuspensionWidget2 />
+
+*Figure 4.2.5.1: Unit step response with adjustable natural frequency and damping ratio, set to critical damping by default.*
+
+However, achieving this in real life may be extremely costly. The difference between cheap and expensive shock absorbers is the adjustability, the range of adjustability and the precision of the damping value. The orifices inside a shock absorber allow the damping constant to change, giving some degree of adjustability in the damping value. However, such components are extremely costly and can cost up to \$980 per shock absorber, while I could find non-adjustable ones at a significantly cheaper price of \$2.50 each. Therefore, I decided to purchase the lower-end shock absorber and focus the budget on the key function of the FOD Hunter, which is FOD remediation.
+
+<!-- #endregion s5 -->
+
+### 4.2.6 Future Work
+
+<!-- #region s6 -->
+For future work, I plan to do a frequency response analysis to verify the transfer function that I derived in section 4.2.2. I also plan to remake the double wishbone geometry for manufacture by CNC machining, using relevant bearings and rubber dampers to minimise vibration transfer to the chassis. The details of this timeline will be elaborated in the Gantt chart at the end of the report.
+
+<!-- #endregion s6 -->

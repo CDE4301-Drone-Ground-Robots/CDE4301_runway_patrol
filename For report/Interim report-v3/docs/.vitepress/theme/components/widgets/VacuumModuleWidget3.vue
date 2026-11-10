@@ -1,23 +1,18 @@
 <!-- Interactive widget: the markup below, its behaviour in scripts/ (run once per page by useWidgetScript), styles scoped by its .wgt-* class. -->
 <script setup lang="ts">
 import { useWidgetScript } from './useWidgetScript'
-import { useRoute, withBase } from 'vitepress'
 
 import s0 from './scripts/asuka-vacuum-module-1.js'
 import s1 from './scripts/asuka-vacuum-module-2.js'
 
 useWidgetScript([['asuka-vacuum-module-1', s0], ['asuka-vacuum-module-2', s1]])
 
-// The Report shows the FOD Sweep Box model once, as its own section (4.5.2). Two copies on one page
-// would share element ids and only the first would run, so on the Report this slot points there instead.
-const onReport = /\/report(\.html)?$/.test(useRoute().path)
 </script>
 
 <template>
   <div class="vp-raw wgt wgt-asuka-vacuum-module">
 <div class="model-frame">
-            <p v-if="onReport" class="model-pointer">The interactive FOD Sweep Box v2 model is in <a :href="withBase('/report#fod-sweep-box')" target="_self">4.5.2 FOD Sweep Box</a>.</p>
-            <FodSweepBoxV2 v-else class="embedded" />
+            <FodSweepBoxV2 class="embedded" />
           </div>
   </div>
 </template>

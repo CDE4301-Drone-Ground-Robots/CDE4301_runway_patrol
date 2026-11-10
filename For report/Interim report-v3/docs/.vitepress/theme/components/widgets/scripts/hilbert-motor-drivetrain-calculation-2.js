@@ -355,7 +355,7 @@ class Scout2DrivetrainViewer {
               <strong style="color: #f8fafc;" id="eq-card-title">Case 2: Incline Slope Governing Equations</strong>
               <span style="font-size: 11px; color: #94a3b8;">Analytical Mechanics (Gillespie, 1992; Siegwart, 2011)</span>
             </div>
-            <div id="eq-card-math" style="font-size: 13px; color: #e2e8f0; overflow-x: auto;">
+            <div id="eq-card-math" style="font-size: 15px; color: #e2e8f0; overflow-x: auto;">
               <!-- Dynamic MathJax updated per case -->
             </div>
           </div>

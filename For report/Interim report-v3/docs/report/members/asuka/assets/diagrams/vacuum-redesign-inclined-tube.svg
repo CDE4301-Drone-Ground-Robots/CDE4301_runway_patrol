@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 100 710 540" font-family="'Oswald','Arial Narrow','Helvetica Neue',Arial,sans-serif">
+  <rect x="0" y="100" width="710" height="540" fill="#000"/>
+  <rect x="0" y="280" width="175" height="255" fill="#aaa"/>
+  <text x="80" y="418" text-anchor="middle" font-size="36" fill="#fff">Bin</text>
+  <rect x="443" y="110" width="185" height="255" fill="#968a5a"/>
+  <text x="535" y="230" text-anchor="middle" font-size="36" fill="#fff">Bounding</text>
+  <text x="535" y="272" text-anchor="middle" font-size="36" fill="#fff">Box</text>
+  <rect x="531" y="127" width="97" height="66" fill="#4a86c5" stroke="#000" stroke-width="3"/>
+  <text x="579" y="167" text-anchor="middle" font-size="21" font-weight="700" fill="#fff">Opening</text>
+  <line x1="175" y1="342" x2="443" y2="208" stroke="#fff" stroke-width="4"/>
+  <line x1="175" y1="495" x2="443" y2="361" stroke="#fff" stroke-width="4"/>
+  <line x1="175" y1="495" x2="278" y2="495" stroke="#fff" stroke-width="4"/>
+  <text x="260" y="248" text-anchor="middle" font-size="32" fill="#4a86c5">Airflow</text>
+  <ellipse cx="320" cy="326" rx="55" ry="40" fill="#d98e8e"/>
+  <text x="320" y="333" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">Object</text>
+  <text x="412" y="443" text-anchor="middle" font-size="32" fill="#fff">Tube</text>
+  <text x="262" y="480" text-anchor="middle" font-size="26" font-style="italic" fill="#fff">θ</text>
+  <line x1="685.0" y1="112.0" x2="645.5" y2="131.7" stroke="#4a86c5" stroke-width="3"/><polygon fill="#4a86c5" points="633.0,138.0 642.4,125.5 648.7,138.0"/><line x1="685.0" y1="138.0" x2="645.5" y2="157.7" stroke="#4a86c5" stroke-width="3"/><polygon fill="#4a86c5" points="633.0,164.0 642.4,151.5 648.7,164.0"/><line x1="685.0" y1="164.0" x2="645.5" y2="183.7" stroke="#4a86c5" stroke-width="3"/><polygon fill="#4a86c5" points="633.0,190.0 642.4,177.5 648.7,190.0"/><line x1="436.0" y1="232.0" x2="398.5" y2="250.8" stroke="#4a86c5" stroke-width="3"/><polygon fill="#4a86c5" points="385.9,257.0 395.3,244.5 401.6,257.0"/><line x1="436.0" y1="276.0" x2="398.5" y2="294.8" stroke="#4a86c5" stroke-width="3"/><polygon fill="#4a86c5" points="385.9,301.0 395.3,288.5 401.6,301.0"/><line x1="436.0" y1="320.0" x2="398.5" y2="338.8" stroke="#4a86c5" stroke-width="3"/><polygon fill="#4a86c5" points="385.9,345.0 395.3,332.5 401.6,345.0"/>
+  <line x1="278.0" y1="425.0" x2="312.2" y2="408.3" stroke="#fff" stroke-width="3"/><polygon fill="#fff" points="323.0,403.0 314.9,413.7 309.6,402.9"/>
+  <line x1="278.0" y1="425.0" x2="261.3" y2="390.8" stroke="#fff" stroke-width="3"/><polygon fill="#fff" points="256.0,380.0 266.7,388.1 255.9,393.4"/>
+  <text x="330" y="406" font-size="22" font-style="italic" fill="#fff">x</text>
+  <text x="240" y="377" font-size="22" font-style="italic" fill="#fff">y</text>
+  <line x1="250.0" y1="352.0" x2="214.5" y2="369.7" stroke="#4a86c5" stroke-width="3"/><polygon fill="#4a86c5" points="202.0,376.0 211.4,363.5 217.7,376.0"/><line x1="214.0" y1="404.0" x2="187.8" y2="420.5" stroke="#4a86c5" stroke-width="3"/><polygon fill="#4a86c5" points="176.0,428.0 184.1,414.6 191.6,426.4"/><line x1="250.0" y1="448.0" x2="218.5" y2="463.7" stroke="#4a86c5" stroke-width="3"/><polygon fill="#4a86c5" points="206.0,470.0 215.4,457.5 221.7,470.0"/>
+  <ellipse cx="375" cy="553" rx="31" ry="25" fill="#d98e8e"/>
+  <text x="375" y="560" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">obj</text>
+  <line x1="360.0" y1="531.0" x2="345.6" y2="506.5" stroke="#a99fc4" stroke-width="2.5"/><polygon fill="#a99fc4" points="340.0,497.0 349.9,503.9 341.3,509.0"/>
+  <line x1="458.0" y1="516.0" x2="412.0" y2="536.5" stroke="#a99fc4" stroke-width="2.5"/><polygon fill="#a99fc4" points="402.0,541.0 410.0,532.0 414.1,541.1"/>
+  <line x1="375.0" y1="578.0" x2="375.0" y2="599.0" stroke="#a99fc4" stroke-width="2.5"/><polygon fill="#a99fc4" points="375.0,610.0 370.0,599.0 380.0,599.0"/>
+  <text x="332" y="494" text-anchor="middle" font-size="20" font-style="italic" fill="#fff">N</text>
+  <text x="468" y="526" font-size="20" font-style="italic" fill="#fff">F<tspan font-size="14" dy="5">D</tspan></text>
+  <text x="375" y="630" text-anchor="middle" font-size="20" font-style="italic" fill="#fff">W</text>
+</svg>

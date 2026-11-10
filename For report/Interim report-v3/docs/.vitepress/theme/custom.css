@@ -472,20 +472,82 @@ html.lg-refract:not(.dark) .glass-surface.lg-refract-control .glass-surface__war
   background: var(--vp-c-bg-soft);
 }
 
-/* Display equations: scroll horizontally instead of overflowing the column */
-.vp-doc mjx-container[display='true'] {
+/* ==========================================================================
+   MathJax Mathematical Formula Typography & High-Legibility Styling
+   ========================================================================== */
+
+/* Inline math: scaled to match body text x-height with clear subscripts */
+.vp-doc mjx-container:not([display='true']),
+.rpt mjx-container:not([display='true']) {
+  font-size: 1.18em !important;
+  vertical-align: -0.15em !important;
+  line-height: normal;
+}
+
+/* Math inside technical tables: ensure fractions and indices remain distinct */
+.vp-doc table mjx-container:not([display='true']),
+.rpt table mjx-container:not([display='true']) {
+  font-size: 1.22em !important;
+  vertical-align: -0.15em !important;
+}
+
+/* Display equations: prominent, clear, with smooth scrolling for long equations */
+.vp-doc mjx-container[display='true'],
+.rpt mjx-container[display='true'],
+.rpt-math--block mjx-container {
   display: block;
+  font-size: 1.32em !important;
+  padding: 8px 0;
+  margin: 1.25em 0;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 6px 0;
-  margin: 1.1em 0;
+  text-align: center;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
 }
+.vp-doc mjx-container[display='true']::-webkit-scrollbar,
+.rpt mjx-container[display='true']::-webkit-scrollbar {
+  height: 4px;
+}
+.vp-doc mjx-container[display='true']::-webkit-scrollbar-thumb,
+.rpt mjx-container[display='true']::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
 .vp-doc .equation {
-  margin: 1.2em 0;
-  padding: 2px 16px;
-  border-left: 2px solid var(--vp-c-brand-3);
-  background: linear-gradient(90deg, var(--vp-c-brand-soft), transparent 70%);
+  margin: 1.3em 0;
+  padding: 4px 18px;
+  border-left: 2.5px solid var(--vp-c-brand-3);
+  background: linear-gradient(90deg, var(--vp-c-brand-soft), transparent 75%);
   border-radius: 0 10px 10px 0;
+}
+.vp-doc .equation mjx-container[display='true'],
+.rpt .equation mjx-container[display='true'] {
+  font-size: 1.36em !important;
+  margin: 0.8em 0;
+}
+
+/* Technical Math Containers in Interactive Widgets */
+.wgt-hilbert-motor-drivetrain-calculation .math-eq-box,
+.wgt-hilbert-navigation .math-eq-box,
+.wgt-hilbert-simulation .math-eq-box,
+.wgt-hilbert-steering-kinematics .math-eq-box,
+.wgt-hilbert-communications .math-eq-box,
+.wgt-programming .math-eq-hero,
+.wgt-hilbert-simulation .math-eq-hero {
+  font-size: 16px !important;
+}
+.wgt-hilbert-motor-drivetrain-calculation .math-eq-box mjx-container,
+.wgt-hilbert-navigation .math-eq-box mjx-container,
+.wgt-hilbert-simulation .math-eq-box mjx-container,
+.wgt-hilbert-steering-kinematics .math-eq-box mjx-container,
+.wgt-hilbert-communications .math-eq-box mjx-container,
+.wgt-programming .MathJax,
+.wgt-programming mjx-container,
+#eq-card-math,
+#eq-card-math mjx-container {
+  font-size: 1.25em !important;
 }
 
 /* Technical tables: restrained, legible, tabular figures */
