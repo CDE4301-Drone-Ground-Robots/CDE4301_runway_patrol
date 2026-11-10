@@ -49,9 +49,7 @@ import ReportToc from '@theme/components/report/ReportToc.vue'
 
 ## Introduction {#introduction}
 
-<SubsystemLead member="asuka" label="Chapter Author" />
-
-In this chapter, I discuss why runway foreign object debris (FOD) remains a problem worth solving and make the case for FOD Argus and FOD Hunter as the answer. I first revisit the loss of Air France Flight 4590, the global cost of FOD and Singapore's shrinking military manpower, before presenting interviews with the RSAF, CAAS and the project's industry partner, which showed that the current process cannot measure its own thoroughness and most often misses small rivets and screws. I then compare existing solutions and find that most detect FOD but leave removal to people, which leads to the problem statement and the decision to scope the project to military air bases. Finally, I justify a two-robot approach using Öztürk and Kuzucuoğlu's multi-robot study, walk through the user journey, and close with seven stakeholder needs that Chapter 2 turns into requirements and specifications.
+In this chapter, we discuss why runway foreign object debris (FOD) remains a problem worth solving and make the case for FOD Argus and FOD Hunter as the answer. We first revisit the loss of Air France Flight 4590, the global cost of FOD and Singapore's shrinking military manpower, before presenting interviews with the RSAF, CAAS and the project's industry partner, which showed that the current process cannot measure its own thoroughness and most often misses small rivets and screws. We then compare existing solutions and find that most detect FOD but leave removal to people, which leads to the problem statement and the decision to scope the project to military air bases. Finally, we justify a two-robot approach using Öztürk and Kuzucuoğlu's multi-robot study, walk through the user journey, and close with seven stakeholder needs that Chapter 2 turns into requirements and specifications.
 
 <!--
 ARCHIVED, previous Chapter 1 (the team's earlier sections, kept for reference and untouched on disk).
@@ -252,9 +250,7 @@ These seven needs, together with the insights from our primary research (the int
 
 ## Overview of Design {#overview-of-design}
 
-<SubsystemLead member="asuka" label="Chapter Author" />
-
-In this chapter, I discuss how the seven stakeholder needs from Chapter 1 become the design of the system. I first describe the system concept, in which FOD Argus surveys the runway, an operator confirms each flag and FOD Hunter removes and logs each item. I then state the six features of FOD Hunter and FOD Argus working together and the ten features of FOD Hunter alone, each justified by the interviews and tied to the needs it answers. Next, I set out the requirements for FOD Hunter by subsystem, with each requirement addressing a feature and mapped to the specification that meets it, and I flag the values that still conflict between pages. Finally, I show how the work is divided between the team, so that any number in Chapters 3 to 5 can be traced back to a need, a feature and a person in charge.
+In this chapter, we discuss how the seven stakeholder needs from Chapter 1 become the design of the system. We first describe the system concept, in which FOD Argus surveys the runway, an operator confirms each flag and FOD Hunter removes and logs each item. We then state the six features of FOD Hunter and FOD Argus working together and the ten features of FOD Hunter alone, each justified by the interviews and tied to the needs it answers. Next, we set out the requirements for FOD Hunter by subsystem, with each requirement addressing a feature and mapped to the specification that meets it, and we flag the values that still conflict between pages. Finally, we show how the work is divided between the team, so that any number in Chapters 3 to 5 can be traced back to a need, a feature and a person in charge.
 
 <!--
 ARCHIVED, previous Chapter 2 (the team's earlier lists, kept for reference and untouched on disk).

@@ -37,9 +37,9 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 - Motor calculation (determine battery spec)
 - Assist with prototype FOD Hunter design
 - Assist with overall electrical design
-- Website report design (GitHub)
+- Website report design
 - Secondary research
-- Final FOD Hunter design (vac fabrication)
+- Final FOD Hunter design
 
 </template>
 
@@ -80,7 +80,6 @@ Also overseeing mechanical
 - Assist with prototype FOD Hunter design
 - Sourcing for primary interviewee
 - Primary and secondary research
-- Project manager
 
 </template>
 
