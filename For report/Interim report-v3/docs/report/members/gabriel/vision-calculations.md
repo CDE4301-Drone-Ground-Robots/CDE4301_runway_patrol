@@ -1,20 +1,24 @@
 ---
 title: "Computer Vision Calculations & Camera Geometry"
-description: "How fast the robot drives, where the camera points, and how many pixels a fastener gets: the numbers behind the camera and model choices."
+description: "Kinematic speed constraints, global-shutter camera trade study, optical projection geometry, and input resolution scaling for small metallic fasteners."
 owner: "Gabriel Tan"
-outline: [2,3]
+outline: [2, 3]
 ---
+
 # Computer Vision Calculations & Camera Geometry
 
-<Badge type="info" text="DRONE & VISION SUBSYSTEM • GABRIEL" />
-
-How fast the robot drives, where the camera points, and how many pixels a fastener gets: the numbers behind the camera and model choices.
+> **Semester 1 engineering documentation · Gabriel Tan**  
+> **Evidence boundary:** This page documents the first-principles kinematic latency budget, optical camera selection trade study, and Ground Sample Distance (GSD) projection geometry. Semester 1 dataset acquisition used the UGREEN CM831 webcam as an accessible interim sensor; the Leopard Imaging LI-IMX568 global-shutter camera is selected for Semester 2 vehicle integration.
 
 <!-- #region report -->
 
-## Speed Constraints {#s1}
+## 1. Speed Constraints & Compute Budget {#s1}
 
-<Badge type="info" text="Kinematics &amp; Compute Budget" />
+At the UGV's maximum design speed of **15.1 km/h** ($4.19\text{ m/s}$ at $400\text{ RPM}$), a forward-looking camera with a $1.65\text{ m}$ longitudinal ground field of view keeps a stationary piece of debris in frame for **0.39 s** (approximately 12 frames at 30 FPS). To guarantee multi-frame confirmation before braking or vacuum actuation, end-to-end perception latency must remain **below 33.3 ms per frame** ($\ge 30\text{ FPS}$).
+
+Crucially, sweeping a full $3,000\text{ m} \times 45\text{ m}$ runway ($135,000\text{ m}^2$) with the UGV's $1.23\text{ m}$ lateral camera swath alone would require **$\approx 7.3\text{ hours}$** of continuous driving. This kinematic bottleneck directly motivates the **cooperative UAV–UGV architecture**, where an aerial drone performs rapid wide-area runway scanning and dispatches georeferenced target coordinates to the UGV for localized verification and high-suction remediation.
+
+::: details Kinematic equations and compute budget breakdown
 
 $$
 v = \frac{\text{RPM} \times 2\pi r}{60} = \frac{400 \times 2\pi(0.1)}{60} = 4.19\text{ m/s} \approx 15.1\text{ km/h}
@@ -24,53 +28,69 @@ $$
 t_{\text{frame}} \le \frac{1}{\text{FPS}} = \frac{1}{30} \approx 33.3\text{ ms}
 $$
 
-| Quantity | Working | Value | Why it matters |
-| --- | --- | --- | --- |
-| **Time in view** | $1.65\text{ m} \div 4.19\text{ m/s}$ | **0.39 s** (~12 frames at 30 fps) | Room for multi-frame confirmation |
-| **Runway sweep, UGV alone** | $135,000\text{ m}^2 \div (1.23\text{ m} \times 4.19\text{ m/s})$ | **≈ 7.3 h** for 3 km × 45 m | Why the drone does the wide search |
+**Table 1.1: Operational Speed & Coverage Constraints**
 
-Driving at 15.1 km/h means total pipeline latency must be **below 33 ms** per frame (≥ 30 fps).
+| Quantity | Working | Value | Engineering Implication |
+| :--- | :--- | :--- | :--- |
+| **Linear Cruise Velocity ($v$)** | $400\text{ RPM} \times 2\pi(0.10\text{ m}) \div 60$ | **$4.19\text{ m/s}$ ($15.1\text{ km/h}$)** | Sets motion-blur exposure ceiling ($\le 81\ \mu\text{s}$) and frame deadline. |
+| **Per-Frame Compute Budget ($t_{\text{frame}}$)** | $1 \div 30\text{ FPS}$ | **$\le 33.3\text{ ms}$** | Maximum allowable latency for capture + inference + NMS. |
+| **Target Time in View** | $1.65\text{ m} \div 4.19\text{ m/s}$ | **$0.39\text{ s}$ (~12 frames @ 30 FPS)** | Provides temporal window for multi-frame tracking confirmation. |
+| **Solo UGV Runway Sweep Time** | $135,000\text{ m}^2 \div (1.23\text{ m} \times 4.19\text{ m/s})$ | **$\approx 7.3\text{ h}$** ($3\text{ km} \times 45\text{ m}$) | Explains why the UAV handles wide search while the UGV performs targeted pickup. |
 
-## Camera Selection {#s2}
+:::
 
-<Badge type="info" text="Hardware Selection" />
+## 2. Camera Hardware Selection & Trade Study {#s2}
 
-**Why it matters:** Driving at 15.1 km/h and needing real-time small-debris detection set hard constraints. This section checks every camera against them.
+Operating at $15.1\text{ km/h}$ while resolving $30\text{ mm}$ metallic fasteners imposes two strict optical constraints: the sensor must use a **global shutter** to eliminate rolling-shutter motion skew during high-speed travel and chassis vibration, and the lens field of view must concentrate enough angular resolution onto the runway surface so that a $30\text{ mm}$ bolt spans **at least 16 pixels** after neural network input downscaling.
+
+We evaluated three candidate cameras against these constraints. The **Leopard Imaging LI-IMX568** ($2472 \times 2064\text{ px}$, 5.1 MP Sony Pregius S global-shutter sensor with a $50.0^\circ \times 42.5^\circ$ lens) was selected for the final platform: it freezes motion at $4.19\text{ m/s}$, projects a $30\text{ mm}$ bolt across **27 px** at $1088 \times 1088$ network input ($60\text{ px}$ native), and keeps **97% of its vertical sensor rows below the horizon**. Due to Semester 1 budget and lead-time constraints, the **UGREEN CM831** 1080p USB webcam ($62.0^\circ \times 37.4^\circ$ FOV) was used as an interim sensor for static tarmac dataset collection.
+
+::: details Candidate camera trade study and hardware role comparison
+
+**Table 2.1: Candidate Camera Specification & Requirement Matrix**
 
 | Specification / Requirement | Leopard LI-IMX568 | e-con Systems e-CAM56 | UGREEN CM831 Webcam |
-| --- | --- | --- | --- |
-| **Sensor Resolution & Pitch** | $2472 \times 2064\text{ px}$ (5.1 MP), $2.74\ \mu\text{m}$ | $2472 \times 2064\text{ px}$ (5.1 MP), $2.74\ \mu\text{m}$ | $1920 \times 1080\text{ px}$ (2.1 MP), n/a |
-| **Shutter Mechanism (Freezes motion at 15.1 km/h)** | ✓ Global shutter | ✓ Global shutter | ✗ Rolling shutter (image skew) |
-| **Lens Field of View ($H \times V$)** | 50.0° × 42.5° | 104.8° × 94.6° | 62.0° × 37.4° |
-| **Bolt width at 1088 input, image centre** (need ≥16 px) | ✓ 27 px ($60\text{ px}$ native) | ✗ 10 px ($22\text{ px}$ native) | ✓ 21 px ($36\text{ px}$ native) |
-| **Ground Coverage ($H=0.45\text{ m}, \theta=20^\circ$)** | ✓ Nearest: 0.51 m; only 3% of image rows (67 of 2064) above the horizon — negligible (tilt to ≥21.3° removes it) | ✗ Nearest: 0.19 m; 33% of image rows above the horizon (wasted on sky) | ✓ Nearest: 0.56 m; no rows above the horizon |
-| **Frame rate ≥ 30 fps** | ✓ 60 fps | ✓ 79 fps | ✓ 60 fps |
-| **Connects to Jetson** | ~ GMSL2: long, noise-resistant cable; needs a GMSL2 adapter | ✓ MIPI CSI-2 direct | ✓ USB 2.0 |
-| **Role & Status** | <Badge type="tip" text="Selected for Semester 2" /> | <Badge type="danger" text="Rejected" /> | <Badge type="warning" text="Interim: used for Semester 1 data collection" /> |
+| :--- | :--- | :--- | :--- |
+| **Sensor Resolution & Pixel Pitch** | $2472 \times 2064\text{ px}$ (5.1 MP), $2.74\ \mu\text{m}$ | $2472 \times 2064\text{ px}$ (5.1 MP), $2.74\ \mu\text{m}$ | $1920 \times 1080\text{ px}$ (2.1 MP), n/a |
+| **Shutter Mechanism (at 15.1 km/h)** | ✓ **Global shutter** (zero skew) | ✓ **Global shutter** (zero skew) | ✗ **Rolling shutter** (motion skew) |
+| **Lens Field of View ($H \times V$)** | $50.0^\circ \times 42.5^\circ$ | $104.8^\circ \times 94.6^\circ$ | $62.0^\circ \times 37.4^\circ$ |
+| **30 mm Bolt Width at 1088 Input** (need $\ge 16\text{ px}$) | ✓ **27 px** ($60\text{ px}$ native) | ✗ **10 px** ($22\text{ px}$ native) | ✓ **21 px** ($36\text{ px}$ native) |
+| **Ground Coverage ($H=0.45\text{ m}, \theta=20^\circ$)** | ✓ Nearest: $0.51\text{ m}$; only 3% of rows (67 / 2064) above horizon (tilting to $\ge 21.3^\circ$ eliminates sky) | ✗ Nearest: $0.19\text{ m}$; 33% of image rows wasted above horizon on sky | ✓ Nearest: $0.56\text{ m}$; 0% of rows above horizon |
+| **Frame Rate ($\ge 30\text{ FPS}$)** | ✓ $60\text{ FPS}$ | ✓ $79\text{ FPS}$ | ✓ $60\text{ FPS}$ |
+| **Host Interface** | ~ **GMSL2 coaxial** (noise-immune automotive link; requires GMSL2 deserialiser board) | ✓ MIPI CSI-2 direct | ✓ USB 2.0 plug-and-play |
+| **Selection Verdict** | <Badge type="tip" text="Selected for Final Platform" /> | <Badge type="danger" text="Rejected (Wide FOV Dilutes GSD)" /> | <Badge type="warning" text="Interim (Sem 1 Dataset Capture)" /> |
 
-Note: Pixel counts use each camera's listed field of view. The e-CAM56's 104.8° may be a diagonal figure; if so its horizontal view is narrower, but it would still give far fewer pixels per bolt than the IMX568.
+*Note: Pixel counts use each camera's listed field of view. Even if the e-CAM56's $104.8^\circ$ figure represents diagonal FOV rather than horizontal FOV, its wide-angle optics still yield far fewer pixels per bolt than the $50^\circ$ LI-IMX568.*
+
+<CardGrid :cols="2">
+
+<Card title="Selected Platform Sensor: Leopard LI-IMX568" accent="emerald">
 
 <Badge type="tip" text="SELECTED CAMERA" />
 
-#### Leopard LI-IMX568
+Although its automotive **GMSL2** interface requires a coaxial deserialiser board to interface with the companion computer, the **LI-IMX568** is the only candidate that simultaneously satisfies global-shutter motion freeze at $4.19\text{ m/s}$, delivers $27\text{ px}$ per $30\text{ mm}$ bolt at $1088$ input, and concentrates $97\%$ of its $5.1\text{ MP}$ array on the tarmac ahead.
 
-While needing a serial adapter
+</Card>
+
+<Card title="Semester 1 Interim Sensor: UGREEN CM831" accent="amber">
 
 <Badge type="warning" text="INTERIM HARDWARE" />
 
-#### Interim: UGREEN CM831
+Adopted during Semester 1 for static and low-speed runway dataset collection due to immediate USB 2.0 availability and zero lead time. Its $62^\circ$ lens provides a usable $21\text{ px}$ bolt width at $1088$ input, but its rolling shutter causes jello distortion and motion skew under high-speed driving.
 
-Due to initial budget constraints, UGREEN CM831 was adopted as an accessible interim solution for Semester 1 training dataset acquisition. However, because its rolling shutter induces distortion and image skew at operational driving speeds, it is unsuitable for the final robot platform.
+</Card>
 
-**Summary:** Selected: **Leopard Imaging LI-IMX568**, a 5.1 MP global-shutter camera with a 50° lens. It is the only option that freezes motion at 4.19 m/s, gives a 30 mm bolt enough pixels at 1088 input, and keeps almost all of its view on the ground.
+</CardGrid>
 
-## Camera Mounting and FOV Calculations {#s3}
+:::
 
-<Badge type="tip" text="Optics &amp; Projection" /> <Badge type="info" text="INTERACTIVE SIMULATOR" />
+## 3. Camera Mounting & Optical FOV Geometry {#s3}
+
+To balance look-ahead stopping distance against spatial resolution (Ground Sample Distance, GSD), the forward perception camera is mounted at height $H = 0.45\text{ m}$ (adjustable between $0.40\text{ m}$ and $0.50\text{ m}$) with a downward pitch angle of $\theta = 20^\circ\text{–}28^\circ$ via a custom 3D-printed adjustable tilt bracket. At the baseline $H = 0.45\text{ m}$ and $\theta = 20^\circ$ configuration, the optical boresight intersects the runway **$1.24\text{ m}$ ahead**, achieving a transverse resolution of **$\text{GSD}_{\text{across}} = 0.50\text{ mm/px}$** and longitudinal resolution of **$\text{GSD}_{\text{along}} = 1.45\text{ mm/px}$** on the LI-IMX568.
+
+Use the interactive simulator below to inspect how camera preset, mounting height $H$, downward tilt angle $\theta$, and target debris size affect the ground footprint and neural network pixel dimensions in real time.
 
 ### Optical Geometry & FOV Simulator {#fov-simulator}
-
-Speed constant $v = 4.19\text{ m/s}$ (400 RPM)
 
 <VisionCalculationsWidget1 />
 
@@ -80,78 +100,88 @@ Speed constant $v = 4.19\text{ m/s}$ (400 RPM)
 
 <VisionCalculationsWidget4 />
 
-<Card title="Key Takeaway:">
+<Card title="Key Takeaway">
 
-💡 At 0.45 m and 20° tilt, the image centre lands 1.24 m ahead. A 30 mm fastener gets 60 × 21 px native on the IMX568, 16 × 5 px at 640 input, and 27 × 9 px at 1088 input. Notice that 1088 keeps the item's width (27 px) closer to the 32 px rule used in our sizing sheet.
+💡 At **$H = 0.45\text{ m}$** and **$\theta = 20^\circ$ tilt**, the image centre lands **$1.24\text{ m}$ ahead** (monitoring usable ground from $0.51\text{ m}$ to $2.16\text{ m}$). A **$30\text{ mm}$ fastener** spans **$60 \times 21\text{ px}$** native on the IMX568, **$16 \times 5\text{ px}$** at $640$ input, and **$27 \times 9\text{ px}$** at $1088$ input—keeping the target width ($27\text{ px}$) close to the $32\text{ px}$ small-object benchmark threshold.
 
 </Card>
 
-::: details Show the working
+::: details Pinhole optical model and Ground Sample Distance (GSD) derivations
 
 **3.1 Focal Length in Pixels ($f_x, f_y$)**
 
-The pinhole camera model converts physical field-of-view angles into discrete sensor pixel dimensions. For a sensor of width $W_{\text{sensor}}$ and height $H_{\text{sensor}}$, the pixel focal lengths scale inversely with the tangent of half the angular field of view. Because pixels on our sensors are square, $f_x$ and $f_y$ share the same value.
+The pinhole camera model converts physical field-of-view angles into discrete sensor pixel dimensions. For a sensor of width $W_{\text{sensor}}$ and height $H_{\text{sensor}}$, the pixel focal lengths scale inversely with the tangent of half the angular field of view. Because pixels on our sensors are square, $f_x$ and $f_y$ share the same value:
 
 $$
-f_x = \frac{W_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{HFOV}}{2}\right)}, \quad f_y = \frac{H_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{VFOV}}{2}\right)}
+f_x = \frac{W_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{HFOV}}{2}\right)}, \qquad f_y = \frac{H_{\text{sensor}}}{2 \cdot \tan\left(\frac{\text{VFOV}}{2}\right)}
 $$
 
-In plain words: how many pixels represent the lens's optical focal length; higher means more zoom.
+*In plain words:* How many pixels represent the lens's optical focal length; a higher value means greater optical zoom.
 
 **3.2 Oblique Slant Range & Ground Incidence**
 
-Because the camera sits $0.45\text{ m}$ off the ground and points $20^\circ$ downward, it views the tarmac at an angle. The true line-of-sight distance $R$ to any runway point $d$ ahead of the lens follows the Pythagorean theorem. The incidence angle $\psi$ tells us how steeply that line of sight strikes the flat runway.
+Because the camera sits $H = 0.45\text{ m}$ above the tarmac and points $\theta = 20^\circ$ downward, it views the runway surface obliquely. The true line-of-sight slant range $R$ to a ground point at horizontal distance $d$ ahead of the lens follows the Pythagorean theorem, while the grazing incidence angle $\psi$ defines how steeply the optical ray strikes the flat pavement:
 
 $$
 R = \sqrt{H^2 + d^2}, \qquad \psi = \arctan\left(\frac{H}{d}\right)
 $$
 
-In plain words: true line-of-sight distance to the ground and how steeply the camera looks down at it.
+*In plain words:* True line-of-sight distance to the ground and how steeply the camera looks down at it.
 
 **3.3 Ground Sample Distance (GSD)**
 
-Ground Sample Distance measures how many millimetres of runway one pixel covers. Looking forward at a shallow angle stretches the vertical footprint along the driving direction by $1 / \sin\psi$. Across the direction of travel, resolution stays sharper because horizontal ray geometry is not foreshortened.
+Ground Sample Distance measures how many millimetres of runway a single pixel covers. Viewing forward at a shallow grazing angle $\psi$ foreshortens the vertical pixel footprint along the driving direction by $1 / \sin\psi$, whereas horizontal resolution across the direction of travel remains unstretched:
 
 $$
 \text{GSD}_{\text{across}} = \frac{R \cdot 1000}{f_x}\ (\text{mm/px}), \qquad \text{GSD}_{\text{along}} = \frac{\text{GSD}_{\text{across}}}{\sin(\psi)}\ (\text{mm/px})
 $$
 
-In plain words: how many millimetres of runway one pixel covers; smaller is sharper.
-
-For any image row at vertical angle $\alpha$ relative to the optical centre ($\alpha > 0$ downwards towards the near ground):
+For any off-centre image row at vertical angle $\alpha$ relative to the optical axis ($\alpha > 0$ downwards toward the near ground):
 
 $$
 \text{GSD}_{\text{along}}(\alpha) = \frac{H \cdot \cos^2\alpha}{f \cdot \sin^2(\theta + \alpha)} \cdot 1000\ (\text{mm/px}), \qquad \text{GSD}_{\text{across}}(\alpha) = \frac{H \cdot \cos\alpha}{f \cdot \sin(\theta + \alpha)} \cdot 1000\ (\text{mm/px})
 $$
 
-At the image centre ($\alpha = 0$) this matches the simpler formula above; away from the centre the $\cos^2\alpha$ term matters.
+At the image centre ($\alpha = 0$), this reduces exactly to the boresight formula above; away from the centre, the $\cos^2\alpha$ factor accounts for off-axis projection.
 
 :::
 
-::: info Camera Mounting
-The mounting height will be 0.4 – 0.5 m at 22° – 28°. To solve this, we will 3D model an adjustable camera mount.
+## 4. Input Resolution Scaling & Target Footprint {#s4}
+
+Single-stage object detectors resize incoming camera frames to a square tensor before convolutional feature extraction. Standard $640 \times 640$ downsampling shrinks a $2472\text{ px}$ IMX568 frame by $3.86\times$, compressing a $30\text{ mm}$ fastener at $1.24\text{ m}$ range to just **$16 \times 5\text{ px}$**—on the brink of vanishing inside YOLO's $8 \times 8\text{ px}$ stride-8 feature cells.
+
+Raising the inference resolution to **$1088 \times 1088$** preserves **$27 \times 9\text{ px}$** on the LI-IMX568 (and **$21 \times 7\text{ px}$** on the interim UGREEN CM831). Although higher input resolution scales compute quadratically, our empirical benchmarks in [YOLO Model Comparison →](./yolo-comparison.md#domain-adaptation) confirm that $1088$ input remains well within the $33.3\text{ ms}$ real-time budget while boosting test $\text{mAP@50}$ on held-out runway videos from **87.7% to 97.0%**.
+
+::: details Fastener pixel footprint across cameras and input resolutions
+
+**Table 4.1: Projected Pixel Dimensions ($W \times L\text{ px}$) of a 30 mm Fastener at Boresight ($d = 1.24\text{ m}$)**
+
+| Camera Candidate | Native Sensor Footprint ($W \times L\text{ px}$) | At $640 \times 640$ Input | At $1088 \times 1088$ Input | Viability at $1088$ Input |
+| :--- | :--- | :--- | :--- | :--- |
+| **Leopard LI-IMX568** | **$60 \times 21\text{ px}$** | $16 \times 5\text{ px}$ (Marginal/Fail) | **$27 \times 9\text{ px}$** | ✓ **Pass** ($\ge 16\text{ px}$ width) |
+| **UGREEN CM831 (Interim)** | $36 \times 12\text{ px}$ | $12 \times 4\text{ px}$ (Fail) | **$21 \times 7\text{ px}$** | ✓ **Pass** ($\ge 16\text{ px}$ width) |
+| **e-con e-CAM56** | $22 \times 7\text{ px}$ | $6 \times 2\text{ px}$ (Fail) | $10 \times 3\text{ px}$ (Fail) | ✗ **Fail** ($< 16\text{ px}$ width) |
+
 :::
-
-## Resolution Selection {#s4}
-
-<Badge type="warning" text="Input Resolution Scaling" />
-
-| Camera | Native ($W \times L\text{ px}$) | at 640 input | at 1088 input |
-| --- | --- | --- | --- |
-| **IMX568** | **60 × 21** | 16 × 5 | **27 × 9** |
-| **UGREEN** | 36 × 12 | 12 × 4 | 21 × 7 |
-| **e-CAM56** | 22 × 7 | 6 × 2 | 10 × 3 |
-
-While having a higher resolution exponentially increases the number of parameters and slows the latency, we aim to push resolution as far as hardware permits while being under the 33 ms limit.
-
-**Why it matters:** Too few pixels and the model can't see the shape. That's why we run the model at 1088 (87.7% → 97.0% mAP@50 on our test videos, see [YOLO model comparison page](./yolo-comparison.md)).
 
 <!-- #endregion report -->
 
-[Next Page →](./yolo-comparison.md)
+<CardGrid :cols="2">
 
-YOLO Model Comparison
+<Card>
 
-Quantitative benchmarks, leak-free dataset split & edge latency
+← [Previous Documentation](./vision-research.md)
 
-→
+**Computer Vision Research**
+
+</Card>
+
+<Card>
+
+[Next Documentation](./yolo-comparison.md) →
+
+**YOLO Model Comparison & Benchmark**
+
+</Card>
+
+</CardGrid>
