@@ -215,11 +215,11 @@ An interactive 3D demonstration was also developed to visualize steering behavio
 
 #### Power Calculation and Battery Selection {#ov-power-calculation}
 
-Conducted power consumption calculations to estimate the total electrical load and determine the battery capacity required to meet the UGV's operating requirements.
+Conducted power consumption calculations under different operating conditions, including cruising, acceleration, incline driving and zero-radius turning, to estimate the total electrical load and determine the required battery capacity.
 
-Evaluated LiFePO4 battery configurations based on energy capacity, operating duration, weight and power demands, leading to the selection of a 48V 20Ah battery.
+Compared battery chemistries based on energy density, thermal stability, operating duration and weight, leading to the selection of a 48V 20Ah LiFePO4 battery.
 
-The selected battery configuration balances operating duration, system weight and energy reserves while supporting the UGV's intended operational requirements.
+The selected battery balances operating duration, system weight and safety considerations while meeting the estimated minimum operating-time requirement, subject to physical validation.
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#power-calculations">Power Calculations &amp; Battery Selection <span aria-hidden="true">↗</span></a>
@@ -231,11 +231,11 @@ The selected battery configuration balances operating duration, system weight an
 
 #### Power Distribution & Electrical Protection {#ov-power-distribution}
 
-Developed a 48V power distribution architecture incorporating fuse protection, a main kill switch and DC-DC converters to supply the different voltage requirements of onboard components.
+Designed a centralised 48V power distribution system with separate branches supplying the drivetrain, vacuum system, onboard computing, sensors and auxiliary components.
 
-Integrated a BMS for battery monitoring and protection, alongside dedicated fuse circuits for high-power loads such as the hub motors and vacuum system.
+The design incorporates a Battery Management System (BMS), main fuse, emergency kill switch and individual branch fuses for electrical protection. DC-DC step-down converters provide the regulated voltages required by the onboard electronics.
 
-The power distribution architecture supports reliable power delivery, electrical isolation and protection against overcurrent and short-circuit faults.
+This arrangement separates high-power and low-power components, allowing individual circuit protection and reducing the impact of electrical faults on other subsystems.
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#power-distribution">Power Distribution &amp; Electrical Protection <span aria-hidden="true">↗</span></a>
@@ -247,7 +247,11 @@ The power distribution architecture supports reliable power delivery, electrical
 
 #### Component Selection, BOM and Integration {#ov-component-BOM}
 
-<p class="ov-placeholder">*To Be Filled*</p>
+Selected electrical components based on their voltage and current requirements, communication interfaces, physical dimensions and cost to ensure compatibility with the overall UGV design.
+
+Compiled a Bill of Materials (BOM) covering the battery, BMS, motor drivers, STM32 microcontroller, DC-DC converters, protection devices and supporting electrical components.
+
+Planned the placement and wiring of electrical components within the chassis, considering space constraints, cable routing, accessibility for maintenance and subsequent hardware integration.
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#components-bom">Components Selection, BOM &amp; Integration <span aria-hidden="true">↗</span></a>
