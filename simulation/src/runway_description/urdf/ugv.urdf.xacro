@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<robot name="runway_ugv" xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- Main UGV description based on Scout v2 chassis with Runway Inspection Payload -->
+    <xacro:include filename="$(find runway_description)/urdf/scout_v2.xacro" />
+</robot>
