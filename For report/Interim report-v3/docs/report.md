@@ -580,6 +580,7 @@ The work is divided into three subsystems, each with a named person in charge of
 ### Electrical System Design {#electrical-system-design}
 
 <!--@compose: ./report/lead/bryan-lead.md-->
+
 <!--@compose: ./report/members/bryan/system-requirements.md#summary{shift=3,prefix=system-req-}-->
 
 #### Power Calculations & Battery Selection {#power-calculations .rpt-l3}
