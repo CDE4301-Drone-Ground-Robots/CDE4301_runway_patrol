@@ -1,53 +1,35 @@
 ---
 title: "Computer Vision & Sensor Fusion Suite"
 owner: "Gabriel Tan"
-outline: [2,3]
+outline: [2, 3]
 ---
+
 # Computer Vision & Sensor Fusion Suite
 
 <!-- #region report -->
 
 <!-- The Report's Computer Vision section text. -->
 
-## 🧠 Computer Vision & Sensor Fusion Suite {#sec-4-4-1}
+## Computer Vision & Sensor Fusion Overview {#sec-4-4-1}
 
-Gabriel Tan leads the computer vision and sensor fusion architecture, implementing YOLO target detection algorithms and multi-modal perception.
+The computer vision subsystem confirms FOD targets at close range ($0.33\text{–}2.12\text{ m}$ look-ahead at $h = 0.45\text{ m}, \theta = 33^\circ$ tilt) so FOD Hunter can classify hazards across six superclasses and localise small metallic fasteners ($\ge 3\text{ cm}$) for physical collection.
 
-<CardGrid :cols="4">
+| Superclass | Representative Examples | Hazard Level |
+| :--- | :--- | :--- |
+| **Metallic Tools** | Wrenches, pliers | High |
+| **Metallic Fasteners** | Bolts, nuts, washers, screws *(Primary Focus)* | High |
+| **Mineral Stone** | Stone, pavement debris | Moderate |
+| **Hazardous Chemical / Liquid** | Spills | Operational |
+| **Polymer Rubber** | Tyre debris | Moderate |
+| **Organic / Paper** | Paper, boxes, birds | Low |
 
-<Card title="1. Metallic Fasteners">
-
-Bolts, safety wires, nuts, rivets.
-
-</Card>
-
-<Card title="2. Asphalt Chips">
-
-Loose pavement rocks & spalls.
-
-</Card>
-
-<Card title="3. Maintenance Tools">
-
-Dropped wrenches & screwdrivers.
-
-</Card>
-
-<Card title="4. Tire Rubber">
-
-Shredded tire rubber fragments.
-
-</Card>
-
-</CardGrid>
-
-### Automotive Vision Hardware Stack
+### Onboard Vision Hardware Stack
 
 | Component | Model / Specification | Operational Role |
-| --- | --- | --- |
-| **Primary RGB Camera** | `LI-IMX568-GMSL2-050H` | Sony IMX568 global shutter sensor, IP67 enclosure, zero motion blur at ≥10 km/h |
-| **Automotive RF Cabling** | `Fakra 1m Type 7` | Heavy-duty shielded coaxial cable delivering high-bandwidth serialized raw video |
-| **Video Deserializer** | `GMSL2 Deserialiser Board` | Converts Fakra serial link to USB 3.2 data feed into Hilbert's laptop |
-| **Active Illumination** | `Headlights for CV (12V)` | Wide-angle floodlighting to illuminate runway tarmac during low-light & night trials |
+| :--- | :--- | :--- |
+| **Primary RGB Camera** | `ELP-USBGS5MP01-L601` (OX05B1S, $6\text{ mm}$ M12 lens) | $2592 \times 1944$ (5 MP) global-shutter sensor, $57^\circ \times 42^\circ$ FOV ($45\text{ px/}^\circ$), $50\text{ FPS}$ MJPEG over UVC |
+| **Semester 1 Interim Sensor** | `UGREEN CM831` & Smartphone Camera | $1920 \times 1080$ ($62^\circ \times 37^\circ$ FOV) used for Semester 1 dataset collection and live webcam POC |
+| **Edge Compute Platform** | `NVIDIA Jetson Orin Nano Super` | Runs TensorRT-accelerated YOLO11-S ($1088\text{ px}$ / SAHI) within the $\le 100\text{ ms}$ ($\ge 10\text{ FPS}$) frame budget |
+| **Active Illumination** | `12 V Onboard LED Floodlights` (controlled via STM32 `PB4`/`PB5`) | Provides consistent surface illumination across night, rain, and harsh glare conditions |
 
 <!-- #endregion report -->

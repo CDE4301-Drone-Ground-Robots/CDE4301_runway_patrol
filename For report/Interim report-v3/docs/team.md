@@ -165,7 +165,9 @@ Also overseeing electrical
 
 <template #s1>
 
-(To Be Filled)
+- Derived camera optical requirements ($\ge 29\text{ px/}^\circ$, $\ge 4.7\text{ FPS}$ min / $10\text{ FPS}$ target, $33^\circ$ tilt) and selected the ELP 5 MP global-shutter camera
+- Audited FOD-A frame leakage ($99.42\% \rightarrow 50.29\%\text{ mAP50}$), benchmarked YOLOv8-S, YOLO11-S and RT-DETR-L, and fine-tuned YOLO11-S on a 1,552-image custom tarmac dataset ($97.0 \pm 1.4\%\text{ mAP50}$ at $1088\text{ px}$)
+- Designed and verified the 5-phase STM32 NUCLEO-F446RE bare-metal firmware (`controller.c`) for dual ZLAC8015D CANopen motor control, 5 V low-side stepper sinking, and USB Host gamepad teleoperation
 
 </template>
 
