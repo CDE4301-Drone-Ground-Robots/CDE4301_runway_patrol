@@ -50,78 +50,56 @@ $$
 P_{\text{weighted}}=125.808\text{ W}\approx125.8\text{ W per motor}
 $$
 
-The interim estimate reports total average system power of:
+The total system power consumption was estimated by combining the weighted average power of the four hub motors with the average power demand of the remaining electrical components, including the onboard computing system, sensors, communication equipment and auxiliary devices.
 
 $$
-P_{\text{system}}=2P_{\text{motor,weighted}}+P_{\text{collection,avg}}+P_{\text{aux,avg}}=611.36\text{ W}
+P_{\text{system}}=(4\times P_{\text{motor,weighted}})+P_{\text{components,avg}}=611.36\text{ W}
 $$
 
-If the drivetrain term represents two motors, the implied collection and auxiliary contribution is:
-
-$$
-P_{\text{collection,avg}}+P_{\text{aux,avg}}=611.36-(2\times125.8)=359.76\text{ W}
-$$
-
-This remainder cannot be independently verified from the current information because the revised FOD collection load and its operating duty cycle are not specified. Therefore, 611.36 W is retained as a preliminary interim estimate, not a fully reconciled load calculation. The final budget must distinguish drivetrain, collection, computing, sensing and auxiliary loads and apply each load's actual duty cycle.
+The power consumption of the individual electrical components is summarised in table below, including their operating voltages, estimated current requirements and operating duty cycles. These values form the basis of the overall system power budget and subsequent battery capacity calculations.
 
 ### Consolidated Subsystem Load Budget
 
 A 48 V-class power bus is used to reduce current relative to a 24 V bus for the same power. Since resistive losses scale with current squared ($P_{\text{loss}}=I^2R$), reducing current can reduce wiring and connector losses, subject to suitable component ratings and protection.
 
-| Subsystem / consumer | Operating voltage | Continuous current (nominal) | Peak inrush current | Nominal power | Peak power | Operational duty cycle |
-|---|---|---:|---:|---:|---:|---|
-| Dual hub motors (ZLLG80ASM25) via ZLAC8015D | 48 V DC | 12.66 A total | 31.00 A total | 1,000 W rated | 1,488 W calculated | 18.62% assumed |
-| Industrial suction vacuum | 48 V assumed | 58.33 A | To be measured | 2,800 W | At least 2,800 W; surge TBD | Off in transit; 100% when active |
-| Onboard laptop | Internal battery, independent of 48 V bus | 0 A from 48 V bus | 0 A from 48 V bus | 0 W from 48 V bus | 0 W from 48 V bus | Runs from internal battery |
-| 12 V auxiliary rail (switch, fans, lights, tower) | 12 V / 5 V regulated | 3.77 A (12 V equivalent) | 6.30 A (12 V equivalent) | 45.21 W | 75.58 W | 50–100%, by component |
-| 5 V logic rail (STM32 F446RE, UM980 GPS, CAN) | 5 V / 3.3 V regulated | 0.21 A (5 V equivalent) | 0.76 A (5 V equivalent) | 1.05 W | 3.93 W | 100% |
-| DC-DC buck-converter inefficiencies (~8%) | 48 V input | 0.084 A (48 V) | 0.144 A (48 V) | 4.02 W | 6.91 W | 100% when rails are active |
-| Total transit state (vacuum standby) | 48 V DC | Approximately 2.18 A average | Approximately 33.0 A simultaneous peak (estimated) | Approximately 104.6 W average | Approximately 1,574 W | Vacuum off; motors at assumed 18.62% duty |
-| Peak active remediation (vacuum active) | 48 V DC | Approximately 81.2 A | At least 91.6 A | Approximately 3,898 W | At least 4,398 W (vacuum surge excluded) | Motors and vacuum fully active |
+| Components | Voltage (V) | Current draw (A) | Peak current (A) | Power (W) | Duty cycle (%) | Average power (W) | <mark>48 V nominal current (A)</mark> | 48 V peak current (A) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| | | | | <div style="text-align: center;"><strong>DRIVETRAIN</strong></div> | | | | |
+| Drive Motor 1 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | <mark>6.33</mark> | 15.50 |
+| Drive Motor 2 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | <mark>6.33</mark> | 15.50 |
+| Drive Motor 3 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | <mark>6.33</mark> | 15.50 |
+| Drive Motor 4 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | <mark>6.33</mark> | 15.50 |
+| | | | | <div style="text-align: center;"><strong>COMPUTE</strong></div> | | | | |
+| NX Orin | 12.0 | 2.70 | 3.30 | 32.40 | 100.00% | 32.40 | <mark>0.75</mark> | 0.92 |
+| Nucleo F446RE | 5.0 | 0.08 | 0.50 | 0.40 | 100.00% | 0.40 | <mark>0.01</mark> | 0.06 |
+| | | | | <div style="text-align: center;"><strong>SENSORS</strong></div> | | | | |
+| LI-IMX568-GMSL2-050H RGB Camera | 12.0 | 0.15 | 0.25 | 1.80 | 100.00% | 1.80 | <mark>0.04</mark> | 0.07 |
+| Deserialiser/Adapter | 12.0 | 0.20 | 0.40 | 2.40 | 100.00% | 2.40 | <mark>0.06</mark> | 0.11 |
+| Livox Mid-360 | 12.0 | 0.54 | 2.00 | 6.48 | 100.00% | 6.48 | <mark>0.15</mark> | 0.56 |
+| RPLidar S2 | 5.0 | 0.45 | 0.80 | 0.80 | 100.00% | 0.80 | <mark>0.05</mark> | 0.09 |
+| UM980 GPS | 5.0 | 0.12 | 0.20 | 0.60 | 100.00% | 0.60 | <mark>0.01</mark> | 0.02 |
+| | | | | <div style="text-align: center;"><strong>COMMUNICATION</strong></div> | | | | |
+| BMS 6S-22S LiFePO4 100A | 51.2 | 0.02 | 0.05 | 0.77 | 100.00% | 0.77 | <mark>0.02</mark> | 0.05 |
+| CAN Transceiver (SN65HVD230) | 3.3 | 0.02 | 0.07 | 0.05 | 100.00% | 0.05 | <mark>0.00</mark> | 0.01 |
+| Ethernet Switch (TP-Link LS105G) | 5.0 | 0.38 | 0.50 | 1.90 | 100.00% | 1.90 | <mark>0.04</mark> | 0.06 |
+| Microhard pMDDL2550 Wireless C2 Transceiver | 12.0 | 0.40 | 1.20 | 4.80 | 100.00% | 4.80 | <mark>0.11</mark> | 0.33 |
+| Wireless Switch for ESC Driver (E-Stop) | 12.0 | 0.01 | 0.01 | 0.12 | 100.00% | 0.12 | <mark>0.00</mark> | 0.00 |
+| DC-DC Relay | 3.3 | 0.01 | 0.01 | 0.02 | 100.00% | 0.02 | <mark>0.00</mark> | 0.00 |
+| | | | | <div style="text-align: center;"><strong>VACUUM</strong></div> | | | | |
+| NEMA17 Stepper (+ driver) | 12.0 | 1.20 | 1.50 | 14.40 | 100.00% | 14.40 | <mark>0.33</mark> | 0.42 |
+| | | | | <div style="text-align: center;"><strong>LIGHTING</strong></div> | | | | |
+| Indicator Light Tower | 12.0 | 0.20 | 0.40 | 2.40 | 100.00% | 2.40 | <mark>0.06</mark> | 0.11 |
+| Bay Cooling Fans | 12.0 | 0.50 | 0.80 | 6.00 | 100.00% | 6.00 | <mark>0.14</mark> | 0.22 |
+| Headlights for CV | 12.0 | 0.83 | 1.20 | 9.96 | 50.00% | 4.98 | <mark>0.23</mark> | 0.33 |
+| Rear Red Light Strip / Status Light | 12.0 | 0.25 | 0.40 | 3.00 | 100.00% | 3.00 | <mark>0.07</mark> | 0.11 |
 
-The transit and peak-active totals describe different operating states; neither is the same as the 611.36 W interim mission-average estimate. These figures and the vacuum assumptions require verification against measured loads and component datasheets.
+*Table 5.2: Total Power Table of Interim System.*
 
-### Power Distribution Architecture
+The consolidated load budget summarises the estimated electrical requirements of each subsystem, including operating voltage, nominal current, peak current, power consumption and duty cycle. The nominal current and operating voltage are used to determine the power demand of individual components through (P=VI), while the duty cycle accounts for intermittent operation to obtain the average power consumption. These average power values are then combined to estimate the total system load, which forms the basis for the subsequent battery capacity and runtime calculations.
 
-The electrical schematic shows the high-current protection, dual hub-motor actuation, vacuum circuit and regulated rails for the onboard computer and sensors.
+The peak current values are considered separately to assess the maximum electrical demand during startup, acceleration and simultaneous component operation. These values are important for selecting suitable wiring, connectors, DC-DC converters and protection devices, including the BMS and fuses. The equivalent 48 V current values allow loads operating at different voltages to be compared on a common battery-bus basis, helping to evaluate the overall current demand on the power distribution system.
 
-<Card>
-
-<Figure src="../../../shared/assets/diagrams/electrical-diagram.svg" alt="Electrical power distribution diagram" />
-
-</Card>
-
-<CardGrid :cols="4">
-
-<Card title="1. Primary 48 V Power &amp; Kill Loop">
-
-The 48 V, 20 Ah LiFePO4 battery supplies the main power bus through a 100 A BMS, 100 A main fuse and 100 A kill switch. Power is distributed through individually fused circuits to the hub motors, vacuum and DC-DC converters. The kill switch provides emergency power isolation, while the BMS monitors battery conditions and protects against electrical faults.
-
-</Card>
-
-<Card title="2. 20 V Laptop Power Sub-Circuit">
-
-A dedicated 48 V-to-20 V, 10 A buck converter supplies regulated power to the onboard laptop through a protected auxiliary circuit. The laptop handles ROS 2 processing, navigation and high-level control while communicating with the STM32 microcontroller. This separates computing power requirements from the high-current motor and vacuum circuits.
-
-</Card>
-
-<Card title="3. Direct-Drive Hub Motor Train">
-
-Two 48 V ZLLG80ASM25 hub motors are controlled by the ZLAC8015D V4.2 dual-channel servo driver, supplied through a dedicated 50 A ANM fuse. The STM32 communicates with the driver via CAN bus to control motor speed and direction. The direct-drive configuration eliminates mechanical transmission components, reducing maintenance and improving drivetrain efficiency.
-
-</Card>
-
-<Card title="4. Automotive Vision &amp; Navigation">
-
-Dedicated 12 V and 5 V buck converters supply regulated power to auxiliary electronics, sensors and the STM32 F446RE. The STM32 interfaces with the UM980 GPS and motor driver, while the onboard laptop processes navigation and perception data. Separate low-voltage rails support reliable sensor operation and reduce interference from high-power loads.
-
-</Card>
-
-</CardGrid>
-
-### DC-DC Buck Regulation & Thermal Loss
-
-[To be filled in]
+As the values are based on interim calculations, the power budget will be further refined during Semester 2 to account for additional components and changes to the FOD remediation system as our future works. These include the redesigned vacuum and collection mechanism, stepper motors for mechanical actuation, and an infrared (IR) sensor to confirm successful FOD clearance. 
 
 ## Energy Requirement & Battery Capacity
 
@@ -164,7 +142,7 @@ Four chemistries were considered using energy density, cycle life, thermal behav
 | LiPo | 44.4 V (12S) | 300–500 cycles | 180–240 Wh/kg | More sensitive to mechanical damage and swelling; prior estimate reports onset around 150°C | 25C–50C | Lightweight packaging and high discharge capability in suitable designs; greater sensitivity to damage and swelling |
 | Lead-acid (SLA / AGM) | 48 V (four 12 V batteries) | 300–400 cycles | 30–40 Wh/kg | Low thermal-runaway risk in the prior comparison | 1C | Established and relatively low initial cost; high mass and low usable energy density |
 
-*Table 5.2: Preliminary comparison of battery chemistries and reported specifications.*
+*Table 5.3: Preliminary comparison of battery chemistries and reported specifications.*
 
 The numerical ranges above were present in the project comparison, but the project's reference list does not currently identify the sources or exact models behind them. They should be treated as indicative, unverified values—not manufacturer specifications—until supported by cited cell or battery datasheets. Battery characteristics vary by product, configuration and test conditions, so final comparison should use referenced specifications for the actual candidate packs.
 
