@@ -591,7 +591,7 @@ The work is divided into three subsystems, each with a named person in charge of
 
 <!--@compose: ./report/lead/bryan-lead.md-->
 
-<!-- DISABLED-COMPOSE: ./report/members/bryan/power-distribution.md#report{shift=3,prefix=power-distri} -->
+<!--@compose: ./report/members/bryan/power-distribution.md#report{shift=3,prefix=power-distri} -->
 
 <p class="ov-placeholder">*Section under development by Bryan Ng.*</p>
 
