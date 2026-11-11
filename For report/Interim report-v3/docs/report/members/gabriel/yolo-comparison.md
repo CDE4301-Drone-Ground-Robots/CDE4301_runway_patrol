@@ -1,86 +1,115 @@
 ---
-title: "YOLO Model Comparison & Edge Benchmark"
-description: "Quantitative architecture evaluation, public benchmark leakage audit, and native runway tarmac resolution scaling for small metallic fasteners."
+title: "YOLO Model Comparison, Dataset Engineering & Deployment"
+description: "FOD-A data leakage fix, 6 hazard superclasses, YOLOv8-S vs. YOLO11-S vs. RT-DETR-L benchmark, custom tarmac fine-tuning (640 px vs. 1088 px), live POC, and Semester 2 plan."
 owner: "Gabriel Tan"
 outline: [2, 3]
 ---
 
-# YOLO Model Comparison & Edge Benchmark
+# YOLO Model Comparison, Dataset Engineering & Deployment
 
 > **Semester 1 engineering documentation · Gabriel Tan**  
-> **Evidence boundary:** This page documents the temporal dataset leakage audit on the public FOD-A dataset, multi-architecture benchmarks on an NVIDIA A40 GPU, and multi-seed resolution scaling ($640$ vs. $1088$) on our own sun-lit tarmac footage ($1,552$ frames across $16$ videos). TensorRT quantization and live frame-rate benchmarking on the Jetson Orin with the global-shutter camera are scheduled for Semester 2.
+> **Evidence boundary:** This page documents the FOD-A data leakage audit, 6-superclass hazard grouping, multi-architecture benchmark (YOLOv8-S, YOLO11-S, RT-DETR-L) on NVIDIA A40 GPUs, two-stage transfer learning onto our custom 1,552-image outdoor tarmac dataset ($640\text{ px}$ vs. $1088\text{ px}$ across 3 seeds), and live webcam proof-of-concept testing. TensorRT export on the Jetson Orin Nano Super, ELP global-shutter camera integration, and wider cross-validated testing are Semester 2 work.
 
 <!-- #region report -->
 
 <span id="sec-4-4-2"></span>
 
-## 1. Dataset Leakage Audit (FOD-A vs. Leak-Free Split) {#leakage-audit}
+## 1. Dataset Engineering: Fixing FOD-A Leakage & Custom Tarmac Data {#leakage-audit}
 
-Publicly available runway debris benchmarks such as **FOD-A** ($33,793$ annotated frames extracted from continuous video sequences) routinely report $\text{mAP@50}$ scores exceeding **99%**. Auditing the standard random frame-level split revealed severe **temporal data leakage**: shuffling consecutive video frames distributes nearly identical adjacent frames across training, validation, and test partitions, allowing models to achieve artificially high scores by memorizing static background asphalt textures rather than learning generalizable object representations.
+### 1.1 Data Leakage in FOD-A & Video-Level Split
 
-To establish a rigorous scientific baseline, we developed an automated 5-step scene-isolation pipeline (`build_arch2_dataset.py`) that groups frames into contiguous video scenes, assigns whole scenes to partitions, and purges **15-frame temporal buffer zones** ($3,416$ discarded boundary frames) wherever a rare-class scene must be split chronologically. Enforcing scene-level separation reduced **YOLO11-S test $\text{mAP@50}$ from 99.42% to 50.29%**, exposing the true generalization baseline on unseen background scenes.
+**FOD-A** [\[4\]](./references.md#ref-4) consists of **33,793 frames** cut from continuous videos. If the frames are shuffled and split at random, one frame lands in training and the very next frame lands in testing. Because consecutive video frames are nearly identical pictures, the model has effectively already seen the test answer. In a random split, **7,924 test frames** sit immediately adjacent to a training frame. Trained on a random split, **YOLO11-S scored 99.42% mAP50**—measuring memorisation rather than detection.
 
-<Card title="Impact of Eliminating Temporal Frame Leakage on FOD-A">
+We split by **whole video segments** instead and discarded the frames in the transition window at each scene boundary (**3,416 frames** removed in total) as a buffer so nothing in the test set has a near-twin in training. Of the 33,793 frames, **30,377 were kept**: **23,592 in train**, **2,472 in validation**, and **4,313 in test**. With this honest video-level split, **YOLO11-S scored 50.29% mAP50**. Every benchmark reported after this uses this leak-free split.
 
-**99.42% → 50.29% Test mAP@50**  
-*YOLO11-S evaluated before (random frame shuffle) and after enforcing contiguous scene separation with 31-frame minimum train–test separation.*
+<Card title="Impact of Video-Level Splitting on FOD-A">
+
+**99.42% → 50.29% Test mAP50**  
+*Random frame shuffle (7,924 leaked adjacent test frames) vs. whole-video segment split (30,377 clean frames kept; 3,416 boundary transition frames discarded).*
 
 </Card>
 
 <YoloComparisonWidget2 />
 
-::: details Automated 5-step leak-free dataset partitioning protocol
-
-Use the interactive stepper below or review the summary table to inspect how `build_arch2_dataset.py` eliminates temporal frame leakage across all $33,793$ FOD-A frames:
+::: details Six hazard superclasses, custom tarmac dataset, and leak-free split protocol
 
 <YoloComparisonWidget3 />
 
-| Protocol Step | Operation | Verification Metric |
+**1.2 Six Hazard Superclasses**
+
+FOD-A was converted from Pascal VOC format and contains 30+ fine-grained classes, many with only a few sparse examples. Because distinguishing an M6 bolt from an M8 bolt does not change the airfield remediation action, we grouped the 30+ classes into **6 hazard superclasses**, with **Metallic Fasteners** as our primary focus (high hazard, and the smallest and hardest items to detect):
+
+| Superclass | Examples | Hazard Level |
 | :--- | :--- | :--- |
-| **Step 1: Scene Grouping** | Sort all $33,793$ video frames chronologically and group into contiguous recording scenes per object instance. | $100\%$ of frames mapped to source video segments. |
-| **Step 2: Scene-Level Assignment** | Classes recorded across $\ge 3$ independent scenes are assigned strictly at the whole-scene level into Train, Val, or Test. | Zero shared scenes across partitions for multi-scene classes. |
-| **Step 3: Temporal Cut for Rare Classes** | Classes filmed in only $1\text{–}2$ scenes are partitioned chronologically: first $70\%$ Train, $8\%$ buffer discard, $10\%$ Val, $4\%$ buffer discard, final $8\%$ Test. | Preserves class coverage without random frame interleaving. |
-| **Step 4: Boundary Buffer Purge** | Delete $15$ frames on each side of any partition boundary; **$3,416$ boundary frames** removed in total. | Eliminates overlapping camera fields of view at cut points. |
-| **Step 5: Automated Leakage Audit** | Verify zero duplicate hashes and enforce minimum temporal separation across splits. | Closest Train and Test frames separated by **$\ge 31$ frames**. |
+| **Metallic Tools** | Wrenches, pliers | High |
+| **Metallic Fasteners** | Bolts, nuts, washers, screws | High *(Primary Focus)* |
+| **Mineral Stone** | Stone, pavement debris | Moderate |
+| **Hazardous Chemical / Liquid** | Spills | Operational |
+| **Polymer Rubber** | Tyre debris | Moderate |
+| **Organic / Paper** | Paper, boxes, birds | Low |
+
+**1.3 Custom Outdoor Tarmac Dataset (1,552 Images, 16 Videos)**
+
+Because FOD-A was not filmed under the viewing geometry and surface conditions our UGV will encounter, we recorded our own dataset on outdoor tarmac: **1,552 images from 16 videos** covering **9 fastener types** (*hex bolt, hex cap screw, flathead Phillips screw, slotted screw, flat washer, spring washer, lock nut, long nail, and partial-thread Allen bolt*) across direct sun, shade, and overcast light. Frames were sampled at `1 FPS` and hand-labelled in Roboflow under a single class (`Metallic Fasteners`), split strictly by video to prevent frame leakage:
+
+| Split | Videos | Images | Contents |
+| :--- | :--- | :--- | :--- |
+| **Train** | 12 | $1,305$ | Remaining fastener videos |
+| **Validation** | 2 | $96$ | Spring washer; mixed scene |
+| **Test** | 2 | $151$ | Slotted screw; lock nut |
+
+*Methodological note:* The test videos were recorded on the same day and site as training at different times (under different sun angles), covering 2 of the 9 fastener types on one surface. The Section 3 results should be read with that boundary in mind.
 
 :::
 
-## 2. Architecture Benchmarking & Selection Framework {#benchmark-matrix}
+## 2. Architecture Benchmark & Model Selection {#benchmark-matrix}
 
-Using the leak-free FOD-A benchmark ($30$ epochs on an NVIDIA A40 GPU), we compared single-stage convolutional detectors (**YOLOv8-S** at $11.1\text{M}$ parameters and **YOLO11-S** at $9.4\text{M}$ parameters) against a hybrid vision transformer (**RT-DETR-L** at $32.8\text{M}$ parameters). Our selection rule is straightforward: **deploy the highest-recall architecture that executes within the 33.3 ms real-time frame budget on the target edge processor**.
+We trained **YOLOv8-S**, **YOLO11-S**, and **RT-DETR-L** on the leak-free FOD-A split. All three started from COCO weights and trained for `30 epochs` at `640 px` input using AdamW and batch size `32` (`16` for RT-DETR-L) on NVIDIA A40 GPUs on the NUS HPC cluster (RT-DETR-L reached the cluster wall-time limit at epoch 27 of 30). Latency is measured per image at batch size 1 on the A40.
 
-Both CNN backbones execute roughly **$5\times$ faster** than RT-DETR-L (**$4.5\text{ ms}$** for YOLOv8-S and **$5.2\text{ ms}$** for YOLO11-S vs. **$24.2\text{ ms}$** for RT-DETR-L on the A40), while **YOLO11-S** improves precision by **+9.95 percentage points** ($75.63\%$ vs. $65.68\%$) and $\text{mAP@50-95}$ by **+5.02 pp** ($39.57\%$ vs. $34.55\%$) over YOLOv8-S with $15\%$ fewer parameters. Consequently, **YOLO11-S** was selected as our primary Semester 1 development architecture, training **$4.25\times$ faster** ($0.92\text{ h}$ vs. $3.91\text{ h}$ per run) to enable rapid multi-seed experimentation on our own runway dataset.
+| Model | Params / GFLOPs | Precision | Recall | mAP50 | mAP50-95 | Training Time | Latency (A40) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **YOLOv8-S** | $11.1\text{M} / 28.7$ | $65.7\%$ | $42.3\%$ | $47.1\%$ | $34.6\%$ | $0.84\text{ h}$ | $3.0\text{ ms}$ |
+| **YOLO11-S** | **$9.4\text{M} / 21.7$** | **$75.6\%$** | $42.5\%$ | $50.3\%$ | $39.6\%$ | $0.92\text{ h}$ | **$3.0\text{ ms}$** |
+| **RT-DETR-L** | $32.0\text{M} / 105.4$ | $63.7\%$ | **$55.8\%$** | **$63.4\%$** | **$48.3\%$** | $3.91\text{ h}$ | $24.2\text{ ms}$ |
 
 <YoloComparisonWidget1 />
 
-::: details Complete architecture benchmark table and experimental analysis
+**Why We Selected YOLO11-S:**
+- **Outperforms YOLOv8-S:** Gains $+10\text{ pts}$ precision ($75.6\%$ vs. $65.7\%$) and $+5\text{ pts}$ mAP50-95 ($39.6\%$ vs. $34.6\%$) with fewer parameters ($9.4\text{M}$ vs. $11.1\text{M}$) at the exact same $3\text{ ms}$ latency.
+- **8× Faster than RT-DETR-L:** Executes in $3\text{ ms}$ vs. $24.2\text{ ms}$ with $5\times$ fewer GFLOPs ($21.7$ vs. $105.4$), preserving compute headroom on the Jetson.
+- **Headroom to Raise Resolution:** Even at $1088\text{ px}$ input, YOLO11-S requires less compute than RT-DETR-L at $640\text{ px}$.
+- **4× Faster Training:** $0.92\text{ h}$ vs. $3.91\text{ h}$ per run, allowing multi-seed iterations.
 
-**Table 2.1: Quantitative Model Comparison Across Leak-Free FOD-A and Native Runway Tarmac Splits (NVIDIA A40 GPU)**
+*Trade-offs accepted:* RT-DETR-L achieved higher overall accuracy on FOD-A ($+13\text{ pts}$ mAP50, $+13\text{ pts}$ recall), and YOLOv8-S scored slightly higher on COCO small-object AP ($37.8\%$ vs. $35.1\%$ for objects under $32^2\text{ px}$). Domain fine-tuning and raising input resolution to $1088\text{ px}$ in Section 3 closed most of that gap for fasteners.
 
-| Model Architecture | Dataset & Input Resolution | Test mAP@50 (%) | Test mAP@50-95 (%) | Precision (%) | Recall (%) | A40 Latency (ms) | Parameters (M) | Training Time (30 ep) | Selection Verdict |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **YOLOv8-S (Small)** | Leak-Free FOD-A ($640\text{ px}$) | $47.4\%$ | $34.55\%$ | $65.68\%$ | $42.28\%$ | **$4.5\text{ ms}$** | $11.1\text{M}$ | $0.88\text{ h}$ | Superseded by YOLO11-S (+9.95 pp Precision) |
-| **YOLO11-S (Small)** | Leak-Free FOD-A ($640\text{ px}$) | $50.29\%$ | $39.57\%$ | **$75.63\%$** | $42.50\%$ | $5.2\text{ ms}$ | **$9.4\text{M}$** | **$0.92\text{ h}$** | ✓ **Selected CNN Backbone** |
-| **RT-DETR-L (Large)** | Leak-Free FOD-A ($640\text{ px}$) | **$67.8\%$** | **$51.82\%$** | $66.44\%$ | **$62.57\%$** | $24.2\text{ ms}$ | $32.8\text{M}$ | $3.91\text{ h}$ | High-Recall Candidate (Pending Orin TensorRT Test) |
-| **YOLO11-S (Zero-Shot)** | Own Tarmac ($640\text{ px}$) | $11.91\%$ | $4.55\%$ | $45.42\%$ | $10.60\%$ | $5.2\text{ ms}$ | $9.4\text{M}$ | — | ✗ Fails under domain shift |
-| **YOLO11-S (Fine-Tuned)** | Own Tarmac ($640\text{ px}$, 3 seeds) | $87.7 \pm 0.7\%$ | $54.8 \pm 1.2\%$ | $95.8 \pm 1.0\%$ | $81.5 \pm 0.7\%$ | $5.2\text{ ms}$ | $9.4\text{M}$ | $0.25\text{ h}$ | Baseline Native Model ($8.3$ false alarms) |
-| **YOLO11-S (Fine-Tuned)** | Own Tarmac (**$1088\text{ px}$**, 3 seeds) | **$97.0 \pm 1.4\%$** | **$69.1 \pm 2.2\%$** | **$98.6 \pm 1.3\%$** | **$92.7 \pm 3.2\%$** | **$6.1\text{ ms}$** | **$9.4\text{M}$** | $0.45\text{ h}$ | ✓ **Selected Development Model ($1.0$ false alarm)** |
+::: details Per-class YOLO11-S results on the leak-free FOD-A split
 
-**Why fix model scale at 'S' and include RT-DETR-L?**  
-Fixing the YOLO scale at Small (`S`) isolates network architecture (C2f in YOLOv8 vs. C3k2 + C2PSA spatial attention in YOLO11) as the sole experimental variable while representing the largest CNN scale guaranteed to fit comfortably inside the $33.3\text{ ms}$ edge deadline. RT-DETR-L ($32.8\text{M}$) is the smallest official real-time DETR variant in Ultralytics; while its global self-attention yields $+20.07\text{ pp}$ higher recall on FOD-A, it is $3.5\times$ larger and $4.7\times$ slower than YOLO11-S, requiring TensorRT quantization testing on the Jetson Orin in Semester 2 before deployment selection.
+| Superclass | Test Instances | Precision | Recall | mAP50 | mAP50-95 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Metallic Tools** | $1,176$ | $59.1\%$ | $43.9\%$ | $50.7\%$ | $42.0\%$ |
+| **Metallic Fasteners** | **$1,798$** | **$97.4\%$** | **$31.7\%$** | **$46.8\%$** | **$34.0\%$** |
+| **Mineral Stone** | $38$ | $85.8\%$ | $94.7\%$ | $97.1\%$ | $66.8\%$ |
+| **Hazardous Chemical** | $99$ | $96.2\%$ | $29.3\%$ | $44.2\%$ | $38.8\%$ |
+| **Polymer Rubber** | $242$ | $65.5\%$ | $47.8\%$ | $51.9\%$ | $50.1\%$ |
+| **Organic Paper** | $1,000$ | $49.7\%$ | $7.6\%$ | $11.0\%$ | $5.6\%$ |
 
-**Why is validation mAP (85–93%) higher than clean test mAP (47–68%) on FOD-A?**  
-Validation mAP remains higher than clean test mAP due to overfitting that accelerates after mosaic augmentation disables at epoch 20, compounded by severe cross-category appearance shifts in unseen test scenes (for instance, *Hazardous Chemical* achieves only $31\%$ test recall because $49\%$ of instances are misclassified as *Metallic Tools*, and *Mineral Stone* experiences $30\%$ missed background detections).
+For **Metallic Fasteners** ($1,798$ test instances), precision is high ($97.4\%$) but recall is only **$31.7\%$**—meaning the general FOD-A model misses roughly 2 in 3 fasteners. (Note that *Mineral Stone* has only 38 test instances, so its score is not statistically reliable.) This recall deficit directly motivated our two-stage fine-tuning on native tarmac fastener data below.
 
 :::
 
-## 3. Runway Adaptation & Small-Fastener Resolution Scaling {#domain-adaptation}
+## 3. Training Iterations & Multi-Seed Results on Tarmac {#domain-adaptation}
 
-Evaluated **zero-shot** (applying public FOD-A weights directly to our own runway footage without native fine-tuning), the baseline model barely recognises metallic fasteners on local tarmac, achieving just **11.91% $\text{mAP@50}$** and **10.60% recall** due to differences in camera optics, grazing angle, solar glare, and aggregate texture. We resolved this domain gap in two sequential stages:
-1. **Domain Fine-Tuning ($640 \times 640$):** Retraining YOLO11-S on $1,305$ frames of our own sun-lit tarmac footage across 3 random seeds ($0, 1, 2$) raised test $\text{mAP@50}$ from **11.91% to 87.7 ± 0.7%** and recall to **81.5 ± 0.7%**.
-2. **High-Resolution Scaling ($1088 \times 1088$):** Increasing input resolution from $640$ to $1088$ reduced frame downsampling from $3.0\times$ to $1.76\times$ (preserving $\approx 14\text{ px}$ vs. $\approx 8\text{ px}$ fastener width), boosting test $\text{mAP@50}$ to **97.0 ± 1.4%**, strict $\text{mAP@50-95}$ to **69.1 ± 2.2%** (+14.3 pp), and recall to **92.7 ± 3.2%** while cutting false positives by **88%** ($8.3 \to 1.0$ false alarms across all $151$ test images) for only **$+0.9\text{ ms}$** additional latency on the A40 GPU.
+Each training iteration changes exactly one variable so the cause of each gain is isolated. Following Reis et al. [\[3\]](./references.md#ref-3), we use two-stage transfer learning: starting from the leak-free FOD-A YOLO11-S checkpoint, we fine-tune on our custom tarmac dataset at $640\text{ px}$ and then scale input resolution to $1088\text{ px}$.
 
-Use the interactive seed selector and table below to inspect individual seed runs ($0, 1, 2$) alongside the 3-seed mean:
+| Iteration | Change | Input Size | Precision | Recall | mAP50 | mAP50-95 | Model Cycle (A40) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **0 (Baseline)** | FOD-A model, zero-shot on tarmac | $640\text{ px}$ | $45.4\%$ | $10.6\%$ | $11.9\%$ | $4.6\%$ | $4.0\text{ ms}$ |
+| **1 (Fine-Tuned)** | Fine-tuned on tarmac (3 seeds) | $640\text{ px}$ | $95.8 \pm 1.0\%$ | $81.5 \pm 0.7\%$ | $87.7 \pm 0.7\%$ | $54.8 \pm 1.2\%$ | $4.1\text{ ms}$ |
+| **2 (High-Res)** | Input raised to $1088\text{ px}$ (3 seeds) | **$1088\text{ px}$** | **$98.6 \pm 1.3\%$** | **$92.7 \pm 3.2\%$** | **$97.0 \pm 1.4\%$** | **$69.1 \pm 2.2\%$** | **$8.0\text{ ms}$** |
+
+- **Iteration 0 — Zero-Shot Baseline ($640\text{ px}$):** Running the leak-free FOD-A YOLO11-S model unchanged on our tarmac test set gave **$10.6\%$ recall** and **$11.9\%$ mAP50**—missing 9 in 10 fasteners because FOD-A was filmed with different cameras, heights, angles, ground textures, and lighting.
+- **Iteration 1 — Fine-Tuning on Our Data ($640\text{ px}$):** Fine-tuning the same model on our $1,305$ tarmac training images raised mAP50 from $11.9\%$ to **$87.7 \pm 0.7\%$** and recall from $10.6\%$ to **$81.5 \pm 0.7\%$** (finding 4 in 5 fasteners). However, it still missed about 1 in 5 fasteners and produced loose boxes ($54.8\%$ mAP50-95) because at $640\text{ px}$ a fastener $2\text{ m}$ away is shrunk to only $\approx 9\text{ px}$ wide.
+- **Iteration 2 — Raising Input Resolution ($1088\text{ px}$):** We chose $1088\text{ px}$ because it is a multiple of YOLO's $32\text{ px}$ stride and fits batch size 16 on the A40 GPU. The $2.9\times$ increase in pixel area ($1088^2 \div 640^2$) resulted in only a $1.95\times$ increase in measured model cycle time ($4.1 \rightarrow 8.0\text{ ms}$ on the A40), while boosting **mAP50 by $+9.3\text{ pts}$ to $97.0 \pm 1.4\%$**, **mAP50-95 by $+14.3\text{ pts}$ to $69.1 \pm 2.2\%$**, and **recall by $+11.2\text{ pts}$ to $92.7 \pm 3.2\%$**.
 
 <YoloComparisonWidget4 />
 
@@ -88,67 +117,69 @@ Use the interactive seed selector and table below to inspect individual seed run
 
 <YoloComparisonWidget6 />
 
-<CardGrid :cols="2">
+::: details Training configuration, 3-seed validation table, and confidence threshold analysis
 
-<Card title="640 × 640 Input: 8.3 False Alarms" accent="amber">
+**Training Configuration Table**
 
-- **Mean False Positives (151 test frames):** **8.3** (individual runs: `15`, `5`, `5`)
-- **Failure Mechanism:** At $3\times$ downsampling, a $24\text{ px}$ screw shrinks to $\approx 8\text{ px}$ (fitting inside a single $8 \times 8\text{ px}$ stride-8 feature block), making metallic fasteners indistinguishable from coarse asphalt aggregate and pavement cracks.
+| Setting | FOD-A Benchmark | Tarmac Fine-Tuning |
+| :--- | :--- | :--- |
+| **Initial Weights** | COCO-pretrained | Leak-free FOD-A YOLO11-S |
+| **Epochs** | $30$ | $30$ |
+| **Batch Size** | $32$ ($16$ for RT-DETR-L) | $16$ |
+| **Input Size** | $640\text{ px}$ | $640\text{ px}$, then $1088\text{ px}$ |
+| **Optimiser** | AdamW (auto) | AdamW, $\text{lr} = 0.002$ (Ultralytics auto: $0.002 \times 5/(4 + n_c)$, $n_c = 1$) |
+| **Augmentation** | Mosaic $1.0$ (off last 10 epochs), flip $0.5$, scale $0.5$, translate $0.1$, HSV $0.015 / 0.7 / 0.4$ | Same |
+| **Numeric Format** | Mixed FP16/FP32 (AMP) | Mixed FP16/FP32 (AMP) |
 
-</Card>
+**Multi-Seed Validation ($640\text{ px}$ vs. $1088\text{ px}$ Across Seeds 0, 1, 2)**
 
-<Card title="1088 × 1088 Input: 1.0 False Alarm (−88%)" accent="emerald">
+Because a single training run can be lucky due to random image ordering, mosaic stitching, and layer initialization, each resolution was trained 3 times with different seeds on the exact same train/val/test split:
 
-- **Mean False Positives (151 test frames):** **1.0** (individual runs: `2`, `1`, `0`)
-- ** Operational Impact:** Preserving $\approx 14\text{ px}$ across the fastener head retains edge and slot geometry, eliminating **88% of false UGV stops** at an incremental cost of just **~0.9 ms per frame** on the A40 GPU.
+| Metric | $640\text{ px}$ (Seeds 0 / 1 / 2) | $640\text{ px}$ Mean ± SD | $1088\text{ px}$ (Seeds 0 / 1 / 2) | $1088\text{ px}$ Mean ± SD |
+| :--- | :--- | :--- | :--- | :--- |
+| **mAP50 (%)** | $88.3 / 86.9 / 88.0$ | **$87.7 \pm 0.7$** | $95.7 / 97.0 / 98.4$ | **$97.0 \pm 1.4$** |
+| **mAP50-95 (%)** | $55.8 / 55.1 / 53.4$ | **$54.8 \pm 1.2$** | $69.4 / 66.8 / 71.2$ | **$69.1 \pm 2.2$** |
+| **Precision (%)** | $96.8 / 95.6 / 94.9$ | **$95.8 \pm 1.0$** | $97.1 / 99.2 / 99.4$ | **$98.6 \pm 1.3$** |
+| **Recall (%)** | $82.1 / 81.5 / 80.8$ | **$81.5 \pm 0.7$** | $89.2 / 93.4 / 95.4$ | **$92.7 \pm 3.2$** |
 
-</Card>
+$1088\text{ px}$ outperforms $640\text{ px}$ on every single seed, and the gains ($+9.3\text{ pts}$ mAP50, $+14.3\text{ pts}$ mAP50-95, $+11.2\text{ pts}$ recall) are far larger than the seed-to-seed spread ($\pm 1\text{–}3\text{ pts}$).
 
-</CardGrid>
+**Error Analysis & Confidence Threshold Selection**
 
-::: details Video-level dataset partition and methodological boundaries
-
-To prevent the temporal leakage diagnosed in Section 1, our native tarmac dataset ($1,552$ annotated frames across $16$ videos recorded in two sessions) was partitioned strictly **by video file**—no video appears in more than one split:
-
-**Table 3.1: Native Runway Fastener Dataset Partition (Strict Video-Level Split)**
-
-| Partition | Source Videos | Frame Count | Experimental Role |
-| :--- | :--- | :--- | :--- |
-| **Train** | 13 videos (6 from Session 1 + all 7 from Session 2) | $1,305$ | Sun-lit tarmac & 2 indoor lab sequences for weight optimization |
-| **Validation** | 1 video (`spring washer sun`, Session 1) | $96$ | Early stopping & best-checkpoint selection |
-| **Test** | 2 videos (`slotted screw sun`, `top big lock nut sun`, Session 1) | **$151$** | **Held-out evaluation (scored once, never seen during training)** |
-
-**Why we trust this improvement:** Every configuration was trained three times with independent random seeds (`0`, `1`, `2`), and the worst $1088$ run ($95.7\%\text{ mAP@50}$, Seed 0) still outperformed the best $640$ run ($88.3\%\text{ mAP@50}$, Seed 0) by $+7.4\text{ percentage points}$.
-
-**Current scope boundaries (to be addressed in Semester 2):**
-1. *Unseen videos vs. unseen fastener classes:* Slotted screws and lock nuts also appear in Session 2 training videos recorded on different tarmac sections; thus, this benchmark validates generalization to **unseen videos and lighting angles**, rather than unseen fastener geometries.
-2. *Empty-tarmac false-positive rate:* The held-out test set comprises $151$ frames across 2 videos where each frame contains a target fastener; false-alarm rates over long stretches of empty tarmac remain to be quantified.
-3. *Camera shutter dynamics:* Semester 1 videos were captured using the interim UGREEN CM831 rolling-shutter webcam rather than at $15.1\text{ km/h}$ cruise speed with the global-shutter sensor.
+For the $1088\text{ px}$ model evaluated at Seed 0 with the default confidence threshold of `0.25`, the confusion matrix shows $89\%$ of test fasteners detected and $11\%$ missed, with $\approx 97\%$ precision ($\approx 3\%$ false detections). Because recall is our primary operational priority, the deployed confidence threshold will be chosen directly from the Precision–Recall (PR) curve in Semester 2 rather than relying on the `0.25` default.
 
 :::
 
-## 4. Future Work: Semester 2 Deployment Plan {#future-work}
+## 4. Inference, Live POC, Limitations & Semester 2 Plan {#future-work}
 
-With **YOLO11-S @ 1088 input** established as our current development baseline ($97.0\%\text{ mAP@50}$, $92.7\%$ recall, $1.0$ false alarm, $9.4\text{M}$ parameters), Semester 2 focuses on transitioning from offline GPU evaluation to closed-loop, real-time onboard perception and 3D ground localisation on the physical UGV.
+### 4.1 Offline Video Benchmark & Live Webcam POC
 
-<Card title="Current Development Baseline & Final Deployment Rule" accent="blue">
+- **Offline Video Benchmark (NVIDIA A40):** Running the $1088\text{ px}$ YOLO11-S model on a recorded tarmac video on the A40 (PyTorch 2.6, FP16) required **$8.0\text{ ms}$ per frame** for the model ($1.2\text{ ms}$ pre-processing, $4.3\text{ ms}$ inference, and $2.5\text{ ms}$ post-processing). The complete end-to-end pipeline—including video decoding, bounding-box rendering, HUD overlay, and video writing—ran at **26.9 FPS** across $2,709$ frames.
+- **Live Detection POC & Operator Triage HUD:** We tested the fine-tuned $1088\text{ px}$ YOLO11-S model live on a laptop webcam using our custom operator HUD (displaying object count, live FPS, adjustable confidence threshold, automatic snapshot logging, and three alert tiers: *High Critical* for tools, *Critical* for fasteners and stone, and *Low* for paper and rubber) over an indoor wooden floor never seen in training:
+  - **Detection Accuracy:** All **7 / 7 fasteners** were detected and flagged `THREAT: CRITICAL` with steady $70\text{–}86\%$ confidence.
+  - **Confidence Tuning:** At the default `0.25` threshold, floor grain triggered false boxes; raising the threshold to `0.70` eliminated every false positive while retaining all 7 fasteners.
+  - **Throughput Limitation:** Running unoptimized on a laptop CPU achieved **3.6 FPS**, below our $4.7\text{ FPS}$ minimum ($10\text{ FPS}$ target), confirming the need for TensorRT acceleration on the Jetson GPU.
 
-<Badge type="info" text="CURRENT DEVELOPMENT MODEL: YOLO11-S @ 1088 INPUT" />
+### 4.2 Key Takeaways & Current Limitations
 
-**97.0% mAP@50 · 92.7% Recall · 1.0 False Alarm · 9.4M Parameters**  
-**Final Deployment Rule:** Export both YOLO11-S and RT-DETR-L ($1088$ input) to TensorRT (FP16/INT8) on the Jetson companion computer and select the model that achieves the **highest recall within the $\le 33.3\text{ ms}$ ($\ge 10\text{–}30\text{ FPS}$) real-time budget** while leaving compute headroom for ROS 2 navigation.
+1. **The leak changed everything:** A random split on FOD-A gave $99.42\%$ mAP50 vs. $50.29\%$ on the honest video split; any comparison on a leaky split measures memory, not detection.
+2. **Domain data mattered more than model architecture:** Fine-tuning on $1,305$ tarmac images raised mAP50 by $\approx 76\text{ pts}$ ($11.9\% \rightarrow 87.7\%$), far outweighing architecture differences.
+3. **Resolution sets detection range:** The optical pixel calculations and the $640 \rightarrow 1088\text{ px}$ training results agree that input resolution, camera geometry, and object size jointly determine how far ahead a fastener can be resolved.
+4. **Current Scope Limitations:**
+   - The held-out test set covers **2 of 9 fastener types** recorded at one site on one day.
+   - The Semester 1 detector runs at $1088\text{ px}$ input, reaching $32\text{ px}$ width out to $\approx 0.8\text{ m}$ (whereas $1\text{ cm}$ objects only reach $32\text{ px}$ across out to $\approx 0.60\text{ m}$).
+   - The fine-tuned tarmac model is single-class (`Metallic Fasteners`), so full three-tier hazard triage requires merging with the 6-class model or training a multi-class tarmac dataset.
+   - Training footage came from a smartphone; transitioning to the ELP camera introduces a second optical domain shift that must be verified upon delivery.
 
-</Card>
+::: details Semester 2 Computer Vision roadmap (5 work packages)
 
-::: details Semester 2 Computer Vision engineering roadmap (5 core work packages)
-
-| Work Package | Technical Scope & Implementation Plan | Target Deliverable |
+| Work Package | Scope & Engineering Action | Target Outcome |
 | :--- | :--- | :--- |
-| **1. Precision-Recall Tuning & Edge Performance** | Fine-tune further on hard negative cases (asphalt spalls, Aggregate cracks), sweep confidence threshold and NMS IoU to lock in the optimal F1 operating point, export weights to **TensorRT (FP16/INT8)**, and achieve **$\ge 10\text{ FPS}$ sustained real-time inference** on the Jetson with the ELP / global-shutter camera. | TensorRT engine + calibrated confidence/NMS operating point on Jetson. |
-| **2. Weather & Onboard Lighting Robustness** | Collect multi-condition training data in **rain, night-time, and harsh solar glare**; design controlled **12 V onboard LED floodlighting** so FOD appearance remains invariant across ambient conditions, and benchmark each weather condition separately. | Controlled illumination rig + condition-stratified test metrics. |
-| **3. SAHI Sliced Inference Evaluation** | Because a $5\text{ MP}$ sensor captures far more detail than a single $1088\text{ px}$ resize preserves, evaluate **Slicing Aided Hyper Inference (SAHI)**: slicing each frame into overlapping full-resolution tiles gives small FOD **$\approx 2.4\times$ more pixels**, extending the $32\text{ px}$ detection range **past $0.8\text{ m}$** (evaluating the $\approx 6\times$ per-frame inference cost trade-off, e.g., for stationary verification). | Range-extension vs. latency trade-off benchmark ($>0.8\text{ m}$ detection). |
-| **4. Monocular FOD Ground Localisation** | Convert 2D bounding-box pixel coordinates $(u, v)$ into **real 3D ground distance $(X, Y)$** in the `base_link` frame using calibrated camera mounting height $H$, downward tilt $\theta$, and intrinsic matrix $K$, enabling the UGV to drive directly up to detected FOD for vacuum remediation. | ROS 2 pixel-to-ground homography node publishing 3D target poses. |
-| **5. Wider Cross-Validated Field Testing** | Expand evaluation across **all 9 metallic fastener types**, multiple pavement surfaces, and separate recording days using **leave-one-video-out cross-validation** plus dedicated empty-tarmac false-alarm sweeps. | 9-class cross-validated confusion matrix + empty-runway false-alarm rate. |
+| **1. Precision–Recall Tuning & TensorRT Performance** | Fine-tune further on hard cases, sweep confidence threshold and NMS IoU on the PR curve, export to TensorRT, and benchmark on the Jetson Orin Nano Super with the ELP camera. | **$\ge 10\text{ FPS}$** sustained real-time inference on the Jetson at the optimal PR operating point. |
+| **2. Weather & Onboard Lighting** | Collect training data in rain, at night, and in harsh solar glare; design regulated onboard LED lighting so FOD looks consistent across ambient conditions, and test each condition separately. | Condition-isolated precision/recall benchmarks across day, night, rain, and glare. |
+| **3. SAHI High-Resolution Tile Slicing** | Because the 5 MP camera captures much finer detail than a $1088\text{ px}$ input, slice each frame into overlapping native-resolution tiles to give small FOD **$\approx 2.4\times$ more pixels** (trading off $\approx 6\times$ inference cost per frame). | Extend the $32\text{ px}$ fastener detection range **past $0.8\text{ m}$** across the full GNSS look-ahead band. |
+| **4. Monocular FOD Ground Localisation** | Convert detected bounding-box pixel coordinates into metric ground distance using calibrated camera height $h = 0.45\text{ m}$ and tilt $\theta = 33^\circ$, and publish target coordinates on a ROS 2 topic. | Closed-loop UGV terminal approach and vacuum alignment over detected FOD. |
+| **5. Wider Cross-Validated Testing** | Evaluate across all **9 fastener types**, multiple tarmac/concrete surfaces, and separate days with rotated test videos (**cross-validation by video**). | Statistically grounded multi-video confidence intervals and empty-runway false-alarm rates. |
 
 :::
 
@@ -168,7 +199,7 @@ With **YOLO11-S @ 1088 input** established as our current development baseline (
 
 [Next Documentation](./vision-research.md) →
 
-**Computer Vision Research & Sensor Modalities**
+**Computer Vision Research & Task Formulation**
 
 </Card>
 
