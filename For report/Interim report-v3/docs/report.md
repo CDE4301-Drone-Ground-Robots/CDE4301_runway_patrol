@@ -587,11 +587,13 @@ The work is divided into three subsystems, each with a named person in charge of
 
 <!--@compose: ./report/members/bryan/power-calculations.md#report{shift=3,prefix=power-calc}-->
 
-#### Power Distribution & Eletrical Protection {#power-distribution .rpt-l3}
+#### Power Distribution & Electrical Protection {#power-distribution .rpt-l3}
 
 <!--@compose: ./report/lead/bryan-lead.md-->
 
-<!--@compose: ./report/members/bryan/power-distribution.md#report{shift=3,prefix=power-distri}-->
+<!-- DISABLED-COMPOSE: ./report/members/bryan/power-distribution.md#report{shift=3,prefix=power-distri} -->
+
+<p class="ov-placeholder">*Section under development by Bryan Ng.*</p>
 
 #### Components & BOM {#components-bom .rpt-l3}
 
