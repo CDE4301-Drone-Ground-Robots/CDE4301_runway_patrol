@@ -409,7 +409,7 @@ The work is divided into three subsystems, each with a named person in charge of
 | Mechanical | Motor and drivetrain sizing | Hilbert Soh | 4.3 |
 | Mechanical | Steering kinematics | Hilbert Soh | 4.4 |
 | Mechanical | FOD remediation (vacuum pickup and sweep box) | Takeuchi Asuka | 4.5 |
-| Electrical | Power: battery selection, load budget, power distribution and wiring | Bryan Ng | 5.1 |
+| Electrical | Electrical System Design: battery selection, load budget, power distribution and wiring | Bryan Ng | 5.1 |
 | Electrical | Microcontrollers: STM32 hardware and firmware | Gabriel Tan | 5.2 |
 
 </div>
@@ -579,13 +579,22 @@ The work is divided into three subsystems, each with a named person in charge of
 
 <!--@compose: ./report/design-overview/subsystem-division.md#electrical-overview{shift=1}-->
 
-### Power {#power}
+### Electrical System Design {#electrical-system-design}
 
-#### Power Calculations {#power-calculations .rpt-l3}
+<!--@compose: ./report/lead/bryan-lead.md-->
+<!--@compose: ./report/members/bryan/system-requirements.md#summary{shift=3,prefix=system-req-}-->
+
+#### Power Calculations & Battery Selection {#power-calculations .rpt-l3}
+
+<!--@compose: ./report/members/bryan/power-calculations.md#report{shift=3,prefix=power-calc}-->
+
+#### Power Distribution & Electrical Protection {#power-distribution .rpt-l3}
 
 <!--@compose: ./report/lead/bryan-lead.md-->
 
-<!--@compose: ./report/members/bryan/power-calculations.md#report{shift=3,prefix=power-calc}-->
+<!--@compose: ./report/members/bryan/power-distribution.md#report{shift=3,prefix=power-distri} -->
+
+<p class="ov-placeholder">*Section under development by Bryan Ng.*</p>
 
 #### Components & BOM {#components-bom .rpt-l3}
 
