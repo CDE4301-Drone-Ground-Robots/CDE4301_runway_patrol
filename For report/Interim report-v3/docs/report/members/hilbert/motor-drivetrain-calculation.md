@@ -25,7 +25,7 @@ We also calculated the torque needed for skid-steer turning. During a pivot, the
 
 <Badge type="info" text="System Constraints" />
 
-We based the drivetrain calculations on operational runway sweep requirements (FAA AC 150/5220-24 [\[2\]](./references.md#ref-2)) and airport pavement conditions (ASTM D5340-20 [\[1\]](./references.md#ref-1)). The design adopts an operational cruise target of up to $15\text{ km/h}$ ($4.167\text{ m/s}$) to sweep an active $3,000\text{ m}$ runway in under $20\text{ minutes}$ between aircraft movements, an acceleration allowance of $t_{\text{acc}} = 3.0\text{ s}$, and sustained torque over runway drainage verges.
+We based the drivetrain calculations on operational runway sweep requirements from FAA AC 150/5220-24 [\[2\]](./references.md#ref-2) and airport pavement conditions from ASTM D5340-20 [\[1\]](./references.md#ref-1). The design adopts an operational cruise target of up to $15\text{ km/h}$ ($4.167\text{ m/s}$) to sweep an active $3,000\text{ m}$ runway in under $20\text{ minutes}$ between aircraft movements, an acceleration allowance of $t_{\text{acc}} = 3.0\text{ s}$, and sustained torque over runway drainage verges.
 
 <Card>
 
@@ -47,7 +47,7 @@ The team purchased **four ZLLG80ASM250 hub motors** and **two ZLAC8015D dual-cha
 | **Design Acceleration ($a_{\text{des}}$)**      | **$1.389\text{ m/s}^2$** ($t_{\text{acc}} = 3.0\text{ s}$)  | Accelerates from standstill to $15\text{ km/h}$ in $3.0\text{ seconds}$ to clear runway active areas ($F_{\text{acc}} = 90.28\text{ N}$).                                                                                      |
 | **Rolling Resistance Coefficient ($C_{rr}$)**   | **$0.025$**                                                 | Pneumatic rubber tires on dry grooved airport asphalt pavement at nominal pressure ($2.5\text{ bar}$).                                                                                                                         |
 | **Aerodynamic Drag Area ($C_d \cdot A$)**       | **$0.28\text{ m}^2$** ($C_d = 0.80$, $A = 0.35\text{ m}^2$) | Effective drag area based on frontal area $A = 0.35\text{ m}^2$ and a conservative drag coefficient $C_d = 0.80$ for the blunt chassis, LiDAR mast, and intake ducting (yielding $2.93\text{ N}$ at $15\text{ km/h}$; a baseline $C_d = 0.70$ would give $2.56\text{ N}$). Air density $\rho = 1.204\text{ kg/m}^3$ at $20^\circ\text{C}$. |
-| **Tarmac Scrub Friction ($\mu_{\text{skid}}$)** | **$0.80$**                                                  | Coulomb lateral friction coefficient baseline for dry grooved airport asphalt (Gillespie, 1992 [\[14\]](./references.md#ref-14); pavement condition survey context from ASTM D5340-20 [\[1\]](./references.md#ref-1)).                                     |
+| **Tarmac Scrub Friction ($\mu_{\text{skid}}$)** | **$0.80$**                                                  | Coulomb lateral friction coefficient baseline for dry grooved airport asphalt following Gillespie (1992) [\[14\]](./references.md#ref-14) and pavement condition survey context from ASTM D5340-20 [\[1\]](./references.md#ref-1).                                     |
 | **Drivetrain Efficiency ($\eta$)**              | **$0.85$** ($85\%$)                                         | Direct-drive configuration: zero gearbox mesh friction. Factor accounts for motor inverter switching, stator copper/iron losses, and tire carcass dissipation.                                                                 |
 
 :::
@@ -68,7 +68,7 @@ The detailed geometric justification for choosing skid steering over Ackermann a
 
 <Badge type="info" text="Hardware Bill of Materials" />
 
-Rather than employing conventional brushed DC motors, omnidirectional Mecanum drive ([\[13\]](./references.md#ref-13)), or BLDC motors paired with multi-stage planetary gearboxes (which suffer from mechanical backlash, seal leakage, gear tooth shear under vibration, and abrasive aggregate ingestion), the platform adopts **Four Direct-Drive BLDC Hub Motors**:
+Rather than employing conventional brushed DC motors, omnidirectional Mecanum drive [\[13\]](./references.md#ref-13), or BLDC motors paired with multi-stage planetary gearboxes (which suffer from mechanical backlash, seal leakage, gear tooth shear under vibration, and abrasive aggregate ingestion), the platform adopts **Four Direct-Drive BLDC Hub Motors**:
 
 <CardGrid :cols="2">
 
@@ -174,7 +174,7 @@ The $15\text{ km/h}$ target speed requires approximately $302.6\text{ RPM}$ on a
 
 <Badge type="info" text="Dynamic Force Sizing" />
 
-The total tractive effort $F_{\text{total}}$ required at the road contact patches derives from longitudinal vehicle dynamics and rolling contact mechanics (Siegwart et al., 2011 [\[13\]](./references.md#ref-13); Gillespie, 1992 [\[14\]](./references.md#ref-14)). In our **4WD independent hub motor architecture ($N = 4$)**, total tractive force and driving yaw torque are distributed across four wheels. Shaft torque demanded from each individual motor is:
+The total tractive effort $F_{\text{total}}$ required at the road contact patches derives from longitudinal vehicle dynamics and rolling contact mechanics [\[13\]](./references.md#ref-13), [\[14\]](./references.md#ref-14). In our **4WD independent hub motor architecture ($N = 4$)**, total tractive force and driving yaw torque are distributed across four wheels. Shaft torque demanded from each individual motor is:
 
 $$
 \tau_{\text{motor}} = \frac{F_i \cdot r}{\eta} = \frac{F_{\text{total}} \cdot r}{N \cdot \eta} = \frac{F_{\text{total}} \cdot 0.1315}{4 \times 0.85} = \frac{F_{\text{total}} \cdot 0.1315}{3.40} = \mathbf{0.038676 \cdot F_{\text{total}}}
@@ -440,7 +440,7 @@ CANopen Object `0x2038`: **$16.0\text{ A}$ phase clamp per channel**.<br> Max Tr
 
 <Badge type="danger" text="Safety Verification" />
 
-To prevent collision with runway infrastructure or airside vehicles upon emergency obstacle detection by the 3D LiDAR, the stopping distance from full cruise speed ($15\text{ km/h} = 4.167\text{ m/s}$) is governed by dynamic normal load transfer and tire adhesion limits (Gillespie, 1992 [\[14\]](./references.md#ref-14)) and must be analytically bounded:
+To prevent collision with runway infrastructure or airside vehicles upon emergency obstacle detection by the 3D LiDAR, the stopping distance from full cruise speed ($15\text{ km/h} = 4.167\text{ m/s}$) is governed by dynamic normal load transfer and tire adhesion limits [\[14\]](./references.md#ref-14) and must be analytically bounded:
 
 Assuming an asphalt friction coefficient $\mu = 0.80$ and regenerative dynamic braking deceleration $a_{\text{brake}} = 3.5\text{ m/s}^2$ (well below the tire skid limit $\mu g \approx 7.85\text{ m/s}^2$):
 

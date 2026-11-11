@@ -1,3 +1,4 @@
+/// <reference path="../../env.d.ts" />
 /**
  * The one source of each member's identity: Meet the Team (Mirror Hall cards and profiles) and the Report's
  * Subsystem Lead plates both read it. Identity only — name, discipline, matric, portrait, documentation
@@ -46,7 +47,7 @@ export const team: Member[] = [
     name: 'Hilbert Soh Yong Tai',
     shortName: 'Hilbert Soh',
     role: 'Programming (navigation & comms)',
-    subsystem: 'Autonomous navigation, SLAM & C2 communications',
+    subsystem: 'Autonomous navigation, SLAM & C2 communications (Overseeing mechanical integration)',
     discipline: 'Mechanical Engineering (Robotics Specialisation)',
     matric: 'A0308263H',
     portrait: hilbertPortrait,

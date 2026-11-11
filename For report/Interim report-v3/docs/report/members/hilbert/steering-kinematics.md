@@ -147,7 +147,7 @@ Next, we will measure turning radius and yaw tracking on FOD Hunter, calibrate $
 
 ### A. Steering Architecture Selection & Trade-Off Matrix
 
-We evaluated three candidate drivetrain topologies for the runway patrol robot: four-wheel independent skid steering, car-like front-wheel Ackermann steering, and Mecanum wheel omnidirectional drive ([\[13\]](./references.md#ref-13)). Selection criteria were weighted according to airside operational priorities, where mechanical reliability and debris tolerance supersede cruising efficiency.
+We evaluated three candidate drivetrain topologies for the runway patrol robot: four-wheel independent skid steering, car-like front-wheel Ackermann steering, and Mecanum wheel omnidirectional drive [\[13\]](./references.md#ref-13). Selection criteria were weighted according to airside operational priorities, where mechanical reliability and debris tolerance supersede cruising efficiency.
 
 <Card tag="Weighted Selection Matrix">
 
@@ -189,7 +189,7 @@ _Scoring Methodology & Composite Arithmetic:_
 
 ### B. Skid-Steer Kinematic Model Derivations
 
-The 4WD skid-steer platform is modeled kinematically by projecting wheel velocities onto the longitudinal axis and accounting for lateral slip through an analytically expanded effective track width $B_{\text{eff}}$ ([\[13\]](./references.md#ref-13)).
+The 4WD skid-steer platform is modeled kinematically by projecting wheel velocities onto the longitudinal axis and accounting for lateral slip through an analytically expanded effective track width $B_{\text{eff}}$ [\[13\]](./references.md#ref-13).
 
 #### 1. Forward Kinematics
 
@@ -228,7 +228,7 @@ Lateral tire scrub during turns resists rotation, causing the vehicle to turn mo
 
 $$B_{\text{eff}} = \chi \cdot B$$
 
-In preliminary simulation and embedded controller tuning, we adopt an analytical baseline correction factor of $\chi \approx 1.18$ based on skid-steer wheeled mobile robot kinematic models ([\[13\]](./references.md#ref-13)):
+In preliminary simulation and embedded controller tuning, we adopt an analytical baseline correction factor of $\chi \approx 1.18$ based on skid-steer wheeled mobile robot kinematic models [\[13\]](./references.md#ref-13):
 
 $$B_{\text{eff}} = 1.18 \times 0.5750\text{ m} = 0.6785\text{ m}$$
 

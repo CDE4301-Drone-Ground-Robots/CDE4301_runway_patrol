@@ -3,10 +3,9 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "baseUrl": ".",
     "paths": {
-      "@docs/*": ["docs/*"],
-      "@theme/*": ["docs/.vitepress/theme/*"]
+      "@docs/*": ["./docs/*"],
+      "@theme/*": ["./docs/.vitepress/theme/*"]
     },
     "strict": false,
     "allowJs": true,
@@ -15,7 +14,12 @@
   },
   "include": [
     "env.d.ts",
+    "docs/.vitepress/env.d.ts",
     "docs/.vitepress/**/*"
+  ],
+  "exclude": [
+    "docs/.vitepress/cache",
+    "docs/.vitepress/dist",
+    "node_modules"
   ]
 }
-

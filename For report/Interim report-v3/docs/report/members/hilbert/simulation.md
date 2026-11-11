@@ -69,7 +69,7 @@ Meaningful navigation testing required: (1) a verified 4WD skid-steer chassis mo
 
 ## 2. Simulation Architecture {#sim-architecture}
 
-We connected **Gazebo Harmonic** to **ROS 2 Jazzy** ([\[7\]](./references.md#ref-7)) using `ros_gz_bridge`. Gazebo supplied simulated odometry, LiDAR, IMU and GNSS data to Nav2 ([\[8\]](./references.md#ref-8)). Nav2 sent `/cmd_vel` commands back to the simulated drivetrain. We used the simulation `/clock` and consistent TF frames to keep the nodes synchronized.
+We connected **Gazebo Harmonic** to **ROS 2 Jazzy** [\[7\]](./references.md#ref-7) using `ros_gz_bridge`. Gazebo supplied simulated odometry, LiDAR, IMU and GNSS data to Nav2 [\[8\]](./references.md#ref-8). Nav2 sent `/cmd_vel` commands back to the simulated drivetrain. We used the simulation `/clock` and consistent TF frames to keep the nodes synchronized.
 
 **Runtime localization check (4 November 2026):** Antigravity launched the NUS EA Field simulation in WSL2 and observed `ekf_filter_node_odom`, `ekf_filter_node_map` and `navsat_transform_node` publishing `/odometry/local`, `/odometry/global` and `/odometry/gps`. The `map → odom → base_footprint` TF chain was present. This confirms the Dual-EKF pipeline was running; it does **not** establish position accuracy or drift reduction without a moving ground-truth comparison. The simulated IMU and odometry were configured at 50 Hz, GPS and LiDAR at 10 Hz, and EKF outputs at 30 Hz in simulation time. During that run, $RTF \approx 0.31\text{–}0.33$, so wall-clock publication rates were lower.
 
@@ -81,7 +81,7 @@ We connected **Gazebo Harmonic** to **ROS 2 Jazzy** ([\[7\]](./references.md#ref
 
 We used simulation for three purposes before testing on hardware:
 
-1. **Kinematic and physics checks:** Simulates contact, turning and path-following behaviour using assumed asphalt friction ($\mu = 0.8$) ([\[13\]](./references.md#ref-13)), ensuring path planners respect non-holonomic turning radius bounds ($R \ge 1.0\text{ m}$) before physical testing.
+1. **Kinematic and physics checks:** Simulates contact, turning and path-following behaviour using assumed asphalt friction ($\mu = 0.8$) [\[13\]](./references.md#ref-13), ensuring path planners respect non-holonomic turning radius bounds ($R \ge 1.0\text{ m}$) before physical testing.
 2. **Parameter sweeps:** Compares navigation settings over repeated simulated routes across acute $90^\circ$ taxiway bends, straight sprint corridors, and cluttered obstacle fields at an accelerated physics stepping rate ($1000\text{ Hz}$, $\Delta t = 1.0\text{ ms}$) without battery recharge interruptions or thermal degradation.
 3. **Software-in-the-Loop (SIL) Protocol Enforcement:** Validates exact ROS 2 message schemas (`geometry_msgs/msg/Twist`, `sensor_msgs/msg/LaserScan`, `sensor_msgs/msg/Imu`, `nav_msgs/msg/Odometry`, `tf2_msgs/msg/TFMessage`), action servers, and CycloneDDS network bridges, allowing the software interfaces to be tested before physical integration.
 
@@ -131,7 +131,7 @@ The navigation algorithm selection rationale belongs in [Navigation](./navigatio
 
 During early Semester 1 development, the **Hunter UGV** was still in the design phase. Autonomy software could not wait for hardware completion.
 
-The commercial **AgileX Scout 2.0** 4WD mobile robot was selected as an interim simulation proxy because of its broadly comparable dimensions, identical four-wheel skid-steering kinematic architecture ([\[13\]](./references.md#ref-13)), and 48V electrical bus domain. The Scout 2.0 allowed the team to develop and tune the complete ROS 2 Jazzy Nav2 stack, sensor bridge interfaces, and C2 mission handlers months before physical hardware became available.
+The commercial **AgileX Scout 2.0** 4WD mobile robot was selected as an interim simulation proxy because of its broadly comparable dimensions, identical four-wheel skid-steering kinematic architecture [\[13\]](./references.md#ref-13), and 48V electrical bus domain. The Scout 2.0 allowed the team to develop and tune the complete ROS 2 Jazzy Nav2 stack, sensor bridge interfaces, and C2 mission handlers months before physical hardware became available.
 
 However, the AgileX simulation model is an **interim kinematic proxy**, not an identical digital twin. The table below delineates verified dimensional, mechanical, and electrical distinctions between the simulation model (`scout_v2.xacro`) and the physical custom Hunter UGV:
 
@@ -162,7 +162,7 @@ AgileX Scout 2.0 Kinematic Simulation Proxy
 
 </Card>
 
-**Governing Kinematic Ratio:** In 4WD skid-steer mobile robotics, executing yaw rotation requires tires to slip laterally against ground friction ([\[13\]](./references.md#ref-13)). The ratio of wheelbase $L$ to track width $W$ is the fundamental governing parameter:
+**Governing Kinematic Ratio:** In 4WD skid-steer mobile robotics, executing yaw rotation requires tires to slip laterally against ground friction [\[13\]](./references.md#ref-13). The ratio of wheelbase $L$ to track width $W$ is the fundamental governing parameter:
 
 $$
 \text{Ratio} = \frac{L}{W} = \frac{0.498\text{ m}}{0.583\text{ m}} \approx \mathbf{0.854} < 1.0
@@ -174,7 +174,7 @@ If $\frac{L}{W} > 1.0$ (a long, narrow chassis), the resistive scrubbing torque 
 
 The initial simulation was modeled after Aarhus Airport Runway 10R/28L ($2,702\text{ m} \times 45\text{ m}$) with centerline markings and edge lighting. Testing in this environment produced a critical engineering discovery:
 
-**2D LiDAR SLAM Failure:** In vast, flat airfield corridors, there are zero vertical walls, columns, or laser-reflective structures within the $25\text{ m}$ range of the LiDAR. As a result, 2D laser scan matching diverges longitudinally ($\Sigma_{xx} \to \infty$), causing SLAM pose estimation to slip and fail ([\[17\]](./references.md#ref-17)). This finding explicitly proved that LiDAR-only odometry is non-viable for runway inspection, directly motivating our Dual-EKF localization architecture fusing wheel odometry, tactical IMU gyro rates, and absolute RTK-GNSS fixes ([\[9\]](./references.md#ref-9), [\[22\]](./references.md#ref-22)).
+**2D LiDAR SLAM Failure:** In vast, flat airfield corridors, there are zero vertical walls, columns, or laser-reflective structures within the $25\text{ m}$ range of the LiDAR. As a result, 2D laser scan matching diverges longitudinally ($\Sigma_{xx} \to \infty$), causing SLAM pose estimation to slip and fail [\[17\]](./references.md#ref-17). This finding explicitly proved that LiDAR-only odometry is non-viable for runway inspection, directly motivating our Dual-EKF localization architecture fusing wheel odometry, tactical IMU gyro rates, and absolute RTK-GNSS fixes [\[9\]](./references.md#ref-9), [\[22\]](./references.md#ref-22).
 
 #### Revised Environment — NUS EA Field
 
@@ -321,7 +321,7 @@ where $y'$ is the lateral cross-track error to the selected lookahead point on t
 
 #### Behavior Tree Configuration & Recovery
 
-When a navigation mission is dispatched, the \*\*Nav2 BT Navigator\*\* executes the production `NavigateToPose` Behavior Tree ([\[8\]](./references.md#ref-8)). The tree utilizes a `PipelineSequence` node ticking at \*\*$10\text{ Hz}$\*\*, concurrently orchestrating global path replanning and local path tracking:
+When a navigation mission is dispatched, the \*\*Nav2 BT Navigator\*\* executes the production `NavigateToPose` Behavior Tree [\[8\]](./references.md#ref-8). The tree utilizes a `PipelineSequence` node ticking at \*\*$10\text{ Hz}$\*\*, concurrently orchestrating global path replanning and local path tracking:
 
 NavigateRecovery (RecoveryNode, retries = 6)<br> ├── PipelineSequence (Primary Navigation Pipeline)<br> │ ├── RateController (1 Hz) → ComputePathToPose (SmacPlannerHybrid, R ≥ 1.0m)<br> │ └── FollowPath (RegulatedPurePursuitController, 20 Hz)<br> └── RoundRobin (Escalating Recovery System)<br> ├── ClearEntireCostmap (local_costmap)<br> ├── ClearEntireCostmap (global_costmap)<br> ├── Spin (nav2_behaviors::Spin, ω = 1.0 rad/s, ±180°)<br> ├── BackUp (nav2_behaviors::BackUp, d = 0.15 m, v = 0.05 m/s)<br> └── Wait (nav2_behaviors::Wait, t = 5.0 s)
 
@@ -333,7 +333,7 @@ NavigateRecovery (RecoveryNode, retries = 6)<br> ├── PipelineSequence (Pri
 
 #### Supporting Localization & Costmap Configuration
 
-Localization is supported by the Dual-EKF pipeline (Moore & Stouch, 2014 [\[9\]](./references.md#ref-9)), which decouples continuous local control odometry (`odom → base_footprint` at $30\text{ Hz}$) from discrete absolute RTK-GNSS geo-locking (`map → odom` at $30\text{ Hz}$). Costmap inflation is tuned with `inflation_radius = 1.20 m` and `cost_scaling_factor = 2.0`, generating an exponential potential field that guides the vehicle smoothly down corridor centerlines while avoiding obstacle edges. (For complete mathematical derivations and block diagrams, see [Navigation Section 5.3](./navigation.md#sec-5-implementation)).
+Localization is supported by the Dual-EKF pipeline [\[9\]](./references.md#ref-9), which decouples continuous local control odometry (`odom → base_footprint` at $30\text{ Hz}$) from discrete absolute RTK-GNSS geo-locking (`map → odom` at $30\text{ Hz}$). Costmap inflation is tuned with `inflation_radius = 1.20 m` and `cost_scaling_factor = 2.0`, generating an exponential potential field that guides the vehicle smoothly down corridor centerlines while avoiding obstacle edges. (For complete mathematical derivations and block diagrams, see [Navigation Section 5.3](./navigation.md#sec-5-implementation)).
 
 :::
 
@@ -529,7 +529,7 @@ Advancing to each speed tier requires satisfying mandatory safety gates: expandi
 
 #### Conditional MPPI Evaluation
 
-The Model Predictive Path Integral (MPPI) controller ([\[19\]](./references.md#ref-19)) will be evaluated on the NVIDIA Jetson Orin **only if RPP ([\[18\]](./references.md#ref-18)) fails to meet trajectory tracking accuracy at speeds $> 10\text{ km/h}$** and if adequate computing budget is available.
+The Model Predictive Path Integral (MPPI) controller [\[19\]](./references.md#ref-19) will be evaluated on the NVIDIA Jetson Orin **only if RPP [\[18\]](./references.md#ref-18) fails to meet trajectory tracking accuracy at speeds $> 10\text{ km/h}$** and if adequate computing budget is available.
 
 _Technical Clarification on MPPI:_ MPPI does not inherently require GPU acceleration; CPU SIMD multithreading implementations exist in Nav2. However, GPU tensor acceleration allows evaluating thousands of trajectory rollouts per control cycle. If RPP's geometric formulation provides sufficient tracking fidelity at lower computational cost, RPP will be retained as the production controller to preserve CPU cycles for real-time edge vision (YOLO).
 

@@ -309,7 +309,7 @@ FOD Hunter has ten features, listed in Table 2.2.2.1.
 | H5 | Compliant with aviation operating standards | N7 | Air base drones need special permission each flight ([Appendix B](#appendix-b)). Clearance has to be checked with CAAS ([Appendix A](#appendix-a)). |
 | H6 | Operating speed of 15 km/hr | N6 | Vehicles today drive at about 40 km/h but must go slowly enough to see FOD by eye ([Appendix A](#appendix-a)). 15 km/h is a design value for camera detection. |
 | H7 | Weight of 65 kg | Practical deployment | No interview evidence. Design value (Section 4.2.2). |
-| H8 | Differential Drivetrain | Supports H3 | No interview evidence. Design choice (Section 4.4). |
+| H8 | Differential Drivetrain | Supports H3 | No interview evidence. Design choice (Section 4.5). |
 | H9 | Robust Suspension System | Supports H1, H2 | Paya Lebar pavement is cracked and comes loose ([Appendix B](#appendix-b)). Potholes break up at Changi ([Appendix D](#appendix-d)). |
 | H10 | Sized for easy transport | Practical deployment | No interview evidence. Design value. |
 
@@ -387,7 +387,7 @@ This section covers FOD Hunter only. The requirements are split by subsystem. Ea
 
 </div>
 
-Some values still need to be settled. The vacuum specification of 2.2 kPa differs from the 19 kPa unit used in Section 4.5, the weight is 60 kg in the specification and 65 kg in the suspension and feature list, the battery is quoted as 48 V 100 A here and 48 V 20 Ah in Section 5.1, and the latency is quoted as below 10 ms and below 15 ms on different pages. R6, R10, R12, R15 and R20 have no specification yet.
+Some values still need to be settled. The vacuum specification of 2.2 kPa differs from the 19 kPa unit used in Section 4.3, the weight is 60 kg in the specification and 65 kg in the suspension and feature list, the battery is quoted as 48 V 100 A here and 48 V 20 Ah in Section 5.1, and the latency is quoted as below 10 ms and below 15 ms on different pages. R6, R10, R12, R15 and R20 have no specification yet.
 
 ### Subsystem Division and Leadership {#subsystem-division}
 
@@ -406,9 +406,9 @@ The work is divided into three subsystems, each with a named person in charge of
 | Programming | Computer vision: sensor fusion, vision field-of-view calculations, vision research and YOLO model benchmarking | Gabriel Tan | 3.5 |
 | Mechanical | Chassis: structural design, FEA simulation and material selection | Zacarias Ng | 4.1 |
 | Mechanical | Suspension | Takeuchi Asuka | 4.2 |
-| Mechanical | Motor and drivetrain sizing | Hilbert Soh | 4.3 |
-| Mechanical | Steering kinematics | Hilbert Soh | 4.4 |
-| Mechanical | FOD remediation (vacuum pickup and sweep box) | Takeuchi Asuka | 4.5 |
+| Mechanical | FOD remediation (vacuum pickup and sweep box) | Takeuchi Asuka | 4.3 |
+| Mechanical | Motor and drivetrain sizing | Hilbert Soh | 4.4 |
+| Mechanical | Steering kinematics | Hilbert Soh | 4.5 |
 | Electrical | Electrical System Design: battery selection, load budget, power distribution and wiring | Bryan Ng | 5.1 |
 | Electrical | Microcontrollers: STM32 hardware and firmware | Gabriel Tan | 5.2 |
 
@@ -476,8 +476,6 @@ The work is divided into three subsystems, each with a named person in charge of
 
 ## Mechanical {#mechanical}
 
-<!--@compose: ./report/design-overview/subsystem-division.md#mechanical-overview{shift=1}-->
-
 ### Chassis {#chassis}
 
 #### Chassis Design {#chassis-structural-design .rpt-l3}
@@ -528,18 +526,6 @@ The work is divided into three subsystems, each with a named person in charge of
 
 <!--@compose: ./report/members/asuka/suspension.md#s6{shift=1,prefix=susp6}-->
 
-### Motor Drivetrain Calculations {#motor-selection}
-
-<!--@compose: ./report/lead/hilbert-lead.md-->
-
-<!--@compose: ./report/members/hilbert/motor-drivetrain-calculation.md#report{shift=2,prefix=motor}-->
-
-### Steering Kinematics {#steering}
-
-<!--@compose: ./report/lead/hilbert-lead.md-->
-
-<!--@compose: ./report/members/hilbert/steering-kinematics.md#report{shift=2,prefix=steer}-->
-
 <span id="vacuum-module"></span>
 
 ### FOD Remediation {#fod-remediation}
@@ -569,6 +555,18 @@ The work is divided into three subsystems, each with a named person in charge of
 <!--@compose: ./report/members/asuka/vacuum-module.md#s6{shift=1,prefix=vac6}-->
 
 <span id="fod-sweep-box"></span>
+
+### Motor Drivetrain Calculations {#motor-selection}
+
+<!--@compose: ./report/lead/hilbert-lead.md-->
+
+<!--@compose: ./report/members/hilbert/motor-drivetrain-calculation.md#report{shift=2,prefix=motor}-->
+
+### Steering Kinematics {#steering}
+
+<!--@compose: ./report/lead/hilbert-lead.md-->
+
+<!--@compose: ./report/members/hilbert/steering-kinematics.md#report{shift=2,prefix=steer}-->
 
 
 </section>

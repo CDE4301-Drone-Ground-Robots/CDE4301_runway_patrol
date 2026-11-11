@@ -3,10 +3,9 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "baseUrl": ".",
     "paths": {
-      "@docs/*": ["For report/Interim report-v3/docs/*"],
-      "@theme/*": ["For report/Interim report-v3/docs/.vitepress/theme/*"]
+      "@docs/*": ["./For report/Interim report-v3/docs/*"],
+      "@theme/*": ["./For report/Interim report-v3/docs/.vitepress/theme/*"]
     },
     "strict": false,
     "allowJs": true,
@@ -17,6 +16,10 @@
     "For report/Interim report-v3/env.d.ts",
     "For report/Interim report-v3/docs/.vitepress/env.d.ts",
     "For report/Interim report-v3/**/*"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/.vitepress/cache",
+    "**/.vitepress/dist"
   ]
 }
-

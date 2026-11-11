@@ -12,7 +12,7 @@ _Semester 1 engineering documentation — ROS 2 Jazzy, CycloneDDS, command-and-c
 
 ## 1. Objectives & Requirements {#com-objectives}
 
-The communication system allows the UAV companion computer to send FOD target coordinates to the UGV through ROS 2 without directly controlling its motors ([\[5\]](./references.md#ref-5), [\[6\]](./references.md#ref-6), [\[11\]](./references.md#ref-11), [\[12\]](./references.md#ref-12)). The UGV validates incoming target coordinates against an operational geofence, queues waypoints, and passes navigation goals to Nav2 while returning telemetry to the C2 terminal.
+The communication system allows the UAV companion computer to send FOD target coordinates to the UGV through ROS 2 without directly controlling its motors [\[5\]](./references.md#ref-5), [\[6\]](./references.md#ref-6), [\[11\]](./references.md#ref-11), [\[12\]](./references.md#ref-12). The UGV validates incoming target coordinates against an operational geofence, queues waypoints, and passes navigation goals to Nav2 while returning telemetry to the C2 terminal.
 
 In Semester 1, we tested this workflow between **two physical computers over an indoor local network**, with UGV path planning and kinematics simulated in Gazebo Harmonic. Testing an over-the-air radio link between an airborne UAV and a physical UGV is planned for Semester 2.
 
@@ -31,7 +31,7 @@ The active communication topics are `/c2/target_alert` (event-driven FOD targets
 
 **Singapore Frequency Regulations & IMDA Compliance**
 
-Radio transmissions in Singapore are governed by the **Infocomm Media Development Authority (IMDA)** under the _Technical Specification for Short Range Devices (IMDA TS SRD)_ ([\[3\]](./references.md#ref-3)), the _Telecommunications Act 1999_ ([\[10\]](./references.md#ref-10)), and civil aviation spectrum rules ([\[4\]](./references.md#ref-4)):
+Radio transmissions in Singapore are governed by the **Infocomm Media Development Authority (IMDA)** under the _Technical Specification for Short Range Devices (IMDA TS SRD)_ [\[3\]](./references.md#ref-3), the _Telecommunications Act 1999_ [\[10\]](./references.md#ref-10), and civil aviation spectrum rules [\[4\]](./references.md#ref-4):
 
 - **North American ISM Band (902–928 MHz):** Standard transceivers like the Microhard P900 hop across 26 MHz of bandwidth (902–928 MHz) at up to 1.0 W (30 dBm) under FCC Part 15.247.
 - **Singapore Permitted Sub-Band (917–925 MHz):** Frequencies below 917 MHz and above 925 MHz are allocated to cellular mobile network operators and public services. Transceiver firmware must be constrained to the 8 MHz window between 917.0 and 925.0 MHz.
@@ -79,7 +79,7 @@ The communications pipeline connects an external companion computer (Raspberry P
 
 ### 3.1 CycloneDDS and Static Unicast Selection {#com-dds}
 
-ROS 2's Data Distribution Service (DDS) publisher–subscriber middleware was selected to decouple mission management from low-level motion control ([\[7\]](./references.md#ref-7)). FastDDS is the default ROS 2 middleware, but cross-machine discovery failed because multicast packets were dropped across the Hyper-V virtual network adapter on the Windows/WSL2 host.
+ROS 2's Data Distribution Service (DDS) publisher–subscriber middleware was selected to decouple mission management from low-level motion control [\[7\]](./references.md#ref-7). FastDDS is the default ROS 2 middleware, but cross-machine discovery failed because multicast packets were dropped across the Hyper-V virtual network adapter on the Windows/WSL2 host.
 
 **Eclipse CycloneDDS with static unicast peering** resolved this issue. By disabling multicast and defining participant IP addresses in `cyclonedds.xml`, peer discovery packets (SPDP/SEDP) travel directly via point-to-point UDP unicast:
 
@@ -189,14 +189,14 @@ While indoor Wi-Fi supported Semester 1 multi-machine testing, airfield operatio
 
 **Why Microhard P900 V2 Is Preferred**
 
-The **Holybro Microhard P900 V2** ([\[20\]](./references.md#ref-20)) is our preliminary preferred choice for the UGV datalink:
+The **Holybro Microhard P900 V2** [\[20\]](./references.md#ref-20) is our preliminary preferred choice for the UGV datalink:
 1. **Sufficient Bandwidth for Metadata:** C2 alerts and telemetry use compact JSON strings (~500 bytes). At 276 kbps nominal throughput, packet transmission takes under 20 ms.
 2. **No Video Streaming on UGV Datalink:** YOLOv8 vision inference runs entirely on the UAV companion computer. Only numerical target coordinates cross the RF link, eliminating high-bandwidth video transmission needs.
 3. **Low SWaP Footprint:** Enclosed in a 42 g aluminum case operating on 7–35V DC, the transceiver connects directly to companion computer UART GPIO pins without external PoE injectors.
 
 **Alternative Candidate: Microhard pMDDL900 vs pMDDL2450**
 
-The **Microhard pMDDL900** ([\[21\]](./references.md#ref-21)) provides native Ethernet IP routing at up to 25 Mbps, allowing CycloneDDS to operate natively across the RF link without a serial gateway. However, it costs significantly more ($1,200+ USD vs ~$150 USD for P900), consumes 6–12 W, and requires dedicated heatsinks. It remains a backup candidate should project requirements expand to include live sensor streaming.
+The **Microhard pMDDL900** [\[21\]](./references.md#ref-21) provides native Ethernet IP routing at up to 25 Mbps, allowing CycloneDDS to operate natively across the RF link without a serial gateway. However, it costs significantly more ($1,200+ USD vs ~$150 USD for P900), consumes 6–12 W, and requires dedicated heatsinks. It remains a backup candidate should project requirements expand to include live sensor streaming.
 
 *Broadband Distinction:* The ARGUS drone team evaluates the **Microhard pMDDL2450** (2.4 GHz broadband IP) for aerial video streaming to a ground station, whereas the UGV datalink carries only lightweight C2 commands and telemetry.
 

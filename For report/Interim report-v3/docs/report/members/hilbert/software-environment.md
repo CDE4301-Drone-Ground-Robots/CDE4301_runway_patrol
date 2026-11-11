@@ -9,7 +9,7 @@ outline: [2, 3]
 
 <Badge type="info" text="ROS 2 Jazzy Jalisco • Ubuntu 24.04 LTS • Gazebo Harmonic" />
 
-We used **Ubuntu 24.04 LTS**, **ROS 2 Jazzy** ([\[7\]](./references.md#ref-7)), **Gazebo Harmonic**, **Nav2** ([\[8\]](./references.md#ref-8)) and **CycloneDDS** to develop the UGV navigation and UAV–UGV communication software. ROS 2 handles data exchange between sensors, localization, planning and control nodes. Gazebo provides the simulation environment used before physical UGV integration.
+We used **Ubuntu 24.04 LTS**, **ROS 2 Jazzy** [\[7\]](./references.md#ref-7), **Gazebo Harmonic**, **Nav2** [\[8\]](./references.md#ref-8) and **CycloneDDS** to develop the UGV navigation and UAV–UGV communication software. ROS 2 handles data exchange between sensors, localization, planning and control nodes. Gazebo provides the simulation environment used before physical UGV integration.
 
 #### Why ROS 2 Jazzy? {#ros2-selection-rationale}
 
@@ -17,7 +17,7 @@ We selected **ROS 2 Jazzy** for three reasons:
 
 1. **Long-term support:** Jazzy is an LTS release supported through May 2029. It runs on Ubuntu 24.04 LTS, providing a stable development baseline.
 2. **Simulation compatibility:** Jazzy integrates with Gazebo Harmonic through `ros_gz_bridge`, allowing simulated sensors and robot commands to communicate with ROS 2 nodes.
-3. **Navigation tools:** Jazzy supports the Nav2 planners and controllers used in our work, including Smac Planner ([\[15\]](./references.md#ref-15)) and Regulated Pure Pursuit ([\[18\]](./references.md#ref-18)).
+3. **Navigation tools:** Jazzy supports the Nav2 planners and controllers used in our work, including Smac Planner [\[15\]](./references.md#ref-15) and Regulated Pure Pursuit [\[18\]](./references.md#ref-18).
 
 We considered other ROS 2 releases, but chose Jazzy to avoid changing the operating system and software dependencies during development. The comparison is available below.
 
