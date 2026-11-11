@@ -62,36 +62,36 @@ The power consumption of the individual electrical components is summarised in t
 
 A 48 V-class power bus is used to reduce current relative to a 24 V bus for the same power. Since resistive losses scale with current squared ($P_{\text{loss}}=I^2R$), reducing current can reduce wiring and connector losses, subject to suitable component ratings and protection.
 
-| Components | Voltage (V) | Current draw (A) | Peak current (A) | Power (W) | Duty cycle (%) | Average power (W) | <mark>48 V nominal current (A)</mark> | 48 V peak current (A) |
+| Components | Voltage (V) | Current draw (A) | Peak current (A) | Power (W) | Duty cycle (%) | Average power (W) | 48 V nominal current (A) | 48 V peak current (A) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | | | | | <div style="text-align: center;"><strong>DRIVETRAIN</strong></div> | | | | |
-| Drive Motor 1 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | <mark>6.33</mark> | 15.50 |
-| Drive Motor 2 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | <mark>6.33</mark> | 15.50 |
-| Drive Motor 3 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | <mark>6.33</mark> | 15.50 |
-| Drive Motor 4 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | <mark>6.33</mark> | 15.50 |
+| Drive Motor 1 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | 6.33 | 15.50 |
+| Drive Motor 2 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | 6.33 | 15.50 |
+| Drive Motor 3 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | 6.33 | 15.50 |
+| Drive Motor 4 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | 6.33 | 15.50 |
 | | | | | <div style="text-align: center;"><strong>COMPUTE</strong></div> | | | | |
-| NX Orin | 12.0 | 2.70 | 3.30 | 32.40 | 100.00% | 32.40 | <mark>0.75</mark> | 0.92 |
-| Nucleo F446RE | 5.0 | 0.08 | 0.50 | 0.40 | 100.00% | 0.40 | <mark>0.01</mark> | 0.06 |
+| NX Orin | 12.0 | 2.70 | 3.30 | 32.40 | 100.00% | 32.40 | 0.75 | 0.92 |
+| Nucleo F446RE | 5.0 | 0.08 | 0.50 | 0.40 | 100.00% | 0.40 | 0.01 | 0.06 |
 | | | | | <div style="text-align: center;"><strong>SENSORS</strong></div> | | | | |
-| LI-IMX568-GMSL2-050H RGB Camera | 12.0 | 0.15 | 0.25 | 1.80 | 100.00% | 1.80 | <mark>0.04</mark> | 0.07 |
-| Deserialiser/Adapter | 12.0 | 0.20 | 0.40 | 2.40 | 100.00% | 2.40 | <mark>0.06</mark> | 0.11 |
-| Livox Mid-360 | 12.0 | 0.54 | 2.00 | 6.48 | 100.00% | 6.48 | <mark>0.15</mark> | 0.56 |
-| RPLidar S2 | 5.0 | 0.45 | 0.80 | 0.80 | 100.00% | 0.80 | <mark>0.05</mark> | 0.09 |
-| UM980 GPS | 5.0 | 0.12 | 0.20 | 0.60 | 100.00% | 0.60 | <mark>0.01</mark> | 0.02 |
+| LI-IMX568-GMSL2-050H RGB Camera | 12.0 | 0.15 | 0.25 | 1.80 | 100.00% | 1.80 | 0.04 | 0.07 |
+| Deserialiser/Adapter | 12.0 | 0.20 | 0.40 | 2.40 | 100.00% | 2.40 | 0.06 | 0.11 |
+| Livox Mid-360 | 12.0 | 0.54 | 2.00 | 6.48 | 100.00% | 6.48 | 0.15 | 0.56 |
+| RPLidar S2 | 5.0 | 0.45 | 0.80 | 0.80 | 100.00% | 0.80 | 0.05 | 0.09 |
+| UM980 GPS | 5.0 | 0.12 | 0.20 | 0.60 | 100.00% | 0.60 | 0.01 | 0.02 |
 | | | | | <div style="text-align: center;"><strong>COMMUNICATION</strong></div> | | | | |
-| BMS 6S-22S LiFePO4 100A | 51.2 | 0.02 | 0.05 | 0.77 | 100.00% | 0.77 | <mark>0.02</mark> | 0.05 |
-| CAN Transceiver (SN65HVD230) | 3.3 | 0.02 | 0.07 | 0.05 | 100.00% | 0.05 | <mark>0.00</mark> | 0.01 |
-| Ethernet Switch (TP-Link LS105G) | 5.0 | 0.38 | 0.50 | 1.90 | 100.00% | 1.90 | <mark>0.04</mark> | 0.06 |
-| Microhard pMDDL2550 Wireless C2 Transceiver | 12.0 | 0.40 | 1.20 | 4.80 | 100.00% | 4.80 | <mark>0.11</mark> | 0.33 |
-| Wireless Switch for ESC Driver (E-Stop) | 12.0 | 0.01 | 0.01 | 0.12 | 100.00% | 0.12 | <mark>0.00</mark> | 0.00 |
-| DC-DC Relay | 3.3 | 0.01 | 0.01 | 0.02 | 100.00% | 0.02 | <mark>0.00</mark> | 0.00 |
+| BMS 6S-22S LiFePO4 100A | 51.2 | 0.02 | 0.05 | 0.77 | 100.00% | 0.77 | 0.02 | 0.05 |
+| CAN Transceiver (SN65HVD230) | 3.3 | 0.02 | 0.07 | 0.05 | 100.00% | 0.05 | 0.00 | 0.01 |
+| Ethernet Switch (TP-Link LS105G) | 5.0 | 0.38 | 0.50 | 1.90 | 100.00% | 1.90 | 0.04 | 0.06 |
+| Microhard pMDDL2550 Wireless C2 Transceiver | 12.0 | 0.40 | 1.20 | 4.80 | 100.00% | 4.80 | 0.11 | 0.33 |
+| Wireless Switch for ESC Driver (E-Stop) | 12.0 | 0.01 | 0.01 | 0.12 | 100.00% | 0.12 | 0.00 | 0.00 |
+| DC-DC Relay | 3.3 | 0.01 | 0.01 | 0.02 | 100.00% | 0.02 | 0.00 | 0.00 |
 | | | | | <div style="text-align: center;"><strong>VACUUM</strong></div> | | | | |
-| NEMA17 Stepper (+ driver) | 12.0 | 1.20 | 1.50 | 14.40 | 100.00% | 14.40 | <mark>0.33</mark> | 0.42 |
+| NEMA17 Stepper (+ driver) | 12.0 | 1.20 | 1.50 | 14.40 | 100.00% | 14.40 | 0.33 | 0.42 |
 | | | | | <div style="text-align: center;"><strong>LIGHTING</strong></div> | | | | |
-| Indicator Light Tower | 12.0 | 0.20 | 0.40 | 2.40 | 100.00% | 2.40 | <mark>0.06</mark> | 0.11 |
-| Bay Cooling Fans | 12.0 | 0.50 | 0.80 | 6.00 | 100.00% | 6.00 | <mark>0.14</mark> | 0.22 |
-| Headlights for CV | 12.0 | 0.83 | 1.20 | 9.96 | 50.00% | 4.98 | <mark>0.23</mark> | 0.33 |
-| Rear Red Light Strip / Status Light | 12.0 | 0.25 | 0.40 | 3.00 | 100.00% | 3.00 | <mark>0.07</mark> | 0.11 |
+| Indicator Light Tower | 12.0 | 0.20 | 0.40 | 2.40 | 100.00% | 2.40 | 0.06 | 0.11 |
+| Bay Cooling Fans | 12.0 | 0.50 | 0.80 | 6.00 | 100.00% | 6.00 | 0.14 | 0.22 |
+| Headlights for CV | 12.0 | 0.83 | 1.20 | 9.96 | 50.00% | 4.98 | 0.23 | 0.33 |
+| Rear Red Light Strip / Status Light | 12.0 | 0.25 | 0.40 | 3.00 | 100.00% | 3.00 | 0.07 | 0.11 |
 
 *Table 5.2: Total Power Table of Interim System.*
 
