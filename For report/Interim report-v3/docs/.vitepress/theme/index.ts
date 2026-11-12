@@ -14,9 +14,6 @@ import MissingAsset from './components/content/MissingAsset.vue'
 import SubsystemLead from './components/report/SubsystemLead.vue'
 import Stat from './components/content/Stat.vue'
 import VideoClip from './components/content/VideoClip.vue'
-import DecisionCard from './components/DecisionCard.vue'
-import BugCard from './components/BugCard.vue'
-import StageStepper from './components/StageStepper.vue'
 import { prefersReducedMotion, supportsViewTransitions } from './composables/motionEnv'
 import { reveal } from './components/report/navigate'
 import { duration, ease, spring } from './motion/tokens'
@@ -93,7 +90,7 @@ export default {
   enhanceApp({ app, router }) {
     app.component('GlassSurface', GlassSurface)
     // Author-facing content components (usable in any Markdown page; see the repository README)
-    for (const [name, c] of Object.entries({ Card, CardGrid, Stat, Figure, VideoClip, AssetLink, MissingAsset, SubsystemLead, DecisionCard, BugCard, StageStepper })) app.component(name, c)
+    for (const [name, c] of Object.entries({ Card, CardGrid, Stat, Figure, VideoClip, AssetLink, MissingAsset, SubsystemLead })) app.component(name, c)
     // Interactive widgets — one async chunk each, loaded only by pages that use them
     const widgets = import.meta.glob('./components/widgets/*.vue')
     for (const [file, load] of Object.entries(widgets)) {
