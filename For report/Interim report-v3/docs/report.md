@@ -595,11 +595,11 @@ The work is divided into three subsystems, each with a named person in charge of
 
 <p class="ov-placeholder">*Section under development by Bryan Ng.*</p>
 
-#### Components & BOM {#components-bom .rpt-l3}
+#### Components List {#components-list .rpt-l3}
 
 <!--@compose: ./report/lead/bryan-lead.md-->
 
-<!--@compose: ./report/members/bryan/components-bom.md#report{shift=3,prefix=bom}-->
+<!--@compose: ./report/members/bryan/components-list.md#report{shift=3,prefix=bom}-->
 
 ### Microcontrollers {#microcontrollers}
 
