@@ -7,147 +7,194 @@ outline: [2,3]
 
 <!-- #region report -->
 
-<!-- Report summary (the Report's section text). The detailed write-up follows. -->
+## System Power Consumption
 
-## 📦 Master Electrical & Hardware Component List (BOM)
+The drivetrain power was estimated for four operating conditions. The mission-duration proportions and estimated power per motor are shown below.
 
-A complete catalogue of 35 hardware components—spanning power storage, safety cut-offs, high-power drivers, microcontrollers, camera sensors, and auxiliary converters—has been specified and procured for the FOD Hunter UGV platform.
+| Operating condition | Mission duration (%) | Estimated electrical power (W) |
+|---|---:|---:|
+| Flat cruising | 80 | 78.48 |
+| Incline driving (5°) | 10 | 165.12 |
+| Acceleration | 5 | 222.14 |
+| Zero-radius turning | 5 | 708.10 |
 
-<CardGrid :cols="2">
+*Table 5.1: Estimated drivetrain power under different operating conditions, based on the interim presentation.*
 
-<Card>
+The electrical power of a component is calculated using:
 
-Total Acquired Items
+$$
+P=VI
+$$
 
-35 Components
+where $P$ is electrical power (W), $V$ is operating voltage (V), and $I$ is current (A).
 
-</Card>
+For an intermittently operated load, average power is estimated using its duty cycle $D$:
 
-<Card>
+$$
+P_{\text{avg}}=P\times D
+$$
 
-Primary Architecture
+The weighted average drivetrain power is calculated from the operating-condition powers and their mission fractions:
 
-48V LiFePO4 Bus
+$$
+P_{\text{weighted}}=\sum_{i=1}^{n}P_iD_i
+$$
 
-</Card>
+Using the proportions in Table 5.1:
 
-</CardGrid>
+$$
+P_{\text{weighted}}=(78.48\times0.80)+(165.12\times0.10)+(222.14\times0.05)+(708.10\times0.05)
+$$
 
-## ⚡ 4.2.1 Power Calculations & System Load Budget (48V Architecture)
+$$
+P_{\text{weighted}}=125.808\text{ W}\approx125.8\text{ W per motor}
+$$
 
-Adopting a **48V nominal power bus** (rather than 24V) is an essential architectural decision: doubling the system voltage halves the current required to deliver equivalent wattage ($P = V \times I$). This drastically suppresses resistive heat generation ($P_{\text{loss}} = I^2 R$) across wiring and connectors, enabling the safe operation of the 2800W vacuum and high-torque ZLLG80 hub motors within an 8 AWG wire harness.
+The total system power consumption was estimated by combining the weighted average power of the four hub motors with the average power demand of the remaining electrical components, including the onboard computing system, sensors, communication equipment and auxiliary devices.
 
-| Subsystem / Consumer | Operating Voltage | Continuous Current (Nominal) | Peak Inrush Current | Nominal Power | Peak Power | Operational Duty Cycle |
-| --- | --- | --- | --- | --- | --- | --- |
-| **Dual Hub Motors (ZLLG80ASM25) via ZLAC8015D** | 48 V DC | 12.66 A total | 31.00 A total | 1,000 W rated | 1,488 W calculated | 18.62% assumed |
-| **2800W Industrial Suction Vacuum** | 48 V assumed | 58.33 A | \[To be filled in\] | 2,800 W | &gt;= 2,800 W; surge TBC | 0% transit; 100% active |
-| **Hilbert's Laptop (UGV Onboard Compute)** | Internal battery (independent of 48V bus) | 0 A (Independent) | 0 A (Independent) | 0 W (48 V bus) | 0 W (48 V bus) | 100% (Runs on internal battery; 0A from 48V) |
-| **12V Auxiliary Rail (Switch, Fans, Lights, Tower)** | 12 V / 5 V regulated | 3.77 A (12 V equivalent) | 6.30 A (12 V equivalent) | 45.21 W | 75.58 W | 50 - 100% by component |
-| **5V Logic Rail (STM32 F446RE, UM980 GPS, CAN)** | 5 V / 3.3 V regulated | 0.21 A (5 V equivalent) | 0.76 A (5 V equivalent) | 1.05 W | 3.93 W | 100% |
-| **DC-DC Buck Converter Inefficiencies (~8%)** | 48 V input | 0.084 A (48 V) | 0.144 A (48 V) | 4.02 W | 6.91 W | 100% when rails active |
-| **TOTAL TRANSIT STATE (Vacuum Standby)** | **48 V DC** | **≈2.18 A average** | **≈33.0 A (estimated simultaneous peak)** | **≈104.6 W average** | **≈1,574 W** | **Vacuum off; motors 18.62% assumed** |
-| **PEAK ACTIVE REMEDIATION (Full Vacuum Active)** | **48 V DC** | **≈81.2 A** | **&gt;= 91.6 A** | **≈3,898 W** | **&gt;= 4,398 W (vacuum surge excluded)** | **Motors and vacuum fully active** |
+$$
+P_{\text{system}}=(4\times P_{\text{motor,weighted}})+P_{\text{components,avg}}=611.36\text{ W}
+$$
 
-<CardGrid :cols="3">
+The power consumption of the individual electrical components is summarised in table below, including their operating voltages, estimated current requirements and operating duty cycles. These values form the basis of the overall system power budget and subsequent battery capacity calculations.
 
-<Card title="1. Usable Energy Storage (48V 20Ah)" accent="blue">
+### Consolidated Subsystem Load Budget
 
-Calculated for an 80% Depth of Discharge (DoD) margin on the 48V 20Ah LiFePO4 pack:
+A 48 V-class power bus is used to reduce current relative to a 24 V bus for the same power. Since resistive losses scale with current squared ($P_{\text{loss}}=I^2R$), reducing current can reduce wiring and connector losses, subject to suitable component ratings and protection.
 
-<Card accent="purple">
+| Components | Voltage (V) | Current draw (A) | Peak current (A) | Power (W) | Duty cycle (%) | Average power (W) | 48 V nominal current (A) | 48 V peak current (A) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| | | | | <div style="text-align: center;"><strong>DRIVETRAIN</strong></div> | | | | |
+| Drive Motor 1 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | 6.33 | 15.50 |
+| Drive Motor 2 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | 6.33 | 15.50 |
+| Drive Motor 3 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | 6.33 | 15.50 |
+| Drive Motor 4 | 48.0 | 6.33 | 15.50 | 500.00 | 25.16% | 125.80 | 6.33 | 15.50 |
+| | | | | <div style="text-align: center;"><strong>COMPUTE</strong></div> | | | | |
+| NX Orin | 12.0 | 2.70 | 3.30 | 32.40 | 100.00% | 32.40 | 0.75 | 0.92 |
+| Nucleo F446RE | 5.0 | 0.08 | 0.50 | 0.40 | 100.00% | 0.40 | 0.01 | 0.06 |
+| | | | | <div style="text-align: center;"><strong>SENSORS</strong></div> | | | | |
+| LI-IMX568-GMSL2-050H RGB Camera | 12.0 | 0.15 | 0.25 | 1.80 | 100.00% | 1.80 | 0.04 | 0.07 |
+| Deserialiser/Adapter | 12.0 | 0.20 | 0.40 | 2.40 | 100.00% | 2.40 | 0.06 | 0.11 |
+| Livox Mid-360 | 12.0 | 0.54 | 2.00 | 6.48 | 100.00% | 6.48 | 0.15 | 0.56 |
+| RPLidar S2 | 5.0 | 0.45 | 0.80 | 0.80 | 100.00% | 0.80 | 0.05 | 0.09 |
+| UM980 GPS | 5.0 | 0.12 | 0.20 | 0.60 | 100.00% | 0.60 | 0.01 | 0.02 |
+| | | | | <div style="text-align: center;"><strong>COMMUNICATION</strong></div> | | | | |
+| BMS 6S-22S LiFePO4 100A | 51.2 | 0.02 | 0.05 | 0.77 | 100.00% | 0.77 | 0.02 | 0.05 |
+| CAN Transceiver (SN65HVD230) | 3.3 | 0.02 | 0.07 | 0.05 | 100.00% | 0.05 | 0.00 | 0.01 |
+| Ethernet Switch (TP-Link LS105G) | 5.0 | 0.38 | 0.50 | 1.90 | 100.00% | 1.90 | 0.04 | 0.06 |
+| Microhard pMDDL2550 Wireless C2 Transceiver | 12.0 | 0.40 | 1.20 | 4.80 | 100.00% | 4.80 | 0.11 | 0.33 |
+| Wireless Switch for ESC Driver (E-Stop) | 12.0 | 0.01 | 0.01 | 0.12 | 100.00% | 0.12 | 0.00 | 0.00 |
+| DC-DC Relay | 3.3 | 0.01 | 0.01 | 0.02 | 100.00% | 0.02 | 0.00 | 0.00 |
+| | | | | <div style="text-align: center;"><strong>VACUUM</strong></div> | | | | |
+| NEMA17 Stepper (+ driver) | 12.0 | 1.20 | 1.50 | 14.40 | 100.00% | 14.40 | 0.33 | 0.42 |
+| | | | | <div style="text-align: center;"><strong>LIGHTING</strong></div> | | | | |
+| Indicator Light Tower | 12.0 | 0.20 | 0.40 | 2.40 | 100.00% | 2.40 | 0.06 | 0.11 |
+| Bay Cooling Fans | 12.0 | 0.50 | 0.80 | 6.00 | 100.00% | 6.00 | 0.14 | 0.22 |
+| Headlights for CV | 12.0 | 0.83 | 1.20 | 9.96 | 50.00% | 4.98 | 0.23 | 0.33 |
+| Rear Red Light Strip / Status Light | 12.0 | 0.25 | 0.40 | 3.00 | 100.00% | 3.00 | 0.07 | 0.11 |
 
-E\_gross = 48.0V × 20Ah = 960.0 Wh<br> E\_usable = 960 Wh × 0.80 = 768.0 Wh
+*Table 5.2: Total Power Table of Interim System.*
 
-</Card>
+The consolidated load budget summarises the estimated electrical requirements of each subsystem, including operating voltage, nominal current, peak current, power consumption and duty cycle. The nominal current and operating voltage are used to determine the power demand of individual components through (P=VI), while the duty cycle accounts for intermittent operation to obtain the average power consumption. These average power values are then combined to estimate the total system load, which forms the basis for the subsequent battery capacity and runtime calculations.
 
-</Card>
+The peak current values are considered separately to assess the maximum electrical demand during startup, acceleration and simultaneous component operation. These values are important for selecting suitable wiring, connectors, DC-DC converters and protection devices, including the BMS and fuses. The equivalent 48 V current values allow loads operating at different voltages to be compared on a common battery-bus basis, helping to evaluate the overall current demand on the power distribution system.
 
-<Card title="2. Transit Patrol Runtime" accent="emerald">
+As the values are based on interim calculations, the power budget will be further refined during Semester 2 to account for additional components and changes to the FOD remediation system as our future works. These include the redesigned vacuum and collection mechanism, stepper motors for mechanical actuation, and an infrared (IR) sensor to confirm successful FOD clearance. 
 
-Continuous patrolling at ≥10 km/h with vacuum in standby (104.6W avg drawn from 48V bus):
+## Energy Requirement & Battery Capacity
 
-<Card accent="emerald">
+The required energy is calculated from the estimated average system power and selected 1.5-hour design duration:
 
-t\_transit = 768.0 Wh / 104.6 W = 7.34 hours<br> t\_transit = 441 minutes continuous runtime
+$$
+E_{\text{required}}=P_{\text{system}}\times t
+$$
 
-</Card>
+$$
+E_{\text{required}}=611.36\times1.5=917.04\text{ Wh}
+$$
 
-</Card>
+The required battery capacity accounts for nominal voltage and the assumed allowable depth of discharge (DoD):
 
-<Card title="3. Airfield Patrol Distance" accent="purple">
+$$
+C_{\text{required}}=
+\frac{E_{\text{required}}}
+{V_{\text{nominal}}\times DoD}
+$$
 
-Total runway sweep distance per single charge cycle at 10 km/h:
+Assuming a 51.2 V nominal voltage for a 16-series LiFePO4 battery (16 cells at 3.2 V nominal each) and an 80% DoD:
 
-<Card accent="blue">
+$$
+C_{\text{required}}=
+\frac{917.04}{51.2\times0.8}
+=22.39\text{ Ah}
+$$
 
-D\_patrol = 10 km/h × 7.34 h = 73.4 km<br> Runway Coverage = &gt; 18.3 full sweeps of 4 km runway
+Approximately 22.39 Ah is therefore required for the 1.5-hour design target under the 611.36 W average-load assumption. The battery's actual nominal voltage and cell configuration must be confirmed from its manufacturer documentation.
 
-</Card>
+## Battery Chemistry Comparison
 
-</Card>
+Four chemistries were considered using energy density, cycle life, thermal behaviour, discharge capability, mass and suitability for repeated UGV operation.
 
-</CardGrid>
+| Battery chemistry | Voltage / configuration considered | Cycle life (80% DoD) | Energy density | Thermal behaviour | Discharge capability | Engineering advantages and limitations |
+|---|---|---:|---:|---|---|---|
+| LiFePO4 | 48 V class; 51.2 V if 16S | 2,000–3,500 cycles | 100–130 Wh/kg | Comparatively low thermal-runaway risk; prior estimate reports onset above 270°C | 5C burst / 2C continuous (100 A BMS in prior estimate) | Good thermal stability and cycle life; lower energy density means greater mass for equivalent energy |
+| Conventional Li-ion (NMC) | 48.1 V (13S) | 500–800 cycles | 160–220 Wh/kg | Requires careful electrical and thermal protection; prior estimate reports onset around 210°C | 3C–5C | Higher energy density and lower mass; thermal protection and management remain important |
+| LiPo | 44.4 V (12S) | 300–500 cycles | 180–240 Wh/kg | More sensitive to mechanical damage and swelling; prior estimate reports onset around 150°C | 25C–50C | Lightweight packaging and high discharge capability in suitable designs; greater sensitivity to damage and swelling |
+| Lead-acid (SLA / AGM) | 48 V (four 12 V batteries) | 300–400 cycles | 30–40 Wh/kg | Low thermal-runaway risk in the prior comparison | 1C | Established and relatively low initial cost; high mass and low usable energy density |
 
-## 🔋 4.2.2 Battery Chemistry Selection & Airfield Safety
+*Table 5.3: Preliminary comparison of battery chemistries and reported specifications.*
 
-The presence of aviation turbine kerosene (Jet A-1) along active runways imposes strict safety constraints. Traditional Lithium Polymer (LiPo) cells decompose violently with self-sustaining oxygen generation if damaged. **Lithium Iron Phosphate (LiFePO4)** was selected for its non-combustible cathode chemistry.
+The numerical ranges above were present in the project comparison, but the project's reference list does not currently identify the sources or exact models behind them. They should be treated as indicative, unverified values—not manufacturer specifications—until supported by cited cell or battery datasheets. Battery characteristics vary by product, configuration and test conditions, so final comparison should use referenced specifications for the actual candidate packs.
 
-| Battery Chemistry | Nominal Voltage | Cycle Life (80% DoD) | Energy Density | Thermal Runaway Risk | Max Continuous Discharge | Selection Status |
-| --- | --- | --- | --- | --- | --- | --- |
-| **48V LiFePO4 (Lithium Iron Phosphate)** | **48.0 V** (51.2V Float) | **2,000 – 3,500 cycles** | 100 – 130 Wh/kg | <Badge type="tip" text="Extremely Low (Thermal onset >270°C)" /> | 5C Burst / 2C Cont (100A BMS) | **SELECTED:** Inherent fire safety, long cycle life, high current capability for 2800W vacuum. |
-| **LiPo (Lithium Polymer)** | 44.4 V (12S) | 300 – 500 cycles | 180 – 240 Wh/kg | <Badge type="danger" text="Severe Hazard (∼150°C thermal runaway)" /> | 25C – 50C | **REJECTED:** Catastrophic fire risk on airside tarmac; poor life cycle durability. |
-| **Li-ion NMC (18650 / 21700)** | 48.1 V (13S) | 500 – 800 cycles | 160 – 220 Wh/kg | <Badge type="warning" text="Moderate Risk (∼210°C)" /> | 3C – 5C | **REJECTED:** Requires complex liquid thermal management; volatile decomposition. |
-| **Lead-Acid (SLA / AGM)** | 48.0 V (4x 12V) | 300 – 400 cycles | 30 – 40 Wh/kg | <Badge type="tip" text="Negligible" /> | 1C | **REJECTED:** Excessive weight (&gt;35 kg penalty), destroys payload allowance and climbing torque. |
+LiFePO4 was selected provisionally for its thermal stability and cycle-life characteristics. Its lower energy density was considered an acceptable mass trade-off for a ground-based platform. Chemistry alone does not ensure safe operation; electrical protection, thermal management and secure mechanical mounting are also required.
 
-## 🔌 4.2.3 System Wiring Diagram & Electrical Architecture (48V Architecture)
+## Final Battery Selection & Runtime
 
-The electrical schematic integrates high-current protection (100A main fuse, 100A kill switch, ANM fuse box), dual hub motor actuation, the 2800W vacuum circuit, and multi-rail buck regulation to power Hilbert's laptop and sensors:
+A 48 V-class, 20 Ah LiFePO4 battery was selected for the preliminary design. Assuming a 16S configuration with 51.2 V nominal voltage, its nominal energy is:
 
-<Card>
+$$
+E_{\text{nominal}}=51.2\times20=1024\text{ Wh}
+$$
 
-<Figure src="../../../shared/assets/diagrams/electrical-diagram.svg" alt="Diagram" />
+At the assumed 80% DoD, usable energy is:
 
-</Card>
+$$
+E_{\text{usable}}=1024\times0.8=819.2\text{ Wh}
+$$
 
-<CardGrid :cols="4">
+Using the estimated 611.36 W average system power, predicted runtime is:
 
-<Card title="1. Primary 48V Power &amp; Kill Loop">
+$$
+t=\frac{819.2}{611.36}\approx1.34\text{ hours}
+$$
 
-The 48V 20Ah LiFePO₄ battery supplies the main power bus through a 100A BMS, 100A main fuse and 100A kill switch. Power is distributed through individually fused circuits to the hub motors, vacuum and DC-DC converters. The kill switch provides emergency power isolation, while the BMS monitors battery conditions and protects against electrical faults.
+The 20 Ah selection is expected to exceed the minimum operating requirement of one hour under the current assumptions, but it does not meet the 1.5-hour design target. Achieving that target at the assumed load requires approximately 22.39 Ah at 51.2 V and 80% DoD. Battery capacity and runtime must be reassessed after measuring actual system consumption, particularly with the drivetrain and FOD collection mechanism operating together.
 
-</Card>
+### Transit-Only Runtime Estimate
 
-<Card title="2. 20V Laptop Power Sub-Circuit">
+An earlier transit-only estimate assumes a 104.6 W average bus load, with the vacuum off and the motors at the assumed transit duty cycle. It uses a 48.0 V, 20 Ah battery assumption (960 Wh nominal and 768 Wh usable at 80% DoD), distinct from the 51.2 V basis used above:
 
-A dedicated 48V-to-20V, 10A buck converter supplies regulated power to Hilbert's onboard laptop through a protected auxiliary circuit. The laptop handles ROS 2 processing, navigation and high-level control while communicating with the STM32 microcontroller. This separates computing power requirements from the high-current motor and vacuum circuits.
+$$
+t_{\text{transit}}=\frac{768}{104.6}=7.34\text{ hours}
+$$
 
-</Card>
+At 10 km/h, that corresponds to an estimated 73.4 km of travel, or more than 18.3 sweeps of a 4 km runway. This is a transit-only estimate, not a prediction for the mixed mission represented by the 611.36 W average-system-power assumption. Confirm the battery's nominal voltage, usable energy and the transit-load estimate against manufacturer specifications and measurements before relying on this runtime.
 
-<Card title="3. Direct-Drive Hub Motor Train">
+### Battery Selection Summary
 
-Two 48V ZLLG80ASM25 hub motors are controlled by the ZLAC8015D V4.2 dual-channel servo driver, supplied through a dedicated 50A ANM fuse. The STM32 communicates with the driver via CAN bus to control motor speed and direction. The direct-drive configuration eliminates mechanical transmission components, reducing maintenance and improving drivetrain efficiency.
+| Parameter | Preliminary selection |
+|---|---|
+| Battery chemistry | LiFePO4 |
+| Marketed voltage class | 48 V |
+| Assumed nominal voltage | 51.2 V (16S, subject to confirmation) |
+| Capacity | 20 Ah |
+| Nominal energy | 1024 Wh |
+| Assumed usable energy | 819.2 Wh |
+| Estimated average system power | 611.36 W |
+| Predicted mixed-mission runtime | Approximately 1.34 hours |
+| Minimum operating requirement | More than 1 hour |
+| Design target | 1.5 hours |
 
-</Card>
-
-<Card title="4. Automotive Vision &amp; Navigation">
-
-Dedicated 12V and 5V buck converters supply regulated power to auxiliary electronics, sensors and the STM32 F446RE. The STM32 interfaces with the UM980 GPS and motor driver, while the onboard laptop processes navigation and perception data. Separate low-voltage rails support reliable sensor operation and reduce interference from high-power loads.
-
-</Card>
-
-</CardGrid>
-
-
-## Subsystem Power Consumption Breakdown
-
-\[To be filled\]
-
-## DC-DC Buck Regulation & Thermal Loss
-
-\[To be filled\]
-
-## Battery Capacity & Runtime Verification
-
-\[To be filled\]
+The selected battery provides a preliminary balance between runtime, mass and electrical safety. Further testing and datasheet verification are required to confirm its discharge capability, usable energy and runtime under representative operating conditions.
 
 <!-- #endregion report -->
