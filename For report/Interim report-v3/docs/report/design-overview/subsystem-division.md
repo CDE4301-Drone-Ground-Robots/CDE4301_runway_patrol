@@ -266,11 +266,9 @@ Planned the placement and wiring of electrical components within the chassis, co
 
 #### Microcontroller Hardware {#ov-microcontroller-hardware}
 
-Selected and integrated the STM32 NUCLEO-F446RE as the real-time Embedded Control Unit (ECU), utilizing dual hardware bxCAN controllers, six UART/USART channels, and an ARM Cortex-M4F core to manage actuation, sensing, and safety loops with >80% CPU headroom.
-
-Designed a conflict-free 64-pin Morpho electrical map, implementing 5 V current-sinking open-drain topology for optocoupled stepper control without level-shifters, isolated 500 kbps CAN motor bus routing, and pre-allocated interfaces for RTK GNSS, IMU, ToF ranging, and BMS telemetry.
-
-Validated physical transceiver signal integrity and bus termination via automated DC loopback sweeps and hardware diagnostics prior to live drivetrain bring-up.
+- Selected the STM32 NUCLEO-F446RE after benchmarking candidates against a **34.34 MHz** worst-case CPU budget (including a twofold safety margin).
+- Allocated **11** external subsystem interfaces across the Morpho headers with zero pin or DMA conflicts.
+- Implemented **5 V** open-drain low-side current sinking on `PC2`/`PC3` to drive the TB6600 stepper optocouplers without external level shifters.
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#stm32-hardware">STM32 Hardware <span aria-hidden="true">↗</span></a>
@@ -282,11 +280,9 @@ Validated physical transceiver signal integrity and bus termination via automate
 
 #### Embedded Firmware {#ov-embedded-firmware}
 
-Developed production-grade embedded firmware in a 5-stage V&V pipeline, progressing from CAN physical layer diagnostics and DWT sub-microsecond pulse timing to dual-driver CiA 402 motion control and fault recovery.
-
-Implemented a deterministic 50 Hz control loop executing differential-drive kinematics (forward, coordinated arc, and spot turns) with dynamic wheel-speed scaling and asymmetric acceleration/deceleration S-curve ramping (35 / 15 RPM/s).
-
-Built a comprehensive multi-tier safety architecture featuring a 6-state CiA 402 FSM, 250 ms communication watchdog, USB gamepad disconnect auto-stop, zero-latency hardware emergency braking, and neutral-interlock rearming.
+- Verified the bare-metal firmware stack bottom-up across **5** progressive stages, from CAN physical loopback to full wireless teleoperation.
+- Implemented a **50 Hz** control loop combining three-mode differential-drive kinematics, proportional wheel anti-saturation, and velocity ramping.
+- Enforced a **250 ms** communication watchdog alongside a six-state CiA 402 supervisor, emergency quick-stop braking, and neutral-gated re-arming.
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#stm32-firmware">STM32 Firmware <span aria-hidden="true">↗</span></a>

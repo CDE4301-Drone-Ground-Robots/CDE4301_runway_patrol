@@ -600,3 +600,120 @@ table.data-table.fit-table.fit-img td:first-child img { max-width: 90px; margin:
     padding-right: clamp(24px, 5.5vw, 105px);
   }
 }
+
+/* STM32 pages: status strip, verification pills, and hero drive video slot */
+.fh-lead-summary {
+  margin: 0.4rem 0 1rem;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--vp-c-text-1);
+}
+
+.fh-status-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  margin: 0.75rem 0 1.2rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  background: var(--vp-c-bg-soft);
+}
+
+.fh-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.fh-status-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vp-c-text-2);
+  min-width: 170px;
+}
+
+.fh-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.fh-pill--tested {
+  background: rgba(16, 185, 129, 0.14);
+  color: #047857;
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.dark .fh-pill--tested {
+  background: rgba(16, 185, 129, 0.16);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.35);
+}
+
+.fh-pill--partial {
+  background: rgba(245, 158, 11, 0.14);
+  color: #b45309;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.dark .fh-pill--partial {
+  background: rgba(245, 158, 11, 0.16);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.35);
+}
+
+.fh-pill--untested {
+  background: var(--vp-c-default-soft);
+  color: var(--vp-c-text-2);
+  border-color: var(--vp-c-divider);
+}
+
+.fh-hero-slot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  margin: 0.85rem 0 1.5rem;
+  border: 1px dashed var(--vp-c-divider);
+  border-radius: 10px;
+  background: var(--vp-c-bg-alt);
+}
+
+.fh-hero-slot__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.fh-hero-slot__title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+.fh-hero-slot__desc {
+  font-size: 0.78rem;
+  color: var(--vp-c-text-2);
+}
+
+@media (max-width: 640px) {
+  .fh-status-label {
+    min-width: 100%;
+    margin-bottom: 2px;
+  }
+  .fh-hero-slot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
