@@ -7,6 +7,8 @@ outline: [2, 3]
 
 # STM32 Firmware Architecture & Control
 
+<!-- #region report -->
+
 <p class="fh-lead-summary">
   Bare-metal STM32F446RE firmware that turns gamepad input now, and ROS 2 <code>cmd_vel</code> in Semester 2, into 4-wheel CAN velocity commands and stepper pulses inside one 50 Hz (20 ms) loop with layered stop paths. Built and tested bottom-up in 5 stages.
 </p>
@@ -41,8 +43,6 @@ outline: [2, 3]
   </div>
   <MissingAsset name="stm32-drive-hero.mp4" alt="Short looping 4WD firmware drive video placeholder" />
 </div>
-
-<!-- #region report -->
 
 <span id="section-1-method"></span>
 
@@ -195,7 +195,6 @@ Each stage was tested on its own before the next was added, so every new failure
 | **FW-R4: CAN robustness** | Loopback, `B1` baud sweep, dual-node `0x6041` poll | Loopback 100% pass; locked at 500 kbps; no mailbox stalls with retransmission off | <span class="fh-pill fh-pill--tested">Bench-tested</span> |
 | **FW-R5: Stepper timing** | `USART2` CLI (`W`/`S`, `+`/`-`) from $5,000$ down to $200\ \mu\text{s}$ | Full $110\text{ mm}$ stroke with no missed steps | <span class="fh-pill fh-pill--tested">Bench-tested</span> |
 | **FW-R6: Watchdog & E-stop** | Controller off, USB unplug, `B`/`BACK`, `A` with throttle held | Stops ≤ 250 ms after last packet, < 1 ms on unplug; re-arm blocked until controls at neutral | <span class="fh-pill fh-pill--tested">Bench-tested</span> |
-| **FW-R7: Jetson & sensors** | Code inspection of `Robot_Set_CmdVel()` and 500 ms watchdog | Compiles; live Jetson link and sensor drivers are Semester 2 | <span class="fh-pill fh-pill--partial">Partial</span> |
 
 <span id="section-8-safety"></span>
 
