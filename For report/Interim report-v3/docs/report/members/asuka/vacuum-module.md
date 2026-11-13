@@ -135,7 +135,7 @@ This shortfall should not be read as poor efficiency alone. Manufacturers quote 
 
 To validate the integrated subsystem, I mounted the vacuum on the FOD Hunter with a custom-made bin sized to fit the chassis, and recorded a pick-up trial using the top-down intake. The FOD Hunter collected M3–M4 screws under 10 g, confirming that the vacuum, intake and bin work as an integrated system on the rover (Video 4.3.1). Larger fasteners remained on the ground, consistent with the bench results and the model in Section 4.3.3. The trial therefore realises the subsystem for light FOD, but shows that lifting heavier FOD by suction alone would require a disproportionately larger motor. This raised the question of whether more suction power is the right solution at all, which led to the redesign in Section 4.3.5.
 
-<VideoClip src="./assets/videos/vacuum-rover-pickup-trial.mp4" caption="Video 4.3.1: Pick-up trial on the FOD Hunter using the top-down intake." />
+<VideoClip src="./assets/videos/vacuum-rover-pickup-trial.mp4" poster="./assets/images/vacuum-rover-pickup-trial-poster.jpg" caption="Video 4.3.1: Pick-up trial on the FOD Hunter using the top-down intake." />
 
 Rather than increasing suction, I changed the pick-up method so that the vacuum no longer has to lift the object off the ground. The redesigned mechanism uses a bounding box that opens and sweeps the FOD inside, elevates above the canister's intake, then turns on the vacuum to draw the contents down an inclined tube into the bin (Figure 4.3.7). Lifting is now done mechanically by the Z-lift, and the airflow only needs to move the object along the tube.
 

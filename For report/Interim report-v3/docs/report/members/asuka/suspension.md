@@ -255,9 +255,13 @@ The drawback of the double wishbone is width: it extends the track, and the whee
 ### 4.2.4 Prototype and Realisation
 
 <!-- #region s4 -->
-For the prototype, the 100 lbf/in spring was purchased and integrated with the design of the suspension system. Sheet metal was chosen as the prototype material as it is cheap to manufacture and it is able to demonstrate the benefit of the dual-arm set-up during skid steering. Attached here is a video demonstration of the suspension system working over extremely undulating terrain. It is imperative to keep all four wheels on the ground at all times to prevent any current spike in the motors, so that the electrical system is protected. Fewer wheels in contact means that the torque on each wheel for the same function will be greatly increased. This is hazardous and might cause the current to surge.
+For the prototype, the 100 lbf/in spring was purchased and integrated with the design of the suspension system. Sheet metal was chosen as the prototype material as it is cheap to manufacture and it is able to demonstrate the benefit of the dual-arm set-up during skid steering. It is imperative to keep all four wheels on the ground at all times to prevent any current spike in the motors, so that the electrical system is protected. Fewer wheels in contact means that the torque on each wheel for the same function will be greatly increased. This is hazardous and might cause the current to surge.
 
-<VideoClip src="./assets/videos/suspension-terrain-test.mp4" caption="Video 4.2.1: Suspension prototype over undulating terrain." />
+<div style="max-width:230px;margin:0 auto">
+
+<Figure src="./assets/images/suspension-prototype-photo.png" alt="Hand holding the sheet metal suspension prototype, showing the spring and damper, the dual arms and the mounting bracket" caption="Figure 4.2.4: Sheet metal prototype of the suspension." />
+
+</div>
 
 <!-- #endregion s4 -->
 
@@ -265,11 +269,17 @@ For the prototype, the 100 lbf/in spring was purchased and integrated with the d
 
 <!-- #region s5 -->
 <!-- TODO: add the real-life test (video analysis of all four wheels staying in contact over obstacles) and the bounce test results. -->
+Attached here is a video demonstration of the suspension system working over extremely undulating terrain.
+
+<VideoClip src="./assets/videos/suspension-terrain-test.mp4" poster="./assets/images/suspension-terrain-test-poster.jpg" caption="Video 4.2.1: Suspension prototype over undulating terrain." />
+
+As clearly shown in this video, even over exaggerated undulating terrain, FOD Hunter maintains contact with the ground with all four wheels, allowing it to overcome challenging terrain.
+
 In an engineering control theory class (that I am reading this semester), I learned that a second order system is critically damped when the damping ratio $\xi$ becomes 1. For my transfer function, the numerator contains a zero due to the term $bs$, so critical damping for this transfer function still has a percentage overshoot of 13.5%. It requires the wheel rate, $K_w$, to be 14378 N/m and the dampener value $b$ to be 967 Ns/m.
 
 <SuspensionWidget2 />
 
-*Figure 4.2.4: Unit step response with adjustable natural frequency and damping ratio, set to critical damping by default.*
+*Figure 4.2.5: Unit step response with adjustable natural frequency and damping ratio, set to critical damping by default.*
 
 However, achieving this in real life may be extremely costly. The difference between cheap and expensive shock absorbers is the adjustability, the range of adjustability and the precision of the damping value. The orifices inside a shock absorber allow the damping constant to change, giving some degree of adjustability in the damping value. However, such components are extremely costly and can cost up to \$980 per shock absorber, while I could find non-adjustable ones at a significantly cheaper price of \$2.50 each. Therefore, I decided to purchase the lower-end shock absorber and focus the budget on the key function of the FOD Hunter, which is FOD remediation.
 
