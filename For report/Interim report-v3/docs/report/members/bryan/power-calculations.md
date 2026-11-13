@@ -199,4 +199,10 @@ At 10 km/h, that corresponds to an estimated 73.4 km of travel, or more than 18.
 
 The selected battery provides a preliminary balance between runtime, mass and electrical safety. Further testing and datasheet verification are required to confirm its discharge capability, usable energy and runtime under representative operating conditions.
 
+## 5.1.1.5 Limitations & Semester 2 Future Work
+
+The interim power calculations were based on estimated component loads and assumed operating duty cycles. As the FOD remediation mechanism is undergoing redesign, the current power budget does not fully account for the revised vacuum and collection system. Consequently, the predicted battery runtime remains subject to validation.
+
+During Semester 2, the power calculations will be updated to include the revised vacuum system and additional electrical components, including stepper motors and an infrared (IR) sensor for FOD clearance confirmation. Actual power consumption will be measured under different operating conditions to refine the system load budget and reassess the selected battery capacity against the minimum operating-time requirement.
+
 <!-- #endregion report -->

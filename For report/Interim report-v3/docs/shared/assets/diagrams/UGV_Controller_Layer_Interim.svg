@@ -1,0 +1,4732 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1900 1330"
+   width="1900"
+   height="1330"
+   font-family="Arial, Helvetica, sans-serif"
+   version="1.1"
+   id="svg324"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:c2pa="http://c2pa.org/manifest">
+  <defs
+     id="defs324" />
+  <rect
+     x="0"
+     y="0"
+     width="1900"
+     height="1330"
+     fill="#ffffff"
+     id="background" />
+  <g
+     id="layer-wires">
+    <polyline
+       id="wire-4"
+       points="90,1140 90,1200"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-5"
+       points="140,1140 140,1200"
+       fill="none"
+       stroke="#e0b800"
+       stroke-width="2"
+       stroke-linejoin="round"
+       stroke-dasharray="4, 3"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <text
+       x="137.15933"
+       y="1065.2489"
+       font-size="8.5764px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text1"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">balance / sense</text>
+    <text
+       x="364.65952"
+       y="1113.0961"
+       font-size="8.5764px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text2"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">BMS P− → PDB negative (common GND)</text>
+    <polyline
+       id="wire-10-2-5"
+       points="770,1067 850,1067"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.00263391,-0.15292901,2.4512992,0.06231099,-2114.1327,1035.6706)" />
+    <polyline
+       id="wire-10-2-5-7"
+       points="770,1067 850,1067"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-1.7463955,-0.00644984,0.71589048,-2.9348384,1068.9685,4010.399)"
+       style="stroke-width:2.20755;stroke-dasharray:none" />
+    <polyline
+       id="wire-10-2-5-7-3"
+       points="770,1067 850,1067"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-1.1097201,-0.00658534,-0.02055856,-2.9964924,1248.8579,3666.6221)"
+       style="stroke-width:2.20755;stroke-dasharray:none" />
+    <polyline
+       id="wire-10-2-5-7-3-1"
+       points="770,1067 850,1067"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.00653945,-1.3127867,2.9756125,-0.02432055,-2807.2931,1548.3493)"
+       style="stroke-width:2.20755;stroke-dasharray:none" />
+    <polyline
+       id="wire-10-2-5-7-2"
+       points="770,1067 850,1067"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.00589719,-4.4388058,2.6833719,1.8195757,-2581.7479,2294.1582)"
+       style="stroke-width:2.20755;stroke-dasharray:none" />
+    <polyline
+       id="wire-10-8"
+       points="770,1067 850,1067"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.00280792,2.0795308,-2.0162388,0.00208164,2815.8206,-620.2519)" />
+    <polyline
+       id="wire-10-8-1"
+       points="770,1067 850,1067"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(2.1204011,-0.00280705,0.00212255,2.0156093,-1135.174,-1162.0396)" />
+    <polyline
+       id="wire-10-8-1-9"
+       points="770,1067 850,1067"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(6.1753233,-0.00274472,0.00618158,1.9708538,-4585.7413,-952.754)" />
+    <polyline
+       id="wire-11"
+       points="1000,1045 1060,1045"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-0.00260421,-0.88098971,0.92509807,-0.00273459,-150.15596,1882.7598)"
+       style="stroke-width:6.64615;stroke-dasharray:none" />
+    <polyline
+       id="wire-12"
+       points="1000,1052 1060,1052"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(2.5251188e-4,-0.88099353,0.92510207,2.6516329e-4,-173.15838,1872.9668)"
+       style="stroke-width:6.64615;stroke-dasharray:none" />
+    <polyline
+       id="wire-13"
+       points="1000,1085 1060,1085"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(4.5171703,0,0,0.92510211,-3816.1083,-54.554702)"
+       style="stroke-width:4.89184;stroke-dasharray:none" />
+    <polyline
+       id="wire-14"
+       points="1000,1092 1060,1092"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(4.4824929,0,0,0.92510211,-3793.3202,-70.308166)"
+       style="stroke-width:4.87848;stroke-dasharray:none" />
+    <polyline
+       id="wire-15"
+       points="1000,1120 1060,1120"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-1.0940121,-0.92510211,0,1739.8273,2042.8517)"
+       style="stroke-width:5.96411;stroke-dasharray:none" />
+    <polyline
+       id="wire-15-1"
+       points="1000,1120 1060,1120"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-1.0940121,-0.92510211,0,1849.9951,2041.9247)"
+       style="stroke-width:5.96411;stroke-dasharray:none" />
+    <polyline
+       id="wire-15-1-9"
+       points="1000,1120 1060,1120"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(2.3270505,0,0,-0.92510211,-1358.4042,1984.8816)"
+       style="stroke-width:5.96411;stroke-dasharray:none" />
+    <polyline
+       id="wire-15-1-2"
+       points="1000,1120 1060,1120"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-1.0940121,-0.92510211,0,2005.691,2042.7403)"
+       style="stroke-width:5.96411;stroke-dasharray:none" />
+    <polyline
+       id="wire-16"
+       points="1000,1127 1060,1127"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-0.88099356,0.92510211,0,-350.17204,1822.6361)"
+       style="stroke-width:6.64615;stroke-dasharray:none" />
+    <polyline
+       id="wire-16-2"
+       points="1000,1127 1060,1127"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-0.88099356,0.92510211,0,-242.25075,1822.5329)"
+       style="stroke-width:6.64615;stroke-dasharray:none" />
+    <polyline
+       id="wire-16-2-1"
+       points="1000,1127 1060,1127"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-0.88099356,0.92510211,0,-87.368255,1822.1804)"
+       style="stroke-width:6.64615;stroke-dasharray:none" />
+    <polyline
+       id="wire-17"
+       points="770,1100 790,1100"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-0.00626871,-0.87613191,2.695049,-0.00224706,-2478.3028,1666.7489)" />
+    <polyline
+       id="wire-17-5"
+       points="770,1100 790,1100"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-5.2960934,-0.00170021,0.00398695,-2.4903053,4528.4289,3601.9798)"
+       style="stroke-width:2.75357;stroke-dasharray:none" />
+    <polyline
+       id="wire-17-5-5"
+       points="770,1100 790,1100"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-4.0776271,-0.00171165,0.00306968,-2.507069,3490.2589,3207.7777)"
+       style="stroke-width:2.75357;stroke-dasharray:none" />
+    <polyline
+       id="wire-17-5-5-3"
+       points="770,1100 790,1100"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-0.00171165,4.0776271,-2.507069,-0.00306968,3114.1201,-2736.1127)"
+       style="stroke-width:2.75357;stroke-dasharray:none" />
+    <polyline
+       id="wire-17-5-7"
+       points="770,1100 790,1100"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.00164051,-18.683842,2.4028644,0.01406537,-2368.9937,15190.305)"
+       style="stroke-width:2.75357;stroke-dasharray:none" />
+    <polyline
+       id="wire-17-5-8"
+       points="770,1100 790,1100"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-11.289939,-0.00207126,0.00849917,-3.0337976,9081.5189,4351.4269)" />
+    <polyline
+       id="wire-17-5-8-7"
+       points="770,1100 790,1100"
+       fill="none"
+       stroke="#d62728"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-13.751366,-0.00186694,0.01035215,-2.7345429,11339.037,4030.0887)"
+       style="stroke-width:2.44611;stroke-dasharray:none" />
+    <text
+       x="721.25702"
+       y="1015.5961"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text4"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">3 spare XT60</text>
+    <text
+       x="138.96489"
+       y="275.31775"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text5"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">48V+/− Drive 1 (50A)</text>
+    <polyline
+       id="wire-36"
+       points="837,900 837,357"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.2923142,3.4625053,230.50038)" />
+    <polyline
+       id="wire-37"
+       points="830,350 800,350"
+       fill="none"
+       stroke="#9b30ff"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.0173175,4.7418095,-0.77595775,0.11668769,991.42759,-3490.5392)" />
+    <polyline
+       id="wire-37-9"
+       points="830,350 800,350"
+       fill="none"
+       stroke="#9b30ff"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.97636495,-0.00182456,0.02215777,0.99404408,-84.633492,-1.5571645)" />
+    <polyline
+       id="wire-38"
+       points="837,357 800,357"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-39"
+       points="830,520 800,520"
+       fill="none"
+       stroke="#9b30ff"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(8.7676329,0,0,0.92510211,-6305.849,4.5950925)"
+       style="fill:#ff0000" />
+    <polyline
+       id="wire-39-3"
+       points="830,520 800,520"
+       fill="none"
+       stroke="#9b30ff"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-3.9475739,0.92510211,0,588.3464,3607.5454)"
+       style="fill:#ff0000" />
+    <polyline
+       id="wire-40"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(6.8578301,0,0,0.92510211,-4778.0067,4.5950925)" />
+    <polyline
+       id="wire-40-5"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-6.8578301,0.92510211,0,391.28115,6288.9226)"
+       style="stroke:#ff8e00;stroke-opacity:1" />
+    <polyline
+       id="wire-40-5-7"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-1.6320371,0,0,-0.92510211,2243.5329,1290.2374)"
+       style="stroke:#ff8e00;stroke-opacity:1" />
+    <polyline
+       id="wire-40-5-7-4"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,16.960521,-0.92510211,0,1340.1469,-13370.79)"
+       style="stroke:#1f69ff;stroke-opacity:1" />
+    <polyline
+       id="wire-40-5-7-4-8"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,9.6825117,-0.92510211,0,1725.8755,-7550.65)"
+       style="stroke:#1f69ff;stroke-opacity:1" />
+    <polyline
+       id="wire-40-5-7-4-6"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-10.501005,0,0,-0.92510211,9640.5843,684.29825)"
+       style="stroke:#1f69ff;stroke-opacity:1" />
+    <polyline
+       id="wire-40-5-7-4-3"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(9.4470075,0,0,0.92510211,-7172.9882,203.24063)"
+       style="stroke:#1f69ff;stroke-opacity:1" />
+    <polyline
+       id="wire-40-5-7-4-3-2"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,2.598722,-0.92510211,0,1221.2985,-1483.1551)"
+       style="stroke:#1f69ff;stroke-opacity:1" />
+    <polyline
+       id="wire-40-5-7-4-3-2-5"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,0.40953281,-0.92510211,0,873.53262,349.43441)"
+       style="stroke:#1f69ff;stroke-opacity:1" />
+    <polyline
+       id="wire-40-5-7-4-3-2-6"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-3.2771623,0,0,-0.92510211,3475.44,1084.7039)"
+       style="stroke:#1f69ff;stroke-opacity:1" />
+    <polyline
+       id="wire-40-5-7-1"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-2.347775,0,0,-0.92510211,2858.0324,949.32366)"
+       style="stroke:#ff8e00;stroke-opacity:1" />
+    <text
+       x="955.57623"
+       y="470.32422"
+       font-size="9.02779px"
+       fill="#9b30ff"
+       text-anchor="start"
+       font-style="italic"
+       id="text7"
+       transform="scale(0.97586902,1.0247277)"
+       style="stroke-width:0.902779">5V</text>
+    <text
+       x="971.03833"
+       y="447.06271"
+       font-size="9.02779px"
+       fill="#9b30ff"
+       text-anchor="start"
+       font-style="italic"
+       id="text7-6"
+       transform="scale(0.97586901,1.0247277)"
+       style="fill:#9b30ff;fill-opacity:1;stroke-width:0.903;stroke-dasharray:none"><tspan
+         id="tspan5"
+         x="971.03833"
+         y="447.06271"
+         style="fill:#ff8c00;fill-opacity:1">20V</tspan></text>
+    <polyline
+       id="wire-42"
+       points="877,900 877,217 1393,217 1393,599"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-45"
+       points="1400,452 1450,452"
+       fill="none"
+       stroke="#1f6bff"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-45-5"
+       points="1400,452 1450,452"
+       fill="none"
+       stroke="#1f6bff"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(1.9159936,0,0,0.92510211,-1443.891,-124.2585)" />
+    <polyline
+       id="wire-46"
+       points="1393,459 1450,459"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-46-3"
+       points="1393,459 1450,459"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(1.7274848,0,0,0.92510211,-1176.6363,-123.23422)" />
+    <polyline
+       id="wire-47"
+       points="1400,592 1450,592"
+       fill="none"
+       stroke="#1f6bff"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-48"
+       points="1393,599 1450,599"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.90511637,0,0,0.92510211,-31.515565,4.5950925)" />
+    <polyline
+       id="wire-50"
+       points="870,813 447,813 447,730"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.89633383,0,0,0.92496199,-3.3775564,4.7033033)" />
+    <text
+       x="436.88181"
+       y="667.1236"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text8"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">12V switched (SSR out)</text>
+    <text
+       x="799.79871"
+       y="807.95703"
+       font-size="9.02779px"
+       fill="#1f6bff"
+       text-anchor="start"
+       font-style="italic"
+       id="text9"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">12V</text>
+    <polyline
+       id="wire-54"
+       points="1080,900 1080,495 1100,495"
+       fill="none"
+       stroke="#ff8c00"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88561669,0,0,0.79910805,-77.665436,66.224761)" />
+    <polyline
+       id="wire-55"
+       points="1087,900 1087,502 1100,502"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <text
+       x="942.43768"
+       y="807.95703"
+       font-size="9.02779px"
+       fill="#ff8c00"
+       text-anchor="start"
+       font-style="italic"
+       id="text10"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">20V</text>
+    <polyline
+       id="wire-56"
+       points="600,365 540,365"
+       fill="none"
+       stroke="#2ca02c"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-57"
+       points="600,372 540,372"
+       fill="none"
+       stroke="#9acd32"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-58"
+       points="580,365 580,545 540,545"
+       fill="none"
+       stroke="#2ca02c"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-59"
+       points="573,365 573,538 540,538"
+       fill="none"
+       stroke="#9acd32"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <text
+       x="495.56238"
+       y="320.45667"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text11"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">CAN-H/L</text>
+    <polyline
+       id="wire-60"
+       points="760,470 760,415"
+       fill="none"
+       stroke="#2ca02c"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-61"
+       points="767,470 767,415"
+       fill="none"
+       stroke="#9acd32"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <text
+       x="700.4931"
+       y="406.22061"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text12"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">CAN_TX/RX</text>
+    <polyline
+       id="wire-62"
+       points="530,690 560,690 560,590 540,590"
+       fill="none"
+       stroke="#333333"
+       stroke-width="2"
+       stroke-linejoin="round"
+       stroke-dasharray="5, 3"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-63"
+       points="560,590 560,405 540,405"
+       fill="none"
+       stroke="#333333"
+       stroke-width="2"
+       stroke-linejoin="round"
+       stroke-dasharray="5, 3"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <text
+       x="514.52075"
+       y="591.29022"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text13"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">ESC enable</text>
+    <polyline
+       id="wire-68"
+       points="800,550 980,550 980,670 1100,670"
+       fill="none"
+       stroke="#808080"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.86227192,3.4625053,39.057454)" />
+    <text
+       x="770.90979"
+       y="496.49844"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text16"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">USB</text>
+    <polyline
+       id="wire-69"
+       points="1100,810 900,810 900,565 800,565"
+       fill="none"
+       stroke="#808080"
+       stroke-width="2"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.96601707,3.4625053,-18.480945)" />
+    <text
+       x="820.56268"
+       y="753.91742"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text17"
+       transform="scale(0.97586902,1.0247277)"
+       style="stroke-width:0.902779">UART TX/RX/GND</text>
+    <text
+       x="1100.4652"
+       y="361.07855"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text18"
+       transform="scale(0.97586902,1.0247277)"
+       style="stroke-width:0.902779">USB</text>
+    <polyline
+       id="wire-72"
+       points="1320,490 1450,490"
+       fill="none"
+       stroke="#00b8d4"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <text
+       x="1208.7574"
+       y="439.62344"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text20"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">RJ45 3m (19)</text>
+    <text
+       x="1436.9911"
+       y="276.39218"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text20-3"
+       transform="scale(0.97586901,1.0247277)"
+       style="stroke-width:0.902779">USB to RS485 Adapter</text>
+    <polyline
+       id="wire-73"
+       points="1550,510 1550,570"
+       fill="none"
+       stroke="#00b8d4"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-74"
+       points="1300,560 1300,650"
+       fill="none"
+       stroke="#808080"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-74-2"
+       points="1300,560 1300,650"
+       fill="none"
+       stroke="#808080"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,3.6828185,353.05638,-1774.6648)" />
+    <polyline
+       id="wire-74-2-3"
+       points="1300,560 1300,650"
+       fill="none"
+       stroke="#808080"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-0.88099356,-3.6906753,0,3564.4242,1763.1034)" />
+    <polyline
+       id="wire-74-2-3-1"
+       points="1300,560 1300,650"
+       fill="none"
+       stroke="#808080"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,-0.88099356,-1.5351197,0,2358.9821,1434.3513)" />
+    <text
+       x="1182.5768"
+       y="555.17908"
+       font-size="8.125px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text21"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">USB 3.2</text>
+    <polyline
+       id="wire-75"
+       points="1320,700 1450,700"
+       fill="none"
+       stroke="#808080"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-76"
+       points="1300,710 1300,780"
+       fill="none"
+       stroke="#808080"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,1.1052538,3.4625053,-123.31262)" />
+    <polyline
+       id="wire-77"
+       points="330,350 290,350 290,340 210,340"
+       fill="none"
+       stroke="#333333"
+       stroke-width="4"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-78"
+       points="330,395 300,395 300,425 210,425"
+       fill="none"
+       stroke="#333333"
+       stroke-width="4"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-79"
+       points="330,540 290,540 290,520 210,520"
+       fill="none"
+       stroke="#333333"
+       stroke-width="4"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <polyline
+       id="wire-80"
+       points="330,585 300,585 300,605 210,605"
+       fill="none"
+       stroke="#333333"
+       stroke-width="4"
+       stroke-linejoin="round"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)" />
+    <text
+       x="203.96495"
+       y="306.01221"
+       font-size="7.22222px"
+       fill="#222222"
+       text-anchor="start"
+       font-style="italic"
+       id="text22"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">U/V/W+Hall+Enc</text>
+    <polyline
+       id="wire-40-5-7-2"
+       points="837,527 800,527"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(0,1.6320371,-0.92510211,0,1424.1153,-504.27097)"
+       style="stroke:#ff8e00;stroke-opacity:1" />
+    <polyline
+       id="wire-16-2-8"
+       points="1000,1127 1060,1127"
+       fill="none"
+       stroke="#111111"
+       stroke-width="3"
+       stroke-linejoin="round"
+       transform="matrix(-2.5943432,0,0,-0.92510211,3702.2145,1981.5509)"
+       style="stroke-width:6.64615;stroke-dasharray:none" />
+  </g>
+  <g
+     id="layer-components">
+    <g
+       id="comp-1"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(40,310)"
+         id="g29">
+        <circle
+           cx="30"
+           cy="30"
+           r="29"
+           fill="#111111"
+           stroke="#000000"
+           stroke-width="2"
+           id="circle22" />
+        <circle
+           cx="30"
+           cy="30"
+           r="22"
+           fill="#9aa0a6"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle23" />
+        <circle
+           cx="30"
+           cy="30"
+           r="12"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle24" />
+        <line
+           x1="30"
+           y1="30"
+           x2="51"
+           y2="30"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line24" />
+        <line
+           x1="30"
+           y1="30"
+           x2="40.499954"
+           y2="48.186558"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line25" />
+        <line
+           x1="30"
+           y1="30"
+           x2="19.49991"
+           y2="48.186481"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line26" />
+        <line
+           x1="30"
+           y1="30"
+           x2="9"
+           y2="29.999846"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line27" />
+        <line
+           x1="30"
+           y1="30"
+           x2="19.500177"
+           y2="11.813364"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line28" />
+        <line
+           x1="30"
+           y1="30"
+           x2="40.500221"
+           y2="11.813595"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line29" />
+        <circle
+           cx="30"
+           cy="30"
+           r="5"
+           fill="#d62728"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle29" />
+        <rect
+           x="66"
+           y="16"
+           width="102"
+           height="28"
+           rx="3"
+           fill="#444444"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect29" />
+        <text
+           x="117"
+           y="34"
+           font-size="8px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text29" />
+      </g>
+      <rect
+         x="40"
+         y="291"
+         width="244.10001"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect30" />
+      <text
+         x="162.05"
+         y="304"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text30">Hub Motor FL ZLLG80ASM25 0-HT V2.0</text>
+    </g>
+    <g
+       id="comp-2"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(40,395)"
+         id="g37">
+        <circle
+           cx="30"
+           cy="30"
+           r="29"
+           fill="#111111"
+           stroke="#000000"
+           stroke-width="2"
+           id="circle30" />
+        <circle
+           cx="30"
+           cy="30"
+           r="22"
+           fill="#9aa0a6"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle31" />
+        <circle
+           cx="30"
+           cy="30"
+           r="12"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle32" />
+        <line
+           x1="30"
+           y1="30"
+           x2="51"
+           y2="30"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line32" />
+        <line
+           x1="30"
+           y1="30"
+           x2="40.499954"
+           y2="48.186558"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line33" />
+        <line
+           x1="30"
+           y1="30"
+           x2="19.49991"
+           y2="48.186481"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line34" />
+        <line
+           x1="30"
+           y1="30"
+           x2="9"
+           y2="29.999846"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line35" />
+        <line
+           x1="30"
+           y1="30"
+           x2="19.500177"
+           y2="11.813364"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line36" />
+        <line
+           x1="30"
+           y1="30"
+           x2="40.500221"
+           y2="11.813595"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line37" />
+        <circle
+           cx="30"
+           cy="30"
+           r="5"
+           fill="#d62728"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle37" />
+        <rect
+           x="66"
+           y="16"
+           width="102"
+           height="28"
+           rx="3"
+           fill="#444444"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect37" />
+        <text
+           x="117"
+           y="34"
+           font-size="8px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text37" />
+      </g>
+      <rect
+         x="40"
+         y="376"
+         width="244.10001"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect38" />
+      <text
+         x="162.05"
+         y="389"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text38">Hub Motor FR ZLLG80ASM25 0-HT V2.0</text>
+    </g>
+    <g
+       id="comp-3"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(40,490)"
+         id="g45">
+        <circle
+           cx="30"
+           cy="30"
+           r="29"
+           fill="#111111"
+           stroke="#000000"
+           stroke-width="2"
+           id="circle38" />
+        <circle
+           cx="30"
+           cy="30"
+           r="22"
+           fill="#9aa0a6"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle39" />
+        <circle
+           cx="30"
+           cy="30"
+           r="12"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle40" />
+        <line
+           x1="30"
+           y1="30"
+           x2="51"
+           y2="30"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line40" />
+        <line
+           x1="30"
+           y1="30"
+           x2="40.499954"
+           y2="48.186558"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line41" />
+        <line
+           x1="30"
+           y1="30"
+           x2="19.49991"
+           y2="48.186481"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line42" />
+        <line
+           x1="30"
+           y1="30"
+           x2="9"
+           y2="29.999846"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line43" />
+        <line
+           x1="30"
+           y1="30"
+           x2="19.500177"
+           y2="11.813364"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line44" />
+        <line
+           x1="30"
+           y1="30"
+           x2="40.500221"
+           y2="11.813595"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line45" />
+        <circle
+           cx="30"
+           cy="30"
+           r="5"
+           fill="#d62728"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle45" />
+        <rect
+           x="66"
+           y="16"
+           width="102"
+           height="28"
+           rx="3"
+           fill="#444444"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect45" />
+        <text
+           x="117"
+           y="34"
+           font-size="8px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text45" />
+      </g>
+      <rect
+         x="40"
+         y="471"
+         width="244.10001"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect46" />
+      <text
+         x="162.05"
+         y="484"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text46">Hub Motor RL ZLLG80ASM25 0-HT V2.0</text>
+    </g>
+    <g
+       id="comp-4"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(40,575)"
+         id="g53">
+        <circle
+           cx="30"
+           cy="30"
+           r="29"
+           fill="#111111"
+           stroke="#000000"
+           stroke-width="2"
+           id="circle46" />
+        <circle
+           cx="30"
+           cy="30"
+           r="22"
+           fill="#9aa0a6"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle47" />
+        <circle
+           cx="30"
+           cy="30"
+           r="12"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle48" />
+        <line
+           x1="30"
+           y1="30"
+           x2="51"
+           y2="30"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line48" />
+        <line
+           x1="30"
+           y1="30"
+           x2="40.499954"
+           y2="48.186558"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line49" />
+        <line
+           x1="30"
+           y1="30"
+           x2="19.49991"
+           y2="48.186481"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line50" />
+        <line
+           x1="30"
+           y1="30"
+           x2="9"
+           y2="29.999846"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line51" />
+        <line
+           x1="30"
+           y1="30"
+           x2="19.500177"
+           y2="11.813364"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line52" />
+        <line
+           x1="30"
+           y1="30"
+           x2="40.500221"
+           y2="11.813595"
+           stroke="#cccccc"
+           stroke-width="3"
+           id="line53" />
+        <circle
+           cx="30"
+           cy="30"
+           r="5"
+           fill="#d62728"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle53" />
+        <rect
+           x="66"
+           y="16"
+           width="102"
+           height="28"
+           rx="3"
+           fill="#444444"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect53" />
+        <text
+           x="117"
+           y="34"
+           font-size="8px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text53" />
+      </g>
+      <rect
+         x="40"
+         y="556"
+         width="244.10001"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect54" />
+      <text
+         x="162.05"
+         y="569"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text54">Hub Motor RR ZLLG80ASM25 0-HT V2.0</text>
+    </g>
+    <g
+       id="comp-5"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(330,330)"
+         id="g68">
+        <rect
+           x="0"
+           y="0"
+           width="210"
+           height="90"
+           rx="4"
+           fill="#b9bec6"
+           stroke="#555555"
+           stroke-width="2"
+           id="rect55" />
+        <line
+           x1="8"
+           y1="12"
+           x2="202"
+           y2="12"
+           stroke="#8c929a"
+           id="line55" />
+        <line
+           x1="8"
+           y1="18"
+           x2="202"
+           y2="18"
+           stroke="#8c929a"
+           id="line56" />
+        <line
+           x1="8"
+           y1="24"
+           x2="202"
+           y2="24"
+           stroke="#8c929a"
+           id="line57" />
+        <line
+           x1="8"
+           y1="30"
+           x2="202"
+           y2="30"
+           stroke="#8c929a"
+           id="line58" />
+        <line
+           x1="8"
+           y1="36"
+           x2="202"
+           y2="36"
+           stroke="#8c929a"
+           id="line59" />
+        <line
+           x1="8"
+           y1="42"
+           x2="202"
+           y2="42"
+           stroke="#8c929a"
+           id="line60" />
+        <line
+           x1="8"
+           y1="48"
+           x2="202"
+           y2="48"
+           stroke="#8c929a"
+           id="line61" />
+        <line
+           x1="8"
+           y1="54"
+           x2="202"
+           y2="54"
+           stroke="#8c929a"
+           id="line62" />
+        <rect
+           x="8"
+           y="64"
+           width="194"
+           height="18"
+           rx="2"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect62" />
+        <rect
+           x="14"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect63" />
+        <rect
+           x="40"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect64" />
+        <rect
+           x="66"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect65" />
+        <rect
+           x="92"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect66" />
+        <rect
+           x="118"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect67" />
+        <rect
+           x="144"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect68" />
+        <circle
+           cx="194"
+           cy="12"
+           r="4"
+           fill="#2a6cff"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle68" />
+        <text
+           x="105"
+           y="45"
+           font-size="13px"
+           fill="#222222"
+           text-anchor="middle"
+           font-weight="700"
+           id="text68">ZLAC8015D</text>
+      </g>
+      <rect
+         x="330"
+         y="421"
+         width="191"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect69" />
+      <text
+         x="425.5"
+         y="434"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text69">Servo Driver ZLAC8015D #1</text>
+    </g>
+    <g
+       id="comp-6"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(330,510)"
+         id="g83">
+        <rect
+           x="0"
+           y="0"
+           width="210"
+           height="90"
+           rx="4"
+           fill="#b9bec6"
+           stroke="#555555"
+           stroke-width="2"
+           id="rect70" />
+        <line
+           x1="8"
+           y1="12"
+           x2="202"
+           y2="12"
+           stroke="#8c929a"
+           id="line70" />
+        <line
+           x1="8"
+           y1="18"
+           x2="202"
+           y2="18"
+           stroke="#8c929a"
+           id="line71" />
+        <line
+           x1="8"
+           y1="24"
+           x2="202"
+           y2="24"
+           stroke="#8c929a"
+           id="line72" />
+        <line
+           x1="8"
+           y1="30"
+           x2="202"
+           y2="30"
+           stroke="#8c929a"
+           id="line73" />
+        <line
+           x1="8"
+           y1="36"
+           x2="202"
+           y2="36"
+           stroke="#8c929a"
+           id="line74" />
+        <line
+           x1="8"
+           y1="42"
+           x2="202"
+           y2="42"
+           stroke="#8c929a"
+           id="line75" />
+        <line
+           x1="8"
+           y1="48"
+           x2="202"
+           y2="48"
+           stroke="#8c929a"
+           id="line76" />
+        <line
+           x1="8"
+           y1="54"
+           x2="202"
+           y2="54"
+           stroke="#8c929a"
+           id="line77" />
+        <rect
+           x="8"
+           y="64"
+           width="194"
+           height="18"
+           rx="2"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect77" />
+        <rect
+           x="14"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect78" />
+        <rect
+           x="40"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect79" />
+        <rect
+           x="66"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect80" />
+        <rect
+           x="92"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect81" />
+        <rect
+           x="118"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect82" />
+        <rect
+           x="144"
+           y="67"
+           width="18"
+           height="12"
+           rx="0"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect83" />
+        <circle
+           cx="194"
+           cy="12"
+           r="4"
+           fill="#2a6cff"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle83" />
+        <text
+           x="105"
+           y="45"
+           font-size="13px"
+           fill="#222222"
+           text-anchor="middle"
+           font-weight="700"
+           id="text83">ZLAC8015D</text>
+      </g>
+      <rect
+         x="330"
+         y="601"
+         width="191"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect84" />
+      <text
+         x="425.5"
+         y="614"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text84">Servo Driver ZLAC8015D #2</text>
+    </g>
+    <g
+       id="comp-7"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(600,330)"
+         id="g88">
+        <rect
+           x="0"
+           y="0"
+           width="200"
+           height="85"
+           rx="3"
+           fill="#2b5fb3"
+           stroke="#112233"
+           stroke-width="2"
+           id="rect85" />
+        <rect
+           x="76"
+           y="10"
+           width="48"
+           height="24"
+           rx="2"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect86" />
+        <text
+           x="100"
+           y="26"
+           font-size="10px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text86">CAN</text>
+        <rect
+           x="8"
+           y="61"
+           width="32"
+           height="16"
+           rx="1"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect87" />
+        <rect
+           x="160"
+           y="61"
+           width="32"
+           height="16"
+           rx="1"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect88" />
+        <text
+           x="100"
+           y="75"
+           font-size="8px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text88">H · L · 3V3/5V</text>
+      </g>
+      <rect
+         x="600"
+         y="311"
+         width="132"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect89" />
+      <text
+         x="666"
+         y="324"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text89">CAN Transceiver</text>
+    </g>
+    <g
+       id="comp-8"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(600,470)"
+         id="g95">
+        <rect
+           x="0"
+           y="0"
+           width="200"
+           height="130"
+           rx="3"
+           fill="#f4f4f4"
+           stroke="#888888"
+           stroke-width="2"
+           id="rect90" />
+        <rect
+           x="4"
+           y="10"
+           width="192"
+           height="10"
+           rx="0"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect91" />
+        <rect
+           x="4"
+           y="110"
+           width="192"
+           height="10"
+           rx="0"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect92" />
+        <rect
+           x="74"
+           y="45"
+           width="52"
+           height="40"
+           rx="2"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect93" />
+        <text
+           x="100"
+           y="69"
+           font-size="11px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text93">STM32</text>
+        <rect
+           x="14"
+           y="51"
+           width="28"
+           height="28"
+           rx="2"
+           fill="#cfcfcf"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect94" />
+        <text
+           x="28"
+           y="68"
+           font-size="8px"
+           fill="#222222"
+           text-anchor="middle"
+           font-weight="700"
+           id="text94">USB</text>
+        <circle
+           cx="174"
+           cy="65"
+           r="8"
+           fill="#d62728"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle94" />
+        <rect
+           x="60"
+           y="87"
+           width="80"
+           height="10"
+           rx="2"
+           fill="#2b5fb3"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect95" />
+      </g>
+      <rect
+         x="600"
+         y="451"
+         width="137.89999"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect96" />
+      <text
+         x="668.95001"
+         y="464"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text96">MCU STM32 F446RE</text>
+    </g>
+    <g
+       id="comp-10"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(330,660)"
+         id="g107">
+        <rect
+           x="0"
+           y="0"
+           width="120"
+           height="70"
+           rx="4"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect103" />
+        <rect
+           x="8"
+           y="8"
+           width="104"
+           height="24.5"
+           rx="2"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect104" />
+        <text
+           x="60"
+           y="54.599998"
+           font-size="9px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text104">2-CH RF RELAY</text>
+        <rect
+           x="136"
+           y="6"
+           width="60"
+           height="58"
+           rx="8"
+           fill="#444444"
+           stroke="#000000"
+           id="rect105" />
+        <circle
+           cx="166"
+           cy="21"
+           r="6"
+           fill="#d62728"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle105" />
+        <circle
+           cx="166"
+           cy="38.5"
+           r="6"
+           fill="#2a6cff"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle106" />
+        <circle
+           cx="166"
+           cy="56"
+           r="3"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle107" />
+      </g>
+      <rect
+         x="330"
+         y="641"
+         width="196.89999"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect107" />
+      <text
+         x="428.45001"
+         y="654"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text107">Wireless Switch ESC Remote</text>
+    </g>
+    <g
+       id="comp-13"
+       transform="matrix(0.88099356,0,0,0.92510211,656.62012,83.341536)">
+      <g
+         transform="translate(480,880)"
+         id="g128">
+        <rect
+           x="30"
+           y="25.200001"
+           width="100"
+           height="58.5"
+           rx="6"
+           fill="#e8b400"
+           stroke="#888855"
+           stroke-width="2"
+           id="rect125" />
+        <rect
+           x="24"
+           y="7.1999998"
+           width="112"
+           height="18"
+           rx="5"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect126" />
+        <circle
+           cx="80"
+           cy="7.1999998"
+           r="10"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle126" />
+        <path
+           d="M 136,49.5 Q 190,36 180,81"
+           fill="none"
+           stroke="#444444"
+           stroke-width="8"
+           id="path126" />
+        <circle
+           cx="40"
+           cy="85.5"
+           r="5"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle127" />
+        <circle
+           cx="120"
+           cy="85.5"
+           r="5"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle128" />
+        <text
+           x="80"
+           y="55.799999"
+           font-size="11px"
+           fill="#222222"
+           text-anchor="middle"
+           font-weight="700"
+           id="text128">2800W</text>
+      </g>
+      <rect
+         x="480"
+         y="861"
+         width="173.3"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect128" />
+      <text
+         x="566.65002"
+         y="874"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text129">2800W Industrial Vacuum (5)</text>
+    </g>
+    <g
+       id="comp-15"
+       transform="matrix(0.88099356,0,0,0.92510211,-305.06758,25.996023)">
+      <g
+         transform="translate(1450,260)"
+         id="g138">
+        <rect
+           x="0"
+           y="0"
+           width="200"
+           height="80"
+           rx="10"
+           fill="#222222"
+           stroke="#000000"
+           stroke-width="2"
+           id="rect135" />
+        <circle
+           cx="60"
+           cy="40"
+           r="28.799999"
+           fill="#111111"
+           stroke="#555555"
+           stroke-width="3"
+           id="circle135" />
+        <circle
+           cx="60"
+           cy="40"
+           r="19.200001"
+           fill="#1b3b78"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle136" />
+        <circle
+           cx="60"
+           cy="40"
+           r="8"
+           fill="#6aa0ff"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle137" />
+        <text
+           x="148"
+           y="36"
+           font-size="10px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text137" />
+        <text
+           x="148"
+           y="49.599998"
+           font-size="8px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text138" />
+      </g>
+      <rect
+         x="1450"
+         y="241"
+         width="202.8"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect138" />
+      <text
+         x="1551.4"
+         y="254"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text139">ELP 5MP 6mm USB Camera</text>
+      <rect
+         x="1836.9506"
+         y="304.59018"
+         width="99.687851"
+         height="18.42469"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.064"
+         id="rect138-2" />
+      <text
+         x="1886.3932"
+         y="317.80252"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text139-7">Hesai JT16 LiDAR</text>
+    </g>
+    <g
+       id="comp-16"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(1100,430)"
+         id="g165">
+        <rect
+           x="0"
+           y="0"
+           width="220"
+           height="130"
+           rx="4"
+           fill="#2e2e2e"
+           stroke="#000000"
+           stroke-width="2"
+           id="rect139" />
+        <rect
+           x="10"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect140" />
+        <rect
+           x="18"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect141" />
+        <rect
+           x="26"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect142" />
+        <rect
+           x="34"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect143" />
+        <rect
+           x="42"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect144" />
+        <rect
+           x="50"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect145" />
+        <rect
+           x="58"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect146" />
+        <rect
+           x="66"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect147" />
+        <rect
+           x="74"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect148" />
+        <rect
+           x="82"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect149" />
+        <rect
+           x="90"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect150" />
+        <rect
+           x="98"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect151" />
+        <rect
+           x="106"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect152" />
+        <rect
+           x="114"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect153" />
+        <rect
+           x="122"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect154" />
+        <rect
+           x="130"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect155" />
+        <rect
+           x="138"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect156" />
+        <rect
+           x="146"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect157" />
+        <rect
+           x="154"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect158" />
+        <rect
+           x="162"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect159" />
+        <rect
+           x="170"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect160" />
+        <rect
+           x="178"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect161" />
+        <rect
+           x="186"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect162" />
+        <rect
+           x="194"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect163" />
+        <rect
+           x="202"
+           y="8"
+           width="4"
+           height="65"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect164" />
+        <circle
+           cx="110"
+           cy="93.599998"
+           r="19.5"
+           fill="#111111"
+           stroke="#777777"
+           stroke-width="1"
+           id="circle164" />
+        <rect
+           x="160"
+           y="100"
+           width="50"
+           height="20"
+           rx="2"
+           fill="#1f7a3d"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect165" />
+        <text
+           x="44"
+           y="117"
+           font-size="11px"
+           fill="#76b900"
+           text-anchor="middle"
+           font-weight="700"
+           id="text165">JETSON</text>
+      </g>
+      <rect
+         x="1100"
+         y="561"
+         width="238.2"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect166" />
+      <text
+         x="1219.1"
+         y="574"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text166">Onboard Computer – Jetson NX</text>
+      <rect
+         x="1097"
+         y="427"
+         width="226"
+         height="136"
+         fill="none"
+         stroke="#d2691e"
+         stroke-width="2"
+         stroke-dasharray="6, 4"
+         id="rect167" />
+    </g>
+    <g
+       id="comp-17"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(1450,430)"
+         id="g173">
+        <rect
+           x="0"
+           y="0"
+           width="200"
+           height="80"
+           rx="4"
+           fill="#3a3f47"
+           stroke="#111111"
+           stroke-width="2"
+           id="rect168" />
+        <rect
+           x="10"
+           y="24"
+           width="26"
+           height="28.799999"
+           rx="2"
+           fill="#111111"
+           stroke="#999999"
+           stroke-width="1"
+           id="rect169" />
+        <circle
+           cx="23"
+           cy="16"
+           r="2.5"
+           fill="#44ff44"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle169" />
+        <rect
+           x="46"
+           y="24"
+           width="26"
+           height="28.799999"
+           rx="2"
+           fill="#111111"
+           stroke="#999999"
+           stroke-width="1"
+           id="rect170" />
+        <circle
+           cx="59"
+           cy="16"
+           r="2.5"
+           fill="#44ff44"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle170" />
+        <rect
+           x="82"
+           y="24"
+           width="26"
+           height="28.799999"
+           rx="2"
+           fill="#111111"
+           stroke="#999999"
+           stroke-width="1"
+           id="rect171" />
+        <circle
+           cx="95"
+           cy="16"
+           r="2.5"
+           fill="#44ff44"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle171" />
+        <rect
+           x="118"
+           y="24"
+           width="26"
+           height="28.799999"
+           rx="2"
+           fill="#111111"
+           stroke="#999999"
+           stroke-width="1"
+           id="rect172" />
+        <circle
+           cx="131"
+           cy="16"
+           r="2.5"
+           fill="#44ff44"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle172" />
+        <rect
+           x="154"
+           y="24"
+           width="26"
+           height="28.799999"
+           rx="2"
+           fill="#111111"
+           stroke="#999999"
+           stroke-width="1"
+           id="rect173" />
+        <circle
+           cx="167"
+           cy="16"
+           r="2.5"
+           fill="#44ff44"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle173" />
+      </g>
+      <rect
+         x="1450"
+         y="411"
+         width="173.3"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect174" />
+      <text
+         x="1536.65"
+         y="424"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text174">Ethernet Switch 5-port</text>
+    </g>
+    <g
+       id="comp-18"
+       transform="matrix(0.88099356,0,0,0.92510211,4.0569756,-16.805838)">
+      <g
+         transform="translate(1450,570)"
+         id="g180">
+        <rect
+           x="0"
+           y="24.5"
+           width="200"
+           height="45.5"
+           rx="4"
+           fill="#f1f1f1"
+           stroke="#666666"
+           stroke-width="2"
+           id="rect175" />
+        <line
+           x1="40"
+           y1="24.5"
+           x2="24"
+           y2="2"
+           stroke="#333333"
+           stroke-width="5"
+           id="line175" />
+        <line
+           x1="160"
+           y1="24.5"
+           x2="176"
+           y2="2"
+           stroke="#333333"
+           stroke-width="5"
+           id="line176" />
+        <circle
+           cx="20"
+           cy="49"
+           r="3"
+           fill="#ffaa00"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle176" />
+        <circle
+           cx="38"
+           cy="49"
+           r="3"
+           fill="#22aa22"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle177" />
+        <circle
+           cx="56"
+           cy="49"
+           r="3"
+           fill="#ffaa00"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle178" />
+        <circle
+           cx="74"
+           cy="49"
+           r="3"
+           fill="#22aa22"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle179" />
+        <circle
+           cx="92"
+           cy="49"
+           r="3"
+           fill="#ffaa00"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle180" />
+      </g>
+      <rect
+         x="1450"
+         y="641"
+         width="185.10001"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect180" />
+      <text
+         x="1542.55"
+         y="654"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text180">Communication Equipment</text>
+    </g>
+    <g
+       id="comp-19"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(1100,650)"
+         id="g190">
+        <rect
+           x="0"
+           y="0"
+           width="220"
+           height="60"
+           rx="6"
+           fill="#5c6470"
+           stroke="#222222"
+           stroke-width="2"
+           id="rect182" />
+        <rect
+           x="14"
+           y="12"
+           width="36"
+           height="36"
+           rx="2"
+           fill="#111111"
+           stroke="#aaaaaa"
+           stroke-width="1"
+           id="rect183" />
+        <rect
+           x="18"
+           y="33"
+           width="28"
+           height="6"
+           rx="0"
+           fill="#2a6cff"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect184" />
+        <rect
+           x="62"
+           y="12"
+           width="36"
+           height="36"
+           rx="2"
+           fill="#111111"
+           stroke="#aaaaaa"
+           stroke-width="1"
+           id="rect185" />
+        <rect
+           x="66"
+           y="33"
+           width="28"
+           height="6"
+           rx="0"
+           fill="#2a6cff"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect186" />
+        <rect
+           x="110"
+           y="12"
+           width="36"
+           height="36"
+           rx="2"
+           fill="#111111"
+           stroke="#aaaaaa"
+           stroke-width="1"
+           id="rect187" />
+        <rect
+           x="114"
+           y="33"
+           width="28"
+           height="6"
+           rx="0"
+           fill="#2a6cff"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect188" />
+        <rect
+           x="158"
+           y="12"
+           width="36"
+           height="36"
+           rx="2"
+           fill="#111111"
+           stroke="#aaaaaa"
+           stroke-width="1"
+           id="rect189" />
+        <rect
+           x="162"
+           y="33"
+           width="28"
+           height="6"
+           rx="0"
+           fill="#2a6cff"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect190" />
+      </g>
+      <rect
+         x="1100"
+         y="711"
+         width="149.7"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect191" />
+      <text
+         x="1174.85"
+         y="724"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text191">USB-C Hub 4×USB3.2</text>
+    </g>
+    <g
+       id="comp-20"
+       transform="matrix(0.88099356,0,0,0.92510211,-97.860265,-10.936227)">
+      <g
+         transform="translate(1450,690)"
+         id="g193">
+        <rect
+           x="180.95897"
+           y="35.442577"
+           width="100"
+           height="28"
+           rx="3"
+           fill="#1f7a3d"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect192" />
+        <circle
+           cx="144"
+           cy="35"
+           r="29.4"
+           fill="#e8e8e8"
+           stroke="#888888"
+           stroke-width="2"
+           id="circle192" />
+        <circle
+           cx="144"
+           cy="35"
+           r="18.200001"
+           fill="#cfcfcf"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle193" />
+        <text
+           x="240.95897"
+           y="54.342579"
+           font-size="9px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text193">UM980</text>
+      </g>
+      <rect
+         x="1570.3937"
+         y="757.94257"
+         width="137.89999"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect193" />
+      <text
+         x="1639.3436"
+         y="770.94257"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text194">UM980 GPS Module</text>
+    </g>
+    <g
+       id="comp-21"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(1100,780)"
+         id="g199">
+        <rect
+           x="0"
+           y="0"
+           width="154"
+           height="60"
+           rx="3"
+           fill="#2b5fb3"
+           stroke="#112233"
+           stroke-width="2"
+           id="rect194" />
+        <rect
+           x="154"
+           y="12"
+           width="48.400002"
+           height="36"
+           rx="1"
+           fill="#cfcfcf"
+           stroke="#666666"
+           stroke-width="1"
+           id="rect195" />
+        <rect
+           x="44"
+           y="15"
+           width="44"
+           height="30"
+           rx="2"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect196" />
+        <circle
+           cx="10"
+           cy="10"
+           r="2"
+           fill="#dddddd"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle196" />
+        <circle
+           cx="10"
+           cy="20"
+           r="2"
+           fill="#dddddd"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle197" />
+        <circle
+           cx="10"
+           cy="30"
+           r="2"
+           fill="#dddddd"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle198" />
+        <circle
+           cx="10"
+           cy="40"
+           r="2"
+           fill="#dddddd"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle199" />
+        <text
+           x="88"
+           y="54"
+           font-size="8px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text199">CP2102</text>
+      </g>
+      <rect
+         x="1100"
+         y="841"
+         width="167.39999"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect199" />
+      <text
+         x="1183.7"
+         y="854"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text200">UART Interface Module</text>
+    </g>
+    <g
+       id="comp-22"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(30,1040)"
+         id="g204">
+        <rect
+           x="0"
+           y="0"
+           width="170"
+           height="100"
+           rx="8"
+           fill="#23456b"
+           stroke="#0e2238"
+           stroke-width="2"
+           id="rect200" />
+        <rect
+           x="8"
+           y="8"
+           width="154"
+           height="42"
+           rx="4"
+           fill="#d6e6f5"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect201" />
+        <text
+           x="85"
+           y="30"
+           font-size="15px"
+           fill="#23456b"
+           text-anchor="middle"
+           font-weight="700"
+           id="text201">LiFePO4</text>
+        <text
+           x="85"
+           y="42"
+           font-size="9.5px"
+           fill="#23456b"
+           text-anchor="middle"
+           font-weight="700"
+           id="text202">48V 20Ah · 51.2V nom</text>
+        <rect
+           x="8"
+           y="62"
+           width="154"
+           height="10"
+           rx="2"
+           fill="#3fa34d"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect202" />
+        <text
+           x="85"
+           y="71"
+           font-size="8px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text203">CELLS 16S</text>
+        <circle
+           cx="144"
+           cy="86"
+           r="6"
+           fill="#d62728"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle203" />
+        <circle
+           cx="124"
+           cy="86"
+           r="6"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle204" />
+        <text
+           x="65"
+           y="90"
+           font-size="8px"
+           fill="#aaaacc"
+           text-anchor="middle"
+           font-weight="700"
+           id="text204">charger port</text>
+      </g>
+      <rect
+         x="30"
+         y="1021"
+         width="179.2"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect204" />
+      <text
+         x="119.6"
+         y="1034"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text205">48V 20Ah LiFePO4 Battery</text>
+    </g>
+    <g
+       id="comp-23"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(30,1200)"
+         id="g216">
+        <rect
+           x="0"
+           y="0"
+           width="170"
+           height="70"
+           rx="3"
+           fill="#1f7a3d"
+           stroke="#0d3d1e"
+           stroke-width="2"
+           id="rect205" />
+        <rect
+           x="12"
+           y="10"
+           width="22"
+           height="16"
+           rx="1"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect206" />
+        <rect
+           x="42"
+           y="10"
+           width="22"
+           height="16"
+           rx="1"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect207" />
+        <rect
+           x="72"
+           y="10"
+           width="22"
+           height="16"
+           rx="1"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect208" />
+        <rect
+           x="102"
+           y="10"
+           width="22"
+           height="16"
+           rx="1"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect209" />
+        <rect
+           x="132"
+           y="10"
+           width="22"
+           height="16"
+           rx="1"
+           fill="#111111"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect210" />
+        <circle
+           cx="20"
+           cy="48"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle210" />
+        <circle
+           cx="46"
+           cy="48"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle211" />
+        <circle
+           cx="72"
+           cy="48"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle212" />
+        <circle
+           cx="98"
+           cy="48"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle213" />
+        <circle
+           cx="124"
+           cy="48"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle214" />
+        <circle
+           cx="150"
+           cy="48"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle215" />
+        <rect
+           x="130"
+           y="34"
+           width="32"
+           height="28"
+           rx="2"
+           fill="#eeeeee"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect215" />
+        <rect
+           x="8"
+           y="56"
+           width="154"
+           height="6"
+           rx="0"
+           fill="#e8c200"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect216" />
+        <text
+           x="60"
+           y="40"
+           font-size="10px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text216">BMS 100A</text>
+      </g>
+      <rect
+         x="30"
+         y="1271"
+         width="126.1"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect217" />
+      <text
+         x="93.050003"
+         y="1284"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text217">BMS 6S–22S 100A (2)</text>
+    </g>
+    <g
+       id="comp-24"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(260,1065)"
+         id="g221">
+        <rect
+           x="10"
+           y="15"
+           width="110"
+           height="20"
+           rx="8"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect218" />
+        <rect
+           x="39"
+           y="15"
+           width="52"
+           height="20"
+           rx="3"
+           fill="#e6e0b0"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect219" />
+        <rect
+           x="0"
+           y="20"
+           width="14"
+           height="10"
+           rx="0"
+           fill="#c9a227"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect220" />
+        <rect
+           x="116"
+           y="20"
+           width="14"
+           height="10"
+           rx="0"
+           fill="#c9a227"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect221" />
+        <text
+           x="65"
+           y="29"
+           font-size="10px"
+           fill="#111111"
+           text-anchor="middle"
+           font-weight="700"
+           id="text221">100A</text>
+      </g>
+      <rect
+         x="260"
+         y="1116"
+         width="149.7"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect222" />
+      <text
+         x="334.85001"
+         y="1129"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text222">Main Fuse 100A 8AWG</text>
+    </g>
+    <g
+       id="comp-25"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(430,1065)"
+         id="g227">
+        <rect
+           x="0"
+           y="0"
+           width="130"
+           height="50"
+           rx="5"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect223" />
+        <circle
+           cx="65"
+           cy="25"
+           r="19"
+           fill="#f2c200"
+           stroke="#111111"
+           stroke-width="2"
+           id="circle223" />
+        <rect
+           x="61"
+           y="6"
+           width="8"
+           height="38"
+           rx="2"
+           fill="#d62728"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect224" />
+        <circle
+           cx="8"
+           cy="8"
+           r="3"
+           fill="#888888"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle224" />
+        <circle
+           cx="122"
+           cy="8"
+           r="3"
+           fill="#888888"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle225" />
+        <circle
+           cx="8"
+           cy="42"
+           r="3"
+           fill="#888888"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle226" />
+        <circle
+           cx="122"
+           cy="42"
+           r="3"
+           fill="#888888"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle227" />
+      </g>
+      <rect
+         x="430"
+         y="1116"
+         width="132"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect227" />
+      <text
+         x="496"
+         y="1129"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text227">Kill Switch 100A</text>
+    </g>
+    <g
+       id="comp-26"
+       transform="matrix(-0.01380258,-0.88088543,0.92498857,-0.01449363,-488.46003,1517.8061)">
+      <g
+         transform="matrix(0.99996331,0.00815771,-0.00899502,0.99996331,620.54245,1029.3904)"
+         id="g235">
+        <rect
+           x="0"
+           y="0"
+           width="150"
+           height="120"
+           rx="4"
+           fill="#2a6e3f"
+           stroke="#112233"
+           stroke-width="2"
+           id="rect228" />
+        <rect
+           x="116"
+           y="10"
+           width="30"
+           height="12"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect229" />
+        <rect
+           x="116"
+           y="26"
+           width="30"
+           height="12"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect230" />
+        <rect
+           x="116"
+           y="42"
+           width="30"
+           height="12"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect231" />
+        <rect
+           x="116"
+           y="58"
+           width="30"
+           height="12"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect232" />
+        <rect
+           x="116"
+           y="74"
+           width="30"
+           height="12"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect233" />
+        <rect
+           x="116"
+           y="90"
+           width="30"
+           height="12"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect234" />
+        <rect
+           x="4"
+           y="46"
+           width="34"
+           height="28"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect235" />
+        <text
+           x="61.716644"
+           y="-62.186726"
+           font-size="12px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text235"
+           transform="matrix(-0.01809727,0.95216438,-1.0498949,-0.01809728,0,0)">XT60</text>
+      </g>
+      <rect
+         x="1022.5939"
+         y="-627.38605"
+         width="125.70669"
+         height="18.901148"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect236"
+         transform="matrix(-0.00833818,0.99996524,-0.99997141,-0.00756206,0,0)" />
+      <text
+         x="1139.7886"
+         y="-584.4743"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text236"
+         transform="matrix(-0.00794064,0.95229029,-1.0500338,-0.00794064,0,0)">PDB XT60 1-to-6</text>
+    </g>
+    <g
+       id="comp-27"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,23.511022)">
+      <g
+         transform="translate(850,1030)"
+         id="g244">
+        <rect
+           x="0"
+           y="0"
+           width="150"
+           height="110"
+           rx="4"
+           fill="#2a6e3f"
+           stroke="#112233"
+           stroke-width="2"
+           id="rect237" />
+        <rect
+           x="116"
+           y="10"
+           width="30"
+           height="10.333333"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect238" />
+        <rect
+           x="116"
+           y="24.333334"
+           width="30"
+           height="10.333333"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect239" />
+        <rect
+           x="116"
+           y="38.666668"
+           width="30"
+           height="10.333333"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect240" />
+        <rect
+           x="116"
+           y="53"
+           width="30"
+           height="10.333333"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect241" />
+        <rect
+           x="116"
+           y="67.333336"
+           width="30"
+           height="10.333333"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect242" />
+        <rect
+           x="116"
+           y="81.666664"
+           width="30"
+           height="10.333333"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect243" />
+        <rect
+           x="4"
+           y="41"
+           width="34"
+           height="28"
+           rx="2"
+           fill="#f0c800"
+           stroke="#aa8800"
+           stroke-width="1"
+           id="rect244" />
+        <text
+           x="69"
+           y="59"
+           font-size="12px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text244">XT60</text>
+      </g>
+      <rect
+         x="850"
+         y="1141"
+         width="155.60001"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect245" />
+      <text
+         x="927.79999"
+         y="1154"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text245">PDB XT60→XT30 6-way</text>
+    </g>
+    <g
+       id="comp-28"
+       transform="matrix(0.88099356,0,0,0.92510211,160.40267,-125.59391)">
+      <g
+         id="g1"
+         transform="translate(-49.921537,-5.1864655)">
+        <g
+           transform="matrix(0,-0.95232034,1.0500668,0,600.07032,926.01219)"
+           id="g255">
+          <rect
+             x="-3.0482566"
+             y="202.06035"
+             width="121.03644"
+             height="73.435249"
+             rx="3.1851695"
+             fill="#252525"
+             stroke="#000000"
+             stroke-width="1.30427"
+             id="rect246" />
+          <rect
+             x="-3.0482566"
+             y="202.06035"
+             width="3.8222034"
+             height="73.435249"
+             rx="0"
+             fill="#000000"
+             stroke="#333333"
+             stroke-width="0.652135"
+             id="rect247" />
+          <rect
+             x="114.16598"
+             y="202.06035"
+             width="3.8222034"
+             height="73.435249"
+             rx="0"
+             fill="#000000"
+             stroke="#333333"
+             stroke-width="0.652135"
+             id="rect248" />
+          <rect
+             x="23.129515"
+             y="210.97816"
+             width="58.183891"
+             height="20.13596"
+             rx="0.84324485"
+             fill="#111111"
+             stroke="#333333"
+             stroke-width="0.651528"
+             id="rect251" />
+          <rect
+             x="36.130009"
+             y="213.14812"
+             width="36"
+             height="16"
+             rx="2"
+             fill="#5ec8f2"
+             stroke="#333333"
+             stroke-width="1"
+             id="rect252" />
+          <text
+             x="54.130009"
+             y="225.14812"
+             font-size="9px"
+             fill="#111111"
+             text-anchor="middle"
+             font-weight="700"
+             id="text252">15A</text>
+          <rect
+             x="23.129515"
+             y="241.18211"
+             width="58.183891"
+             height="20.13596"
+             rx="0.84324485"
+             fill="#111111"
+             stroke="#333333"
+             stroke-width="0.651528"
+             id="rect253" />
+          <rect
+             x="36.130009"
+             y="243.14812"
+             width="36"
+             height="16"
+             rx="2"
+             fill="#e0443a"
+             stroke="#333333"
+             stroke-width="1"
+             id="rect254" />
+          <text
+             x="54.130009"
+             y="255.14812"
+             font-size="9px"
+             fill="#111111"
+             text-anchor="middle"
+             font-weight="700"
+             id="text254">10A</text>
+          <text
+             x="48.404373"
+             y="272.7832"
+             font-size="8px"
+             fill="#ffffff"
+             text-anchor="middle"
+             font-weight="700"
+             id="text255">blade slots</text>
+        </g>
+      </g>
+      <rect
+         x="753.17877"
+         y="924.26898"
+         width="97.779373"
+         height="30.011778"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.27287"
+         id="rect255" />
+      <text
+         x="803.49988"
+         y="937.36786"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text256"><tspan
+           id="tspan1"
+           x="803.49988"
+           y="937.36786">Blade Fuse Box +</tspan><tspan
+           id="tspan2"
+           x="803.49988"
+           y="950.49286">10A/15A Fuses</tspan></text>
+    </g>
+    <g
+       id="comp-29"
+       transform="matrix(0.88099356,0,0,0.92510211,111.28012,7.9156761)">
+      <g
+         transform="translate(40,880)"
+         id="g262">
+        <rect
+           x="0"
+           y="0"
+           width="240"
+           height="110"
+           rx="5"
+           fill="#1c1c1c"
+           stroke="#000000"
+           stroke-width="2"
+           id="rect256" />
+        <rect
+           x="30"
+           y="18"
+           width="36"
+           height="44"
+           rx="3"
+           fill="#d62728"
+           stroke="#222222"
+           stroke-width="1"
+           id="rect257" />
+        <circle
+           cx="48"
+           cy="12"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle257" />
+        <circle
+           cx="48"
+           cy="68"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle258" />
+        <rect
+           x="100"
+           y="18"
+           width="36"
+           height="44"
+           rx="3"
+           fill="#d62728"
+           stroke="#222222"
+           stroke-width="1"
+           id="rect258" />
+        <circle
+           cx="118"
+           cy="12"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle259" />
+        <circle
+           cx="118"
+           cy="68"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle260" />
+        <rect
+           x="170"
+           y="18"
+           width="36"
+           height="44"
+           rx="3"
+           fill="#d62728"
+           stroke="#222222"
+           stroke-width="1"
+           id="rect260" />
+        <circle
+           cx="188"
+           cy="12"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle261" />
+        <circle
+           cx="188"
+           cy="68"
+           r="6"
+           fill="#bbbbbb"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle262" />
+        <text
+           x="120"
+           y="98"
+           font-size="10px"
+           fill="#ffffff"
+           text-anchor="middle"
+           font-weight="700"
+           id="text262">3 × 50A ANM</text>
+      </g>
+      <rect
+         x="40"
+         y="861"
+         width="196.89999"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect262" />
+      <text
+         x="138.45"
+         y="874"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text263">201 ANM Fuse Box + 50A ×3</text>
+    </g>
+    <g
+       id="comp-30"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(700,900)"
+         id="g276">
+        <rect
+           x="0"
+           y="0"
+           width="150"
+           height="60"
+           rx="3"
+           fill="#2b5fb3"
+           stroke="#112233"
+           stroke-width="2"
+           id="rect263" />
+        <rect
+           x="6"
+           y="6"
+           width="57"
+           height="48"
+           rx="2"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect264" />
+        <rect
+           x="10"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect265" />
+        <rect
+           x="15"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect266" />
+        <rect
+           x="20"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect267" />
+        <rect
+           x="25"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect268" />
+        <rect
+           x="30"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect269" />
+        <rect
+           x="35"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect270" />
+        <rect
+           x="40"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect271" />
+        <rect
+           x="45"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect272" />
+        <rect
+           x="50"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect273" />
+        <rect
+           x="55"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect274" />
+        <circle
+           cx="93"
+           cy="24"
+           r="16.799999"
+           fill="#8a8a8a"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle274" />
+        <circle
+           cx="93"
+           cy="24"
+           r="8.3999996"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle275" />
+        <rect
+           x="116"
+           y="6"
+           width="28"
+           height="14"
+           rx="1"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect275" />
+        <rect
+           x="116"
+           y="40"
+           width="28"
+           height="14"
+           rx="1"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect276" />
+        <circle
+           cx="75"
+           cy="48"
+           r="5"
+           fill="#cccccc"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle276" />
+      </g>
+      <rect
+         x="700"
+         y="881"
+         width="102.5"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect277" />
+      <text
+         x="751.25"
+         y="894"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text277">5V Buck 5A</text>
+    </g>
+    <g
+       id="comp-31"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(860,900)"
+         id="g291">
+        <rect
+           x="0"
+           y="0"
+           width="150"
+           height="60"
+           rx="3"
+           fill="#2b5fb3"
+           stroke="#112233"
+           stroke-width="2"
+           id="rect278" />
+        <rect
+           x="6"
+           y="6"
+           width="57"
+           height="48"
+           rx="2"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect279" />
+        <rect
+           x="10"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect280" />
+        <rect
+           x="15"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect281" />
+        <rect
+           x="20"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect282" />
+        <rect
+           x="25"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect283" />
+        <rect
+           x="30"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect284" />
+        <rect
+           x="35"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect285" />
+        <rect
+           x="40"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect286" />
+        <rect
+           x="45"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect287" />
+        <rect
+           x="50"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect288" />
+        <rect
+           x="55"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect289" />
+        <circle
+           cx="93"
+           cy="24"
+           r="16.799999"
+           fill="#8a8a8a"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle289" />
+        <circle
+           cx="93"
+           cy="24"
+           r="8.3999996"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle290" />
+        <rect
+           x="116"
+           y="6"
+           width="28"
+           height="14"
+           rx="1"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect290" />
+        <rect
+           x="116"
+           y="40"
+           width="28"
+           height="14"
+           rx="1"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect291" />
+        <circle
+           cx="75"
+           cy="48"
+           r="5"
+           fill="#cccccc"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle291" />
+      </g>
+      <rect
+         x="860"
+         y="881"
+         width="114.3"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect292" />
+      <text
+         x="917.15002"
+         y="894"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text292">12V Buck 15A</text>
+    </g>
+    <g
+       id="comp-32"
+       transform="matrix(0.88099356,0,0,0.92510211,3.4625053,4.5950925)">
+      <g
+         transform="translate(1030,900)"
+         id="g306">
+        <rect
+           x="0"
+           y="0"
+           width="150"
+           height="60"
+           rx="3"
+           fill="#2b5fb3"
+           stroke="#112233"
+           stroke-width="2"
+           id="rect293" />
+        <rect
+           x="6"
+           y="6"
+           width="57"
+           height="48"
+           rx="2"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect294" />
+        <rect
+           x="10"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect295" />
+        <rect
+           x="15"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect296" />
+        <rect
+           x="20"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect297" />
+        <rect
+           x="25"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect298" />
+        <rect
+           x="30"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect299" />
+        <rect
+           x="35"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect300" />
+        <rect
+           x="40"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect301" />
+        <rect
+           x="45"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect302" />
+        <rect
+           x="50"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect303" />
+        <rect
+           x="55"
+           y="9"
+           width="3"
+           height="42"
+           rx="0"
+           fill="#555555"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect304" />
+        <circle
+           cx="93"
+           cy="24"
+           r="16.799999"
+           fill="#8a8a8a"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle304" />
+        <circle
+           cx="93"
+           cy="24"
+           r="8.3999996"
+           fill="#222222"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle305" />
+        <rect
+           x="116"
+           y="6"
+           width="28"
+           height="14"
+           rx="1"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect305" />
+        <rect
+           x="116"
+           y="40"
+           width="28"
+           height="14"
+           rx="1"
+           fill="#1a9a3a"
+           stroke="#333333"
+           stroke-width="1"
+           id="rect306" />
+        <circle
+           cx="75"
+           cy="48"
+           r="5"
+           fill="#cccccc"
+           stroke="#333333"
+           stroke-width="1"
+           id="circle306" />
+      </g>
+      <rect
+         x="1030"
+         y="881"
+         width="114.3"
+         height="18"
+         fill="#d9ead3"
+         stroke="#4e8a3a"
+         stroke-width="1.5"
+         id="rect307" />
+      <text
+         x="1087.15"
+         y="894"
+         font-size="10.5px"
+         font-weight="700"
+         fill="#1b3a10"
+         text-anchor="middle"
+         id="text307">20V Buck 10A</text>
+    </g>
+    <rect
+       x="1005.9365"
+       y="224.29851"
+       width="114.52916"
+       height="24.052654"
+       fill="#6b7fa3"
+       stroke="#333333"
+       id="rect308"
+       style="stroke-width:0.902779" />
+    <text
+       x="1089.4917"
+       y="235.13597"
+       text-anchor="middle"
+       font-size="11.7361px"
+       fill="#ffffff"
+       font-weight="700"
+       id="text308"
+       transform="scale(0.97586901,1.0247277)"
+       style="stroke-width:0.902779">Sensor Layer</text>
+    <rect
+       x="382.28973"
+       y="254.37265"
+       width="123.3391"
+       height="24.052654"
+       fill="#6b7fa3"
+       stroke="#333333"
+       id="rect309"
+       style="stroke-width:0.902779" />
+    <text
+       x="454.93735"
+       y="264.48441"
+       text-anchor="middle"
+       font-size="11.7361px"
+       fill="#ffffff"
+       font-weight="700"
+       id="text309"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">Controller Layer</text>
+    <ellipse
+       style="fill:#001a52;fill-opacity:1;stroke:#001a50;stroke-width:0.903;stroke-dasharray:none;stroke-opacity:1"
+       id="path7"
+       cx="1355.8772"
+       cy="272.58966"
+       rx="33.587574"
+       ry="34.294678" />
+    <rect
+       style="fill:#001a52;fill-opacity:1;stroke:#001a50;stroke-width:0.775779;stroke-dasharray:none;stroke-opacity:1"
+       id="rect7"
+       width="67.302361"
+       height="36.189667"
+       x="1322.2262"
+       y="271.46539" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:#001a50;stroke-width:3.52141;stroke-dasharray:none;stroke-opacity:1"
+       id="path8"
+       cx="1356.2308"
+       cy="265.3418"
+       rx="15.307806"
+       ry="14.777473" />
+    <ellipse
+       style="fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:0.903;stroke-dasharray:none;stroke-opacity:1"
+       id="path9"
+       cx="1349.8668"
+       cy="260.39209"
+       rx="3.5355339"
+       ry="3.3587573" />
+  </g>
+  <g
+     id="layer-legend">
+    <rect
+       x="38.702248"
+       y="61.951424"
+       width="528.59613"
+       height="175.76941"
+       fill="#fafafa"
+       stroke="#999999"
+       id="rect311"
+       style="stroke-width:0.902779" />
+    <text
+       x="53.200939"
+       y="80.317596"
+       font-size="12.6389px"
+       font-weight="700"
+       id="text311"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">Legend (every supply is a + / − pair; − return in black)</text>
+    <line
+       x1="51.917149"
+       y1="104.50612"
+       x2="95.966827"
+       y2="104.50612"
+       stroke="#d62728"
+       stroke-width="3.61111"
+       id="line311" />
+    <text
+       x="107.36766"
+       y="105.5954"
+       font-size="9.93052px"
+       id="text312"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">48V DC +</text>
+    <line
+       x1="51.917149"
+       y1="128.55878"
+       x2="95.966827"
+       y2="128.55878"
+       stroke="#ff8c00"
+       stroke-width="3.61111"
+       id="line312" />
+    <text
+       x="107.36766"
+       y="129.06764"
+       font-size="9.93052px"
+       id="text313"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">20V DC +</text>
+    <line
+       x1="51.917149"
+       y1="152.61143"
+       x2="95.966827"
+       y2="152.61143"
+       stroke="#1f6bff"
+       stroke-width="3.61111"
+       id="line313" />
+    <text
+       x="107.36766"
+       y="152.53989"
+       font-size="9.93052px"
+       id="text314"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">12V DC +</text>
+    <line
+       x1="51.917149"
+       y1="176.66408"
+       x2="95.966827"
+       y2="176.66408"
+       stroke="#9b30ff"
+       stroke-width="3.61111"
+       id="line314" />
+    <text
+       x="107.36766"
+       y="176.01212"
+       font-size="9.93052px"
+       id="text315"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">5V DC +</text>
+    <line
+       x1="51.917149"
+       y1="200.71674"
+       x2="95.966827"
+       y2="200.71674"
+       stroke="#111111"
+       stroke-width="3.72984"
+       id="line315" />
+    <text
+       x="107.36766"
+       y="199.48436"
+       font-size="9.93052px"
+       id="text316"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">Negative return / GND (common)</text>
+    <line
+       x1="316.21521"
+       y1="104.50612"
+       x2="360.26489"
+       y2="104.50612"
+       stroke="#2ca02c"
+       stroke-width="3.61111"
+       id="line316" />
+    <text
+       x="378.2012"
+       y="105.5954"
+       font-size="9.93052px"
+       id="text317"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">CAN-H (lime = CAN-L)</text>
+    <line
+       x1="316.21521"
+       y1="128.55878"
+       x2="360.26489"
+       y2="128.55878"
+       stroke="#00b8d4"
+       stroke-width="3.61111"
+       id="line317" />
+    <text
+       x="378.2012"
+       y="129.06764"
+       font-size="9.93052px"
+       id="text318"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">Ethernet RJ45</text>
+    <line
+       x1="316.21521"
+       y1="152.61143"
+       x2="360.26489"
+       y2="152.61143"
+       stroke="#808080"
+       stroke-width="3.61111"
+       id="line318" />
+    <text
+       x="378.2012"
+       y="152.53989"
+       font-size="9.93052px"
+       id="text319"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">USB / UART</text>
+    <line
+       x1="316.21521"
+       y1="176.66408"
+       x2="360.26489"
+       y2="176.66408"
+       stroke="#8b5a2b"
+       stroke-width="3.61111"
+       id="line319" />
+    <text
+       x="378.2012"
+       y="176.01212"
+       font-size="9.93052px"
+       id="text320"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">GMSL2 coax (Fakra)</text>
+    <line
+       x1="316.21521"
+       y1="200.71674"
+       x2="360.26489"
+       y2="200.71674"
+       stroke="#e0b800"
+       stroke-width="3.61111"
+       id="line320" />
+    <text
+       x="378.2012"
+       y="199.48436"
+       font-size="9.93052px"
+       id="text321"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">BMS balance / sense</text>
+    <line
+       x1="51.917149"
+       y1="224.76939"
+       x2="95.966827"
+       y2="224.76939"
+       stroke="#111111"
+       stroke-width="1.86492"
+       stroke-dasharray="5, 3"
+       id="line321" />
+    <text
+       x="107.36766"
+       y="222.95659"
+       font-size="9.93052px"
+       id="text322"
+       transform="scale(0.97586904,1.0247277)"
+       style="stroke-width:0.902779">Control / signal · orange dashed outline = not in BOM list / TBC</text>
+    <text
+       x="40"
+       y="40"
+       font-size="22px"
+       font-weight="700"
+       id="text323">Interim UGV – Controller Layer (Proposed)</text>
+  </g>
+  <text
+     x="861.18768"
+     y="1191.6379"
+     text-anchor="middle"
+     font-size="14.4445px"
+     font-style="italic"
+     id="text324"
+     transform="scale(0.97586901,1.0247277)"
+     style="stroke-width:0.902779">Figure XX: Controller Layer (Interim)</text>
+  <metadata
+     id="metadata324">
+    <c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTplZDE5ZWFjOC02MTc5LTRiOTUtOTZlZC1lNTY1ZGI3MDE5ZjMAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaAjxst2H9zxuS00M9MOiwgQAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDowYTBkZTdkNC01NzZiLTQxZTgtOWE1MC1lNDExNDY4ZGQzMGFscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoPpdpP7hVJA22DlmcZmFzVgAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggGQ/lHXpxnX22X89yZItMLWjg02UifqFTgDR6ODeSoNWkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaF9kp5fuKL8TVXwpaoTVggcAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIJguVObVAX+8DAKLVJBio5FgnfdZP214icaw1C3Fi7MnZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GfC5Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmVkMTllYWM4LTYxNzktNGI5NS05NmVkLWU1NjVkYjcwMTlmMy9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjc0Y2JjMjEyLTc5MGQtNDFiMy05YzQ4LTkzZTdlOWY1MzM0M3JjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCAZD+UdenGdfbZfz3Jki0wtaODTZSJ+oVOANHo4N5Kg1aJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggf/ATGpwodqR7NoKy99FsThj81m5dp9y6wdfDtO8g22uiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFgg0ZCN5SmRZeb4qUldSgqdetc1pDwThhpJCely5b4bnYN0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQF4YNC9jd7YZguid2MLhKTZ2y40wTYZvok5CQieyJMpmBEIALqC6HUUB526pTicOfQgJbaq+duVJEJ1vQR5WaVQ=</c2pa:manifest>
+  </metadata>
+</svg>

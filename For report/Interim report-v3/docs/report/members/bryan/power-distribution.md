@@ -56,7 +56,7 @@ The separation of electrical loads allows individual branches to be protected ac
 
 <Card>
 
-<Figure src="../../../shared/assets/diagrams/electrical-diagram.svg" alt="FOD Hunter electrical power distribution and wiring diagram" />
+<Figure src="../../../shared/assets/diagrams/UGV_Controller_Layer_Interim.svg" alt="FOD Hunter electrical power distribution and wiring diagram" />
 
 </Card>
 
@@ -161,9 +161,13 @@ The component inventory specifies 8 AWG wiring for the main battery loop, 12 AWG
 
 *Table 5.10: Proposed wiring specifications for the electrical subsystem.*
 
-The final conductor and fuse ratings must account for installed cable length, routing, insulation temperature rating, connector current limits and measured continuous and startup currents. Voltage drop and resistive heating must also be considered, particularly for high-current circuits.
+The wiring arrangement separates high-current power circuits from sensitive communication and control signals to minimise electrical interference. A common electrical reference is required for relevant interfaces, including connections between the STM32 and motor drivers, while high-current return paths are routed separately to reduce noise coupling.
 
-A common electrical reference is required for relevant communication interfaces, including connections between the STM32 and motor drivers. High-current return paths should be arranged to minimise interference with sensitive sensor and control signals.
+The proposed conductor sizes provide the basis for physical integration. Their suitability will be assessed against the installed cable lengths, insulation ratings, connector specifications and expected operating currents, as discussed in the following section.
+
+## 5.1.2.5 Limitations & Semester 2 Future Work
+
+The proposed 48 V power distribution architecture incorporates a Battery Management System (BMS), main fuse, branch fuses and emergency kill switch. However, these protection devices have not yet been fully implemented or validated under the expected operating loads. The final conductor and fuse ratings must be verified against continuous and startup currents, cable routing, insulation temperature ratings and connector current limits. Voltage drop, resistive heating and thermal performance also require assessment during physical integration.
 
 Particular attention is required for the vacuum branch. The interim design specifies a 50 A ANM fuse for selected high-current circuits, while the original 2800 W vacuum corresponds to an estimated current of:
 
@@ -171,10 +175,7 @@ $$
 I_{\text{vacuum}}=\frac{2800}{48}=58.33\text{ A}
 $$
 
-This estimated operating current exceeds the stated 50 A branch fuse rating. Therefore, the vacuum's actual operating and startup currents must be verified against its manufacturer specifications before finalising the fuse, wiring and connector ratings. The branch must not be energised until the protection arrangement has been confirmed to be suitable.
+This estimated current exceeds the nominal 50 A fuse rating. The vacuum's actual operating and startup currents must therefore be verified against the manufacturer's specifications, and the corresponding fuse, wiring and connector ratings must be reassessed before the circuit is energised.
 
-The physical arrangement of electrical components will be refined during Semester 2 integration, with emphasis on cable routing, thermal management, accessibility of protection devices and verification of electrical connections before full-system operation.
-
-<mark>Limitations?</mark>
-
+During Semester 2, the BMS, fuse protection and emergency isolation system will be implemented and tested alongside the power distribution network. Further work will include verifying conductor suitability, measuring voltage drop and temperature under representative loads, refining cable routing and confirming the grounding arrangement. The electrical design of a UAV charging platform will also be explored, including its power supply and charging requirements, to support future UAV–UGV integration.
 <!-- #endregion report -->

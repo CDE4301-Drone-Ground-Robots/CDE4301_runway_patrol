@@ -112,7 +112,7 @@ The 50 A ANM branch fuse rating also requires review against the vacuum's actual
 Detailed electrical protection considerations are presented in Section 5.1.2.
 
 
-## 5.1.3.4 Limitations & Semester 2 Future Work
+## 5.1.3.4 Component Integration & Verification
 
 The electrical components have been identified based on the interim design requirements and proposed system architecture. However, several component specifications and integration requirements remain subject to confirmation.
 
@@ -126,6 +126,14 @@ The electrical components have been identified based on the interim design requi
 
 *Table 5.13: Component integration and verification activities planned for Semester 2.*
 
-The component selection establishes the hardware required for the electrical subsystem and provides the basis for subsequent physical integration. The final component specifications and operating performance will be verified during Semester 2 through datasheet review, subsystem testing and full-system integration.
+These requirements provide the basis for subsequent hardware integration and testing. Detailed power distribution and electrical protection considerations are discussed in Section 5.1.2.
+
+## 5.1.3.5 Limitations & Semester 2 Future Work
+
+Although the electrical components have been identified based on the interim design requirements, several sensors and auxiliary devices have yet to be fully integrated and tested. Their compatibility and performance within the complete electrical system therefore remain unverified.
+
+During Semester 2, electrical integration will focus on wiring and testing the GPS, JT16 LiDAR and ELP camera, together with further IMU testing. A PCB breakout board will also be designed to organise the electrical connections, simplify cable routing and improve maintainability. In addition, the electrical requirements of the redesigned FOD collection mechanism, including the stepper motors and IR sensor, will be incorporated into the final component configuration.
+
+These developments will support the completion of the electrical subsystem and provide the basis for subsequent system-level validation.
 
 <!-- #endregion report -->
