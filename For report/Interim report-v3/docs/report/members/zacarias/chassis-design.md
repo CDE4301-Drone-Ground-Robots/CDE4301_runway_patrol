@@ -11,7 +11,7 @@ Structural chassis architecture, physical CAD layout, mounting points, and mecha
 
 <!-- #region report -->
 
-## 1. Objective & Requirements {#sec-4-1-1}
+## 4.1.1.1 Objective & Requirements {#sec-4-1-1}
 
 The chassis provides structural support for the UGV's battery, electronics, drivetrain, suspension and FOD collection system. During Semester 1, the main objective was to fabricate a functional chassis early to allow other subteams to proceed with component integration. The design therefore prioritized structural adequacy, modularity and ease of fabrication.
 
@@ -31,9 +31,9 @@ Following the convention in [Steering Kinematics](../hilbert/steering-kinematics
 
 A conservative initial design was adopted, with detailed structural optimization carried out after the prototype was fabricated.
 
-## 2. System Architecture {#chassis-architecture}
+## 4.1.1.2 System Architecture {#chassis-architecture}
 
-### 2.1 Chassis Concept Evaluation {#chassis-concepts}
+### 4.1.1.2.1 Chassis Concept Evaluation {#chassis-concepts}
 
 Three chassis concepts were considered before prototype fabrication (Figure 4.1.1).
 
@@ -55,7 +55,7 @@ The **compact rectangular extrusion frame** was selected because it provided suf
 
 *Figure 4.1.1: Preliminary chassis concepts: (a) sheet-metal monocoque, (b) expanded aluminium extrusion frame and (c) compact rectangular extrusion frame (left to right; top to bottom when wrapped).*
 
-### 2.2 Selected Prototype Architecture {#chassis-prototype-architecture}
+### 4.1.1.2.2 Selected Prototype Architecture {#chassis-prototype-architecture}
 
 The initial chassis used **40 × 40 mm T-slot aluminium extrusions (PTP-4040-8)**, assembled into a rectangular frame using brackets and fasteners. The main members consisted of four 620 mm longitudinal beams, six 220 mm transverse beams and four 185 mm vertical supports.
 
@@ -70,7 +70,7 @@ This arrangement provided multiple load paths from the plate to the surrounding 
 
 *Figure 4.1.2: Isometric and underside CAD views showing the 4040 chassis, mounting plate and additional support beams.*
 
-### 2.3 Component Placement and Centre of Mass {#chassis-centre-of-mass}
+### 4.1.1.2.3 Component Placement and Centre of Mass {#chassis-centre-of-mass}
 
 The battery was positioned toward the front of the chassis, while the vacuum module was positioned toward the rear. This arrangement was intended to distribute the major component masses more evenly along the vehicle.
 
@@ -91,9 +91,9 @@ The coordinates are referenced to the default assembly coordinate system. The to
 
 *Figure 4.1.3: SolidWorks top-view assembly showing the calculated centre of mass.*
 
-## 3. Design Methodology & Selection {#chassis-methodology}
+## 4.1.1.3 Design Methodology & Selection {#chassis-methodology}
 
-### 3.1 Preliminary Structural Calculations {#chassis-calculations}
+### 4.1.1.3.1 Preliminary Structural Calculations {#chassis-calculations}
 
 Before fabricating the prototype, simplified calculations were performed to assess the feasibility of the selected 4040 members supporting the electronics mounting plate. The preliminary loading assumptions included a 12 kg battery allowance and 7 kg for electrical components, giving a total load of:
 
@@ -146,13 +146,13 @@ These additional supports were included to reduce the unsupported regions of the
 
 *Figure 4.1.4: (a) Simplified free-body diagram of the 220 mm transverse 4040 support beam; (b) electronics mounting-plate support arrangement showing the two transverse beams and their 165 mm clear spacing.*
 
-### 3.2 Decision to Fabricate the 4040 Prototype {#chassis-fabrication-decision}
+### 4.1.1.3.2 Decision to Fabricate the 4040 Prototype {#chassis-fabrication-decision}
 
 The 4040 extrusion frame was retained for the initial prototype because it offered adequate preliminary strength and adjustable mounting interfaces. Completing fabrication early allowed the electrical and mechanical teams to install their components while detailed structural evaluation continued.
 
 The 4040 configuration was initially considered a potential final chassis. Its suitability and opportunities for weight reduction were subsequently investigated using SolidWorks FEA.
 
-## 4. Implementation & Prototype {#chassis-implementation}
+## 4.1.1.4 Implementation & Prototype {#chassis-implementation}
 
 The 4040 aluminium extrusion chassis was fabricated using profiles. The frame was assembled using mechanical brackets, T-slot nuts and fasteners. The electronics mounting plate was installed using brackets with central mounting holes and the two additional transverse support beams.
 
@@ -162,13 +162,13 @@ The assembled prototype has since been fitted with the wheel and suspension asse
 
 *Figure 4.1.5: Fabricated 4040 prototype showing the assembled structure and installed components (photograph pending).*
 
-## 5. Testing & Results {#chassis-results}
+## 4.1.1.5 Testing & Results {#chassis-results}
 
-### 5.1 Evaluation of the 4040 Prototype {#chassis-4040-evaluation}
+### 4.1.1.5.1 Evaluation of the 4040 Prototype {#chassis-4040-evaluation}
 
 Following fabrication, a static FEA study was conducted to assess whether the 4040 extrusion chassis was suitable as the final design. The analysis indicated a substantial structural reserve in the assessed chassis members, suggesting that the initial configuration could be optimized to reduce weight. This motivated the investigation of a lighter alternative using **30 × 30 mm hollow aluminium square tubes with a nominal wall thickness of 2 mm**.
 
-### 5.2 Selection of the 3030 Square-Tube Chassis {#chassis-3030-selection}
+### 4.1.1.5.2 Selection of the 3030 Square-Tube Chassis {#chassis-3030-selection}
 
 The proposed 3030 configuration was evaluated under static, skid-steering and uneven-ground loading. The preliminary member-level results indicated acceptable factors of safety under the investigated conditions, although localized stress concentrations require further verification.
 
@@ -179,7 +179,7 @@ $$
 = \boxed{53.2\%}
 $$
 
-Based on the estimated mass reduction and preliminary structural evaluation, the **30 × 30 × 2 mm square-tube configuration** was selected as the proposed final chassis (Figure 4.1.6). Detailed FEA methodology, loading assumptions, stress distributions and numerical results belong in the separate [FEA Simulation report (Section 4.1.2)](./fea-simulation.md), which is still being completed.
+Based on the estimated mass reduction and preliminary structural evaluation, the **30 × 30 × 2 mm square-tube configuration** was selected as the proposed final chassis (Figure 4.1.6). Detailed FEA methodology, loading assumptions, stress distributions and numerical results belong in the separate [FEA Simulation report (Section 4.1.2)](./fea-simulation.md).
 
 <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
   <img src="./assets/images/chassis-comparison-4040-extrusion.png" alt="4040 extrusion chassis CAD model" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
@@ -188,7 +188,7 @@ Based on the estimated mass reduction and preliminary structural evaluation, the
 
 *Figure 4.1.6: Side-by-side CAD comparison of the 4040 extrusion chassis (left) and proposed 3030 square-tube chassis (right; below when wrapped).*
 
-## 6. Engineering Discussion {#chassis-discussion}
+## 4.1.1.6 Engineering Discussion {#chassis-discussion}
 
 The initial 4040 extrusion chassis prioritized rapid fabrication and mounting flexibility, allowing subsystem integration to proceed before the final component arrangement was established.
 
@@ -196,7 +196,7 @@ Subsequent structural evaluation showed that the initial configuration had consi
 
 The main trade-off is reduced mounting flexibility in exchange for lower structural mass. The selected 3030 design therefore provides a suitable baseline for the final chassis, subject to verification of critical structural connections and local stresses.
 
-## 7. Limitations & Semester 2 Plan {#chassis-limitations}
+## 4.1.1.7 Limitations & Semester 2 Plan {#chassis-limitations}
 
 The main remaining tasks are final material selection, verification of mounting stresses and fabrication of the optimized chassis.
 
