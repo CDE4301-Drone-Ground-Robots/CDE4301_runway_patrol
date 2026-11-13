@@ -26,8 +26,6 @@ Figure E.2 maps the stakeholders by power and interest. The RSAF holds both, as 
 
 The team interviewed four of these stakeholders in September 2026: the industry partner coordinating the project with the RSAF, an RSAF technician and an RSAF air traffic controller who had both cleared FOD during National Service, and a CAAS officer with over 20 years of experience at Changi Airport. Table E.1 records what each stakeholder said in their own words. ([See interview transcripts](#appendix).)
 
-<!-- TODO: add Table E.3 (current practice and pain points per stakeholder) before Table E.4. -->
-
 *Table E.1: What stakeholders said.*
 
 <table class="data-table fit-table fit-4"><tbody>
@@ -56,7 +54,7 @@ Existing solutions fall into three groups: those that only detect FOD, those tha
 
 ##### Detection Only {#comp-detection}
 
-*Table 1.3.1: FOD detection systems.*
+*Table F.1: FOD detection systems.*
 
 <table class="data-table fit-table fit-img"><tbody>
 <tr><th></th><th>System</th><th>How it works</th><th>Shortcomings</th></tr>
@@ -83,11 +81,11 @@ Autonomous removal is only now reaching the market. Roboxi, a Norwegian multi-fu
 
 ##### Competitor Map {#comp-map}
 
-Figure 1.3.1 places each solution by detection and collection performance. Fixed systems sit high on detection but offer no collection; drag mats and manual sweeping collect but do not detect. Only Roboxi and the proposed system sit in the upper-right quadrant, and Roboxi's position there is based on its manufacturer's claims rather than published results.
+Figure F.4 places each solution by detection and collection performance. Fixed systems sit high on detection but offer no collection; drag mats and manual sweeping collect but do not detect. Only Roboxi and the proposed system sit in the upper-right quadrant, and Roboxi's position there is based on its manufacturer's claims rather than published results.
 
 <IntroductionWidget1 />
 
-*Figure 1.3.1: Competitor map, detection performance against collection performance.*
+*Figure F.4: Competitor map, detection performance against collection performance.*
 
 <!-- TODO: static version competitor-map.png (not in the project yet), for a printed copy of the interactive map above. -->
 <!-- #endregion f -->

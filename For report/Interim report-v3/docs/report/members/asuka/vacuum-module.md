@@ -86,7 +86,7 @@ $$\Delta P_{total} = \tfrac{1}{2}\rho V^2 + \Delta P_{entry} + \Delta P_{frictio
 
 $$\Delta P_{entry} = K_{entry}\left(\tfrac{1}{2}\rho V^2\right), \quad \Delta P_{friction} = f\frac{L}{D}\left(\tfrac{1}{2}\rho V^2\right), \quad \Delta P_{elbow} = K_{bend}\left(\tfrac{1}{2}\rho V^2\right)$$
 
-I took $\rho_{air}$ = 1.2 kg/m³, $C_D$ = 0.8, $K_{entry}$ = 0.35, $K_{bend}$ = 0.4, a friction factor $f$ = 0.022, a duct length of 0.4 m and an assumed filter loss of 300 Pa. I assumed a blower efficiency of 50% and a motor efficiency of 80%, giving $\eta_{total}$ = 40%.<!-- TODO: cite a source for both efficiencies, e.g. a blower or vacuum motor datasheet --> Table 4.3.3 applies the model to the two limiting cases set in Section 4.5.1.
+I took $\rho_{air}$ = 1.2 kg/m³, $C_D$ = 0.8, $K_{entry}$ = 0.35, $K_{bend}$ = 0.4, a friction factor $f$ = 0.022, a duct length of 0.4 m and an assumed filter loss of 300 Pa. I assumed a blower efficiency of 50% and a motor efficiency of 80%, giving $\eta_{total}$ = 40%.<!-- TODO: cite a source for both efficiencies, e.g. a blower or vacuum motor datasheet --> Table 4.3.3 applies the model to the two limiting cases set in Section 4.3.1.
 
 *Table 4.3.3: Vacuum sizing for the two limiting cases (no safety factor applied).*
 
@@ -129,11 +129,11 @@ I measured the intake airspeed with an anemometer at 42.6 m/s for the 1.5 in int
 
 <Figure src="./assets/images/vacuum-anemometer-test.png" alt="Kestrel anemometer reading 95.3 mph at the vacuum intake" style="max-width: 340px; margin: 28px auto;" caption="Figure 4.3.6: Anemometer measurement of the intake airspeed. The display reads 95.3 mph." />
 
-The bench results agree with the model in Section 4.5.3: the measured 42.6 m/s is well below the 67.2 m/s predicted for the 25 g case. The vacuum also fell well short of its 19 kPa rating in operation. The measured airspeed corresponds to a dynamic pressure of about 1.09 kPa ($\tfrac{1}{2}\rho V^2$), roughly 6% of the rated value.
+The bench results agree with the model in Section 4.3.3: the measured 42.6 m/s is well below the 67.2 m/s predicted for the 25 g case. The vacuum also fell well short of its 19 kPa rating in operation. The measured airspeed corresponds to a dynamic pressure of about 1.09 kPa ($\tfrac{1}{2}\rho V^2$), roughly 6% of the rated value.
 
 This shortfall should not be read as poor efficiency alone. Manufacturers quote suction as sealed (zero-flow) vacuum, whereas an open intake operates at the high-flow end of the fan curve, where pressure is far lower [\[9\]](./references.md#ref-9). A larger motor would move the operating point upwards but would add mass and draw more from the 48 V battery.
 
-To validate the integrated subsystem, I mounted the vacuum on the FOD Hunter with a custom-made bin sized to fit the chassis, and recorded a pick-up trial using the top-down intake. The FOD Hunter collected M3–M4 screws under 10 g, confirming that the vacuum, intake and bin work as an integrated system on the rover (Video 4.3.1). Larger fasteners remained on the ground, consistent with the bench results and the model in Section 4.5.3. The trial therefore realises the subsystem for light FOD, but shows that lifting heavier FOD by suction alone would require a disproportionately larger motor. This raised the question of whether more suction power is the right solution at all, which led to the redesign in Section 4.5.5.
+To validate the integrated subsystem, I mounted the vacuum on the FOD Hunter with a custom-made bin sized to fit the chassis, and recorded a pick-up trial using the top-down intake. The FOD Hunter collected M3–M4 screws under 10 g, confirming that the vacuum, intake and bin work as an integrated system on the rover (Video 4.3.1). Larger fasteners remained on the ground, consistent with the bench results and the model in Section 4.3.3. The trial therefore realises the subsystem for light FOD, but shows that lifting heavier FOD by suction alone would require a disproportionately larger motor. This raised the question of whether more suction power is the right solution at all, which led to the redesign in Section 4.3.5.
 
 <VideoClip src="./assets/videos/vacuum-rover-pickup-trial.mp4" caption="Video 4.3.1: Pick-up trial on the FOD Hunter using the top-down intake." />
 

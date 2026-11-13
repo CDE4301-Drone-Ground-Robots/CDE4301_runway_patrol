@@ -104,6 +104,8 @@ The video below demonstrates the first stage in simulation: FOD Argus launches a
 
 <VideoClip src="./shared/assets/videos/fod-hunter-argus-demo.mp4" poster="./shared/assets/images/fod-hunter-argus-demo-poster.jpg" caption="Video 1.2.1: Simulated demonstration of FOD Hunter × FOD Argus in Gazebo." />
 
+After implementing the solution, the team hopes to run a benchmarking test that compares the speed and time taken to clear a fixed amount of FOD between a human crew and FOD Hunter × FOD Argus. The accuracy and clearing rate will be a significant indication of the effectiveness of the solution.
+
 
 ### Value Proposition {#sec-vps}
 
@@ -248,7 +250,7 @@ This section covers FOD Hunter only. The requirements are split by subsystem. Ea
 | R15 | Sized for easy transport (from the feature list) | H10 | Not yet specified | The robot is carried to the airfield. |
 | R16 | Natural frequency of below 10 Hz | H9 | Spring constant of 100 lbf/in | Wheel hop is near 15 Hz, so the suspension must sit well below it (Section 4.2.1). |
 | R17 | Static sag of half the stroke length | H9 | Spring constant of 100 lbf/in; total mass of 65 kg | Leaves travel in both directions (Section 4.2.1). |
-| R18 | Able to pick up FOD of varying size and weight, from screws up to a bird (3 cm to 18 cm, up to 300 g) | H2 | Vacuum motor of 2.2 kPa; FOD up to 5 inches in diameter | Items range from screws ([Appendix B](#appendix-b)) to dead birds ([Appendix D](#appendix-d)). |
+| R18 | Able to pick up FOD of varying size and weight, from screws up to a bird (3 cm to 18 cm, up to 300 g) | H2 | Vacuum motor of 2.2 kPa (2x required); FOD up to 5 inches in diameter | Items range from screws ([Appendix B](#appendix-b)) to dead birds ([Appendix D](#appendix-d)). |
 
 </div>
 
@@ -280,7 +282,6 @@ This section covers FOD Hunter only. The requirements are split by subsystem. Ea
 
 </div>
 
-Some values still need to be settled. The vacuum specification of 2.2 kPa differs from the 19 kPa unit used in Section 4.3, the weight is 60 kg in the specification and 65 kg in the suspension and feature list, the battery is quoted as 48 V 100 A here and 48 V 20 Ah in Section 5.1, and the latency is quoted as below 10 ms and below 15 ms on different pages. R6, R10, R12, R15 and R20 have no specification yet.
 
 ### Subsystem Division and Leadership {#subsystem-division}
 
