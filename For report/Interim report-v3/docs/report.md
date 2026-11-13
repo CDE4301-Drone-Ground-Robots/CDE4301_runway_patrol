@@ -339,29 +339,17 @@ The work is divided into three subsystems, each with a named person in charge of
 
 ### Computer Vision {#computer-vision}
 
-#### Vision Research {#vision-research .rpt-l3}
-
-<!--@compose: ./report/lead/gabriel-lead.md-->
-
-<!--@compose: ./report/members/gabriel/vision-research.md#report{shift=3,prefix=cv-research}-->
-
 #### Vision Calculations {#vision-calculations .rpt-l3}
 
 <!--@compose: ./report/lead/gabriel-lead.md-->
 
 <!--@compose: ./report/members/gabriel/vision-calculations.md#report{shift=3,prefix=cv-calc}-->
 
-#### YOLO Comparison {#cv-yolo-comparison .rpt-l3}
+#### YOLO Comparison & Training {#cv-yolo-comparison .rpt-l3}
 
 <!--@compose: ./report/lead/gabriel-lead.md-->
 
-<!--@compose: ./report/members/gabriel/yolo-comparison.md#report{shift=3,prefix=cv-yolo}-->
-
-#### Sensor Fusion {#cv-sensor-fusion .rpt-l3}
-
-<!--@compose: ./report/lead/gabriel-lead.md-->
-
-<!--@compose: ./report/members/gabriel/sensor-fusion.md#report{shift=3,prefix=cv-fusion}-->
+<!--@compose: ./report/members/gabriel/yolo-comparison-and-training.md#report{shift=3,prefix=cv-yolo}-->
 
 </section>
 

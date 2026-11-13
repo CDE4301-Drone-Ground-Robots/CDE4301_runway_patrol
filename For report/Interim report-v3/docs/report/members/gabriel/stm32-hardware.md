@@ -131,9 +131,9 @@ National University of Singapore · CDE4301 Capstone Project
 
 <Card>
 
-← [Previous Documentation](./vision-research.md)
+← [Previous Documentation](./yolo-comparison-and-training.md)
 
-Computer Vision Research
+YOLO Model Comparison & Training
 
 </Card>
 

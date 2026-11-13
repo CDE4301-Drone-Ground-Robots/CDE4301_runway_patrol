@@ -123,12 +123,19 @@ Driving the TB6600 stepper driver directly from the NUCLEO-F446RE required solvi
 
 <p style="margin-top: -10px; margin-bottom: 24px; font-size: 13.5px; line-height: 1.55; color: var(--vp-c-text-2, #9CA3AF);">Table 5.2.4: Stage 2 stepper driver electrical and timing problems and the firmware solutions implemented in Steppermotor_w_user_input.c.</p>
 
-<div class="gif-vertical">
+<div class="fig-row">
   <Figure
-    src="./assets/videos/Stepper motor.gif"
-    alt="Bench test of the stepper motor linear actuator driven from the STM32 NUCLEO-F446RE via the TB6600 driver"
-    caption="Figure 5.2.3: Stage 2 verification of the TB6600 stepper motor drive and DWT microsecond pulse timing across the 110 mm linear actuator stroke."
+    src="./assets/stm32-stepper-open-drain.png"
+    alt="Open-drain 5 V current-sinking circuit on PC2 driving the TB6600 optocoupler LED: closed to ground turns the LED on, open-circuit turns it off"
+    caption="Figure 5.2.3a: Open-drain 5 V sinking on PC2 (PUL−). Pulling the pin low sinks current from the 5 V rail through the TB6600 optocoupler LED (ON); releasing it to high-Z breaks the path (OFF)."
   />
+  <div class="gif-vertical">
+    <Figure
+      src="./assets/videos/Stepper motor.gif"
+      alt="Bench test of the stepper motor linear actuator driven from the STM32 NUCLEO-F446RE via the TB6600 driver"
+      caption="Figure 5.2.3b: Stage 2 verification of the TB6600 stepper motor drive and DWT microsecond pulse timing across the 110 mm linear actuator stroke."
+    />
+  </div>
 </div>
 
 - **Verification:** Swept pulse widths `w` from 5,000 µs down to 200 µs in 100 µs steps over the `USART2` CLI (`W`/`S` to jog ±400 steps, `+`/`-` to adjust delay), achieving the full 110 mm vacuum actuator stroke with zero missed steps. Any active pulse train is aborted immediately if E-stop is triggered.

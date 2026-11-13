@@ -84,6 +84,6 @@ outline: [2, 3]
 - **Live battery telemetry:** Read 48 V LiFePO4 BMS voltage, current, SoC, and temperature over `USART1` with automatic low-battery throttling.
 - **Closed-loop speed control:** Use real-time encoder velocity feedback from the motor drivers (`0x606C`) to close the wheel speed and heading loop on the STM32, deployed on the custom KiCad carrier PCB with locking JST connectors.
 
-**Related documentation:** [YOLO Model Comparison](./yolo-comparison.md) · [Vision Calculations](./vision-calculations.md) · [Vision Research](./vision-research.md) · [STM32 Hardware](./stm32-hardware.md) · [STM32 Firmware](./stm32-firmware.md)
+**Related documentation:** [YOLO Comparison & Training](./yolo-comparison-and-training.md) · [Vision Calculations](./vision-calculations.md) · [STM32 Hardware](./stm32-hardware.md) · [STM32 Firmware](./stm32-firmware.md)
 
 <!-- #endregion plan -->

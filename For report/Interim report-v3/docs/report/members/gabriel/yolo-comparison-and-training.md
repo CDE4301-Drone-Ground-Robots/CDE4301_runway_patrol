@@ -8,7 +8,7 @@ outline: [2, 3]
 # YOLO Model Comparison, Dataset Engineering & Deployment
 
 > **Semester 1 engineering documentation · Gabriel Tan**  
-> **Evidence boundary:** This page documents the FOD-A data leakage audit, 6-superclass hazard grouping, multi-architecture benchmark (YOLOv8-S, YOLO11-S, RT-DETR-L) on NVIDIA A40 GPUs, two-stage transfer learning onto our custom 1,552-image outdoor tarmac dataset ($640\text{ px}$ vs. $1088\text{ px}$ across 3 seeds), and live webcam proof-of-concept testing. TensorRT export on the Jetson Orin Nano Super, ELP global-shutter camera integration, and wider cross-validated testing are Semester 2 work.
+> **Evidence boundary:** This page documents the FOD-A data leakage audit, 6-superclass hazard grouping, multi-architecture benchmark (YOLOv8-S, YOLO11-S, RT-DETR-L) on NVIDIA A40 GPUs, two-stage transfer learning onto our custom 1,552-image outdoor tarmac dataset (640 px vs. 1088 px across 3 seeds), and live `UGREEN CM831` webcam proof-of-concept testing. TensorRT export on the Jetson Orin Nano Super, ELP global-shutter camera integration, and wider cross-validated testing are Semester 2 work.
 
 <!-- #region report -->
 
@@ -66,17 +66,17 @@ Because FOD-A was not filmed under the viewing geometry and surface conditions o
 
 We trained **YOLOv8-S**, **YOLO11-S**, and **RT-DETR-L** on the leak-free FOD-A split. All three started from COCO weights and trained for `30 epochs` at `640 px` input using AdamW and batch size `32` (`16` for RT-DETR-L) on NVIDIA A40 GPUs on the NUS HPC cluster (RT-DETR-L reached the cluster wall-time limit at epoch 27 of 30). Latency is measured per image at batch size 1 on the A40.
 
-| Model | Params / GFLOPs | Precision | Recall | mAP50 | mAP50-95 | Training Time | Latency (A40) |
+| Model | Params / GFLOPs | Precision | Recall | mAP50 | mAP50-95 | Training Time | Latency (A40, inference only) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **YOLOv8-S** | $11.1\text{M} / 28.7$ | $65.7\%$ | $42.3\%$ | $47.1\%$ | $34.6\%$ | $0.84\text{ h}$ | $3.0\text{ ms}$ |
-| **YOLO11-S** | **$9.4\text{M} / 21.7$** | **$75.6\%$** | $42.5\%$ | $50.3\%$ | $39.6\%$ | $0.92\text{ h}$ | **$3.0\text{ ms}$** |
-| **RT-DETR-L** | $32.0\text{M} / 105.4$ | $63.7\%$ | **$55.8\%$** | **$63.4\%$** | **$48.3\%$** | $3.91\text{ h}$ | $24.2\text{ ms}$ |
+| **YOLOv8-S** | 11.1M / 28.4 | 65.7% | 42.3% | 47.1% | 34.6% | 0.84 h | 3.0 ms |
+| **YOLO11-S** | **9.4M / 21.4** | **75.6%** | 42.5% | 50.3% | 39.6% | 0.92 h | **3.0 ms** |
+| **RT-DETR-L** | 32.0M / 105.4 | 63.7% | **55.8%** | **63.4%** | **48.3%** | 3.91 h | 24.2 ms |
 
 <YoloComparisonWidget1 />
 
 **Why We Selected YOLO11-S:**
-- **Outperforms YOLOv8-S:** Gains $+10\text{ pts}$ precision ($75.6\%$ vs. $65.7\%$) and $+5\text{ pts}$ mAP50-95 ($39.6\%$ vs. $34.6\%$) with fewer parameters ($9.4\text{M}$ vs. $11.1\text{M}$) at the exact same $3\text{ ms}$ latency.
-- **8× Faster than RT-DETR-L:** Executes in $3\text{ ms}$ vs. $24.2\text{ ms}$ with $5\times$ fewer GFLOPs ($21.7$ vs. $105.4$), preserving compute headroom on the Jetson.
+- **Outperforms YOLOv8-S:** Gains +10 pts precision (75.6% vs. 65.7%) and +5 pts mAP50-95 (39.6% vs. 34.6%) with fewer parameters (9.4M vs. 11.1M) at the exact same 3 ms latency.
+- **8× Faster than RT-DETR-L:** Executes in 3 ms vs. 24.2 ms with ≈5× fewer GFLOPs (21.4 vs. 105.4), preserving compute headroom on the Jetson.
 - **Headroom to Raise Resolution:** Even at $1088\text{ px}$ input, YOLO11-S requires less compute than RT-DETR-L at $640\text{ px}$.
 - **4× Faster Training:** $0.92\text{ h}$ vs. $3.91\text{ h}$ per run, allowing multi-seed iterations.
 
@@ -101,11 +101,13 @@ For **Metallic Fasteners** ($1,798$ test instances), precision is high ($97.4\%$
 
 Each training iteration changes exactly one variable so the cause of each gain is isolated. Following Reis et al. [\[3\]](./references.md#ref-3), we use two-stage transfer learning: starting from the leak-free FOD-A YOLO11-S checkpoint, we fine-tune on our custom tarmac dataset at $640\text{ px}$ and then scale input resolution to $1088\text{ px}$.
 
-| Iteration | Change | Input Size | Precision | Recall | mAP50 | mAP50-95 | Model Cycle (A40) |
+| Iteration | Change | Input Size | Precision | Recall | mAP50 | mAP50-95 | Model cycle (A40, pre + inference + post) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **0 (Baseline)** | FOD-A model, zero-shot on tarmac | $640\text{ px}$ | $45.4\%$ | $10.6\%$ | $11.9\%$ | $4.6\%$ | $4.0\text{ ms}$ |
-| **1 (Fine-Tuned)** | Fine-tuned on tarmac (3 seeds) | $640\text{ px}$ | $95.8 \pm 1.0\%$ | $81.5 \pm 0.7\%$ | $87.7 \pm 0.7\%$ | $54.8 \pm 1.2\%$ | $4.1\text{ ms}$ |
-| **2 (High-Res)** | Input raised to $1088\text{ px}$ (3 seeds) | **$1088\text{ px}$** | **$98.6 \pm 1.3\%$** | **$92.7 \pm 3.2\%$** | **$97.0 \pm 1.4\%$** | **$69.1 \pm 2.2\%$** | **$8.0\text{ ms}$** |
+| **0 (Baseline)** | FOD-A model, zero-shot on tarmac | 640 px | 45.4% | 10.6% | 11.9% | 4.6% | 4.0 ms |
+| **1 (Fine-Tuned)** | Fine-tuned on tarmac (3 seeds) | 640 px | 95.8 ± 1.0% | 81.5 ± 0.7% | 87.7 ± 0.7% | 54.8 ± 1.2% | 4.1 ms |
+| **2 (High-Res)** | Input raised to 1088 px (3 seeds) | **1088 px** | **98.6 ± 1.3%** | **92.7 ± 3.2%** | **97.0 ± 1.4%** | **69.1 ± 2.2%** | **8.0 ms** |
+
+Inference alone at 640 px is 3.0 ms (benchmark table); the model cycle adds pre- and post-processing.
 
 - **Iteration 0 — Zero-Shot Baseline ($640\text{ px}$):** Running the leak-free FOD-A YOLO11-S model unchanged on our tarmac test set gave **$10.6\%$ recall** and **$11.9\%$ mAP50**—missing 9 in 10 fasteners because FOD-A was filmed with different cameras, heights, angles, ground textures, and lighting.
 - **Iteration 1 — Fine-Tuning on Our Data ($640\text{ px}$):** Fine-tuning the same model on our $1,305$ tarmac training images raised mAP50 from $11.9\%$ to **$87.7 \pm 0.7\%$** and recall from $10.6\%$ to **$81.5 \pm 0.7\%$** (finding 4 in 5 fasteners). However, it still missed about 1 in 5 fasteners and produced loose boxes ($54.8\%$ mAP50-95) because at $640\text{ px}$ a fastener $2\text{ m}$ away is shrunk to only $\approx 9\text{ px}$ wide.
@@ -133,7 +135,7 @@ Each training iteration changes exactly one variable so the cause of each gain i
 
 **Multi-Seed Validation ($640\text{ px}$ vs. $1088\text{ px}$ Across Seeds 0, 1, 2)**
 
-Because a single training run can be lucky due to random image ordering, mosaic stitching, and layer initialization, each resolution was trained 3 times with different seeds on the exact same train/val/test split:
+Because a single training run can be lucky due to random image ordering, mosaic stitching, and layer initialisation, each resolution was trained 3 times with different seeds on the exact same train/val/test split:
 
 | Metric | $640\text{ px}$ (Seeds 0 / 1 / 2) | $640\text{ px}$ Mean ± SD | $1088\text{ px}$ (Seeds 0 / 1 / 2) | $1088\text{ px}$ Mean ± SD |
 | :--- | :--- | :--- | :--- | :--- |
@@ -146,7 +148,20 @@ $1088\text{ px}$ outperforms $640\text{ px}$ on every single seed, and the gains
 
 **Error Analysis & Confidence Threshold Selection**
 
-For the $1088\text{ px}$ model evaluated at Seed 0 with the default confidence threshold of `0.25`, the confusion matrix shows $89\%$ of test fasteners detected and $11\%$ missed, with $\approx 97\%$ precision ($\approx 3\%$ false detections). Because recall is our primary operational priority, the deployed confidence threshold will be chosen directly from the Precision–Recall (PR) curve in Semester 2 rather than relying on the `0.25` default.
+<div class="fig-row">
+  <Figure
+    src="./assets/images/S_1088_PR_curve.png"
+    alt="Precision-Recall curve for 1088 px YOLO11-S model, seed 0, validation split"
+    caption="Figure 3.6.1a: Precision-Recall curve, 1088 px model, seed 0, validation split (96 images)."
+  />
+  <Figure
+    src="./assets/images/S_1088_confusion_matrix.png"
+    alt="Normalised confusion matrix for 1088 px YOLO11-S model, seed 0, validation split"
+    caption="Figure 3.6.1b: Normalised confusion matrix, 1088 px model, seed 0, validation split (96 images)."
+  />
+</div>
+
+The PR curve stays at precision 1.0 until recall ≈ 0.98, so the model makes almost no false detections until it has found nearly every fastener (AP50 = 0.994 on validation). The confusion matrix uses the default confidence threshold 0.25: 89% of fasteners detected, 11% missed. So the default threshold leaves recall on the table. Since recall is our priority, the Semester 2 threshold will be picked from the PR curve. The background column is empty because there are no fastener-free images, so false alarms on empty tarmac are not measured yet.
 
 :::
 
@@ -155,10 +170,16 @@ For the $1088\text{ px}$ model evaluated at Seed 0 with the default confidence t
 ### 4.1 Offline Video Benchmark & Live Webcam POC
 
 - **Offline Video Benchmark (NVIDIA A40):** Running the $1088\text{ px}$ YOLO11-S model on a recorded tarmac video on the A40 (PyTorch 2.6, FP16) required **$8.0\text{ ms}$ per frame** for the model ($1.2\text{ ms}$ pre-processing, $4.3\text{ ms}$ inference, and $2.5\text{ ms}$ post-processing). The complete end-to-end pipeline—including video decoding, bounding-box rendering, HUD overlay, and video writing—ran at **26.9 FPS** across $2,709$ frames.
-- **Live Detection POC & Operator Triage HUD:** We tested the fine-tuned $1088\text{ px}$ YOLO11-S model live on a laptop webcam using our custom operator HUD (displaying object count, live FPS, adjustable confidence threshold, automatic snapshot logging, and three alert tiers: *High Critical* for tools, *Critical* for fasteners and stone, and *Low* for paper and rubber) over an indoor wooden floor never seen in training:
-  - **Detection Accuracy:** All **7 / 7 fasteners** were detected and flagged `THREAT: CRITICAL` with steady $70\text{–}86\%$ confidence.
+- **Live Detection POC & Operator Triage HUD:** We tested the fine-tuned 1088 px YOLO11-S model live on the `UGREEN CM831` webcam using our custom operator HUD (displaying object count, live FPS, adjustable confidence threshold, automatic snapshot logging, and three alert tiers: *High Critical* for tools, *Critical* for fasteners and stone, and *Low* for paper and rubber) over an indoor wooden floor never seen in training:
+  - **Detection Accuracy:** All **7 / 7 fasteners** were detected and flagged `THREAT: CRITICAL` with steady 70–86% confidence.
   - **Confidence Tuning:** At the default `0.25` threshold, floor grain triggered false boxes; raising the threshold to `0.70` eliminated every false positive while retaining all 7 fasteners.
-  - **Throughput Limitation:** Running unoptimized on a laptop CPU achieved **3.6 FPS**, below our $4.7\text{ FPS}$ minimum ($10\text{ FPS}$ target), confirming the need for TensorRT acceleration on the Jetson GPU.
+  - **Throughput Limitation:** Running unoptimised on a laptop CPU achieved **3.6 FPS**, below our 4.7 FPS minimum (10 FPS target), confirming the need for TensorRT acceleration on the Jetson GPU.
+
+<Figure
+  src="./assets/videos/live_detection_demo.gif"
+  alt="Live HUD on the UGREEN CM831 webcam running 1088 px YOLO11-S and flagging 7 of 7 fasteners CRITICAL"
+  caption="Figure 3.6.2: Live HUD on the UGREEN CM831 webcam, 1088 px YOLO11-S, 7 / 7 fasteners flagged CRITICAL."
+/>
 
 ### 4.2 Key Takeaways & Current Limitations
 
@@ -167,15 +188,16 @@ For the $1088\text{ px}$ model evaluated at Seed 0 with the default confidence t
 3. **Resolution sets detection range:** The optical pixel calculations and the $640 \rightarrow 1088\text{ px}$ training results agree that input resolution, camera geometry, and object size jointly determine how far ahead a fastener can be resolved.
 4. **Current Scope Limitations:**
    - The held-out test set covers **2 of 9 fastener types** recorded at one site on one day.
-   - The Semester 1 detector runs at $1088\text{ px}$ input, reaching $32\text{ px}$ width out to $\approx 0.8\text{ m}$ (whereas $1\text{ cm}$ objects only reach $32\text{ px}$ across out to $\approx 0.60\text{ m}$).
+   - The Semester 1 detector runs at 1088 px input, reaching 32 px width out to ≈ 0.8 m (whereas 1 cm objects only reach 32 px across out to ≈ 0.6 m).
    - The fine-tuned tarmac model is single-class (`Metallic Fasteners`), so full three-tier hazard triage requires merging with the 6-class model or training a multi-class tarmac dataset.
-   - Training footage came from a smartphone; transitioning to the ELP camera introduces a second optical domain shift that must be verified upon delivery.
+   - Training data came from the UGREEN CM831 (rolling shutter). Moving to the ELP global-shutter camera is a second domain shift and will be checked on delivery.
+   - No fastener-free images in the test set, so false alarms on empty tarmac (cracks, paint, shadows) are not measured.
 
 ::: details Semester 2 Computer Vision roadmap (5 work packages)
 
 | Work Package | Scope & Engineering Action | Target Outcome |
 | :--- | :--- | :--- |
-| **1. Precision–Recall Tuning & TensorRT Performance** | Fine-tune further on hard cases, sweep confidence threshold and NMS IoU on the PR curve, export to TensorRT, and benchmark on the Jetson Orin Nano Super with the ELP camera. | **$\ge 10\text{ FPS}$** sustained real-time inference on the Jetson at the optimal PR operating point. |
+| **1. Precision–Recall Tuning & TensorRT Performance** | Fine-tune further on hard cases, sweep confidence threshold and NMS IoU on the PR curve, export to TensorRT, and benchmark on the Jetson Orin Nano Super with the ELP camera. | **$\ge 10\text{ FPS}$** sustained real-time inference on the Jetson at the selected PR operating point. |
 | **2. Weather & Onboard Lighting** | Collect training data in rain, at night, and in harsh solar glare; design regulated onboard LED lighting so FOD looks consistent across ambient conditions, and test each condition separately. | Condition-isolated precision/recall benchmarks across day, night, rain, and glare. |
 | **3. SAHI High-Resolution Tile Slicing** | Because the 5 MP camera captures much finer detail than a $1088\text{ px}$ input, slice each frame into overlapping native-resolution tiles to give small FOD **$\approx 2.4\times$ more pixels** (trading off $\approx 6\times$ inference cost per frame). | Extend the $32\text{ px}$ fastener detection range **past $0.8\text{ m}$** across the full GNSS look-ahead band. |
 | **4. Monocular FOD Ground Localisation** | Convert detected bounding-box pixel coordinates into metric ground distance using calibrated camera height $h = 0.45\text{ m}$ and tilt $\theta = 33^\circ$, and publish target coordinates on a ROS 2 topic. | Closed-loop UGV terminal approach and vacuum alignment over detected FOD. |
@@ -197,10 +219,25 @@ For the $1088\text{ px}$ model evaluated at Seed 0 with the default confidence t
 
 <Card>
 
-[Next Documentation](./vision-research.md) →
+[Next Documentation](./stm32-hardware.md) →
 
-**Computer Vision Research & Task Formulation**
+**STM32 Low-Level Control Unit (Hardware)**
 
 </Card>
 
 </CardGrid>
+
+<style scoped>
+.fig-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+  margin: 18px 0;
+}
+@media (max-width: 768px) {
+  .fig-row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

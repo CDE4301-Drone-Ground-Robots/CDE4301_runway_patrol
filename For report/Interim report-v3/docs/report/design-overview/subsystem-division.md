@@ -113,10 +113,8 @@ Benchmarked real-time single-stage CNN backbones against transformer-based archi
 Diagnosed small-hardware detection failure modes using confusion matrix analysis, establishing that missed detections stem from deep convolutional downsampling feature loss rather than class confusion; introduced targeted mitigations combining sub-millimeter GSD optical compensation, functional remediation superclasses, and high-resolution inference.
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#cv-sensor-fusion">Sensor Fusion &amp; Depth Estimation <span aria-hidden="true">↗</span></a>
-  <a class="ovx-more" href="/report#vision-calculations">Vision Field-of-View Calculations <span aria-hidden="true">↗</span></a>
-  <a class="ovx-more" href="/report#vision-research">Vision &amp; Sensor Research <span aria-hidden="true">↗</span></a>
-  <a class="ovx-more" href="/report#cv-yolo-comparison">YOLO Model Benchmarking &amp; Comparison <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#vision-calculations">Vision Calculations &amp; Sensor Selection <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#cv-yolo-comparison">YOLO Comparison &amp; Training <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>
