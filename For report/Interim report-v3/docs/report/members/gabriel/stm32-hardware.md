@@ -84,12 +84,12 @@ The **STM32 NUCLEO-F446RE** was selected as the optimal microcontroller platform
 
 ## 3. Implementation & Prototype {#interface-wiring}
 
-All 11 external subsystems are mapped onto non-overlapping Morpho and Arduino headers on the NUCLEO-F446RE (**Figure 3.1** and Table 3.1).
+All 11 external subsystems are mapped onto non-overlapping Morpho and Arduino headers on the NUCLEO-F446RE (**Figure 5.2.1**).
 
 <Figure
   src="./assets/images/comm-diagram.jpeg"
   alt="STM32 NUCLEO-F446RE hardware interface and pinout diagram grouped by Sensor, Power, Motor, Visual and User Input subsystems"
-  caption="**Figure 3.1: STM32 NUCLEO-F446RE Hardware Interface Map.** Pin allocation across all 11 external subsystems (Motor, User Input, Power, Sensor, Vacuum Actuator, and Visual Lighting)."
+  caption="**Figure 5.2.1: STM32 NUCLEO-F446RE Hardware Interface Map.** Pin allocation across all 11 external subsystems (Motor, User Input, Power, Sensor, Vacuum Actuator, and Visual Lighting)."
 />
 
 ::: details Interactive pinout & peripheral interface explorer (11 devices)

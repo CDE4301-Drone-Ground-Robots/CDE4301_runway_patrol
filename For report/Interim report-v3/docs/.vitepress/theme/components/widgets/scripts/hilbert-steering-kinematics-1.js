@@ -124,9 +124,9 @@ export default function init() {
       var elTauSub = document.getElementById('metric-tau-sub');
       var elDeltaN = document.getElementById('metric-delta-n');
       var elDeltaNSub = document.getElementById('metric-deltan-sub');
-      var elNFront = document.getElementById('metric-n-front');
-      var elNFrontSub = document.getElementById('metric-nfront-sub');
-      var nFrontCard = document.getElementById('metric-nfront-card');
+      var elNRear = document.getElementById('metric-n-rear');
+      var elNRearSub = document.getElementById('metric-nrear-sub');
+      var nRearCard = document.getElementById('metric-nrear-card');
 
       if (valL) valL.textContent = L_mm.toFixed(1) + " mm (" + L_m.toFixed(3) + " m)";
       if (valB) valB.textContent = B_mm.toFixed(1) + " mm (" + B_m.toFixed(3) + " m)";
@@ -136,18 +136,18 @@ export default function init() {
       if (elTauWheel) elTauWheel.textContent = tau_shaft.toFixed(2) + " Nm";
       if (elDeltaN) elDeltaN.textContent = delta_n_frict.toFixed(1) + " N";
       if (elDeltaNSub) elDeltaNSub.textContent = "Friction " + mu.toFixed(1) + "g (" + delta_n_frict.toFixed(1) + " N) / Struct 1.0g (" + delta_n_struct.toFixed(1) + " N)";
-      if (elNFront) elNFront.textContent = (n_rear_frict > 0 ? "+" : "") + n_rear_frict.toFixed(1) + " N";
+      if (elNRear) elNRear.textContent = (n_rear_frict > 0 ? "+" : "") + n_rear_frict.toFixed(1) + " N";
 
       // Motor Torque Status Subtext
       if (elTauSub) {
         if (tau_shaft <= tau_cont_rated) {
-          elTauSub.textContent = "Shaft: " + tau_shaft.toFixed(2) + " Nm (Cont) | Elec: " + tau_elec.toFixed(2) + " Nm";
+          elTauSub.textContent = "Analytical estimate based on selected inputs (within 15.0 Nm continuous rating)";
           elTauSub.style.color = "#10b981";
         } else if (tau_shaft <= tau_peak_rated) {
-          elTauSub.textContent = "Shaft: " + tau_shaft.toFixed(2) + " Nm (Peak " + ((tau_shaft / tau_peak_rated) * 100).toFixed(0) + "%) | Elec: " + tau_elec.toFixed(2) + " Nm";
+          elTauSub.textContent = "Analytical estimate based on selected inputs (Peak " + ((tau_shaft / tau_peak_rated) * 100).toFixed(0) + "% of 28.5 Nm)";
           elTauSub.style.color = "#38bdf8";
         } else {
-          elTauSub.textContent = "EXCEEDS PEAK (" + tau_shaft.toFixed(1) + " > 28.5 Nm)";
+          elTauSub.textContent = "Analytical estimate exceeds peak rating (" + tau_shaft.toFixed(1) + " > 28.5 Nm)";
           elTauSub.style.color = "#f43f5e";
         }
       }
@@ -166,11 +166,19 @@ export default function init() {
           banner.style.borderColor = 'rgba(245, 158, 11, 0.4)';
         }
         if (icon) { icon.innerHTML = "&#9888;"; icon.style.color = "#fbbf24"; }
-        if (title) { title.textContent = "Longitudinal Pitch Risk: Narrow Wheelbase (L/B = " + ratio.toFixed(3) + " < " + min_stable_ratio_struct.toFixed(2) + ")"; title.style.color = "#fbbf24"; }
-        if (desc) { desc.textContent = "Short wheelbase reduces dynamic braking stability. Decelerating at friction limit (" + mu.toFixed(2) + " g) transfers " + delta_n_frict.toFixed(1) + " N forward, reducing rear-axle normal force to " + n_rear_frict.toFixed(1) + " N (rear wheels risk dynamic lift-off or brake hop under hard stops)."; }
+        if (title) { title.textContent = "Rear-Wheel Lift Risk — Assumed 1g Braking (L/B = " + ratio.toFixed(3) + " < " + min_stable_ratio_struct.toFixed(3) + ")"; title.style.color = "#fbbf24"; }
+        if (desc) { desc.textContent = "Short wheelbase increases forward dynamic load transfer during deceleration. Under the assumed quasi-static 1g deceleration and 200 mm CG height, calculated rear-axle load is " + (n_rear_struct < 0 ? "negative (" + n_rear_struct.toFixed(1) + " N, indicating four-wheel contact equilibrium is lost and rear wheels lift)" : n_rear_struct.toFixed(1) + " N") + ". Friction-limited braking (" + mu.toFixed(2) + "g) retains " + (n_rear_frict > 0 ? n_rear_frict.toFixed(1) + " N" : "0 N") + " rear load."; }
         if (badge) { badge.className = "badge badge-amber"; }
-        if (nFrontCard) { nFrontCard.style.borderColor = "#f59e0b"; }
-        if (elNFrontSub) { elNFrontSub.textContent = "Reduced Rear-Axle Load (" + (n_rear_frict / (m * g / 2.0) * 100).toFixed(0) + "% Retained)"; elNFrontSub.style.color = "#fbbf24"; }
+        if (nRearCard) { nRearCard.style.borderColor = "#f59e0b"; }
+        if (elNRearSub) {
+          if (n_rear_frict <= 0) {
+            elNRearSub.textContent = "Rear-wheel lift risk (contact equilibrium lost)";
+            elNRearSub.style.color = "#ef4444";
+          } else {
+            elNRearSub.textContent = "Reduced Rear-Axle Load (" + (n_rear_frict / (m * g / 2.0) * 100).toFixed(0) + "% retained at " + mu.toFixed(2) + "g)";
+            elNRearSub.style.color = "#fbbf24";
+          }
+        }
       } else if (ratio > 1.00) {
         statusMode = "scrub";
         if (banner) {
@@ -178,11 +186,11 @@ export default function init() {
           banner.style.borderColor = 'rgba(239, 68, 68, 0.4)';
         }
         if (icon) { icon.innerHTML = "&#10060;"; icon.style.color = "#f87171"; }
-        if (title) { title.textContent = "Pivot Traction Limit Exceeded (L/B = " + ratio.toFixed(3) + " > 1.00)"; title.style.color = "#f87171"; }
-        if (desc) { desc.textContent = "Under isotropic Coulomb friction, required tractive force per wheel (" + fx_wheel_req.toFixed(1) + " N) exceeds available ground grip (" + fx_wheel_max.toFixed(1) + " N). The simplified analytical model predicts longitudinal wheel slip before initiating pivot."; }
+        if (title) { title.textContent = "Above Simplified Traction Threshold (L/B = " + ratio.toFixed(3) + " > 1.00)"; title.style.color = "#f87171"; }
+        if (desc) { desc.textContent = "The required wheel force (" + fx_wheel_req.toFixed(1) + " N) exceeds the assumed longitudinal friction limit (" + fx_wheel_max.toFixed(1) + " N) in this simplified model. Actual pivoting depends on tire slip, surface conditions and motor torque."; }
         if (badge) { badge.className = "badge badge-red"; }
-        if (nFrontCard) { nFrontCard.style.borderColor = "var(--apple-border)"; }
-        if (elNFrontSub) { elNFrontSub.textContent = "Positive Calculated Rear-Axle Load"; elNFrontSub.style.color = "#34d399"; }
+        if (nRearCard) { nRearCard.style.borderColor = "var(--apple-border)"; }
+        if (elNRearSub) { elNRearSub.textContent = "Positive Calculated Rear-Axle Load"; elNRearSub.style.color = "#34d399"; }
       } else {
         statusMode = "optimal";
         if (banner) {
@@ -190,11 +198,11 @@ export default function init() {
           banner.style.borderColor = 'rgba(16, 185, 129, 0.35)';
         }
         if (icon) { icon.innerHTML = "&#10003;"; icon.style.color = "#34d399"; }
-        if (title) { title.textContent = "Within Assumed Design Range (L/B = " + ratio.toFixed(3) + ") • Predicted Stability Margin"; title.style.color = "#34d399"; }
-        if (desc) { desc.textContent = "The chassis stance resides within the assumed analytical design envelope (L/B >= " + min_stable_ratio_struct.toFixed(2) + " and L/B <= 1.00). Direct-drive hub motors produce sufficient shaft torque (" + tau_shaft.toFixed(2) + " Nm) to overcome lateral tire scrub within simplified traction estimates."; }
+        if (title) { title.textContent = "Within Model Range (L/B = " + ratio.toFixed(3) + ")"; title.style.color = "#34d399"; }
+        if (desc) { desc.textContent = "Chassis stance resides within the preliminary analytical model range (L/B >= " + min_stable_ratio_struct.toFixed(3) + " and L/B <= 1.00). Required shaft torque (" + tau_shaft.toFixed(2) + " Nm) is an analytical estimate; continuous pivoting capability and motor temperature remain unverified."; }
         if (badge) { badge.className = "badge badge-purple"; }
-        if (nFrontCard) { nFrontCard.style.borderColor = "var(--apple-border)"; }
-        if (elNFrontSub) { elNFrontSub.textContent = "Positive Calculated Rear-Axle Load"; elNFrontSub.style.color = "#34d399"; }
+        if (nRearCard) { nRearCard.style.borderColor = "var(--apple-border)"; }
+        if (elNRearSub) { elNRearSub.textContent = "Positive Calculated Rear-Axle Load"; elNRearSub.style.color = "#34d399"; }
       }
 
       // Re-render Dynamic Chassis SVG:

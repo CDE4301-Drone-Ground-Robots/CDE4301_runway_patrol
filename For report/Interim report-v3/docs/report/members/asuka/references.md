@@ -60,7 +60,7 @@ List all references used in your documentation and subsystem reports below. Use 
 ::: info
 <Badge type="info" text="[6]" /> <Badge type="info" text="FOD & Debris Removal" />
 
-A. F. El-Sayed, *Foreign Object Debris and Damage in Aviation*. Boca Raton, FL, USA: CRC Press, 2022, doi: [10.1201/9781003133087](https://doi.org/10.1201/9781003133087).<br> Used in 4.5.1: FAA and EASA definitions (p. 4), the AAGSC list (p. 4), the hard/soft classification and the 60% metal study (p. 19), and credit for Figure 4.5.1.1 (Fig. 1.3). Used in 4.5.2: removal methods (Sec. 8.4.3).
+A. F. El-Sayed, *Foreign Object Debris and Damage in Aviation*. Boca Raton, FL, USA: CRC Press, 2022, doi: [10.1201/9781003133087](https://doi.org/10.1201/9781003133087).<br> Used in 4.5.1: FAA and EASA definitions (p. 4), the AAGSC list (p. 4), the hard/soft classification and the 60% metal study (p. 19), and credit for Figure 4.3.1 (Fig. 1.3). Used in 4.5.2: removal methods (Sec. 8.4.3).
 :::
 
 <span id="ref-7"></span>

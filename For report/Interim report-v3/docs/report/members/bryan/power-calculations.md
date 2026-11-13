@@ -18,7 +18,7 @@ The drivetrain power was estimated for four operating conditions. The mission-du
 | Acceleration | 5 | 222.14 |
 | Zero-radius turning | 5 | 708.10 |
 
-*Table 5.1: Estimated drivetrain power under different operating conditions, based on the interim presentation.*
+*Table 5.1.1: Estimated drivetrain power under different operating conditions, based on the interim presentation.*
 
 The electrical power of a component is calculated using:
 
@@ -40,7 +40,7 @@ $$
 P_{\text{weighted}}=\sum_{i=1}^{n}P_iD_i
 $$
 
-Using the proportions in Table 5.1:
+Using the proportions in Table 5.1.1:
 
 $$
 P_{\text{weighted}}=(78.48\times0.80)+(165.12\times0.10)+(222.14\times0.05)+(708.10\times0.05)
@@ -93,7 +93,7 @@ A 48 V-class power bus is used to reduce current relative to a 24 V bus for the 
 | Headlights for CV | 12.0 | 0.83 | 1.20 | 9.96 | 50.00% | 4.98 | 0.23 | 0.33 |
 | Rear Red Light Strip / Status Light | 12.0 | 0.25 | 0.40 | 3.00 | 100.00% | 3.00 | 0.07 | 0.11 |
 
-*Table 5.2: Total Power Table of Interim System.*
+*Table 5.1.2: Total Power Table of Interim System.*
 
 The consolidated load budget summarises the estimated electrical requirements of each subsystem, including operating voltage, nominal current, peak current, power consumption and duty cycle. The nominal current and operating voltage are used to determine the power demand of individual components through (P=VI), while the duty cycle accounts for intermittent operation to obtain the average power consumption. These average power values are then combined to estimate the total system load, which forms the basis for the subsequent battery capacity and runtime calculations.
 
@@ -142,7 +142,7 @@ Four chemistries were considered using energy density, cycle life, thermal behav
 | LiPo | 44.4 V (12S) | 300–500 cycles | 180–240 Wh/kg | More sensitive to mechanical damage and swelling; prior estimate reports onset around 150°C | 25C–50C | Lightweight packaging and high discharge capability in suitable designs; greater sensitivity to damage and swelling |
 | Lead-acid (SLA / AGM) | 48 V (four 12 V batteries) | 300–400 cycles | 30–40 Wh/kg | Low thermal-runaway risk in the prior comparison | 1C | Established and relatively low initial cost; high mass and low usable energy density |
 
-*Table 5.3: Preliminary comparison of battery chemistries and reported specifications.*
+*Table 5.1.3: Preliminary comparison of battery chemistries and reported specifications.*
 
 The numerical ranges above were present in the project comparison, but the project's reference list does not currently identify the sources or exact models behind them. They should be treated as indicative, unverified values—not manufacturer specifications—until supported by cited cell or battery datasheets. Battery characteristics vary by product, configuration and test conditions, so final comparison should use referenced specifications for the actual candidate packs.
 

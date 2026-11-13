@@ -28,9 +28,9 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0]])
             <div id="sim-status-banner" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: flex-start; gap: 14px;">
               <span id="sim-status-icon" style="font-size: 20px;">✓</span>
               <div>
-                <strong id="sim-status-title" style="color: #34d399; font-size: 14px;">Within Assumed Design Range (L/B = 0.850) • Predicted Stability Margin</strong>
+                <strong id="sim-status-title" style="color: #34d399; font-size: 14px;">Within Model Range (L/B = 0.850)</strong>
                 <p id="sim-status-desc" style="font-size: 13px; color: var(--apple-text-secondary); margin: 4px 0 0 0; line-height: 1.45;">
-                  Analytical prediction indicates the chassis stance resides safely between the emergency pitch lift-off boundary (L/B &ge; 0.70) and the stationary pivot traction limit (L/B &le; 1.00). Direct-drive hub motors produce sufficient shaft torque (14.25 N·m) to overcome lateral tire scrub within simplified traction estimates.
+                  Chassis stance resides within the preliminary analytical model range (L/B &ge; 0.70 and L/B &le; 1.00). Required shaft torque (14.25 N·m) is an analytical estimate; continuous pivoting capability and motor temperature remain unverified.
                 </p>
               </div>
             </div>
@@ -45,7 +45,7 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0]])
                 <input type="range" id="input-wheelbase" min="300" max="800" step="0.1" value="488.8" oninput="updateLBSimulation()" style="width: 100%; accent-color: #3b82f6;">
                 <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: var(--apple-text-tertiary); margin-top: 4px;">
                   <span>300 mm (Pitch Risk)</span>
-                  <span>Physical: 488.8 mm</span>
+                  <span>Design Baseline: 488.8 mm</span>
                   <span>800 mm (Excess Scrub)</span>
                 </div>
               </div>
@@ -58,7 +58,7 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0]])
                 <input type="range" id="input-trackwidth" min="400" max="850" step="0.1" value="575.0" oninput="updateLBSimulation()" style="width: 100%; accent-color: #a855f7;">
                 <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: var(--apple-text-tertiary); margin-top: 4px;">
                   <span>400 mm (Narrow)</span>
-                  <span>Physical: 575.0 mm</span>
+                  <span>Design Baseline: 575.0 mm</span>
                   <span>850 mm (Wide Stance)</span>
                 </div>
               </div>
@@ -69,14 +69,17 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0]])
                   <span style="font-weight: 700; color: #34d399;">Selected Surface</span>
                 </label>
                 <select id="select-friction" onchange="updateLBSimulation()" style="width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid var(--apple-border); border-radius: 6px; padding: 7px 10px; font-size: 13px;">
-                  <option value="0.80" selected="">Dry Runway Asphalt / Concrete (&mu; = 0.80)</option>
-                  <option value="0.50">Wet Tropical Rain Tarmac (&mu; = 0.50)</option>
-                  <option value="0.95">High-Traction Rubberized Apron (&mu; = 0.95)</option>
-                  <option value="0.25">Ice / Aviation Oil Contamination (&mu; = 0.25)</option>
+                  <option value="0.80" selected="">Assumed Dry Asphalt / Concrete (&mu; = 0.80)</option>
+                  <option value="0.50">Assumed Wet Tropical Tarmac (&mu; = 0.50)</option>
+                  <option value="0.95">Assumed High-Traction Rubberized Apron (&mu; = 0.95)</option>
+                  <option value="0.25">Assumed Contaminated Surface (&mu; = 0.25)</option>
                 </select>
+                <div style="font-size: 11px; color: var(--apple-text-tertiary); margin-top: 6px; line-height: 1.35;">
+                  Friction coefficients are preliminary assumptions for comparing design sensitivity. Actual tire-road friction must be measured.
+                </div>
                 <div style="display: flex; gap: 6px; margin-top: 8px;">
-                  <button type="button" class="bt-toolbar-btn" onclick="setPresetLB(488.8, 575.0)" style="font-size: 11px; padding: 4px 8px; flex: 1;">Hunter Physical (0.85)</button>
-                  <button type="button" class="bt-toolbar-btn" onclick="setPresetLB(498.0, 583.0)" style="font-size: 11px; padding: 4px 8px; flex: 1;">AgileX Scout (0.85)</button>
+                  <button type="button" class="bt-toolbar-btn" onclick="setPresetLB(488.8, 575.0)" style="font-size: 11px; padding: 4px 8px; flex: 1;">FOD Hunter Design Baseline</button>
+                  <button type="button" class="bt-toolbar-btn" onclick="setPresetLB(498.0, 583.0)" style="font-size: 11px; padding: 4px 8px; flex: 1;">AgileX Scout Proxy (0.85)</button>
                 </div>
               </div>
             </div>
@@ -89,19 +92,19 @@ useWidgetScript([['hilbert-steering-kinematics-1', s0]])
                 <span style="font-size: 11px; color: var(--apple-text-secondary);">0.5 &mu; m g L yaw resistance</span>
               </div>
               <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--apple-border);">
-                <span style="font-size: 11px; color: var(--apple-text-tertiary); display: block; text-transform: uppercase;">Shaft Torque (&tau;<sub>shaft</sub>)</span>
+                <span style="font-size: 11px; color: var(--apple-text-tertiary); display: block; text-transform: uppercase;">Required Shaft Torque (&tau;<sub>shaft</sub>)</span>
                 <span id="metric-tau-wheel" style="font-size: 20px; font-weight: 800; color: #38bdf8; display: block; margin: 4px 0;">14.25 Nm</span>
-                <span id="metric-tau-sub" style="font-size: 11px; color: #10b981;">Cont: 14.25 Nm | Elec: 16.77 Nm</span>
+                <span id="metric-tau-sub" style="font-size: 11px; color: #10b981;">Analytical estimate based on selected inputs</span>
               </div>
               <div style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--apple-border);">
                 <span style="font-size: 11px; color: var(--apple-text-tertiary); display: block; text-transform: uppercase;">Braking Load Shift (&Delta;N)</span>
                 <span id="metric-delta-n" style="font-size: 20px; font-weight: 800; color: #f43f5e; display: block; margin: 4px 0;">208.7 N</span>
                 <span id="metric-deltan-sub" style="font-size: 11px; color: var(--apple-text-secondary);">Friction 0.8g (208.7 N) / Struct 1.0g (260.8 N)</span>
               </div>
-              <div id="metric-nfront-card" style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--apple-border);">
+              <div id="metric-nrear-card" style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 8px; border: 1px solid var(--apple-border);">
                 <span style="font-size: 11px; color: var(--apple-text-tertiary); display: block; text-transform: uppercase;">Rear Axle Normal (N<sub>rear</sub>)</span>
-                <span id="metric-n-front" style="font-size: 20px; font-weight: 800; color: #34d399; display: block; margin: 4px 0;">+110.1 N</span>
-                <span id="metric-nfront-sub" style="font-size: 11px; color: #34d399;">Positive Calculated Rear-Axle Load</span>
+                <span id="metric-n-rear" style="font-size: 20px; font-weight: 800; color: #34d399; display: block; margin: 4px 0;">+110.1 N</span>
+                <span id="metric-nrear-sub" style="font-size: 11px; color: #34d399;">Positive Calculated Rear-Axle Load</span>
               </div>
             </div>
 

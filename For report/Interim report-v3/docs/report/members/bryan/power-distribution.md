@@ -50,7 +50,7 @@ The main electrical supply is divided into dedicated branches according to the o
 | Communication and control | STM32, CAN transceiver and communication equipment | STM32 is powered by the Jetson NX while STM32 powers the CAN Transceiver |
 | Lighting and auxiliaries | Indicator lights, headlights and cooling fans | Regulated auxiliary supply |
 
-*Table 5.4: Proposed power distribution branches.*
+*Table 5.1.4: Proposed power distribution branches.*
 
 The separation of electrical loads allows individual branches to be protected according to their current requirements. It also provides a more organised wiring arrangement for installation, maintenance and future subsystem modifications.
 
@@ -60,7 +60,7 @@ The separation of electrical loads allows individual branches to be protected ac
 
 </Card>
 
-*Figure 5.1: Overall Electrical Wiring Schematic. <mark>UPDATEEEEEEEEE</mark>*
+*Figure 5.1.1: Overall Electrical Wiring Schematic.*
 
 The schematic illustrates the proposed distribution of power from the battery through the main protection devices to the individual electrical subsystems.
 
@@ -86,7 +86,7 @@ The proposed design includes three regulated voltage rails.
 | **12 V** | Sensors, Ethernet switch, cooling fans, headlights and indicator light tower. |
 | **5 V** | Backup in case STM32 cannot supply enough to connected sensors due to its max current of 500mA. |
 
-*Table 5.5: Proposed DC-DC voltage regulation.*
+*Table 5.1.5: Proposed DC-DC voltage regulation.*
 
 The low-voltage branches are distributed through a blade-fuse block. Each converter and branch must be wired and fused for its actual input current, output current and conductor rating.
 
@@ -140,7 +140,7 @@ The preliminary design incorporates ANM fuses for higher-current branches and bl
 | **High-current branch fuses** | 50 A ANM fuses | Branch protection for high-current loads. Confirm final branch assignments and ratings against measured load and startup current. |
 | **Low-voltage branch fuses** | 10 A and 15 A automotive blade fuses | Protects the converter-fed computer, auxiliary and logic circuits; confirm each fuse against its wiring and load. |
 
-*Table 5.6: Electrical protection devices and their intended functions.*
+*Table 5.1.6: Electrical protection devices and their intended functions.*
 
 The branch fuse ratings will be reviewed against the operating current, startup current and cable specifications of the connected loads before physical integration.    
 
@@ -157,7 +157,7 @@ The component inventory specifies 8 AWG wiring for the main battery loop, 12 AWG
 | Converter and auxiliary circuits | 16–18 AWG | DC-DC converters, sensors and auxiliary components |
 | Communication and signal circuits | 20–22 AWG | CAN communication and low-current control signals |
 
-*Table 5.7: Proposed wiring specifications for the electrical subsystem.*
+*Table 5.1.7: Proposed wiring specifications for the electrical subsystem.*
 
 The final conductor and fuse ratings must account for installed cable length, routing, insulation temperature rating, connector current limits and measured continuous and startup currents. Voltage drop and resistive heating must also be considered, particularly for high-current circuits.
 

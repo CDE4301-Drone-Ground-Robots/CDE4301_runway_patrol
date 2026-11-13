@@ -101,11 +101,11 @@ Figure 1.2.2 maps the stakeholders by power and interest. The RSAF holds both, a
 
 <Figure src="./shared/assets/images/stakeholder-map.svg" alt="Power–interest map placing the RSAF at high power and high interest, CAAS at high power and lower interest, the industry partner and insurance companies at high interest and lower power, and RSAF servicemen at lower power and lower interest" style="max-width: 560px; margin: 28px auto;" caption="Figure 1.2.2: Stakeholder power–interest map." />
 
-The team interviewed four of these stakeholders in September 2026: the industry partner coordinating the project with the RSAF, an RSAF technician and an RSAF air traffic controller who had both cleared FOD during National Service, and a CAAS officer with over 20 years of experience at Changi Airport. Table 1.2.3 summarises current practice and pain points, and Table 1.2.4 records what each stakeholder said in their own words. ([See interview transcripts](#appendix).)
+The team interviewed four of these stakeholders in September 2026: the industry partner coordinating the project with the RSAF, an RSAF technician and an RSAF air traffic controller who had both cleared FOD during National Service, and a CAAS officer with over 20 years of experience at Changi Airport. Table 1.2.1 records what each stakeholder said in their own words. ([See interview transcripts](#appendix).)
 
 <!-- TODO: add Table 1.2.3 (current practice and pain points per stakeholder) before Table 1.2.4. -->
 
-*Table 1.2.4: What stakeholders said.*
+*Table 1.2.1: What stakeholders said.*
 
 <table class="data-table fit-table fit-4"><tbody>
 <tr><th>Who</th><th>What they said</th><th>Sentiment</th><th>Key insight</th></tr>
@@ -131,7 +131,7 @@ Existing solutions fall into three groups: those that only detect FOD, those tha
 
 #### Detection Only {#comp-detection .rpt-l3}
 
-*Table 1.3.1.1: FOD detection systems.*
+*Table 1.3.1: FOD detection systems.*
 
 <table class="data-table fit-table fit-img"><tbody>
 <tr><th></th><th>System</th><th>How it works</th><th>Shortcomings</th></tr>
@@ -146,23 +146,23 @@ Fixed systems detect FOD well. At Boston Logan, the detection system logged 86% 
 
 #### Collection Only {#comp-collection .rpt-l3}
 
-Collection is still done by specialised vehicles towing friction drag mats, by sweeper trucks, or by hand (Figure 1.3.2.1). These methods remove FOD without first locating it, so they offer no record of what was collected or missed, and sweepers often miss the small hard items the interviewees described (see Appendix [B](#appendix-b)).
+Collection is still done by specialised vehicles towing friction drag mats, by sweeper trucks, or by hand. These methods remove FOD without first locating it, so they offer no record of what was collected or missed, and sweepers often miss the small hard items the interviewees described (see Appendix [B](#appendix-b)).
 
 <!-- TODO: add Figure 1.3.2.1 as three images side by side in a .fig-row: friction-drag-mat-vehicle.jpg "Figure 1.3.2.1a: Specialised vehicle with friction drag mats [source].", manual-sweeping-1.jpg "Figure 1.3.2.1b: Manual sweeping [source].", manual-sweeping-changi.jpg "Figure 1.3.2.1c: Manual FOD pickup at Changi Airport [source]." (images not in the project yet) -->
 
 #### Detection and Collection {#comp-both .rpt-l3}
 
-Autonomous removal is only now reaching the market. Roboxi, a Norwegian multi-function airside robot (Figure 1.3.3.1), claims to detect and pick up FOD whilst also inspecting pavement and runway lights, and began a four-month trial at Berlin Brandenburg in 2026 [\[14\]](#refs-literature-ref-14), [\[15\]](#refs-literature-ref-15). Its cost has not been published, and no independent data on its detection or removal performance is yet available. Removal is therefore no longer an empty niche, and FOD Hunter cannot claim to be the first system to remove FOD. Its case has to rest on how it removes FOD and for whom.
+Autonomous removal is only now reaching the market. Roboxi, a Norwegian multi-function airside robot, claims to detect and pick up FOD whilst also inspecting pavement and runway lights, and began a four-month trial at Berlin Brandenburg in 2026 [\[14\]](#refs-literature-ref-14), [\[15\]](#refs-literature-ref-15). Its cost has not been published, and no independent data on its detection or removal performance is yet available. Removal is therefore no longer an empty niche, and FOD Hunter cannot claim to be the first system to remove FOD. Its case has to rest on how it removes FOD and for whom.
 
 <!-- TODO: add roboxi.jpg as Figure 1.3.3.1: "Roboxi autonomous airside robot [15]." (image not in the project yet) -->
 
 #### Competitor Map {#comp-map .rpt-l3}
 
-Figure 1.3.4.1 places each solution by detection and collection performance. Fixed systems sit high on detection but offer no collection; drag mats and manual sweeping collect but do not detect. Only Roboxi and the proposed system sit in the upper-right quadrant, and Roboxi's position there is based on its manufacturer's claims rather than published results.
+Figure 1.3.1 places each solution by detection and collection performance. Fixed systems sit high on detection but offer no collection; drag mats and manual sweeping collect but do not detect. Only Roboxi and the proposed system sit in the upper-right quadrant, and Roboxi's position there is based on its manufacturer's claims rather than published results.
 
 <IntroductionWidget1 />
 
-*Figure 1.3.4.1: Competitor map, detection performance against collection performance.*
+*Figure 1.3.1: Competitor map, detection performance against collection performance.*
 
 <!-- TODO: static version competitor-map.png (not in the project yet), for a printed copy of the interactive map above. -->
 
@@ -183,7 +183,7 @@ A single robot forces a trade-off between coverage and capability. A drone surve
 
 *Figure 1.5.1: Five-year cost sensitivity across usage frequencies, ranked row by row (green cheapest, red most expensive). Redrawn from Öztürk and Kuzucuoğlu [\[4\]](#refs-literature-ref-4).*
 
-*Table 1.5.2: Five-year cost at 500 collection runs [\[4\]](#refs-literature-ref-4).*
+*Table 1.5.1: Five-year cost at 500 collection runs [\[4\]](#refs-literature-ref-4).*
 
 | | ASP3, 10 robots | Manual, 1 truck |
 | --- | --- | --- |
@@ -209,7 +209,7 @@ Figure 1.6.1 shows the intended operating cycle in six steps.<!-- TODO: confirm 
 
 The video below demonstrates the first stage in simulation: FOD Argus launches and patrols the runway on a pre-planned path whilst FOD Hunter waits on standby, before being dispatched to each reported target.<!-- TODO: state what the demonstration shows end to end and what remains to be shown on hardware. -->
 
-<VideoClip src="./shared/assets/videos/fod-hunter-argus-demo.mp4" poster="./shared/assets/images/fod-hunter-argus-demo-poster.jpg" caption="Figure 1.6.2: Simulated demonstration of FOD Hunter × FOD Argus in Gazebo." />
+<VideoClip src="./shared/assets/videos/fod-hunter-argus-demo.mp4" poster="./shared/assets/images/fod-hunter-argus-demo-poster.jpg" caption="Video 1.6.1: Simulated demonstration of FOD Hunter × FOD Argus in Gazebo." />
 
 
 ### Value Proposition {#sec-vps}
@@ -218,7 +218,7 @@ The video below demonstrates the first stage in simulation: FOD Argus launches a
 
 Our value proposition statement is as follows. For low to moderate air traffic airports that struggle with effective use of manpower, our automated solution detects and removes FOD from the runway, while staff focus on more critical jobs. Unlike the current manual, time-consuming and laborious processes of clearing FOD, the system works autonomously, targets the small hard objects that are most often missed, and logs every item it handles.
 
-Figure 1.7.2 sets out the value map and customer map, and Figure 1.7.3 shows the value proposition fit, in which each customer pain and gain is answered by a feature of the system. Table 1.7.4 maps each stakeholder need to the feature that addresses it. Chapter 2 carries these features through to requirements and specifications.
+Figure 1.7.2 sets out the value map and customer map, and Figure 1.7.3 shows the value proposition fit, in which each customer pain and gain is answered by a feature of the system. Table 1.7.1 maps each stakeholder need to the feature that addresses it. Chapter 2 carries these features through to requirements and specifications.
 
 <div class="fig-row" style="max-width: 760px; margin-left: auto; margin-right: auto;">
 
@@ -230,7 +230,7 @@ Figure 1.7.2 sets out the value map and customer map, and Figure 1.7.3 shows the
 
 <Figure src="./shared/assets/diagrams/value-proposition-fit.svg" alt="Value proposition fit: the value map on the left answers the customer map on the right" style="max-width: 760px; margin: 28px auto;" caption="Figure 1.7.3: Value proposition fit. Each customer pain and gain is answered by a feature of FOD Hunter and FOD Argus." />
 
-*Table 1.7.4: Need-to-feature mapping.*
+*Table 1.7.1: Need-to-feature mapping.*
 
 | ID | Stakeholder need | Source | Feature |
 | --- | --- | --- | --- |
@@ -271,13 +271,13 @@ FOD Argus is a drone that flies a pre-planned path over the runway during a clos
 
 ### Features {#list-of-features}
 
-This section states the features of the system, where FOD Hunter and FOD Argus work together, and then the features of FOD Hunter alone. Each feature shows the stakeholder needs it answers (N1 to N7, Table 1.7.4) and a short justification from the interviews, cited as Appendix A (Mr Lim), Appendix B (the RSAF technician), Appendix C (the RSAF air traffic controller) and Appendix D (the CAAS officer).
+This section states the features of the system, where FOD Hunter and FOD Argus work together, and then the features of FOD Hunter alone. Each feature shows the stakeholder needs it answers (N1 to N7, Table 1.7.1) and a short justification from the interviews, cited as Appendix A (Mr Lim), Appendix B (the RSAF technician), Appendix C (the RSAF air traffic controller) and Appendix D (the CAAS officer).
 
 #### Features of FOD Hunter × FOD Argus {#features-system .rpt-l3}
 
-The system has six features, listed in Table 2.2.1.1.
+The system has six features, listed in Table 2.2.1.
 
-*Table 2.2.1.1: The six features of FOD Hunter × FOD Argus.*
+*Table 2.2.1: The six features of FOD Hunter × FOD Argus.*
 
 <div class="wrap-table">
 
@@ -294,9 +294,9 @@ The system has six features, listed in Table 2.2.1.1.
 
 #### Features of FOD Hunter {#features-hunter .rpt-l3}
 
-FOD Hunter has ten features, listed in Table 2.2.2.1.
+FOD Hunter has ten features, listed in Table 2.2.2.
 
-*Table 2.2.2.1: The ten features of FOD Hunter.*
+*Table 2.2.2: The ten features of FOD Hunter.*
 
 <div class="wrap-table">
 
@@ -321,7 +321,7 @@ This section covers FOD Hunter only. The requirements are split by subsystem. Ea
 
 #### Communication and Navigation {#requirements-comm-nav .rpt-l3}
 
-*Table 2.3.1.1: Requirements and specifications for communication and navigation.*
+*Table 2.3.1: Requirements and specifications for communication and navigation.*
 
 <div class="wrap-table">
 
@@ -341,7 +341,7 @@ This section covers FOD Hunter only. The requirements are split by subsystem. Ea
 
 #### Mechanical {#requirements-mechanical .rpt-l3}
 
-*Table 2.3.2.1: Requirements and specifications for the chassis, body and steering, the suspension and FOD remediation.*
+*Table 2.3.2: Requirements and specifications for the chassis, body and steering, the suspension and FOD remediation.*
 
 <div class="wrap-table">
 
@@ -361,7 +361,7 @@ This section covers FOD Hunter only. The requirements are split by subsystem. Ea
 
 #### FOD Detection {#requirements-detection .rpt-l3}
 
-*Table 2.3.3.1: Requirements and specifications for FOD detection.*
+*Table 2.3.3: Requirements and specifications for FOD detection.*
 
 <div class="wrap-table">
 
@@ -374,7 +374,7 @@ This section covers FOD Hunter only. The requirements are split by subsystem. Ea
 
 #### Electrical and Power {#requirements-electrical .rpt-l3}
 
-*Table 2.3.4.1: Requirements and specifications for the microcontroller, computer and battery management system.*
+*Table 2.3.4: Requirements and specifications for the microcontroller, computer and battery management system.*
 
 <div class="wrap-table">
 

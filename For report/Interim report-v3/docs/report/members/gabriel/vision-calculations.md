@@ -16,7 +16,9 @@ outline: [2, 3]
 
 The UGV camera sits $0.4\text{–}0.5\text{ m}$ above the ground and has to find small metal fasteners in real time on hardware that fits on the robot. In our system, the UAV surveys the airfield and sends the UGV to candidate FOD spots; the UGV's camera then confirms the FOD up close so the robot can collect it, which means the vision subsystem has to output **what the object is** and **where it is in the image**.
 
-Table 1.1 lists the constraints, the working behind each one, and the requirement it sets. None of these depend on which camera we pick, so Section 2 can check candidate cameras directly against them.
+Table 3.5.1 lists the constraints, the working behind each one, and the requirement it sets. None of these depend on which camera we pick, so Section 2 can check candidate cameras directly against them.
+
+**Table 3.5.1: Vision Subsystem Design Constraints and Derived Requirements.**
 
 | Constraint | Calculation | Requirement |
 | :--- | :--- | :--- |
@@ -43,7 +45,7 @@ Table 1.1 lists the constraints, the working behind each one, and the requiremen
 
 ## 2. Camera Selection {#s2}
 
-Each candidate camera is checked against Table 1.1: **$\ge 29\text{ px/}^\circ$**, **$\ge 4.7\text{ FPS}$ minimum ($10\text{ FPS}$ target)**, **global shutter**, and native compatibility with the **Jetson Orin Nano Super**. Pixels per degree is the horizontal image width divided by the horizontal field of view ($\text{W} / \text{HFOV}$).
+Each candidate camera is checked against Table 3.5.1: **$\ge 29\text{ px/}^\circ$**, **$\ge 4.7\text{ FPS}$ minimum ($10\text{ FPS}$ target)**, **global shutter**, and native compatibility with the **Jetson Orin Nano Super**. Pixels per degree is the horizontal image width divided by the horizontal field of view ($\text{W} / \text{HFOV}$).
 
 <table class="data-table"><tbody>
 <tr><th>Camera</th><th>Resolution</th><th>HFOV / VFOV</th><th>px/°</th><th>Shutter (Max FPS)</th><th>Outcome</th></tr>
@@ -77,7 +79,7 @@ With **$\theta = 33^\circ$**, the view spans from **$x_{\text{near}} = 0.33\text
 <Figure
   src="./assets/images/mounting-geometry.png"
   alt="Tilt analysis graphs showing foreshortening factor, pixels on a 1 cm object at image centre, and look-ahead far edge of view across tilt angles"
-  caption="**Figure 3.1: Camera Tilt Trade-Off Analysis ($h = 0.40\text{–}0.50\text{ m}$).** Plots longitudinal foreshortening ($\sin\psi = h/d$), pixel width on a $1\text{ cm}$ object at the image centre, and far-edge look-ahead distance across downward tilt angles."
+  caption="**Figure 3.5.1: Camera Tilt Trade-Off Analysis ($h = 0.40\text{–}0.50\text{ m}$).** Plots longitudinal foreshortening ($\sin\psi = h/d$), pixel width on a $1\text{ cm}$ object at the image centre, and far-edge look-ahead distance across downward tilt angles."
 />
 
 Tilt also foreshortens objects along the direction of travel: pixels along the ground equal pixels across multiplied by $h/d$ (the sine of the depression angle to the object). A $1\text{ cm}$ object reaches $32\text{ px}$ across only out to $\approx 0.60\text{ m}$ ahead (close range), whereas a **$3\text{ cm}$ fastener** meets the $32\text{ px}$ width requirement across the full detection band at native camera resolution.
@@ -102,7 +104,9 @@ An object at ground distance $x$ sits at slant distance $d = \sqrt{x^2 + h^2}$ f
 
 $$d = \sqrt{x^2 + h^2}, \qquad \text{px} = \frac{L \times W}{2 \times d \times \tan(\text{HFOV}/2)}$$
 
-Table 4.1 applies this equation to a **$3\text{ cm}$ fastener** at the ELP camera's full $2592\text{ px}$ sensor width and after downscaling to the two neural network input sizes evaluated in [YOLO Model Comparison & Benchmark](./yolo-comparison.md):
+Table 3.5.2 applies this equation to a **$3\text{ cm}$ fastener** at the ELP camera's full $2592\text{ px}$ sensor width and after downscaling to the two neural network input sizes evaluated in [YOLO Model Comparison & Benchmark](./yolo-comparison.md):
+
+**Table 3.5.2: Look-Ahead Band Pixel Coverage for 3 cm Fastener Target.**
 
 | Position | Ground (Slant Distance) | Camera Native ($2592\text{ px}$) | Model Input ($1088\text{ px}$) | Model Input ($640\text{ px}$) |
 | :--- | :--- | :--- | :--- | :--- |

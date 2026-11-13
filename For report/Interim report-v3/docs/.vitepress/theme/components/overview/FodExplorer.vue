@@ -149,8 +149,10 @@ onBeforeUnmount(() => {
           <h3 class="xpl__panel-title">{{ selected.title }}</h3>
           <p class="xpl__panel-text">{{ selected.text }}</p>
           <p class="xpl__panel-part">In the CAD: {{ selected.part }}</p>
-          <a class="xpl__more" :href="reportHref(selected.report.id)">Find out more <span aria-hidden="true">↗</span></a>
-          <p class="xpl__panel-dest">{{ selected.report.label }}</p>
+          <template v-if="selected.report">
+            <a class="xpl__more" :href="reportHref(selected.report.id)">Find out more <span aria-hidden="true">↗</span></a>
+            <p class="xpl__panel-dest">{{ selected.report.label }}</p>
+          </template>
         </template>
         <template v-else>
           <p class="xpl__panel-empty">Select a marker on the vehicle — or a feature below — to read about it.</p>

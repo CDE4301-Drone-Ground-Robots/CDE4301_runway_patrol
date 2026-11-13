@@ -29,35 +29,45 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 
 <template #contributions>
 
-- Multi-agent ROS 2 C2 communications & DDS network architecture
-- 4WD skid-steer kinematics, instantaneous center of rotation (ICR) & turning dynamics
-- ROS 2 Jazzy software architecture, lifecycle management & TF2 transform trees
-- Gazebo Harmonic digital twin simulation, airfield world modelling & sensor bridges
-- Nav2 autonomous navigation (SmacPlanner2D, Regulated Pure Pursuit & Behavior Trees)
-- Direct-drive hub motor sizing, tractive resistance & tarmac scrub torque calculations
-- Overseeing mechanical system integration & prototype CAD collaboration
-- Electrical system integration & motor driver architecture coordination
-- VitePress modern interactive technical documentation engine & visual design
-- Secondary research on autonomous airport robotics & aviation safety standards
-- FOD Hunter physical platform mechanical integration & architecture synthesis
+- ROS 2 software development
+- Autonomous navigation and obstacle avoidance
+- Gazebo simulation
+- Dual-EKF localisation
+- UAV–UGV communications
+- Motor sizing and selection
+- Skid-steer kinematics
+- Mechanical design coordination
+- Electrical design support
+- FOD Hunter prototype and final design
+- Engineering research and documentation
+- Website design and development
 
 </template>
 
 <template #scope>
 
-- **System Integration:** Overseeing mechanical integration and physical architecture alignment with autonomous software requirements.
-- **Drivetrain & Steering Dynamics:** Analytical sizing of 4× 48V direct-drive hub motors, tractive force modeling, tarmac scrub resistance, and 4WD skid-steer kinematics ($B_{\text{eff}}$).
-- **Localization & State Estimation:** Dual-EKF architecture (`robot_localization`) fusing continuous local odometry with global RTK-GNSS positioning.
-- **Autonomous Path Planning & Control:** Nav2 stack configuration, Smac 2D cost-aware global planning, and Regulated Pure Pursuit trajectory tracking.
-- **Multi-Agent C2 Communications:** ROS 2 DDS publish-subscribe architecture, CycloneDDS unicast bridging, JSON target alert parsing, and operational geofencing.
+- **Software:** ROS 2 Jazzy setup and system integration.
+- **Navigation:** Hybrid A* path planning, Regulated Pure Pursuit control and obstacle avoidance.
+- **Localisation:** Dual-EKF using simulated GPS, IMU and wheel odometry.
+- **Communications:** CycloneDDS, C2 alert reception and Nav2 goal dispatch.
+- **Motor drivetrain:** Motor torque calculations, sizing and selection.
+- **Steering:** Skid-steer kinematics and wheel-speed calculations.
+- **Mechanical:** Coordinate chassis, suspension and FOD collection integration.
+- **Electrical:** Support power-system design and component selection.
+- **Safety:** Communication-loss handling and navigation goal cancellation.
 
 </template>
 
 <template #s1>
 
-- Autonomous UGV navigation stack on Gazebo Harmonic & ROS 2 Jazzy (SmacPlanner2D, Regulated Pure Pursuit, obstacle costmaps & Behavior Trees)
-- Communications with simulated UAV (Raspberry Pi 5 / Charan's laptop) via CycloneDDS unicast router
-- Analytical drivetrain & kinematics models (4WD hub motor sizing, tractive effort, tarmac scrub torque & dynamic braking limits)
+- Set up ROS 2 Jazzy, Ubuntu 24.04 and Gazebo Harmonic.
+- Implemented autonomous navigation using Hybrid A* and Regulated Pure Pursuit in simulation.
+- Configured Dual-EKF localisation with simulated GPS, IMU and wheel odometry.
+- Tested indoor UAV–UGV communication between Raspberry Pi 5 and workstation.
+- Implemented C2 alert reception and Nav2 goal dispatch.
+- Completed preliminary motor sizing and skid-steer calculations.
+- Supported mechanical and electrical subsystem integration.
+- Developed the VitePress engineering report website.
 
 </template>
 

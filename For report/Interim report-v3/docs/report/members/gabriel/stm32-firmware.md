@@ -48,7 +48,9 @@ outline: [2, 3]
 
 ## 1. Objectives & Requirements {#objectives-requirements}
 
-The firmware has one job: take a drive command $(v_x, \omega_z)$, turn it into safe wheel speeds, and stop the robot when anything goes wrong. Each requirement in Table 1.1 is verified in [Section 5](#testing-results).
+The firmware has one job: take a drive command $(v_x, \omega_z)$, turn it into safe wheel speeds, and stop the robot when anything goes wrong. Each requirement in Table 5.2.1 is verified in [Section 5](#testing-results).
+
+**Table 5.2.1: Firmware Functional Requirements and Verification Target.**
 
 | ID | Requirement | Target | Firmware Module |
 | :--- | :--- | :--- | :--- |
@@ -75,20 +77,20 @@ Every gamepad button calls the same function ROS 2 will call in Semester 2:
 
 ## 2. System Architecture {#system-architecture}
 
-Figure 2.1 shows how a command becomes wheel speed. Figure 2.2 shows when commands are allowed through at all. Click any block to jump to its section.
+Figure 5.2.2 shows how a command becomes wheel speed. Figure 5.2.3 shows when commands are allowed through at all. Click any block to jump to its section.
 
-There are two separate state machines. The **robot supervisor** (6 states, Figure 2.2) decides whether the robot may move. The **motor FSM** (5 states, [Figure 4.1](#implementation-prototype)) runs the CiA 402 enable sequence on each driver.
+There are two separate state machines. The **robot supervisor** (6 states, Figure 5.2.3) decides whether the robot may move. The **motor FSM** (5 states, [Figure 5.2.4](#implementation-prototype)) runs the CiA 402 enable sequence on each driver.
 
 <Figure
   src="./assets/diagrams/stm32-firmware-firmware-architecture-block-diagram.svg"
   alt="Firmware Data Flow Diagram from Gamepad / ROS cmd_vel to 4 Motors"
-  caption="**Figure 2.1: Motion Data Flow.** Gamepad and ROS 2 inputs meet at `Robot_Set_CmdVel(vx, wz)`, then pass through 3-mode kinematics, anti-saturation scaling and the 50 Hz ramp before going out on CAN1 (500 kbps) to both ZLAC8015D drivers."
+  caption="**Figure 5.2.2: Motion Data Flow.** Gamepad and ROS 2 inputs meet at `Robot_Set_CmdVel(vx, wz)`, then pass through 3-mode kinematics, anti-saturation scaling and the 50 Hz ramp before going out on CAN1 (500 kbps) to both ZLAC8015D drivers."
 />
 
 <Figure
   src="./assets/diagrams/stm32-firmware-safety-state-machine.svg"
   alt="6-State Firmware Safety State Machine Diagram"
-  caption="**Figure 2.2: Robot Supervisor State Machine.** Motors only receive velocity in `ROBOT_STATE_READY`. A timeout (≥ 250 ms), USB unplug, E-stop (`B`/`BACK`) or driver/CAN fault stops the motors. Re-arming with `A`/`START` only works with all controls at neutral."
+  caption="**Figure 5.2.3: Robot Supervisor State Machine.** Motors only receive velocity in `ROBOT_STATE_READY`. A timeout (≥ 250 ms), USB unplug, E-stop (`B`/`BACK`) or driver/CAN fault stops the motors. Re-arming with `A`/`START` only works with all controls at neutral."
 />
 
 ## 3. Design Decisions {#design-selection}
@@ -174,12 +176,12 @@ Each stage was tested on its own before the next was added, so every new failure
   <Figure
     src="./assets/images/fsm-diagram.png"
     alt="State Machine Diagram for Motor showing DISENGAGE, LOCK, MOVEMENT, JERK, and ERR states and transitions"
-    caption="**Figure 4.1: Stage 4 Motor FSM (`state_machine_check.c`).** Motors must pass through `LOCK` (0 RPM) before `MOVEMENT`. Faults latch in `ERR` until cleared."
+    caption="**Figure 5.2.4: Stage 4 Motor FSM (`state_machine_check.c`).** Motors must pass through `LOCK` (0 RPM) before `MOVEMENT`. Faults latch in `ERR` until cleared."
   />
   <Figure
     src="./assets/images/gui-screenshot.png"
     alt="ZLAC8015D Motor Controller Python GUI showing state banner, RPM speedometer, velocity slider, machine state buttons, and live CAN serial monitor"
-    caption="**Figure 4.2: Stage 4 Test GUI (`GUI.py`).** Sends target RPM and state commands over `USART2` (115,200 baud) and logs raw CAN frames."
+    caption="**Figure 5.2.5: Stage 4 Test GUI (`GUI.py`).** Sends target RPM and state commands over `USART2` (115,200 baud) and logs raw CAN frames."
   />
 </div>
 

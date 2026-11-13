@@ -47,7 +47,7 @@ export const team: Member[] = [
     name: 'Hilbert Soh Yong Tai',
     shortName: 'Hilbert Soh',
     role: 'Programming (navigation & comms)',
-    subsystem: 'Autonomous navigation, SLAM & C2 communications (Overseeing mechanical integration)',
+    subsystem: 'Autonomous navigation, SLAM & C2 communications',
     discipline: 'Mechanical Engineering (Robotics Specialisation)',
     matric: 'A0308263H',
     portrait: hilbertPortrait,

@@ -15,7 +15,7 @@ Structural chassis architecture, physical CAD layout, mounting points, and mecha
 
 The chassis provides structural support for the UGV's battery, electronics, drivetrain, suspension and FOD collection system. During Semester 1, the main objective was to fabricate a functional chassis early to allow other subteams to proceed with component integration. The design therefore prioritized structural adequacy, modularity and ease of fabrication.
 
-**Table 1. Chassis design requirements**
+**Table 4.1.1: Chassis design requirements**
 
 | Parameter | Requirement |
 | :--- | :--- |
@@ -35,9 +35,9 @@ A conservative initial design was adopted, with detailed structural optimization
 
 ### 2.1 Chassis Concept Evaluation {#chassis-concepts}
 
-Three chassis concepts were considered before prototype fabrication (Figure 1).
+Three chassis concepts were considered before prototype fabrication (Figure 4.1.1).
 
-**Table 2. Comparison of initial chassis concepts**
+**Table 4.1.2: Comparison of initial chassis concepts**
 
 | Concept | Advantages | Limitations |
 | :--- | :--- | :--- |
@@ -48,12 +48,12 @@ Three chassis concepts were considered before prototype fabrication (Figure 1).
 The **compact rectangular extrusion frame** was selected because it provided sufficient component space while allowing mounting positions to be adjusted. This was important as several electrical and mechanical components had not yet been finalized.
 
 <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
-  <img src="./assets/images/chassis-concept-sheet-metal-monocoque.png" alt="Figure 1(a): Sheet-metal monocoque concept" style="width: 220px; max-width: 100%; height: auto; flex: 1 1 220px; min-width: 0;">
-  <img src="./assets/images/chassis-concept-expanded-extrusion.png" alt="Figure 1(b): Expanded aluminium extrusion frame concept" style="width: 220px; max-width: 100%; height: auto; flex: 1 1 220px; min-width: 0;">
-  <img src="./assets/images/chassis-concept-compact-extrusion.png" alt="Figure 1(c): Compact rectangular extrusion frame concept" style="width: 220px; max-width: 100%; height: auto; flex: 1 1 220px; min-width: 0;">
+  <img src="./assets/images/chassis-concept-sheet-metal-monocoque.png" alt="Figure 4.1.1(a): Sheet-metal monocoque concept" style="width: 220px; max-width: 100%; height: auto; flex: 1 1 220px; min-width: 0;">
+  <img src="./assets/images/chassis-concept-expanded-extrusion.png" alt="Figure 4.1.1(b): Expanded aluminium extrusion frame concept" style="width: 220px; max-width: 100%; height: auto; flex: 1 1 220px; min-width: 0;">
+  <img src="./assets/images/chassis-concept-compact-extrusion.png" alt="Figure 4.1.1(c): Compact rectangular extrusion frame concept" style="width: 220px; max-width: 100%; height: auto; flex: 1 1 220px; min-width: 0;">
 </div>
 
-*Figure 1. Preliminary chassis concepts: (a) sheet-metal monocoque, (b) expanded aluminium extrusion frame and (c) compact rectangular extrusion frame (left to right; top to bottom when wrapped).*
+*Figure 4.1.1: Preliminary chassis concepts: (a) sheet-metal monocoque, (b) expanded aluminium extrusion frame and (c) compact rectangular extrusion frame (left to right; top to bottom when wrapped).*
 
 ### 2.2 Selected Prototype Architecture {#chassis-prototype-architecture}
 
@@ -61,14 +61,14 @@ The initial chassis used **40 × 40 mm T-slot aluminium extrusions (PTP-4040-8)*
 
 A 3 mm aluminium 6061 mounting plate was installed to accommodate the battery and electronics. Two additional 220 mm transverse beams supported the plate from below, with a measured clear spacing of 165 mm between their nearest faces. The plate was also secured to the frame through mounting brackets.
 
-This arrangement provided multiple load paths from the plate to the surrounding structure and allowed components to be repositioned during integration (Figure 2).
+This arrangement provided multiple load paths from the plate to the surrounding structure and allowed components to be repositioned during integration (Figure 4.1.2).
 
 <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
   <img src="./assets/images/chassis-4040-isometric-cad.png" alt="Isometric CAD view of the 4040 chassis and mounting plate" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
   <img src="./assets/images/chassis-4040-underside-cad.png" alt="Underside CAD view showing the mounting plate and transverse support beams" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
 </div>
 
-*Figure 2. Isometric and underside CAD views showing the 4040 chassis, mounting plate and additional support beams.*
+*Figure 4.1.2: Isometric and underside CAD views showing the 4040 chassis, mounting plate and additional support beams.*
 
 ### 2.3 Component Placement and Centre of Mass {#chassis-centre-of-mass}
 
@@ -76,7 +76,7 @@ The battery was positioned toward the front of the chassis, while the vacuum mod
 
 A preliminary centre-of-mass check was performed in SolidWorks using the assembled chassis and major components. The battery was assigned its actual mass of 6.8 kg, while a simplified vacuum placeholder with an estimated mass of 7 kg was included.
 
-**Table 3. SolidWorks centre-of-mass results**
+**Table 4.1.3: SolidWorks centre-of-mass results**
 
 | Parameter | Result |
 | :--- | ---: |
@@ -85,11 +85,11 @@ A preliminary centre-of-mass check was performed in SolidWorks using the assembl
 | CG Y-coordinate | 270.50 mm |
 | CG Z-coordinate | −4.58 mm |
 
-The coordinates are referenced to the default assembly coordinate system. The top-view model showed the CG located approximately within the central region of the vehicle, supporting the selected front-to-rear component arrangement (Figure 3).
+The coordinates are referenced to the default assembly coordinate system. The top-view model showed the CG located approximately within the central region of the vehicle, supporting the selected front-to-rear component arrangement (Figure 4.1.3).
 
 <img src="./assets/images/chassis-assembly-centre-of-mass.png" alt="SolidWorks top-view assembly with the calculated centre-of-mass marker" style="display: block; width: 360px; max-width: 100%; height: auto; margin: 16px auto;">
 
-*Figure 3. SolidWorks top-view assembly showing the calculated centre of mass.*
+*Figure 4.1.3: SolidWorks top-view assembly showing the calculated centre of mass.*
 
 ## 3. Design Methodology & Selection {#chassis-methodology}
 
@@ -107,7 +107,7 @@ These values were conservative design allowances rather than the actual componen
 
 :::: details Preliminary 4040 support-beam bending calculation
 
-The beam was modelled as simply supported over $L = 220\text{ mm}$, with a midpoint load $P = 186.39\text{ N}$, as shown in Figure 4(a). The manufacturer's section modulus for the PTP-4040-8 profile is $Z = 4690\text{ mm}^3$ ([1](#chassis-ref-1)).
+The beam was modelled as simply supported over $L = 220\text{ mm}$, with a midpoint load $P = 186.39\text{ N}$, as shown in Figure 4.1.4(a). The manufacturer's section modulus for the PTP-4040-8 profile is $Z = 4690\text{ mm}^3$ ([1](#chassis-ref-1)).
 
 $$
 M_{\max} = \frac{PL}{4}
@@ -129,22 +129,22 @@ $$
 
 ::::
 
-**Electronics mounting-plate support arrangement.** The 3 mm aluminium 6061 mounting plate was supported by two additional 220 mm transverse 4040 beams and mounting brackets connected to the surrounding chassis. The clear spacing between the two transverse beams was measured as **165 mm**, as shown in Figure 4(b).
+**Electronics mounting-plate support arrangement.** The 3 mm aluminium 6061 mounting plate was supported by two additional 220 mm transverse 4040 beams and mounting brackets connected to the surrounding chassis. The clear spacing between the two transverse beams was measured as **165 mm**, as shown in Figure 4.1.4(b).
 
 These additional supports were included to reduce the unsupported regions of the plate and distribute component loads into the chassis. Due to the multiple support locations and non-uniform component loading, a simplified single-span bending calculation was not considered representative of the complete plate. The final plate and mounting connections require assessment under their actual loading and support conditions.
 
 <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: start;">
   <figure style="flex: 1 1 400px; min-width: 0; margin: 0;">
-    <img src="./assets/images/chassis-4040-support-beam-fbd.svg" alt="Figure 4(a): Simplified free-body diagram of the 220 mm transverse 4040 support beam" style="display: block; width: 100%; height: auto; background: white; color-scheme: light;">
+    <img src="./assets/images/chassis-4040-support-beam-fbd.svg" alt="Figure 4.1.4(a): Simplified free-body diagram of the 220 mm transverse 4040 support beam" style="display: block; width: 100%; height: auto; background: white; color-scheme: light;">
     <figcaption>(a) 220 mm transverse 4040 support-beam free-body diagram.</figcaption>
   </figure>
   <figure style="flex: 1 1 400px; min-width: 0; margin: 0;">
-    <img src="./assets/images/chassis-mounting-plate-support-arrangement.svg" alt="Figure 4(b): Electronics mounting plate supported by two transverse beams with 165 mm clear spacing" style="display: block; width: 100%; height: auto; background: white; color-scheme: light;">
+    <img src="./assets/images/chassis-mounting-plate-support-arrangement.svg" alt="Figure 4.1.4(b): Electronics mounting plate supported by two transverse beams with 165 mm clear spacing" style="display: block; width: 100%; height: auto; background: white; color-scheme: light;">
     <figcaption>(b) Mounting-plate support arrangement with 165 mm clear spacing.</figcaption>
   </figure>
 </div>
 
-*Figure 4. (a) Simplified free-body diagram of the 220 mm transverse 4040 support beam; (b) electronics mounting-plate support arrangement showing the two transverse beams and their 165 mm clear spacing.*
+*Figure 4.1.4: (a) Simplified free-body diagram of the 220 mm transverse 4040 support beam; (b) electronics mounting-plate support arrangement showing the two transverse beams and their 165 mm clear spacing.*
 
 ### 3.2 Decision to Fabricate the 4040 Prototype {#chassis-fabrication-decision}
 
@@ -158,9 +158,9 @@ The 4040 aluminium extrusion chassis was fabricated using profiles. The frame wa
 
 The assembled prototype has since been fitted with the wheel and suspension assemblies and major electrical components, allowing subsystem integration to proceed. The modular construction proved useful during this stage, as mounting arrangements could be adjusted without modifying the main frame.
 
-<!-- TODO Figure 5: Add the physical prototype photograph to ./assets/images/ when available. Do not substitute a CAD image. Caption: Fabricated 4040 prototype showing the assembled structure and installed components. -->
+<!-- TODO Figure 4.1.5: Add the physical prototype photograph to ./assets/images/ when available. Do not substitute a CAD image. Caption: Fabricated 4040 prototype showing the assembled structure and installed components. -->
 
-*Figure 5. Fabricated 4040 prototype showing the assembled structure and installed components (photograph pending).*
+*Figure 4.1.5: Fabricated 4040 prototype showing the assembled structure and installed components (photograph pending).*
 
 ## 5. Testing & Results {#chassis-results}
 
@@ -179,14 +179,14 @@ $$
 = \boxed{53.2\%}
 $$
 
-Based on the estimated mass reduction and preliminary structural evaluation, the **30 × 30 × 2 mm square-tube configuration** was selected as the proposed final chassis (Figure 6). Detailed FEA methodology, loading assumptions, stress distributions and numerical results belong in the separate [FEA Simulation report (Section 4.1.2)](./fea-simulation.md), which is still being completed.
+Based on the estimated mass reduction and preliminary structural evaluation, the **30 × 30 × 2 mm square-tube configuration** was selected as the proposed final chassis (Figure 4.1.6). Detailed FEA methodology, loading assumptions, stress distributions and numerical results belong in the separate [FEA Simulation report (Section 4.1.2)](./fea-simulation.md), which is still being completed.
 
 <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
   <img src="./assets/images/chassis-comparison-4040-extrusion.png" alt="4040 extrusion chassis CAD model" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
   <img src="./assets/images/chassis-comparison-3030-square-tube.png" alt="Proposed 3030 square-tube chassis CAD model" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
 </div>
 
-*Figure 6. Side-by-side CAD comparison of the 4040 extrusion chassis (left) and proposed 3030 square-tube chassis (right; below when wrapped).*
+*Figure 4.1.6: Side-by-side CAD comparison of the 4040 extrusion chassis (left) and proposed 3030 square-tube chassis (right; below when wrapped).*
 
 ## 6. Engineering Discussion {#chassis-discussion}
 

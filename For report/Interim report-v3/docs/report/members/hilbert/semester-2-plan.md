@@ -35,7 +35,7 @@ The four tasks below cover navigation, radio communications, physical sensor int
 
 **Transfer Nav2 to the physical UGV and tune its steering** [\[15\]](./references.md#ref-15), [\[16\]](./references.md#ref-16)
 
-The simulation uses SmacPlannerHybrid with a Reeds–Shepp motion model and RPP for path tracking. We will start from the tested configuration, then adjust it using the physical UGV's measured behaviour.
+The simulation uses SmacPlannerHybrid with a Reeds–Shepp motion model and RPP for path tracking. I will start from the tested configuration, then adjust it using the physical UGV's measured behaviour.
 
 - **Turning radius:** Start from the simulated 1.0 m planner setting. Measure actual turning behaviour before deciding whether a larger planning radius, such as 1.5 m, is needed.
 - **Planner settings:** Recheck heading resolution, reverse penalties and planning time on the onboard computer. The simulation used 64 heading bins; proposed changes must be tested rather than assumed to improve performance.

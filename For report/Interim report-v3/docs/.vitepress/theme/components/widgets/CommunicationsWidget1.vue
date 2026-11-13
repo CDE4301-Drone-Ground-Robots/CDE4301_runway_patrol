@@ -9,21 +9,21 @@ const netSem1SVG = `
     <rect width="880" height="260" fill="#090d16" rx="8"/>
     
     <!-- Machine 1: Raspberry Pi 5 (UAV C2) -->
-    <g transform="translate(40, 30)">
-      <rect width="240" height="190" rx="8" fill="#131c2e" stroke="#3b82f6" stroke-width="1.5"/>
-      <text x="120" y="28" fill="#60a5fa" font-size="13" font-weight="700" text-anchor="middle">🍓 Machine 1: Raspberry Pi 5</text>
-      <text x="120" y="46" fill="#94a3b8" font-size="10.5" text-anchor="middle">UAV C2 Ground Terminal</text>
+    <g transform="translate(40, 24)">
+      <rect width="240" height="212" rx="8" fill="#131c2e" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="120" y="25" fill="#60a5fa" font-size="13" font-weight="700" text-anchor="middle">🍓 Machine 1: Raspberry Pi 5</text>
+      <text x="120" y="42" fill="#94a3b8" font-size="10.5" text-anchor="middle">UAV C2 Ground Terminal</text>
       
-      <rect x="20" y="65" width="200" height="42" rx="5" fill="#1e293b" stroke="#334155"/>
-      <text x="120" y="84" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">DemoComs_C2.py</text>
-      <text x="120" y="98" fill="#38bdf8" font-size="9.5" text-anchor="middle">Publishes /c2/target_alert</text>
+      <rect x="20" y="58" width="200" height="42" rx="5" fill="#1e293b" stroke="#334155"/>
+      <text x="120" y="77" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">DemoComs_C2.py</text>
+      <text x="120" y="91" fill="#38bdf8" font-size="9.5" text-anchor="middle">Publishes /c2/target_alert</text>
 
-      <rect x="20" y="120" width="200" height="42" rx="5" fill="#1e293b" stroke="#334155"/>
-      <text x="120" y="139" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">CycloneDDS Transport</text>
-      <text x="120" y="153" fill="#a78bfa" font-size="9.5" text-anchor="middle">IP: 192.168.168.50 (wlan0)</text>
+      <rect x="20" y="110" width="200" height="42" rx="5" fill="#1e293b" stroke="#334155"/>
+      <text x="120" y="129" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">CycloneDDS Transport</text>
+      <text x="120" y="143" fill="#a78bfa" font-size="9.5" text-anchor="middle">IP: 192.168.168.50 (wlan0)</text>
       
-      <rect x="20" y="174" width="200" height="26" rx="4" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981"/>
-      <text x="120" y="191" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">VALIDATED IN BENCHTOP SIL</text>
+      <rect x="20" y="166" width="200" height="28" rx="4" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981"/>
+      <text x="120" y="184" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">VALIDATED IN BENCHTOP SIL</text>
     </g>
 
     <!-- Transport: Wi-Fi Router / Hotspot -->
@@ -36,25 +36,25 @@ const netSem1SVG = `
     </g>
 
     <!-- Connecting Arrows -->
-    <path d="M 280 140 L 340 130" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4" fill="none"/>
-    <path d="M 540 130 L 600 140" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4" fill="none"/>
+    <path d="M 280 144 L 340 130" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4" fill="none"/>
+    <path d="M 540 130 L 600 144" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4" fill="none"/>
 
     <!-- Machine 2: Engineering Workstation (Laptop) -->
-    <g transform="translate(600, 30)">
-      <rect width="240" height="190" rx="8" fill="#131c2e" stroke="#3b82f6" stroke-width="1.5"/>
-      <text x="120" y="28" fill="#60a5fa" font-size="13" font-weight="700" text-anchor="middle">💻 Machine 2: Laptop (WSL2)</text>
-      <text x="120" y="46" fill="#94a3b8" font-size="10.5" text-anchor="middle">UGV Simulation &amp; Autonomy</text>
+    <g transform="translate(600, 24)">
+      <rect width="240" height="212" rx="8" fill="#131c2e" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="120" y="25" fill="#60a5fa" font-size="13" font-weight="700" text-anchor="middle">💻 Machine 2: Laptop (WSL2)</text>
+      <text x="120" y="42" fill="#94a3b8" font-size="10.5" text-anchor="middle">UGV Simulation &amp; Autonomy</text>
 
-      <rect x="20" y="65" width="200" height="42" rx="5" fill="#1e293b" stroke="#334155"/>
-      <text x="120" y="84" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">ugv_c2_bridge_node</text>
-      <text x="120" y="98" fill="#34d399" font-size="9.5" text-anchor="middle">Subscribes &amp; Dispatches to Nav2</text>
+      <rect x="20" y="58" width="200" height="42" rx="5" fill="#1e293b" stroke="#334155"/>
+      <text x="120" y="77" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">ugv_c2_bridge_node</text>
+      <text x="120" y="91" fill="#34d399" font-size="9.5" text-anchor="middle">Subscribes &amp; Dispatches to Nav2</text>
 
-      <rect x="20" y="120" width="200" height="42" rx="5" fill="#1e293b" stroke="#334155"/>
-      <text x="120" y="139" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">CycloneDDS Transport</text>
-      <text x="120" y="153" fill="#a78bfa" font-size="9.5" text-anchor="middle">IP: 192.168.168.100 (WSL2 NAT)</text>
+      <rect x="20" y="110" width="200" height="42" rx="5" fill="#1e293b" stroke="#334155"/>
+      <text x="120" y="129" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">CycloneDDS Transport</text>
+      <text x="120" y="143" fill="#a78bfa" font-size="9.5" text-anchor="middle">IP: 192.168.168.100 (WSL2 NAT)</text>
 
-      <rect x="20" y="174" width="200" height="26" rx="4" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981"/>
-      <text x="120" y="191" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">VALIDATED IN BENCHTOP SIL</text>
+      <rect x="20" y="166" width="200" height="28" rx="4" fill="rgba(16, 185, 129, 0.15)" stroke="#10b981"/>
+      <text x="120" y="184" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">VALIDATED IN BENCHTOP SIL</text>
     </g>
   </svg>
 `
@@ -65,22 +65,22 @@ const netSem2SVG = `
     <rect width="880" height="260" fill="#090d16" rx="8"/>
     
     <!-- UAV Drone Subsystem -->
-    <g transform="translate(30, 30)">
-      <rect width="250" height="190" rx="8" fill="#131c2e" stroke="#c084fc" stroke-width="1.5"/>
-      <text x="125" y="28" fill="#c084fc" font-size="13" font-weight="700" text-anchor="middle">🚁 Aerial Scouting UAV</text>
-      <text x="125" y="46" fill="#94a3b8" font-size="10.5" text-anchor="middle">YOLO Edge Vision + RPi 5</text>
+    <g transform="translate(30, 24)">
+      <rect width="250" height="212" rx="8" fill="#131c2e" stroke="#c084fc" stroke-width="1.5"/>
+      <text x="125" y="25" fill="#c084fc" font-size="13" font-weight="700" text-anchor="middle">🚁 Aerial Scouting UAV</text>
+      <text x="125" y="42" fill="#94a3b8" font-size="10.5" text-anchor="middle">YOLO Edge Vision + RPi 5</text>
       
-      <rect x="15" y="65" width="220" height="38" rx="5" fill="#1e293b" stroke="#334155"/>
-      <text x="125" y="82" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">C2 Mission Dispatcher</text>
-      <text x="125" y="95" fill="#a78bfa" font-size="9" text-anchor="middle">JSON Target Assembly</text>
+      <rect x="15" y="58" width="220" height="38" rx="5" fill="#1e293b" stroke="#334155"/>
+      <text x="125" y="75" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">C2 Mission Dispatcher</text>
+      <text x="125" y="88" fill="#a78bfa" font-size="9" text-anchor="middle">JSON Target Assembly</text>
 
-      <rect x="15" y="112" width="220" height="42" rx="5" fill="rgba(192, 132, 252, 0.1)" stroke="#a855f7"/>
-      <text x="125" y="129" fill="#f8fafc" font-size="10.5" font-weight="600" text-anchor="middle">Serial Framing Gateway Node</text>
-      <text x="125" y="143" fill="#c084fc" font-size="9" text-anchor="middle">COBS Encoding + CRC-32 (UART)</text>
+      <rect x="15" y="106" width="220" height="40" rx="5" fill="rgba(192, 132, 252, 0.1)" stroke="#a855f7"/>
+      <text x="125" y="123" fill="#f8fafc" font-size="10.5" font-weight="600" text-anchor="middle">Serial Framing Gateway Node</text>
+      <text x="125" y="137" fill="#c084fc" font-size="9" text-anchor="middle">COBS Encoding + CRC-32 (UART)</text>
       
-      <rect x="15" y="165" width="220" height="38" rx="4" fill="#0f172a" stroke="#475569"/>
-      <text x="125" y="182" fill="#38bdf8" font-size="10.5" font-weight="700" text-anchor="middle">Holybro P900 V2 (UAV OEM)</text>
-      <text x="125" y="194" fill="#94a3b8" font-size="9" text-anchor="middle">UART Interface (JST-GH) @ 115.2 kbps</text>
+      <rect x="15" y="156" width="220" height="38" rx="4" fill="#0f172a" stroke="#475569"/>
+      <text x="125" y="173" fill="#38bdf8" font-size="10.5" font-weight="700" text-anchor="middle">Holybro P900 V2 (UAV OEM)</text>
+      <text x="125" y="185" fill="#94a3b8" font-size="9" text-anchor="middle">UART Interface (JST-GH) @ 115.2 kbps</text>
     </g>
 
     <!-- Long-Range RF Link -->
@@ -93,26 +93,26 @@ const netSem2SVG = `
     </g>
 
     <!-- Connecting Lines -->
-    <path d="M 280 184 L 320 65" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="4,4" fill="none"/>
-    <path d="M 560 65 L 600 184" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="4,4" fill="none"/>
+    <path d="M 280 175 L 320 65" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="4,4" fill="none"/>
+    <path d="M 560 65 L 600 175" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="4,4" fill="none"/>
 
     <!-- UGV Chassis Subsystem -->
-    <g transform="translate(600, 30)">
-      <rect width="250" height="190" rx="8" fill="#131c2e" stroke="#34d399" stroke-width="1.5"/>
-      <text x="125" y="28" fill="#34d399" font-size="13" font-weight="700" text-anchor="middle">🚜 Autonomous Runway UGV</text>
-      <text x="125" y="46" fill="#94a3b8" font-size="10.5" text-anchor="middle">Jetson Orin + STM32 Firmware</text>
+    <g transform="translate(600, 24)">
+      <rect width="250" height="212" rx="8" fill="#131c2e" stroke="#34d399" stroke-width="1.5"/>
+      <text x="125" y="25" fill="#34d399" font-size="13" font-weight="700" text-anchor="middle">🚜 Autonomous Runway UGV</text>
+      <text x="125" y="42" fill="#94a3b8" font-size="10.5" text-anchor="middle">Jetson Orin + STM32 Firmware</text>
 
-      <rect x="15" y="65" width="220" height="38" rx="5" fill="#1e293b" stroke="#334155"/>
-      <text x="125" y="82" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">ugv_c2_bridge_node</text>
-      <text x="125" y="95" fill="#34d399" font-size="9" text-anchor="middle">Nav2 Action Queue &amp; Marker Array</text>
+      <rect x="15" y="58" width="220" height="38" rx="5" fill="#1e293b" stroke="#334155"/>
+      <text x="125" y="75" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">ugv_c2_bridge_node</text>
+      <text x="125" y="88" fill="#34d399" font-size="9" text-anchor="middle">Nav2 Action Queue &amp; Marker Array</text>
 
-      <rect x="15" y="112" width="220" height="42" rx="5" fill="rgba(52, 211, 153, 0.1)" stroke="#10b981"/>
-      <text x="125" y="129" fill="#f8fafc" font-size="10.5" font-weight="600" text-anchor="middle">Serial Framing Gateway Node</text>
-      <text x="125" y="143" fill="#34d399" font-size="9" text-anchor="middle">COBS Decoding + CRC-32 Ingestion</text>
+      <rect x="15" y="106" width="220" height="40" rx="5" fill="rgba(52, 211, 153, 0.1)" stroke="#10b981"/>
+      <text x="125" y="123" fill="#f8fafc" font-size="10.5" font-weight="600" text-anchor="middle">Serial Framing Gateway Node</text>
+      <text x="125" y="137" fill="#34d399" font-size="9" text-anchor="middle">COBS Decoding + CRC-32 Ingestion</text>
 
-      <rect x="15" y="165" width="220" height="38" rx="4" fill="#0f172a" stroke="#475569"/>
-      <text x="125" y="182" fill="#38bdf8" font-size="10.5" font-weight="700" text-anchor="middle">Holybro P900 V2 (UGV OEM)</text>
-      <text x="125" y="194" fill="#94a3b8" font-size="9" text-anchor="middle">UART Interface (USB-C / JST-GH)</text>
+      <rect x="15" y="156" width="220" height="38" rx="4" fill="#0f172a" stroke="#475569"/>
+      <text x="125" y="173" fill="#38bdf8" font-size="10.5" font-weight="700" text-anchor="middle">Holybro P900 V2 (UGV OEM)</text>
+      <text x="125" y="185" fill="#94a3b8" font-size="9" text-anchor="middle">UART Interface (USB-C / JST-GH)</text>
     </g>
   </svg>
 `

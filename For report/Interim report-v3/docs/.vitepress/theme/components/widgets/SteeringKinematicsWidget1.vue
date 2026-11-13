@@ -73,8 +73,8 @@ useWidgetScript([['hilbert-steering-kinematics-2', s1]])
                 <span id="hud-vr" style="font-size: 15px; font-weight: 700; color: #10b981;">1.28 m/s</span>
               </div>
               <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px; border: 1px solid var(--apple-border); text-align: center;">
-                <span style="font-size: 11px; color: var(--apple-text-tertiary); display: block;">Scrub Resistance</span>
-                <span id="hud-mscrub" style="font-size: 15px; font-weight: 700; color: #f43f5e;">45.2 Nm</span>
+                <span style="font-size: 11px; color: var(--apple-text-tertiary); display: block;">Pivot-Equivalent Scrub Moment</span>
+                <span id="hud-mscrub" style="font-size: 15px; font-weight: 700; color: #f43f5e;">135.0 Nm</span>
               </div>
             </div>
 

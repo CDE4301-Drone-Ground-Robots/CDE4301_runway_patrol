@@ -3,9 +3,12 @@ import { useData, useRoute, withBase, type Theme } from 'vitepress'
 import { defineAsyncComponent, defineComponent, h, nextTick, onMounted, watch } from 'vue'
 import { MotionConfig } from 'motion-v'
 import AmbientBackground from './components/AmbientBackground.vue'
+import BugCard from './components/BugCard.vue'
+import DecisionCard from './components/DecisionCard.vue'
 import DocOwnership from './components/DocOwnership.vue'
 import GlassFilterDefs from './components/GlassFilterDefs.vue'
 import GlassSurface from './components/GlassSurface.vue'
+import StageStepper from './components/StageStepper.vue'
 import AssetLink from './components/content/AssetLink.vue'
 import Card from './components/content/Card.vue'
 import CardGrid from './components/content/CardGrid.vue'
@@ -90,7 +93,20 @@ export default {
   enhanceApp({ app, router }) {
     app.component('GlassSurface', GlassSurface)
     // Author-facing content components (usable in any Markdown page; see the repository README)
-    for (const [name, c] of Object.entries({ Card, CardGrid, Stat, Figure, VideoClip, AssetLink, MissingAsset, SubsystemLead })) app.component(name, c)
+    for (const [name, c] of Object.entries({
+      Card,
+      CardGrid,
+      Stat,
+      Figure,
+      VideoClip,
+      AssetLink,
+      MissingAsset,
+      SubsystemLead,
+      BugCard,
+      DecisionCard,
+      StageStepper
+    }))
+      app.component(name, c)
     // Interactive widgets — one async chunk each, loaded only by pages that use them
     const widgets = import.meta.glob('./components/widgets/*.vue')
     for (const [file, load] of Object.entries(widgets)) {
