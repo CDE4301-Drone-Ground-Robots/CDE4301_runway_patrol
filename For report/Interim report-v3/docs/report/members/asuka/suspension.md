@@ -202,7 +202,7 @@ $$
 
 The value of $b$ has to be an assumed value, as manufacturers do not usually tell consumers the damping constant. I searched online and asked Gemini AI to estimate the closest value, and eventually settled on $b = 400\ \text{Ns/m}$. I acknowledge that it may not be best practice to use a rough number for something as important as the suspension system. However, this value can be verified in testing when I perform a frequency response analysis.
 
-System mass = 65 kg, corner mass = 16.25 kg, $F_{corner}$ = 159.4125 N. Angle of installation = 25°, motion ratio = 0.821 ($K_w = K_s \times 0.821$), stroke length = 20 mm.
+System mass = 65 kg, corner mass = 16.25 kg, $F_{corner}$ = 159.4125 N. Angle of installation = 25°, motion ratio = 0.821 ($K_w = K_s \times 0.821$; see [Appendix I](/report#appendix-i) for the proof), stroke length = 20 mm (a commercially available length).
 
 <div class="compact-table">
 

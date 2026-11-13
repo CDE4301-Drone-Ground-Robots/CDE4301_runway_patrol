@@ -602,6 +602,10 @@ The work is divided into three subsystems, each with a named person in charge of
 
 <!--@compose: ./report/appendix/background.md#h-->
 
+#### Appendix I: Proof of the Suspension Motion Ratio {#appendix-i .rpt-l3}
+
+<!--@compose: ./report/appendix/derivations.md#i-->
+
 </section>
 
 </div>
