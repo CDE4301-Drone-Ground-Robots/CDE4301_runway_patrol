@@ -103,7 +103,9 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 
 <template #s1>
 
-(To Be Filled)
+- Problem insight report and primary interviews.
+- Critical function prototype of the suspension system.
+- Critical function prototype of FOD remediation.
 
 </template>
 

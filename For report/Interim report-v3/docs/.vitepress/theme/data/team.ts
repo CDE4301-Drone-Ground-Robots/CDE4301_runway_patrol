@@ -78,7 +78,6 @@ export const team: Member[] = [
     docs: [
       { label: 'Suspension', route: '/members/asuka/suspension' },
       { label: 'Vacuum Module', route: '/members/asuka/vacuum-module' },
-      { label: 'FOD Sweep Box', route: '/members/asuka/fod-sweep-box-v2' },
       { label: 'Semester 2 Plan', route: '/members/asuka/semester-2-plan' }
     ],
     social: [
