@@ -1,9 +1,9 @@
 ---
-title: "Components BOM"
+title: "Components List"
 owner: "Bryan Ng"
 outline: [2,3]
 ---
-# Components BOM
+# Components List
 
 [← Back to Electrical Subsystem](../../report.md#electrical)
 

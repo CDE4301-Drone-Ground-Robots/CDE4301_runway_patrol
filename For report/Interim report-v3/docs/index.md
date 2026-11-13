@@ -177,7 +177,7 @@ const roadmap = [
   name="Bryan Ng Rui Jie"
   role="ELECTRICAL SYSTEM & CHARGING DOCK"
   preview="(To Be Filled)"
-  docs="/members/bryan/components-bom"
+  docs="/members/bryan/components-list"
   plan="/members/bryan/semester-2-plan"
 >
 

@@ -69,10 +69,10 @@ docs/report/members/zacarias/
 
 docs/report/members/bryan/
 
-- [▸ Components BOM](./bryan/components-bom.md)
+- [▸ Components List](./bryan/components-list.md)
 - [▸ Detailed Power Calculations](./bryan/power-calculations.md)
 
-[BOM →](./bryan/components-bom.md) [Power Calcs →](./bryan/power-calculations.md)
+[Components List →](./bryan/components-list.md) [Power Calcs →](./bryan/power-calculations.md)
 
 </Card>
 

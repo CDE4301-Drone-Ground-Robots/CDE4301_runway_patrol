@@ -138,7 +138,7 @@ export const team: Member[] = [
     portrait: bryanPortrait,
     focus: '48% 50%',
     docs: [
-      { label: 'Components & BOM', route: '/members/bryan/components-bom' },
+      { label: 'Components List', route: '/members/bryan/components-list' },
       { label: 'Power Calculations', route: '/members/bryan/power-calculations' },
       { label: 'Semester 2 Plan', route: '/members/bryan/semester-2-plan' }
     ],

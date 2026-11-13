@@ -64,7 +64,7 @@ Every member also has a `references.md` (their reference list in Report chapter 
 |              | `stm32-hardware.md`               | 5.2.1 STM32 Hardware                                       |
 |              | `stm32-firmware.md`               | 5.2.2 STM32 Firmware                                       |
 | **Bryan**    | `power-calculations.md`           | 5.1.1 Power Calculations                                   |
-|              | `components-bom.md`               | 5.1.2 Components & BOM                                     |
+|              | `components-list.md`               | 5.1.2 Components & BOM                                     |
 
 Each technical file is also published as its own page, at `/members/<your-name>/<file>`.
 
