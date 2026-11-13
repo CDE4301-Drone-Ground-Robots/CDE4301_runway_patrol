@@ -15,7 +15,7 @@ outline: [2, 3]
 
 ### 1.1 Methodology {#methodology}
 
-We built the firmware around the gamepad controller first. Instead of wiring buttons straight to motor commands, every input on the controller calls a firmware function. That kills two birds with one stone: the controller is our user interface for testing now, and the same functions become the interface for ROS 2 later.
+I built the firmware around the gamepad controller first. Instead of wiring buttons straight to motor commands, every input on the controller calls a firmware function. That kills two birds with one stone: the controller is my user interface for testing now, and the same functions become the interface for ROS 2 later.
 
 Both the gamepad and ROS 2 come down to the same two numbers: forward speed `vx` (m/s) and turn rate `ωz` (rad/s). These go through the same kinematics, ramps, safety checks, and CAN commands. When the Jetson is connected in Semester 2, its `cmd_vel` message (`linear.x` and `angular.z`) goes straight into `Robot_Set_CmdVel(vx, wz)`, so nothing below that changes. Every manual test drive is also a test of the code path autonomy will use (Table 5.2.1).
 
@@ -32,7 +32,7 @@ Both the gamepad and ROS 2 come down to the same two numbers: forward speed `vx`
 
 ### 1.2 Step-by-Step Bottom-Up Validation {#step-by-step-validation}
 
-Rather than writing the full UGV firmware at once and debugging electrical, protocol, and kinematic faults together, we brought the system up in five isolated stages (detailed with logs, safety checks, and bug fixes in [Section 3](#implementation-prototype)):
+Rather than writing the full UGV firmware at once and debugging electrical, protocol, and kinematic faults together, I brought the system up in five isolated stages (detailed with logs, safety checks, and bug fixes in [Section 3](#implementation-prototype)):
 
 1. **[CAN Bus Debugging (`Can_debugging_check.c`)](#phase-1):** Get the STM32 connected to the motor drivers at 500 kbps and prevent unanswered frames from jamming the CAN transmit buffers.
 2. **[Stepper Motor Drive (`Steppermotor_w_user_input.c`)](#phase-2):** Drive the TB6600 from 3.3 V pins by sinking its 5 V inputs, with microsecond pulse timing.
@@ -64,7 +64,7 @@ Figure 5.2.2 traces a motion command from input to wheel speed. Two separate sta
 
 ### 3.1 Stage 1: CAN Bus Debugging (`Can_debugging_check.c`) {#stage-1-can}
 
-When first bringing up the CAN bus, the ZLAC8015D drivers gave no reply and a silent bus offered no clue whether the fault lay in the transceiver wiring, baud rate, or termination. We built `Can_debugging_check.c` around four diagnostic steps (Table 5.2.2).
+When first bringing up the CAN bus, the ZLAC8015D drivers gave no reply and a silent bus offered no clue whether the fault lay in the transceiver wiring, baud rate, or termination. I built `Can_debugging_check.c` around four diagnostic steps (Table 5.2.2).
 
 | Problem | Solution |
 | :--- | :--- |
@@ -119,7 +119,7 @@ Driving the TB6600 stepper driver directly from the NUCLEO-F446RE required solvi
 | :--- | :--- |
 | **Driver input requires 5 V signals, but STM32 pins only output 3.3 V** | Tie `PUL+` and `DIR+` to the 5 V rail and configure `PC2` (`PUL−`) and `PC3` (`DIR−`) as 5 V-tolerant open-drain outputs (`GPIO_MODE_OUTPUT_OD`). The pin switches between ground (LED ON) and open-circuit (LED OFF), creating the pulse train without an external level-shifter. |
 | **`HAL_Delay()`'s 1 ms resolution cannot generate microsecond motor pulses** | Read the ARM Cortex-M4 DWT cycle counter (`DWT->CYCCNT`), which counts every CPU clock cycle (5.6 ns at 180 MHz; 11.9 ns at 84 MHz), giving microsecond-accurate pulse widths `w` (`1 pulse = 1 step`) for smooth, adjustable speeds. |
-| **Changing direction right before a pulse can cause lost or missing steps** | Insert a 20 µs setup delay after every `DIR` state change before issuing the first `PUL` edge (exceeding the 5 µs TB6600 minimum <!-- TODO: source (TB6600 datasheet) -->). |
+| **Changing direction right before a pulse can cause lost or missing steps** | Insert a 20 µs setup delay after every `DIR` state change before issuing the first `PUL` edge
 
 <p style="margin-top: -10px; margin-bottom: 24px; font-size: 13.5px; line-height: 1.55; color: var(--vp-c-text-2, #9CA3AF);">Table 5.2.4: Stage 2 stepper driver electrical and timing problems and the firmware solutions implemented in Steppermotor_w_user_input.c.</p>
 
@@ -172,7 +172,7 @@ During Stage 3 bench testing, single-character keyboard commands over `USART2` t
 
 | Key | SDO DATA (`DATA` Payload, Hex) | Action |
 | :---: | :--- | :--- |
-| **`R`** | `2B 40 60 00 06 00 00 00` → Shutdown<br>`2B 40 60 00 07 00 00 00` → Switch On<br>`2B 40 60 00 0F 00 00 00` → Enable Operation | Arm the driver (step through the CiA 402 enable sequence on Controlword `0x6040` <!-- TODO: source (ZLAC8015D CANopen manual) -->) |
+| **`R`** | `2B 40 60 00 06 00 00 00` → Shutdown<br>`2B 40 60 00 07 00 00 00` → Switch On<br>`2B 40 60 00 0F 00 00 00` → Enable Operation | Arm the driver (step through the CiA 402 enable sequence on Controlword `0x6040`) |
 | **`W` / `S`** | `23 FF 60 01 32 00 00 00` → Left Velocity 50<br>`23 FF 60 02 32 00 00 00` → Right Velocity 50<br>`23 FF 60 01 CE FF FF FF` → Left Velocity −50<br>`23 FF 60 02 CE FF FF FF` → Right Velocity −50 | Speed +50 / −50 RPM on `0x60FF` sub-indices `0x01` (Left) and `0x02` (Right) (hardware limit ±350 RPM) |
 | **`Q`** | `23 FF 60 01 00 00 00 00` → RPM 0 | Normal Stop — ramps wheels down to 0 RPM |
 | **`E`** | `2B 40 60 00 02 00 00 00` → Emergency Stop | Emergency Stop — locks shaft and sets wheels to 0 RPM instantly (`0x0002` Quick-Stop) |
@@ -212,7 +212,7 @@ During Stage 3 bench testing, single-character keyboard commands over `USART2` t
 <Figure
   src="./assets/stm32-diff-drive.png"
   alt="Differential drive geometry (arc turn and spot turn)"
-  caption="Figure 3.5.1: Differential drive geometry (arc turn and spot turn)."
+  caption="Figure 5.2.7: Differential drive geometry (arc turn and spot turn)."
 />
 
 ```text
@@ -249,7 +249,7 @@ Spot turn (vx = 0): left wheels = −ΔRPM, right wheels = +ΔRPM
 ## 4. Limitations & Semester 2 {#limitations-semester-2}
 
 1. **Speed is capped well below the operating target.** Semester 1 ran Preset 3 (25 RPM, 0.34 m/s) to stay within the 32 V / 10.4 A bench supply. Preset 1 on the planned 48 V 20 Ah LiFePO4 pack raises the cap to 30 RPM (0.41 m/s). Reaching the 15 km/h (4.17 m/s) operating target requires `RPM = 60 × 4.17 / (2π × 0.1315) ≈ 303 RPM`, so the cap will only be raised after the battery, BMS, and safety contactor are tested on the chassis.
-2. **Hardware RF kill switch not yet functional.** The RF kill switch we bought arrived faulty, so the hardware E-stop path (relay → ZLAC8015D `X0`/`X1` E-stop inputs) has not been installed or tested. In Semester 2 we will fit a replacement and verify that it stops the drivers.
+2. **Hardware RF kill switch not yet functional.** The RF kill switch I bought arrived faulty, so the hardware E-stop path (relay → ZLAC8015D `X0`/`X1` E-stop inputs) has not been installed or tested. In Semester 2 I will fit a replacement and verify that it stops the drivers.
 3. **Open-loop wheel commands → closed-loop slip compensation.** Semester 1 sends RPM setpoints to the drivers' internal FOC loops. Semester 2 will read actual encoder velocity back over `CAN1` (`0x606C`) to compensate for wheel slip on damp tarmac.
 4. **IMU fusion (`I2C1`, `PB6`/`PB7`).** Fuse the 9-DOF IMU (`0x68`, 100 Hz) with wheel odometry using a complementary filter or EKF for heading and tilt estimation.
 5. **Jetson ROS 2 link and BMS telemetry (`USART1`, `PA9`/`PA10`).** Stream `cmd_vel` into `Robot_Set_CmdVel(vx, wz)` under the 500 ms watchdog, and read cell voltages, current, and state of charge from the BMS at 115,200 baud.

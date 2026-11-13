@@ -18,25 +18,26 @@ outline: [2, 3]
 
 <Badge type="info" text="Computer Vision & Edge AI • NVIDIA Jetson + ELP 5 MP Camera" />
 
-- **Precision-recall tuning and performance:** Fine-tune further on hard cases, sweep the confidence threshold and NMS IoU to find the best operating point, export to TensorRT and hit **≥ 10 FPS** on the Jetson with the ELP camera.
-- **Weather and lighting:** Collect training data in rain, at night and in harsh glare, design onboard lighting so FOD looks the same in any condition, and test each condition separately.
-- **SAHI slicing:** The 5 MP camera captures much more detail than the `1088 px` input. Slicing each frame into tiles and detecting each one at full resolution gives small FOD about **2.4× more pixels**, which extends the `32 px` range past **0.8 m**. _Trade-off:_ about **6× inference cost** per frame.
-- **FOD localisation:** Convert the detection's pixel position into real ground distance using the camera height and tilt, so the UGV can drive right up to the FOD.
-- **Wider testing:** All **9 fastener types**, other surfaces and other days, with the test videos rotated (cross-validation by video).
+- **Precision-recall tuning and TensorRT performance:** Confirm sustained full-resolution UVC capture of the ELP camera on JetPack 6.2, fine-tune on hard cases, sweep the confidence threshold and NMS IoU on the PR curve, export to TensorRT, and hit **≥ 10 FPS** on the Jetson.
+- **Weather and lighting:** Collect training data in rain, at night, and in harsh glare; design onboard LED lighting so FOD looks consistent across ambient conditions, and test each condition separately.
+- **SAHI slicing:** The 5 MP camera captures much more detail than the `1088 px` input. Slicing each frame into overlapping native-resolution tiles gives small FOD about **2.4× more pixels**, extending the `32 px` range past **0.8 m**. _Trade-off:_ about **6× inference cost** per frame.
+- **FOD localisation:** Convert the detection's pixel position into metric ground distance using the camera height (`0.45 m`) and tilt (`33°`), and publish target coordinates over ROS 2 for terminal approach.
+- **Wider testing & empty-runway false alarms:** Test all **9 fastener types**, other surfaces, and separate days with video-level cross-validation, and add fastener-free tarmac images to measure false alarms on cracks, paint, and shadows.
 
 ::: details 01 — Precision-Recall Tuning & TensorRT Edge Performance
 
-**Model operating-point optimization and Jetson deployment**
+**Model operating-point tuning and Jetson deployment**
 
+- **ELP UVC verification:** Confirm sustained full-resolution (`2592 × 1944`) UVC capture on JetPack 6.2 upon camera delivery.
 - **Hard-case fine-tuning:** Expand training on hard negative backgrounds (asphalt cracks, aggregate, oil stains) and low-contrast fasteners.
-- **Threshold & NMS sweep:** Systematically sweep confidence thresholds and Non-Maximum Suppression (NMS) IoU thresholds on held-out validation videos to select the optimal precision–recall operating point.
+- **Threshold & NMS sweep:** Sweep confidence thresholds and Non-Maximum Suppression (NMS) IoU thresholds on held-out validation videos to select the best precision–recall operating point.
 - **TensorRT export:** Export the trained detector to TensorRT (FP16 / INT8) and benchmark end-to-end camera-to-detection throughput to achieve **≥ 10 FPS** on the NVIDIA Jetson paired with the ELP camera.
 
 :::
 
 ::: details 02 — Weather, Illumination & Onboard Lighting
 
-**Environmental robustness across runway operating conditions**
+**Environmental reliability across runway operating conditions**
 
 - **Multi-condition dataset expansion:** Collect and annotate tarmac footage in **rain** (wet specular reflections), **at night**, and under **harsh low-angle sun glare**.
 - **Controlled onboard illumination:** Design and mount regulated onboard LED floodlighting so fasteners maintain consistent surface contrast and appearance regardless of ambient weather or time of day.
@@ -58,7 +59,7 @@ outline: [2, 3]
 
 **Geometric projection from bounding-box coordinates to metric UGV targets**
 
-- **Homography & pinhole ground projection:** Convert each detected bounding box's bottom-centre pixel $(u, v)$ into metric ground-plane coordinates $(X_{\text{ground}}, Y_{\text{ground}})$ relative to `base_footprint` using the calibrated camera mounting height $H$ and downward pitch angle $\theta$.
+- **Homography & pinhole ground projection:** Convert each detected bounding box's bottom-centre pixel (u, v) into metric ground-plane coordinates (X_ground, Y_ground) relative to `base_footprint` using the calibrated camera mounting height H and downward pitch angle θ.
 - **Terminal approach integration:** Publish localised 3D FOD coordinates to ROS 2 so the UGV can drive directly up to the fastener and position the vacuum head over it.
 
 :::
@@ -79,6 +80,7 @@ outline: [2, 3]
 
 <Badge type="info" text="Embedded Hardware & Firmware • STM32 NUCLEO-F446RE" />
 
+- **Hardware RF kill switch & `PB1` interlock:** Fit a replacement RF kill switch module, verify that its relay cuts the ZLAC8015D `X0`/`X1` E-stop inputs with the STM32 unpowered, and add the `PB1` state latch in firmware.
 - **ROS 2 link to the Jetson for autonomous driving:** Connect the Jetson to the STM32 so autonomous `cmd_vel` and vacuum-head actuator commands call the existing firmware API (`Robot_Set_CmdVel()`, `Robot_Actuator_Toggle()`) with a 500 ms comms watchdog.
 - **IMU and wheel-odometry fusion:** Combine 9-DOF IMU (`I2C1`) yaw-rate/attitude data with ZLAC8015D dual-axle wheel encoder feedback for slip-compensated odometry.
 - **Live battery telemetry:** Read 48 V LiFePO4 BMS voltage, current, SoC, and temperature over `USART1` with automatic low-battery throttling.

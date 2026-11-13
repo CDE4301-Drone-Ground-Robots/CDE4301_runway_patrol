@@ -32,18 +32,18 @@ This page covers the STM32 hardware: choosing the MCU and wiring everything to i
 | # | Objective | Done when | Section |
 | :--- | :--- | :--- | :--- |
 | 1 | **Size the compute** | Worst-case CPU load is estimated for every Sem 1 and Sem 2 peripheral, with a 2× margin | [2.1](#cpu-load) |
-| 2 | **Pick the MCU** | It has ≥ 4 UARTs, hardware CAN, USB Host for the gamepad ([1.3](#methodology)) and enough compute for the load in 2.1, at a cost and toolchain we can work with | [2.2](#mcu-tradeoff) |
+| 2 | **Pick the MCU** | It has ≥ 4 UARTs, hardware CAN, USB Host for the gamepad ([1.3](#methodology)) and enough compute for the load in 2.1, at a cost and toolchain I can work with | [2.2](#mcu-tradeoff) |
 | 3 | **Wire everything without pin conflicts** | All 11 subsystems are mapped, and the Sem 2 sensors already have reserved pins, so adding them needs no re-wiring | [3](#interface-wiring) |
 
 **Not covered this semester:** bringing up the Sem 2 sensors (BMS, IMU, GNSS, radio, ToF) and the carrier PCB that replaces the jumper wires. Their pins are reserved now so that work can start without changing the pin map.
 
 ### 1.3 Methodology {#methodology}
 
-We designed the hardware around the interfaces first, not the parts. Before choosing the board, we listed every device the UGV needs to talk to, now and in Semester 2, and the type of connection each one uses. That set the requirement: a microcontroller with enough hardware CAN, UART, I²C and USB peripherals that nothing needs to be bit-banged in software.
+I designed the hardware around the interfaces first, not the parts. Before choosing the board, I listed every device the UGV needs to talk to, now and in Semester 2, and the type of connection each one uses. That set the requirement: a microcontroller with enough hardware CAN, UART, I²C and USB peripherals that nothing needs to be bit-banged in software.
 
-That also kills two birds with one stone. Every interface is allocated a pin now, including the ones we won't wire until Semester 2 (GPS, BMS, IMU, radio, ToF). So adding a sensor later means plugging it in and writing its driver, with no rewiring or pin conflicts.
+That also kills two birds with one stone. Every interface is allocated a pin now, including the ones I won't wire until Semester 2 (GPS, BMS, IMU, radio, ToF). So adding a sensor later means plugging it in and writing its driver, with no rewiring or pin conflicts.
 
-Each interface was then brought up on its own and tested before integration. We checked the CAN transceiver with a DC loopback test before connecting the motor drivers, and the stepper signals before attaching the motor. When something failed, we knew which layer it was in.
+Each interface was then brought up on its own and tested before integration. I checked the CAN transceiver with a DC loopback test before connecting the motor drivers, and the stepper signals before attaching the motor. When something failed, I knew which layer it was in.
 
 | Device | Interface | Why this interface | Status |
 | :--- | :--- | :--- | :--- |
@@ -81,7 +81,7 @@ Each interface was then brought up on its own and tested before integration. We 
 | **2× Safety Margin** | | **34.34 MHz** |
 
 **Utilization Summary**  
-The estimated worst-case load is 17.16 MHz. Our firmware runs the F446RE at 84 MHz (the chip can run at up to 180 MHz), so that is about 20% CPU. With a 2× safety margin it is 34.34 MHz, about 41%, which still leaves close to 60% headroom for sensor fusion and more telemetry. Running the chip at its full 180 MHz would bring the same load under 20%.
+The estimated worst-case load is 17.16 MHz. My firmware runs the F446RE at 84 MHz (the chip can run at up to 180 MHz), so that is about 20% CPU. With a 2× safety margin it is 34.34 MHz, about 41%, which still leaves close to 60% headroom for sensor fusion and more telemetry. Running the chip at its full 180 MHz would bring the same load under 20%.
 
 <span id="mcu-tradeoff"></span>
 
@@ -93,7 +93,7 @@ The estimated worst-case load is 17.16 MHz. Our firmware runs the F446RE at 84 M
 | **Espressif ESP32** | 3 | 1 | 240 MHz | **Rejected:** Only 3 UARTs |
 | **Raspberry Pi Pico** | 2 | 0 | 133 MHz | **Rejected:** Insufficient native UARTs; lacks integrated CAN controller |
 | **STM32G474RE** | 5 | 3 | 170 MHz | **Rejected:** Similar specs to selected choice, needs USB host for controller and has many unneccessary ports |
-| **Teensy 4.1** | 8 | 3 | 600 MHz | **Viable Alternative:** Excellent specs, but not chosen due to higher cost and leadtime and our familiarity with STM32CubeIDE |
+| **Teensy 4.1** | 8 | 3 | 600 MHz | **Viable Alternative:** Excellent specs, but not chosen due to higher cost and leadtime and my familiarity with STM32CubeIDE |
 | **STM32 NUCLEO-F446RE** | **6** | **2** | **180 MHz** | **Selected Platform:** Meets requirements, dedicated CAN |
 
 **Selection Rationale**  
