@@ -80,13 +80,12 @@ docs/report/members/bryan/
 
 docs/report/members/gabriel/
 
-- [▸ YOLO model comparison](./gabriel/yolo-comparison.md)
-- [▸ Computer vison calculation](./gabriel/vision-calculations.md)
-- [▸ Computer vison research](./gabriel/vision-research.md)
+- [▸ YOLO comparison & training](./gabriel/yolo-comparison-and-training.md)
+- [▸ Computer vision calculation](./gabriel/vision-calculations.md)
 - [▸ STM32 Hardware Architecture & Interfacing](./gabriel/stm32-hardware.md)
 - [▸ STM32 Firmware & Real-Time Control](./gabriel/stm32-firmware.md)
 
-[YOLO →](./gabriel/yolo-comparison.md) [Calculations →](./gabriel/vision-calculations.md) [Research →](./gabriel/vision-research.md) [STM32 HW →](./gabriel/stm32-hardware.md) [STM32 FW →](./gabriel/stm32-firmware.md)
+[YOLO →](./gabriel/yolo-comparison-and-training.md) [Calculations →](./gabriel/vision-calculations.md) [STM32 HW →](./gabriel/stm32-hardware.md) [STM32 FW →](./gabriel/stm32-firmware.md)
 
 </Card>
 

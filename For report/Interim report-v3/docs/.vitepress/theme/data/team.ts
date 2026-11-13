@@ -117,10 +117,8 @@ export const team: Member[] = [
     docs: [
       { label: 'STM32 Hardware', route: '/members/gabriel/stm32-hardware' },
       { label: 'STM32 Firmware', route: '/members/gabriel/stm32-firmware' },
-      { label: 'Sensor Fusion', route: '/members/gabriel/sensor-fusion' },
       { label: 'Vision Calculations', route: '/members/gabriel/vision-calculations' },
-      { label: 'Vision Research', route: '/members/gabriel/vision-research' },
-      { label: 'YOLO Comparison', route: '/members/gabriel/yolo-comparison' },
+      { label: 'YOLO Comparison & Training', route: '/members/gabriel/yolo-comparison-and-training' },
       { label: 'Semester 2 Plan', route: '/members/gabriel/semester-2-plan' }
     ],
     // LinkedIn left out until Gabriel's own profile URL is known.

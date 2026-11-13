@@ -1,105 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg viewBox="0 0 1320 250" width="100%" height="auto" style="min-width: 900px; max-width: 1320px;" role="img" aria-label="Firmware Architecture Block Diagram" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="fwNodeGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#1e293b"></stop>
-                  <stop offset="100%" stop-color="#0f172a"></stop>
-                </linearGradient>
-                <linearGradient id="fwStmGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#064e3b"></stop>
-                  <stop offset="100%" stop-color="#022c22"></stop>
-                </linearGradient>
-                <linearGradient id="fwDriverGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#312e81"></stop>
-                  <stop offset="100%" stop-color="#1e1b4b"></stop>
-                </linearGradient>
-                <filter id="fwShadow" x="-10%" y="-10%" width="120%" height="120%">
-                  <fedropshadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.4"></fedropshadow>
-                </filter>
-              </defs>
+<svg viewBox="0 0 1320 205" width="1320" height="205" role="img" aria-label="Firmware Architecture Block Diagram" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fwNodeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="fwStmGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#065f46" />
+      <stop offset="100%" stop-color="#064e3b" />
+    </linearGradient>
+    <linearGradient id="fwDriverGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3730a3" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+    <filter id="fwShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.55" />
+    </filter>
+  </defs>
 
-              <!-- Block 1: Gamepad -->
-              <rect x="20" y="25" width="160" height="90" rx="10" fill="url(#fwNodeGrad)" stroke="#38bdf8" stroke-width="1.5" filter="url(#fwShadow)"></rect>
-              <text x="100" y="55" fill="#38bdf8" font-size="10.5" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">USB HOST</text>
-              <text x="100" y="78" fill="#ffffff" font-size="13" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">Wireless Gamepad</text>
-              <text x="100" y="96" fill="#94a3b8" font-size="10" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">PA11/PA12 (OTG
-                FS)</text>
+  <!-- Block 1: Wireless Gamepad -->
+  <rect x="20" y="24" width="170" height="78" rx="12" fill="url(#fwNodeGrad)" stroke="#38bdf8" stroke-width="2.5" filter="url(#fwShadow)" />
+  <text x="105" y="53" fill="#38bdf8" font-size="11" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" letter-spacing="0.06em" text-anchor="middle">USB HOST</text>
+  <text x="105" y="79" fill="#ffffff" font-size="14.5" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">Wireless Gamepad</text>
 
-              <!-- Arrow 1 -->
-              <path d="M 180 70 L 228 70" fill="none" stroke="#2997ff" stroke-width="2"></path>
-              <polygon points="230,70 222,66 222,74" fill="#2997ff"></polygon>
+  <!-- Arrow 1 -->
+  <path d="M 190 63 L 228 63" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+  <polygon points="236,63 226,57 226,69" fill="#38bdf8" />
 
-              <!-- Block 2: HID Parser -->
-              <rect x="230" y="25" width="150" height="90" rx="10" fill="url(#fwNodeGrad)" stroke="#38bdf8" stroke-width="1.5" filter="url(#fwShadow)"></rect>
-              <text x="305" y="55" fill="#38bdf8" font-size="10" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">PARSER TIER</text>
-              <text x="305" y="78" fill="#ffffff" font-size="13" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">HID Parser</text>
-              <text x="305" y="96" fill="#94a3b8" font-size="10" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">XInput Raw
-                Packets</text>
+  <!-- Block 2: HID Parser -->
+  <rect x="238" y="24" width="155" height="78" rx="12" fill="url(#fwNodeGrad)" stroke="#38bdf8" stroke-width="2.5" filter="url(#fwShadow)" />
+  <text x="315.5" y="53" fill="#38bdf8" font-size="11" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" letter-spacing="0.06em" text-anchor="middle">PARSER TIER</text>
+  <text x="315.5" y="79" fill="#ffffff" font-size="14.5" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">HID Parser</text>
 
-              <!-- Arrow 2 -->
-              <path d="M 380 70 L 428 70" fill="none" stroke="#2997ff" stroke-width="2"></path>
-              <polygon points="430,70 422,66 422,74" fill="#2997ff"></polygon>
+  <!-- Arrow 2 -->
+  <path d="M 393 63 L 431 63" fill="none" stroke="#38bdf8" stroke-width="2.5" />
+  <polygon points="439,63 429,57 429,69" fill="#38bdf8" />
 
-              <!-- Block 3: Throttle & Steering -->
-              <rect x="430" y="20" width="170" height="100" rx="10" fill="url(#fwNodeGrad)" stroke="#06b6d4" stroke-width="1.5" filter="url(#fwShadow)"></rect>
-              <text x="515" y="48" fill="#06b6d4" font-size="10" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">INPUT SANITIZER</text>
-              <text x="515" y="70" fill="#ffffff" font-size="12.5" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">Throttle &amp; Steering</text>
-              <text x="515" y="88" fill="#94a3b8" font-size="10" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Triggers
-                • Deadzones</text>
-              <text x="515" y="104" fill="#67e8f9" font-size="9.5" font-family="'JetBrains Mono', monospace" text-anchor="middle">Conflict Check (0 RPM)</text>
+  <!-- Block 3: Throttle & Steering -->
+  <rect x="441" y="24" width="175" height="78" rx="12" fill="url(#fwNodeGrad)" stroke="#06b6d4" stroke-width="2.5" filter="url(#fwShadow)" />
+  <text x="528.5" y="53" fill="#22d3ee" font-size="11" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" letter-spacing="0.06em" text-anchor="middle">INPUT SANITIZER</text>
+  <text x="528.5" y="79" fill="#ffffff" font-size="14.5" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">Throttle &amp; Steering</text>
 
-              <!-- Arrow 3 -->
-              <path d="M 600 70 L 648 70" fill="none" stroke="#06b6d4" stroke-width="2"></path>
-              <polygon points="650,70 642,66 642,74" fill="#06b6d4"></polygon>
+  <!-- Arrow 3 -->
+  <path d="M 616 63 L 654 63" fill="none" stroke="#06b6d4" stroke-width="2.5" />
+  <polygon points="662,63 652,57 652,69" fill="#06b6d4" />
 
-              <!-- Block 4: Differential Kinematics & Ramp (Featured STM32 Node) -->
-              <rect x="650" y="12" width="220" height="116" rx="12" fill="url(#fwStmGrad)" stroke="#30d158" stroke-width="2" filter="url(#fwShadow)"></rect>
-              <text x="760" y="38" fill="#4ade80" font-size="10" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">STM32F446RE CORE</text>
-              <text x="760" y="60" fill="#ffffff" font-size="14" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">Differential Kinematics</text>
-              <text x="760" y="80" fill="#86efac" font-size="11" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Software Ramp
-                (25 ms loop)</text>
-              <text x="760" y="100" fill="#a7f3d0" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="middle">Motor_Set_Velocity()</text>
-              <text x="760" y="116" fill="#6ee7b7" font-size="9.5" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">35 RPM/s Accel
-                • 15 RPM/s Coast</text>
+  <!-- Block 4: Differential Kinematics (STM32F446RE Core) -->
+  <rect x="664" y="18" width="215" height="90" rx="12" fill="url(#fwStmGrad)" stroke="#30d158" stroke-width="2.5" filter="url(#fwShadow)" />
+  <text x="771.5" y="51" fill="#4ade80" font-size="11" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" letter-spacing="0.06em" text-anchor="middle">STM32F446RE CORE</text>
+  <text x="771.5" y="79" fill="#ffffff" font-size="15" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">Differential Kinematics</text>
 
-              <!-- Arrow 4 (CAN Bus) -->
-              <path d="M 870 70 L 928 70" fill="none" stroke="#30d158" stroke-width="2"></path>
-              <polygon points="930,70 922,66 922,74" fill="#30d158"></polygon>
-              <rect x="880" y="44" width="45" height="18" rx="4" fill="#062e1e" stroke="rgba(48,209,88,0.4)" stroke-width="1"></rect>
-              <text x="902.5" y="56" fill="#4ade80" font-size="8.5" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">CAN1</text>
+  <!-- Arrow 4 (CAN1 Bus) -->
+  <path d="M 879 63 L 929 63" fill="none" stroke="#30d158" stroke-width="2.5" />
+  <polygon points="937,63 927,57 927,69" fill="#30d158" />
+  <rect x="884" y="34" width="46" height="20" rx="5" fill="#064e3b" stroke="#30d158" stroke-width="1.5" />
+  <text x="907" y="48" fill="#4ade80" font-size="9.5" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" text-anchor="middle">CAN1</text>
 
-              <!-- Block 5: Dual ZLAC8015D Drivers -->
-              <rect x="930" y="20" width="190" height="100" rx="10" fill="url(#fwDriverGrad)" stroke="#a855f7" stroke-width="1.5" filter="url(#fwShadow)"></rect>
-              <text x="1025" y="46" fill="#c084fc" font-size="10" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">500 kbps CANopen</text>
-              <text x="1025" y="68" fill="#ffffff" font-size="13" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">Dual ZLAC8015D</text>
-              <text x="1025" y="88" fill="#d8b4fe" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Node 1: Front
-                L/R</text>
-              <text x="1025" y="104" fill="#d8b4fe" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Node 2: Rear
-                L/R</text>
+  <!-- Block 5: Dual ZLAC8015D Drivers -->
+  <rect x="939" y="24" width="175" height="78" rx="12" fill="url(#fwDriverGrad)" stroke="#a855f7" stroke-width="2.5" filter="url(#fwShadow)" />
+  <text x="1026.5" y="53" fill="#c084fc" font-size="11" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" letter-spacing="0.06em" text-anchor="middle">500 kbps CANopen</text>
+  <text x="1026.5" y="79" fill="#ffffff" font-size="14.5" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">Dual ZLAC8015D</text>
 
-              <!-- Arrow 5 -->
-              <path d="M 1120 70 L 1168 70" fill="none" stroke="#a855f7" stroke-width="2"></path>
-              <polygon points="1170,70 1162,66 1162,74" fill="#a855f7"></polygon>
+  <!-- Arrow 5 -->
+  <path d="M 1114 63 L 1152 63" fill="none" stroke="#a855f7" stroke-width="2.5" />
+  <polygon points="1160,63 1150,57 1150,69" fill="#a855f7" />
 
-              <!-- Block 6: Physical Motors -->
-              <rect x="1170" y="25" width="130" height="90" rx="10" fill="url(#fwDriverGrad)" stroke="#c084fc" stroke-width="1.5" filter="url(#fwShadow)"></rect>
-              <text x="1235" y="55" fill="#c084fc" font-size="10" font-family="'JetBrains Mono', monospace" font-weight="700" text-anchor="middle">ACTUATION</text>
-              <text x="1235" y="78" fill="#ffffff" font-size="13" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">4 Hub Motors</text>
-              <text x="1235" y="96" fill="#d8b4fe" font-size="10" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">Closed-Loop
-                FOC</text>
+  <!-- Block 6: 4 Hub Motors -->
+  <rect x="1162" y="24" width="138" height="78" rx="12" fill="url(#fwDriverGrad)" stroke="#c084fc" stroke-width="2.5" filter="url(#fwShadow)" />
+  <text x="1231" y="53" fill="#c084fc" font-size="11" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" letter-spacing="0.06em" text-anchor="middle">ACTUATION</text>
+  <text x="1231" y="79" fill="#ffffff" font-size="14.5" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-weight="700" text-anchor="middle">4 Hub Motors</text>
 
-              <!-- ============================================================
-                   RETURN PATH (DASHED, STATUSWORD & FAULT FEEDBACK)
-                   ============================================================ -->
-              <path d="M 1025 120 L 1025 180 L 760 180 L 760 130" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="6,4"></path>
-              <polygon points="760,128 756,136 764,136" fill="#fbbf24"></polygon>
+  <!-- Return Path (Dashed, Statusword & Fault Feedback) -->
+  <path d="M 1026.5 102 L 1026.5 162 L 771.5 162 L 771.5 116" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-dasharray="6,4" />
+  <polygon points="771.5,108 766.5,118 776.5,118" fill="#fbbf24" />
 
-              <!-- Return path label pill -->
-              <rect x="825" y="166" width="220" height="28" rx="6" fill="#181303" stroke="rgba(251, 191, 36, 0.45)" stroke-width="1"></rect>
-              <text x="935" y="184" fill="#fbbf24" font-size="10.5" font-family="'JetBrains Mono', monospace" font-weight="600" text-anchor="middle">
-                Statusword 0x6041 / SDO Replies
-              </text>
-              <text x="892" y="210" fill="#94a3b8" font-size="10" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" text-anchor="middle">
-                150 ms Fault Detection • Auto-Quick-Stop Loop
-              </text>
-            </svg>
+  <!-- Return Path Label Box -->
+  <rect x="794" y="146" width="210" height="32" rx="8" fill="#181303" stroke="#fbbf24" stroke-width="2" filter="url(#fwShadow)" />
+  <text x="899" y="166" fill="#fbbf24" font-size="11" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="700" text-anchor="middle">Statusword 0x6041 / SDO Replies</text>
+</svg>

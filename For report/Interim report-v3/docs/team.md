@@ -169,17 +169,17 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 
 Also overseeing electrical
 
-- YOLO object detection model training, comparison & FOD target classification.
-- Multi-modal perception combining camera streams & sensor fusion.
-- Close-range target spatial detection & bounding box evaluation.
+- Computer vision optical sizing, camera selection, and close-range FOD detection (YOLO11-S).
+- FOD-A leakage auditing, custom tarmac dataset collection, and multi-seed training evaluation.
+- STM32 NUCLEO-F446RE hardware interfacing and bare-metal firmware for dual-driver CANopen motion control, stepper actuation, and safety watchdogs.
 
 </template>
 
 <template #s1>
 
-- Derived camera optical requirements ($\ge 29\text{ px/}^\circ$, $\ge 4.7\text{ FPS}$ min / $10\text{ FPS}$ target, $33^\circ$ tilt) and selected the ELP 5 MP global-shutter camera
-- Audited FOD-A frame leakage ($99.42\% \rightarrow 50.29\%\text{ mAP50}$), benchmarked YOLOv8-S, YOLO11-S and RT-DETR-L, and fine-tuned YOLO11-S on a 1,552-image custom tarmac dataset ($97.0 \pm 1.4\%\text{ mAP50}$ at $1088\text{ px}$)
-- Designed and verified the 5-phase STM32 NUCLEO-F446RE bare-metal firmware (`controller.c`) for dual ZLAC8015D CANopen motor control, 5 V low-side stepper sinking, and USB Host gamepad teleoperation
+- Derived camera optical requirements (≥ 29 px/°, ≥ 4.7 FPS min / 10 FPS target, 33° tilt) and selected the ELP 5 MP global-shutter camera (`ELP-USBGS5MP01-L601`).
+- Audited FOD-A frame leakage (99.42% → 50.29% mAP50), benchmarked YOLOv8-S, YOLO11-S, and RT-DETR-L, fine-tuned YOLO11-S on a 1,552-image custom tarmac dataset (97.0 ± 1.4% mAP50 at 1088 px), and verified live detection (7 / 7 fasteners) on the UGREEN CM831 webcam.
+- Built and verified the 5-stage STM32 NUCLEO-F446RE bare-metal firmware (`controller.c`) for dual ZLAC8015D CANopen motor control, 5 V open-drain stepper actuation (110 mm stroke), CiA 402 state machine (`GUI.py`), and USB Host gamepad teleoperation.
 
 </template>
 

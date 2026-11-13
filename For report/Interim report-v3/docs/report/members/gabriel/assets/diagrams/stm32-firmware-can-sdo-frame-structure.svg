@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 260" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #090D16; }
+      .outer { fill: none; stroke: #475569; stroke-width: 1.8px; stroke-dasharray: 5 5; rx: 12px; }
+      .box-auto { fill: #111827; stroke: #475569; stroke-width: 2.2px; rx: 6px; }
+      .box-ctrl { fill: #0F172A; stroke: #38BDF8; stroke-width: 2.2px; rx: 6px; }
+      .box-user { fill: #111827; stroke: #F59E0B; stroke-width: 2.5px; rx: 6px; }
+      .hdr-auto { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; font-size: 15px; font-weight: 700; fill: #94A3B8; }
+      .hdr-active { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; font-size: 15px; font-weight: 700; fill: #F8FAFC; }
+      .val-auto { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 14px; font-weight: 500; fill: #94A3B8; }
+      .val-ctrl { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 14.5px; font-weight: 600; fill: #E2E8F0; }
+      .val-user { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; font-size: 15px; font-weight: 700; fill: #FBBF24; }
+      .bits { font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; font-size: 12.5px; font-weight: 500; fill: #94A3B8; }
+    </style>
+  </defs>
+
+  <!-- Canvas -->
+  <rect width="1120" height="260" rx="14" class="bg" />
+
+  <!-- Dashed Frame Container -->
+  <rect x="28" y="24" width="1064" height="212" class="outer" />
+
+  <!-- 1. SOF (x=52, w=68) -->
+  <rect x="52" y="46" width="68" height="136" class="box-auto" />
+  <text x="86" y="88" text-anchor="middle" class="hdr-auto">SOF</text>
+  <text x="86" y="138" text-anchor="middle" class="val-auto">0</text>
+  <text x="86" y="208" text-anchor="middle" class="bits">1 bit</text>
+
+  <!-- 2. ID (x=128, w=136) -->
+  <rect x="128" y="46" width="136" height="136" class="box-user" />
+  <text x="196" y="88" text-anchor="middle" class="hdr-active">ID</text>
+  <text x="196" y="138" text-anchor="middle" class="val-user">0x601</text>
+  <text x="196" y="208" text-anchor="middle" class="bits">11 bits</text>
+
+  <!-- 3. RTR (x=272, w=64) -->
+  <rect x="272" y="46" width="64" height="136" class="box-ctrl" />
+  <text x="304" y="88" text-anchor="middle" class="hdr-active">RTR</text>
+  <text x="304" y="138" text-anchor="middle" class="val-ctrl">0</text>
+  <text x="304" y="208" text-anchor="middle" class="bits">1 bit</text>
+
+  <!-- 4. IDE (x=344, w=64) -->
+  <rect x="344" y="46" width="64" height="136" class="box-ctrl" />
+  <text x="376" y="88" text-anchor="middle" class="hdr-active">IDE</text>
+  <text x="376" y="138" text-anchor="middle" class="val-ctrl">0</text>
+  <text x="376" y="208" text-anchor="middle" class="bits">1 bit</text>
+
+  <!-- 5. r0 (x=416, w=64) -->
+  <rect x="416" y="46" width="64" height="136" class="box-ctrl" />
+  <text x="448" y="88" text-anchor="middle" class="hdr-active">r0</text>
+  <text x="448" y="138" text-anchor="middle" class="val-ctrl">0</text>
+  <text x="448" y="208" text-anchor="middle" class="bits">1 bit</text>
+
+  <!-- 6. DLC (x=488, w=68) -->
+  <rect x="488" y="46" width="68" height="136" class="box-ctrl" />
+  <text x="522" y="88" text-anchor="middle" class="hdr-active">DLC</text>
+  <text x="522" y="138" text-anchor="middle" class="val-ctrl">8</text>
+  <text x="522" y="208" text-anchor="middle" class="bits">4 bits</text>
+
+  <!-- 7. DATA (x=564, w=236) -->
+  <rect x="564" y="46" width="236" height="136" class="box-user" />
+  <text x="682" y="88" text-anchor="middle" class="hdr-active">DATA</text>
+  <text x="682" y="138" text-anchor="middle" class="val-user">SDO msg</text>
+  <text x="682" y="208" text-anchor="middle" class="bits">8 bytes</text>
+
+  <!-- 8. CRC (x=808, w=82) -->
+  <rect x="808" y="46" width="82" height="136" class="box-auto" />
+  <text x="849" y="88" text-anchor="middle" class="hdr-auto">CRC</text>
+  <text x="849" y="138" text-anchor="middle" class="val-auto">auto</text>
+  <text x="849" y="208" text-anchor="middle" class="bits">15 bits</text>
+
+  <!-- 9. ACK (x=898, w=82) -->
+  <rect x="898" y="46" width="82" height="136" class="box-auto" />
+  <text x="939" y="88" text-anchor="middle" class="hdr-auto">ACK</text>
+  <text x="939" y="138" text-anchor="middle" class="val-auto">auto</text>
+  <text x="939" y="208" text-anchor="middle" class="bits">2 bits</text>
+
+  <!-- 10. EOF (x=988, w=80) -->
+  <rect x="988" y="46" width="80" height="136" class="box-auto" />
+  <text x="1028" y="88" text-anchor="middle" class="hdr-auto">EOF</text>
+  <text x="1028" y="138" text-anchor="middle" class="val-auto">auto</text>
+  <text x="1028" y="208" text-anchor="middle" class="bits">7 bits</text>
+</svg>
+
