@@ -21,13 +21,17 @@ To ensure system safety and reliable motion control, direct hardware interfacing
 
 ### 1.2 Scope and Objectives
 
-This page covers the STM32 hardware: which MCU we picked, how everything is wired to it, and how it scales to Semester 2. Firmware and test results are on [STM32 Firmware Architecture & Control](./stm32-firmware.md).
+This page covers the STM32 hardware: choosing the MCU and wiring everything to it. Firmware, testing and results are on [STM32 Firmware Architecture & Control](./stm32-firmware.md).
 
-1. **Pick an MCU with enough peripherals and compute headroom** ([Section 2](#requirements-selection)). It needs at least 4 UARTs, hardware CAN, USB Host and ≥ 35 MHz of real-time compute (worst-case load with a 2× margin), at a price and toolchain we can work with.
-2. **Wire every subsystem without pin conflicts** ([Section 3](#interface-wiring)). That means CAN motor drivers, USB gamepad, 5 V stepper sinking and the RF safety switch now, plus reserved pins for the BMS, IMU, GNSS, radio and ToF so Semester 2 needs no re-wiring.
-3. **Move from jumper wires to a carrier PCB** ([Section 4](#carrier-pcb)). Jumpers work on the bench but can shake loose on the runway, so Semester 2 replaces them with locking connectors and brings up the reserved sensors.
+| # | Objective | Done when | Section |
+| :--- | :--- | :--- | :--- |
+| 1 | **Size the compute** | Worst-case CPU load is estimated for every Sem 1 and Sem 2 peripheral, with a 2× margin | [2.1](#cpu-load) |
+| 2 | **Pick the MCU** | It has ≥ 4 UARTs, hardware CAN, USB Host for the gamepad ([1.3](#methodology)) and enough compute for the load in 2.1, at a cost and toolchain we can work with | [2.2](#mcu-tradeoff) |
+| 3 | **Wire everything without pin conflicts** | All 11 subsystems are mapped, and the Sem 2 sensors already have reserved pins, so adding them needs no re-wiring | [3](#interface-wiring) |
 
-### 1.3 Methodology
+**Not covered this semester:** bringing up the Sem 2 sensors (BMS, IMU, GNSS, radio, ToF) and the carrier PCB that replaces the jumper wires. Their pins are reserved now so that work can start without changing the pin map.
+
+### 1.3 Methodology 
 
 We built the firmware around the gamepad controller first. Instead of wiring buttons straight to motor commands, every input on the controller calls a firmware function. That kills two birds with one stone: the controller is our user interface for testing now, and the same functions become the interface for ROS 2 later.
 
