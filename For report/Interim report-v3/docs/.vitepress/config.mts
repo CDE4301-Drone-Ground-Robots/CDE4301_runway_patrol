@@ -137,7 +137,7 @@ export default defineConfig({
       }
     },
     // engineering files that pages link to or widgets load (models, diagrams, MATLAB, data)
-    assetsInclude: ['**/*.glb', '**/*.gltf', '**/*.drawio', '**/*.mlx', '**/*.mov', '**/*.xlsx', '**/*.stl'],
+    assetsInclude: ['**/*.glb', '**/*.gltf', '**/*.drawio', '**/*.mlx', '**/*.mov', '**/*.MOV', '**/*.xlsx', '**/*.stl'],
     // Pre-bundling would bypass the transform above in dev.
     optimizeDeps: { exclude: ['@wxperia/liquid-glass-vue'] }
   },

@@ -18,7 +18,7 @@ export interface Hotspot {
   text: string
   anchor: [number, number, number] | null // CAD coordinates (m); null = conceptual callout
   part: string
-  report: { id: string; label: string }
+  report?: { id: string; label: string } // omitted for proposed features with no report section yet
 }
 
 const verified = (id: string) => highlights.find((h) => h.id === id)
@@ -32,8 +32,7 @@ export const hotspots: Hotspot[] = [
     subsystem: 'Electrical',
     text: textOf('charger'),
     anchor: anchorOf('charger'),
-    part: 'UAV Charger (raised rear deck)',
-    report: { id: 'power', label: 'Electrical → Power' }
+    part: 'UAV Charger (raised rear deck)'
   },
   {
     id: 'chassis',

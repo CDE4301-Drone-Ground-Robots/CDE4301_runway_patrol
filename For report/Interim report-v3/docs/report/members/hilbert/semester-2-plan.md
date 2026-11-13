@@ -33,14 +33,14 @@ The four tasks below cover navigation, radio communications, physical sensor int
 
 ::: details 01 — Navigation & Kinematics
 
-**Transfer Nav2 to the physical UGV and tune its steering** ([\[15\]](./references.md#ref-15), [\[16\]](./references.md#ref-16))
+**Transfer Nav2 to the physical UGV and tune its steering** [\[15\]](./references.md#ref-15), [\[16\]](./references.md#ref-16)
 
-The simulation uses SmacPlannerHybrid with a Reeds–Shepp motion model and RPP for path tracking. We will start from the tested configuration, then adjust it using the physical UGV's measured behaviour.
+The simulation uses SmacPlannerHybrid with a Reeds–Shepp motion model and RPP for path tracking. I will start from the tested configuration, then adjust it using the physical UGV's measured behaviour.
 
 - **Turning radius:** Start from the simulated 1.0 m planner setting. Measure actual turning behaviour before deciding whether a larger planning radius, such as 1.5 m, is needed.
 - **Planner settings:** Recheck heading resolution, reverse penalties and planning time on the onboard computer. The simulation used 64 heading bins; proposed changes must be tested rather than assumed to improve performance.
 - **Reverse-path limitation:** Reeds–Shepp can plan reverse segments, but the current RPP configuration has `allow_reversing: false`. Resolve this mismatch before allowing reverse-path execution on hardware; retain Reeds–Shepp as the selected planner motion model.
-- **Speed and lookahead:** Begin at low speed and retune RPP lookahead, curvature-based speed limits and stopping distance. The 8 km/h simulation setting does not establish safe operation at the 15 km/h design target ([\[18\]](./references.md#ref-18)).
+- **Speed and lookahead:** Begin at low speed and retune RPP lookahead, curvature-based speed limits and stopping distance. The 8 km/h simulation setting does not establish safe operation at the 15 km/h design target [\[18\]](./references.md#ref-18).
 - **ROS 2 to STM32 interface:** Work with Gabriel to connect Nav2 `/cmd_vel` to the existing `Robot_Set_CmdVel(vx, wz)` firmware interface. Select and test the transport method; micro-ROS is not a fixed requirement.
 
 :::
@@ -49,9 +49,9 @@ The simulation uses SmacPlannerHybrid with a Reeds–Shepp motion model and RPP 
 
 **Test UAV–UGV communication without the indoor router**
 
-The indoor test used CycloneDDS static unicast between a Raspberry Pi 5 and a laptop. The Microhard P900 V2 is a proposed radio candidate; it has not been purchased or tested ([\[20\]](./references.md#ref-20)).
+The indoor test used CycloneDDS static unicast between a Raspberry Pi 5 and a laptop. The Microhard P900 V2 is a proposed radio candidate; it has not been purchased or tested [\[20\]](./references.md#ref-20).
 
-- **Radio selection:** Check available hardware, range, power needs and whether it can be used legally at the test site. Verify applicable IMDA frequency, power and approval requirements before transmitting ([\[3\]](./references.md#ref-3), [\[10\]](./references.md#ref-10)).
+- **Radio selection:** Check available hardware, range, power needs and whether it can be used legally at the test site. Verify applicable IMDA frequency, power and approval requirements before transmitting [\[3\]](./references.md#ref-3), [\[10\]](./references.md#ref-10).
 - **Message transport:** Build and test the bridge needed for the chosen radio. UART framing with COBS is one option, not a confirmed implementation.
 - **Message handling:** Test alert delivery, acknowledgements, duplicate handling and compatible ROS 2 QoS settings. Evaluate message authentication if required by the final design.
 - **Link loss:** Define and test a heartbeat timeout and safe response on the physical UGV. Do not assume the proposed 2 Hz heartbeat and 1.5 s timeout are already validated.
@@ -65,7 +65,7 @@ The indoor test used CycloneDDS static unicast between a Raspberry Pi 5 and a la
 The local EKF, global EKF and `navsat_transform_node` were observed running in the Gazebo simulation, with odometry messages and the `map → odom → base_footprint` transform chain present. This confirms runtime operation, **not localization accuracy**.
 
 - **GNSS:** Integrate the selected physical receiver and correction service, if available. Confirm coordinate frames and datum handling before using GNSS-derived navigation goals.
-- **Dual-EKF:** Reuse the `robot_localization` architecture with physical wheel odometry, IMU and GNSS measurements. Tune covariances and filter rates based on real sensor data ([\[9\]](./references.md#ref-9), [\[22\]](./references.md#ref-22)). The simulated EKFs were configured at 30 Hz; any proposed 100 Hz physical rate requires testing.
+- **Dual-EKF:** Reuse the `robot_localization` architecture with physical wheel odometry, IMU and GNSS measurements. Tune covariances and filter rates based on real sensor data [\[9\]](./references.md#ref-9), [\[22\]](./references.md#ref-22). The simulated EKFs were configured at 30 Hz; any proposed 100 Hz physical rate requires testing.
 - **Wheel odometry:** Coordinate with Gabriel to add motor velocity feedback and odometry output. The current STM32 firmware sends velocity commands but does not yet integrate encoder odometry.
 - **LiDAR and safety:** Configure obstacle detection and test collision-monitor stop/slowdown distances against measured stopping behaviour. The proposed 0.40 m, 1.20 m and 2.50 m zones are starting points only.
 - **Validation:** Compare filtered position and heading against a suitable reference during motion. Record error, drift and behaviour during temporary GNSS loss.
@@ -79,7 +79,7 @@ The local EKF, global EKF and `navsat_transform_node` were observed running in t
 Gabriel has demonstrated ground movement with the preliminary four-motor chassis under an estimated 30 kg load, using a 32 V supply with an approximately 10 A current limit. The intended 48 V battery was delayed. These tests support basic motor operation, but do not verify the 65 kg design calculations or 15 km/h target.
 
 - **Drivetrain readiness:** Coordinate with Gabriel on 48 V power integration, motor-driver limits, feedback and safe stop behaviour before autonomous driving. Gabriel owns the embedded implementation and motor tests.
-- **Steering calibration:** Measure yaw response and effective track width using encoder-based odometry and an independent heading reference. Compare results with the analytical skid-steer model ([\[13\]](./references.md#ref-13)).
+- **Steering calibration:** Measure yaw response and effective track width using encoder-based odometry and an independent heading reference. Compare results with the analytical skid-steer model [\[13\]](./references.md#ref-13).
 - **Navigation tests:** Start with low-speed straight runs and turns, then measure cross-track error, obstacle clearance, stopping distance and controller behaviour as speed increases.
 - **Target approach:** Measure final position error at FOD targets. The proposed ±5 cm target remains unverified.
 - **Integrated trial:** Test the full chain from UAV target coordinates through communication and UGV navigation to FOD clearance. Record successful runs, failures and the conditions of each test.

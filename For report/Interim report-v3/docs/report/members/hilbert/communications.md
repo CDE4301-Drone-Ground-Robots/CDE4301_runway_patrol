@@ -6,331 +6,334 @@ outline: [2, 3]
 
 # UAV–UGV Communications & Command Integration
 
-_Semester 1 engineering documentation — ROS 2 Jazzy, CycloneDDS, command-and-control and future datalink selection._
+_Semester 1: ROS 2 communication, waypoint dispatch and proposed radio link._
 
 <!-- #region report -->
 
-## 1. Objectives & Requirements {#com-objectives}
+## 3.3.1 Objectives & Requirements {#com-objectives}
 
-The communication system allows the UAV-side computer to send FOD target coordinates to the UGV without directly controlling its motors ([\[5\]](./references.md#ref-5), [\[6\]](./references.md#ref-6), [\[11\]](./references.md#ref-11), [\[12\]](./references.md#ref-12)). The UGV checks incoming alerts, sends valid goals to Nav2 and returns status updates. We tested this workflow between **two physical computers on an indoor local network**, with the UGV simulated in Gazebo. We did **not** test a radio link between a flying UAV and a physical UGV.
+The multi-agent communications pipeline coordinates reconnaissance data transfer between the autonomous aerial reconnaissance drone (FOD Argus) and the ground remediation platform (FOD Hunter) via asynchronous ROS 2 interfaces [\[5\]](./references.md#ref-5), [\[6\]](./references.md#ref-6), [\[11\]](./references.md#ref-11), [\[12\]](./references.md#ref-12). The UAV companion computer transmits detected debris target coordinates without directly asserting low-level motor actuation. In Semester 1 development, the UGV communications bridge parses incoming JSON target alerts, maintains an asynchronous FIFO waypoint queue, dispatches trajectory goals to Nav2, and returns vehicle telemetry and link heartbeats to the C2 terminal.
 
-The implemented streams were `/c2/target_alert` (event-driven alerts) and `/c2/ugv_telemetry` (2 Hz UGV status). Operational requirements for longer-range, infrastructure-independent transmission remain Semester 2 work.
+Semester 1 verification was conducted across a **heterogeneous multi-machine testbed over an isolated local network**, interfacing an ARM64 companion computer with an x86_64 autonomy workstation executing Gazebo Harmonic SIL simulation. Over-the-air long-range RF evaluation between flight and ground hardware is designated for Semester 2.
+
+Active communication interfaces comprise `/c2/target_alert` (event-driven debris targets) and `/c2/ugv_telemetry` (configured 2 Hz vehicle state and link heartbeat).
 
 ::: details Detailed requirements, operational constraints and safety considerations
 
-**3. Requirements & Considerations**
+**Functional & Operational Requirements**
 
-**3.1 Indoor DDS Testing Objectives**
+- **REQ-COM-01 (Peer Discovery):** Heterogeneous computing nodes (ARM64 Ubuntu 24.04 on Raspberry Pi 5 vs x86_64 Ubuntu 24.04 on WSL2) must discover peers and exchange ROS 2 topics over the local network.
+- **REQ-COM-02 (Payload Formatting & Parsing):** Target alerts and telemetry must encapsulate coordinates, classification labels, and timing metadata within lightweight JSON structures with sub-50 ms parsing overhead.
+- **REQ-COM-03 (Asynchronous Goal Dispatch):** Ingested alerts must drive the Nav2 Behavior Tree asynchronously and manage sequential waypoint queues without blocking DDS event threads.
+- **REQ-COM-04 (Airfield Operating Range):** Datalink architecture must support a line-of-sight range of $1.5\text{ to } 3.0\text{ km}$ across runway tarmac (e.g., Aarhus Airport Runway 10R/28L at $2,702\text{ m} \times 45\text{ m}$, or Singapore Changi Airport exceeding $4,000\text{ m}$).
+- **REQ-COM-05 (Infrastructure Independence):** The inter-agent datalink cannot depend on civilian cellular networks (4G/5G) or commercial Wi-Fi due to coverage gaps, aerodrome security rules, and recurring SIM costs.
+- **REQ-COM-06 (Power & Payload Budget):** Onboard transceiver hardware must run on a regulated 12V DC auxiliary bus (&lt;10 W peak draw) with a mass under 100 g for drone mounting.
 
-Semester 1 communication development was structured around clear benchtop validation objectives prior to committing to costly outdoor RF hardware:
+**Singapore Radio Regulations**
 
-- Validate that ROS 2 Jazzy nodes running across heterogeneous computing architectures (ARM64 Ubuntu on Raspberry Pi 5 vs x86_64 Ubuntu on WSL2) discover peers and exchange DDS messages deterministically.
-- Verify that JSON-serialized strings can encapsulate complete tactical alert and telemetry datasets with sub-50 ms parsing overhead.
-- Prove that external DDS alert callbacks can directly drive the Nav2 Behavior Tree navigation pipeline and manage sequential goal queues without thread deadlocks.
+Radio transmissions in Singapore are governed by the **Infocomm Media Development Authority (IMDA)** under the _Technical Specification for Short Range Devices (IMDA TS SRD)_ [\[3\]](./references.md#ref-3), the _Telecommunications Act 1999_ [\[10\]](./references.md#ref-10), and civil aviation spectrum rules [\[4\]](./references.md#ref-4):
 
-**3.2 Long-Range Operational Requirements**
+- **North American ISM Band (902–928 MHz):** Standard transceivers like the Microhard P900 hop across 26 MHz of bandwidth (902–928 MHz) at up to 1.0 W (30 dBm) under FCC Part 15.247.
+- **Singapore Permitted Sub-Band (917–925 MHz):** Frequencies below 917 MHz and above 925 MHz are allocated to cellular mobile network operators and public services. Transceiver firmware must be constrained to the 8 MHz window between 917.0 and 925.0 MHz.
+- **IMDA Radiated Power Limits:** Under IMDA TS SRD Table 1 (Item 7b), telemetry devices in 917–925 MHz are restricted to effective radiated power (ERP) limits between $100\text{ mW}$ and $500\text{ mW}$ ($20 - 27\text{ dBm}$), depending on channel bandwidth and duty cycle.
 
-Commercial aerodrome runways present extreme operational environments: Runway 10R/28L at Aarhus Airport spans $2,702\text{ m} \times 45\text{ m}$, while international hub runways (e.g. Singapore Changi Airport) exceed $4,000\text{ m}$. Outdoor communications must fulfill rigorous engineering constraints:
+<Figure src="./assets/diagrams/imda-spectrum-allocation.svg" alt="Singapore IMDA 900 MHz Spectrum Allocation and Permitted Sub-Band" caption="Figure 3.3.1: Singapore 900 MHz spectrum comparison and IMDA compliance limits for the candidate Microhard P900 V2 telemetry transceiver." />
 
-- **Line-of-Sight Range:** Datalink must maintain uninterrupted communication across a minimum operational radius of **$1.5\text{ to } 3.0\text{ km}$** in ground-to-air line-of-sight conditions.
-- **Payload Characteristics:** Individual alert payloads require $\approx 450 - 650\text{ bytes}$ of uncompressed JSON. At the implemented $2.0\text{ Hz}$ telemetry rate and burst downlink alerts, total required network throughput is remarkably low (&lt;10 kbps average, &lt;50 kbps burst). _High-bandwidth video streaming is deliberately excluded from the inter-agent datalink._
-- **Infrastructure Independence:** The system cannot depend on civilian cellular networks (4G LTE / 5G) or commercial aerodrome Wi-Fi infrastructure due to dead zones, statutory data security mandates, and recurring monthly SIM subscriptions.
-- **Electrical & SWaP Budget:** Onboard radio hardware must operate off the UGV's auxiliary DC bus ($12\text{V}$ regulated, &lt;10W peak power draw) and present a compact footprint for UAV payload integration (&lt;100g).
+_Regulatory status:_ The proposed Microhard P900 V2 has not yet been procured or submitted for IMDA equipment registration. Frequency configuration, channel spacing, and radiated power must be verified before field transmission.
 
-**3.3 Singapore Frequency Regulations & IMDA Compliance**
+**Proposed Fail-Safe Requirements (Semester 2)**
 
-Deploying radio-frequency transmission equipment in Singapore is governed by the **Infocomm Media Development Authority (IMDA)** under the _Technical Specification for Short Range Devices (IMDA TS SRD)_ ([\[3\]](./references.md#ref-3)), the _Telecommunications Act 1999_ ([\[10\]](./references.md#ref-10)), and civil aviation spectrum mandates ([\[4\]](./references.md#ref-4)).
+These behaviours are design requirements for Semester 2. They were not implemented in the Semester 1 software.
 
-Radio configuration and approval must be checked against the current Singapore IMDA requirements:
-
-- **North American ISM Band (902–928 MHz):** Industrial transceivers like the Microhard P900 are manufactured to hop across 26 MHz of bandwidth (902–928 MHz) at up to 1.0W (30 dBm) under FCC Part 15.247.
-- **Singapore Allocated Band (917–925 MHz):** In Singapore, frequencies below 917 MHz and above 925 MHz are allocated to cellular mobile network operators (MNOs) and critical public communications. _The suitability of these frequencies for the proposed equipment must be confirmed with IMDA before transmission._
-- **IMDA Power & Bandwidth Limits:** Under IMDA TS SRD Table 1 (Item 7b), short-range telemetry/telecommand devices operating in 917–925 MHz are restricted to maximum effective radiated power (ERP) limits typically between $100\text{ mW}$ and $500\text{ mW}$ ($20 - 27\text{ dBm}$), depending on channel bandwidth and duty cycle.
-
-<Figure src="./assets/diagrams/imda-spectrum-allocation.svg" alt="Singapore IMDA 900 MHz Spectrum Allocation and Permitted Sub-Band" caption="**Figure 3.1: Singapore IMDA 900 MHz Spectrum Boundary Analysis.** Contrast between the unrestricted 26 MHz North American FCC Part 15 band and Singapore's 8 MHz legal window (917–925 MHz). Deployment of P900 V2 hardware mandates configuring pseudo-random frequency hopping channels strictly within the 917–925 MHz sub-band." />
-
-_Regulatory status:_ The P900 V2 has not been approved for this project. The team must verify permitted frequencies, channel configuration, output power and licensing with IMDA before purchasing or transmitting. **No proposed long-range radio has been purchased, tested or approved.**
-
-**3.4 System Safety and Fail-Safe Behavior**
-
-Fail-safe logic must account for anomalous communications events:
-
-- **Link Loss While Idle:** The UGV remains at its current georeferenced station, continuing local obstacle monitoring and suppressing all motion.
-- **Link Loss En Route:** The UGV continues executing its active Nav2 trajectory to the current waypoint. If communications are not restored within $30.0\text{ s}$ of goal completion, it transitions to a holding pattern rather than blindly executing subsequent unconfirmed targets.
-- **Corrupted or Out-of-Bounds Coordinates:** Alert payloads are validated against the operational geofence (NUS EA Field: $X \in [-30, 25]\text{ m}$, $Y \in [-15, 15]\text{ m}$). Waypoints violating geofence limits or exhibiting invalid JSON schemas are rejected immediately, generating a warning log without crashing the bridge node.
+- **Link Loss While Idle:** UGV holds its current position, continues local 3D LiDAR obstacle monitoring, and inhibits autonomous driving.
+- **Link Loss En Route:** UGV continues driving to the active waypoint. If communications are not restored within $30.0\text{ s}$ of goal arrival, the vehicle halts rather than executing subsequent unconfirmed waypoints.
+- **Geofence Boundary Check:** Coordinates outside the airfield boundary (NUS EA Field: $X \in [-30, 25]\text{ m}$, $Y \in [-15, 15]\text{ m}$) are discarded with an error log, preventing out-of-bounds driving.
 
 :::
 
-## 2. System Architecture {#com-architecture}
+<span id="sec-2-overview"></span>
 
-We used a **Raspberry Pi 5** to represent the UAV-side command computer and an **Ubuntu 24.04/WSL2 workstation** to run the simulated UGV and Nav2. The Pi sent test target alerts. The UGV-side node checked each message, converted it into a map-frame goal and sent it to Nav2 using `NavigateToPose`. Status and heartbeat messages travelled back to the Pi. Because target detection was simulated, this test verifies the communication-to-navigation workflow, not an end-to-end UAV flight demonstration.
+## 3.3.2 System Architecture {#com-architecture}
+
+The inter-agent communications pipeline links the aerial UAV C2 terminal (hosted on a physical Raspberry Pi 5 companion computer) with the UGV autonomy workstation (Ubuntu 24.04 under WSL2). When debris is detected, the companion computer serializes classified target metadata into structured JSON payloads published to `/c2/target_alert`. The UGV mission controller (`ugv_c2_bridge_node`) ingests and parses the alert, constructs a goal pose in the global `map` frame, applies the pickup offset geometry, and dispatches the goal asynchronously to the Nav2 `NavigateToPose` action server. Concurrently, vehicle pose and status telemetry stream back to the C2 terminal over `/c2/ugv_telemetry` at 2 Hz.
 
 <Figure
   src="./assets/diagrams/c1-uav-ugv-communication-architecture.svg"
   alt="FOD Hunter UAV–UGV Communication Architecture"
-  caption="**Figure 2.1: Heterogeneous Multi-Agent Communications Pipeline.** End-to-end dataflow illustrating simulated aerial target dispatch on the Raspberry Pi 5, CycloneDDS static unicast transport, UGV command bridge schema validation, Nav2 action dispatch, and reverse telemetry feedback."
+  caption="Figure 3.3.2: UAV–UGV communication architecture showing target alert dispatch from Raspberry Pi 5 across CycloneDDS unicast to UGV bridge and Nav2, with 2 Hz telemetry return."
 />
-
-<Figure src="./assets/diagrams/uav-ugv-dispatch-workflow.svg" alt="UAV-to-UGV command dispatch workflow" caption="Existing logical dispatch workflow; distinguish simulated aerial detection from tested Raspberry Pi-to-Gazebo communication." />
-
-::: details ROS 2 nodes, topics and communication interface
-
-| Interface            | Direction           | Purpose                                                              |
-| -------------------- | ------------------- | -------------------------------------------------------------------- |
-| `/c2/target_alert`   | C2 terminal → UGV   | Structured FOD target and priority                                   |
-| `/c2/ugv_telemetry`  | UGV → C2 terminal   | Vehicle state and status updates at 2 Hz                             |
-| `ugv_c2_bridge_node` | UGV-side processing | Validate, queue and dispatch navigation goals                        |
-| `NavigateToPose`     | UGV bridge → Nav2   | Execute target waypoint                                              |
-| `/c2/goal_markers`   | UGV → RViz          | Visualize queued and active goals in RViz                            |
-
-<Figure src="./assets/diagrams/c5-ros2-publisher-subscriber-architecture.svg" alt="ROS 2 Node Graph and Communication Architecture" caption="**Figure 2.2: ROS 2 Publisher–Subscriber and Action Interface Architecture.** Conceptual node graph depicting bidirectional communication between the companion Raspberry Pi 5 C2 commander and the UGV onboard mission controller (`ugv_c2_bridge_node`), with goal dispatch to the Nav2 `NavigateToPose` action server." />
-
-:::
-
-## 3. Design Methodology & Selection {#com-methodology}
-
-### 3.1 CycloneDDS and Static Unicast Selection {#com-dds}
-
-ROS 2's DDS-based publisher–subscriber model was selected to keep mission messages independent of the navigation implementation ([\[7\]](./references.md#ref-7)). **CycloneDDS with static unicast peers** addressed a specific integration problem: multicast discovery was unreliable across the workstation's WSL2/Hyper-V NAT networking. The team therefore configured known peer addresses rather than depending on multicast discovery. This was an engineering workaround verified in the indoor testbed, not a guarantee of reliability over a future long-range RF link.
-
-::: details Middleware architecture and static unicast design
 
 <CommunicationsWidget1 />
 
-<Figure src="./assets/diagrams/c3-cyclonedds-static-unicast-topology.svg" alt="CycloneDDS Static Unicast Peering Architecture" caption="**Figure 3.2: CycloneDDS Static Unicast Peering Topology.** Comparison of default UDP multicast discovery failure across Hyper-V virtual switch NAT vs configured static unicast peer discovery between the Windows/WSL2 simulation host and external physical Raspberry Pi 5." />
+::: details ROS 2 nodes, topics and communication interface
 
-**CycloneDDS static peer configuration**
+The companion computer and autonomy workstation communicate through dedicated ROS 2 publisher-subscriber topics and action servers shown in Figure 3.3.3. Target alerts arrive over `/c2/target_alert` configured with `RELIABLE` reliability and `TRANSIENT_LOCAL` durability (history depth 10) to ensure delivery even if subscriber initialization is delayed. Telemetry heartbeats publish at 2 Hz over `/c2/ugv_telemetry`, while mission execution coordinates asynchronously via the `nav2_msgs/action/NavigateToPose` action server.
 
-We configured `cyclonedds.xml` on both computers with explicit peer addresses because multicast discovery was unreliable across the WSL2 network. Static IP declarations establish direct point-to-point participant discovery between the laptop workstation and Raspberry Pi 5:
+| Interface                      | Direction           | Protocol / Type                      | Purpose                                                                                     |
+| :----------------------------- | :------------------ | :----------------------------------- | :------------------------------------------------------------------------------------------ |
+| `/c2/target_alert`             | C2 Terminal → UGV   | `std_msgs/msg/String` (JSON)         | Structured target debris alerts with priority and coordinates                               |
+| `/c2/ugv_telemetry`            | UGV → C2 Terminal   | `std_msgs/msg/String` (JSON)         | Periodic vehicle pose, task state, and heartbeat at configured 2 Hz                         |
+| `ugv_c2_bridge_node`           | Internal Processing | ROS 2 Python node (`rclpy`)          | JSON parsing, FIFO queueing, and action dispatch                                            |
+| `NavigateToPose`               | Bridge → Nav2       | `nav2_msgs/action/NavigateToPose`    | Asynchronous navigation action invocation (the same pose is also published on `/goal_pose`) |
+| `/c2/queued_waypoints_markers` | Bridge → RViz2      | `visualization_msgs/msg/MarkerArray` | Visual markers showing the active and queued waypoints                                      |
 
-The XML below is a historical configuration excerpt. Check it against the active WSL2 and Raspberry Pi files before reusing the addresses:
-
-&lt;?xml version="1.0" encoding="UTF-8" ?&gt; &lt;CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt; &lt;Domain id="any"&gt; &lt;General&gt; &lt;NetworkInterfaceAddress&gt;auto&lt;/NetworkInterfaceAddress&gt; &lt;AllowMulticast&gt;false&lt;/AllowMulticast&gt; &lt;/General&gt; &lt;Discovery&gt; &lt;Peers&gt; &lt;Peer address="192.168.168.50"/&gt; &lt;!-- RPi 5 on Router Subnet --&gt; &lt;Peer address="192.168.168.100"/&gt; &lt;!-- Laptop on Router Subnet --&gt; &lt;Peer address="192.168.137.1"/&gt; &lt;!-- Laptop Windows Hotspot --&gt; &lt;Peer address="192.168.137.233"/&gt; &lt;!-- RPi 5 on Hotspot --&gt; &lt;/Peers&gt; &lt;/Discovery&gt; &lt;/Domain&gt; &lt;/CycloneDDS&gt;
-
-Setting `<AllowMulticast>false</AllowMulticast>` instructs the DDS transport to direct all participant discovery (SPDP) and endpoint discovery (SEDP) traffic as point-to-point unicast UDP packets, avoiding multicast-based peer discovery in this configuration.
+<Figure src="./assets/diagrams/c5-ros2-publisher-subscriber-architecture.svg" alt="ROS 2 Node Graph and Communication Architecture" caption="Figure 3.3.3: ROS 2 topic and action interfaces between Raspberry Pi 5, UGV C2 bridge, and Nav2 NavigateToPose action server." />
 
 :::
 
-### 3.2 Payload and QoS decisions {#com-payload-selection}
+## 3.3.3 Design Methodology & Selection {#com-methodology}
 
-The team used JSON dictionaries carried in `std_msgs/msg/String` to simplify inspection and avoid distributing a custom compiled ROS 2 message package between machines. **RELIABLE + TRANSIENT_LOCAL QoS** was configured for target alerts. This supports delivery to compatible late-joining subscribers while the publisher retains samples, but does not guarantee delivery across disconnections. The design trades schema enforcement and message efficiency for rapid cross-machine integration; JSON validation and application-level safety checks are therefore important. During the later WSL2 audit, a default volatile test publisher produced an **incompatible durability QoS warning**. Publishers must offer QoS compatible with the bridge subscription; `TRANSIENT_LOCAL` alone does not guarantee delivery or reconnect recovery.
+### 3.3.3.1 CycloneDDS and Static Unicast Selection {#com-dds}
+
+ROS 2's Data Distribution Service (DDS) publisher–subscriber middleware was selected to decouple mission management from low-level motion control [\[7\]](./references.md#ref-7). FastDDS is the default ROS 2 middleware, but cross-machine discovery failed because multicast packets were dropped across the Hyper-V virtual network adapter on the Windows/WSL2 host.
+
+**Eclipse CycloneDDS with static unicast peers** resolved this issue. Listing the participant IP addresses as peers lets discovery packets (SPDP/SEDP) reach each machine directly by UDP unicast, so discovery no longer depends on multicast crossing the WSL2 virtual network. The deployed `cyclonedds.xml` contains only the peer list:
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Domain id="any">
+        <Discovery>
+            <Peers>
+                <Peer address="192.168.168.50"/>
+                <Peer address="192.168.168.100"/>
+                <Peer address="192.168.137.1"/>
+                <Peer address="192.168.137.233"/>
+            </Peers>
+        </Discovery>
+    </Domain>
+</CycloneDDS>
+```
+
+`setup_dds.sh` sets `RMW_IMPLEMENTATION=rmw_cyclonedds_cpp` and `ROS_DOMAIN_ID=0`. It binds CycloneDDS to the active 192.168.168.x (Wi-Fi router) or 192.168.137.x (direct link) address through `CYCLONEDDS_URI`, using the same four peers. Multicast is left at its default setting; it is not disabled.
+
+::: details Middleware architecture and static unicast design
+
+<Figure src="./assets/diagrams/c3-cyclonedds-static-unicast-topology.svg" alt="CycloneDDS Static Unicast Peering Architecture" caption="Figure 3.3.4: CycloneDDS static unicast peering topology resolving WSL2 virtual switch NAT multicast discovery failure between simulation host and Raspberry Pi 5." />
+
+With static peers configured, CycloneDDS sends participant discovery (SPDP) and endpoint discovery (SEDP) traffic directly to each listed address as unicast UDP, in addition to its default multicast. This avoids the virtual-switch multicast problem without disabling multicast.
+
+:::
+
+### 3.3.3.2 Payload and QoS Decisions {#com-payload-selection}
+
+Structured JSON dictionaries encapsulated within `std_msgs/msg/String` topics were selected to enable seamless data exchange between the ARM64 companion computer and x86_64 workstation without compiling and synchronizing custom ROS 2 message packages (`.msg`).
+
+Target alerts use **`TRANSIENT_LOCAL` durability** and **`RELIABLE` reliability** QoS:
+
+- **`RELIABLE`:** Requires positive acknowledgement of target alerts, resending packets dropped by transient interference.
+- **`TRANSIENT_LOCAL`:** Retains recent target alert samples in publisher memory, allowing late-joining subscribers to receive active goals upon startup. A restarted subscriber can therefore also receive alerts that were already handled.
+
+Telemetry on `/c2/ugv_telemetry` uses the default publisher QoS (reliable, volatile, depth 10).
 
 ::: details Alert and telemetry schemas
 
-**JSON payloads — examples and implementation status**
-
-We used JSON inside `std_msgs/msg/String` so both computers could exchange messages without installing a custom ROS 2 message package.
-
-The table below is a **proposed/illustrative extended alert schema**. The runtime audit confirms JSON target coordinates and mission dispatch, but does not establish that every listed field is parsed, authenticated or enforced by the active bridge. Check the source before describing individual fields as implemented:
-
 <Card tag="UAV → UGV Command Stream">
 
-**Table 5.1: Downlink Reconnaissance Alert Schema (`/c2/target_alert`)**
+**Table 3.3.1: C2 Target Alert Format (`/c2/target_alert`)**
 
-| JSON Field                           | Data Type           | Example Value                     | Role & Semantic Definition                                                                                  |
-| ------------------------------------ | ------------------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `mission_id`                         | `string`            | `"RUNWAY_INSPECT_2026_0923"`      | Global unique identifier linking reconnaissance sorties to remediation records.                             |
-| `threat_id`                          | `string`            | `"FOD_THREAT_001"`                | Sequential debris identifier used for tracking remediation task states.                                     |
-| `object_class`                       | `string`            | `"metal_bolt"`                    | Object classification label passed from the vision pipeline to prioritize collection order.                  |
-| `coordinates.x` / `.y`               | `float`             | `-15.0, 5.0`                      | Target coordinate in metric Cartesian `map` coordinate frame (meters).                                      |
-| `coordinates.z` / `.yaw`             | `float`             | `0.0, 0.0`                        | Elevation relative to ground plane ($Z=0$) and approach orientation (radians).                              |
-| `confidence`                         | `float`             | `0.96`                            | Normalized machine learning inference confidence score ($0.00 - 1.00$).                                     |
-| `priority_level` (proposed)          | `string`            | `"NORMAL" \| "URGENT" \| "ABORT"` | Proposed priority/abort behaviour; physical stopping and cancellation timing are not verified.              |
-| `timestamp_utc`                      | `string (ISO 8601)` | `"2026-09-23T14:32:00.123Z"`      | Precision Coordinated Universal Time stamp for latency and timeout monitoring.                              |
-| `cryptographic_signature` (proposed) | `string (hex)`      | `"a3f5b8..." (SHA-256)`           | A plain SHA-256 hash does not authenticate the sender; keyed HMAC or a digital signature would be required. |
+| JSON Field                                      | Data Type | Example Value                                                     | Role & Semantic Definition                                                                                                          |
+| :---------------------------------------------- | :-------- | :---------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- |
+| `mission_id`                                    | `string`  | `"RUNWAY_PATROL_PHASE1"`                                          | Sortie identifier linking reconnaissance missions to remediation tasks.                                                             |
+| `threat_id`                                     | `string`  | `"FOD_THREAT_001"`                                                | Debris identifier used for task lifecycle tracking.                                                                                 |
+| `source_agent_id`                               | `string`  | `"UAV_ALPHA_01"`                                                  | Sending agent.                                                                                                                      |
+| `anomaly_metadata.primary_class` / `.sub_class` | `string`  | `"FOD"`, `"screw"`                                                | Object classification labels from the UAV detector.                                                                                 |
+| `anomaly_metadata.confidence_score`             | `float`   | `0.96`                                                            | Detection confidence ($0.00 - 1.00$).                                                                                               |
+| `target_metric.x` / `.y`                        | `float`   | `-15.0, 5.0`                                                      | Metric coordinates in the `map` frame (metres). If absent, the bridge falls back to top-level `x` / `y`.                            |
+| `target_metric.z` / `.yaw`                      | `float`   | `0.0, 0.0`                                                        | Height and requested heading (radians). The bridge reads `yaw` but sets the goal heading from the approach direction (Section 3.3.4.3). |
+| `target_georeference`                           | `object`  | `{"latitude_deg": …, "longitude_deg": …, "altitude_msl_m": 15.0}` | WGS84 position; displayed by the receiver, not used for navigation.                                                                 |
+| `priority_level` / `suggested_action`           | `string`  | `"HIGH_ACTIVE_REMEDIATION"`                                       | `IMMEDIATE` replaces the queue; `ABORT`, `CANCEL` or `STOP` triggers the abort handling (Section 3.3.5).                                |
+| `timestamp_utc`                                 | `string`  | ISO 8601                                                          | Message time.                                                                                                                       |
+| `signature`                                     | `string`  | SHA-256 hex                                                       | Hash of the timestamp, ID and coordinates. No key is used, so it does not authenticate the sender.                                  |
+
+_Example values are from `DemoComs_C2.py`._
 
 </Card>
-
-The active UGV bridge publishes telemetry at **2 Hz** on `/c2/ugv_telemetry`. Table 5.2 describes an extended telemetry format; not every field is verified as present in the active source:
 
 <Card tag="UGV → UAV / Base Telemetry">
 
-**Table 5.2: Uplink Operational Telemetry Schema (`/c2/ugv_telemetry`)**
+**Table 3.3.2: UGV Telemetry Format (`/c2/ugv_telemetry`)**
 
-| JSON Field                        | Data Type | Example Value                                 | Role & Semantic Definition                                                        |
-| --------------------------------- | --------- | --------------------------------------------- | --------------------------------------------------------------------------------- |
-| `target_ack.threat_id`            | `string`  | `"FOD_THREAT_001"`                            | Active debris threat currently being tracked or remediated.                       |
-| `target_ack.task_state`           | `string`  | `"EN_ROUTE"`                                  | Current finite state machine status: `IDLE`, `EN_ROUTE`, `VERIFIED`, `COLLECTED`. |
-| `target_ack.queued_goals_count`   | `int`     | `2`                                           | Remaining waypoints buffered in UGV navigation execution queue.                   |
-| `target_ack.distance_to_target_m` | `float`   | `4.82`                                        | Euclidean distance from UGV `base_footprint` to active goal (meters).             |
-| `target_ack.eta_seconds`          | `float`   | `2.4`                                         | Estimated time to target arrival based on current linear velocity.                |
-| `vehicle_telemetry.pose_metric`   | `object`  | `{"x": -10.2, "y": 4.8, "heading_deg": 12.4}` | Real-time estimated global pose in `map` frame derived from Dual-EKF fusion.      |
-| `vehicle_telemetry.speed_kmh`     | `float`   | `7.2`                                         | Instantaneous vehicle travel speed in kilometers per hour.                        |
-| `vehicle_telemetry.battery_pct`   | `float`   | `94.5`                                        | Estimated remaining battery state of charge percentage.                           |
-| `link_watchdog.heartbeat_seq`     | `int`     | `142`                                         | Monotonically increasing heartbeat counter for wireless link health validation.   |
+| JSON Field                                         | Data Type | Example Value                              | Role & Semantic Definition                                                                                                        |
+| :------------------------------------------------- | :-------- | :----------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| `target_ack.threat_id`                             | `string`  | `"FOD_THREAT_001"`                         | Active debris threat currently being remediated.                                                                                  |
+| `target_ack.task_state`                            | `string`  | `"EN_ROUTE"`                               | Task state (`IDLE`, `ACKNOWLEDGED`, `EN_ROUTE`, `VERIFIED`, `VACUUMING`, `CONTINUOUS_SWEEP`, `COLLECTED`, `CANCELLED`, `FAILED`). |
+| `target_ack.queued_goals_count`                    | `int`     | `2`                                        | Remaining waypoints in the UGV FIFO queue.                                                                                        |
+| `target_ack.distance_to_target_m` / `.eta_seconds` | `float`   | `6.4`, `5.3`                               | Distance to the active goal and estimated time to arrival.                                                                        |
+| `vehicle_telemetry.pose_metric`                    | `object`  | `{"x": 1.2, "y": 0.8, "heading_deg": 2.9}` | Robot pose from the `map → base_link` transform (supplied by the Dual-EKF when it is running).                                    |
+| `vehicle_telemetry.speed_mps`                      | `float`   | `1.3`                                      | Speed estimated from successive poses.                                                                                            |
+| `vehicle_telemetry.battery_pct`                    | `float`   | `94.5`                                     | Simulated placeholder that decreases while en route; not a battery measurement.                                                   |
+| `link_watchdog.heartbeat_seq` / `.rssi_dbm`        | `int`     | `142`, `-64`                               | Message counter for link monitoring; `rssi_dbm` is a fixed placeholder value.                                                     |
 
 </Card>
 
-<Figure src="./assets/diagrams/c6-json-target-alert-message-flow.svg" alt="JSON Target Alert Message Flow and Queueing Pipeline" caption="**Figure 3.3: Downlink Target Alert Message Processing Pipeline.** Illustrative JSON payload structure, string serialization over ROS 2 topic `/c2/target_alert`, multi-stage schema validation, de-duplication filtering, and Nav2 waypoint queue insertion in `ugv_c2_bridge_node`." />
+<Figure src="./assets/diagrams/c6-json-target-alert-message-flow.svg" alt="JSON Target Alert Message Flow and Queueing Pipeline" caption="Figure 3.3.5: JSON target alert parsing and waypoint dispatch pipeline in ugv_c2_bridge_node (schema validation and de-duplication planned for Semester 2)." />
 
 :::
 
-### 3.3 Long-range datalink trade study {#com-radio-selection}
+### 3.3.3.3 Long-Range Datalink Trade Study {#com-radio-selection}
 
-Indoor Wi-Fi was suitable for Semester 1 integration but not established as an airfield-range solution. The **Microhard P900 V2** was identified as a _preliminary preferred_ serial-radio candidate, with pMDDL900 and other options compared for range, power, bandwidth and interface complexity. Procurement, frequency configuration and Singapore regulatory approval remain unresolved decision gates; the radio must not be described as deployed or approved.
-
-::: details Long-range radio comparison, regulatory considerations and selection rationale
-
-**4.4 Long-Range Airfield Technology Comparison**
-
-We compared five wireless options for the planned outdoor communication link:
+While local Wi-Fi satisfied indoor benchtop development requirements, airfield deployment demands an autonomous, long-range datalink capable of 1.5–3.0 km line-of-sight propagation across active runways. Five candidate wireless technologies were evaluated against range, throughput, power consumption, and statutory radio spectrum compliance:
 
 <Card tag="Airfield Technology Evaluation">
 
-**Table 4.1: Long-Range Wireless Communications Technology Trade-Off Matrix**
+**Table 3.3.3: Wireless Communications Technology Trade-Off Matrix**
 
-| Technology Candidate                            | Frequency Band                                 | Nominal Throughput      | LOS Range                            | Interface                          | Power Draw                                                      | Infrastructure & Regulatory Assessment                                                                                                                                                                | Selection Status                                              |
-| ----------------------------------------------- | ---------------------------------------------- | ----------------------- | ------------------------------------ | ---------------------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| **Microhard P900 V2**                           | 902–928 MHz FHSS (Configurable to 917–925 MHz) | Up to 276 kbps          | $5 - 15\text{ km}$ (air-to-ground)   | Asynchronous Serial (UART / USB-C) | $1.2\text{ W}$ transmit (at 1W RF), $100\text{ mA}$ idle at 12V | Fully infrastructure-independent point-to-point. Requires firmware configuration to restrict channels to 917–925 MHz for Singapore IMDA compliance. Requires serial framing gateway for ROS 2.        | <Badge type="info" text="PREFERRED CANDIDATE" />              |
-| **Microhard pMDDL900**                          | 902–928 MHz 2×2 MIMO                           | Up to 25 Mbps           | $5 - 20\text{ km}$                   | Native Ethernet (RJ45) / IP        | $6 - 12\text{ W}$ transmit, heavy heat-sinking required         | Native IP allows direct CycloneDDS bridging without serial gateway. However, high power draw, thermal dissipation, and significantly higher cost (\$1,200+ USD) exceed lightweight JSON requirements. | <Badge type="info" text="Alternative Backup" />               |
-| **Long-Range Wi-Fi Bridge** (e.g. Ubiquiti 5AC) | 5.15–5.85 GHz OFDM                             | $100 - 450\text{ Mbps}$ | $1 - 5\text{ km}$ (directional only) | Ethernet (PoE)                     | $7 - 9\text{ W}$ (requires PoE injector)                        | High bandwidth but severe line-of-sight and antenna misalignment vulnerability. Bulky directional antennas unsuitable for dynamic UAV flight banking angles. High multipath ground attenuation.       | <Badge type="info" text="Rejected for UAV" />                 |
-| **4G LTE / 5G Cellular Modem** (e.g. Sixfab)    | Licensed Carrier Bands (B1/B3/B7/B8/B20)       | $10 - 150\text{ Mbps}$  | Cellular coverage dependent          | USB / PCIe / UART                  | $3 - 6\text{ W}$                                                | Relies entirely on civilian telco base stations. High recurring SIM costs; unacceptable latency spikes (&gt;150 ms) during cell handovers; strict aerodrome security regulations ban cellular uplink. | <Badge type="info" text="Rejected (Telco Dependent)" />       |
-| **LoRa / LoRaWAN** (e.g. Semtech SX1262)        | 915 / 868 / 433 MHz Chirp Spread Spectrum      | $0.3 - 5.5\text{ kbps}$ | $3 - 10\text{ km}$                   | SPI / UART                         | &lt;0.5W transmit                                               | Extremely low data rate. Packet payload limits (typically 51–222 bytes per frame) require multi-packet fragment assembly for 500-byte JSON telemetry, introducing multi-second delivery latency.      | <Badge type="info" text="Rejected (Throughput Bottleneck)" /> |
-
-</Card>
-
-![Holybro Microhard P900 V2 Telemetry Radio](./assets/images/holybro-p900-v2.png)
-
-![Microhard pMDDL900 OEM Digital Data Link](./assets/images/microhard-pmddl900-detail.png)
-
-![Ubiquiti NanoStation 5AC Loco Wi-Fi Bridge](./assets/images/hardware-ubiquiti-nanostation-5ac.png)
-
-![Sixfab Cellular IoT Modem HAT for Raspberry Pi](./assets/images/hardware-cellular-sixfab-hat.png)
-
-<Figure src="./assets/images/hardware-lora-rak2245-module.png" alt="RAKwireless RAK2245 LoRa Gateway Module" caption="Illustrative product photographs of radio options considered; these devices were not physically tested. Images courtesy of Holybro, Microhard Systems, Ubiquiti Inc., Sixfab, and RAKwireless." />
-
-<CardGrid :cols="2">
-
-<Card tag="Preferred Candidate">
-
-<Card>
+| Technology Candidate   | Operating Band                                               | Nominal Throughput      | LOS Range                       | Interface                 | Power Draw                   | Operational Assessment                                                                                                                             | Selection Status                                      |
+| :--------------------- | :----------------------------------------------------------- | :---------------------- | :------------------------------ | :------------------------ | :--------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------- |
+| **Microhard P900 V2**  | 902–928 MHz FHSS (917–925 MHz configuration to be confirmed) | Up to 276 kbps          | $5 - 15\text{ km}$              | Asynchronous UART / USB-C | 1.2 W RF (100 mA idle @ 12V) | Infrastructure-independent point-to-point. Possible Singapore deployment subject to IMDA and firmware checks. Requires a serial gateway for ROS 2. | <Badge type="info" text="PREFERRED CANDIDATE" />      |
+| **Microhard pMDDL900** | 902–928 MHz 2×2 MIMO                                         | Up to 25 Mbps           | $5 - 20\text{ km}$              | Native Ethernet / IP      | 6–12 W transmit              | Native IP supports direct CycloneDDS bridging without gateway. High cost (\$1,200+ USD) and thermal dissipation exceed requirements.               | <Badge type="info" text="ALTERNATIVE BACKUP" />       |
+| **Ubiquiti 5AC Wi-Fi** | 5.15–5.85 GHz OFDM                                           | $100 - 450\text{ Mbps}$ | $1 - 5\text{ km}$ (directional) | Ethernet (PoE)            | 7–9 W                        | High bandwidth, but directional dish alignment fails during dynamic UAV banking maneuvers. Severe ground attenuation.                              | <Badge type="info" text="REJECTED (UAV LINK)" />      |
+| **4G LTE / 5G Modem**  | Telco Carrier Bands                                          | $10 - 150\text{ Mbps}$  | Cell dependent                  | USB / PCIe                | 3–6 W                        | Relies on civilian telecom towers; subject to recurring SIM fees and aerodrome security restrictions.                                              | <Badge type="info" text="REJECTED (TELCO RELIANT)" /> |
+| **LoRa (SX1262)**      | 915 / 868 MHz CSS                                            | $0.3 - 5.5\text{ kbps}$ | $3 - 10\text{ km}$              | SPI / UART                | &lt;0.5 W                    | Low bandwidth and 222-byte payload limits cause multi-packet fragmentation and multi-second latency for JSON messages.                             | <Badge type="info" text="REJECTED (BANDWIDTH)" />     |
 
 </Card>
 
-**Holybro P900 V2** 900 MHz FHSS Serial Radio
+::: details Long-range radio comparison, regulatory considerations and selection rationale
 
-</Card>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
+  <div>
+    <img src="./assets/images/holybro-p900-v2.png" alt="Holybro Microhard P900 V2 Telemetry Radio" style="border-radius: 8px; border: 1px solid var(--apple-border);" />
+    <p style="font-size: 12px; color: var(--apple-text-tertiary); text-align: center; margin-top: 6px;">Preferred Candidate: Holybro Microhard P900 V2 (900 MHz FHSS Serial)</p>
+  </div>
+  <div>
+    <img src="./assets/images/microhard-pmddl900-detail.png" alt="Microhard pMDDL900 OEM Digital Data Link" style="border-radius: 8px; border: 1px solid var(--apple-border);" />
+    <p style="font-size: 12px; color: var(--apple-text-tertiary); text-align: center; margin-top: 6px;">Alternative Candidate: Microhard pMDDL900 (900 MHz 2×2 MIMO IP)</p>
+  </div>
+</div>
 
-<Card tag="IP Alternative">
+**Why P900 V2 Was Shortlisted**
 
-<Card>
+I shortlisted the **Holybro Microhard P900 V2** [\[20\]](./references.md#ref-20) for the UGV datalink:
 
-</Card>
+1. **Sufficient Bandwidth for Metadata:** C2 alerts and telemetry use compact JSON strings (~500 bytes). At 276 kbps nominal throughput, packet transmission takes under 20 ms.
+2. **No Video Streaming on UGV Datalink:** YOLOv8 vision inference runs entirely on the UAV companion computer. Only numerical target coordinates cross the RF link, eliminating high-bandwidth video transmission needs.
+3. **Low SWaP Footprint:** Enclosed in a 42 g aluminum case operating on 7–35V DC, the transceiver connects directly to companion computer UART GPIO pins without external PoE injectors.
 
-**Microhard pMDDL900** 900 MHz 25 Mbps MIMO Ethernet
+**Alternative Candidate: Microhard pMDDL900 vs pMDDL2450**
 
-</Card>
+The **Microhard pMDDL900** [\[21\]](./references.md#ref-21) provides native Ethernet IP routing at up to 25 Mbps, allowing CycloneDDS to operate natively across the RF link without a serial gateway. However, it costs significantly more ($1,200+ USD vs ~$150 USD for P900), consumes 6–12 W, and requires dedicated heatsinks. It remains a backup candidate should project requirements expand to include live sensor streaming.
 
-<Card tag="Evaluated Baseline">
+_Broadband Distinction:_ The ARGUS drone team evaluates the **Microhard pMDDL2450** (2.4 GHz broadband IP) for aerial video streaming to a ground station, whereas the UGV datalink carries only lightweight C2 commands and telemetry.
 
-<Card>
+**Radio Security Considerations**
 
-</Card>
+The radio options have different security requirements:
 
-**Ubiquiti NanoStation 5AC** 5 GHz Directional Wi-Fi
+- **Serial RF (Microhard P900 V2):** Operates an air-gapped point-to-point asynchronous serial connection. The lack of an IP stack eliminates port scanning, SSH brute-force attempts, and network routing vulnerabilities. The transceiver firmware supports AES-256 link-layer encryption and unique Network ID pairing. However, 900 MHz FHSS remains vulnerable to RF jamming, which requires link-loss watchdog timeouts.
+- **Broadband IP (pMDDL2450 / pMDDL900):** Native TCP/IP networking exposes a broader attack surface, requiring firewall protection, SSH connection throttling (`fail2ban`), MAC address filtering, and disabled SSID broadcasts.
 
-</Card>
+**Selection Requirements**
 
-<Card tag="Telco Dependent">
+Purchasing P900 V2 hardware depends on four decision gates in Semester 2:
 
-<Card>
-
-</Card>
-
-**Sixfab Cellular HAT** 4G LTE / 5G Cellular Modem
-
-</Card>
-
-<Card tag="Low Data Rate">
-
-<Card>
-
-</Card>
-
-**RAK2245 LoRa Node** Semtech LoRa Datalink
-
-</Card>
-
-</CardGrid>
-
-**4.5 Why Microhard P900 V2 Is Currently Preferred**
-
-The **Holybro Microhard P900 V2** ([\[20\]](./references.md#ref-20)) emerged as the preferred long-range telemetry candidate due to specific alignment with our technical scope:
-
-- **Suitable data rate on paper:** Because our C2 messages consist exclusively of compact JSON strings (~500 bytes), the P900's 276 kbps link rate delivers complete packet transmission in &lt;20 ms, suggesting sufficient nominal bandwidth for low-rate messages, subject to link and framing overhead.
-- **No Video Streaming Burden:** Real-time high-definition video is processed entirely on the UAV's onboard computer (YOLO inference). Only post-processed metadata and bounding coordinates traverse the RF link, completely eliminating the requirement for multi-megabit Wi-Fi or LTE links.
-- **Size and power:** The proposed unit has published size and power specifications; its actual system power draw has not been measured. A claim of &lt;1.2 W electrical input during 1.0 W RF transmission should not be assumed. It is described as operating and operating off a wide 7–35V DC input (XT30/JST-GH), the Holybro enclosure weighs only 42g and integrates directly with companion computer UART GPIO pins without bulky power converters.
-- **Configuration interface:** The V2 enclosure incorporates an onboard USB-to-UART converter with a physical mode switch (Data vs Configuration), allowing rapid parameter tuning via USB-C without requiring specialized FTDI programming jigs.
-
-_Architectural Consideration:_ Because the P900 operates as a transparent serial stream (UART) rather than an Ethernet network interface, it cannot natively transport DDS discovery multicasts. Utilizing the P900 requires deploying a lightweight \*\*Serial Gateway Node\*\* on both the UAV and UGV to frame, serialize, and validate JSON messages across the UART bridge.
-
-**4.6 Microhard pMDDL900 as an Alternative**
-
-The **Microhard pMDDL900** ([\[21\]](./references.md#ref-21)) is retained as a high-performance alternative backup. Operating as a native 2×2 MIMO Ethernet digital data link, the pMDDL900 provides standard IP networking at up to 25 Mbps.
-
-The pMDDL900 would allow CycloneDDS to communicate directly across the radio link without requiring a custom serial gateway. However, this capability introduces substantial trade-offs: the OEM module costs significantly more ($1,200+ USD vs ~$150 USD for the P900), consumes 6–12W of electrical power, generates severe thermal dissipation requiring dedicated aluminum heat-sinks, and introduces complex dual-antenna RF co-location constraints on the drone airframe. The pMDDL900 will only be reconsidered if project scope in Semester 2 expands to mandate live video downlinks to a mobile Ground Control Station.
-
-**4.7 Preliminary Selection & Decision Gate**
-
-The Holybro Microhard P900 V2 represents our \*\*preliminary preferred design baseline\*\*. Final procurement and deployment remain subject to four mandatory engineering decision gates in early Semester 2:
-
-1. **IMDA Regulatory Feasibility:** Confirming firmware restriction parameters to verify whether hopping channels can be strictly constrained within 917–925 MHz, and determining whether statutory trial permits are required.
-2. **Formal Vendor Quotations:** Obtaining verified institutional pricing and lead-time commitments from authorized academic suppliers.
-3. **Serial Gateway Latency Benchmarking:** Bench-testing the Python/C++ serial framing gateway to prove end-to-end latency remains below 100 ms.
-4. **Companion SBC Pin Compatibility:** Verifying hardware UART level-shifting and CTS/RTS hardware flow control between the P900 and the Raspberry Pi 5 / NVIDIA Jetson Orin GPIO headers.
+1. **IMDA Channel Masking:** Confirming firmware frequency masking via PicoConfig software to confine hopping strictly within 917.0–925.0 MHz.
+2. **Supplier Procurement:** Securing formal institutional quotes from academic distributors.
+3. **Serial Gateway Benchmarking:** Bench-testing the serial framing gateway to verify latency stays below 100 ms.
+4. **Hardware Flow Control:** Validating UART CTS/RTS hardware handshaking between the transceiver and Raspberry Pi 5 / NVIDIA Jetson GPIO headers.
 
 :::
 
-## 4. Implementation & Prototype {#com-implementation}
+## 3.3.4 Implementation & Prototype {#com-implementation}
 
-### 4.1 Two-machine integration {#com-network}
+### 3.3.4.1 Two-Machine Integration {#com-network}
 
-We connected the Raspberry Pi and workstation over a local Wi-Fi network. The workstation ran ROS 2, Gazebo and Nav2. CycloneDDS static peers allowed the two machines to discover each other. The addresses below describe this test setup and are not general configuration defaults.
+The Semester 1 hardware-in-the-loop testbed connected two physical computing nodes across an isolated Wi-Fi local network:
 
-::: details Testbed hardware and network configuration
+1. **Machine 1 (UAV C2 Terminal):** Raspberry Pi 5 (Quad-Core ARM Cortex-A76 @ 2.4 GHz, 8 GB RAM) running Ubuntu 24.04 LTS and ROS 2 Jazzy, hosting `DemoComs_C2.py` (IP: `192.168.168.50`).
+2. **Machine 2 (UGV Autonomy Workstation):** Laptop workstation running Ubuntu 24.04 LTS under WSL2, executing Gazebo Harmonic DART physics, Dual-EKF state estimation, Nav2 path planning, `ugv_c2_bridge_node`, and `c2_alert_receiver` (IP: `192.168.168.100`).
 
-**5.1 Semester 1 Indoor Network Topology**
+The inter-agent operational workflow executes across four sequential stages:
 
-The Semester 1 multi-machine testbed connected two distinct physical computing nodes across an isolated wireless subnet:
+- **Stage 1:** Establish peer-to-peer network discovery between ARGUS and HUNTER host systems.
+- **Stage 2:** Acquire aerial inspection coordinates and update detected debris locations.
+- **Stage 3:** Transmit structured C2 target alerts to HUNTER.
+- **Stage 4:** Ingest target coordinates and dispatch autonomous navigation goals within Nav2.
 
-- **Machine 1 (UAV C2 Terminal):** Raspberry Pi 5 (Quad-Core ARM Cortex-A76 @ 2.4 GHz, 8 GB LPDDR4X RAM) running Ubuntu 24.04 LTS and ROS 2 Jazzy. Hosted `DemoComs_C2.py` and `uav_waypoint_commander.py`, operating on Wi-Fi interface `wlan0` (IP: `192.168.168.50` / `192.168.137.233`).
-- **Machine 2 (UGV Simulation & Autonomy Workstation):** Engineering laptop (AMD Ryzen 7, NVIDIA RTX 4070, 32 GB RAM) running Ubuntu 24.04 LTS under WSL2. Executed Gazebo Harmonic DART physics, Dual-EKF state estimation, Nav2 Hybrid A\* / RPP stack, `ugv_c2_bridge_node`, and `c2_alert_receiver` (IP: `192.168.168.100` / `192.168.137.1`).
+Stages 1 and 2 cover aerial inspection and coordinate extraction, and are documented in the [ARGUS Communication System](https://cde4301-drone-ground-robots.github.io/CDE4301_runway_drone/report/#report-communication-system). Stages 3 and 4 document HUNTER's alert ingestion and autonomous navigation dispatch.
 
-:::
+<VideoClip
+  src="./assets/videos/uav-ugv-communication-video.mp4"
+  poster="./assets/images/posters/uav-ugv-communication-video-poster.jpg"
+  caption="Video 3.3.1: Benchtop demonstration of CycloneDDS static unicast topic exchange between Raspberry Pi 5 and ROS 2 Jazzy workstation over local Wi-Fi."
+/>
 
-### 4.2 Alert ingestion, coordinates and goal queue {#com-dispatch}
+### 3.3.4.2 Stage 3 — Sending C2 Alert to HUNTER {#com-stage-3}
 
-The UGV bridge read target coordinates in the `map` frame, converted the requested heading to a quaternion and sent a `PoseStamped` goal to Nav2. A FIFO queue handled multiple targets, and RViz markers showed queued and active goals. **These tests used synthetic map-frame targets; they did not verify conversion of real UAV GPS detections into UGV map coordinates.**
+<span id="com-dispatch"></span>
 
-::: details Coordinate conversion and Nav2 dispatch implementation
+In Stage 3, the ARGUS communication client (`DemoComs_C2.py`) serializes the target alert and publishes it to `/c2/target_alert` formatted as JSON within a `std_msgs/msg/String`. Eclipse CycloneDDS transmits the datagram to the UGV workstation via static unicast peering.
 
-**5.4 Coordinate Conversion and Nav2 Action Dispatch**
+On the HUNTER platform, the communication monitor (`c2_alert_receiver`) and mission controller (`ugv_c2_bridge_node`) subscribe to `/c2/target_alert` with matching `TRANSIENT_LOCAL` durability and `RELIABLE` reliability QoS profiles. In the benchmarked multi-machine demonstration (presentation slide 175), the following parameters were transmitted and verified:
 
-When `ugv_c2_bridge_node` ingests a target alert, it converts Cartesian offsets into a fully formatted `geometry_msgs/msg/PoseStamped` message referencing the global `map` frame. Target orientation is calculated by converting the scalar yaw angle into a unit quaternion:
+| Parameter Field  | Demonstration Value      | Interpretation & Context                                                                              |
+| :--------------- | :----------------------- | :---------------------------------------------------------------------------------------------------- |
+| **Threat ID**    | `FOD_THREAT_001`         | Unique sequential identifier assigned to candidate debris                                             |
+| **Object Class** | `Screw` (`FOD / screw`)  | Debris classification passed from edge detection model (the 1 October log records the class as `FOD`) |
+| **Confidence**   | `0.96` (96.0%)           | Target classification confidence score                                                                |
+| **Target X**     | `3.20 m`                 | Local metric coordinate in `map` Cartesian frame                                                      |
+| **Target Y**     | `1.70 m`                 | Local metric coordinate in `map` Cartesian frame                                                      |
+| **Target Yaw**   | `0.00 rad` ($0.0^\circ$) | Desired terminal vehicle orientation upon arrival                                                     |
+
+_Note: These coordinates and classifications represent recorded demonstration test values, not live physical UAV flight measurements._
+
+<C2TerminalDemo />
+
+**Recorded test (1 October 2026):** The ROS 2 logs show that `ugv_c2_bridge_node` received and parsed this alert (`FOD_THREAT_001 at (3.20, 1.70)`) five times. On the last attempt, Nav2 started navigating to (3.20, 1.70), but the planner (SmacPlanner2D at that time) reported "no valid path found" for this target. Recovery actions ran and the goal was aborted after 24 s. This alert is therefore evidence of **message reception, parsing and goal dispatch**, not of arrival. Successful navigation to C2 goals is shown in Stage 4.
+
+### 3.3.4.3 Stage 4 — C2 Alert Receiver to HUNTER Navigation {#com-stage-4}
+
+Upon alert ingestion, the UGV bridge processes incoming target dispatches:
+
+1. **Alert Ingestion & Parsing:** `ugv_c2_bridge_node` parses the incoming JSON payload from `/c2/target_alert`, extracting target coordinates, object classifications, and dispatch priority levels. `c2_alert_receiver` mirrors this payload for operator display.
+2. **Coordinate Extraction:** The node extracts Cartesian metric coordinates from `target_metric.x` and `target_metric.y` (defaulting to top-level `x`/`y` if omitted).
+3. **Map-Frame Pose Construction:** Because alert coordinates are referenced to the global Cartesian datum, coordinates are packaged into a `geometry_msgs/msg/PoseStamped` with `frame_id = map`.
+4. **Intake Standoff Offset Calculation:** To position the rear-mounted centrifugal vacuum intake directly above the target debris, a 0.66 m standoff offset is applied along the vehicle approach vector from the robot's current pose. The terminal goal heading $\theta$ is oriented along this approach vector and converted to a planar quaternion:
+   $$
+   q_z = \sin\left(\frac{\theta}{2}\right), \quad q_w = \cos\left(\frac{\theta}{2}\right), \quad q_x = 0.0, \quad q_y = 0.0
+   $$
+5. **Asynchronous Nav2 Action Dispatch:** The bridge dispatches the goal to the Nav2 `NavigateToPose` action server asynchronously and publishes the coordinate to `/goal_pose`.
+6. **Lattice Planning & Visualization:** Nav2's `SmacPlannerHybrid` generates a kinematically feasible Reeds-Shepp trajectory across the global costmap, visualized in RViz2 alongside queued waypoint markers (`/c2/queued_waypoints_markers`).
+7. **Trajectory Tracking:** `RegulatedPurePursuitController` guides the simulated UGV (AgileX Scout 2.0 proxy in Gazebo Harmonic) to the standoff waypoint.
+
+**Recorded result (13 October 2026):** In this session (SmacPlannerHybrid, NUS EA Field map), the bridge dispatched six C2 goals. Five reached the goal: three `IMMEDIATE` alerts and two queued targets, 7.9–14.7 m from the robot, in 10.7–24.8 s. The sixth was replaced by the next queued goal before Nav2 reported completion. Goal position error was not recorded.
+
+<VideoClip
+  src="./assets/videos/131026_UAV_sim_Charan_demo.mov"
+  poster="./assets/images/posters/131026-uav-sim-charan-demo-poster.jpg"
+  caption="Video 3.3.2: Recorded demonstration of C2 target ingestion triggering Nav2 path planning and autonomous UGV tracking in Gazebo Harmonic and RViz2."
+/>
+
+::: details Coordinate conversion and Nav2 action dispatch implementation
+
+The bridge builds a `PoseStamped` goal in the `map` frame. The current version applies a 0.66 m intake offset and converts the approach heading to a quaternion:
 
 $$
 q_z = \sin\left(\frac{\theta}{2}\right), \quad q_w = \cos\left(\frac{\theta}{2}\right), \quad q_x = 0, \quad q_y = 0
 $$
 
-Goals are appended to an internal FIFO queue (`goal_queue`). The node concurrently publishes RViz marker spheres (`visualization_msgs/msg/MarkerArray`) on `/c2/goal_markers`, color-coding active waypoints in cyan, queued waypoints in amber, and completed targets in green with yellow trajectory breadcrumb lines.
-
-<CommunicationsWidget2 />
+If the UGV is busy (`EN_ROUTE` or `VERIFIED`), new goals are appended to an internal FIFO queue (`goal_queue`); an `IMMEDIATE` alert clears the queue and is dispatched at once. The node publishes RViz markers (`visualization_msgs/msg/MarkerArray`) on `/c2/queued_waypoints_markers`: an amber cylinder for the active target, cyan cylinders for queued targets, and a yellow line joining them in order.
 
 :::
 
-**Related documentation:** [Navigation →](/report#programming) · [Simulation →](/report#programming) (links to the programming chapter; exact subsection anchors should be verified in the live Report).
+**Related documentation:** [Navigation →](/report#programming) · [Simulation →](/report#programming) (links to the programming chapter).
 
-### 4.3 Proposed serial-radio gateway {#com-future-gateway}
+### 3.3.4.4 Proposed Serial-Radio Gateway {#com-future-gateway}
 
-The proposed P900 V2 uses a serial interface, so ROS 2 messages would need a gateway rather than being sent as native DDS traffic. The gateway would frame and validate messages before publishing them on the receiving computer. **This gateway has not yet been implemented or tested.**
+The candidate Microhard P900 V2 operates via an asynchronous UART serial interface, precluding native DDS multicasting over the RF link. Hardware migration requires deploying dedicated serial gateway nodes to encapsulate, frame, and validate ROS 2 messages across the transparent serial bridge.
+
+**Current status:**
+
+- The Microhard P900 V2 remains a **proposed candidate**; no units have been procured or deployed.
+- The software serial gateway has **not been implemented or bench-tested**.
+- **No outdoor RF range or throughput tests** have been conducted.
+- Singapore IMDA licensing, frequency mask restrictions (917–925 MHz) and power thresholds must be formally verified before transmitting over the air.
 
 ::: details Proposed COBS, CRC-32 and acknowledgement design
 
-**Proposed serial framing gateway**
+When transitioning from indoor Wi-Fi to the long-range P900 V2 datalink, ROS 2 nodes cannot directly publish native DDS packets over a transparent UART connection. The proposed architecture uses a serial framing gateway on each computer:
 
-When transitioning from indoor Wi-Fi to the long-range P900 V2 datalink, ROS 2 nodes cannot directly publish native DDS packets over a transparent UART connection. The proposed architecture would use a serial framing gateway on each computer:
-
-<Figure src="./assets/diagrams/uav-ugv-rf-datalink.svg" alt="Proposed Serial Framing Gateway and RF Telemetry Pipeline" caption="**Figure 5.2: Proposed Semester 2 Serial Framing Gateway Pipeline.** Encapsulation of ROS 2 JSON topics into framed UART packets using Consistent Overhead Byte Stuffing (COBS) and 32-bit CRC error detection across the 900 MHz FHSS RF physical layer." />
+<Figure src="./assets/diagrams/uav-ugv-rf-datalink.svg" alt="Proposed Serial Framing Gateway and RF Telemetry Pipeline" caption="Figure 3.3.6: Proposed serial-radio gateway architecture framing JSON messages with COBS encoding and CRC-32 integrity checks over UART." />
 
 _Framing & Reliability Protocol (Design Requirements):_
 
@@ -340,106 +343,69 @@ _Framing & Reliability Protocol (Design Requirements):_
 
 :::
 
-**C2 — Complete communications demonstration (existing recording)**
+## 3.3.5 Testing & Results {#com-testing}
 
-<VideoClip src="./assets/videos/uav-ugv-communication-video.mp4" poster="./assets/images/posters/uav-ugv-communication-video-poster.jpg" caption="Video 3.3.0: Heterogeneous UAV-UGV communication pipeline demonstration between Raspberry Pi 5 and workstation." />
+Benchtop evaluations validated peer discovery, target alert transmission, JSON parsing, asynchronous Nav2 action invocation, and multi-waypoint queueing between the physical companion computer and autonomy workstation.
 
-_Semester 1: Raspberry Pi 5 command generation and Gazebo UGV navigation via the workstation. This does not depict live UAV flight or a physical UGV._
+<Card tag="Communications Subsystem Verification Matrix">
 
-## 5. Testing & Results {#com-testing}
+**Table 3.3.4: Semester 1 Communication Test Results**
 
-The indoor test matrix covers peer discovery, alert reception, JSON parsing, waypoint dispatch, abort handling and telemetry. Recordings support the cross-device demonstration, but several numerical claims in the historical table have not been independently reproduced. The active bridge publishes telemetry at **2 Hz**; the earlier 600-message/ten-minute record appears to describe a **1 Hz** test and must not be presented as the current configuration.
+<div class="table-scroll-wrapper" style="overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; margin: 8px 0;">
 
-**6.5 Communications-to-Navigation Integration Verification**
+| Test ID    | Test Objective                                                       | Supporting Evidence                                                                                                                                                                                                              | Verification Status                |
+| :--------- | :------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------- |
+| **COM-01** | Cross-machine CycloneDDS communication across ARM64 and x86_64 nodes | Video 3.3.1 (`uav-ugv-communication-video.mp4`), RPi 5 terminal recording (`230926-uavugv-comms-rpi5-.mp4`), workstation recording (`230926-uavugv-comms-laptop.mp4`); static peers in `cyclonedds.xml` / `setup_dds.sh`           | <Badge type="tip" text="PASSED" /> |
+| **COM-02** | C2 target alert transmission and reception over `/c2/target_alert`   | `DemoComs_C2.py` publisher and matching `RELIABLE` + `TRANSIENT_LOCAL` subscribers in source; bridge logs record received alerts on 23 Sep and 1, 5, 9, 13, 16 and 22 Oct 2026                                                   | <Badge type="tip" text="PASSED" /> |
+| **COM-03** | JSON target-coordinate parsing                                       | 1 Oct 2026 bridge log: `FOD_THREAT_001` at $(X=3.20\text{ m}, Y=1.70\text{ m})$ received and parsed five times; no parse errors in any bridge log. Navigation to this target failed (no valid path) and is not part of this test | <Badge type="tip" text="PASSED" /> |
+| **COM-04** | C2 alert to `map`-frame goal and Nav2 `NavigateToPose` dispatch      | Video 3.3.2 (`131026_UAV_sim_Charan_demo.mov`); 13 Oct 2026 logs: six C2 goals dispatched, five reached with SmacPlannerHybrid (Hybrid A\*) on the AgileX Scout 2.0 simulation proxy                                           | <Badge type="tip" text="PASSED" /> |
+| **COM-05** | Sequential multi-waypoint queue navigation                           | Video `Multiqueue waypoint.mp4` demonstrating autonomous sequential 3-target execution in Nav2; bridge logs show queueing and automatic advance to the next target on 1, 5, 9, 13 and 16 Oct 2026 (see queue limitation below)   | <Badge type="tip" text="PASSED" /> |
 
-The recorded demonstration shows target alerts passing from the Raspberry Pi 5 to the UGV-side bridge and Nav2 in Gazebo. The bridge uses `NavigateToPose` and publishes simulated telemetry at **2 Hz**. Any pickup dwell represents a simulated task state, not physical debris collection.
+</div>
 
-<Card tag="Historical Indoor Test Matrix — Evidence Status Under Review">
+> **Test scope:** These results cover the Semester 1 indoor communication testbed and ROS 2 simulation. Physical UAV–UGV RF communication, outdoor range and real-world navigation remain unverified.
 
-**Table 6.1: Communications Subsystem Verification & Test Matrix**
+_Testing Note:_ COM-01 through COM-05 cover the Semester 1 objective: cross-machine communication and sending waypoints to the UGV simulation. Not every dispatched goal reached its target; some failed because no valid path existed. Periodic telemetry at 2 Hz (`/c2/ugv_telemetry`) is implemented in `ugv_c2_bridge_node`. Abort handling is **partially implemented**: an alert with `priority_level` or `suggested_action` set to `ABORT`, `CANCEL` or `STOP` clears the queue and cancels the active Nav2 goal (`cancel_goal_async()`). It was triggered in a 5 October 2026 session. It does not publish a zero-velocity command, and no emergency-stop test with acceptance criteria was run. A complete emergency stop, link-loss watchdog, geofencing, schema validation, RF packet-error rate, outdoor range and physical stopping distance are Semester 2 work.
 
-| Test ID | Evaluation Scope                 | Test Procedure                                                                     | Acceptance Criteria                                                               | Status                                           | Observed Result                                                                                                                                     |
-| ------- | -------------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| COM-01  | DDS Cross-Architecture Discovery | Run RPi 5 (ARM64) and Laptop (x86_64) across Wi-Fi subnet with CycloneDDS XML      | Bidirectional discovery within &lt;5.0 s; all topics visible in `ros2 topic list` | <Badge type="warning" text="HISTORICAL CLAIM" /> | Discovered in &lt;1.0 s; full node graph visible across both machines.                                                                              |
-| COM-02  | Latched Alert Ingestion          | Publish 3 alerts on RPi 5, then launch receiver node on Laptop workstation         | Receiver ingests all 3 buffered alerts via Transient Local QoS without loss       | <Badge type="warning" text="HISTORICAL CLAIM" /> | Reported in the earlier test matrix; verify publisher persistence, compatible QoS and the original logs before treating this as a confirmed result. |
-| COM-03  | JSON Schema Integrity            | Transmit structured payloads with coordinates, confidence, timestamps, and SHA-256 | Zero JSON parse exceptions; coordinates successfully mapped to Cartesian floats   | <Badge type="warning" text="HISTORICAL CLAIM" /> | Reported in the earlier test matrix; the available audit confirms JSON parsing in source, not the claimed count of successful messages.             |
-| COM-04  | Nav2 Action Goal Queueing        | Dispatch 3 sequential targets; monitor Nav2 `NavigateToPose` goal execution        | UGV navigates to Target 1 → Dwells 2s → Dispatches Target 2 → Dispatches Target 3 | <Badge type="warning" text="HISTORICAL CLAIM" /> | Sequential clearance across all 3 coordinates; RViz markers updated.                                                                                |
-| COM-05  | Emergency Abort Handling         | Publish `suggested_action: "ABORT"` while UGV is cruising at 2.22 m/s              | Action goal cancelled immediately; robot halts without collision                  | <Badge type="warning" text="HISTORICAL CLAIM" /> | Historical claim; cancellation latency and stopping distance were not established by the source-code/runtime audits.                                |
-| COM-06  | Telemetry Uplink Heartbeat       | Historical ten-minute telemetry check; current bridge is configured at 2 Hz        | Check sequence continuity and message rate                                        | <Badge type="warning" text="RECHECK" />          | Historical record reports 600 messages at 1 Hz; current code publishes at 2 Hz.                                                                     |
+**Queue limitation:** The ROS 2 logs show that a goal can be marked complete twice: once when the robot comes within 0.6 m of the target, and again when Nav2 reports success. Each completion advances the queue, so a queued waypoint was sometimes skipped (for example on 1 October 2026, when `FOD_THREAT_002` and `FOD_THREAT_003` were both dequeued within one second). The queue is therefore not reliable under all conditions; this will be fixed in Semester 2.
 
 </Card>
 
+#### Fail-Safe Architecture & Datalink Fault Handling {#com-failsafe}
+
+**Emergency Abort & Goal Cancellation:** In the Semester 1 software, receiving a C2 alert with `priority_level` or `suggested_action` set to `ABORT`, `CANCEL` or `STOP` clears the internal waypoint queue and calls `cancel_goal_async()` on the Nav2 action client (verified in a 5 October 2026 session). However, this software-level cancellation does not command active braking or issue zero-velocity overrides. Figure 3.3.7 illustrates this multi-tier architecture, showing current software queue flushing alongside proposed Semester 2 hardware Safe Torque Off (STO) motor driver interlocks:
+
+<Figure src="./assets/diagrams/c8-emergency-abort-logic.svg" alt="Multi-Tier Emergency Abort and Goal Cancellation Architecture" caption="Figure 3.3.7: Emergency abort and cancellation flowchart: Semester 1 queue flushing and asynchronous Nav2 cancellation, with hardware E-stop and STO interlocks planned for Semester 2." />
+
+**Datalink Loss & Autonomous Recovery:** The Semester 1 prototype lacks a communication watchdog; if the datalink drops, the UGV continues executing its current goal without an RF link. Figure 3.3.8 presents the proposed Semester 2 datalink monitoring state machine, which will transition the rover into an autonomous holding state upon missing periodic heartbeats before executing return-to-base navigation:
+
+<Figure src="./assets/diagrams/c9-communication-failure-recovery.svg" alt="Datalink Loss and Recovery Finite State Machine" caption="Figure 3.3.8: Proposed datalink failure and recovery state flow: autonomous hold, reconnection handling, and watchdog return-to-base (Semester 2 design; Semester 1 software lacks link-loss watchdog)." />
+
 ::: details Recorded communication demonstrations and evidence
 
-<VideoClip src="./assets/videos/230926-uavugv-comms-rpi5-.mp4" poster="./assets/images/posters/230926-uavugv-comms-rpi5-poster.jpg" caption="Video 3.3.1: Raspberry Pi 5 terminal recording showing incoming JSON alerts and CycloneDDS publishing." />
+<VideoClip src="./assets/videos/230926-uavugv-comms-rpi5-.mp4" poster="./assets/images/posters/230926-uavugv-comms-rpi5-poster.jpg" caption="Video 3.3.3: Raspberry Pi 5 terminal recording showing incoming JSON alerts and CycloneDDS publishing." />
 
-<VideoClip src="./assets/videos/230926-uavugv-comms-laptop.mp4" poster="./assets/images/posters/230926-uavugv-comms-laptop-poster.jpg" caption="Video 3.3.2: Laptop workstation recording showing Nav2 goal queueing and action dispatch." />
+<VideoClip src="./assets/videos/230926-uavugv-comms-laptop.mp4" poster="./assets/images/posters/230926-uavugv-comms-laptop-poster.jpg" caption="Video 3.3.4: Laptop workstation recording showing Nav2 goal queueing and action dispatch." />
 
-<VideoClip src="./assets/videos/Multiqueue waypoint.mp4" poster="./assets/images/posters/multiqueue-waypoint-poster.jpg" caption="Video 3.3.3 (C4): Multi-Queue Sequential Waypoint Navigation demonstration in Nav2 showing autonomous 3-target sequence execution." />
-
-_Raspberry Pi 5 terminal recording, workstation Nav2 recording, and multi-queue waypoint demonstration provide complementary perspectives on the distributed communications testbed._
+<VideoClip src="./assets/videos/Multiqueue waypoint.mp4" poster="./assets/images/posters/multiqueue-waypoint-poster.jpg" caption="Video 3.3.5: Multi-Queue Sequential Waypoint Navigation demonstration in Nav2 showing autonomous 3-target sequence execution." />
 
 :::
 
-**C4 — Sequential waypoint dispatch:** Documented in Video 3.3.3 above, demonstrating autonomous ingestion, frame conversion, and sequential queueing of three target alerts (`target_01` at $t = 0\text{ s}$, `target_02` at $t = 12\text{ s}$, `target_03` at $t = 25\text{ s}$).
+## 3.3.6 Engineering Discussion {#com-discussion}
 
-**Coordinate-to-goal conversion:** The complete transformation pipeline (source coordinates $\to$ schema validation $\to$ `geometry_msgs/PoseStamped` in `map` frame $\to$ Nav2 action queue) is illustrated in [Figure 3.3.4 (C6) — JSON Target Alert Message Flow and Queueing Pipeline](#sec-4-iterations).
+Semester 1 development decoupled aerial reconnaissance from ground remediation via asynchronous ROS 2 interfaces, resolving virtualized network discovery through CycloneDDS static unicast peering and avoiding cross-compilation overhead via structured JSON serialization.
 
-<Figure src="./assets/diagrams/c8-emergency-abort-logic.svg" alt="Multi-Tier Emergency Abort and Goal Cancellation Architecture" caption="**Figure 5.2: Emergency Abort and Goal Cancellation Architecture.** Flowchart detailing software mission abort handling, queue flushing, asynchronous Nav2 action cancellation (`cancel_goal_async()`), and commanded zero-velocity override in the Semester 1 SIL testbed, distinguished from proposed Semester 2 physical hardware E-stop and STO motor interlocks." />
+Key architectural limitations guide Semester 2 development:
 
-<Figure src="./assets/diagrams/c9-communication-failure-recovery.svg" alt="Datalink Loss and Recovery Finite State Machine" caption="**Figure 6.1: Datalink Failure and Autonomy Recovery State Flow.** Finite state machine detailing active goal execution during loss of communications, waypoint holding safe-pause upon arrival, automatic DDS reconnection, and Semester 2 proposed autonomous return-to-base (RTB) watchdog timeout." />
+1. **Dynamic Addressing:** Hardcoded static IP configurations in `cyclonedds.xml` lack resilience against DHCP lease changes; operational field deployments require dynamic discovery or zero-configuration addressing.
+2. **Serial Gateway Protocol:** Integrating UART-based transceivers (Microhard P900 V2) necessitates implementing a robust serial gateway implementing COBS packet delimitation, CRC-32 integrity validation, and ARQ acknowledgement protocols.
+3. **Cryptographic Authentication:** The current signature is an unkeyed SHA-256 digest, which detects accidental byte corruption but does not authenticate the sender. Semester 2 implementation will incorporate keyed HMAC signatures to prevent spoofed target injection.
 
-## 6. Engineering Discussion {#com-discussion}
+## 3.3.7 Limitations & Semester 2 Plan {#com-semester-two}
 
-We separated target dispatch from the UGV navigation software and connected ROS 2 nodes across two computers. Static unicast peers solved the discovery problem in our WSL2 setup. JSON messages were straightforward to inspect during testing, but they require validation in the application. Static peers also need to be updated when network addresses change. The indoor tests do not establish outdoor radio reliability. A plain message hash does not authenticate the sender; that requires keyed authentication or a digital signature.
-
-::: details Additional evaluation and lessons learned
-
-**7. Evaluation & Discussion**
-
-**7.1 Evaluation of Semester 1 Implementation**
-
-The recorded indoor demonstration showed the Raspberry Pi sending target alerts to the simulated UGV and the bridge passing goals to Nav2. The separation between mission messages and robot motion control made the system easier to test. These results do not establish reliability on a long-range radio link.
-
-**7.2 Limitations of Indoor Wi-Fi & DDS Transport**
-
-Despite its success on the benchtop, three critical limitations prevent direct deployment of this architecture to an outdoor operational airfield:
-
-1. **Unverified outdoor range:** Indoor router tests do not establish reliable communication over runway distances. Outdoor coverage depends on antenna placement, interference and line of sight.
-2. **Transport compatibility:** The proposed serial radio is not an IP network, so native DDS traffic would require a separate transport or gateway design.
-3. **Static IP Fragility:** Static unicast peering requires hardcoded IP tables in `cyclonedds.xml`. While manageable in lab conditions, any network address change or IP lease renewal breaks node discovery.
-
-**Preliminary P900 V2 selection**
-
-The Holybro Microhard P900 V2 is a candidate for Semester 2. Operating on 900 MHz may offer different propagation characteristics from 5 GHz Wi-Fi, but range and reliability require testing. However, it requires accepting the development overhead of an asynchronous serial gateway node to frame and validate JSON messages across the UART bridge. Furthermore, the radio must be strictly validated against IMDA 917–925 MHz frequency limits before outdoor field transmission can be authorized.
-
-**8. Improvements & Lessons Learned**
-
-**8.1 DDS Discovery Under Virtualized NAT**
-
-The main networking issue was ROS 2 discovery across WSL2 and the external Raspberry Pi. Multicast discovery was unreliable, so we configured explicit CycloneDDS peers in XML. This allowed the two computers to discover each other in our test setup. The configuration does not by itself prove zero added latency.
-
-**8.2 JSON String vs Custom ROS 2 IDL Messages**
-
-Utilizing standard `std_msgs/msg/String` carrying JSON payloads significantly accelerated heterogeneous development between the ARM64 Raspberry Pi 5 and x86_64 workstation. It eliminated the need to cross-compile and synchronize custom ROS 2 message packages (`.msg` files) across different colcon workspaces. For the low-rate test messages, JSON was convenient to inspect in the terminal. Parsing latency was not independently benchmarked in the runtime audit.
-
-**8.3 Serial Gateway Design Considerations**
-
-Preparing for long-range radio integration revealed that transparent serial links can fragment packets if baud rates or buffer sizes are misconfigured. The proposed Semester 2 serial gateway must enforce strict byte-stuffing framing (COBS) and hardware CRC-32 validation to prevent partial JSON dictionaries from being passed to the parser.
-
-:::
-
-## 7. Limitations & Semester 2 Plan {#com-semester-two}
-
-Next, we need to confirm the radio regulations, select suitable hardware and implement the serial-to-ROS 2 gateway. We then plan to measure packet loss and latency, test communication loss and stale-message handling, and verify target dispatch between the physical UAV and UGV. Outdoor radio range and full physical mission performance have not yet been tested.
+Semester 2 milestones focus on radio transceiver procurement, firmware frequency masking validation (IMDA 917–925 MHz compliance), serial gateway implementation, and full over-the-air inter-agent field verification:
 
 ::: details Detailed proposed milestones
-
-**9. Semester 2 Development Plan**
-
-**Proposed implementation tasks**
-
-The proposed transition from indoor Wi-Fi testing to outdoor radio operation has ten steps:
 
 1. **Payload Profiling:** Measure and freeze exact JSON packet sizes for all alert and telemetry message types to establish maximum required UART baud rates.
 2. **IMDA Regulatory Clearance:** Verify Microhard P900 V2 firmware frequency masking via PicoConfig software to prove strict 917.0–925.0 MHz channel confinement; submit technical inquiry to IMDA regarding Short Range Device (SRD) power thresholds.
@@ -453,6 +419,10 @@ The proposed transition from indoor Wi-Fi testing to outdoor radio operation has
 10. **Full Inter-Agent Closed-Loop Integration:** Execute end-to-end mission verification connecting real UAV flight reconnaissance, RF alert transmission, UGV autonomous trajectory clearance, and telemetry uplink.
 
 :::
+
+### Related Documentation — ARGUS Communication System {#com-argus-reference}
+
+This document covers Stage 3 (C2 alert transmission) and Stage 4 (HUNTER navigation goal dispatch). For Stage 1 (communication setup) and Stage 2 (FOD coordinate generation), see the [ARGUS Communication System](https://cde4301-drone-ground-robots.github.io/CDE4301_runway_drone/report/#report-communication-system).
 
 <!-- #endregion report -->
 

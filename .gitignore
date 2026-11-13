@@ -28,6 +28,8 @@ build/
 test-results/
 playwright-report/
 blob-report/
+audit_screenshots/
+**/*audit_screenshots/
 # Root-level temporary test screenshots
 /*.png
 /*.jpg

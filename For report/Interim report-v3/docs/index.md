@@ -162,8 +162,8 @@ const roadmap = [
 <PlanEntry
   index="04"
   name="Gabriel Tan Kai Jie"
-  role="COMPUTER VISION & SENSOR FUSION"
-  preview="(To Be Filled)"
+  role="COMPUTER VISION, SENSOR FUSION & STM32 EMBEDDED CONTROL"
+  preview="TensorRT edge deployment with ELP 5 MP global-shutter camera, SAHI tiling, ROS 2–STM32 link, IMU/encoder fusion, and carrier PCB."
   docs="/members/gabriel/stm32-hardware"
   plan="/members/gabriel/semester-2-plan"
 >
@@ -177,7 +177,7 @@ const roadmap = [
   name="Bryan Ng Rui Jie"
   role="ELECTRICAL SYSTEM & CHARGING DOCK"
   preview="(To Be Filled)"
-  docs="/members/bryan/components-bom"
+  docs="/members/bryan/components-list"
   plan="/members/bryan/semester-2-plan"
 >
 

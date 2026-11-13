@@ -38,9 +38,9 @@ Each corner is modelled as a corner mass supported by a spring and a dampener in
 
 <div class="fig-row">
 
-<Figure src="./assets/diagrams/suspension-corner-mass-on-spring-and-dampener-above.svg" alt="Corner mass on spring and dampener above a rigid wheel" caption="Figure 4.2.2.1: Single-corner model of the suspension." />
+<Figure src="./assets/diagrams/suspension-corner-mass-on-spring-and-dampener-above.svg" alt="Corner mass on spring and dampener above a rigid wheel" caption="Figure 4.2.1: Single-corner model of the suspension." />
 
-<Figure src="./assets/diagrams/suspension-free-body-diagram-with-road-profile-inpu.svg" alt="Free body diagram with road profile input x(t) and chassis displacement output y(t)" caption="Figure 4.2.2.2: Free body diagram of the corner mass with road profile input x(t) and chassis displacement output y(t)." />
+<Figure src="./assets/diagrams/suspension-free-body-diagram-with-road-profile-inpu.svg" alt="Free body diagram with road profile input x(t) and chassis displacement output y(t)" caption="Figure 4.2.2: Free body diagram of the corner mass with road profile input x(t) and chassis displacement output y(t)." />
 
 </div>
 
@@ -202,11 +202,11 @@ $$
 
 The value of $b$ has to be an assumed value, as manufacturers do not usually tell consumers the damping constant. I searched online and asked Gemini AI to estimate the closest value, and eventually settled on $b = 400\ \text{Ns/m}$. I acknowledge that it may not be best practice to use a rough number for something as important as the suspension system. However, this value can be verified in testing when I perform a frequency response analysis.
 
-System mass = 65 kg, corner mass = 16.25 kg, $F_{corner}$ = 159.4125 N. Angle of installation = 25°, motion ratio = 0.821 ($K_w = K_s \times 0.821$), stroke length = 20 mm.
+System mass = 65 kg, corner mass = 16.25 kg, $F_{corner}$ = 159.4125 N. Angle of installation = 25°, motion ratio = 0.821 ($K_w = K_s \times 0.821$; see [Appendix I](/report#appendix-i) for the proof), stroke length = 20 mm (a commercially available length).
 
 <div class="compact-table">
 
-*Table 4.2.2.3: Spring rate evaluation against the natural frequency and static sag criteria.*
+*Table 4.2.1: Spring rate evaluation against the natural frequency and static sag criteria.*
 
 | Spring rate (lbf/in) | K<sub>s</sub> (N/m) | K<sub>w</sub> (N/m) | K<sub>w</sub> (N/mm) | Sag (mm) | ω<sub>n</sub> (rad/s) | f<sub>n</sub> (Hz) | Result |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -226,18 +226,18 @@ System mass = 65 kg, corner mass = 16.25 kg, $F_{corner}$ = 159.4125 N. Angle of
 
 </div>
 
-Table 4.2.2.3 evaluates commercially available spring rates from 30 lbf/in to 750 lbf/in against two criteria: a natural frequency below 10 Hz and a static sag of 40–60% of stroke. The options from 30 lbf/in to 400 lbf/in meet the natural frequency criterion, whereas the only spring that meets the 40–60% static sag criterion is 100 lbf/in. The 150 lbf/in and 200 lbf/in springs have static sag percentages of 37.0% and 27.7% respectively. These stiffer springs reduce static sag and leave more compression travel. Should testing show that the suspension bottoms out or lacks headroom, I will swap to one of these stiffer springs. Below, I have prepared an interactive slider (Figure 4.2.2.4) that compares two springs of choice. It shows the time-domain response to a unit step input for comparison. I went ahead with the purchase of the 100 lbf/in spring.
+Table 4.2.1 evaluates commercially available spring rates from 30 lbf/in to 750 lbf/in against two criteria: a natural frequency below 10 Hz and a static sag of 40–60% of stroke. The options from 30 lbf/in to 400 lbf/in meet the natural frequency criterion, whereas the only spring that meets the 40–60% static sag criterion is 100 lbf/in. The 150 lbf/in and 200 lbf/in springs have static sag percentages of 37.0% and 27.7% respectively. These stiffer springs reduce static sag and leave more compression travel. Should testing show that the suspension bottoms out or lacks headroom, I will swap to one of these stiffer springs. Below, I have prepared an interactive slider (Figure 4.2.3) that compares two springs of choice. It shows the time-domain response to a unit step input for comparison. I went ahead with the purchase of the 100 lbf/in spring.
 
 <SuspensionWidget1 />
 
-*Figure 4.2.2.4: Unit step response of the 100 lbf/in and 400 lbf/in springs for adjustable m, k and b.*
+*Figure 4.2.3: Unit step response of the 100 lbf/in and 400 lbf/in springs for adjustable m, k and b.*
 
 <!-- #endregion s2 -->
 
 ### 4.2.3 Suspension Design Evaluation
 
 <!-- #region s3 -->
-*Table 4.2.3.1: Comparison of candidate suspension types.*
+*Table 4.2.2: Comparison of candidate suspension types.*
 
 <table class="data-table fit-table"><tbody>
 <tr><th></th><th>Suspension type</th><th>Advantages</th><th>Disadvantages</th><th>Remarks</th><th>Final decision</th></tr>
@@ -255,9 +255,13 @@ The drawback of the double wishbone is width: it extends the track, and the whee
 ### 4.2.4 Prototype and Realisation
 
 <!-- #region s4 -->
-For the prototype, the 100 lbf/in spring was purchased and integrated with the design of the suspension system. Sheet metal was chosen as the prototype material as it is cheap to manufacture and it is able to demonstrate the benefit of the dual-arm set-up during skid steering. Attached here is a video demonstration of the suspension system working over extremely undulating terrain. It is imperative to keep all four wheels on the ground at all times to prevent any current spike in the motors, so that the electrical system is protected. Fewer wheels in contact means that the torque on each wheel for the same function will be greatly increased. This is hazardous and might cause the current to surge.
+For the prototype, the 100 lbf/in spring was purchased and integrated with the design of the suspension system. Sheet metal was chosen as the prototype material as it is cheap to manufacture and it is able to demonstrate the benefit of the dual-arm set-up during skid steering. It is imperative to keep all four wheels on the ground at all times to prevent any current spike in the motors, so that the electrical system is protected. Fewer wheels in contact means that the torque on each wheel for the same function will be greatly increased. This is hazardous and might cause the current to surge.
 
-<VideoClip src="./assets/videos/suspension-terrain-test.mp4" caption="Figure 4.2.4.1: Suspension prototype over undulating terrain." />
+<div style="max-width:230px;margin:0 auto">
+
+<Figure src="./assets/images/suspension-prototype-photo.png" alt="Hand holding the sheet metal suspension prototype, showing the spring and damper, the dual arms and the mounting bracket" caption="Figure 4.2.4: Sheet metal prototype of the suspension." />
+
+</div>
 
 <!-- #endregion s4 -->
 
@@ -265,11 +269,17 @@ For the prototype, the 100 lbf/in spring was purchased and integrated with the d
 
 <!-- #region s5 -->
 <!-- TODO: add the real-life test (video analysis of all four wheels staying in contact over obstacles) and the bounce test results. -->
+Attached here is a video demonstration of the suspension system working over extremely undulating terrain.
+
+<VideoClip src="./assets/videos/suspension-terrain-test.mp4" poster="./assets/images/suspension-terrain-test-poster.jpg" caption="Video 4.2.1: Suspension prototype over undulating terrain." />
+
+As clearly shown in this video, even over exaggerated undulating terrain, FOD Hunter maintains contact with the ground with all four wheels, allowing it to overcome challenging terrain.
+
 In an engineering control theory class (that I am reading this semester), I learned that a second order system is critically damped when the damping ratio $\xi$ becomes 1. For my transfer function, the numerator contains a zero due to the term $bs$, so critical damping for this transfer function still has a percentage overshoot of 13.5%. It requires the wheel rate, $K_w$, to be 14378 N/m and the dampener value $b$ to be 967 Ns/m.
 
 <SuspensionWidget2 />
 
-*Figure 4.2.5.1: Unit step response with adjustable natural frequency and damping ratio, set to critical damping by default.*
+*Figure 4.2.5: Unit step response with adjustable natural frequency and damping ratio, set to critical damping by default.*
 
 However, achieving this in real life may be extremely costly. The difference between cheap and expensive shock absorbers is the adjustability, the range of adjustability and the precision of the damping value. The orifices inside a shock absorber allow the damping constant to change, giving some degree of adjustability in the damping value. However, such components are extremely costly and can cost up to \$980 per shock absorber, while I could find non-adjustable ones at a significantly cheaper price of \$2.50 each. Therefore, I decided to purchase the lower-end shock absorber and focus the budget on the key function of the FOD Hunter, which is FOD remediation.
 

@@ -60,7 +60,7 @@ List all references used in your documentation and subsystem reports below. Use 
 ::: info
 <Badge type="info" text="[6]" /> <Badge type="info" text="FOD & Debris Removal" />
 
-A. F. El-Sayed, *Foreign Object Debris and Damage in Aviation*. Boca Raton, FL, USA: CRC Press, 2022, doi: [10.1201/9781003133087](https://doi.org/10.1201/9781003133087).<br> Used in 4.5.1: FAA and EASA definitions (p. 4), the AAGSC list (p. 4), the hard/soft classification and the 60% metal study (p. 19), and credit for Figure 4.5.1.1 (Fig. 1.3). Used in 4.5.2: removal methods (Sec. 8.4.3).
+A. F. El-Sayed, *Foreign Object Debris and Damage in Aviation*. Boca Raton, FL, USA: CRC Press, 2022, doi: [10.1201/9781003133087](https://doi.org/10.1201/9781003133087).<br> Used in 4.3.1: FAA and EASA definitions (p. 4), the AAGSC list (p. 4), the hard/soft classification and the 60% metal study (p. 19), and credit for Figure 4.3.1 (Fig. 1.3). Used in 4.3.2: removal methods (Sec. 8.4.3).
 :::
 
 <span id="ref-7"></span>
@@ -68,7 +68,7 @@ A. F. El-Sayed, *Foreign Object Debris and Damage in Aviation*. Boca Raton, FL, 
 ::: info
 <Badge type="info" text="[7]" /> <Badge type="info" text="Aviation Standard / FOD Management" />
 
-Federal Aviation Administration, "Airport foreign object debris (FOD) management," Advisory Circular 150/5210-24, Sep. 2010.<br> Used in 4.5.2: FOD removal equipment.
+Federal Aviation Administration, "Airport foreign object debris (FOD) management," Advisory Circular 150/5210-24, Sep. 2010.<br> Used in 4.3.2: FOD removal equipment.
 :::
 
 <span id="ref-8"></span>
@@ -76,7 +76,7 @@ Federal Aviation Administration, "Airport foreign object debris (FOD) management
 ::: info
 <Badge type="info" text="[8]" /> <Badge type="info" text="Fluid Mechanics" />
 
-Y. A. Çengel and J. M. Cimbala, *Fluid Mechanics: Fundamentals and Applications*, 4th ed. New York, NY, USA: McGraw-Hill Education, 2018.<br> Used in 4.5.3: drag and pressure-loss equations.
+Y. A. Çengel and J. M. Cimbala, *Fluid Mechanics: Fundamentals and Applications*, 4th ed. New York, NY, USA: McGraw-Hill Education, 2018.<br> Used in 4.3.3: drag and pressure-loss equations.
 :::
 
 <span id="ref-9"></span>
@@ -84,7 +84,7 @@ Y. A. Çengel and J. M. Cimbala, *Fluid Mechanics: Fundamentals and Applications
 ::: info
 <Badge type="info" text="[9]" /> <Badge type="info" text="Vacuum Performance Standard" />
 
-*Vacuum Cleaners for Household Use – Part 1: Dry Vacuum Cleaners – Methods for Measuring the Performance*, IEC 60312-1, 2017.<br> Used in 4.5.4: sealed vs open-flow suction rating.
+*Vacuum Cleaners for Household Use – Part 1: Dry Vacuum Cleaners – Methods for Measuring the Performance*, IEC 60312-1, 2017.<br> Used in 4.3.4: sealed vs open-flow suction rating.
 :::
 
 <span id="ref-10"></span>
@@ -92,7 +92,7 @@ Y. A. Çengel and J. M. Cimbala, *Fluid Mechanics: Fundamentals and Applications
 ::: info
 <Badge type="info" text="[10]" /> <Badge type="info" text="Industrial Ventilation" />
 
-American Conference of Governmental Industrial Hygienists, *Industrial Ventilation: A Manual of Recommended Practice for Design*, 30th ed. Cincinnati, OH, USA: ACGIH, 2019.<br> Used in 4.5.3: airspeed decay near a suction inlet.
+American Conference of Governmental Industrial Hygienists, *Industrial Ventilation: A Manual of Recommended Practice for Design*, 30th ed. Cincinnati, OH, USA: ACGIH, 2019.<br> Used in 4.3.3: airspeed decay near a suction inlet.
 :::
 
 ::::

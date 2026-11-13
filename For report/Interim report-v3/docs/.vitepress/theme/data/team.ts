@@ -1,3 +1,4 @@
+/// <reference path="../../env.d.ts" />
 /**
  * The one source of each member's identity: Meet the Team (Mirror Hall cards and profiles) and the Report's
  * Subsystem Lead plates both read it. Identity only — name, discipline, matric, portrait, documentation
@@ -77,7 +78,6 @@ export const team: Member[] = [
     docs: [
       { label: 'Suspension', route: '/members/asuka/suspension' },
       { label: 'Vacuum Module', route: '/members/asuka/vacuum-module' },
-      { label: 'FOD Sweep Box', route: '/members/asuka/fod-sweep-box-v2' },
       { label: 'Semester 2 Plan', route: '/members/asuka/semester-2-plan' }
     ],
     social: [
@@ -117,10 +117,8 @@ export const team: Member[] = [
     docs: [
       { label: 'STM32 Hardware', route: '/members/gabriel/stm32-hardware' },
       { label: 'STM32 Firmware', route: '/members/gabriel/stm32-firmware' },
-      { label: 'Sensor Fusion', route: '/members/gabriel/sensor-fusion' },
       { label: 'Vision Calculations', route: '/members/gabriel/vision-calculations' },
-      { label: 'Vision Research', route: '/members/gabriel/vision-research' },
-      { label: 'YOLO Comparison', route: '/members/gabriel/yolo-comparison' },
+      { label: 'YOLO Comparison & Training', route: '/members/gabriel/yolo-comparison-and-training' },
       { label: 'Semester 2 Plan', route: '/members/gabriel/semester-2-plan' }
     ],
     // LinkedIn left out until Gabriel's own profile URL is known.
@@ -137,7 +135,7 @@ export const team: Member[] = [
     portrait: bryanPortrait,
     focus: '48% 50%',
     docs: [
-      { label: 'Components & BOM', route: '/members/bryan/components-bom' },
+      { label: 'Components List', route: '/members/bryan/components-list' },
       { label: 'Power Calculations', route: '/members/bryan/power-calculations' },
       { label: 'Semester 2 Plan', route: '/members/bryan/semester-2-plan' }
     ],

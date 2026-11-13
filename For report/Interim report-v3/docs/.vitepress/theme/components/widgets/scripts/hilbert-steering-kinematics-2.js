@@ -201,8 +201,8 @@ class Scout2SteeringViewer {
                 <span style="font-weight: 600; color: #e2e8f0; font-family: 'JetBrains Mono', monospace;">0.688 m (&chi; = 1.18)</span>
               </div>
               <div style="display: flex; justify-content: space-between;">
-                <span style="color: #94a3b8;">Est. Scrub Torque (M<sub>scrub</sub>):</span>
-                <span id="in-hud-mscrub" style="font-weight: 600; color: #f43f5e; font-family: 'JetBrains Mono', monospace;">45.2 Nm</span>
+                <span style="color: #94a3b8;">Pivot-Equivalent Scrub Moment (M<sub>scrub</sub>):</span>
+                <span id="in-hud-mscrub" style="font-weight: 600; color: #f43f5e; font-family: 'JetBrains Mono', monospace;">135.0 Nm</span>
               </div>
             </div>
           </div>
@@ -834,11 +834,13 @@ class Scout2SteeringViewer {
       }
     }
 
-    // Scrub Torque Estimation
+    // Pivot-equivalent scrub moment (total resisting yaw moment, four-wheel point-contact model):
+    // M_scrub = 0.5 * mu * m * g * L. The model does not reduce scrub with turn radius, so the same
+    // pivot value is shown whenever the vehicle is yawing.
     const g = 9.81;
     let mScrub = 0;
     if (Math.abs(omega) > 0.05) {
-      mScrub = this.params.mu_tarmac * (this.params.mass * g) * (this.params.wheelbase / 4);
+      mScrub = 0.5 * this.params.mu_tarmac * (this.params.mass * g) * this.params.wheelbase;
     }
 
     this.state.vL = vL;

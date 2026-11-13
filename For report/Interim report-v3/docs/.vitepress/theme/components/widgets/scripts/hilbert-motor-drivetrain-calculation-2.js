@@ -228,15 +228,15 @@ class Scout2DrivetrainViewer {
             <!-- FORCES SECTION -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11.5px; margin-bottom: 8px;">
               <div>
-                <span style="color: #94a3b8;">Total Force ($F_{\\text{total}}$):</span>
+                <span style="color: #94a3b8;">Total Force (<i>F</i><sub>total</sub>):</span>
                 <div id="hud-ftotal" style="font-weight: 700; color: #f8fafc; font-family: 'JetBrains Mono', monospace; font-size: 13px;">74.44 N</div>
               </div>
               <div>
-                <span style="color: #94a3b8;">Torque / Motor ($\\tau_m$):</span>
+                <span style="color: #94a3b8;">Torque / Motor (<i>&tau;</i><sub>m</sub>):</span>
                 <div id="hud-torque" style="font-weight: 700; color: #f59e0b; font-family: 'JetBrains Mono', monospace; font-size: 13px;">2.88 Nm</div>
               </div>
               <div>
-                <span style="color: #94a3b8;">Phase Current ($I_m$):</span>
+                <span style="color: #94a3b8;">Phase Current (<i>I</i><sub>m</sub>):</span>
                 <div id="hud-current-phase" style="font-weight: 700; color: #10b981; font-family: 'JetBrains Mono', monospace;">3.44 A</div>
               </div>
               <div>
@@ -244,11 +244,11 @@ class Scout2DrivetrainViewer {
                 <div id="hud-current-bus" style="font-weight: 700; color: #10b981; font-family: 'JetBrains Mono', monospace;">13.76 A</div>
               </div>
               <div>
-                <span style="color: #94a3b8;">Wheel Speed ($N$):</span>
+                <span style="color: #94a3b8;">Wheel Speed (<i>N</i>):</span>
                 <div id="hud-rpm" style="font-weight: 700; color: #38bdf8; font-family: 'JetBrains Mono', monospace;">302.6 RPM (15 km/h)</div>
               </div>
               <div>
-                <span style="color: #94a3b8;">Motor Efficiency ($\\eta$):</span>
+                <span style="color: #94a3b8;">Motor Efficiency (<i>&eta;</i>):</span>
                 <div id="hud-eff" style="font-weight: 700; color: #38bdf8; font-family: 'JetBrains Mono', monospace;">70.0% (Measured)</div>
               </div>
             </div>
@@ -256,11 +256,11 @@ class Scout2DrivetrainViewer {
             <!-- POWER & HEADROOM -->
             <div style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 6px; font-size: 11px; display: flex; flex-direction: column; gap: 4px;">
               <div style="display: flex; justify-content: space-between;">
-                <span style="color: #94a3b8;">Mechanical Power ($P_{\\text{mech}}$):</span>
+                <span style="color: #94a3b8;">Mechanical Power (<i>P</i><sub>mech</sub>):</span>
                 <span id="hud-pmech" style="font-weight: 700; color: #e2e8f0; font-family: 'JetBrains Mono', monospace;">310.2 W (77.5 W/m)</span>
               </div>
               <div style="display: flex; justify-content: space-between;">
-                <span style="color: #94a3b8;">Electrical Input ($P_{\\text{elec}}$):</span>
+                <span style="color: #94a3b8;">Electrical Input (<i>P</i><sub>elec</sub>):</span>
                 <span id="hud-pelec" style="font-weight: 600; color: #94a3b8; font-family: 'JetBrains Mono', monospace;">443.1 W (Total Bus)</span>
               </div>
               <div style="display: flex; justify-content: space-between;">
@@ -287,7 +287,7 @@ class Scout2DrivetrainViewer {
             <!-- SLOPE ANGLE SLIDER (ACTIVE IN CASE 2) -->
             <div id="ctrl-slope-group">
               <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
-                <label for="scout-slope-slider" style="color: #f8fafc; font-weight: 600;">Incline Slope Angle ($\\theta$):</label>
+                <label for="scout-slope-slider" style="color: #f8fafc; font-weight: 600;">Incline Slope Angle (<i>&theta;</i>):</label>
                 <span id="scout-slope-val" style="color: #f59e0b; font-weight: 700; font-family: 'JetBrains Mono', monospace;">5.0° (8.75% grade)</span>
               </div>
               <input type="range" id="scout-slope-slider" min="0" max="15" step="0.5" value="5.0" style="width: 100%; accent-color: #f59e0b; cursor: pointer;">
@@ -301,7 +301,7 @@ class Scout2DrivetrainViewer {
             <!-- SPEED SLIDER (ACTIVE IN CASES 1 & 2) -->
             <div id="ctrl-speed-group">
               <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
-                <label for="scout-speed-kmh-slider" style="color: #f8fafc; font-weight: 600;">Vehicle Speed ($v$):</label>
+                <label for="scout-speed-kmh-slider" style="color: #f8fafc; font-weight: 600;">Vehicle Speed (<i>v</i>):</label>
                 <span id="scout-speed-kmh-val" style="color: #38bdf8; font-weight: 700; font-family: 'JetBrains Mono', monospace;">15.0 km/h (4.17 m/s)</span>
               </div>
               <input type="range" id="scout-speed-kmh-slider" min="0" max="20" step="1" value="15" style="width: 100%; accent-color: #38bdf8; cursor: pointer;">
@@ -316,7 +316,7 @@ class Scout2DrivetrainViewer {
             <!-- ACCELERATION SLIDER (ACTIVE IN CASE 3) -->
             <div id="ctrl-accel-group" style="display: none;">
               <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
-                <label for="scout-accel-slider" style="color: #f8fafc; font-weight: 600;">Linear Acceleration ($a$):</label>
+                <label for="scout-accel-slider" style="color: #f8fafc; font-weight: 600;">Linear Acceleration (<i>a</i>):</label>
                 <span id="scout-accel-val" style="color: #60a5fa; font-weight: 700; font-family: 'JetBrains Mono', monospace;">1.389 m/s² (3.0 s to 15 km/h)</span>
               </div>
               <input type="range" id="scout-accel-slider" min="0.5" max="2.5" step="0.1" value="1.389" style="width: 100%; accent-color: #60a5fa; cursor: pointer;">
@@ -356,20 +356,57 @@ class Scout2DrivetrainViewer {
               <span style="font-size: 11px; color: #94a3b8;">Analytical Mechanics (Gillespie, 1992; Siegwart, 2011)</span>
             </div>
             <div id="eq-card-math" style="font-size: 15px; color: #e2e8f0; overflow-x: auto;">
-              <!-- Dynamic MathJax updated per case -->
+              <!-- Dynamic Math updated per case -->
             </div>
           </div>
 
           <!-- RECONCILIATION PROVENANCE NOTE -->
           <div style="margin-top: 12px; padding: 10px 14px; background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 6px; font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
             <strong style="color: #38bdf8;">Provenance &amp; Parameter Reconciliation:</strong> 
-            This 3D vehicle dynamics visualizer utilizes the authentic <strong>AgileX Scout 2.0 simulation proxy</strong> ($L=0.498\\text{ m}, B=0.583\\text{ m}, r=0.165\\text{ m}$) employed during Semester 1 Gazebo Harmonic simulation to illustrate physical forces, incline pitch, and wheel scrubbing. All numerical outputs, force equations, and torque ratings in the telemetry panel strictly reflect the final custom CDE4301 UGV design parameters ($m=65.0\\text{ kg}, r=0.1315\\text{ m}, L=0.4888\\text{ m}, B=0.5750\\text{ m}$) and certified factory load-test bench measurements for the purchased <strong>ZLLG80ASM250-4096 48V direct-drive hub motors</strong> (Report FA2201060003).
+            This 3D vehicle dynamics visualizer utilizes the authentic <strong>AgileX Scout 2.0 simulation proxy</strong> (<i>L</i> = 0.498 m, <i>B</i> = 0.583 m, <i>r</i> = 0.165 m) employed during Semester 1 Gazebo Harmonic simulation to illustrate physical forces, incline pitch, and wheel scrubbing. All numerical outputs, force equations, and torque ratings in the telemetry panel strictly reflect the final custom CDE4301 UGV design parameters (<i>m</i> = 65.0 kg, <i>r</i> = 0.1315 m, <i>L</i> = 0.4888 m, <i>B</i> = 0.5750 m) and certified factory load-test bench measurements for the purchased <strong>ZLLG80ASM250-4096 48V direct-drive hub motors</strong> (Report FA2201060003).
           </div>
 
         </div>
       </div>
       
       <style>
+        /* Drivetrain Live Equation Styling */
+        .drive-eq-row {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 6px;
+          margin: 6px 0;
+          font-family: 'Times New Roman', Cambria, 'KaTeX_Math', serif;
+          font-size: 14.5px;
+          color: #e2e8f0;
+          line-height: 1.5;
+        }
+        .drive-eq-frac {
+          display: inline-flex;
+          flex-direction: column;
+          vertical-align: middle;
+          text-align: center;
+          padding: 0 4px;
+          font-size: 0.9em;
+          line-height: 1.1;
+        }
+        .drive-eq-num {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+          padding-bottom: 2px;
+        }
+        .drive-eq-den {
+          padding-top: 2px;
+        }
+        .drive-eq-val {
+          font-family: 'JetBrains Mono', monospace;
+          font-weight: 700;
+          color: #38bdf8;
+        }
+        .drive-eq-dim {
+          color: #94a3b8;
+          font-size: 0.9em;
+        }
         .scout-case-btn:hover:not(.active) {
           color: #f8fafc !important;
           background: rgba(255, 255, 255, 0.06) !important;
@@ -975,7 +1012,10 @@ class Scout2DrivetrainViewer {
     document.getElementById('hud-pelec').textContent = `${this.state.elecPower.toFixed(1)} W (Total 48V Bus)`;
     document.getElementById('hud-headroom').textContent = headroomStr;
 
-    // 4. Update 3D Visual Force Vectors
+    // 4. Update Live Equation Card
+    this.updateEquationCard();
+
+    // 5. Update 3D Visual Force Vectors
     this.update3DSceneGeometry(thetaRad);
   }
 
@@ -1101,35 +1141,55 @@ class Scout2DrivetrainViewer {
     if (c === 'cruise') {
       cardTitle.textContent = 'Case 1: Straight Flat Cruising at 15 km/h';
       cardMath.innerHTML = `
-        $$F_{rr} = C_{rr} m g = 0.025 \\times 65.0 \\times 9.81 = \\mathbf{15.94\\text{ N}}$$
-        $$F_{aero} = \\frac{1}{2}\\rho C_d A v^2 = 0.5 \\times 1.204 \\times 0.80 \\times 0.35 \\times (4.167)^2 = \\mathbf{2.93\\text{ N}}$$
-        $$F_{\\text{total}} = F_{rr} + F_{aero} = \\mathbf{18.87\\text{ N}} \\implies \\tau_{\\text{motor}} = \\frac{F_{\\text{total}} \\cdot r}{4 \\cdot \\eta} = \\frac{18.87 \\times 0.1315}{4 \\times 0.85} = \\mathbf{0.73\\text{ Nm}}$$
+        <div class="drive-eq-row">
+          <span><i>F</i><sub>rr</sub> = <i>C</i><sub>rr</sub> &middot; <i>m</i> &middot; <i>g</i> = 0.025 &times; 65.0 &times; 9.81 = <strong class="drive-eq-val">15.94 N</strong></span>
+        </div>
+        <div class="drive-eq-row">
+          <span><i>F</i><sub>aero</sub> = <span class="drive-eq-frac"><span class="drive-eq-num">1</span><span class="drive-eq-den">2</span></span> <i>&rho;</i> <i>C</i><sub>d</sub> <i>A</i> <i>v</i><sup>2</sup> = 0.5 &times; 1.204 &times; 0.80 &times; 0.35 &times; (4.167)<sup>2</sup> = <strong class="drive-eq-val">2.93 N</strong></span>
+        </div>
+        <div class="drive-eq-row">
+          <span><i>F</i><sub>total</sub> = <i>F</i><sub>rr</sub> + <i>F</i><sub>aero</sub> = <strong class="drive-eq-val">18.87 N</strong> &emsp;&rArr;&emsp; <i>&tau;</i><sub>motor</sub> = <span class="drive-eq-frac"><span class="drive-eq-num"><i>F</i><sub>total</sub> &middot; <i>r</i></span><span class="drive-eq-den">4 &middot; <i>&eta;</i></span></span> = <span class="drive-eq-frac"><span class="drive-eq-num">18.87 &times; 0.1315</span><span class="drive-eq-den">4 &times; 0.85</span></span> = <strong class="drive-eq-val" style="color: #fbbf24;">0.73 Nm</strong></span>
+        </div>
       `;
     } else if (c === 'slope') {
       cardTitle.textContent = `Case 2: Incline Slope Climbing (${this.state.slopeDeg.toFixed(1)}° at ${this.state.speedKmh.toFixed(0)} km/h)`;
       cardMath.innerHTML = `
-        $$F_{\\text{slope}} = m g \\sin(${this.state.slopeDeg.toFixed(1)}^\\circ) = 65.0 \\times 9.81 \\times \\sin(${this.state.slopeDeg.toFixed(1)}^\\circ) = \\mathbf{${this.state.Fgrade.toFixed(2)}\\text{ N}}$$
-        $$F_{rr} = C_{rr} m g \\cos(${this.state.slopeDeg.toFixed(1)}^\\circ) = \\mathbf{${this.state.Frr.toFixed(2)}\\text{ N}}, \\qquad F_{aero} = \\mathbf{${this.state.Faero.toFixed(2)}\\text{ N}}$$
-        $$F_{\\text{total}} = F_{rr} + F_{\\text{slope}} + F_{aero} = \\mathbf{${this.state.Ftotal.toFixed(2)}\\text{ N}} \\implies \\tau_{\\text{motor}} = \\frac{${this.state.Ftotal.toFixed(2)} \\times 0.1315}{4 \\times 0.85} = \\mathbf{${this.state.torquePerMotor.toFixed(2)}\\text{ Nm}}$$
+        <div class="drive-eq-row">
+          <span><i>F</i><sub>slope</sub> = <i>m</i> &middot; <i>g</i> &middot; sin(${this.state.slopeDeg.toFixed(1)}°) = 65.0 &times; 9.81 &times; sin(${this.state.slopeDeg.toFixed(1)}°) = <strong class="drive-eq-val">${this.state.Fgrade.toFixed(2)} N</strong></span>
+        </div>
+        <div class="drive-eq-row">
+          <span><i>F</i><sub>rr</sub> = <i>C</i><sub>rr</sub> &middot; <i>m</i> &middot; <i>g</i> &middot; cos(${this.state.slopeDeg.toFixed(1)}°) = <strong class="drive-eq-val">${this.state.Frr.toFixed(2)} N</strong>,&emsp; <i>F</i><sub>aero</sub> = <strong class="drive-eq-val">${this.state.Faero.toFixed(2)} N</strong></span>
+        </div>
+        <div class="drive-eq-row">
+          <span><i>F</i><sub>total</sub> = <i>F</i><sub>rr</sub> + <i>F</i><sub>slope</sub> + <i>F</i><sub>aero</sub> = <strong class="drive-eq-val">${this.state.Ftotal.toFixed(2)} N</strong> &emsp;&rArr;&emsp; <i>&tau;</i><sub>motor</sub> = <span class="drive-eq-frac"><span class="drive-eq-num">${this.state.Ftotal.toFixed(2)} &times; 0.1315</span><span class="drive-eq-den">4 &times; 0.85</span></span> = <strong class="drive-eq-val" style="color: #fbbf24;">${this.state.torquePerMotor.toFixed(2)} Nm</strong></span>
+        </div>
       `;
     } else if (c === 'accel') {
       cardTitle.textContent = `Case 3: Dynamic Acceleration (a = ${this.state.accelMps2.toFixed(3)} m/s²)`;
       cardMath.innerHTML = `
-        $$a = \\frac{v}{t_{\\text{acc}}} = \\frac{4.167\\text{ m/s}}{3.0\\text{ s}} = \\mathbf{1.3889\\text{ m/s}^2} \\implies F_{\\text{acc}} = m \\cdot a = 65.0 \\times 1.3889 = \\mathbf{90.28\\text{ N}}$$
-        $$F_{\\text{total}} = F_{rr} + F_{\\text{acc}} + F_{aero} = 15.94 + 90.28 + 2.93 = \\mathbf{109.15\\text{ N}}$$
-        $$\\tau_{\\text{motor}} = \\frac{109.15 \\times 0.1315}{4 \\times 0.85} = \\mathbf{4.22\\text{ Nm per motor}} \\quad (\\text{Margin: } 6.75\\times \\text{ of } 28.5\\text{ Nm peak})$$
+        <div class="drive-eq-row">
+          <span><i>a</i> = <span class="drive-eq-frac"><span class="drive-eq-num"><i>v</i></span><span class="drive-eq-den"><i>t</i><sub>acc</sub></span></span> = <span class="drive-eq-frac"><span class="drive-eq-num">4.167 m/s</span><span class="drive-eq-den">3.0 s</span></span> = <strong class="drive-eq-val">1.3889 m/s<sup>2</sup></strong> &emsp;&rArr;&emsp; <i>F</i><sub>acc</sub> = <i>m</i> &middot; <i>a</i> = 65.0 &times; 1.3889 = <strong class="drive-eq-val">90.28 N</strong></span>
+        </div>
+        <div class="drive-eq-row">
+          <span><i>F</i><sub>total</sub> = <i>F</i><sub>rr</sub> + <i>F</i><sub>acc</sub> + <i>F</i><sub>aero</sub> = 15.94 + 90.28 + 2.93 = <strong class="drive-eq-val">109.15 N</strong></span>
+        </div>
+        <div class="drive-eq-row">
+          <span><i>&tau;</i><sub>motor</sub> = <span class="drive-eq-frac"><span class="drive-eq-num">109.15 &times; 0.1315</span><span class="drive-eq-den">4 &times; 0.85</span></span> = <strong class="drive-eq-val" style="color: #fbbf24;">4.22 Nm per motor</strong> &emsp;<span class="drive-eq-dim">(Margin: 6.75&times; of 28.5 Nm peak)</span></span>
+        </div>
       `;
     } else if (c === 'pivot') {
       cardTitle.textContent = 'Case 4: In-Place Zero-Radius Skid-Steer Pivot (Peak Sizing Case)';
       cardMath.innerHTML = `
-        $$F_{\\text{skid}} = m g \\mu_{\\text{skid}} = 65.0 \\times 9.81 \\times 0.80 = \\mathbf{510.12\\text{ N}} \\implies F_{y,i} = \\frac{510.12}{4} = \\mathbf{127.53\\text{ N per wheel}}$$
-        $$M_{\\text{scrub}} = 4 \\times \\left(F_{y,i} \\cdot \\frac{L}{2}\\right) = \\mathbf{255.06 \\cdot L\\text{ Nm}} \\implies F_x = 127.53 \\times \\left(\\frac{L}{B}\\right) = 127.53 \\times 0.80 = \\mathbf{102.02\\text{ N}}$$
-        $$\\tau_{\\text{motor}} = \\frac{F_x \\cdot r}{\\eta} = \\frac{102.02 \\times 0.1315}{0.85} = \\mathbf{15.78\\text{ Nm per motor}} \\quad (\\text{Peak Headroom: } \\mathbf{1.81\\times})$$
+        <div class="drive-eq-row">
+          <span><i>F</i><sub>skid</sub> = <i>m</i> &middot; <i>g</i> &middot; <i>&mu;</i><sub>skid</sub> = 65.0 &times; 9.81 &times; 0.80 = <strong class="drive-eq-val">510.12 N</strong> &emsp;&rArr;&emsp; <i>F</i><sub>y,i</sub> = <span class="drive-eq-frac"><span class="drive-eq-num">510.12</span><span class="drive-eq-den">4</span></span> = <strong class="drive-eq-val">127.53 N per wheel</strong></span>
+        </div>
+        <div class="drive-eq-row">
+          <span><i>M</i><sub>scrub</sub> = 4 &times; (<i>F</i><sub>y,i</sub> &middot; <span class="drive-eq-frac"><span class="drive-eq-num"><i>L</i></span><span class="drive-eq-den">2</span></span>) = <strong class="drive-eq-val">255.06 &middot; <i>L</i> Nm</strong> &emsp;&rArr;&emsp; <i>F</i><sub>x</sub> = 127.53 &times; (<span class="drive-eq-frac"><span class="drive-eq-num"><i>L</i></span><span class="drive-eq-den"><i>B</i></span></span>) = 127.53 &times; 0.80 = <strong class="drive-eq-val">102.02 N</strong></span>
+        </div>
+        <div class="drive-eq-row">
+          <span><i>&tau;</i><sub>motor</sub> = <span class="drive-eq-frac"><span class="drive-eq-num"><i>F</i><sub>x</sub> &middot; <i>r</i></span><span class="drive-eq-den"><i>&eta;</i></span></span> = <span class="drive-eq-frac"><span class="drive-eq-num">102.02 &times; 0.1315</span><span class="drive-eq-den">0.85</span></span> = <strong class="drive-eq-val" style="color: #fbbf24;">15.78 Nm per motor</strong> &emsp;<span class="drive-eq-dim">(Peak Headroom: <strong style="color: #4ade80;">1.81&times;</strong>)</span></span>
+        </div>
       `;
-    }
-
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      window.MathJax.typesetPromise([cardMath]).catch(() => {});
     }
   }
 

@@ -13,10 +13,11 @@ useWidgetScript([['gabriel-stm32-hardware-1', s0]])
             <table class="admin-table" id="interface-table">
               <thead>
                 <tr>
-                  <th style="min-width: 120px;">Group</th>
-                  <th style="min-width: 240px;">Device</th>
-                  <th style="min-width: 160px;">Interface</th>
-                  <th style="min-width: 200px;">Pins</th>
+                  <th style="min-width: 110px;">Group</th>
+                  <th style="min-width: 200px;">Device</th>
+                  <th style="min-width: 140px;">Interface</th>
+                  <th style="min-width: 165px;">Pins</th>
+                  <th style="min-width: 280px;">Reasoning</th>
                 </tr>
               </thead>
               <tbody>
@@ -25,36 +26,42 @@ useWidgetScript([['gabriel-stm32-hardware-1', s0]])
                   <td><strong>ToF distance sensor</strong></td>
                   <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">UART5</code></td>
                   <td><code style="font-family: var(--font-mono);">PC12 TX, PD2 RX</code></td>
+                  <td>Measures close-range ground and debris distance for nozzle height verification and obstacle clearance.</td>
                 </tr>
                 <tr data-group="sensor">
                   <td><span class="group-tag tag-sensor">Sensor</span></td>
                   <td><strong>9-DOF IMU</strong></td>
                   <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">I2C1</code></td>
                   <td><code style="font-family: var(--font-mono);">PB6 SCL, PB7 SDA</code></td>
+                  <td>Provides 100 Hz accelerometer, gyroscope, and magnetometer data (`0x68`) for heading estimation, tilt sensing, and wheel-slip fusion.</td>
                 </tr>
                 <tr data-group="sensor">
                   <td><span class="group-tag tag-sensor">Sensor</span></td>
                   <td><strong>UM980 RTK GNSS</strong></td>
                   <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">USART3</code></td>
                   <td><code style="font-family: var(--font-mono);">PC10 TX, PC11 RX</code></td>
+                  <td>Streams centimetre-level 10 Hz RTK positioning sentences so the UGV can navigate to runway FOD coordinates flagged by the drone.</td>
                 </tr>
                 <tr data-group="sensor">
                   <td><span class="group-tag tag-sensor">Sensor</span></td>
                   <td><strong>Microhard radio</strong></td>
                   <td><code style="color: var(--apple-blue); font-family: var(--font-mono);">UART4</code></td>
                   <td><code style="font-family: var(--font-mono);">PA0 TX, PA1 RX</code></td>
+                  <td>Long-range wireless telemetry link between the ground station, UAV, and UGV for target dispatch and status reporting.</td>
                 </tr>
                 <tr data-group="power">
                   <td><span class="group-tag tag-power">Power</span></td>
                   <td><strong>BMS 6S–22S LiFePO4 100 A</strong></td>
                   <td><code style="color: var(--apple-amber); font-family: var(--font-mono);">USART1</code></td>
                   <td><code style="font-family: var(--font-mono);">PA9 TX, PA10 RX</code></td>
+                  <td>Reports pack voltage, cell balance, discharge current, and temperature from the 48 V LiFePO4 battery for low-voltage and thermal protection.</td>
                 </tr>
                 <tr data-group="motor">
                   <td><span class="group-tag tag-motor">Motor</span></td>
                   <td><strong>2× ZLAC8015D (via CAN transceiver)</strong></td>
                   <td><code style="color: var(--apple-green); font-family: var(--font-mono);">CAN1</code></td>
                   <td><code style="font-family: var(--font-mono);">PB8 RX, PB9 TX</code></td>
+                  <td>Shared 500 kbps CANopen bus controlling all 4 hub motors across Node 1 (`0x601`) and Node 2 (`0x602`) with 150 ms Statusword fault polling.</td>
                 </tr>
                 <tr data-group="motor">
                   <td><span class="group-tag tag-motor">Motor</span></td>
@@ -62,33 +69,38 @@ useWidgetScript([['gabriel-stm32-hardware-1', s0]])
                   <td><code style="color: var(--apple-green); font-family: var(--font-mono);">GPIO (open-drain sink)</code>
                   </td>
                   <td><code style="font-family: var(--font-mono);">PC2 PUL−, PC3 DIR−</code></td>
+                  <td>Lowers and retracts the vacuum pickup head (110 mm stroke); uses 5 V open-drain current sinking to switch the TB6600 optocouplers without level shifters.</td>
                 </tr>
                 <tr data-group="visual">
                   <td><span class="group-tag tag-visual">Visual</span></td>
                   <td><strong>Headlights &amp; status light</strong></td>
                   <td><code style="color: var(--apple-purple); font-family: var(--font-mono);">GPIO out</code></td>
                   <td><code style="font-family: var(--font-mono);">PB4, PB5</code></td>
+                  <td>Drives forward runway illumination for low-light camera inspection and external visual indicators of the UGV's operating state.</td>
                 </tr>
                 <tr data-group="actuator">
                   <td><span class="group-tag tag-actuator">Actuator</span></td>
                   <td><strong>Vacuum relay</strong></td>
                   <td><code style="color: #22d3ee; font-family: var(--font-mono);">GPIO out</code></td>
                   <td><code style="font-family: var(--font-mono);">PC0</code></td>
+                  <td>Switches the high-power vacuum suction blower on and off when the UGV reaches a confirmed FOD target.</td>
                 </tr>
                 <tr data-group="input">
                   <td><span class="group-tag tag-input">User Input</span></td>
                   <td><strong>RF relay switch (E-stop)</strong></td>
                   <td><code style="color: #fb923c; font-family: var(--font-mono);">GPIO in</code></td>
                   <td><code style="font-family: var(--font-mono);">PB1</code></td>
+                  <td>Hardware emergency-stop input from the wireless kill switch; triggers an immediate motor halt independent of high-level software.</td>
                 </tr>
                 <tr data-group="input">
                   <td><span class="group-tag tag-input">User Input</span></td>
                   <td><strong>USB gamepad</strong></td>
                   <td><code style="color: #fb923c; font-family: var(--font-mono);">USB OTG FS (host)</code></td>
                   <td><code style="font-family: var(--font-mono);">PA11 DM, PA12 DP</code></td>
+                  <td>Connects the wireless GameSir receiver directly to the STM32 for standalone manual driving and bench testing without a laptop.</td>
                 </tr>
                 <tr id="interface-empty-row" style="display: none;">
-                  <td colspan="4" style="text-align: center; padding: 24px; color: var(--apple-text-tertiary);">
+                  <td colspan="5" style="text-align: center; padding: 24px; color: var(--apple-text-tertiary);">
                     No matching devices or interfaces found. Try clearing your search query.
                   </td>
                 </tr>

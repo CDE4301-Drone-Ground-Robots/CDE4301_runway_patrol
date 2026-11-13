@@ -29,35 +29,45 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 
 <template #contributions>
 
-- Communication (indoor)
-- Steering kinematics
-- Software (ROS 2)
-- Simulation (Gazebo)
-- Navigation (RViz2)
-- Motor calculation (determine battery spec)
-- Assist with prototype FOD Hunter design
-- Assist with overall electrical design
-- Website report design
-- Secondary research
-- Final FOD Hunter design
+- ROS 2 software development
+- Autonomous navigation and obstacle avoidance
+- Gazebo simulation
+- Dual-EKF localisation
+- UAV–UGV communications
+- Motor sizing and selection
+- Skid-steer kinematics
+- Mechanical design coordination
+- Electrical design support
+- FOD Hunter prototype and final design
+- Engineering research and documentation
+- Website design and development
 
 </template>
 
 <template #scope>
 
-Also overseeing mechanical
-
-- **Messaging architecture:** custom ROS 2 message parser/validator for incoming UAV coordinate streams.
-- **SLAM & localisation:** `SLAM Toolbox` tuning for 2D/3D airfield mapping & pose tracking.
-- **Path planning & avoidance:** `Nav2` controller/planner plugins for waypoint execution with dynamic obstacle clearance.
-- **Fail-safe protocols:** heartbeat monitors & automated emergency stop logic upon signal loss.
+- **Software:** ROS 2 Jazzy setup and system integration.
+- **Navigation:** Hybrid A* path planning, Regulated Pure Pursuit control and obstacle avoidance.
+- **Localisation:** Dual-EKF using simulated GPS, IMU and wheel odometry.
+- **Communications:** CycloneDDS, C2 alert reception and Nav2 goal dispatch.
+- **Motor drivetrain:** Motor torque calculations, sizing and selection.
+- **Steering:** Skid-steer kinematics and wheel-speed calculations.
+- **Mechanical:** Coordinate chassis, suspension and FOD collection integration.
+- **Electrical:** Support power-system design and component selection.
+- **Safety:** Communication-loss handling and navigation goal cancellation.
 
 </template>
 
 <template #s1>
 
-- Autonomous UGV navigation on Gazebo Harmonic & RViz2 (ROS 2 Jazzy on Ubuntu 24.04)
-- Communications with simulated UAV (Raspberry Pi 5 / Charan's laptop) via router
+- Set up ROS 2 Jazzy, Ubuntu 24.04 and Gazebo Harmonic.
+- Implemented autonomous navigation using Hybrid A* and Regulated Pure Pursuit in simulation.
+- Configured Dual-EKF localisation with simulated GPS, IMU and wheel odometry.
+- Tested indoor UAV–UGV communication between Raspberry Pi 5 and workstation.
+- Implemented C2 alert reception and Nav2 goal dispatch.
+- Completed preliminary motor sizing and skid-steer calculations.
+- Supported mechanical and electrical subsystem integration.
+- Developed the VitePress engineering report website.
 
 </template>
 
@@ -93,7 +103,9 @@ Also overseeing mechanical
 
 <template #s1>
 
-(To Be Filled)
+- Problem insight report and primary interviews.
+- Critical function prototype of the suspension system.
+- Critical function prototype of FOD remediation.
 
 </template>
 
@@ -157,15 +169,17 @@ Also overseeing mechanical
 
 Also overseeing electrical
 
-- YOLO object detection model training, comparison & FOD target classification.
-- Multi-modal perception combining camera streams & sensor fusion.
-- Close-range target spatial detection & bounding box evaluation.
+- Computer vision optical sizing, camera selection, and close-range FOD detection (YOLO11-S).
+- FOD-A leakage auditing, custom tarmac dataset collection, and multi-seed training evaluation.
+- STM32 NUCLEO-F446RE hardware interfacing and bare-metal firmware for dual-driver CANopen motion control, stepper actuation, and safety watchdogs.
 
 </template>
 
 <template #s1>
 
-(To Be Filled)
+- Derived camera optical requirements (≥ 29 px/°, ≥ 4.7 FPS min / 10 FPS target, 33° tilt) and selected the ELP 5 MP global-shutter camera (`ELP-USBGS5MP01-L601`).
+- Audited FOD-A frame leakage (99.42% → 50.29% mAP50), benchmarked YOLOv8-S, YOLO11-S, and RT-DETR-L, fine-tuned YOLO11-S on a 1,552-image custom tarmac dataset (97.0 ± 1.4% mAP50 at 1088 px), and verified live detection (7 / 7 fasteners) on the UGREEN CM831 webcam.
+- Built and verified the 5-stage STM32 NUCLEO-F446RE bare-metal firmware (`controller.c`) for dual ZLAC8015D CANopen motor control, 5 V open-drain stepper actuation (110 mm stroke), CiA 402 state machine (`GUI.py`), and USB Host gamepad teleoperation.
 
 </template>
 
