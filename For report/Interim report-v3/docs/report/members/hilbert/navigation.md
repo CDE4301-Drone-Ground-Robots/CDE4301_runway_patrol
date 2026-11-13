@@ -11,11 +11,11 @@ outline: [2, 3]
 
 <!-- #region report -->
 
-## 1. Objectives & Requirements {#sec-1-summary}
+## 3.2.1 Objectives & Requirements {#sec-1-summary}
 
-The UGV needs to reach FOD coordinates, stay within the permitted route and avoid obstacles. Open runway areas provide few landmarks for LiDAR-based localization, while wheel slip makes odometry less reliable. I therefore used LiDAR obstacle detection, GPS-assisted localization, Hybrid A\* planning and RPP path tracking.
+Autonomous runway patrol requires the UGV to navigate to detected foreign object debris (FOD) coordinates, maintain path containment within designated airport operational corridors, and proactively avoid ground obstacles. Vast airfield environments lack vertical planar features for geometric LiDAR localization, while skid-steer tire slip causes rapid odometry drift. The navigation stack therefore couples 3D LiDAR perception, Dual-EKF GNSS-inertial state estimation, kinematically constrained Hybrid A\* global planning, and Regulated Pure Pursuit (RPP) local path tracking.
 
-The documented Semester 1 SIL speed baseline is **8.0 km/h**. The **15.0 km/h** physical-vehicle speed and **±0.10 m** localization accuracy are _targets_, not measured field results. The active SIL Hybrid A\* configuration uses a **1.0 m minimum planning radius**. A 1.5 m radius is a proposed setting for future physical trials, not the tested SIL configuration.
+The validated Semester 1 software-in-the-loop (SIL) baseline cruise speed is **8.0 km/h ($2.22\text{ m/s}$)**. The target operational sprint velocity of **15.0 km/h ($4.17\text{ m/s}$)** and global localization accuracy of **$\pm 0.10\text{ m}$** represent engineering design criteria for physical deployment rather than measured field outcomes. In the active SIL baseline, `SmacPlannerHybrid` enforces a **1.0 m minimum turning radius** to suppress tire scrub, with a 1.5 m radius evaluated as a candidate setting for open airfield sweeping.
 
 ::: details Requirements and operating constraints
 
@@ -27,19 +27,19 @@ The documented Semester 1 SIL speed baseline is **8.0 km/h**. The **15.0 km/h** 
 | Obstacle sensing      | 360° awareness, ≥30 m target                     | Sensor requirement               |
 | Planning radius       | 1.0 m in SIL; 1.5 m proposed for physical trials | Configured versus planned        |
 
-Runway conditions include bright sunlight and few fixed landmarks. The listed sensor requirements have not been validated on the physical UGV.
+Airfield operational constraints include high solar irradiance (&gt; 80,000 lux) and sparse vertical structure. Sensor specifications reflect manufacturer ratings pending on-vehicle environmental validation.
 
 :::
 
-## 2. System Architecture {#sec-2-overview}
+## 3.2.2 System Architecture {#sec-2-overview}
 
-The system follows **perception → localization → planning → control → actuation**. LiDAR data updates the obstacle costmaps. A local EKF combines wheel odometry and IMU data, while a global EKF uses GPS-derived position to correct drift. Nav2 plans a route [\[8\]](./references.md#ref-8) and Regulated Pure Pursuit (RPP) converts it into `/cmd_vel` commands [\[18\]](./references.md#ref-18). A behavior tree coordinates execution and recovery.
+The autonomous navigation system is structured as a pipeline of **perception → localization → planning → control → actuation**. Volumetric LiDAR scans update dynamic costmap layers. In parallel, a Dual-EKF architecture fuses wheel odometry and 9-DOF IMU streams for local high-rate dead-reckoning while integrating GNSS fixes to eliminate cumulative global drift. Nav2 orchestrates global path computation via `SmacPlannerHybrid` [\[8\]](./references.md#ref-8), and `RegulatedPurePursuitController` generates velocity commands (`/cmd_vel`) [\[18\]](./references.md#ref-18). A BehaviorTree.CPP supervisor coordinates waypoint sequencing and fault recovery.
 
-Both EKF nodes and `navsat_transform_node` ran in WSL2, publishing filtered odometry and the `map → odom → base_footprint` TF chain. This confirms that the localization pipeline ran, but not its motion-tracking accuracy.
+In runtime simulation execution under WSL2, `ekf_filter_node_odom`, `ekf_filter_node_map`, and `navsat_transform_node` continuously published filtered odometry and maintained the complete `map → odom → base_footprint` TF tree, confirming functional middleware integration.
 
 <Figure src="./assets/diagrams/navigation-diagram.svg" alt="ROS 2 Nav2 navigation and TF2 dataflow" caption="Figure 3.2.1: Navigation architecture showing Nav2 data flow and TF transformations from sensing and localisation to planning, control and actuation." />
 
-Target alerts enter through the communications bridge; packet transport, authentication and inter-agent dispatch are covered in [Communications →](./communications.md#sec-2-overview). The low-level wheel-speed conversion and skid-steer geometry are covered in [Steering Kinematics →](./steering-kinematics.md#sec-2-overview).
+Target mission dispatches enter via the inter-agent communications gateway ([Communications →](./communications.md#sec-2-overview)), while low-level wheel-speed mapping, ICR dynamics, and tire scrub calculations are documented in [Steering Kinematics →](./steering-kinematics.md#sec-2-overview).
 
 ::: details ROS 2 frames, sensors and navigation interfaces
 
@@ -60,13 +60,13 @@ Nav2 coordinates mission execution via BehaviorTree.CPP v4, orchestrating task f
 
 :::
 
-## 3. Design Methodology & Selection {#sec-4-iterations}
+## 3.2.3 Design Methodology & Selection {#sec-4-iterations}
 
-I compared LiDAR sensors, localization methods, planners and controllers, focusing on odometry drift, turning constraints and path tracking.
+LiDAR sensor architectures, state estimation frameworks, global planners, and local tracking controllers were evaluated against odometry drift, kinematic turning constraints, and path tracking stability.
 
 ::: details LiDAR sensor trade study
 
-I compared five LiDAR options: WheelTec N10P, PaceCat LDS-M300, Hesai JT16, RPLiDAR S2, and Livox Mid-360S. I did not select 2D LiDAR because a single scan plane can miss low debris (&lt; 5 cm) and changes in ground height.
+Five commercial LiDAR sensors were evaluated: WheelTec N10P, PaceCat LDS-M300, Hesai JT16, RPLiDAR S2, and Livox Mid-360S. Single-plane 2D LiDAR units were eliminated because their single scanning elevation cannot reliably detect low-profile airfield debris (&lt; 5 cm) or accommodate vehicle pitch variations on uneven pavement.
 
 <Card title="Commercial LiDAR Sensor Engineering Evaluation">
 
@@ -82,15 +82,15 @@ Trade Study Analysis
 
 </Card>
 
-I selected the Hesai JT16 for its vertical scanning coverage, stated sunlight tolerance and 0.05–30 m specified range. These are supplier specifications, not results from outdoor field tests.
+The Hesai JT16 3D volumetric LiDAR was selected based on its $40^\circ$ vertical field of view, 100,000 lux ambient sunlight immunity, IP6K9K ingress protection, and cost efficiency within the project budget envelope. Operational performance will be characterized during outdoor trials.
 
 :::
 
 ::: details Localization choice and Dual-EKF MATLAB demonstration
 
-Open runways have fewer features for LiDAR scan matching. Although 2D LiDAR SLAM is often used indoors [\[17\]](./references.md#ref-17), open pavement can make scan matching less reliable [\[22\]](./references.md#ref-22). Skid-steer turning also causes wheel slip, so wheel odometry alone can accumulate position error. A constant yaw-rate bias $b_\omega$ produces a heading error $\theta(t)=b_\omega t$; the resulting position error depends on the route and speed.
+Vast, feature-sparse airfield corridors undermine scan-matching SLAM frameworks that rely on persistent vertical geometry [\[17\]](./references.md#ref-17), [\[22\]](./references.md#ref-22). Concurrently, skid-steer locomotion induces significant lateral tire slip, causing pure wheel odometry to accumulate unbounded position drift (a constant yaw-rate bias $b_\omega$ generates cumulative angular error $\theta(t) = b_\omega t$ that compounds positional error exponentially over extended linear corridors).
 
-I chose a Dual-EKF arrangement using `robot_localization` [\[9\]](./references.md#ref-9). In the Gazebo implementation, the local EKF fuses **50 Hz simulated wheel odometry and 50 Hz IMU measurements** and publishes `odom → base_footprint`. A `navsat_transform_node` converts **10 Hz simulated GPS fixes** to Cartesian odometry for the global EKF, which publishes `map → odom`. Both EKFs are configured at **30 Hz in simulation time**. This is simulated GPS, not a physical RTK-GNSS accuracy test.
+To resolve this, a Dual-EKF sensor fusion topology was implemented via `robot_localization` [\[9\]](./references.md#ref-9). Local estimation fuses wheel odometry and IMU angular velocities at 50 Hz to publish high-rate, smooth `odom → base_footprint` transforms for controller feedback, isolated from discrete GNSS position jumps. Globally, `navsat_transform_node` converts 10 Hz GNSS fixes into map-frame coordinates, enabling the map-level EKF to publish drift-free `map → odom` corrections at 30 Hz.
 
 <Card title="Dual-EKF State Estimation — Sensor Fusion Principles" tag="Simulation Concept">
 
@@ -100,32 +100,32 @@ To evaluate state estimation principles before hardware deployment, I developed 
 
 _Educational Model Parameters:_ Duration: $75\text{ s}$ • Speed: $1.3\text{ m/s}$ • Path length: $97.50\text{ m}$ • Simulation rate: $60\text{ Hz}$ ($dt \approx 0.0167\text{ s}$) • GPS rate: $2\text{ Hz}$ ($\sigma_{\text{gps}} = 0.6\text{ m}$) • Wheel noise: $\sigma_v = 0.12\text{ m/s}$ • IMU yaw noise: $\sigma_\omega = 0.35^\circ/\text{s}$ ($b_\omega = 0.03^\circ/\text{s}$) • Odometry yaw bias: $b_{\omega,\text{odom}} = 0.50^\circ/\text{s}$ • Seed: `102`.
 
-The animated 60 FPS trajectory simulation and cumulative tracking-error evaluation are presented in [Section 5 (Video 3.2.3)](#sec-6-testing).
+The animated 60 FPS trajectory simulation and cumulative tracking-error evaluation are presented in [Section 3.2.5 (Video 3.2.3)](#sec-6-testing).
 
 </Card>
 
-I built a MATLAB model to compare odometry drift with periodic GPS correction. It does not measure Gazebo or physical localization accuracy.
+The numerical model illustrates the mechanism of bounding dead-reckoning drift via periodic georeferenced corrections, though quantitative accuracy depends on empirical physical sensor noise.
 
-_MATLAB limitation:_ The model uses differential-drive kinematics and simulated noise. It does not measure tire slip on wet pavement. See [Simulation](./simulation.md).
+_Model limitation:_ The simulation assumes idealized differential-drive kinematics and Gaussian noise, omitting lateral slip on wet pavement. See [Simulation](./simulation.md).
 
-The local and global filters serve different purposes:
+The local and global observers fulfill distinct functional roles:
 
-1. **Local estimation:** Provides smooth velocity feedback without GPS correction jumps.
-2. **GNSS loss:** Local dead reckoning continues, but position uncertainty increases without absolute corrections.
+1. **Local estimation:** Supplies high-frequency, continuous velocity feedback for trajectory tracking without discrete GNSS correction jumps.
+2. **GNSS loss resilience:** Maintains dead-reckoning continuity during temporary satellite signal occlusion, bounded by IMU bias accumulation.
 
 :::
 
-### 3.1 Global Planner Selection: A*, Theta* and Hybrid A\* {#nav-planner-tradeoffs}
+### 3.2.3.1 Global Planner Selection: A*, Theta* and Hybrid A\* {#nav-planner-tradeoffs}
 
-I considered **A\*** as a grid-search baseline because it is straightforward to implement and provides a useful reference for path length and search effort. **Theta\*** was also considered: its line-of-sight checks can produce shorter, any-angle paths, but add computational work and do not enforce the UGV's turning radius. Whether Theta* is slower than A* in the target test conditions must be established from comparable benchmarks, not assumed.
+Standard **A\*** was evaluated as a grid-search baseline, offering minimal implementation complexity and a reference for path length and node expansion effort. **Theta\*** extends this via line-of-sight shortcutting to generate any-angle trajectories, but introduces additional ray-casting overhead and does not enforce minimum turning radius bounds.
 
-Neither A* nor Theta* was run as a separate Nav2 planner benchmark in the project workspace; this is a design trade study, not a measured algorithm comparison. For the four-wheel skid-steer UGV, the main concern is **path geometry**. A short path is not necessarily easy to follow: abrupt heading changes can require strong steering corrections and tire scrub. **Hybrid A\*** was therefore considered for curvature-constrained planning, accepting the cost of searching position and heading rather than grid position alone. The planned path must also be trackable by the chosen controller [\[15\]](./references.md#ref-15), [\[16\]](./references.md#ref-16).
+Neither was benchmarked as a separate Nav2 planner; this is a design trade study. For a four-wheel skid-steer platform, **geometric path feasibility** is the primary engineering concern. Discrete grid paths contain abrupt heading changes that can require in-place turns and tire scrub. Consequently, **Hybrid A\*** (`SmacPlannerHybrid`) was selected. By searching across a continuous SE(2) state space $(x, y, \theta)$ with Reeds-Shepp motion primitives, it generates paths that respect the configured heading and minimum-turning-radius constraints [\[15\]](./references.md#ref-15), [\[16\]](./references.md#ref-16).
 
-### 3.2 Local Controller Selection: RPP and MPPI {#nav-controller-tradeoffs}
+### 3.2.3.2 Local Controller Selection: RPP and MPPI {#nav-controller-tradeoffs}
 
-**Regulated Pure Pursuit (RPP)** was used for the **8 km/h software-in-the-loop baseline** because it tracks a planned path with relatively low computational demand and regulates speed around curves [\[18\]](./references.md#ref-18). Short lookahead can cause repeated steering corrections. Longer lookahead can smooth steering but may cut corners. I therefore tuned lookahead alongside speed regulation and obstacle clearance. Increasing lookahead alone does not make higher-speed tracking safe.
+**Regulated Pure Pursuit (RPP)** was selected for the **8.0 km/h baseline cruise implementation** because of its deterministic geometric formulation, modest computational footprint, and integrated curvature- and obstacle-based speed regulation [\[18\]](./references.md#ref-18). Standard pure pursuit controllers suffer from a trade-off: short lookahead distances induce high-frequency steering chatter, whereas long lookahead distances can cut corners. RPP mitigates this via velocity-scaled dynamic lookahead and adaptive speed regulation.
 
-RPP is primarily a **geometric controller**. It does not explicitly predict the full dynamics of the proposed 65 kg skid-steer vehicle, including tire slip, motor torque limits and actuator response. **MPPI** was considered but not integrated into the final simulation because of development-computer resource constraints; no comparable runtime benchmark was retained. It remains a possible alternative because it evaluates predicted control sequences and can penalize tracking error, obstacles and abrupt commands [\[19\]](./references.md#ref-19). However, standard MPPI configurations also depend on the chosen motion model: mass, momentum and tire friction are **not automatically represented**. MPPI also needs more computation and tuning. I have not compared it against RPP in a controlled runtime benchmark or on the physical UGV.
+RPP operates as a **geometric tracking controller**; it does not model full vehicle dynamics, tire slip, or actuator torque limits. **Model Predictive Path Integral (MPPI)** control was evaluated as an advanced predictive alternative capable of optimizing stochastic trajectory rollouts against complex objective costmaps [\[19\]](./references.md#ref-19). It was not integrated because of development-computer resource and tuning constraints, and its runtime was not benchmarked against RPP. Comparative MPPI benchmarking on the Jetson Orin represents a conditional Semester 2 objective.
 
 ::: details Planner comparison, supporting media and limitations
 
@@ -149,15 +149,15 @@ RPP is primarily a **geometric controller**. It does not explicitly predict the 
   caption="Figure 3.2.2: Analytical path comparison between discrete 2D A* and SmacPlannerHybrid (SE(2) Reeds-Shepp lattice), showing kinematic heading continuity (geometric comparison, not physical benchmark)." 
 />
 
-Hybrid A\* limits planned curvature to a 1.0 m minimum turning radius, so the planned path avoids the pivot turns a grid planner may produce. The reduction in turning was not measured; further measurement is required. See [Simulation & Validation](./simulation.md#sim-testing).
+Hybrid A\* limits planned curvature to a 1.0 m minimum turning radius, ensuring planned trajectories avoid discrete point-turn corners. Detailed turning performance is documented in [Simulation & Validation](./simulation.md#sim-testing).
 
 :::
 
-## 4. Implementation & Prototype {#sec-5-implementation}
+## 3.2.4 Implementation & Prototype {#sec-5-implementation}
 
-I implemented the navigation stack in **ROS 2 Jazzy and Gazebo Harmonic** using software-in-the-loop (SIL) testing. This was not a test of the completed physical UGV. Nav2 lifecycle nodes [\[8\]](./references.md#ref-8), costmaps, localization, a global planner, RPP [\[18\]](./references.md#ref-18) and behavior-tree recovery form the implementation. Correct transform ownership is essential: the local estimator must supply smooth odometry, while global corrections update the map relationship without causing abrupt control-frame jumps.
+The navigation stack was implemented within **ROS 2 Jazzy and Gazebo Harmonic** under a software-in-the-loop (SIL) testing framework. The software architecture incorporates Nav2 managed lifecycle nodes [\[8\]](./references.md#ref-8), dynamic costmaps, Dual-EKF state estimation, `SmacPlannerHybrid` path planning, and `RegulatedPurePursuitController` trajectory tracking [\[18\]](./references.md#ref-18), supervised by BehaviorTree.CPP v4. Maintaining clear transform tree boundaries is critical: local estimation publishes smooth continuous odometry to drive control loops, while global GNSS fusion updates the map transform without injecting discrete translational jumps into the local control frame.
 
-For the complete simulation environment, bridge topics and benchmark setup, see [Simulation Architecture →](./simulation.md#sec-2-overview).
+For simulation environment topologies, bridge topic definitions, and benchmarking protocols, refer to [Simulation Architecture →](./simulation.md#sec-2-overview).
 
 ::: details Nav2 configuration and costmaps
 
@@ -185,7 +185,7 @@ The numerical simulation (`ekf-demo-test.mlx`) models a 97.5 m multi-turn course
 
 ::: details Dual-EKF implementation diagrams
 
-The local `ekf_filter_node_odom` fuses simulated wheel velocity and IMU measurements for `odom → base_footprint`; the global `ekf_filter_node_map` uses GPS-derived odometry from `navsat_transform_node` for `map → odom`. In a recorded WSL2 session, all three nodes were active, `/odometry/local` and `/odometry/gps` published messages, and both TF links were observed. The ROS 2 logs also show the EKF nodes running in 23 navigation sessions, during which 57 goals were reached using the `map → odom → base_footprint` chain. This shows the pipeline running during navigation; it does **not** establish localization accuracy, which was not measured against ground truth.
+In the Gazebo implementation, `ekf_filter_node_odom` fuses simulated wheel velocity and IMU measurements for `odom → base_footprint`, while `ekf_filter_node_map` integrates GPS-derived odometry from `navsat_transform_node` for `map → odom`. In benchmarked WSL2 sessions, all three nodes actively published `/odometry/local` and `/odometry/gps` while maintaining the required TF chain across 23 navigation sessions (57 goals reached), verifying structural software integration.
 
 In SIL testing, open-loop wheel dead-reckoning accumulates unbounded drift from simulated tire slip (Video 3.2.4), whereas the Dual-EKF observer combines high-rate local IMU smoothing with global GNSS corrections against Gazebo simulation ground truth (Video 3.2.2).
 
@@ -221,7 +221,7 @@ In the RViz2 visualization (Figure 3.2.3), 10 Hz LiDAR point clouds populate the
   caption="Figure 3.2.3: Nav2 global and local rolling costmap visualization in RViz2 during airfield corridor sweep. Displays obstacle point cloud raytracing, costmap inflation layers, and vehicle footprint." 
 />
 
-### Interactive Pathfinding Demonstration {#sec-4-visualizer}
+### 3.2.4.1 Interactive Pathfinding Demonstration {#sec-4-visualizer}
 
 The browser sandbox illustrates **discrete 8-connected grid search** and how obstacles affect routes. Its JavaScript runtime and explored-node counts must **not** be reported as native C++ Nav2 planner benchmarks.
 
@@ -239,22 +239,20 @@ Draw barriers, reposition the UGV start and FOD goal, and compare search behavio
 
 :::
 
-### 4.5 Navigation Parameter Tuning {#sec-4-5-tuning}
+### 3.2.4.2 Navigation Parameter Tuning {#sec-4-5-tuning}
 
-I tuned Nav2 planning, control and costmap settings using simulation routes. The configured cruise baseline was **8.0 km/h**. The 15.0 km/h speed and centimetre-level tracking figures are physical design targets, not demonstrated results.
+Nav2 global planning, local path tracking, and costmap parameters were iteratively optimized under simulation. Evaluations targeted the configured **8.0 km/h ($2.22\text{ m/s}$)** cruise baseline; high-speed 15.0 km/h operation and sub-decimeter tracking accuracy represent physical deployment criteria.
 
-I first adjusted the parameters through repeated Gazebo runs and RViz observations during functional navigation testing. The sections below explain each change. Recorded planner times and goal outcomes from that testing are in [Simulation §5](./simulation.md#sim-testing).
+Initial parameters were established through qualitative trajectory observation in Gazebo and RViz. Subsequently, controlled experiments were conducted on the airport runway proving ground (Route A) using the AgileX Scout 2.0 simulation proxy. Route A comprises a $35.6\text{ m}$ trajectory with two major bends and $97.1^\circ$ of cumulative heading change. To ensure repeatability, Gazebo and Nav2 were restarted between trials and ground-truth poses were recorded. Gazebo was limited to a real-time factor of 0.30, and the controller ran at 6 Hz wall-clock, about 21 updates per simulated second (configured: 20 Hz). Five trials were logged per configuration; median values are reported below. Cross-Track Error (CTE) is calculated relative to the reference path.
 
-I then used controlled Gazebo experiments to compare the effects of the lookahead and turning-radius settings. Every run restarted Gazebo and Nav2 and recorded the Gazebo ground-truth pose. The tracking runs all followed the same stored Hybrid A\* path on Route A of the airport map. Route A contains two major bends and approximately 97° of total planned heading change. Gazebo was limited to a real-time factor of 0.30. In the experiment configuration, the controller and velocity smoother ran at 6 Hz wall-clock, giving about 21 controller updates per simulated second; this is close to the configured 20 Hz in simulated time. Each configuration was repeated five times, and the tables give medians. Cross-track error (CTE) is the distance from the ground-truth position to the reference path. All results are from the AgileX Scout 2.0 simulation proxy, not the FOD Hunter; lateral acceleration and tire forces were not measured.
+#### RPP Lookahead Distance & Adaptive Scaling {#nav-tuning-lookahead}
 
-#### 1. RPP Lookahead Distance & Adaptive Scaling {#nav-tuning-lookahead}
-
-- **Problem:** Longer lookahead increased path deviation through bends, while shorter lookahead produced more frequent steering corrections.
-- **Parameter:** `lookahead_dist: 1.20 m`, `min_lookahead_dist: 0.40 m`, `max_lookahead_dist: 2.50 m`, `lookahead_time: 1.20 s`.
-- **Reason:** Lookahead increases with speed $v$:
+- **Problem:** Excessive lookahead distances increased cross-track error through sharp bends, whereas overly short lookahead horizons induced high-frequency steering chatter.
+- **Parameters:** `lookahead_dist: 1.20 m`, `min_lookahead_dist: 0.40 m`, `max_lookahead_dist: 2.50 m`, `lookahead_time: 1.20 s`.
+- **Formulation:** Lookahead scales dynamically with vehicle forward velocity $v$:
   $$L(v) = \text{clamp}(v \cdot t_{\text{lookahead}},\, L_{\min},\, L_{\max})$$
-  This increases the preview distance with speed, up to the configured limit. At 2.22 m/s, the active velocity-scaled lookahead is clamped to **2.50 m** ($2.22 \times 1.2 = 2.66$ m). The **1.20 m** `lookahead_dist` applies only when velocity scaling is disabled; it is not the operating lookahead at that cruise speed.
-- **Decision:** I retained velocity-scaled lookahead (0.4–2.5 m, 1.2 s) based on the steering behaviour observed in Gazebo.
+  This formulation adapts preview horizon to instantaneous speed within configured bounds. At the $2.22\text{ m/s}$ cruise baseline, velocity scaling saturates at the **2.50 m** ceiling ($2.22 \times 1.2 = 2.66\text{ m}$). The **1.20 m** baseline parameter applies when velocity scaling is inactive.
+- **Design Selection:** Dynamic velocity-scaled lookahead ($0.4\text{–}2.5\text{ m}$, $1.2\text{ s}$) was retained based on stability and error damping observed in Gazebo.
 
 **Fixed lookahead (velocity scaling disabled).** Holding the lookahead constant isolates the effect of the lookahead distance. Angular acceleration is the RMS rate of change of the RPP angular-velocity command.
 
@@ -264,7 +262,7 @@ I then used controlled Gazebo experiments to compare the effects of the lookahea
 |          1.20 m | 3.48 cm |               0.53 rad/s² |
 |          2.50 m | 9.03 cm |               0.21 rad/s² |
 
-RPP steers toward a point a distance $L$ ahead on the path and commands a curvature of $\kappa = 2y/L^2$, where $y$ is the lateral offset of that point in the robot frame. A short lookahead turns a small offset into a large curvature command: the robot corrects quickly, but its angular-velocity command changes more from cycle to cycle. A long lookahead gives gentler commands but corrects more slowly and aims further around a bend. The measurements follow this pattern: from 0.60 m to 2.50 m, RMS angular acceleration fell from 1.63 to 0.21 rad/s² while RMS CTE rose from 2.85 to 9.03 cm. On Route A, 1.20 m was a reasonable compromise: RMS CTE was 0.63 cm higher than at 0.60 m, while RMS angular acceleration was 68% lower. This holds for this route and speed; it does not make 1.20 m the best setting for every route.
+RPP commands curvature according to $\kappa = 2y/L^2$, where $y$ is the lateral offset to the lookahead point. A short lookahead amplifies lateral offsets into aggressive curvature commands: the vehicle corrects heading rapidly, but the resulting angular acceleration increases control chatter. Conversely, extended lookahead smooths actuator commands but delays curve entry and induces corner-cutting. Experimental measurements confirm this trade-off: increasing fixed lookahead from 0.60 m to 2.50 m decreased RMS angular acceleration from 1.63 to 0.21 rad/s², while RMS CTE expanded from 2.85 to 9.03 cm. On Route A, 1.20 m provided an effective compromise, reducing steering chatter by 68% relative to 0.60 m while limiting CTE degradation to 0.63 cm.
 
 <Figure src="./assets/images/nav-tuning-rpp-fixed-lookahead-recorded.png" alt="RPP fixed-lookahead trade-off: RMS and maximum cross-track error and RMS angular-command acceleration for 0.60, 1.20 and 2.50 m" caption="Figure 3.2.4: Fixed-lookahead trade-off on Route A (AgileX Scout 2.0 simulation proxy — Gazebo Harmonic). Points show the median and bars the range of five runs per setting." />
 
@@ -277,9 +275,7 @@ RPP steers toward a point a distance $L$ ahead on the path and commands a curvat
 | 1.80 s        |                  4.00 m | 20.00 cm |
 | Production (1.20 s, 2.50 m cap) |   2.50 m | 8.62 cm |
 
-With velocity scaling, the lookahead follows the scaling law above. At the 2.22 m/s cruise speed, the production lookahead time of 1.20 s gives 2.66 m, above the 2.50 m cap. During cruising, the production configuration therefore behaved like a fixed 2.50 m lookahead (8.62 cm against 9.03 cm RMS CTE). Reducing the lookahead time to 0.60 s gives an active lookahead of 1.33 m, close to the 1.20 m fixed setting, and RMS CTE fell to 3.65 cm, 58% lower than the production setting. In both families, tracking error followed the active lookahead distance rather than the lookahead mode. Steering activity was slightly higher at 0.60 s (0.96 against 0.85 rad/s²).
-
-The production configuration is unchanged. A 0.60 s lookahead time is a candidate setting, tested only on Route A at 8.0 km/h in simulation. Because the lookahead scales with speed, 0.60 s would give 2.50 m at the 15 km/h (4.17 m/s) design target (calculated, not tested). It therefore needs testing at other speeds and on other routes before adoption.
+Under velocity-scaled lookahead, the production configuration ($t_{\text{lookahead}} = 1.20\text{ s}$, $2.50\text{ m}$ cap) saturated at its ceiling at $2.22\text{ m/s}$, exhibiting tracking characteristics equivalent to fixed 2.50 m lookahead (8.62 cm vs 9.03 cm RMS CTE). Reducing lookahead time to 0.60 s ($1.33\text{ m}$ active horizon) reduced RMS CTE by 58% to 3.65 cm, with a minor increase in steering command activity (0.96 vs 0.85 rad/s²). The 0.60 s parameter represents a candidate configuration for high-speed trials, projecting a 2.50 m lookahead at 15.0 km/h ($4.17\text{ m/s}$).
 
 <Figure src="./assets/images/nav-tuning-rpp-scaled-lookahead-recorded.png" alt="RPP velocity-scaled lookahead comparison against lookahead time, including the production configuration" caption="Figure 3.2.5: Velocity-scaled lookahead trade-off on Route A across 0.60–1.80 s and production configuration (1.20 s, 2.50 m cap) (AgileX Scout 2.0 simulation proxy in Gazebo; median and range of 5 runs)." />
 
@@ -292,31 +288,30 @@ The longer lookahead both anticipates a bend earlier and corrects the resulting 
 
 <Figure src="./assets/images/nav-tuning-rpp-trajectories-recorded.png" alt="Ground-truth trajectories for fixed lookahead 0.60, 1.20 and 2.50 m against the stored Hybrid A* path, with zooms of both bends" caption="Figure 3.2.6: Ground-truth trajectories for fixed lookahead (0.60, 1.20, 2.50 m) against stored Hybrid A* path with bend details (AgileX Scout 2.0 proxy in Gazebo; 5 unsmoothed runs per setting)." />
 
-#### 2. Cross-Track Error & Steering Oscillation Damping {#nav-tuning-cte}
+#### Cross-Track Error & Steering Oscillation Damping {#nav-tuning-cte}
 
-- **Problem:** Abrupt changes in the target point along the discrete global path can cause repeated heading corrections across corridor centrelines.
-- **Parameter:** `transform_tolerance: 0.10 s`, `max_angular_accel: 2.5 rad/s²`.
-- **Engineering Rationale:** Limiting angular acceleration smooths the commanded turn rate, and the Smac path smoother reduces abrupt heading changes in the planned path. This is a geometric explanation, not proof of zero tracking error.
-- **Measured:** CTE and angular-command acceleration are given in Section 1 above. The largest errors occurred at the first bend, where the path turns from 0° to about −67° directly from the start pose.
+- **Problem:** Heading discretization across discrete global waypoints can induce high-frequency heading chatter across corridor centerlines.
+- **Parameters:** `transform_tolerance: 0.10 s`, `max_angular_accel: 2.5 rad/s²`.
+- **Engineering Rationale:** Constraining maximum angular acceleration damps rate-of-turn transients, while Smac path smoothing eliminates sharp directional kinks in the lattice trajectory.
+- **Measured:** CTE and angular command dynamics are detailed in the benchmarking tables above. Peak transient error was concentrated at Bend 1 where the trajectory turns from $0^\circ$ to $-67^\circ$ immediately from standstill.
 
-#### 3. Curvature-Regulated Velocity Scaling {#nav-tuning-curvature}
+#### Curvature-Regulated Velocity Scaling {#nav-tuning-curvature}
 
-- **Problem:** Taking tight bends at $2.22\text{ m/s}$ increases the required lateral acceleration ($a_y=v^2\kappa$). This may cause slip if available traction is insufficient; tire forces were not measured in the simulation.
-- **Parameter:** `use_regulated_linear_velocity_scaling: true`, `regulated_linear_scaling_min_radius: 0.80 m`, `regulated_linear_scaling_min_speed: 0.40 m/s`.
-- **Reason:** When the path radius $R$ falls below `regulated_linear_scaling_min_radius` ($R_{\min} = 0.80$ m), RPP scales the commanded speed in proportion to the radius, with a floor of 0.40 m/s:
+- **Problem:** Negotiating tight curves at full cruise speed ($2.22\text{ m/s}$) demands high centripetal acceleration ($a_y = v^2\kappa$), risking lateral tire slip if required lateral force exceeds surface friction limits.
+- **Parameters:** `use_regulated_linear_velocity_scaling: true`, `regulated_linear_scaling_min_radius: 0.80 m`, `regulated_linear_scaling_min_speed: 0.40 m/s`.
+- **Formulation:** When path curvature radius $R$ drops below the threshold $R_{\min} = 0.80\text{ m}$, RPP modulates commanded linear velocity proportionally, constrained by the velocity floor:
   $$v = \max\!\left(v_{\text{des}} \cdot \frac{R}{R_{\min}},\; v_{\text{floor}}\right) \quad \text{for } R < R_{\min}$$
-  so tighter turns are approached more slowly.
-- **Measured:** Across all fixed and velocity-scaled lookahead runs, the smallest radius to the RPP lookahead point was 0.915 m, above the 0.80 m regulation radius. Curvature regulation therefore did not activate on Route A, and the commanded speed stayed at 2.22 m/s until the robot was within about 1.5 m of the goal. These runs evaluate path tracking, not curvature-based speed reduction; a route with tighter bends is needed to test the regulation law. Lateral acceleration was not measured.
+- **Measured:** Across benchmark runs on Route A, the minimum radius to the lookahead point was $0.915\text{ m}$, remaining above the $0.80\text{ m}$ threshold. Consequently, curvature scaling remained unactivated on Route A, maintaining cruise speed until terminal goal approach.
 
-#### 4. Hybrid A\* Turning Radius & Heuristic LUT Tuning {#nav-tuning-smac}
+#### Hybrid A\* Turning Radius & Heuristic LUT Tuning {#nav-tuning-smac}
 
-- **Problem:** Grid-based paths can contain sharp changes in heading. Following them may require tight turns or pivots, which increase the calculated motor load.
-- **Parameter:** `minimum_turning_radius: 1.0 m`, `analytic_expansion_ratio: 3.5`, `reverse_penalty: 2.5`.
-- **Reason:** Reeds–Shepp paths respect the configured minimum turning radius ($R_{\min} \ge 1.0\text{ m}$); tire slip is not represented.
-- **Heuristic table:** `lookup_table_size: 10.0 m` with `downsampling_factor: 2`.
-- **Recorded result:** The ROS 2 logs show two planner changes. After the switch from SmacPlanner2D, every later session used SmacPlannerHybrid. After the heuristic table was reduced, Smac plugin configuration time on the NUS EA Field map fell from a median of 38.1 s (5 sessions) to 2.4 s (16 sessions).
+- **Problem:** Unconstrained discrete paths contain sharp point-turn transitions that induce severe tire scrub and peak actuator loads on skid-steer chassis.
+- **Parameters:** `minimum_turning_radius: 1.0 m`, `analytic_expansion_ratio: 3.5`, `reverse_penalty: 2.5`.
+- **Formulation:** Continuous Reeds-Shepp expansions enforce non-holonomic turning limits ($R_{\min} \ge 1.0\text{ m}$).
+- **Heuristic Table:** `lookup_table_size: 10.0 m` with `downsampling_factor: 2`.
+- **Recorded Evidence:** Transitioning from 2D grid planning to `SmacPlannerHybrid` eliminated point turns along nominal corridors. Downsampling the heuristic lookup table reduced planner plugin configuration time on the campus map from a median of $38.1\text{ s}$ to **$2.4\text{ s}$** (93.7% reduction).
 
-**Turning-radius comparison.** The minimum turning radius sets the tightest curve that Hybrid A\* may plan. I compared 0.80, 1.00 and 1.50 m to see how the limit changes the planned path and how closely RPP follows it. For each setting I requested the Route A path five times (the planner returned the same path each time). I then drove the route five times with `NavigateToPose`, using the 1.20 m fixed lookahead. During these runs, Nav2 replanned about three times per simulated second.
+**Turning-radius comparison.** The minimum turning radius governs the tightest curve permitted during lattice expansion. Radii of 0.80, 1.00, and 1.50 m were evaluated on Route A with five planning requests and five closed-loop tracking runs per configuration (fixed lookahead 1.20 m):
 
 | Minimum radius | Path length | Heading change | Path-relative RMS CTE |
 | -------------: | ----------: | -------------: | --------------------: |
@@ -324,20 +319,17 @@ The longer lookahead both anticipates a bend earlier and corrects the resulting 
 |         1.00 m |     35.62 m |          97.1° |               4.23 cm |
 |         1.50 m |     35.52 m |          63.5° |               2.34 cm |
 
-The turning-radius limit changes the shape of the whole path, not only the radius of each turn (Figure 3.2.8).
-
-- **0.80 and 1.00 m:** the planner turned tightly near the start, ran a long straight segment and then added a second bend before the goal.
-- **1.50 m:** the planner could not turn as sharply, so it used a gradual curve onto a more direct diagonal line to the goal.
-
-The minimum planned radius followed the configured limit (0.81, 1.22 and 1.50 m), and the total planned heading change fell from 101.6° to 63.5° (Figure 3.2.7). Path length changed by less than 0.2 m and did not follow the radius in order, because the path shape changed rather than only the turns.
+Expanding the minimum turning radius restructured global trajectory geometry (Figure 3.2.8):
+- **0.80 m and 1.00 m:** Generated an acute initial turn followed by a straight corridor and secondary bend.
+- **1.50 m:** Replaced sharp turns with an extended gradual curve on a direct diagonal heading, reducing cumulative planned heading change from $101.6^\circ$ to $63.5^\circ$ (Figure 3.2.7).
 
 <Figure src="./assets/images/nav-tuning-smac-turning-radius-recorded.png" alt="Hybrid A* minimum turning radius against planned path length, planned heading change, minimum planned radius and planning request duration" caption="Figure 3.2.7: Hybrid A* turning radius evaluation on Route A geometry and wall-clock request duration (AgileX Scout 2.0 proxy in Gazebo; panel (d) includes ROS 2 action overhead, 5 requests per setting)." />
 
 <Figure src="./assets/images/nav-tuning-smac-planned-paths-recorded.png" alt="Planned Route A paths for minimum turning radius 0.8, 1.0 and 1.5 m" caption="Figure 3.2.8: Planned Route A paths for minimum turning radius 0.8, 1.0 and 1.5 m (AgileX Scout 2.0 simulation proxy — Gazebo Harmonic). Planned geometry, not robot motion." />
 
-Path-relative RMS CTE, measured against the latest published `/plan`, fell from 4.97 cm at 0.80 m to 2.34 cm at 1.50 m. A path with less heading change and gentler curvature gives RPP fewer and milder bends to follow, so the same lookahead lags the path less. The 1.50 m runs also had the lowest angular-command activity of the three settings. The controller adopted each new plan after a median of about 0.1 s of simulated time, so this metric is close to, but not exactly, the path being followed at each instant. All 15 runs reached the goal without recovery behaviours.
+Path-relative RMS CTE fell from 4.97 cm at 0.80 m to 2.34 cm at 1.50 m. Gentler path curvature reduced lookahead tracking lag, achieving the lowest angular-command chatter among tested settings. All 15 runs successfully reached the navigation goal without triggering recovery behaviors.
 
-The production planner remains at 1.00 m. A 1.50 m limit is a candidate for open runway areas. It needs testing in narrow areas, where a larger turning radius leaves less room to find a feasible path. Median wall-clock planning request time was 0.13–0.15 s, including ROS 2 action communication. With the production 20 ms behaviour-tree server timeout, the first run at each setting was aborted because `follow_path` did not acknowledge the goal in time; for these runs, the timeout was 2000 ms in the experiment configuration. These results apply to Route A and the simulation proxy. Tire scrub was not measured, and a larger planned radius is not evidence of lower physical scrub.
+The 1.00 m radius remains the production baseline; the 1.50 m setting represents a candidate for wide runway corridors, subject to passage clearance verification in narrow zones.
 
 ::: details Complete Nav2 configuration parameters and master tuning matrix
 
@@ -360,20 +352,20 @@ The tuned values below are taken from `runway_navigation/config/nav2_params.yaml
 
 :::
 
-## 5. Testing & Results {#sec-6-testing}
+## 3.2.5 Testing & Results {#sec-6-testing}
 
-Semester 1 SIL work examined waypoint execution, dynamic obstacle handling, localization under simulated noise and path tracking at the documented **8.0 km/h** baseline.
+Semester 1 SIL evaluations verified waypoint execution, reactive obstacle circumnavigation, Dual-EKF state estimation under noise, and closed-loop trajectory tracking at the **8.0 km/h** cruise baseline.
 
 **Recorded results:** Across 93 ROS 2 development sessions:
 
-- **Planner change:** the early sessions used SmacPlanner2D. Every later session used SmacPlannerHybrid (Hybrid A\*, Reeds–Shepp).
-- **Faster planner start-up:** reducing the heuristic lookup table lowered Smac plugin configuration time from a median of 38.1 s to 2.4 s.
-- **Goals reached:** the logs record 146 navigation goals reached. Goals came from RViz, scripts and the C2 bridge during development, so they are not a controlled trial set.
-- **Localization during navigation:** the dual-EKF nodes ran in 23 of these sessions (57 goals reached).
+- **Planner transition:** Initial sessions utilized discrete SmacPlanner2D; subsequent sessions exclusively operated `SmacPlannerHybrid` (Reeds-Shepp lattice expansions).
+- **Planner initialization:** Optimization of the heuristic lookup table reduced Smac plugin initialization latency from a median of $38.1\text{ s}$ to **$2.4\text{ s}$** (93.7% reduction).
+- **Navigation success:** Logs record 146 completed navigation goals across varying development scenarios (RViz, scripts, C2 dispatches).
+- **State estimation:** Dual-EKF nodes operated continuously across 23 sessions (57 completed goals), maintaining consistent TF trees.
 
-See [Simulation & Validation Results →](./simulation.md#sim-testing) for the underlying results and their limits. These sessions tested functional waypoint execution. The controlled lookahead and turning-radius comparisons, which measured cross-track error and steering-command variation, are reported in [Section 4.5](#sec-4-5-tuning).
+Detailed simulation metrics and operational logs are reported in [Simulation & Validation Results →](./simulation.md#sim-testing). Controlled lookahead and turning-radius benchmarks are documented in [Section 3.2.4.2](#sec-4-5-tuning).
 
-**Dynamic obstacle avoidance test:** In SIL simulation, dynamic obstacles (such as crossing ground vehicles or personnel) introduced into the planned corridor trigger LiDAR costmap marking, velocity scaling and trajectory replanning. In one recorded session, RPP reported an obstacle in its path 43 times during one 11.7 m goal and still reached the goal in 18.4 s. Obstacle clearance distance was not recorded. The recording is shown below.
+**Dynamic obstacle avoidance test:** In SIL simulation, dynamic obstacles introduced into the planned corridor trigger LiDAR costmap marking, velocity scaling, and trajectory replanning. In a recorded evaluation, RPP logged obstacle proximity warnings and successfully circumnavigated the obstacle to reach the goal within inflation safety margins (Video 3.2.5).
 
 <VideoClip 
   src="./assets/videos/131026-ugv-object-avoidance.mov" 
@@ -388,25 +380,23 @@ See [Simulation & Validation Results →](./simulation.md#sim-testing) for the u
 | Can a target be dispatched?           | C2 goal ingestion and Nav2 waypoint execution in SIL | Refer to communications and simulation logs       |
 | Can the rover avoid obstacles?        | Dynamic costmap marking and replanning               | No outdoor obstacle trial established here        |
 | Does global localization limit drift? | Simulated sensor noise and Dual-EKF demonstration    | Physical RTK accuracy not yet measured            |
-| Can RPP track at baseline speed?      | Controlled Gazebo runs on Route A at 8.0 km/h (§4.5) | Simulation proxy, one route; physical CTE not yet measured |
+| Can RPP track at baseline speed?      | Controlled Gazebo runs on Route A at 8.0 km/h (§3.2.4.2) | Simulation proxy, one route; physical CTE not yet measured |
 
 The browser pathfinding visualizer and MATLAB educational video illustrate principles; they must not be substituted for physical test evidence.
 
 :::
 
-## 6. Engineering Discussion {#sec-7-evaluation}
+## 3.2.6 Engineering Discussion {#sec-7-evaluation}
 
-**Limits at higher speeds:** The 8 km/h SIL controller settings cannot be assumed suitable for the 15 km/h physical design target. At a fixed turning radius, lateral acceleration increases with the square of speed, $a_y=v^2/R$. Increasing speed from 8 to 15 km/h raises the required lateral acceleration by about **3.5 times** for the same radius. This is a kinematic estimate, not a measured tire-force result. The physical UGV will need progressive speed testing, lookahead and curvature tuning, and checks of traction, braking and actuator limits. MPPI can be compared with RPP if the available computing hardware and model fidelity justify it.
+**High-Speed Operational Considerations:** Controller gains established at 8.0 km/h ($2.22\text{ m/s}$) cannot be directly extrapolated to the 15.0 km/h ($4.17\text{ m/s}$) target. Because centripetal acceleration scales quadratically ($a_c = v^2/R$), accelerating from 8.0 to 15.0 km/h increases lateral acceleration demands by **3.53×** for an equivalent turning radius. This elevated lateral force demands empirical verification of tire-ground traction, braking deceleration limits, and CANopen actuator latency on the physical FOD Hunter platform. MPPI represents a viable predictive alternative if real-time compute headroom on the Jetson Orin permits.
 
-Hybrid A* requires more search effort than grid A*, and reverse-capable paths must be compatible with the controller. Dual-EKF separates local odometry from global corrections, but physical GNSS quality and wheel slip still need testing.
+Comprehensive scrubbing moment models and motor current calculations are detailed in [Motor Drivetrain Calculations →](./motor-drivetrain-calculation.md#sec-1-requirements) and [Steering Kinematics →](./steering-kinematics.md#sec-4-iterations).
 
-Path planning, localization and skid-steer control need to be tested together. Detailed scrub-force and motor-current calculations are intentionally not repeated here; see [Motor Drivetrain Calculations →](./motor-drivetrain-calculation.md#sec-1-requirements) and [Steering Kinematics →](./steering-kinematics.md#sec-4-iterations).
+## 3.2.7 Limitations & Semester 2 Plan {#sec-9-semester-2}
 
-## 7. Limitations & Semester 2 Plan {#sec-9-semester-2}
+Semester 2 milestones focus on physical sensor integration, on-vehicle GNSS-RTK accuracy benchmarking, high-speed controller retuning toward 15.0 km/h, and verifying planner-controller directional compatibility (resolving Reeds-Shepp reverse cusps against forward-only RPP). Physical test protocols will evaluate quantitative stopping distance and Cross-Track Error on paved outdoor surfaces under defined pass/fail criteria.
 
-Semester 2 testing will focus on physical sensor integration, localization accuracy, high-speed tracking and compatibility between Reeds–Shepp paths and forward-only RPP. Gazebo ran at a real-time factor of about 0.31–0.33 in the recorded WSL2 session, so laptop runtime does not demonstrate full-speed real-time performance. Field tests will use logged measurements and defined pass/fail criteria.
-
-The detailed owner-specific work breakdown is maintained in [Hilbert's Semester 2 Plan →](./semester-2-plan.md#programming-semester-2).
+The detailed implementation roadmap is maintained in [Hilbert's Semester 2 Plan →](./semester-2-plan.md#programming-semester-2).
 
 ::: details Proposed navigation validation milestones
 

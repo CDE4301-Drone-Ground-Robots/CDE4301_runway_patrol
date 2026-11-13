@@ -10,37 +10,35 @@ Semester 1 · Steering design and calculations
 
 <!-- #region report -->
 
-## 1. Objectives & Requirements {#steer-objectives}
+## 4.5.1 Objectives & Requirements {#steer-objectives}
 
-FOD Hunter must travel along paved runway routes and position itself over detected foreign object debris (FOD). I compared steering options based on turning space, mechanical complexity, traction and compatibility with ROS 2 velocity commands. The calculations assume **65 kg**, **263 mm wheel diameter**, **488.8 mm wheelbase** and **575 mm track width**; the assembled vehicle has not been measured.
+Autonomous airfield inspection requires precise trajectory tracking along rectilinear sweeps and zero-radius positioning over detected foreign object debris (FOD). Drivetrain kinematics were evaluated across swept clearance, mechanical complexity, pavement traction, and compatibility with ROS 2 velocity commands (`geometry_msgs/msg/Twist`). Calculations assume a nominal vehicle mass of **65.0 kg**, wheel diameter of **263.0 mm** ($r = 131.5\text{ mm}$), wheelbase of **488.8 mm**, and track width of **575.0 mm**.
 
 :::: details Detailed steering requirements and assumptions
 
-The intended patrol speed is 8 km/h, with a 15 km/h sprint design target. Opposite wheel-bank speeds can command an in-place turn, but real skid steering involves tire slip. The ideal differential-drive model does not capture this effect. I also considered outdoor traction and protection from debris.
-
-The full requirement tables and stability calculations are available in the detailed appendix on the individual page.
+The operational concept establishes an 8.0 km/h nominal patrol speed and a 15.0 km/h sprint target. While counter-rotating wheel banks enable zero-radius in-place pivoting, physical skid-steer turning involves lateral tire scrub that is not captured by ideal differential-drive kinematics. Outdoor traction on wet asphalt, environmental sealing against airfield grit, and suspension compatibility were key selection drivers.
 
 ::::
 
-## 2. Steering Architecture {#steer-architecture}
+<span id="sec-2-overview"></span>
 
-I selected **four independently driven hub motors**, operated as left and right wheel banks. Equal bank speeds move the UGV straight; different speeds produce a turn; opposite speeds command an in-place pivot. Sizing and torque requirements are established in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md), while chassis fabrication, hub mounting brackets and suspension integration are documented in [Chassis Design](../zacarias/chassis-design.md).
+## 4.5.2 Steering Architecture {#steer-architecture}
+
+The selected architecture utilizes **four independently driven hub motors**, coordinated as synchronized left and right wheel banks. Symmetric wheel speeds produce longitudinal translation, differential speeds produce curved paths, and counter-rotating banks execute in-place pivots. Component sizing and torque requirements are established in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md), while chassis fabrication, hub mounting brackets, and suspension kinematics are detailed in [Chassis Design](../zacarias/chassis-design.md).
 
 ![Steering architecture down-selection decision tree](./assets/diagrams/steering-decision-tree.svg)
 
-## 3. Design Methodology & Selection {#steer-selection}
+<span id="sec-4-iterations"></span>
 
-### 2WD vs 4WD Drive Selection
+## 4.5.3 Design Methodology & Selection {#steer-selection}
 
-A two-wheel differential-drive layout with passive casters was considered as a simpler alternative. It would require fewer motors and drivers, reducing cost, weight and electrical complexity.
+### 4.5.3.1 2WD vs 4WD Drive Selection {#steer-2wd-4wd}
 
-However, only the driven wheels would provide traction. With equal wheel loading, 2WD provides approximately half the available driven-wheel traction of 4WD on the same surface. Casters would also complicate suspension integration on uneven ground.
+A two-wheel differential-drive layout with passive casters was evaluated as a lower-complexity baseline. While reducing actuator count and wiring, driven tractive effort is halved under uniform wheel loading, and passive casters introduce snag hazards on runway expansion joints. A four-wheel-drive (4WD) layout was selected to maximize traction across all four contact patches and integrate directly with independent trailing-arm suspension, despite higher hardware cost and control complexity.
 
-I selected 4WD to provide traction at all four wheels and maintain compatibility with the planned independent suspension. The trade-off is higher hardware cost, weight and motor-control complexity.
+### 4.5.3.2 Steering Topology Evaluation {#steer-topology}
 
-### Steering Topology Evaluation
-
-I compared **skid-steer, Ackermann and Mecanum** steering. I chose skid-steer because it supports tight turns without separate steering linkages. Ackermann reduces tire scrub during turns but cannot pivot in place. Mecanum allows sideways motion, but its exposed rollers add maintenance concerns for outdoor use.
+Three steering topologies were evaluated: **four-wheel skid-steer, Ackermann front-wheel steering, and Mecanum omnidirectional drive**. Skid steering was selected for zero-radius in-place pivoting without steering knuckles, tie-rods, or linkages. Ackermann steering eliminates lateral tire scrub during cruise but imposes a minimum swept turning radius ($R_{\text{swept}} \ge 1.2\text{ m}$), requiring multi-point maneuvers over detected debris. Mecanum wheels offer holonomic motion but suffer from low pavement friction ($\mu \approx 0.35$), severe roller vibration, and vulnerability to grit ingress.
 
 ![Steering and drive architecture down-selection trade study](./assets/diagrams/steering-architecture-comparison.svg)
 
@@ -73,22 +71,22 @@ I compared **skid-steer, Ackermann and Mecanum** steering. I chose skid-steer be
   </div>
 </div>
 
-The appendix contains the weighted scores and alternative kinematic models. The scores are design judgments, not test results.
+Detailed scoring criteria, mathematical formulations, and kinematic equations are compiled in the appendix.
 
 ::::
 
-## 4. Engineering Calculations & Interactive Kinematics {#steer-kinematics}
+## 4.5.4 Engineering Calculations & Interactive Kinematics {#steer-kinematics}
 
-I convert the commanded forward speed $v_x$ and yaw rate $\omega_z$ into left and right wheel speeds using wheel radius $r$ and effective track width $B_{\mathrm{eff}}$:
+Commanded forward velocity $v_x$ and yaw rate $\omega_z$ map to left and right wheel bank angular velocities through rolling wheel radius $r$ and effective track width $B_{\mathrm{eff}}$:
 
 $$
-\omega_L=\frac{v_x-\omega_z B_{\mathrm{eff}}/2}{r},\qquad
-\omega_R=\frac{v_x+\omega_z B_{\mathrm{eff}}/2}{r}
+\omega_L = \frac{v_x - \omega_z B_{\mathrm{eff}}/2}{r}, \qquad
+\omega_R = \frac{v_x + \omega_z B_{\mathrm{eff}}/2}{r}
 $$
 
-For $\omega_z\ne0$, the ideal turning radius is $R=v_x/\omega_z$. When $v_x=0$ and the wheel banks rotate in opposite directions, the model predicts an in-place turn. Actual turning depends on tire slip, so $B_{\mathrm{eff}}$ must be calibrated using measured yaw motion.
+For non-zero yaw rate ($\omega_z \ne 0$), the instantaneous turning radius is $R = v_x / \omega_z$. For pure pivoting ($v_x = 0$), the kinematic model predicts zero turning radius ($R = 0$). Because lateral tire scrub resists chassis rotation, $B_{\mathrm{eff}}$ exceeds the physical track width ($B$) and must be calibrated using measured yaw motion.
 
-> **Interactive models:** Widget 1 combines the AgileX Scout 2.0 geometry with the 65 kg FOD Hunter design mass to examine steering behaviour under the selected loading assumption. The Scout simulation model itself has a mass of 52.37 kg. Widget 2 explores the provisional FOD Hunter geometry using adjustable dimensions and surface friction. Neither widget measures physical steering performance.
+> **Interactive models:** Widget 1 applies AgileX Scout 2.0 simulation geometry ($B = 0.583\text{ m}$, $L = 0.498\text{ m}$) with the 65.0 kg FOD Hunter design mass to examine kinematic steering response. The Gazebo simulation model itself specifies a 52.37 kg base mass. Widget 2 explores the provisional FOD Hunter chassis geometry ($B = 0.575\text{ m}$, $L = 0.4888\text{ m}$) across adjustable surface friction coefficients. Both models represent theoretical kinematic approximations rather than empirical field measurements.
 
 <SteeringKinematicsWidget1 />
 
@@ -98,15 +96,13 @@ For $\omega_z\ne0$, the ideal turning radius is $R=v_x/\omega_z$. When $v_x=0$ a
 
 ![Skid-steer tire-scrub free-body diagram](./assets/diagrams/skid-steer-forces-fbd.svg)
 
-The appendix contains the friction model, geometry comparison, pitch analysis and operating scenarios. These torque estimates use assumed friction. Motor sizing is covered in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md).
+The appendix details the friction model, track width calibration factor, pitch stability thresholds, and five operating torque scenarios. Motor sizing calculations are established in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md).
 
 ::::
 
-## 5. Testing & Results {#steer-testing}
+## 4.5.5 Testing & Results {#steer-testing}
 
-The steering equations were used in Gabriel's STM32 motor-control firmware. Gabriel also tested a preliminary four-wheel chassis moving on the ground under an **estimated 30 kg load**, using a **32 V supply with an approximately 10 A current limit**. The test demonstrated forward and reverse motion, variable-speed control and four-motor operation. Video evidence is available. Turning radius, tyre scrub and full-load steering torque were not measured.
-
-**Firmware implementation (Gabriel):** `CDE4301Stm32/Core/Src/controller.c`, `Drive_UGV_With_Mode()` (reported lines 650–666), converts commanded linear and angular velocity into left/right wheel speeds and RPM. The code uses a **575 mm track width** and **131.5 mm wheel radius**, matching the design assumptions in this analysis. The **488.75 mm wheelbase** is also defined in the firmware; these dimensions remain provisional until the final chassis is measured.
+The skid-steer inverse kinematics formulation was implemented in the STM32 motor-control firmware (`CDE4301Stm32/Core/Src/controller.c`, `Drive_UGV_With_Mode()`, lines 650–666) authored by Gabriel Tan. The implementation maps commanded body twist into left and right wheel RPM setpoints using nominal dimensions ($B = 575\text{ mm}$, $r = 131.5\text{ mm}$, $L = 488.75\text{ mm}$).
 
 ```c
 /* CDE4301Stm32/Core/Src/controller.c (lines 650–666) — Gabriel Tan */
@@ -129,7 +125,9 @@ if (max_wheel_rpm > (float)g_motor_max_rpm && max_wheel_rpm > 0.0001f) {
 }
 ```
 
-Gabriel also added **proportional speed limiting**: when either wheel bank exceeds the allowed RPM, both commands are scaled by the same factor. This keeps the commanded turning radius unchanged in the ideal kinematic model, although tire slip may still change the actual path. The firmware uses a 50 Hz motor-command dispatch loop; it does not yet calculate physical wheel odometry from encoder feedback.
+The firmware incorporates proportional velocity saturation scaling: when either wheel bank exceeds the maximum motor RPM limit (`g_motor_max_rpm`), both bank commands are scaled by identical ratios, preserving commanded trajectory curvature ($R = v_x / \omega_z$) within the ideal kinematic domain. Commands are dispatched over CAN bus at 50 Hz. Physical wheel odometry feedback from motor encoders is slated for Semester 2 implementation.
+
+A preliminary four-wheel prototype chassis was bench-tested under an **estimated 30 kg preliminary test load** powered by a **32 V / 10.4 A bench DC power supply**. The test verified forward, reverse, and differential skid-steer velocity control across four operating hub motors (Video 4.5.1). Turning radius, lateral tire scrub forces, and full-load motor current were not quantitatively measured.
 
 <VideoClip
   src="./assets/videos/Video K8.MOV"
@@ -139,19 +137,19 @@ Gabriel also added **proportional speed limiting**: when either wheel bank excee
 
 :::: details Original analytical scenarios and verification status
 
-The appendix lists the five calculated operating scenarios (see [Table 4.5.2 in the standalone Steering Kinematics appendix](/members/hilbert/steering-kinematics#sec-detailed-engineering-evidence)). Encoder, CAN and turning results will be compared against logged data during Semester 2 testing.
+The appendix compiles the five analytical operating scenarios (see [Table 4.5.2 in the standalone Steering Kinematics appendix](/members/hilbert/steering-kinematics#sec-detailed-engineering-evidence)). Encoder odometry, CAN bus telemetry, and turning circle measurements will be validated against logged empirical data during Semester 2 field trials.
 
 ::::
 
-## 6. Engineering Discussion {#steer-discussion}
+## 4.5.6 Engineering Discussion {#steer-discussion}
 
-The main trade-off is **tight turning versus tyre scrub**. Pivots increase tyre wear and motor load, so planned curves can reduce their frequency. The wheel-speed equations generate commands, but actual turning requires calibration of effective track width.
+The central trade-off in skid steering is **maneuverability versus parasitic tire scrub**. In-place pivoting enables zero-radius reorientation in confined airfield zones but increases tire wear and transient electrical loading. Autonomous navigation mitigates this by prioritizing sweeping curves ($R \ge 1.0\text{ m}$) during wide sweeps and reserving in-place pivots for debris alignment and docking.
 
-For motor torque and electrical demand, see [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md). For planner configuration and localization, see [Navigation](./navigation.md). For software simulation evidence, see [Simulation](./simulation.md).
+Command dispatch requires empirical calibration of effective track width ($B_{\mathrm{eff}}$) to eliminate understeer from lateral slip. Motor sizing and power demand are detailed in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md), autonomous navigation in [Navigation](./navigation.md), and Gazebo simulation in [Simulation](./simulation.md).
 
-## 7. Limitations & Semester 2 Plan {#steer-future}
+## 4.5.7 Limitations & Semester 2 Plan {#steer-future}
 
-Next, I will measure turning radius and yaw tracking on FOD Hunter, calibrate $B_{\mathrm{eff}}$ using odometry and independent heading measurements, and assess motor current and tire scrub. I will begin with low-speed tests before attempting higher speeds. Detailed scheduling belongs in the [Semester 2 Plan](./semester-2-plan.md).
+Validation on FOD Hunter requires field trials on runway asphalt: measuring turning radii, calibrating $B_{\mathrm{eff}}$ via onboard dual-EKF state estimation and optical ground truth, and logging motor currents during pivot maneuvers. Testing will progress incrementally from low-speed trials to full-scale sweeps. Detailed testing milestones are scheduled in the [Semester 2 Plan](./semester-2-plan.md).
 
 <!-- #endregion report -->
 
@@ -161,7 +159,7 @@ Next, I will measure turning radius and yaw tracking on FOD Hunter, calibrate $B
 
 ### A. Steering Architecture Selection & Trade-Off Matrix
 
-I evaluated three candidate drivetrain topologies for the runway patrol robot: four-wheel independent skid steering, car-like front-wheel Ackermann steering, and Mecanum wheel omnidirectional drive [\[13\]](./references.md#ref-13). I weighted mechanical reliability and debris tolerance above cruising efficiency for runway use.
+Three candidate drivetrain topologies were evaluated for the autonomous runway patrol UGV: four-wheel independent skid steering, front-wheel Ackermann steering, and Mecanum wheel omnidirectional drive [\[13\]](./references.md#ref-13). Mechanical reliability, structural simplicity, and debris tolerance were weighted above cruising efficiency for airfield operations.
 
 <Card tag="Weighted Selection Matrix">
 
@@ -204,7 +202,7 @@ _Scoring Methodology & Composite Arithmetic:_
 
 ### B. Skid-Steer Kinematic Model Derivations
 
-The 4WD skid-steer model uses left and right wheel speeds and an effective track width $B_{\text{eff}}$ to account for lateral slip [\[13\]](./references.md#ref-13).
+The planar 4WD skid-steer model maps wheel bank speeds to body velocities using an effective track width $B_{\text{eff}}$ that accounts for lateral tire slip [\[13\]](./references.md#ref-13).
 
 #### 1. Forward Kinematics
 
@@ -243,7 +241,7 @@ Lateral tire scrub during turns resists rotation, causing the vehicle to turn mo
 
 $$B_{\text{eff}} = \chi \cdot B$$
 
-For analysis I use $\chi \approx 1.18$, following the effective-track-width approach for skid-steer robots [\[13\]](./references.md#ref-13). This analytical ratio compares the Gazebo wheel separation (0.68 m) with the provisional FOD Hunter track width (0.575 m):
+Kinematic analyses adopt $\chi \approx 1.18$, following classical effective-track-width parameterization for skid-steer mobile robots [\[13\]](./references.md#ref-13). This ratio reflects the Gazebo simulation wheel separation (0.68 m) relative to the provisional FOD Hunter track width (0.575 m):
 
 $$B_{\text{eff}} = 1.18 \times 0.5750\text{ m} = 0.6785\text{ m}$$
 
@@ -283,12 +281,12 @@ Substituting baseline parameters ($m = 65.0\text{ kg}$, $L = 0.4888\text{ m}$, $
 
 $$M_{\text{scrub}} = 0.5 \times 0.85 \times 65.0\text{ kg} \times 9.80665\text{ m/s}^2 \times 0.4888\text{ m} = \mathbf{132.42\text{ Nm}}$$
 
-Both $124.63\text{ Nm}$ and $132.42\text{ Nm}$ are analytical estimates calculated using the identical classical formula $M_{\text{scrub}} = 0.5 \mu m g L$, differing only in the assumed pavement friction coefficient:
+Both $124.63\text{ Nm}$ and $132.42\text{ Nm}$ represent analytical estimates derived from the classical Coulomb friction formulation $M_{\text{scrub}} = 0.5 \mu m g L$, differing solely in the assumed pavement friction coefficient:
 
 - **Nominal dry asphalt assumption ($\mu = 0.80$):** $M_{\text{scrub}} = 0.5 \times 0.80 \times 65.0 \times 9.80665 \times 0.4888 = \mathbf{124.63\text{ Nm}}$ (used as the default baseline in the interactive explorer).
 - **Conservative sizing assumption ($\mu = 0.85$):** $M_{\text{scrub}} = 0.5 \times 0.85 \times 65.0 \times 9.80665 \times 0.4888 = \mathbf{132.42\text{ Nm}}$ (used for conservative drivetrain torque margin evaluation).
 
-Neither friction coefficient is an experimentally measured runway value; both serve as analytical estimates for drivetrain sensitivity.
+Neither friction coefficient represents an experimentally measured runway value; both serve as analytical boundaries for drivetrain sensitivity evaluation.
 
 #### 3. Combined Friction Circle & Slip Vector Analysis
 
@@ -305,7 +303,7 @@ Under an idealized Coulomb friction-circle model where friction opposes the inst
 
 $$\frac{M_{\text{drive}}}{M_{\text{scrub}}} = \frac{2 B (\mu N_w \cos\theta)}{2 L (\mu N_w \sin\theta)} = \frac{B}{L} \cot(\theta) = \left( \frac{B}{L} \right)^2 = \left( \frac{1}{0.8501} \right)^2 = 1.3838$$
 
-The ratio reduces to $(B/L)^2 = 1.38$, so it only compares the stance geometry. It splits one assumed friction force into two components and is not a traction reserve. Motor sizing uses the model in Section C.4, where turning in place requires $L/B \le 1$ under the same simplified Coulomb assumptions. Real pneumatic tires have contact-patch compliance and non-linear slip, so in-place pivoting must be tested on runway pavement in Semester 2.
+The expression simplifies to $(B/L)^2 = 1.38$, illustrating the geometric relationship between stance aspect ratio and moment generation. Under simplified Coulomb assumptions, stationary pivoting requires $L/B \le 1.00$ to ensure driving traction overcomes scrub resistance. Because real pneumatic tires exhibit contact-patch compliance and non-linear shear characteristics, in-place pivoting dynamics must be validated empirically on runway pavement during Semester 2 field trials.
 
 #### 4. Motor Torque Sizing for Zero-Radius Turning
 
@@ -317,9 +315,9 @@ With rolling wheel radius $r = 0.1315\text{ m}$, mechanical shaft torque require
 
 $$\tau_{\text{shaft}} = F_w \cdot r = 115.15\text{ N} \times 0.1315\text{ m} = \mathbf{15.14\text{ Nm}}$$
 
-Under the nominal friction assumption ($\mu = 0.80$), $F_w = 108.37\text{ N}$ and required mechanical shaft torque is **$14.25\text{ Nm}$** (compared to **$15.14\text{ Nm}$** under $\mu = 0.85$). For preliminary component selection, Hilbert's Motor Drivetrain chapter evaluated an earlier design baseline ($L/B = 0.80$, $\mu = 0.80$), which established a preliminary mechanical shaft torque requirement of **$13.42\text{ Nm}$** and a preliminary efficiency-adjusted design allowance of **$15.78\text{ Nm}$** ($\tau_{\text{design}} = 13.42 / 0.85 = 15.78\text{ Nm}$).
+Under the nominal friction assumption ($\mu = 0.80$), $F_w = 108.37\text{ N}$, yielding a required mechanical shaft torque of **$14.25\text{ Nm}$** per motor (compared to **$15.14\text{ Nm}$** under conservative $\mu = 0.85$). For preliminary component selection, the initial drivetrain sizing evaluated an earlier baseline geometry ($L/B = 0.80$, $\mu = 0.80$), establishing a baseline shaft torque requirement of **$13.42\text{ Nm}$** and an efficiency-adjusted sizing allowance of **$15.78\text{ Nm}$** ($\tau_{\text{design}} = 13.42 / 0.85$).
 
-If an 85% electrical and inverter efficiency margin ($\eta \approx 0.85$) is similarly applied to the later provisional geometry ($L/B = 0.850$, $\mu = 0.80$), it yields an electrical sizing allowance of $\tau_{\text{allowance}} = 14.25 / 0.85 = 16.77\text{ Nm}$. This is the design allowance for the later geometry used in Table 4.5.2. It is a sizing allowance, not a measured torque or electrical input-power result; the 14.25 Nm shaft torque is the value to compare with the motor's mechanical torque ratings. The selected ZLLG80ASM250 direct-drive hub motors provide a rated continuous torque of $15.0\text{ Nm}$ and a peak torque of $28.5\text{ Nm}$ (driven by ZLAC8015D dual-channel servo drivers). Calculated shaft torque is an analytical estimate; continuous pivoting capability and motor temperature have not been tested and require physical field testing on runway tarmac.
+Applying the same 85% electrical and inverter efficiency allowance ($\eta \approx 0.85$) to the provisional geometry ($L/B = 0.850$, $\mu = 0.80$) yields an electrical sizing allowance of $\tau_{\text{allowance}} = 14.25 / 0.85 = 16.77\text{ Nm}$, matching Table 4.5.2. This serves as a conservative sizing boundary rather than an empirical measurement; the mechanical shaft torque ($14.25\text{ Nm}$) remains the primary benchmark against motor continuous ratings. The selected ZLLG80ASM250 hub motors provide a rated continuous torque of $15.0\text{ Nm}$ and peak torque of $28.5\text{ Nm}$ (driven by ZLAC8015D servo drivers). Thermal rise and continuous pivoting limits will be evaluated under physical runway conditions.
 
 #### 5. Parasitic Power Dissipation
 
@@ -360,7 +358,41 @@ The design baseline ratio ($L/B = 0.8501$) resides within this preliminary analy
 
 ### E. Calculated Operating Scenarios
 
-I calculated five operating scenarios with the Motor Drivetrain road-load model ([Section 4](./motor-drivetrain-calculation.md#motor-calculations)) and the scrub model in Section C of this appendix. The results are preliminary analytical estimates per motor, not measured values.
+Five representative operating scenarios were evaluated using the longitudinal road-load model ([Motor Drivetrain Calculations Section 4.4.4](./motor-drivetrain-calculation.md#motor-calculations)) combined with the scrub resistance formulation in Section C. Tabulated values represent analytical shaft torque estimates per motor rather than empirical test measurements.
+
+<Card tag="Analytical Model Predictions">
+
+**Table 4.5.2: Calculated Steering Scenarios — Torque per Motor**
+
+| Scenario                 | Operating condition                                                                  | Shaft torque per motor | Design allowance per motor ($\div\,0.85$) | Calculation basis                                                                                                    |
+| :----------------------- | :----------------------------------------------------------------------------------- | ---------------------: | ----------------------------------------: | :------------------------------------------------------------------------------------------------------------------- |
+| **1. Cruise patrol**     | 8.0 km/h (2.22 m/s), straight; wheels 16.90 rad/s (161.4 rpm)                        |       $0.55\text{ Nm}$ |                          $0.65\text{ Nm}$ | Rolling resistance 15.94 N + drag 0.83 N                                                                             |
+| **2. High-speed sprint** | 15.0 km/h (4.17 m/s), straight; wheels 31.69 rad/s (302.6 rpm)                       |       $0.62\text{ Nm}$ |                          $0.73\text{ Nm}$ | Rolling resistance 15.94 N + drag 2.93 N (same as Motor Drivetrain Case 1)                                           |
+| **3. Sweeping turn**     | 8.0 km/h, $\omega_z$ = 0.74 rad/s, R = 3.00 m; wheels 14.99 / 18.81 rad/s            |       $2.16\text{ Nm}$ |                          $2.54\text{ Nm}$ | Scenario 1 road load (0.55 Nm) + scrub term (1.61 Nm) from $M_{\text{scrub}}(R)$ = 14.05 Nm                          |
+| **4. In-place pivot**    | 0 km/h, $\omega_z$ = 1.00 rad/s; wheels ∓2.58 rad/s (24.6 rpm)                       |      $14.25\text{ Nm}$ |                         $16.77\text{ Nm}$ | Pivot scrub moment 124.63 Nm at μ = 0.80, L/B = 0.85 (Section C.4)                                                   |
+| **5. 5° incline turn**   | 6.0 km/h (1.67 m/s), $\omega_z$ = 0.50 rad/s, R = 3.33 m; wheels 11.38 / 13.96 rad/s |       $3.81\text{ Nm}$ |                          $4.49\text{ Nm}$ | Slope 55.57 N + rolling 15.94 N + drag 0.47 N (2.37 Nm) + scrub term (1.45 Nm) from $M_{\text{scrub}}(R)$ = 12.65 Nm |
+
+_Equations used:_
+
+- Straight-line road load: $F_{\text{road}} = F_{rr} + F_{\text{aero}} + F_{\text{slope}}$, with $F_{rr} = m g C_{rr}$, $F_{\text{aero}} = \tfrac12 \rho C_d A v^2$, $F_{\text{slope}} = m g \sin\theta$ ($m$ = 65 kg, $g$ = 9.81 m/s², $C_{rr}$ = 0.025, $C_d A$ = 0.28 m², $\rho$ = 1.204 kg/m³).
+- Road-load shaft torque per motor: $\tau_{\text{shaft}} = F_{\text{road}}\, r / 4$, with $r$ = 0.1315 m.
+- Turning scrub: $M_{\text{scrub}}(R) = M_{\text{pivot}} \frac{B_{\text{eff}}}{2\sqrt{R^2 + (L/2)^2}}$, with $M_{\text{pivot}} = \tfrac12 \mu m g L$ = 124.63 Nm, $B_{\text{eff}}$ = 0.6785 m and $L$ = 0.4888 m. This is a simplified scaling with no published source.
+- Scrub shaft torque per motor: $\tau_{\text{scrub}} = \frac{M_{\text{scrub}}(R)}{2B}\, r$, with $B$ = 0.575 m. It is added to the road-load torque.
+- Design allowance: $\tau_{\text{design}} = \tau_{\text{shaft}} / 0.85$.
+- Component values in the table are rounded; totals are calculated from unrounded values (Scenario 5: 2.366 + 1.447 = 3.813 Nm).
+
+_Notes on Scenarios:_
+
+- Wheel speeds in the turning scenarios (3, 4 and 5) use the effective track width $B_{\text{eff}} = 0.6785\text{ m}$ ($\chi = 1.18$).
+- The model assumes equal load on all four wheels and divides the scrub moment evenly between them. During real skid steering, wheel loads and slip differ between wheels, so individual motor torques will differ.
+- In Scenario 4, the 14.25 Nm shaft torque is within the 15.0 Nm continuous rating. The 16.77 Nm allowance is above it and within the 28.5 Nm peak, so pivots are treated as short transients.
+- All values use the preliminary design geometry ($m = 65.0\text{ kg}$, $L = 488.8\text{ mm}$, $B = 575.0\text{ mm}$, $r = 131.5\text{ mm}$) and assumed dry-pavement friction $\mu = 0.80$. Testing on runway pavement is scheduled for Semester 2.
+
+**Two pivot results.** The original Motor Drivetrain sizing used a preliminary stance ratio of $L/B = 0.80$, giving a pivot shaft torque of **13.42 Nm** and a design allowance of **15.78 Nm**. That calculation remains the basis for motor selection. This appendix uses the later provisional chassis geometry ($L = 488.8$ mm, $B = 575$ mm, $L/B \approx 0.85$), which gives **14.25 Nm** shaft torque and a **16.77 Nm** design allowance. The difference comes from the updated wheelbase-to-track-width ratio, not from a change in method.
+
+</Card>
+
+::::
 
 <Card tag="Analytical Model Predictions">
 

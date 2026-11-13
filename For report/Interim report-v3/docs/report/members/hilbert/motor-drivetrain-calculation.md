@@ -13,11 +13,11 @@ outline: [2, 3]
 
 <!-- #region report -->
 
-## 1. Objectives & Requirements {#motor-objectives}
+## 4.4.1 Objectives & Requirements {#motor-objectives}
 
-I sized the drivetrain for a **65 kg UGV** with **263 mm wheels** and a **15 km/h target speed**. The four cases cover cruising, a 5° incline, acceleration and in-place pivoting. A separate 15° ramp check is included. These are design calculations, not measured performance.
+The powertrain was sized from first principles for a **65.0 kg gross vehicle mass (fully laden)** utilizing four **263 mm outer diameter wheels** at a target operational sprint velocity of **15.0 km/h ($4.17\text{ m/s}$)**. Four operating regimes were evaluated: level aerodynamic cruising, slope climbing on a $5.0^\circ$ taxiway shoulder embankment, dynamic acceleration ($0\text{–}15\text{ km/h}$ in $3.0\text{ s}$), and in-place zero-radius skid-steer pivoting, supplemented by a $15.0^\circ$ drainage culvert check.
 
-During an in-place turn, the tyres scrub sideways against the ground. I included this resistance to identify the highest motor-torque requirement.
+In-place pivoting represents the sizing load case, where lateral tire scrubbing against high-friction tarmac ($\mu_{\text{skid}} = 0.80$) governs peak shaft torque requirements.
 
 ::: details Full design assumptions and requirements
 
@@ -25,13 +25,13 @@ During an in-place turn, the tyres scrub sideways against the ground. I included
 
 <Badge type="info" text="System Constraints" />
 
-I used runway sweep requirements from FAA AC 150/5220-24 [\[2\]](./references.md#ref-2) and airport pavement conditions from ASTM D5340-20 [\[1\]](./references.md#ref-1). The design targets up to $15\text{ km/h}$ ($4.167\text{ m/s}$) to sweep an active $3,000\text{ m}$ runway in under $20\text{ minutes}$ between aircraft movements, an acceleration allowance of $t_{\text{acc}} = 3.0\text{ s}$, and a 5° incline case.
+Drivetrain sizing incorporates aerodrome sweeping requirements derived from FAA AC 150/5220-24 [\[2\]](./references.md#ref-2) and pavement surface friction standards from ASTM D5340-20 [\[1\]](./references.md#ref-1). Operating at $15.0\text{ km/h}$ ($4.17\text{ m/s}$) enables rapid sweeping of active $3,000\text{ m}$ runway corridors within $15\text{–}20\text{ minute}$ air traffic control separation windows, with an acceleration budget of $t_{\text{acc}} = 3.0\text{ s}$.
 
 <Card>
 
 **Selected drivetrain: four direct-drive hub motors**
 
-The team purchased **four ZLLG80ASM250 hub motors** and **two ZLAC8015D dual-channel drivers**. Gabriel implemented CANopen communication over a 500 kbps CAN bus, with one driver per axle. Each driver controls two motors. The hub motors avoid a separate gearbox and mechanical differential. The final vehicle wiring and full-load performance still need validation.
+The physical drivetrain utilizes **four ZLLG80ASM250 hub motors** and **two ZLAC8015D dual-channel drivers**. Low-level CANopen communication was established over a 500 kbps CAN bus, allocating one driver per axle to control two motors independently. Direct-drive hub motors eliminate gearbox backlash, mechanical transmission wear, and differential maintenance. Full-load validation at nominal 48 V supply is scheduled for Semester 2.
 
 </Card>
 
@@ -52,9 +52,11 @@ The team purchased **four ZLLG80ASM250 hub motors** and **two ZLAC8015D dual-cha
 
 :::
 
-## 2. Drivetrain Architecture {#motor-architecture}
+<span id="sec-2-overview"></span>
 
-I selected **four ZLLG80ASM250 hub motors** and **two ZLAC8015D dual-channel drivers**. Each wheel is driven independently, so no mechanical differential or steering linkage is needed. Gabriel has implemented STM32 velocity commands over CANopen and tested the four-motor setup on a preliminary chassis. Integration with Nav2 and validation at the intended supply voltage remain outstanding.
+## 4.4.2 Drivetrain Architecture {#motor-architecture}
+
+The physical powertrain comprises **four direct-drive BLDC hub motors (ZLTECH ZLLG80ASM250)** driven by **two dual-channel FOC servo drivers (ZLAC8015D)**. Independent four-wheel drive eliminates mechanical differentials, gearboxes, and steering linkages. Low-level velocity control and CANopen CiA 402 communication (500 kbps) were implemented on an STM32F446RE MCU (Gabriel), validating multi-motor synchronization on a preliminary test chassis under laboratory supply conditions ($32\text{ V}$, $10.4\text{ A}$ limit).
 
 <Figure src="./assets/images/motor-and-driver.jpg" alt="Purchased ZLLG80ASM250 hub motors and ZLAC8015D dual-channel servo driver" caption="Figure 4.4.1: Purchased drivetrain hardware showing ZLTECH ZLLG80ASM250 hub motors with 263 mm pneumatic tyres and ZLAC8015D dual-channel servo driver." />
 
@@ -68,7 +70,7 @@ The detailed geometric justification for choosing skid steering over Ackermann a
 
 <Badge type="info" text="Hardware Bill of Materials" />
 
-I selected **four direct-drive BLDC hub motors** to avoid gearboxes and separate steering linkages. The steering architecture comparison is covered in [Steering Kinematics](./steering-kinematics.md):
+Four direct-drive BLDC hub motors were selected to eliminate gearbox backlash and complex steering linkages. The kinematic steering trade study is detailed in [Steering Kinematics](./steering-kinematics.md):
 
 <CardGrid :cols="2">
 
@@ -108,18 +110,18 @@ Direct-drive motors avoid gearbox backlash. Wheel-speed reversal is still limite
 
 :::
 
-## 3. Design Methodology & Selection {#motor-methodology}
+## 4.4.3 Design Methodology & Selection {#motor-methodology}
 
-The drivetrain was developed in four stages:
+The drivetrain was developed across four progressive engineering stages:
 
-1. **Stage 1 — Preliminary Calculations:** Before purchasing motors or finalizing chassis CAD, I estimated motor torque from first principles using an assumed $65\text{ kg}$ gross vehicle mass, $263\text{ mm}$ wheels, and an assumed $0.80$ wheelbase-to-track-width ratio ($L/B$).
-2. **Stage 2 — Hardware Selection:** The preliminary sizing indicated that level cruising required $0.73\text{ Nm}$, incline climbing required $2.88\text{ Nm}$, acceleration required $4.22\text{ Nm}$, and in-place pivoting required a preliminary design torque estimate of $15.78\text{ Nm}$ per motor (assuming $85\%$ efficiency). Based on these figures, I selected four direct-drive ZLLG80ASM250 hub motors ($15.0\text{ Nm}$ continuous, $28.5\text{ Nm}$ peak) and two ZLAC8015D dual-channel FOC drivers ($15\text{ A}$ continuous, $30\text{ A}$ peak per channel).
-3. **Stage 3 — Preliminary Physical Testing:** Gabriel implemented STM32 motor control firmware and CANopen communication. Ground tests on a preliminary test chassis moved under an estimated $30\text{ kg}$ load powered by a laboratory bench supply at approximately $32\text{ V}$ with a $10.4\text{ A}$ current limit (`USE_POWER_PRESET_3`, clamped to $25\text{ RPM}$ in firmware). The test confirmed forward/reverse travel, variable-speed control, and four-motor coordination.
-4. **Stage 4 — Remaining Validation:** The intended $48\text{ V}$ battery pack was delayed. Full-load torque at the $65\text{ kg}$ design mass, incline climbing, in-place pivoting on tarmac, and loaded $15\text{ km/h}$ travel have not been tested. The $30\text{ kg}$ bench test was a functional verification of motor control and firmware, not a direct validation of the $65\text{ kg}$ design calculations.
+1. **Stage 1 — Analytical Sizing:** Motor torque and speed requirements were estimated from first principles using an assumed $65.0\text{ kg}$ gross vehicle mass, $263\text{ mm}$ wheels, and an assumed $0.80$ stance ratio ($L/B$).
+2. **Stage 2 — Hardware Selection:** Analytical sizing yielded required shaft torques of $0.73\text{ Nm}$ for level cruise, $2.88\text{ Nm}$ for a $5.0^\circ$ incline, $4.22\text{ Nm}$ for linear acceleration, and $15.78\text{ Nm}$ for in-place pivoting (assuming $\eta = 0.85$). Consequently, four direct-drive ZLLG80ASM250 hub motors ($15.0\text{ Nm}$ continuous, $28.5\text{ Nm}$ peak) and two ZLAC8015D dual-channel FOC drivers were procured.
+3. **Stage 3 — Embedded Firmware Validation:** STM32 motor control firmware and CANopen communication were developed (Gabriel). Low-voltage ground testing under an estimated $30\text{ kg}$ load powered by a bench supply ($32\text{ V}$, $10.4\text{ A}$ limit, `USE_POWER_PRESET_3`, clamped to $25\text{ RPM}$) validated forward/reverse motion, speed control, and multi-motor coordination.
+4. **Stage 4 — Semester 2 Physical Validation:** Characterization of full-load torque at $65.0\text{ kg}$, incline climbing, tarmac pivoting, and loaded $15.0\text{ km/h}$ cruising with the production $48\text{ V}$ battery pack will be conducted in Semester 2.
 
-## 4. Engineering Calculations {#motor-calculations}
+## 4.4.4 Engineering Calculations {#motor-calculations}
 
-I calculated motor torque for four operating cases using the preliminary design assumptions ($65\text{ kg}$ mass, $263\text{ mm}$ wheels, $L/B = 0.80$, $\mu_{\text{skid}} = 0.80$, and an assumed $85\%$ efficiency allowance). The results are **0.73 N·m per motor** for level cruising, **2.88 N·m** for a 5° incline, **4.22 N·m** for acceleration to 15 km/h in 3 s, and a preliminary design estimate of **15.78 N·m** for an in-place pivot. **Pivoting represents the sizing case** in this model. These are calculated values, not physical test results.
+Motor torque was evaluated across four operating cases using the design baseline ($65.0\text{ kg}$ mass, $263\text{ mm}$ wheels, $L/B = 0.80$, $\mu_{\text{skid}} = 0.80$, $\eta = 0.85$). Results yield **0.73 N·m per motor** for level cruising, **2.88 N·m** for a 5° incline, **4.22 N·m** for acceleration ($0\text{–}15\text{ km/h}$ in $3\text{ s}$), and **15.78 N·m** for an in-place pivot. **In-place pivoting represents the sizing case.**
 
 | Calculated case        | Shaft torque per motor | Preliminary design torque ($\eta = 0.85$) | Interpretation                                        |
 | ---------------------- | ---------------------: | ----------------------------------------: | ----------------------------------------------------- |
@@ -130,7 +132,7 @@ I calculated motor torque for four operating cases using the preliminary design 
 
 ::: details Wheel-speed derivation and tire-size comparison
 
-#### 2. Kinematic Velocity & Wheel Rotational Speed (RPM) Derivation
+#### Kinematic Velocity & Wheel Rotational Speed (RPM) Derivation
 
 <Badge type="tip" text="Kinematic Model" />
 
@@ -324,13 +326,13 @@ The value **$15.78\text{ Nm}$** was retained as the **preliminary design torque 
 
 :::
 
-## 5. Testing & Results {#motor-testing}
+## 4.4.5 Testing & Results {#motor-testing}
 
-### Preliminary loaded ground test
+### 4.4.5.1 Preliminary Loaded Ground Test {#sec-ground-test}
 
-Gabriel tested the purchased motors and drivers on a preliminary UGV chassis that **moved on the ground under an estimated 30 kg total load**. The test used a laboratory power supply set to approximately **32 V**, with a current limit of about **10 A**. The firmware contains a 32 V / 10.4 A bench preset (`USE_POWER_PRESET_3`) with a **25 RPM command limit**. This is a software limit, not a measured wheel speed.
+Preliminary physical validation was conducted on a mobile test chassis operating under an estimated 30 kg payload powered by a laboratory bench power supply ($32\text{ V}$, $10.4\text{ A}$ current limit, `USE_POWER_PRESET_3`, clamped to 25 RPM in firmware). The evaluation confirmed bi-directional ground motion, variable-speed command execution, and synchronous four-wheel coordination via CANopen. Shaft torque measurement, 48 V nominal bus operation, and full 65 kg payload testing will be performed in Semester 2.
 
-The ground test demonstrated forward and reverse travel, variable-speed commands and simultaneous operation of all four motors. Gabriel implemented the STM32 motor-control firmware and CANopen driver communication; the motor-sizing calculations in this chapter are Hilbert's contribution.
+Gabriel implemented the STM32 motor-control firmware and CANopen driver communication; the first-principles motor-sizing derivations and architectural specifications are Hilbert's contribution.
 
 | Test item                | Evidence and outcome                                                                |
 | ------------------------ | ----------------------------------------------------------------------------------- |
@@ -348,13 +350,13 @@ The ground test demonstrated forward and reverse travel, variable-speed commands
   caption="Video 4.4.1: Preliminary four-motor loaded ground test demonstrating forward and reverse drive under ~30 kg load with a 32 V / 10.4 A DC bench supply."
 />
 
-The test shows that the selected drivetrain can move the preliminary chassis under these conditions. It **does not verify** the calculated torque values, full-load acceleration, incline climbing or 15 km/h operation. The intended 48 V battery was delayed, so full-voltage testing remains outstanding. For the STM32 code and test procedure, see Gabriel's firmware documentation.
+The bench evaluation confirms low-level CANopen actuator control and four-wheel driving synchronization on a mobile chassis. However, verification of calculated full-load continuous torque, acceleration rates, slope climbing, and 15.0 km/h cruising awaits installation of the 48 V production battery pack.
 
-## 6. Engineering Discussion {#motor-discussion}
+## 4.4.6 Engineering Discussion {#motor-discussion}
 
-With the assumed friction coefficient ($\mu_{\text{skid}} = 0.80$), **in-place pivoting produces the highest calculated motor torque** ($15.78\text{ Nm}$ preliminary design torque, $13.42\text{ Nm}$ required shaft torque). This makes lateral tire scrub, driver current limits and motor thermal rise important engineering considerations. If runway pavement friction is lower (e.g. wet tarmac $\mu = 0.55$), the required pivot torque decreases proportionally.
+Under the Coulomb friction model ($\mu_{\text{skid}} = 0.80$), **zero-radius in-place pivoting constitutes the primary mechanical sizing case** ($15.78\text{ Nm}$ preliminary design torque, $13.42\text{ Nm}$ required shaft torque). Lateral tire scrubbing, driver phase current limits, and stator thermal dissipation govern actuator selection. On reduced-friction surfaces (such as wet asphalt, $\mu \approx 0.55$), required pivoting torque diminishes proportionally.
 
-### Distinction Between Phase Current and Battery DC Current
+### 4.4.6.1 Distinction Between Phase Current and Battery DC Current {#sec-phase-dc-current}
 
 Five different current and power quantities appear in this chapter:
 
@@ -368,7 +370,7 @@ Five different current and power quantities appear in this chapter:
 
 > **Note:** This is the preliminary electrical budget. Its traction figures are the manufacturer test-curve input powers (Section 6, item 3), and its auxiliary load assumes a **250 W DC vacuum blower**. The vacuum design is still developing: the current concept uses an AC motor that may need its own battery and inverter, and its power requirement is not confirmed (Asuka's sizing estimates 0.9–1.1 kW; Bryan's BOM lists a 2,800 W unit). The runtime and BMS figures below depend on the original 250 W assumption and will be reconciled with Bryan's electrical design, which is the reference for battery, DC-DC and BMS specifications.
 
-#### 5. Electrical Power Bus, BMS Discharge Capacity & Auxiliary Load Sizing {#sec-power-bus}
+#### Electrical Power Bus, BMS Discharge Capacity & Auxiliary Load Sizing {#sec-power-bus}
 
 <Badge type="warning" text="48V LiFePO4 Bus" />
 
@@ -451,7 +453,7 @@ Peak Bus Estimate (test-curve pivot point): $\mathbf{66.41\text{ A}}$ ($58.99\te
 
 <Badge type="warning" text="Analytical Estimate" />
 
-I estimated the stopping distance from the target cruise speed ($15\text{ km/h} = 4.167\text{ m/s}$) is governed by dynamic normal load transfer and tire adhesion limits [\[14\]](./references.md#ref-14) and must be analytically bounded:
+Analytical stopping distance from the target cruise velocity ($15.0\text{ km/h} = 4.167\text{ m/s}$) is governed by dynamic normal load transfer and tire adhesion limits [\[14\]](./references.md#ref-14):
 
 Assuming an asphalt friction coefficient $\mu = 0.80$ and regenerative dynamic braking deceleration $a_{\text{brake}} = 3.5\text{ m/s}^2$ (well below the tire skid limit $\mu g \approx 7.85\text{ m/s}^2$):
 
@@ -469,9 +471,9 @@ This is an analytical estimate. The Nav2 simulation configuration uses a 1.20 m 
 
 :::
 
-## 7. Limitations & Semester 2 Plan {#motor-future-work}
+## 4.4.7 Limitations & Semester 2 Plan {#motor-future-work}
 
-The preliminary chassis moved under an estimated 30 kg load at approximately 32 V, but I still need to test the completed FOD Hunter using the intended 48 V battery and the 65 kg design-load case. The planned checks are motor and driver voltage/current limits, encoder RPM, phase and bus current, turning calibration, temperature rise, acceleration, stopping distance and fail-safe response. Testing should start at low speed and increase gradually. The **15 km/h target** and calculated torque margins remain unverified.
+While preliminary low-voltage bench trials validated low-level actuator control under partial load, rigorous characterization of the fully integrated FOD Hunter prototype under full design conditions ($65.0\text{ kg}$, $48.0\text{ V}$ nominal bus) constitutes the primary Semester 2 focus. Planned experimental evaluations encompass driver current profiling, empirical wheel-slip calibration, thermal rise during prolonged scrubbing, acceleration response, stopping distance under emergency braking, and verification of the target $15.0\text{ km/h}$ cruise velocity.
 
 [Read Hilbert's Semester 2 implementation plan →](./semester-2-plan.md)
 

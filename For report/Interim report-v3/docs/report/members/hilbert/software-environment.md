@@ -9,21 +9,21 @@ outline: [2, 3]
 
 <Badge type="info" text="ROS 2 Jazzy Jalisco • Ubuntu 24.04 LTS • Gazebo Harmonic" />
 
-I used **Ubuntu 24.04 LTS**, **ROS 2 Jazzy** [\[7\]](./references.md#ref-7), **Gazebo Harmonic**, **Nav2** [\[8\]](./references.md#ref-8) and **CycloneDDS** to develop the UGV navigation and UAV–UGV communication software. ROS 2 handles data exchange between sensors, localization, planning and control nodes. Gazebo provides the simulation environment used before physical UGV integration.
+The autonomous runway navigation and communications software was developed on **Ubuntu 24.04 LTS**, **ROS 2 Jazzy** [\[7\]](./references.md#ref-7), **Gazebo Harmonic**, **Nav2** [\[8\]](./references.md#ref-8), and **Eclipse CycloneDDS**. ROS 2 provides the middleware layer for data exchange across sensing, state estimation, path planning, and actuator control, while Gazebo Harmonic serves as the simulation environment prior to physical vehicle deployment.
 
-#### Why ROS 2 Jazzy? {#ros2-selection-rationale}
+#### 3.1.1 Why ROS 2 Jazzy? {#ros2-selection-rationale}
 
-I selected **ROS 2 Jazzy** for three reasons:
+**ROS 2 Jazzy Jalisco** was selected based on three criteria:
 
-1. **Long-term support:** Jazzy is an LTS release supported through May 2029. It runs on Ubuntu 24.04 LTS, providing a stable development baseline.
-2. **Simulation compatibility:** Jazzy integrates with Gazebo Harmonic through `ros_gz_bridge`, allowing simulated sensors and robot commands to communicate with ROS 2 nodes.
-3. **Navigation tools:** Jazzy supports the Nav2 planners and controllers used in my work, including Smac Planner [\[15\]](./references.md#ref-15) and Regulated Pure Pursuit [\[18\]](./references.md#ref-18).
+1. **Lifecycle Stability:** As a Long-Term Support (LTS) release supported through May 2029 on Ubuntu 24.04 LTS, Jazzy provides binary stability throughout the project development cycle.
+2. **Simulation Integration:** Native compatibility with Gazebo Harmonic via `ros_gz_bridge` enables transport of simulated sensor streams and motion setpoints without intermediate middleware bridges.
+3. **Autonomy Tooling:** Full support for core Nav2 packages, specifically SmacPlannerHybrid [\[15\]](./references.md#ref-15) and Regulated Pure Pursuit [\[18\]](./references.md#ref-18).
 
-I considered other ROS 2 releases, but chose Jazzy to avoid changing the operating system and software dependencies during development. The comparison is available below.
+Candidate distributions were evaluated against operational support windows and dependency stability (detailed in the comparison below).
 
-#### Development Setup (WSL2) {#wsl2-development-environment}
+#### 3.1.2 Development Setup (WSL2) {#wsl2-development-environment}
 
-I ran Ubuntu 24.04 inside **Windows Subsystem for Linux 2 (WSL2)** on the development laptop. This allowed me to develop ROS 2 packages and run Gazebo Harmonic without a separate Linux computer. During setup, Gazebo rendered at approximately **45–60 FPS** through WSLg; this was observed on screen, not measured with a standard benchmark.
+Ubuntu 24.04 LTS was hosted within **Windows Subsystem for Linux 2 (WSL2)**, leveraging hardware-accelerated rendering through WSLg (yielding an observed 45–60 FPS in Gazebo) to enable compilation and simulation on development hardware.
 
 <Figure
   src="./assets/images/ros2-jazzy-wsl2-runtime.png"
@@ -31,7 +31,7 @@ I ran Ubuntu 24.04 inside **Windows Subsystem for Linux 2 (WSL2)** on the develo
   caption="Figure 3.1.1: Terminal verification of Ubuntu 24.04 LTS, ROS 2 Jazzy, runway_sim_ws workspace, and core Nav2 packages in WSL2."
 />
 
-I encountered a networking issue when connecting ROS 2 nodes in WSL2 to the external Raspberry Pi 5: DDS multicast discovery did not work reliably across the virtualized network. I configured **CycloneDDS static unicast peers** so the machines could discover each other using known addresses. The configuration and tests are documented in [Communications](./communications.md).
+Because default DDS multicast discovery failed across the virtualized Hyper-V network switch between the WSL2 environment and the external companion computer (Raspberry Pi 5), **Eclipse CycloneDDS was configured with static unicast peering** to bypass virtual network multicast filtering. Network architecture and verification tests are documented in [Communications](./communications.md).
 
 ::: details ROS 2 Distribution Comparison
 
