@@ -12,7 +12,7 @@ The power distribution system was designed to supply the drivetrain, FOD remedia
 
 The proposed architecture also incorporates a Battery Management System (BMS), main fuse, emergency kill switch and branch-level fuses to address battery operating faults, overcurrent conditions and emergency isolation.
 
-## Power Distribution Architecture
+## 5.1.2.1 Power Distribution Architecture
 
 The FOD Hunter uses a nominal 48 V LiFePO₄ battery bus to supply the drivetrain, vacuum system and DC-DC converters. The distribution design combines a master battery protection and isolation path with separately protected high-current and low-voltage branches.
 
@@ -50,7 +50,7 @@ The main electrical supply is divided into dedicated branches according to the o
 | Communication and control | STM32, CAN transceiver and communication equipment | STM32 is powered by the Jetson NX while STM32 powers the CAN Transceiver |
 | Lighting and auxiliaries | Indicator lights, headlights and cooling fans | Regulated auxiliary supply |
 
-*Table 5.1.4: Proposed power distribution branches.*
+*Table 5.6: Proposed power distribution branches.*
 
 The separation of electrical loads allows individual branches to be protected according to their current requirements. It also provides a more organised wiring arrangement for installation, maintenance and future subsystem modifications.
 
@@ -60,7 +60,7 @@ The separation of electrical loads allows individual branches to be protected ac
 
 </Card>
 
-*Figure 5.1.1: Overall Electrical Wiring Schematic.*
+*Figure 5.1: Overall Electrical Wiring Schematic.*
 
 The schematic illustrates the proposed distribution of power from the battery through the main protection devices to the individual electrical subsystems.
 
@@ -68,11 +68,13 @@ The schematic illustrates the proposed distribution of power from the battery th
 | --- | --- | --- |
 | **Battery and master isolation** | 48 V 20 Ah LiFePO₄ battery, 100 A BMS, 100 A main fuse and 100 A kill switch | Stores energy, monitors battery conditions, protects the main output and provides manual isolation. |
 | **48 V distribution** | XT60 power distribution board and branch fuse enclosure | Routes battery power to the high-current loads and converter inputs. |
-| **Traction branch** | ZLAC8015D dual-channel motor driver and two 48 V hub motors | Supplies and controls the drivetrain. |
+| **Motor branch** | ZLAC8015D dual-channel motor driver and two 48 V hub motors | Supplies and controls the drivetrain. |
 | **Vacuum branch** | 48 V industrial vacuum | Supplies the FOD collection system. |
 | **Regulated branches** | 48 V-to-20 V, 48 V-to-12 V and 48 V-to-5 V DC-DC converters | Provides lower-voltage supplies for computing, auxiliary equipment and logic. |
 
-## Low-Voltage Rails
+*Table 5.7: Distribution Branches.*
+
+## 5.1.2.2 Low-Voltage Rails
 
 Although the drivetrain and FOD remediation system are designed around the main battery voltage, the onboard computing system, sensors and control electronics require lower operating voltages.
 
@@ -86,11 +88,11 @@ The proposed design includes three regulated voltage rails.
 | **12 V** | Sensors, Ethernet switch, cooling fans, headlights and indicator light tower. |
 | **5 V** | Backup in case STM32 cannot supply enough to connected sensors due to its max current of 500mA. |
 
-*Table 5.1.5: Proposed DC-DC voltage regulation.*
+*Table 5.8: Proposed DC-DC voltage regulation.*
 
 The low-voltage branches are distributed through a blade-fuse block. Each converter and branch must be wired and fused for its actual input current, output current and conductor rating.
 
-## Electrical Protection
+## 5.1.2.3 Electrical Protection
 
 Electrical protection was incorporated into the design to reduce the risk of damage caused by excessive current, battery operating faults and short circuits.
 
@@ -140,11 +142,11 @@ The preliminary design incorporates ANM fuses for higher-current branches and bl
 | **High-current branch fuses** | 50 A ANM fuses | Branch protection for high-current loads. Confirm final branch assignments and ratings against measured load and startup current. |
 | **Low-voltage branch fuses** | 10 A and 15 A automotive blade fuses | Protects the converter-fed computer, auxiliary and logic circuits; confirm each fuse against its wiring and load. |
 
-*Table 5.1.6: Electrical protection devices and their intended functions.*
+*Table 5.9: Electrical protection devices and their intended functions.*
 
 The branch fuse ratings will be reviewed against the operating current, startup current and cable specifications of the connected loads before physical integration.    
 
-## Electrical Integration, Wiring & Verification
+## 5.1.2.4 Electrical Integration, Wiring & Verification
 
 The electrical architecture was developed with consideration for component compatibility, wiring arrangement and future maintenance. High-current loads, including the drivetrain and vacuum system, are supplied through dedicated branches, while lower-voltage electronics receive power through regulated DC-DC converters.
 
@@ -157,7 +159,7 @@ The component inventory specifies 8 AWG wiring for the main battery loop, 12 AWG
 | Converter and auxiliary circuits | 16–18 AWG | DC-DC converters, sensors and auxiliary components |
 | Communication and signal circuits | 20–22 AWG | CAN communication and low-current control signals |
 
-*Table 5.1.7: Proposed wiring specifications for the electrical subsystem.*
+*Table 5.10: Proposed wiring specifications for the electrical subsystem.*
 
 The final conductor and fuse ratings must account for installed cable length, routing, insulation temperature rating, connector current limits and measured continuous and startup currents. Voltage drop and resistive heating must also be considered, particularly for high-current circuits.
 

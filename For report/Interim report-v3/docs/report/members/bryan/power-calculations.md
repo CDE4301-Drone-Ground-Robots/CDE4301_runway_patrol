@@ -7,7 +7,7 @@ outline: [2,3]
 
 <!-- #region report -->
 
-## System Power Consumption
+## 5.1.1.1 System Power Consumption
 
 The drivetrain power was estimated for four operating conditions. The mission-duration proportions and estimated power per motor are shown below.
 
@@ -18,7 +18,7 @@ The drivetrain power was estimated for four operating conditions. The mission-du
 | Acceleration | 5 | 222.14 |
 | Zero-radius turning | 5 | 708.10 |
 
-*Table 5.1.1: Estimated drivetrain power under different operating conditions, based on the interim presentation.*
+*Table 5.2: Estimated drivetrain power under different operating conditions, based on the interim presentation.*
 
 The electrical power of a component is calculated using:
 
@@ -40,7 +40,7 @@ $$
 P_{\text{weighted}}=\sum_{i=1}^{n}P_iD_i
 $$
 
-Using the proportions in Table 5.1.1:
+Using the proportions in Table 5.2:
 
 $$
 P_{\text{weighted}}=(78.48\times0.80)+(165.12\times0.10)+(222.14\times0.05)+(708.10\times0.05)
@@ -93,7 +93,7 @@ A 48 V-class power bus is used to reduce current relative to a 24 V bus for the 
 | Headlights for CV | 12.0 | 0.83 | 1.20 | 9.96 | 50.00% | 4.98 | 0.23 | 0.33 |
 | Rear Red Light Strip / Status Light | 12.0 | 0.25 | 0.40 | 3.00 | 100.00% | 3.00 | 0.07 | 0.11 |
 
-*Table 5.1.2: Total Power Table of Interim System.*
+*Table 5.3: Total Power Table of Interim System.*
 
 The consolidated load budget summarises the estimated electrical requirements of each subsystem, including operating voltage, nominal current, peak current, power consumption and duty cycle. The nominal current and operating voltage are used to determine the power demand of individual components through (P=VI), while the duty cycle accounts for intermittent operation to obtain the average power consumption. These average power values are then combined to estimate the total system load, which forms the basis for the subsequent battery capacity and runtime calculations.
 
@@ -101,7 +101,7 @@ The peak current values are considered separately to assess the maximum electric
 
 As the values are based on interim calculations, the power budget will be further refined during Semester 2 to account for additional components and changes to the FOD remediation system as our future works. These include the redesigned vacuum and collection mechanism, stepper motors for mechanical actuation, and an infrared (IR) sensor to confirm successful FOD clearance. 
 
-## Energy Requirement & Battery Capacity
+## 5.1.1.2 Energy Requirement & Battery Capacity
 
 The required energy is calculated from the estimated average system power and selected 1.5-hour design duration:
 
@@ -131,7 +131,7 @@ $$
 
 Approximately 22.39 Ah is therefore required for the 1.5-hour design target under the 611.36 W average-load assumption. The battery's actual nominal voltage and cell configuration must be confirmed from its manufacturer documentation.
 
-## Battery Chemistry Comparison
+## 5.1.1.3 Battery Chemistry Comparison
 
 Four chemistries were considered using energy density, cycle life, thermal behaviour, discharge capability, mass and suitability for repeated UGV operation.
 
@@ -142,13 +142,13 @@ Four chemistries were considered using energy density, cycle life, thermal behav
 | LiPo | 44.4 V (12S) | 300–500 cycles | 180–240 Wh/kg | More sensitive to mechanical damage and swelling; prior estimate reports onset around 150°C | 25C–50C | Lightweight packaging and high discharge capability in suitable designs; greater sensitivity to damage and swelling |
 | Lead-acid (SLA / AGM) | 48 V (four 12 V batteries) | 300–400 cycles | 30–40 Wh/kg | Low thermal-runaway risk in the prior comparison | 1C | Established and relatively low initial cost; high mass and low usable energy density |
 
-*Table 5.1.3: Preliminary comparison of battery chemistries and reported specifications.*
+*Table 5.4: Preliminary comparison of battery chemistries and reported specifications.*
 
 The numerical ranges above were present in the project comparison, but the project's reference list does not currently identify the sources or exact models behind them. They should be treated as indicative, unverified values—not manufacturer specifications—until supported by cited cell or battery datasheets. Battery characteristics vary by product, configuration and test conditions, so final comparison should use referenced specifications for the actual candidate packs.
 
 LiFePO4 was selected provisionally for its thermal stability and cycle-life characteristics. Its lower energy density was considered an acceptable mass trade-off for a ground-based platform. Chemistry alone does not ensure safe operation; electrical protection, thermal management and secure mechanical mounting are also required.
 
-## Final Battery Selection & Runtime
+## 5.1.1.4 Final Battery Selection & Runtime
 
 A 48 V-class, 20 Ah LiFePO4 battery was selected for the preliminary design. Assuming a 16S configuration with 51.2 V nominal voltage, its nominal energy is:
 
@@ -194,6 +194,8 @@ At 10 km/h, that corresponds to an estimated 73.4 km of travel, or more than 18.
 | Predicted mixed-mission runtime | Approximately 1.34 hours |
 | Minimum operating requirement | More than 1 hour |
 | Design target | 1.5 hours |
+
+*Table 5.5: Final Battery Selected.*
 
 The selected battery provides a preliminary balance between runtime, mass and electrical safety. Further testing and datasheet verification are required to confirm its discharge capability, usable energy and runtime under representative operating conditions.
 

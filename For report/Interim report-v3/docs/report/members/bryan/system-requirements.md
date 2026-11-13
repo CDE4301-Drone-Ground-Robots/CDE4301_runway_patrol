@@ -25,6 +25,8 @@ The electrical design was developed around three main requirements: component co
 | Minimum 1-hour operating time | Battery capacity must support the estimated load for at least one hour of operation. | Use a 48 V, 20 Ah LiFePO4 battery. Based on the current power estimate, it is expected to provide approximately 1.34 hours of operation. |
 | Electrical safety | Protect the battery, wiring and connected components from overcurrent and provide a way to stop power in an emergency. | Include a Battery Management System (BMS), appropriately rated fuses and an emergency kill switch in the power distribution system. |
 
+*Table 5.1: Electrical Requirements.*
+
 The 1.5-hour design baseline provides a more conservative target than the minimum operating-time requirement. Battery capacity was estimated using the expected mission power consumption and an assumed usable capacity of 80%.
 
 <!-- #endregion summary2 -->

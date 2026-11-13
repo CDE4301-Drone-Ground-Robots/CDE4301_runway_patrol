@@ -9,63 +9,123 @@ outline: [2,3]
 
 <!-- #region report -->
 
-## Master Electrical & Hardware Component List (35 Items)
+This section presents the electrical components selected for FOD Hunter, outlining their specifications, functions and compatibility with the overall system. The components are categorised according to their roles in power distribution, drivetrain control, computing, sensing, communication and auxiliary operations.
 
-Comprehensive itemized inventory of all electrical hardware, battery storage, safety disconnects, high-power DC-DC converters, motor drivers, and sensor interfaces engineered for the FOD Hunter UGV:
+## 5.1.3.1 Component Selection Criteria
+
+The selection of electrical components was guided by the following criteria.
+
+| Criterion | Design consideration | Justification |
+| --- | --- | --- |
+| Voltage compatibility | Compatibility with the 48 V-class battery and regulated 20 V, 12 V and 5 V supplies | Prevents operation outside the allowable voltage range of individual components |
+| Current requirements | Continuous operating current, peak current and startup demand | Ensures that components and their power connections can support the expected electrical loads |
+| Communication interfaces | Compatibility with CAN, UART, I2C, USB and Ethernet interfaces | Supports communication between the STM32, onboard computer, motor drivers and sensors |
+| Electrical protection | Compatibility with the proposed BMS, fuse and isolation arrangement | Allows electrical loads to be protected according to their operating requirements |
+| Physical integration | Dimensions, connector arrangement, cooling and mounting requirements | Supports installation and maintenance within the available chassis space |
+| Cost and availability | Component price, procurement lead time and availability | Supports component selection within the project budget and development schedule |
+
+*Table 5.11: Proposed wiring specifications for the electrical subsystem.*
+
+## 5.1.3.2 Electrical Components List
+
+The electrical components are grouped according to their functions within the UGV, including energy storage, electrical protection, power distribution, drivetrain control, computing, sensing, communication and auxiliary operation.
+
+### A. Battery, Power Distribution & Electrical Protection
 
 | No. | Component / Hardware Item | Subsystem Category | Key Specifications / Ratings | Operational Function |
 | --- | --- | --- | --- | --- |
-| **1** | **48V 20Ah LiFePO4 Battery Pack** | Power Storage | 48V nom (51.2V float), 20Ah, 960–1024 Wh, with dedicated CC/CV charger | Primary high-voltage energy storage for drive and vacuum |
-| **2** | **BMS 6S–22S LiFePO4 100A** | Battery Management | 100A continuous discharge, cell balancing, low/over voltage & temp cutoffs | Internal cell protection against short-circuit and over-current |
-| **3** | **8 AWG Main Fuse 100A** | Primary Protection | 8 AWG high-flex silicone wire, 100A fast-acting inline fuse | Master battery output circuit protection against dead shorts |
-| **4** | **Kill Switch 100A** | Hardware Safety | 100A continuous heavy-duty master rotary disconnect switch | Manual lock-out / tag-out safety isolation for entire vehicle |
-| **5** | **2800W Industrial Vacuum** | FOD Remediation | 2800W high-flow suction motor, 48V switched supply | Heavy debris suction and ingestion into containment hopper |
-| **6** | **201 ANM Fuse Box** | Power Distribution | High-current ANM bolted fuse holder enclosure | Encloses primary high-amperage branch fuses |
-| **7** | **50A 3-Piece ANM Fuse** | Branch Protection | 50A bolted ANM fuses (3 pcs) | Protects 2800W vacuum and ZLAC8015D motor driver branches |
-| **8** | **Blade Fuse Box** | Low-Voltage PDB | Multi-slot automotive ATC/ATO blade fuse distribution block | Houses individual branch fuses for buck regulators and lights |
-| **9** | **Blade Fuses 10A & 15A** | Branch Protection | Standard automotive blade fuses (10A, 15A) | Protects 20V laptop, 12V auxiliary, and 5V MCU buck lines |
-| **10** | **CAN Transceiver** | Communications | High-speed isolated CAN bus transceiver module (1 Mbps) | Enables robust CAN communication between MCU and ZLAC driver |
-| **11** | **Microcontroller (MCU): STM32 F446RE** | Low-Level Control | STM32F446RE ARM Cortex-M4 (180 MHz, CAN, UART, USB CDC) | Connects via USB to Hilbert's PC; sends CAN bus velocity commands to ZLAC8015D driver |
-| **12** | **PDB XT60 1-to-6 Way** | Power Distribution | Heavy-copper parallel busboard, 1x XT60 input to 6x XT60 outputs | Distributes 48V power to motor driver, vacuum, and buck inputs |
-| **13** | **PDB XT60 to XT30 6-Way** | Power Distribution | XT60 input stepping down to 6x compact XT30 distribution lines | Feeds lower-current buck converters and auxiliary devices |
-| **14** | **Hub Motor ZLLG80ASM25 0-HT V2.0** | Traction Actuation | 8-inch direct-drive brushless hub motor, built-in encoder, high torque | Direct-drive UGV wheels achieving ≥10 km/h with zero gearbox backlash |
-| **15** | **Servo Driver ZLAC8015D V4.2** | Motor Control | Dual-channel DC brushless servo driver, CAN / RS485 / PWM interfaces | Precision closed-loop current, velocity, and position control |
-| **16** | **Ethernet Switch** | Networking | Industrial compact 5-port Gigabit Ethernet switch (12V DC) | Bridges onboard compute, base telemetry router, and vision nodes |
-| **17** | **PETG CF Filament** | Structural Materials | Carbon-fiber reinforced PETG 3D printing filament | High stiffness, heat-resistant brackets, sensor mounts, and ducting |
-| **18** | **Suspension Shock Absorber** | Mechanical Chassis | Adjustable coil-over spring hydraulic dampers | Isolates chassis and electronics from airfield joint vibrations |
-| **19** | **RJ45 Cable 3m** | Networking | Cat6 shielded twisted pair (STP) Ethernet cabling | Interconnects onboard Ethernet switch with telemetry transceivers |
-| **20** | **USB Dongle \[C HUB\] USB 3.2×4 0.15m** | Compute I/O | High-speed USB-C to 4-port USB 3.2 Gen 2 hub | Expands Hilbert's Laptop I/O to GMSL2 deserializer, MCU, and GPS |
-| **21** | **LI-IMX568-GMSL2-050H RGB Camera** | Perception Sensor | Sony IMX568 global shutter CMOS, GMSL2 serial interface, IP67 | High-speed, low-latency target FOD detection without motion blur |
-| **22** | **GMSL2 Deserialiser Board** | Sensor Interface | Maxim MAX9296A deserializer to USB3 / MIPI CSI-2 bridge | Decodes camera Fakra GMSL2 stream directly into Hilbert's laptop |
-| **23** | **Headlights for CV** | Active Illumination | High-lumen wide-angle 12V LED floodlights | Eliminates pavement shadow false positives during dawn/dusk sweeps |
-| **24** | **UM980 GPS Module** | Localization | Unicore UM980 multi-band all-constellation high-precision RTK GNSS | Provides centimeter-level positioning accuracy along runway axis |
-| **25** | **Wireless Switch for ESC Remote** | Wireless Safety | 2-channel long-range RF remote relay receiver with transmitter | Safety operator wireless remote kill switch for ESC cut-off |
-| **26** | **Fakra 1m Type 7 Cable** | Sensor Cabling | Automotive coaxial cable with water-tight Fakra Type Z/7 connectors | Transmits high-bandwidth GMSL2 video from camera to deserializer |
-| **27** | **TPU 98A Filament** | Vibration Dampening | Abrasion-resistant 98A Shore hardness thermoplastic polyurethane | Flexible seals, weather gaskets, and vibration-absorbing motor boots |
-| **28** | **20V Buck Converter** | Compute Power | 48V to 20V DC-DC synchronous step-down converter (10A max) | Powers Hilbert's Laptop directly from the 48V vehicle battery |
-| **29** | **12V Buck Converter** | Auxiliary Power | 48V to 12V DC-DC synchronous step-down converter (15A max) | Powers Ethernet switch, cooling fans, CV headlights, and light tower |
-| **30** | **5V Buck Converter** | Logic Power | 48V to 5V DC-DC step-down converter (5A max) | Powers MCU, UM980 GPS, CAN transceiver, and USB peripherals |
-| **31** | **UART Interface Module** | Control Interface | CP2102 / FTDI USB-to-UART serial interface | Debugging telemetry bridge and MCU serial console monitoring |
-| **32** | **Solid State Relay (SSR) 10A** | Power Switching | DC-DC optocoupled solid state relay (3–32V DC control, 10A load) | Allows MCU digital output pin to switch auxiliary coils and beacons |
-| **33** | **Indicator Light Tower** | Visual Safety | 3-tier 12V LED industrial stack light (Red, Amber, Green) + buzzer | Visual indication of UGV state (Manual, Autonomous, Error/E-Stop) |
-| **34** | **Bay Cooling Fans** | Thermal Control | Dual 12V high-CFM brushless chassis exhaust fans | Forces cooling airflow across the laptop, motor driver, and battery bay |
-| **35** | **Rear Red Light Strip / Status Light** | Airfield Safety | Automotive-grade 12V red LED tail illumination strip | Guarantees airside visibility from behind for escort and ATC vehicles |
+| **1** | **48V 20Ah LiFePO4 Battery Pack** | Power Storage | 48V class; 51.2V nominal if 16S, 20Ah, 960–1024 Wh, dedicated CC/CV charger | Primary energy storage for the drivetrain, vacuum and onboard electronics |
+| **2** | **BMS 6S–22S LiFePO4 100A** | Battery Management | 100A continuous discharge rating; cell balancing, voltage and temperature protection | Battery monitoring and protection against abnormal operating conditions |
+| **3** | **8 AWG Main Fuse 100A** | Primary Protection | 8 AWG main wiring; 100A inline fuse | Main battery output overcurrent protection |
+| **4** | **Kill Switch 100A** | Hardware Safety | 100A-rated master rotary disconnect switch | Manual isolation of the vehicle's electrical supply |
+| **6** | **201 ANM Fuse Box** | Power Distribution | High-current ANM bolted fuse holder | Houses high-current branch fuses |
+| **7** | **50A 3-Piece ANM Fuse** | Branch Protection | 50A ANM fuses, 3 pieces | Protection of selected motor-driver and high-current branches |
+| **8** | **Blade Fuse Box** | Low-Voltage Distribution | Multi-slot automotive blade fuse holder | Houses auxiliary circuit fuses |
+| **9** | **Blade Fuses 10A & 15A** | Branch Protection | Automotive blade fuses, 10A and 15A | Protection of converter and auxiliary circuits |
+| **12** | **PDB XT60 1-to-6 Way** | Power Distribution | 1 XT60 input, 6 XT60 outputs | Distribution of battery power to compatible electrical branches |
+| **13** | **PDB XT60 to XT30 6-Way** | Power Distribution | XT60 input, 6 XT30 outputs | Distribution to lower-current power circuits |
+| **28** | **20V Buck Converter** | Compute Power | 48V-class input to 20V DC output, 10A maximum | Regulated supply for compatible onboard computing equipment |
+| **29** | **12V Buck Converter** | Auxiliary Power | 48V-class input to 12V DC output, 15A maximum | Supplies communication equipment, cooling fans, lighting and auxiliary components |
+| **30** | **5V Buck Converter** | Logic Power | 48V-class input to 5V DC output, 5A maximum | Supplies low-voltage control electronics and peripherals |
 
-## Wire Gauge & Interconnect Specifications
+#### B. Drivetrain & Motor Control
 
-To safely handle the high currents demanded by the 48V power bus without excessive resistive voltage drop or overheating, the wiring harness is partitioned into distinct gauge tiers:
+| No. | Component / Hardware Item | Subsystem Category | Key Specifications / Ratings | Operational Function |
+| --- | --- | --- | --- | --- |
+| **10** | **CAN Transceiver** | Communications | High-speed CAN transceiver module, up to 1 Mbps; isolation subject to selected model | Provides CAN physical-layer communication between STM32 and motor drivers |
+| **11** | **Microcontroller (MCU): STM32 F446RE** | Low-Level Control | ARM Cortex-M4, 180 MHz, CAN, UART and USB interfaces | Receives commands from onboard computing and controls motor drivers and auxiliary devices |
+| **14** | **Hub Motor ZLLG80ASM25 0-HT V2.0** | Traction Actuation | 8-inch brushless direct-drive hub motor with encoder | Wheel propulsion and encoder-based motion feedback |
+| **15** | **Servo Driver ZLAC8015D V4.2** | Motor Control | Dual-channel brushless servo driver; CAN and other control interfaces | Closed-loop control of hub motor speed and direction |
+| **25** | **Wireless Switch for ESC Remote** | Wireless Safety | Two-channel RF remote relay receiver with transmitter | Remote switching or motor-disable function, subject to safety verification |
 
-- **8 AWG Silicone High-Flex Wire:** Master battery loop, 100A kill switch, and 2800W vacuum motor feed (rated up to 100A peak).
-- **12 AWG Silicone Wire:** ZLAC8015D dual-channel motor driver power leads (rated for 30A continuous per channel).
-- **16–18 AWG Wire:** 48V-to-12V and 48V-to-19V DC-DC buck converter inputs and high-current 12V auxiliary branches.
-- **20–22 AWG Shielded Twisted Pair:** CAN bus communication lines, encoder feedback, and logic power to Arduino/RP2040 microcontrollers.
+#### C. Onboard Computing, Sensors & Imaging
 
-## Procurement Status & Testing Notes
+| No. | Component / Hardware Item | Subsystem Category | Key Specifications / Ratings | Operational Function |
+| --- | --- | --- | --- | --- |
+| **21** | **LI-IMX568-GMSL2-050H RGB Camera** | Perception Sensor | Sony IMX568 global-shutter CMOS sensor, GMSL2 interface, IP67-rated camera assembly | Visual detection and confirmation of FOD |
+| **22** | **GMSL2 Deserialiser Board** | Sensor Interface | MAX9296A-based GMSL2 deserialiser; host interface dependent on selected board | Converts camera serial data for the onboard computing system |
+| **23** | **Headlights for CV** | Active Illumination | 12V LED floodlights | Provides illumination for visual detection under low-light conditions |
+| **24** | **UM980 GPS Module** | Localisation | Unicore UM980 multi-band, multi-constellation RTK GNSS receiver | Provides high-precision positioning for navigation |
+| **26** | **Fakra 1m Type 7 Cable** | Sensor Cabling | 1m automotive coaxial cable with compatible Fakra connectors | Transmits GMSL2 camera data to the deserialiser |
 
-All 35 listed hardware components have been successfully sourced and bench-tested:
 
-- **Battery & BMS Validation:** The 48V 20Ah LiFePO4 pack has undergone charge/discharge cycling with individual cell balancing verified within ±15mV.
-- **Kill Switch & Emergency Stop:** Dual hardware E-Stop contactors tested under full 50A simulated load; disconnect response latency verified &lt;10ms.
-- **Power Bus Stability:** Step-down regulators (48V to 19V for laptop, 48V to 12V for lights/fans, 48V to 5V for sensors) maintain &lt;1.5% voltage ripple under transient motor loads.
+#### D. Communication & Electrical Interfaces
+
+| No. | Component / Hardware Item | Subsystem Category | Key Specifications / Ratings | Operational Function |
+| --- | --- | --- | --- | --- |
+| **16** | **Ethernet Switch** | Networking | Compact 5-port Gigabit Ethernet switch; input voltage subject to model | Connects onboard computing and Ethernet-enabled devices |
+| **19** | **RJ45 Cable 3m** | Networking | 3m Cat6 Ethernet cable | Provides wired Ethernet connections |
+| **20** | **USB Dongle [C HUB] USB 3.2×4 0.15m** | Compute I/O | USB-C hub with four USB 3.2 ports | Expands the onboard computer's USB connections |
+| **31** | **UART Interface Module** | Control Interface | CP2102 / FTDI USB-to-UART interface | Serial debugging, telemetry and communication monitoring |
+
+
+#### E. FOD Remediation & Auxiliary Electrical Components
+
+| No. | Component / Hardware Item | Subsystem Category | Key Specifications / Ratings | Operational Function |
+| --- | --- | --- | --- | --- |
+| **5** | **2800W Industrial Vacuum** | FOD Remediation | 2800W-rated suction motor; proposed 48V switched supply | Suction and collection of FOD into the containment system |
+| **32** | **Solid State Relay (SSR) 10A** | Power Switching | DC-control SSR, 3–32V DC control input, 10A load rating | MCU-controlled switching of compatible auxiliary loads |
+| **33** | **Indicator Light Tower** | Visual Safety | Three-tier 12V LED indicator, red/amber/green, with buzzer | Indicates operating states and fault conditions |
+| **34** | **Bay Cooling Fans** | Thermal Control | Dual 12V brushless cooling fans | Provides airflow for onboard electrical equipment |
+| **35** | **Rear Red Light Strip / Status Light** | Visual Safety | 12V red LED strip | Rear visibility and vehicle status indication |
+
+
+The component numbers correspond to the original inventory, with structural materials and mechanical components excluded. Detailed electrical protection and power distribution considerations are presented in Section 5.1.2.
+
+## 5.1.3.3 Wire Gauge & Interconnect Specifications
+
+The wiring harness was divided into different conductor sizes according to the expected current demand and function of each circuit. Larger conductors were considered for the main battery and motor power connections, while smaller conductors were allocated to auxiliary power and communication signals.
+
+| Wire specification | Intended application | Design consideration |
+| --- | --- | --- |
+| 8 AWG high-flex silicone wire | Main battery loop, kill switch and high-current power connections | High-current capacity and reduced resistive voltage drop |
+| 12 AWG silicone wire | ZLAC8015D motor-driver power connections | Continuous and peak drivetrain current requirements |
+| 16–18 AWG wire | DC-DC converter inputs and auxiliary power circuits | Converter input current, cable length and thermal limits |
+| 20–22 AWG shielded twisted pair | CAN communication, encoder feedback and low-current signals | Signal integrity and reduced electromagnetic interference |
+
+*Table 5.12: Proposed wire gauge and interconnect specifications.*
+
+The proposed wire sizes remain subject to verification against the installed cable lengths, routing, insulation temperature ratings, connector specifications and measured operating currents. In particular, the 8 AWG main wiring and 100 A protection arrangement must be assessed together to ensure that the selected fuse provides adequate conductor protection.
+
+The 50 A ANM branch fuse rating also requires review against the vacuum's actual electrical demand. Based on the original 2800 W rating at 48 V, the estimated current is approximately 58.33 A, exceeding the nominal fuse rating. The final branch protection, wiring and connectors must therefore be confirmed before the vacuum circuit is energised.
+
+Detailed electrical protection considerations are presented in Section 5.1.2.
+
+
+## 5.1.3.4 Limitations & Semester 2 Future Work
+
+The electrical components have been identified based on the interim design requirements and proposed system architecture. However, several component specifications and integration requirements remain subject to confirmation.
+
+| Development area | Outstanding work | Intended outcome |
+| --- | --- | --- |
+| Component verification | Confirm manufacturer specifications, voltage limits and current ratings | Finalise component compatibility |
+| Power integration | Complete connections between the battery, distribution boards and electrical loads | Establish the physical electrical system |
+| Sensor integration | Complete power and communication connections for the cameras, LiDAR and GNSS | Verify sensor operation with the onboard computing system |
+| FOD remediation | Finalise the vacuum, stepper motor and IR sensor requirements | Update the collection-system electrical design |
+| Electrical testing | Measure operating currents and verify component behaviour | Validate component selection and update the power budget |
+
+*Table 5.13: Component integration and verification activities planned for Semester 2.*
+
+The component selection establishes the hardware required for the electrical subsystem and provides the basis for subsequent physical integration. The final component specifications and operating performance will be verified during Semester 2 through datasheet review, subsystem testing and full-system integration.
 
 <!-- #endregion report -->
