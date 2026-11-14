@@ -119,7 +119,7 @@ Driving the TB6600 stepper driver directly from the NUCLEO-F446RE required solvi
 | :--- | :--- |
 | **Driver input requires 5 V signals, but STM32 pins only output 3.3 V** | Tie `PUL+` and `DIR+` to the 5 V rail and configure `PC2` (`PUL−`) and `PC3` (`DIR−`) as 5 V-tolerant open-drain outputs (`GPIO_MODE_OUTPUT_OD`). The pin switches between ground (LED ON) and open-circuit (LED OFF), creating the pulse train without an external level-shifter. |
 | **`HAL_Delay()`'s 1 ms resolution cannot generate microsecond motor pulses** | Read the ARM Cortex-M4 DWT cycle counter (`DWT->CYCCNT`), which counts every CPU clock cycle (5.6 ns at 180 MHz; 11.9 ns at 84 MHz), giving microsecond-accurate pulse widths `w` (`1 pulse = 1 step`) for smooth, adjustable speeds. |
-| **Changing direction right before a pulse can cause lost or missing steps** | Insert a 20 µs setup delay after every `DIR` state change before issuing the first `PUL` edge
+| **Changing direction right before a pulse can cause lost or missing steps** | Insert a 20 µs setup delay after every `DIR` state change before issuing the first `PUL` edge so the direction signal settles. |
 
 <p style="margin-top: -10px; margin-bottom: 24px; font-size: 13.5px; line-height: 1.55; color: var(--vp-c-text-2, #9CA3AF);">Table 5.2.4: Stage 2 stepper driver electrical and timing problems and the firmware solutions implemented in Steppermotor_w_user_input.c.</p>
 
@@ -170,7 +170,7 @@ During Stage 3 bench testing, single-character keyboard commands over `USART2` t
 
 | Key | SDO DATA (`DATA` Payload, Hex) | Action |
 | :---: | :--- | :--- |
-| **`R`** | `2B 40 60 00 06 00 00 00` → Shutdown<br>`2B 40 60 00 07 00 00 00` → Switch On<br>`2B 40 60 00 0F 00 00 00` → Enable Operation | Arm the driver (step through the CiA 402 enable sequence on Controlword `0x6040`) |
+| **`R`** | `2B 40 60 00 06 00 00 00` → Shutdown<br>`2B 40 60 00 07 00 00 00` → Switch On<br>`2B 40 60 00 0F 00 00 00` → Enable Operation | Arm the driver (step through the CiA 402 enable sequence on Controlword `0x6040` [\[6\]](./references.md#ref-6)) |
 | **`W` / `S`** | `23 FF 60 01 32 00 00 00` → Left Velocity 50<br>`23 FF 60 02 32 00 00 00` → Right Velocity 50<br>`23 FF 60 01 CE FF FF FF` → Left Velocity −50<br>`23 FF 60 02 CE FF FF FF` → Right Velocity −50 | Speed +50 / −50 RPM on `0x60FF` sub-indices `0x01` (Left) and `0x02` (Right) (hardware limit ±350 RPM) |
 | **`Q`** | `23 FF 60 01 00 00 00 00` → RPM 0 | Normal Stop — ramps wheels down to 0 RPM |
 | **`E`** | `2B 40 60 00 02 00 00 00` → Emergency Stop | Emergency Stop — locks shaft and sets wheels to 0 RPM instantly (`0x0002` Quick-Stop) |
@@ -314,10 +314,11 @@ Spot turn (vx = 0): left wheels = −ΔRPM, right wheels = +ΔRPM
 
 .stepper-row {
   display: grid !important;
-  grid-template-columns: 1.55fr 1fr !important;
+  grid-template-columns: 1fr 1fr !important;
   gap: 16px !important;
   align-items: start !important;
-  margin: 18px 0 !important;
+  max-width: 760px !important;
+  margin: 18px auto !important;
 }
 
 .stepper-row .fh-figure {
@@ -326,7 +327,7 @@ Spot turn (vx = 0): left wheels = −ΔRPM, right wheels = +ΔRPM
 }
 
 .stepper-row .fh-figure__wrapper {
-  height: 300px !important;
+  height: 420px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -336,12 +337,8 @@ Spot turn (vx = 0): left wheels = −ΔRPM, right wheels = +ΔRPM
 .stepper-row .fh-figure__img {
   height: 100% !important;
   width: 100% !important;
-  object-fit: cover !important;
-  object-position: center !important;
-}
-
-.stepper-row > :first-child .fh-figure__img {
   object-fit: contain !important;
+  object-position: center !important;
 }
 
 @media (max-width: 768px) {
