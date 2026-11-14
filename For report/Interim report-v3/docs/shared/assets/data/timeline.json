@@ -464,36 +464,36 @@
       "endWeekIdx": 10,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "2D/3D SLAM map generation and localization validation in simulated runway."
+      "status": "Completed",
+      "notes": "Airfield simulation with SLAM Toolbox occupancy grid and Dual-EKF odometry integration."
     },
     {
       "id": "task-307",
       "owner": "Hilbert",
       "ownerCode": "hilbert",
       "category": "Navigation",
-      "title": "Integrating ROS2 package into physical UGV",
+      "title": "Sensor bench bringup and onboard ROS 2 setup",
       "period": "S2 Wk1 - S2 Wk2",
       "startWeekIdx": 21,
       "endWeekIdx": 22,
       "semester": "2",
       "isMilestone": false,
       "status": "In Progress",
-      "notes": "Deploying Nav2 stack to onboard compute with real motor controller interface."
+      "notes": "Setting up Jetson Orin Nano, sensor drivers (LiDAR, IMU, RTK-GNSS), and ROS 2 command bridge to STM32."
     },
     {
       "id": "task-308",
       "owner": "Hilbert",
       "ownerCode": "hilbert",
       "category": "Navigation",
-      "title": "Tuning and testing of UGV navigation",
+      "title": "Physical skid-steer calibration and low-speed navigation",
       "period": "S2 Wk3 - S2 Wk4",
       "startWeekIdx": 23,
       "endWeekIdx": 24,
       "semester": "2",
       "isMilestone": false,
       "status": "In Progress",
-      "notes": "Real-world waypoint tracking, speed tuning, and runway boundary compliance."
+      "notes": "Measuring effective track width (Beff) on pavement, tuning motor controller parameters, and low-speed waypoint tracking."
     },
     {
       "id": "task-309",
@@ -536,8 +536,8 @@
       "endWeekIdx": 6,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "Procuring RF modules and testing bench.",
+      "status": "Completed",
+      "notes": "Procurement and delivery of evaluation compute and RF modules for bench testing.",
       "isAllMembers": false
     },
     {
@@ -551,8 +551,8 @@
       "endWeekIdx": 9,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "Throughput, packet loss, and latency testing under simulated interference."
+      "status": "Completed",
+      "notes": "Bench testing of UART and COBS protocol between Raspberry Pi 5 and ground station laptop."
     },
     {
       "id": "task-313",
@@ -565,8 +565,8 @@
       "endWeekIdx": 11,
       "semester": "1",
       "isMilestone": false,
-      "status": "In Progress",
-      "notes": "ROS 2 Zenoh/DDS bridge simulation for multi-agent coordinated sweep."
+      "status": "Completed",
+      "notes": "Simulation of UAV target dispatch to Nav2 action client in Gazebo."
     },
     {
       "id": "task-314",
@@ -580,7 +580,7 @@
       "semester": "2",
       "isMilestone": true,
       "status": "In Progress",
-      "notes": "End-to-end aerial drone detection to ground robot intercept dispatch."
+      "notes": "Testing wireless datalink on physical robot with target coordinate parsing and link-loss failsafes."
     },
     {
       "id": "task-315",
@@ -602,14 +602,14 @@
       "owner": "Hilbert",
       "ownerCode": "hilbert",
       "category": "Extra",
-      "title": "Designing final Chassis",
-      "period": "Vac Wk 1 - Vac Wk 2",
+      "title": "UGV mechanical CAD detailing and packaging",
+      "period": "Vac Wk 1 - Vac Wk 3",
       "startWeekIdx": 17,
-      "endWeekIdx": 18,
+      "endWeekIdx": 19,
       "semester": "vac",
       "isMilestone": false,
       "status": "In Progress",
-      "notes": "Collaborative refinement of chassis envelope during December break."
+      "notes": "Finalizing CAD models for chassis frame, suspension brackets, electronics trays, and sweep box. Modeling continues during reservist."
     },
     {
       "id": "task-317",
@@ -622,8 +622,8 @@
       "endWeekIdx": 11,
       "semester": "1",
       "isMilestone": true,
-      "status": "In Progress",
-      "notes": "Interim documentation submission for navigation and autonomy stack."
+      "status": "Completed",
+      "notes": "Interim documentation compilation and engineering chapters completed."
     },
     {
       "id": "task-318",
@@ -637,7 +637,7 @@
       "semester": "vac",
       "isMilestone": false,
       "status": "In Progress",
-      "notes": "National Service Reservist duty."
+      "notes": "National Service reservist duty. Physical workshop fabrication and lab testing paused."
     },
     {
       "id": "task-319",
@@ -645,13 +645,111 @@
       "ownerCode": "hilbert",
       "category": "Report",
       "title": "Prepare documentation and compile all results",
-      "period": "S2 Wk10 - S2 Wk11",
-      "startWeekIdx": 31,
+      "period": "S2 Wk11",
+      "startWeekIdx": 32,
       "endWeekIdx": 32,
       "semester": "2",
       "isMilestone": true,
       "status": "In Progress",
-      "notes": "Final Capstone thesis and documentation compilation for Week 11."
+      "notes": "Final capstone report compilation and submission for Week 11 deadline."
+    },
+    {
+      "id": "task-326",
+      "owner": "Hilbert",
+      "ownerCode": "hilbert",
+      "category": "Extra",
+      "title": "Fabrication dispatch, sourcing, and chassis assembly",
+      "period": "Vac Wk 4 - S2 Wk2",
+      "startWeekIdx": 20,
+      "endWeekIdx": 22,
+      "semester": "vac",
+      "isMilestone": false,
+      "status": "In Progress",
+      "notes": "Sending drawings to vendors post-reservist, ordering hardware, and assembling welded chassis frame with Zacarias."
+    },
+    {
+      "id": "task-320",
+      "owner": "Hilbert",
+      "ownerCode": "hilbert",
+      "category": "Navigation",
+      "title": "Physical sensor calibration and Dual-EKF fusion",
+      "period": "S2 Wk6 - S2 Recess",
+      "startWeekIdx": 26,
+      "endWeekIdx": 27,
+      "semester": "2",
+      "isMilestone": false,
+      "status": "In Progress",
+      "notes": "Fusing wheel odometry, IMU, and RTK-GNSS in robot_localization; filtering vibration from vacuum motor."
+    },
+    {
+      "id": "task-321",
+      "owner": "Hilbert",
+      "ownerCode": "hilbert",
+      "category": "Navigation",
+      "title": "Nav2 collision monitor and safety zones",
+      "period": "S2 Wk7",
+      "startWeekIdx": 28,
+      "endWeekIdx": 28,
+      "semester": "2",
+      "isMilestone": false,
+      "status": "In Progress",
+      "notes": "Configuring stop, slowdown, and approach zones in nav2_collision_monitor based on measured braking distances."
+    },
+    {
+      "id": "task-322",
+      "owner": "Hilbert",
+      "ownerCode": "hilbert",
+      "category": "Navigation",
+      "title": "Progressive speed testing and braking verification",
+      "period": "S2 Wk8",
+      "startWeekIdx": 29,
+      "endWeekIdx": 29,
+      "semester": "2",
+      "isMilestone": false,
+      "status": "In Progress",
+      "notes": "Stepwise speed testing up to 15 km/h on open ground; measuring stopping distance and vehicle pitch."
+    },
+    {
+      "id": "task-323",
+      "owner": "Hilbert",
+      "ownerCode": "hilbert",
+      "category": "UAV Communication",
+      "title": "Integrated UAV-UGV field trials",
+      "period": "S2 Wk9",
+      "startWeekIdx": 30,
+      "endWeekIdx": 30,
+      "semester": "2",
+      "isMilestone": true,
+      "status": "In Progress",
+      "notes": "Outdoor multi-agent trial from aerial FOD detection to ground robot navigation and vacuum pickup."
+    },
+    {
+      "id": "task-324",
+      "owner": "Hilbert",
+      "ownerCode": "hilbert",
+      "category": "Report",
+      "title": "Software freeze and system reliability testing",
+      "period": "S2 Wk10",
+      "startWeekIdx": 31,
+      "endWeekIdx": 31,
+      "semester": "2",
+      "isMilestone": false,
+      "status": "In Progress",
+      "notes": "Freezing ROS 2 configurations, documenting bringup procedures, and testing cold boot repeatability."
+    },
+    {
+      "id": "task-325",
+      "owner": "Hilbert",
+      "ownerCode": "hilbert",
+      "category": "Report",
+      "title": "Final demonstration rehearsal and oral defense",
+      "period": "S2 Wk12 - S2 Wk13",
+      "startWeekIdx": 33,
+      "endWeekIdx": 34,
+      "semester": "2",
+      "isMilestone": true,
+      "status": "In Progress",
+      "notes": "Rehearsing live demonstrations, recording trial videos, and final presentation."
     },
     {
       "id": "task-401",

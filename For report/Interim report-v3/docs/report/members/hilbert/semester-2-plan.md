@@ -10,9 +10,10 @@ description: "Planned physical UGV integration and validation tasks."
 <!-- Edit your plan between the region markers; the Overview and the Meet the Team page show this text. -->
 <!-- #region plan -->
 
-- Integrate the tested Hybrid A\* and RPP navigation stack with the physical FOD Hunter, then tune it using measured steering and stopping behaviour.
-- Connect physical GNSS, IMU and LiDAR sensors to the Dual-EKF localization system and measure localization error.
-- Select and test a compliant UAV–UGV radio link, then carry out coordinated outdoor trials.
+- Finalize UGV mechanical CAD detailing and packaging during vacation, then dispatch fabrication drawings and assemble the frame post-reservist.
+- Bench-test sensors and deploy the ROS 2 navigation stack to the onboard computer, tuning skid-steer kinematics and low-speed path tracking.
+- Calibrate Dual-EKF localization with physical wheel odometry, IMU, and RTK-GNSS, and configure Nav2 collision monitor safety zones.
+- Verify progressive speed scaling up to 15 km/h, conduct joint UAV–UGV airfield trials, and prepare the final capstone demonstration.
 
 <!-- #endregion plan -->
 
@@ -23,71 +24,79 @@ description: "Planned physical UGV integration and validation tasks."
 
 <Badge type="info" text="Hilbert's Autonomy Scope • Physical UGV" />
 
-The ROS 2 navigation stack, including Hybrid A\*, RPP and Dual-EKF, has been run in Gazebo. UAV–UGV target dispatch was tested between a Raspberry Pi 5 and a laptop over an indoor Wi-Fi network. The next step is to connect these systems to the physical FOD Hunter and test them outdoors. The simulation robot is not a one-to-one model of the final UGV.
+The ROS 2 navigation stack, including Hybrid A\*, RPP and Dual-EKF, has been tested in Gazebo simulation. Target coordinate dispatch between UAV and UGV was verified on an indoor test bench between a Raspberry Pi 5 and a laptop. In Semester 2, these systems will be integrated with the physical FOD Hunter and evaluated on paved outdoor surfaces.
 
-The four tasks below cover navigation, radio communications, physical sensor integration and field testing. **Values described as targets or starting settings have not been verified on the physical UGV.** Gabriel leads STM32 firmware and motor-driver integration; Hilbert leads navigation, localization and UAV–UGV communications.
+The tasks below outline the mechanical completion, firmware and sensor integration, navigation tuning, wireless telemetry, and field verification steps. Values described as targets or initial settings are design baselines to be verified on hardware.
 
 [Navigation methodology](./navigation.md) · [Communications implementation](./communications.md) · [Simulation evidence](./simulation.md) · [Steering kinematics](./steering-kinematics.md) · [Motor sizing](./motor-drivetrain-calculation.md)
 
 <ProgrammingWidget5 />
 
-::: details 01 — Navigation & Kinematics
+::: details 01 — Mechanical Detailing & Fabrication Dispatch
 
-**Transfer Nav2 to the physical UGV and tune its steering** [\[15\]](./references.md#ref-15), [\[16\]](./references.md#ref-16)
+**Finalize CAD assembly and dispatch for fabrication**
 
-The simulation uses SmacPlannerHybrid with a Reeds–Shepp motion model and RPP for path tracking. I will start from the tested configuration, then adjust it using the physical UGV's measured behaviour.
+Chassis packaging and component placement are finalized before and during the vacation period. Modeling work continues during reservist, followed by fabrication dispatch and mechanical assembly.
 
-- **Turning radius:** Start from the simulated 1.0 m planner setting. Measure actual turning behaviour before deciding whether a larger planning radius, such as 1.5 m, is needed.
-- **Planner settings:** Recheck heading resolution, reverse penalties and planning time on the onboard computer. The simulation used 64 heading bins; proposed changes must be tested rather than assumed to improve performance.
-- **Reverse-path limitation:** Reeds–Shepp can plan reverse segments, but the current RPP configuration has `allow_reversing: false`. Resolve this mismatch before allowing reverse-path execution on hardware; retain Reeds–Shepp as the selected planner motion model.
-- **Speed and lookahead:** Begin at low speed and retune RPP lookahead, curvature-based speed limits and stopping distance. The 8 km/h simulation setting does not establish safe operation at the 15 km/h design target [\[18\]](./references.md#ref-18).
-- **ROS 2 to STM32 interface:** Work with Gabriel to connect Nav2 `/cmd_vel` to the existing `Robot_Set_CmdVel(vx, wz)` firmware interface. Select and test the transport method; micro-ROS is not a fixed requirement.
+- **CAD detailing (Vac Wk 1–3):** Complete master assembly in SolidWorks. Package chassis frame, trailing-arm suspension geometry, vacuum sweep box mounting, 48 V battery enclosure, and electronics mounting plates.
+- **Reservist constraint (Vac Wk 2–3):** National Service reservist duty. Physical workshop fabrication and lab access are paused; only computer-based CAD modeling continues.
+- **Fabrication dispatch & assembly (Vac Wk 4 – S2 Wk 2):** Release 2D drawings and DXF flat patterns to machining and welding vendors immediately post-reservist. Order fasteners and raw stock. Assemble welded frame and drivetrain components with Zacarias.
 
 :::
 
-::: details 02 — RF Telemetry & Datalink
+::: details 02 — Navigation & Kinematics Tuning
 
-**Test UAV–UGV communication without the indoor router**
+**Deploy Nav2 to the physical UGV and tune steering parameters** [\[15\]](./references.md#ref-15), [\[16\]](./references.md#ref-16)
 
-The indoor test used CycloneDDS static unicast between a Raspberry Pi 5 and a laptop. The Microhard P900 V2 is a proposed radio candidate; it has not been purchased or tested [\[20\]](./references.md#ref-20).
+The simulation uses SmacPlannerHybrid with a Reeds–Shepp motion model and RPP for path tracking. Initial hardware tests will start from these baseline parameters and adapt based on measured vehicle response.
 
-- **Radio selection:** Check available hardware, range, power needs and whether it can be used legally at the test site. Verify applicable IMDA frequency, power and approval requirements before transmitting [\[3\]](./references.md#ref-3), [\[10\]](./references.md#ref-10).
-- **Message transport:** Build and test the bridge needed for the chosen radio. UART framing with COBS is one option, not a confirmed implementation.
-- **Message handling:** Test alert delivery, acknowledgements, duplicate handling and compatible ROS 2 QoS settings. Evaluate message authentication if required by the final design.
-- **Link loss:** Define and test a heartbeat timeout and safe response on the physical UGV. Do not assume the proposed 2 Hz heartbeat and 1.5 s timeout are already validated.
-
-:::
-
-::: details 03 — Sensor Fusion & State Estimation
-
-**Connect physical sensors to the working ROS 2 localization setup**
-
-The local EKF, global EKF and `navsat_transform_node` were observed running in the Gazebo simulation, with odometry messages and the `map → odom → base_footprint` transform chain present. This confirms runtime operation, **not localization accuracy**.
-
-- **GNSS:** Integrate the selected physical receiver and correction service, if available. Confirm coordinate frames and datum handling before using GNSS-derived navigation goals.
-- **Dual-EKF:** Reuse the `robot_localization` architecture with physical wheel odometry, IMU and GNSS measurements. Tune covariances and filter rates based on real sensor data [\[9\]](./references.md#ref-9), [\[22\]](./references.md#ref-22). The simulated EKFs were configured at 30 Hz; any proposed 100 Hz physical rate requires testing.
-- **Wheel odometry:** Coordinate with Gabriel to add motor velocity feedback and odometry output. The current STM32 firmware sends velocity commands but does not yet integrate encoder odometry.
-- **LiDAR and safety:** Configure obstacle detection and test collision-monitor stop/slowdown distances against measured stopping behaviour. The proposed 0.40 m, 1.20 m and 2.50 m zones are starting points only.
-- **Validation:** Compare filtered position and heading against a suitable reference during motion. Record error, drift and behaviour during temporary GNSS loss.
+- **Turning radius:** Begin from the 1.0 m planner baseline. Measure actual turning radius and scrub characteristics on asphalt before adjusting planner bounds.
+- **Planner settings:** Validate heading resolution (64 heading bins baseline), reverse penalties, and compute times on the onboard Jetson Orin Nano.
+- **Reverse-path limitation:** Enforce forward-only motion (`allow_reversing: false`) or configure Dubins lattice primitives to maintain forward sensor coverage during runway sweeps.
+- **Speed and lookahead:** Begin with low-speed runs (2.22 m/s / 8 km/h) to calibrate RPP lookahead distances and curvature speed limits before expanding towards the 15 km/h design target [\[18\]](./references.md#ref-18).
+- **ROS 2 to STM32 interface:** Connect Nav2 `/cmd_vel` output to Gabriel's STM32 `Robot_Set_CmdVel(vx, wz)` firmware interface over serial transport.
 
 :::
 
-::: details 04 — Physical Integration & Validation
+::: details 03 — RF Telemetry & Multi-Agent Datalink
 
-**Test the complete system on FOD Hunter**
+**Validate wireless telemetry without local network dependencies**
 
-Gabriel has demonstrated ground movement with the preliminary four-motor chassis under an estimated 30 kg load, using a 32 V supply with an approximately 10 A current limit. The intended 48 V battery was delayed. These tests support basic motor operation, but do not verify the 65 kg design calculations or 15 km/h target.
+Indoor bench testing used CycloneDDS static unicast between a Raspberry Pi 5 and a laptop. Outdoor testing requires an independent long-range radio link.
 
-- **Drivetrain readiness:** Coordinate with Gabriel on 48 V power integration, motor-driver limits, feedback and safe stop behaviour before autonomous driving. Gabriel owns the embedded implementation and motor tests.
-- **Steering calibration:** Measure yaw response and effective track width using encoder-based odometry and an independent heading reference. Compare results with the analytical skid-steer model [\[13\]](./references.md#ref-13).
-- **Navigation tests:** Start with low-speed straight runs and turns, then measure cross-track error, obstacle clearance, stopping distance and controller behaviour as speed increases.
-- **Target approach:** Measure final position error at FOD targets. The proposed ±5 cm target remains unverified.
-- **Integrated trial:** Test the full chain from UAV target coordinates through communication and UGV navigation to FOD clearance. Record successful runs, failures and the conditions of each test.
+- **Radio candidate:** Evaluate 915 MHz RF modules (Microhard P900 / LoRa) for range, throughput, and power requirements. Verify compliance with IMDA short-range device regulations [\[3\]](./references.md#ref-3), [\[10\]](./references.md#ref-10).
+- **Message framing:** Implement UART serial bridging with COBS byte framing and JSON payload parsing.
+- **Failsafe handling:** Implement heartbeat monitoring (e.g. 2 Hz) with a 1.5 s link-loss timeout to safely halt or park the UGV if communication drops.
+- **Target dispatch:** Parse incoming aerial target coordinates, transform them into the local navigation frame, and trigger Nav2 goal actions.
+
+:::
+
+::: details 04 — Sensor Fusion & State Estimation
+
+**Integrate physical sensors into Dual-EKF localization**
+
+Simulation confirmed runtime transform publishing (`map → odom → base_footprint`). Hardware deployment requires sensor noise characterization and covariance tuning.
+
+- **Wheel odometry:** Read encoder feedback from ZLAC8015D motor drivers via STM32 firmware to compute wheel odometry and linear/angular velocities.
+- **IMU & RTK-GNSS:** Connect BNO085 IMU (50 Hz) and ArduSimple RTK-GNSS (10 Hz). Verify frame alignments and datum coordinates.
+- **Dual-EKF tuning:** Configure `robot_localization` instances (local continuous odom, global absolute map). Tune process noise $Q$ and measurement noise $R$ matrices based on static and dynamic bench measurements [\[9\]](./references.md#ref-9), [\[22\]](./references.md#ref-22).
+- **Vibration filtering:** Apply digital low-pass filtering to isolate IMU readings from high-frequency structural vibration caused by the vacuum motor.
+
+:::
+
+::: details 05 — Safety Zones, Speed Scaling & Field Verification
+
+**Evaluate active safety, stopping performance, and multi-agent operations**
+
+- **Collision monitor (S2 Wk 7):** Deploy `nav2_collision_monitor` with 3-tier bounding polygons: Stop (0.40 m), Slowdown (1.20 m), and Approach (2.50 m), configured against measured stopping distance.
+- **Progressive speed scaling (S2 Wk 8):** Incremental speed runs (8, 10, 12, 15 km/h) on paved ground. Measure empirical stopping distances against analytical braking estimates ($d_{\text{stop}} \approx 3.77\text{–}4.5\text{ m}$) and verify chassis pitch stability ($|\theta| \le 4.0^\circ$).
+- **Coordinated field trials (S2 Wk 9):** End-to-end multi-agent test: UAV detects synthetic FOD $\to$ RF transmission $\to$ UGV navigates to target $\to$ precision alignment ($\pm 5\text{ cm}$) $\to$ vacuum pickup.
+- **System freeze & final milestones (S2 Wk 10–13):** Freeze software configuration, compile final capstone documentation (Week 11), rehearse live demonstrations, and complete oral defense.
 
 :::
 
 ::: warning Items to verify before physical testing
-The final chassis mass and geometry are not yet confirmed; 65 kg remains the drivetrain sizing baseline. Check planner–controller reverse compatibility, physical steering limits, sensor accuracy, radio approval and safe stopping distances before outdoor trials. The simulated navigation results and preliminary 32 V ground test do not establish full-load performance.
+The final chassis mass and geometry must be verified against the 65 kg drivetrain baseline. Check planner–controller reverse compatibility, physical steering limits, sensor accuracy, radio regulatory compliance, and emergency stopping performance before outdoor airfield trials.
 :::
 
 <!-- #endregion programming-tasks -->
