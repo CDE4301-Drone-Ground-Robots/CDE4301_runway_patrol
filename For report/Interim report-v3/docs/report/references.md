@@ -1,14 +1,14 @@
 <!-- Report chapter 7 reference catalogue. Edit here. -->
 
 ::: info
-📖 Academic & Regulatory Foundation
+Academic & Regulatory Foundation
 
 <Badge type="info" text="Scholarly Traceability" />
 
 This repository contains the peer-reviewed literature, FAA / ICAO international civil aviation regulations, and pavement distress condition indices that govern the engineering parameters, sensor thresholds, and operational autonomy of the FOD Hunter robotic platform.
 :::
 
-## 🗺️ Reference Impact Matrix {#reference-impact-matrix}
+## Reference Impact Matrix {#reference-impact-matrix}
 
 <Badge type="info" text="Traceability" />
 
@@ -23,7 +23,7 @@ Cross-reference table mapping how each published standard and academic work dire
 | **\[5\]** | Federal Aviation Administration (2014) | FAA Advisory Circular AC 150/5220-24 | Mandates the regulatory detection thresholds: $\varnothing 38\text{ mm} \times 31\text{ mm}$ cylinder at $1,000\text{ m}$ (radar) and $20\text{ mm}$ debris at $300\text{ m}$ (optical). |
 | **\[6\]** | ASTM International (2020) | ASTM D5340-20 Standard Test Method | Defines the standardized Pavement Condition Index (PCI) structural distress taxonomy for runway alligator cracking, joint spalls, and weathering. |
 
-## 📚 Detailed Reference Catalogue {#reference-catalogue}
+## Detailed Reference Catalogue {#reference-catalogue}
 
 <Badge type="tip" text="6 Citations" />
 

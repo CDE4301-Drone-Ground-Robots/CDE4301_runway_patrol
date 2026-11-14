@@ -9,7 +9,7 @@ outline: [2,3]
 Electrical & Power
 
 :::: warning
-📚 Bryan's Reference Catalogue
+Bryan's Reference Catalogue
 
 <Badge type="warning" text="Electrical &amp; Power" />
 

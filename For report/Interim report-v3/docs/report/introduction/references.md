@@ -9,7 +9,7 @@ outline: [2,3]
 Research Foundation
 
 :::: info
-📚 Literature Review's Reference Catalogue
+Literature Review's Reference Catalogue
 
 <Badge type="info" text="Research Foundation" />
 

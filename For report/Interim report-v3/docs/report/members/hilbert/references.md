@@ -9,7 +9,7 @@ outline: [2,3]
 Software, Nav2 Autonomy & C2 Communications
 
 :::: info
-📚 Hilbert's Reference Catalogue
+Hilbert's Reference Catalogue
 
 <Badge type="info" text="Academic &amp; Statutory Standards" />
 

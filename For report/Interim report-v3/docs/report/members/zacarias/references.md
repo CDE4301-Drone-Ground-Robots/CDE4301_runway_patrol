@@ -9,7 +9,7 @@ outline: [2,3]
 Mechanical
 
 :::: info
-📚 Zacarias's Reference Catalogue
+Zacarias's Reference Catalogue
 
 <Badge type="info" text="Mechanical" />
 
