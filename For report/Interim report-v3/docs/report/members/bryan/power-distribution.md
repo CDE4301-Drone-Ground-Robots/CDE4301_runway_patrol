@@ -71,10 +71,12 @@ The schematic illustrates the distribution of electrical power from the battery 
 | **Battery and master isolation** | 48 V 20 Ah LiFePO₄ battery, 100 A BMS, 100 A main fuse and 100 A kill switch | Stores energy, monitors battery conditions, protects the main output and provides manual isolation. |
 | **48 V distribution** | XT60 power distribution board and branch fuse enclosure | Routes battery power to the high-current loads and converter inputs. |
 | **Motor branch** | ZLAC8015D dual-channel motor driver and two 48 V hub motors | Supplies and controls the drivetrain. |
-| **Vacuum branch** | 48 V industrial vacuum | Supplies the FOD collection system. |
+| **Vacuum branch** | Stepper motors supplied through regulated auxiliary power (2800 W vacuum supplied by a separate external battery) | Supplies the FOD collection system. |
 | **Regulated branches** | 48 V-to-20 V, 48 V-to-12 V and 48 V-to-5 V DC-DC converters | Provides lower-voltage supplies for computing, auxiliary equipment and logic. |
 
 *Table 5.8: Distribution Branches.*
+
+The schematic illustrates the distribution of electrical power from the main 48 V LiFePO4 battery through the protection and isolation devices to the drivetrain, onboard computing system, sensors and auxiliary components. The 2800 W vacuum operates from a separate external battery supply and is therefore electrically independent of the main UGV power distribution system. This arrangement prevents the vacuum's high power demand from loading the main battery, allowing its capacity to be allocated primarily to vehicle propulsion and onboard electronics. However, the stepper motors and other low-voltage components associated with the FOD collection mechanism remain connected to the UGV's regulated power supply.
 
 ## 5.1.2.2 Low-Voltage Rails
 
@@ -171,13 +173,8 @@ The proposed conductor sizes provide the basis for physical integration. Their s
 
 The proposed 48 V power distribution architecture incorporates a Battery Management System (BMS), main fuse, branch fuses and emergency kill switch. However, these protection devices have not yet been fully implemented or validated under the expected operating loads. The final conductor and fuse ratings must be verified against continuous and startup currents, cable routing, insulation temperature ratings and connector current limits. Voltage drop, resistive heating and thermal performance also require assessment during physical integration.
 
-Particular attention is required for the vacuum branch. The interim design specifies a 50 A ANM fuse for selected high-current circuits, while the original 2800 W vacuum corresponds to an estimated current of:
+The FOD remediation system will undergo further development during Semester 2, with the original 2800 W vacuum replaced by a lower-power 24 V DC vacuum motor (AMETEK LAMB 116514-13). This change is intended to reduce the electrical power demand of the collection mechanism while maintaining sufficient suction performance. As the revised vacuum operates at a different voltage from the main 48 V battery, a dedicated 48 V-to-24 V DC-DC converter will be required if it is powered by the UGV's main battery. The converter capacity, vacuum startup current, wiring and protection ratings must be reassessed to ensure compatibility with the updated electrical architecture.
 
-$$
-I_{\text{vacuum}}=\frac{2800}{48}=58.33\text{ A}
-$$
+During Semester 2, the BMS, fuse protection and emergency isolation system will be implemented and tested alongside the power distribution network. Further work will include verifying conductor suitability, measuring voltage drop and temperature under representative loads, refining cable routing and confirming the grounding arrangement. The electrical designs of the UGV charging dock and UAV charging platform will also be explored, including their power supply, charging requirements and integration considerations, to support future autonomous UAV–UGV operations.
 
-This estimated current exceeds the nominal 50 A fuse rating. The vacuum's actual operating and startup currents must therefore be verified against the manufacturer's specifications, and the corresponding fuse, wiring and connector ratings must be reassessed before the circuit is energised.
-
-During Semester 2, the BMS, fuse protection and emergency isolation system will be implemented and tested alongside the power distribution network. Further work will include verifying conductor suitability, measuring voltage drop and temperature under representative loads, refining cable routing and confirming the grounding arrangement. The electrical design of the UGV charging dock and the UAV charging platform will also be explored, including its power supply and charging requirements, to support future UAV–UGV integration.
 <!-- #endregion report -->
