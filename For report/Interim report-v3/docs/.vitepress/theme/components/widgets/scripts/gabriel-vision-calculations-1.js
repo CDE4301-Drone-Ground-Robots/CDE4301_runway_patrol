@@ -11,6 +11,15 @@ export default function init() {
 
       // Sensor Preset Definitions
       const PRESETS = {
+        elp5mp: {
+          name: 'ELP-USBGS5MP01-L601 (OX05B1S, 6 mm)',
+          width: 2592,
+          height: 1944,
+          hfovDeg: 57.0,
+          fx: 2386.9,
+          fy: 2386.9,
+          vfovDeg: 42.0
+        },
         imx568: {
           name: 'Leopard LI-IMX568',
           width: 2472,
@@ -40,7 +49,7 @@ export default function init() {
         }
       };
 
-      let currentPresetKey = 'imx568';
+      let currentPresetKey = 'elp5mp';
       const V_SPEED = 4.19; // 400 RPM wheels = 4.19 m/s
 
       // DOM Elements

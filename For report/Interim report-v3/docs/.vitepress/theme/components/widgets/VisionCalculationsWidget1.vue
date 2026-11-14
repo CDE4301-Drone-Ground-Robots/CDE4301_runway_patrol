@@ -14,14 +14,17 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
                 Select Sensor &amp; Lens Configuration:
               </div>
               <div class="preset-selector" role="radiogroup" aria-label="Camera Presets">
-                <button type="button" class="preset-btn active" data-preset="imx568" aria-checked="true">
-                  📷 Leopard LI-IMX568 (50.0° HFOV, Global Shutter)
+                <button type="button" class="preset-btn active" data-preset="elp5mp" aria-checked="true">
+                  📷 ELP-USBGS5MP01-L601 (57.0° HFOV, 5 MP Global · 50 fps)
                 </button>
-                <button type="button" class="preset-btn" data-preset="ecam56" aria-checked="false">
-                  📷 e-con e-CAM56 (104.8° HFOV, Wide Angle)
+                <button type="button" class="preset-btn" data-preset="imx568" aria-checked="false">
+                  📷 Leopard LI-IMX568 (50.0° HFOV, Global Shutter · 60 fps)
                 </button>
                 <button type="button" class="preset-btn" data-preset="ugreen" aria-checked="false">
-                  📹 UGREEN CM831 (62.0° HFOV, 1080p Rolling)
+                  📹 UGREEN CM831 (62.0° HFOV, 1080p Rolling · 60 fps)
+                </button>
+                <button type="button" class="preset-btn" data-preset="ecam56" aria-checked="false">
+                  📷 e-con e-CAM56 (104.8° HFOV, Wide Angle · 79 fps)
                 </button>
               </div>
             </div>

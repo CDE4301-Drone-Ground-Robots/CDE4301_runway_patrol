@@ -16,9 +16,9 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
                   <span class="sim-label">Camera Height ($H$)</span>
                   <span class="sim-val-badge" id="val-height">0.45 m</span>
                 </div>
-                <input type="range" class="sim-slider" id="slider-height" min="0.30" max="1.50" step="0.05" value="0.45" aria-label="Camera Mounting Height">
+                <input type="range" class="sim-slider" id="slider-height" min="0.15" max="1.50" step="0.05" value="0.45" aria-label="Camera Mounting Height">
                 <div class="sim-hint">
-                  <span>0.30 m</span>
+                  <span>0.15 m</span>
                   <span>Default: 0.45 m</span>
                   <span>1.50 m</span>
                 </div>
@@ -28,13 +28,13 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
               <div class="sim-control-group">
                 <div class="sim-label-row">
                   <span class="sim-label">Camera Tilt ($\theta$)</span>
-                  <span class="sim-val-badge" id="val-tilt">20.0°</span>
+                  <span class="sim-val-badge" id="val-tilt">38.0°</span>
                 </div>
-                <input type="range" class="sim-slider" id="slider-tilt" min="5" max="60" step="1" value="20" aria-label="Camera Downward Tilt">
+                <input type="range" class="sim-slider" id="slider-tilt" min="5" max="90" step="1" value="38" aria-label="Camera Downward Tilt">
                 <div class="sim-hint">
                   <span>5° (Horizon)</span>
-                  <span>Default: 20°</span>
-                  <span>60° (Down)</span>
+                  <span>Default: 38°</span>
+                  <span>90° (Nadir)</span>
                 </div>
               </div>
 
@@ -42,12 +42,12 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
               <div class="sim-control-group">
                 <div class="sim-label-row">
                   <span class="sim-label">Target Debris Size</span>
-                  <span class="sim-val-badge" id="val-debris">30 mm</span>
+                  <span class="sim-val-badge" id="val-debris">10 mm</span>
                 </div>
-                <input type="range" class="sim-slider" id="slider-debris" min="10" max="100" step="1" value="30" aria-label="Target Debris Dimension">
+                <input type="range" class="sim-slider" id="slider-debris" min="10" max="100" step="1" value="10" aria-label="Target Debris Dimension">
                 <div class="sim-hint">
                   <span>10 mm</span>
-                  <span>Default: 30 mm</span>
+                  <span>Default: 10 mm</span>
                   <span>100 mm</span>
                 </div>
               </div>
