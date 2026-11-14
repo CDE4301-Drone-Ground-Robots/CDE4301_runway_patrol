@@ -12,15 +12,15 @@ description: "Zacarias's Semester 2 (Phase 2) deliverables."
 
 ### Semester 2 — Planned Work
 
-- **Final Chassis Design:** Refine the selected 3030 aluminium square-tube chassis, including member geometry, mounting-hole locations, bracket configurations and interfaces with the suspension and drivetrain assemblies.
+- **Final Chassis Design:** Refine the selected 3030 aluminium square-tube chassis, including member geometry, planned welded-joint configurations, mounting-hole locations, mounting brackets and interfaces with the suspension and drivetrain assemblies.
 
 - **Electronics Mounting Plate:** Redesign the component mounting plate to accommodate the updated number and arrangement of electrical components, considering mounting positions, accessibility and cable routing.
 
-- **Structural Analysis and Validation:** Conduct further FEA on the final chassis assembly, incorporating the updated mounting configurations and connection details. Evaluate critical stresses under static, skid-steering and uneven-ground loading, followed by physical testing of the fabricated structure.
+- **Structural Analysis and Validation:** Conduct further FEA on the final chassis assembly, incorporating the updated mounting configurations and planned welded interfaces. Verify the connection details without treating simplified bonded contacts as proof of weld strength. Evaluate critical stresses under static, skid-steering and uneven-ground loading, followed by physical testing of the fabricated structure.
 
 - **Dynamic Simulations:** Extend the structural assessment beyond the linear static FEA studies conducted during Semester 1 by investigating the chassis response to time-varying loading conditions, including vibration and dynamic effects associated with vehicle movement and uneven-ground traversal.
 
-- **Chassis Fabrication and Integration:** Finalise fabrication drawings and coordinate the assembly of the revised chassis with the suspension, drivetrain, electronics and FOD collection systems.
+- **Chassis Fabrication and Integration:** Finalise fabrication drawings and coordinate welding and assembly of the revised chassis with the suspension, drivetrain, electronics and FOD collection systems.
 
 - **Waterproofing and Environmental Protection:** Develop the UGV's waterproofing and enclosure arrangements to protect internal components against moisture and environmental exposure during outdoor operation.
 

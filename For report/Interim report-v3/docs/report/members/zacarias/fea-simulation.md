@@ -561,7 +561,7 @@ No physical load tests were conducted during Semester 1; therefore, the numerica
 
 ### 4.1.2.7.2 Mounting Connection and Material Verification {#fea-4-1-2-7-2}
 
-During Semester 2, the suspension mounting brackets, bolt arrangements and load-transfer interfaces will be reviewed as part of the final chassis integration.
+The final 3030 square-tube frame is planned for welded construction. The welded joints, suspension mounting brackets, bolt arrangements and load-transfer interfaces will be assessed during final chassis development. The completed studies used simplified bonded connections and do not independently validate weld strength.
 
 Local reinforcement, changes to the mounting method or adjustments to the 3030 tube wall thickness will be considered where necessary.
 
