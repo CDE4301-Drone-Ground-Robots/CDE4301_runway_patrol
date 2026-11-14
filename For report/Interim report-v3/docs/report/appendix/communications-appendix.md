@@ -8,11 +8,11 @@ owner: "Hilbert Soh"
 
 <!-- #region comms-appendix -->
 
-This appendix details the inter-agent JSON message schemas, candidate long-range RF transceiver evaluations, Singapore statutory spectrum compliance parameters, and proposed serial framing protocols for the UAV–UGV communications subsystem.
+This appendix covers the JSON message schemas, the comparison of long-range RF transceivers, Singapore spectrum regulations, and the proposed serial framing protocol for the UAV–UGV communications subsystem.
 
 ### K.1 Complete JSON Alert & Telemetry Schemas
 
-The command and control interface exchanges structured JSON payloads over ROS 2 topics between the aerial reconnaissance drone (ARGUS) and the ground remediation rover (HUNTER).
+The command and control (C2) interface sends JSON messages over ROS 2 topics between the reconnaissance drone (ARGUS) and the ground remediation rover (HUNTER).
 
 <Card tag="UAV → UGV Command Stream">
 
@@ -92,7 +92,7 @@ The command and control interface exchanges structured JSON payloads over ROS 2 
 
 ### K.2 Candidate Long-Range Datalink Comparative Analysis
 
-Table K.3 evaluates candidate wireless datalink technologies against operational runway patrol requirements (1.5–3.0 km range, low power consumption, lightweight payload, and Singapore spectrum compliance).
+Table K.3 compares candidate datalink radios against the runway patrol requirements (1.5–3.0 km range, low power consumption, lightweight payload, and Singapore spectrum compliance).
 
 **Table K.3: Long-Range Datalink Technology Trade Study**
 
@@ -110,24 +110,24 @@ Table K.3 evaluates candidate wireless datalink technologies against operational
 | **Unit Cost Envelope** | $\approx \$150\text{–}200\text{ USD}$ | $\approx \$120\text{–}150\text{ USD}$ | $\approx \$90\text{–}120\text{ USD}$ | $\approx \$1,200+\text{ USD}$ |
 
 #### Radio Security Considerations
-- **Serial RF (Microhard P900 V2):** Operates an air-gapped point-to-point asynchronous serial connection. The lack of an IP network stack completely eliminates remote port scanning, SSH brute-force attacks, and IP routing exploits. The modem firmware enforces AES-256 physical-layer payload encryption paired via unique 32-bit Network IDs.
-- **Broadband IP (pMDDL2450 / pMDDL900):** Native TCP/IP networking exposes computing hosts to network attack surfaces, requiring firewall policies (`iptables`), connection rate limiting (`fail2ban`), MAC address whitelisting, and disabled broadcast beacons.
+- **Serial RF (Microhard P900 V2):** Uses an air-gapped, point-to-point asynchronous serial connection with no IP network stack, so remote port scanning, SSH brute-force attacks, and IP routing exploits do not apply. The modem firmware encrypts the payload with AES-256, and radios are paired using unique 32-bit Network IDs.
+- **Broadband IP (pMDDL2450 / pMDDL900):** Native TCP/IP networking exposes the connected computers to network attacks, so firewall rules (`iptables`), connection rate limiting (`fail2ban`), MAC address whitelisting, and disabled broadcast beacons are needed.
 
 #### Institutional Procurement Decision Gates
-Acquisition and flight integration of P900 V2 transceivers depends on four engineering verification gates scheduled in Semester 2:
-1. **IMDA Channel Masking Verification:** Confirming via PicoConfig software that hopping frequencies are strictly constrained within 917.0–925.0 MHz.
-2. **Supplier Procurement:** Securing formal institutional purchase quotes from authorized regional distributors.
-3. **Serial Gateway Benchmarking:** Bench-testing the serial framing gateway in loopback to confirm packet processing latency remains $<50\text{ ms}$.
-4. **Hardware Flow Control Validation:** Confirming CTS/RTS hardware handshaking between the transceiver and companion computing headers (Raspberry Pi 5 / Jetson GPIO).
+Buying the P900 V2 transceivers and integrating them on the UAV depends on four checks scheduled for Semester 2:
+1. **IMDA Channel Masking Verification:** Use PicoConfig to confirm that the hopping frequencies stay within 917.0–925.0 MHz.
+2. **Supplier Procurement:** Obtain formal purchase quotations from authorized regional distributors.
+3. **Serial Gateway Benchmarking:** Bench-test the serial framing gateway in loopback to confirm that packet processing latency stays below $50\text{ ms}$.
+4. **Hardware Flow Control Validation:** Confirm CTS/RTS hardware handshaking between the transceiver and the companion computer headers (Raspberry Pi 5 / Jetson GPIO).
 
 ---
 
 ### K.3 Singapore IMDA Spectrum Regulations (917–925 MHz)
 
-Radio transmissions in Singapore are legally governed by the **Infocomm Media Development Authority (IMDA)** under the *Technical Specification for Short Range Devices (IMDA TS SRD)* [\[3\]](../members/hilbert/references.md#ref-3), the *Telecommunications Act 1999* [\[10\]](../members/hilbert/references.md#ref-10), and civil aviation aerodrome spectrum directives [\[4\]](../members/hilbert/references.md#ref-4).
+Radio transmissions in Singapore are regulated by the **Infocomm Media Development Authority (IMDA)** under the *Technical Specification for Short Range Devices (IMDA TS SRD)* [\[3\]](../members/hilbert/references.md#ref-3), the *Telecommunications Act 1999* [\[10\]](../members/hilbert/references.md#ref-10), and civil aviation aerodrome spectrum directives [\[4\]](../members/hilbert/references.md#ref-4).
 
-- **Singapore Permitted Sub-Band (917.0–925.0 MHz):** Standard North American ISM transceivers hop across 902.0–928.0 MHz. Frequencies below 917.0 MHz and above 925.0 MHz are legally allocated to cellular mobile network operators (MNOs) and public services. Unmodified overseas firmware that hops into 902–917 MHz or 925–928 MHz violates statutory regulations. Transceiver firmware must be constrained to the 8.0 MHz window between 917.0 and 925.0 MHz.
-- **IMDA Radiated Power Limits:** Under IMDA TS SRD Table 1 (Item 7b), telemetry devices operating within 917–925 MHz are restricted to effective radiated power (ERP) limits between **$100\text{ mW}$ and $500\text{ mW}$ ($20\text{–}27\text{ dBm}$)**, depending on occupied channel bandwidth and duty cycle. Transceivers rated at 1.0 W (30 dBm) conducted output must be configured in software to reduce power output to remain compliant with radiated limits when paired with omnidirectional whip antennas.
+- **Singapore Permitted Sub-Band (917.0–925.0 MHz):** Standard North American ISM transceivers hop across 902.0–928.0 MHz. Frequencies below 917.0 MHz and above 925.0 MHz are allocated to cellular mobile network operators (MNOs) and public services. Unmodified overseas firmware that hops into 902–917 MHz or 925–928 MHz breaks these regulations, so the transceiver firmware must be limited to the 8.0 MHz window between 917.0 and 925.0 MHz.
+- **IMDA Radiated Power Limits:** Under IMDA TS SRD Table 1 (Item 7b), telemetry devices operating within 917–925 MHz have effective radiated power (ERP) limits between **$100\text{ mW}$ and $500\text{ mW}$ ($20\text{–}27\text{ dBm}$)**, depending on occupied channel bandwidth and duty cycle. A transceiver rated at 1.0 W (30 dBm) conducted output must have its power reduced in software to stay within the radiated limit when used with an omnidirectional whip antenna.
 
 <Figure 
   src="../members/hilbert/assets/diagrams/imda-spectrum-allocation.svg" 
@@ -139,7 +139,7 @@ Radio transmissions in Singapore are legally governed by the **Infocomm Media De
 
 ### K.4 Proposed Serial Framing & Datalink Reliability Protocol
 
-When transitioning from local Wi-Fi to a long-range transparent UART datalink, ROS 2 nodes cannot publish native DDS packets over a serial stream. The proposed architecture deploys a lightweight serial gateway node on each platform.
+ROS 2 nodes cannot publish native DDS packets over a serial stream, so a different approach is needed when moving from local Wi-Fi to a long-range transparent UART datalink. The proposed design runs a lightweight serial gateway node on each platform.
 
 <Figure 
   src="../members/hilbert/assets/diagrams/uav-ugv-rf-datalink.svg" 
@@ -148,8 +148,8 @@ When transitioning from local Wi-Fi to a long-range transparent UART datalink, R
 />
 
 #### Framing & Reliability Protocol Specifications:
-1. **Packet Delimitation (COBS):** Employs **Consistent Overhead Byte Stuffing (COBS)** with a `0x00` delimiter byte to mark packet boundaries. COBS guarantees that delimiter bytes never appear in the payload, providing robust packet synchronization over noisy serial channels without unpredictable byte-stuffing bloat.
-2. **Integrity Checking (CRC-32):** Appends a hardware-computed 4-byte **CRC-32 polynomial** checksum to the packet trailer, detecting bit flips, frame truncations, and RF interference bursts.
-3. **Stop-and-Wait ARQ:** Critical target alerts require positive acknowledgement (`ACK`). If an acknowledgement is not received within $200\text{ ms}$, the gateway initiates up to 3 automatic retransmissions before flagging an alert timeout fault.
+1. **Packet Delimitation (COBS):** Uses **Consistent Overhead Byte Stuffing (COBS)** with a `0x00` delimiter byte to mark packet boundaries. COBS ensures that delimiter bytes never appear in the payload, so the receiver can stay synchronized on noisy serial channels, and the encoding overhead is small and predictable.
+2. **Integrity Checking (CRC-32):** Appends a hardware-computed 4-byte **CRC-32** checksum to the end of each packet to detect bit flips, truncated frames, and RF interference bursts.
+3. **Stop-and-Wait ARQ:** Target alerts require positive acknowledgement (`ACK`). If an acknowledgement is not received within $200\text{ ms}$, the gateway initiates up to 3 automatic retransmissions before flagging an alert timeout fault.
 
 <!-- #endregion comms-appendix -->

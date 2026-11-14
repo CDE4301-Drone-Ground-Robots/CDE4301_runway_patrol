@@ -8,7 +8,7 @@ owner: "Hilbert Soh"
 
 <!-- #region kinematics-appendix -->
 
-This appendix compiles the quantitative steering selection trade study, formal skid-steer kinematic formulations, lateral tire-scrub moment derivations, dynamic stability constraints, and calculated vehicle operating regimes.
+This appendix presents the steering selection matrix, skid-steer kinematics, tire-scrub moment derivations, dynamic stability constraints, and calculated operating scenarios.
 
 ### L.1 Steering Architecture Down-Selection Decision Matrix
 
@@ -34,22 +34,22 @@ Three candidate drivetrain topologies were evaluated for the autonomous runway p
 #### Alternative Architecture Kinematic Formulations
 
 1. **Ackermann Steering Kinematics:**
-   Ackermann steering enforces concentric turning circles for front wheels via geometry:
+   Ackermann geometry keeps the front wheels on concentric turning circles:
    $$\cot\delta_o - \cot\delta_i = \frac{w}{L}$$
-   Where $\delta_i$ is inside steer angle, $\delta_o$ is outside steer angle, $w$ is track width ($0.575\text{ m}$), and $L$ is wheelbase ($0.4888\text{ m}$). Minimum turning radius is constrained by maximum mechanical steering angle ($\delta_{\max} \approx 35^\circ$):
+   Where $\delta_i$ is inside steer angle, $\delta_o$ is outside steer angle, $w$ is track width ($0.575\text{ m}$), and $L$ is wheelbase ($0.4888\text{ m}$). The minimum turning radius depends on the maximum mechanical steering angle ($\delta_{\max} \approx 35^\circ$):
    $$R_{\min} = \frac{L}{\sin\delta_{\max}} = \frac{0.4888}{\sin 35^\circ} \approx \mathbf{0.852\text{ m}}$$
-   This non-holonomic constraint prevents zero-radius in-place turns, requiring multi-point reverse maneuvers to align remediation nozzles over debris.
+   This non-holonomic constraint prevents zero-radius in-place turns, so multi-point reversing maneuvers would be needed to align the remediation nozzle over debris.
 
 2. **Mecanum Wheel Kinematics:**
-   Mecanum wheels feature passive rollers oriented at $\pm 45^\circ$ to the wheel plane:
+   Mecanum wheels have passive rollers oriented at $\pm 45^\circ$ to the wheel plane:
    $$\begin{bmatrix} \omega_1 \\ \omega_2 \\ \omega_3 \\ \omega_4 \end{bmatrix} = \frac{1}{R} \begin{bmatrix} 1 & -1 & -(l_x + l_y) \\ 1 & 1 & (l_x + l_y) \\ 1 & 1 & -(l_x + l_y) \\ 1 & -1 & (l_x + l_y) \end{bmatrix} \begin{bmatrix} v_x \\ v_y \\ \omega_z \end{bmatrix}$$
-   While offering 3-DOF planar mobility, small roller contact points yield high ground pressure, rapid polyurethane wear on coarse tarmac, and low traction coefficients on wet runway asphalt ($\mu_{\text{wet}} \le 0.35$).
+   They allow 3-DOF planar motion, but the small roller contact points cause high ground pressure, rapid polyurethane wear on coarse tarmac, and low traction on wet runway asphalt ($\mu_{\text{wet}} \le 0.35$).
 
 ---
 
 ### L.2 Skid-Steer Kinematic Model Derivations
 
-The four-wheel skid-steer platform is kinematically modeled as an equivalent two-wheeled differential drive system by synchronizing front and rear motors on each side: $\omega_{\text{FL}} = \omega_{\text{RL}} = \omega_L$ and $\omega_{\text{FR}} = \omega_{\text{RR}} = \omega_R$.
+The four-wheel skid-steer platform is modeled as an equivalent two-wheel differential drive by running the front and rear motors on each side at the same speed: $\omega_{\text{FL}} = \omega_{\text{RL}} = \omega_L$ and $\omega_{\text{FR}} = \omega_{\text{RR}} = \omega_R$.
 
 #### 1. Forward Kinematics
 Given measured wheel linear velocities $v_L = \omega_L R$ and $v_R = \omega_R R$ with wheel radius $R = 0.1315\text{ m}$:
@@ -58,14 +58,14 @@ $$\omega = \frac{v_R - v_L}{B_{\text{eff}}}$$
 Where $v$ is body longitudinal velocity ($\text{m/s}$), $\omega$ is vehicle yaw rate ($\text{rad/s}$), and $B_{\text{eff}}$ is the effective track width accounting for lateral wheel slip.
 
 #### 2. Inverse Kinematics
-Given target trajectory velocity setpoints $(v, \omega)$ dispatched by Nav2:
+For velocity setpoints $(v, \omega)$ sent by Nav2:
 $$v_L = v - \frac{\omega B_{\text{eff}}}{2}, \quad \omega_L = \frac{v_L}{R} = \frac{1}{R}\left(v - \frac{\omega B_{\text{eff}}}{2}\right)$$
 $$v_R = v + \frac{\omega B_{\text{eff}}}{2}, \quad \omega_R = \frac{v_R}{R} = \frac{1}{R}\left(v + \frac{\omega B_{\text{eff}}}{2}\right)$$
 Wheel rotational speed in revolutions per minute ($\text{RPM}$) is:
 $$N_L = \frac{60 \omega_L}{2\pi} = \frac{30 v_L}{\pi R}, \quad N_R = \frac{60 \omega_R}{2\pi} = \frac{30 v_R}{\pi R}$$
 
 #### 3. Instantaneous Centre of Rotation (ICR)
-Due to lateral tire scrub during turning, the actual ICR does not lie on the physical lateral wheel axle line. For a symmetric four-wheel vehicle with longitudinal wheelbase $L$ and track width $B$:
+Because the tires scrub sideways when turning, the actual ICR does not lie on the physical wheel axle line. For a symmetric four-wheel vehicle with longitudinal wheelbase $L$ and track width $B$:
 $$x_{\text{ICR}} = \frac{-v_y}{\omega}, \quad y_{\text{ICR}, L} = \frac{v_{x,L} - v_x}{\omega}, \quad y_{\text{ICR}, R} = \frac{v_{x,R} - v_x}{\omega}$$
 For steady-state symmetric maneuvers on level ground, longitudinal slip shifts the effective track width outward: $B_{\text{eff}} = y_{\text{ICR}, R} - y_{\text{ICR}, L} > B$.
 
@@ -81,7 +81,7 @@ Where $\chi \ge 1.0$ is the empirical slip factor. For the FOD Hunter platform o
 
 ### L.3 Tire-Scrub Resistance & Motor Torque Analysis
 
-During zero-radius or tight-radius turns, wheels rotate about the vehicle geometric center while contact patches are forced laterally across pavement, generating significant scrubbing moments.
+During in-place or tight turns, wheels rotate about the vehicle center while contact patches slip laterally across pavement, generating tire scrub resistance.
 
 #### 1. Normal Load Distribution
 For vehicle total mass $m = 65.0\text{ kg}$ on level ground ($\theta = 0^\circ$):
@@ -107,10 +107,10 @@ At each wheel contact patch, longitudinal traction force $F_{x,i}$ and lateral s
 $$F_{\text{res},i} = \sqrt{F_{x,i}^2 + F_{y,i}^2} \le \mu F_{z,i}$$
 In a pure zero-radius turn ($v = 0$, $\omega \ne 0$), longitudinal wheel motion provides the driving torque while lateral slip dissipates energy:
 $$F_{x,i} = \frac{T_i}{R}, \quad F_{y,i} \approx \mu F_{z,i} \cdot \text{sgn}(\omega)$$
-To initiate rotation without wheel stall, tire-ground contact must enter sliding friction regime.
+For the vehicle to rotate without stalling the wheels, the tire contact must enter the sliding friction regime.
 
 #### 4. Motor Torque Sizing for Zero-Radius Turning
-To overcome the lateral scrubbing moment $M_{\text{scrub}}$ during an in-place turn, drive wheels must generate an opposing yaw torque couple about the vehicle centerline. Moment arm of longitudinal tire forces is half the physical track width: $d_y = B / 2 = 0.575 / 2 = 0.2875\text{ m}$.
+To overcome the lateral scrub moment $M_{\text{scrub}}$ during an in-place turn, the drive wheels must produce an opposing yaw torque couple about the vehicle centerline. The moment arm of the longitudinal tire forces is half the physical track width: $d_y = B / 2 = 0.575 / 2 = 0.2875\text{ m}$.
 Yaw torque generated by four drive motors (two driving forward with force $+F_x$, two in reverse with $-F_x$):
 $$M_{\text{drive}} = 2 \cdot F_x \cdot \frac{B}{2} + 2 \cdot F_x \cdot \frac{B}{2} = 2 F_x B = 4 F_{x,i} \frac{B}{2} = 2 F_{x,i} B$$
 Equating drive moment to scrub resistance ($M_{\text{drive}} \ge M_{\text{scrub}}$):
@@ -121,23 +121,23 @@ Required motor output torque per wheel with wheel radius $R = 0.1315\text{ m}$:
 $$T_{\text{pivot}, i} = F_{x,i} \cdot R = \frac{M_{\text{scrub}} \cdot R}{2 B}$$
 Substituting nominal values ($M_{\text{scrub}} = 124.63\text{ Nm}$, $B = 0.575\text{ m}$, $R = 0.1315\text{ m}$):
 $$T_{\text{pivot}, i} = \frac{124.63 \times 0.1315}{2 \times 0.575} = \frac{16.389}{1.150} \approx \mathbf{14.25\text{ Nm per wheel}}$$
-Applying dynamic safety factor $S_f = 1.30$ to overcome static-to-kinetic friction transition peak:
+Applying a dynamic safety factor $S_f = 1.30$ to cover the friction peak at the static-to-kinetic transition:
 $$T_{\text{peak}, i} = 1.30 \times 14.25\text{ Nm} \approx \mathbf{18.53\text{ Nm per wheel}}$$
-The selected ZLLG80ASM250 hub motors deliver $15.0\text{ Nm}$ continuous rated torque and **$30.0\text{ Nm}$ peak torque**, confirming $1.62\times$ torque margin above peak pivot requirements.
+The selected ZLLG80ASM250 hub motors deliver $15.0\text{ Nm}$ continuous rated torque and **$30.0\text{ Nm}$ peak torque**, giving a $1.62\times$ torque margin over the peak pivot requirement.
 
 #### 5. Parasitic Power Dissipation
 Frictional power dissipated in tire scrub during a zero-radius turn at yaw rate $\omega = 0.873\text{ rad/s}$ ($50^\circ/\text{s}$):
 $$P_{\text{scrub}} = M_{\text{scrub}} \cdot |\omega| = 124.63\text{ Nm} \times 0.873\text{ rad/s} \approx \mathbf{108.8\text{ W}}$$
-This power is dissipated directly as thermal energy in tire rubber and tarmac abrasion. Planning sweeping turns with radius $R \ge 1.0\text{ m}$ reduces lateral scrub moment by over $60\%$, conserving battery capacity and extending tire life.
+This power is lost as heat in the tire rubber and through tarmac abrasion. Planning sweeping turns with radius $R \ge 1.0\text{ m}$ reduces the lateral scrub moment by over $60\%$, which saves battery energy and extends tire life.
 
 ---
 
 ### L.4 Vehicle Stance & Dynamic Stability Analysis
 
 #### 1. Wheelbase-to-Track-Width Ratio ($L/B$) Limits
-The geometric ratio $L/B$ governs the balance between directional stability and skid-steer maneuverability:
+The ratio $L/B$ sets the balance between directional stability and skid-steer maneuverability:
 $$\frac{L}{B} = \frac{0.4888\text{ m}}{0.575\text{ m}} \approx \mathbf{0.850}$$
-- **Steering Efficiency Bound ($L/B < 1.0$):** Values below $1.0$ ensure that lateral scrub moment arm ($L/2$) is smaller than drive torque moment arm ($B/2$), maintaining positive steering mechanical advantage:
+- **Steering Efficiency Bound ($L/B < 1.0$):** Below $1.0$, the lateral scrub moment arm ($L/2$) is smaller than the drive torque moment arm ($B/2$), so the drive torque keeps a mechanical advantage when steering:
   $$\frac{M_{\text{scrub}}}{M_{\text{drive}}} \propto \frac{L}{B} = 0.850 < 1.0 \implies \text{Favorable turnability}$$
 - **Directional Stability Bound ($L/B > 0.60$):** Values above $0.60$ prevent excessive yaw sensitivity and hunting oscillations during high-speed linear cruising ($15\text{ km/h}$).
 
@@ -145,7 +145,7 @@ $$\frac{L}{B} = \frac{0.4888\text{ m}}{0.575\text{ m}} \approx \mathbf{0.850}$$
 
 ### L.5 Calculated Skid-Steer Operating Scenarios
 
-Table L.2 compiles five operational kinematics and loading regimes calculated for the $65.0\text{ kg}$ FOD Hunter platform on clean dry airfield asphalt ($\mu = 0.80$, $B_{\text{eff}} = 0.7475\text{ m}$, $R = 0.1315\text{ m}$).
+Table L.2 lists five operating cases calculated for the $65.0\text{ kg}$ FOD Hunter platform on clean dry airfield asphalt ($\mu = 0.80$, $B_{\text{eff}} = 0.7475\text{ m}$, $R = 0.1315\text{ m}$).
 
 **Table L.2: Calculated Skid-Steer Operating Scenarios**
 

@@ -15,9 +15,9 @@ outline: [2, 3]
 
 ## 4.4.1 Objectives & Requirements {#motor-objectives}
 
-The powertrain was sized from first principles for a **65.0 kg gross vehicle mass (fully laden)** utilizing four **263 mm outer diameter wheels** at a target operational sprint velocity of **15.0 km/h ($4.17\text{ m/s}$)**. Four operating regimes were evaluated: level aerodynamic cruising, slope climbing on a $5.0^\circ$ taxiway shoulder embankment, dynamic acceleration ($0\text{–}15\text{ km/h}$ in $3.0\text{ s}$), and in-place zero-radius skid-steer pivoting, supplemented by a $15.0^\circ$ drainage culvert check.
+The powertrain was sized using first-principles calculations for a **65.0 kg fully laden design mass** with four **263 mm outer diameter wheels** at a target sprint speed of **15.0 km/h ($4.17\text{ m/s}$)**. Four operating cases were evaluated: level cruising with aerodynamic drag, climbing a $5.0^\circ$ taxiway shoulder embankment, acceleration ($0\text{–}15\text{ km/h}$ in $3.0\text{ s}$), and an in-place zero-radius skid-steer pivot. A $15.0^\circ$ drainage culvert ramp was also checked.
 
-In-place pivoting represents the sizing load case, where lateral tire scrubbing against high-friction tarmac ($\mu_{\text{skid}} = 0.80$) governs peak shaft torque requirements.
+In-place pivoting is the sizing case because lateral tire scrub on high-friction tarmac ($\mu_{\text{skid}} = 0.80$) governs peak shaft torque requirements.
 
 ::: details Full design assumptions and requirements
 
@@ -25,30 +25,30 @@ In-place pivoting represents the sizing load case, where lateral tire scrubbing 
 
 <Badge type="info" text="System Constraints" />
 
-Drivetrain sizing incorporates aerodrome sweeping requirements derived from FAA AC 150/5220-24 [\[2\]](./references.md#ref-2) and pavement surface friction standards from ASTM D5340-20 [\[1\]](./references.md#ref-1). Operating at $15.0\text{ km/h}$ ($4.17\text{ m/s}$) enables rapid sweeping of active $3,000\text{ m}$ runway corridors within $15\text{–}20\text{ minute}$ air traffic control separation windows, with an acceleration budget of $t_{\text{acc}} = 3.0\text{ s}$.
+The sizing uses aerodrome sweeping requirements from FAA AC 150/5220-24 [\[2\]](./references.md#ref-2) and pavement surface friction standards from ASTM D5340-20 [\[1\]](./references.md#ref-1). At $15.0\text{ km/h}$ ($4.17\text{ m/s}$), the UGV can sweep an active $3,000\text{ m}$ runway corridor within a $15\text{–}20\text{ minute}$ air traffic control separation window. The acceleration time budget is $t_{\text{acc}} = 3.0\text{ s}$.
 
 <Card>
 
 **Selected drivetrain: four direct-drive hub motors**
 
-The physical drivetrain utilizes **four ZLLG80ASM250 hub motors** and **two ZLAC8015D dual-channel drivers**. Low-level CANopen communication was established over a 500 kbps CAN bus, allocating one driver per axle to control two motors independently. Direct-drive hub motors eliminate gearbox backlash, mechanical transmission wear, and differential maintenance. Full-load validation at nominal 48 V supply is scheduled for Semester 2.
+The physical drivetrain uses **four ZLLG80ASM250 hub motors** and **two ZLAC8015D dual-channel drivers**. Low-level CANopen communication was set up over a 500 kbps CAN bus, with one driver per axle controlling its two motors independently. Direct-drive hub motors have no gearbox backlash, transmission wear, or differential to maintain. Full-load testing at the nominal 48 V supply is scheduled for Semester 2.
 
 </Card>
 
 | Parameter                                       | Design Value                                                | Engineering Justification & Airfield Operating Context                                                                                                                                                                                                                                                                                     |
 | ----------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Gross Vehicle Mass ($m$)**                    | **$65.0\text{ kg}$** (Fully Laden)                          | Worst-case sizing mass: includes 6061-T6 chassis ($18\text{ kg}$), 48V 20Ah battery ($12\text{ kg}$), vacuum turbine & bin ($15\text{ kg}$), sensors & computer stack ($5\text{ kg}$), and 4 hub drive units ($15\text{ kg}$).                                                                                                             |
-| **Drive Architecture ($N$)**                    | **4 Independent Hub Motors (4WD)**                          | Four-wheel independent skid-steer control. Tractive driving force is distributed across 4 direct-drive motors, reducing individual continuous motor loading.                                                                                                                                                                               |
+| **Drive Architecture ($N$)**                    | **4 Independent Hub Motors (4WD)**                          | Four-wheel independent skid-steer control. Traction force is shared by 4 direct-drive motors, which reduces the continuous load on each motor.                                                                                                                                                                               |
 | **Wheel Outer Diameter ($D$) & Radius ($r$)**   | **$D = 263\text{ mm}$**, **$r = 0.1315\text{ m}$**          | 10-inch all-terrain tubeless pneumatic tire mounted on ZLLG80 hub. Matches firmware macro `ROBOT_WHEEL_RADIUS_MM = 131.5f`.                                                                                                                                                                                                                |
-| **Design Cruise Velocity ($v$)**                | **$15.0\text{ km/h}$** ($4.167\text{ m/s}$)                 | Authoritative target speed enabling rapid sweep of active $3,000\text{ m}$ runway corridors within 15–20 minute air traffic control intervals.                                                                                                                                                                                             |
+| **Design Cruise Velocity ($v$)**                | **$15.0\text{ km/h}$** ($4.167\text{ m/s}$)                 | Target speed for sweeping an active $3,000\text{ m}$ runway corridor within a 15–20 minute air traffic control interval.                                                                                                                                                                                             |
 | **Required Wheel Speed ($N_{\text{req}}$)**     | **$302.6\text{ RPM}$** at $15\text{ km/h}$                  | Direct kinematic conversion: $N = \frac{60 \cdot v}{\pi \cdot D} = \frac{60 \times 4.1667}{\pi \times 0.263} = 302.58\text{ RPM}$.                                                                                                                                                                                                         |
-| **Motor No-Load Speed ($N_{\text{no-load}}$)**  | **$415.6\text{ RPM}$** ($20.59\text{ km/h}$)                | Factory rating of ZLLG80ASM250 hub motor at 48V. Provides a verified **calculated $1.373\times$ no-load speed ratio** ($37.3\%$ above required RPM) over cruise speed.                                                                                                                                                                     |
+| **Motor No-Load Speed ($N_{\text{no-load}}$)**  | **$415.6\text{ RPM}$** ($20.59\text{ km/h}$)                | Manufacturer rating of the ZLLG80ASM250 hub motor at 48V. Gives a **calculated $1.373\times$ no-load speed ratio** over cruise speed ($37.3\%$ above the required RPM).                                                                                                                                                                     |
 | **Design Incline Angle ($\theta$)**             | **$5.0^\circ$** (Verge) / **$15.0^\circ$** (Ramp)           | Airside runways have $<1.5^\circ$ cross-fall; $5.0^\circ$ ($8.7\%$) represents taxiway shoulder embankment verges, while $15.0^\circ$ represents drainage culvert access ramps.                                                                                                                                                            |
 | **Design Acceleration ($a_{\text{des}}$)**      | **$1.389\text{ m/s}^2$** ($t_{\text{acc}} = 3.0\text{ s}$)  | Accelerates from standstill to $15\text{ km/h}$ in $3.0\text{ seconds}$ to clear runway active areas ($F_{\text{acc}} = 90.28\text{ N}$).                                                                                                                                                                                                  |
 | **Rolling Resistance Coefficient ($C_{rr}$)**   | **$0.025$**                                                 | Pneumatic rubber tires on dry grooved airport asphalt pavement at nominal pressure ($2.5\text{ bar}$).                                                                                                                                                                                                                                     |
 | **Aerodynamic Drag Area ($C_d \cdot A$)**       | **$0.28\text{ m}^2$** ($C_d = 0.80$, $A = 0.35\text{ m}^2$) | Effective drag area based on frontal area $A = 0.35\text{ m}^2$ and a conservative drag coefficient $C_d = 0.80$ for the blunt chassis, LiDAR mast, and intake ducting (yielding $2.93\text{ N}$ at $15\text{ km/h}$; a baseline $C_d = 0.70$ would give $2.56\text{ N}$). Air density $\rho = 1.204\text{ kg/m}^3$ at $20^\circ\text{C}$. |
 | **Tarmac Scrub Friction ($\mu_{\text{skid}}$)** | **$0.80$**                                                  | Coulomb lateral friction coefficient baseline for dry grooved airport asphalt following Gillespie (1992) [\[14\]](./references.md#ref-14) and pavement condition survey context from ASTM D5340-20 [\[1\]](./references.md#ref-1).                                                                                                         |
-| **Drivetrain Efficiency ($\eta$)**              | **$0.85$** ($85\%$)                                         | Direct-drive configuration: zero gearbox mesh friction. Factor accounts for motor inverter switching, stator copper/iron losses, and tire carcass dissipation.                                                                                                                                                                             |
+| **Drivetrain Efficiency ($\eta$)**              | **$0.85$** ($85\%$)                                         | Direct drive, so there are no gearbox mesh losses. The factor covers inverter switching, stator copper and iron losses, and tire carcass losses.                                                                                                                                                                             |
 
 :::
 
@@ -56,13 +56,13 @@ The physical drivetrain utilizes **four ZLLG80ASM250 hub motors** and **two ZLAC
 
 ## 4.4.2 Drivetrain Architecture {#motor-architecture}
 
-The physical powertrain comprises **four direct-drive BLDC hub motors (ZLTECH ZLLG80ASM250)** driven by **two dual-channel FOC servo drivers (ZLAC8015D)**. Independent four-wheel drive eliminates mechanical differentials, gearboxes, and steering linkages. Low-level velocity control and CANopen CiA 402 communication (500 kbps) were implemented on an STM32F446RE MCU (Gabriel), validating multi-motor synchronization on a preliminary test chassis under laboratory supply conditions ($32\text{ V}$, $10.4\text{ A}$ limit).
+The physical powertrain consists of **four direct-drive BLDC hub motors (ZLTECH ZLLG80ASM250)** driven by **two dual-channel FOC servo drivers (ZLAC8015D)**. Independent four-wheel drive removes the need for mechanical differentials, gearboxes, and steering linkages. Gabriel implemented low-level velocity control and CANopen CiA 402 communication (500 kbps) on an STM32F446RE MCU and tested multi-motor synchronization on a preliminary test chassis with a laboratory supply ($32\text{ V}$, $10.4\text{ A}$ limit).
 
 <Figure src="./assets/images/motor-and-driver.jpg" alt="Purchased ZLLG80ASM250 hub motors and ZLAC8015D dual-channel servo driver" caption="Figure 4.4.1: Purchased drivetrain hardware showing ZLTECH ZLLG80ASM250 hub motors with 263 mm pneumatic tyres and ZLAC8015D dual-channel servo driver." />
 
 **Wiring and CAN interface:** The 48 V power distribution, STM32 CAN interface and dual ZLAC8015D drivers are shown in [Figure 4.4.6](#sec-power-bus). Wiring-harness photographs will be added after hardware assembly.
 
-The detailed geometric justification for choosing skid steering over Ackermann and Mecanum configurations is documented in [Steering Kinematics →](./steering-kinematics.md). The team-wide battery, DC conversion and auxiliary load budget belongs in Bryan's Electrical documentation.
+The reasons for choosing skid steering over Ackermann and Mecanum layouts are in [Steering Kinematics →](./steering-kinematics.md). The team-wide battery, DC conversion and auxiliary load budget is covered in Bryan's Electrical documentation.
 
 ::: details Selected motor and driver specifications
 
@@ -70,7 +70,7 @@ The detailed geometric justification for choosing skid steering over Ackermann a
 
 <Badge type="info" text="Hardware Bill of Materials" />
 
-Four direct-drive BLDC hub motors were selected to eliminate gearbox backlash and complex steering linkages. The kinematic steering trade study is detailed in [Steering Kinematics](./steering-kinematics.md):
+Based on the torque calculations, four direct-drive BLDC hub motors were selected, which avoids gearbox backlash and complex steering linkages. The steering trade study is in [Steering Kinematics](./steering-kinematics.md):
 
 <CardGrid :cols="2">
 
@@ -112,16 +112,16 @@ Direct-drive motors avoid gearbox backlash. Wheel-speed reversal is still limite
 
 ## 4.4.3 Design Methodology & Selection {#motor-methodology}
 
-The drivetrain was developed across four progressive engineering stages:
+The drivetrain was developed in four stages:
 
 1. **Stage 1 — Analytical Sizing:** Motor torque and speed requirements were estimated from first principles using an assumed $65.0\text{ kg}$ gross vehicle mass, $263\text{ mm}$ wheels, and an assumed $0.80$ stance ratio ($L/B$).
-2. **Stage 2 — Hardware Selection:** Analytical sizing yielded required shaft torques of $0.73\text{ Nm}$ for level cruise, $2.88\text{ Nm}$ for a $5.0^\circ$ incline, $4.22\text{ Nm}$ for linear acceleration, and $15.78\text{ Nm}$ for in-place pivoting (assuming $\eta = 0.85$). Consequently, four direct-drive ZLLG80ASM250 hub motors ($15.0\text{ Nm}$ continuous, $28.5\text{ Nm}$ peak) and two ZLAC8015D dual-channel FOC drivers were procured.
-3. **Stage 3 — Embedded Firmware Validation:** STM32 motor control firmware and CANopen communication were developed (Gabriel). Low-voltage ground testing under an estimated $30\text{ kg}$ load powered by a bench supply ($32\text{ V}$, $10.4\text{ A}$ limit, `USE_POWER_PRESET_3`, clamped to $25\text{ RPM}$) validated forward/reverse motion, speed control, and multi-motor coordination.
-4. **Stage 4 — Semester 2 Physical Validation:** Characterization of full-load torque at $65.0\text{ kg}$, incline climbing, tarmac pivoting, and loaded $15.0\text{ km/h}$ cruising with the production $48\text{ V}$ battery pack will be conducted in Semester 2.
+2. **Stage 2 — Hardware Selection:** The analysis gave required shaft torques of $0.73\text{ Nm}$ for level cruise, $2.88\text{ Nm}$ for a $5.0^\circ$ incline, $4.22\text{ Nm}$ for linear acceleration, and $15.78\text{ Nm}$ for in-place pivoting (assuming $\eta = 0.85$). Based on these values, four direct-drive ZLLG80ASM250 hub motors ($15.0\text{ Nm}$ continuous, $28.5\text{ Nm}$ peak) and two ZLAC8015D dual-channel FOC drivers were procured.
+3. **Stage 3 — Embedded Firmware Validation:** Gabriel developed the STM32 motor control firmware and CANopen communication. A low-voltage ground test with an estimated $30\text{ kg}$ load and a bench supply ($32\text{ V}$, $10.4\text{ A}$ limit, `USE_POWER_PRESET_3`, clamped to $25\text{ RPM}$) confirmed forward and reverse motion, speed control, and multi-motor coordination.
+4. **Stage 4 — Semester 2 Physical Validation:** Full-load torque at $65.0\text{ kg}$, incline climbing, tarmac pivoting, and loaded $15.0\text{ km/h}$ cruising will be tested with the production $48\text{ V}$ battery pack in Semester 2.
 
 ## 4.4.4 Engineering Calculations {#motor-calculations}
 
-Motor torque was evaluated across four operating cases using the design baseline ($65.0\text{ kg}$ mass, $263\text{ mm}$ wheels, $L/B = 0.80$, $\mu_{\text{skid}} = 0.80$, $\eta = 0.85$). Results yield **0.73 N·m per motor** for level cruising, **2.88 N·m** for a 5° incline, **4.22 N·m** for acceleration ($0\text{–}15\text{ km/h}$ in $3\text{ s}$), and **15.78 N·m** for an in-place pivot. **In-place pivoting represents the sizing case.**
+I calculated motor torque for four operating cases using the preliminary 65.0 kg design mass ($263\text{ mm}$ wheels, $L/B = 0.80$, $\mu_{\text{skid}} = 0.80$, $\eta = 0.85$). The results are **0.73 N·m per motor** for level cruising, **2.88 N·m** for a 5° incline, **4.22 N·m** for acceleration ($0\text{–}15\text{ km/h}$ in $3\text{ s}$), and **15.78 N·m** for an in-place pivot. **In-place pivoting is the sizing case.**
 
 | Calculated case        | Shaft torque per motor | Preliminary design torque ($\eta = 0.85$) | Interpretation                                        |
 | ---------------------- | ---------------------: | ----------------------------------------: | ----------------------------------------------------- |
@@ -177,7 +177,7 @@ The $15\text{ km/h}$ target speed requires approximately $302.6\text{ RPM}$ on a
 
 <Badge type="info" text="Dynamic Force Sizing" />
 
-I estimated the total tractive force $F_{\text{total}}$ from rolling resistance, drag, grade and acceleration [\[13\]](./references.md#ref-13), [\[14\]](./references.md#ref-14). In the **4WD independent hub motor architecture ($N = 4$)**, total tractive force and driving yaw torque are distributed across four wheels. Shaft torque demanded from each individual motor is:
+I estimated the total tractive force $F_{\text{total}}$ from rolling resistance, drag, grade and acceleration [\[13\]](./references.md#ref-13), [\[14\]](./references.md#ref-14). With **four independent hub motors ($N = 4$)**, the tractive force and driving yaw torque are shared across four wheels, so the shaft torque required from each motor is:
 
 $$
 \tau_{\text{motor}} = \frac{F_i \cdot r}{\eta} = \frac{F_{\text{total}} \cdot r}{N \cdot \eta} = \frac{F_{\text{total}} \cdot 0.1315}{4 \times 0.85} = \frac{F_{\text{total}} \cdot 0.1315}{3.40} = \mathbf{0.038676 \cdot F_{\text{total}}}
@@ -211,7 +211,7 @@ $$
 
 #### Case 2: Incline Slope Climbing ($5.0^\circ$ at $15\text{ km/h}$)
 
-Traversing airport shoulder embankment verges ($\theta = 5.0^\circ$, $\sin 5^\circ = 0.08715$):
+Climbing an airport shoulder embankment verge ($\theta = 5.0^\circ$, $\sin 5^\circ = 0.08715$):
 
 $$
 F_{\text{slope}} = m \cdot g \cdot \sin(5.0^\circ) = 65.0 \times 9.81 \times 0.087156 = \mathbf{55.57\text{ N}}
@@ -229,7 +229,7 @@ $$
 
 *Figure 4.4.3: Case 2 free-body diagram (slope climbing).*
 
-_Drainage Culvert Ramp Check ($15.0^\circ$ Peak):_ For worst-case airfield drainage transitions ($\theta = 15.0^\circ$, $\sin 15^\circ = 0.2588$): $F_{\text{slope}} = 65 \times 9.81 \times 0.2588 = 165.0\text{ N}$, yielding total tractive force $F_{\text{total}} = 183.9\text{ N}$ and $\tau_{\text{motor}} = \frac{183.9 \times 0.1315}{4 \times 0.85} = \mathbf{7.11\text{ Nm}}$, well below the motor's $15.0\text{ Nm}$ continuous thermal rating.
+_Drainage Culvert Ramp Check ($15.0^\circ$ Peak):_ For worst-case airfield drainage transitions ($\theta = 15.0^\circ$, $\sin 15^\circ = 0.2588$): $F_{\text{slope}} = 65 \times 9.81 \times 0.2588 = 165.0\text{ N}$, giving a total tractive force of $F_{\text{total}} = 183.9\text{ N}$ and $\tau_{\text{motor}} = \frac{183.9 \times 0.1315}{4 \times 0.85} = \mathbf{7.11\text{ Nm}}$, well below the motor's $15.0\text{ Nm}$ continuous thermal rating.
 
 #### Case 3: Flat Dynamic Acceleration ($0 \to 15\text{ km/h}$ in $t_{\text{acc}} = 3.0\text{ s}$)
 
@@ -257,7 +257,7 @@ $$
 
 #### Case 4: In-Place Zero-Radius Skid-Steer Pivot ($R = 0\text{ m}$) — Peak Sizing Case {#sec-tarmac-scrub}
 
-When executing an in-place pivot, all four tires must shear laterally across dry textured tarmac ($\mu_{\text{skid}} = 0.80$). This represents the maximum mechanical load case in the preliminary sizing model:
+During an in-place pivot, all four tires slide sideways across dry textured tarmac ($\mu_{\text{skid}} = 0.80$). This is the highest mechanical load case in the preliminary sizing model:
 
 $$
 F_{\text{skid}} = m \cdot g \cdot \mu_{\text{skid}} = 65.0 \times 9.81 \times 0.80 = \mathbf{510.12\text{ N}}
@@ -293,7 +293,7 @@ $$
 \tau_{\text{design}} = \frac{\tau_{\text{shaft}}}{\eta} = \frac{13.416}{0.85} = \mathbf{15.7838\text{ Nm}} \approx \mathbf{15.78\text{ Nm per motor}}
 $$
 
-The value **$15.78\text{ Nm}$** was retained as the **preliminary design torque estimate with an assumed 85% efficiency allowance** to guide motor procurement. The calculated mechanical shaft torque required at the hub is **$13.42\text{ Nm}$**. Neither figure represents measured physical torque.
+The value **$15.78\text{ Nm}$** was used as the **preliminary design torque estimate with an assumed 85% efficiency allowance** for motor procurement. The calculated mechanical shaft torque required at the hub is **$13.42\text{ Nm}$**. Neither figure represents measured physical torque.
 
 ![Case 4 Zero Radius Turn 4WD FBD](./assets/diagrams/motor-fbd-case4-pivot.svg)
 
@@ -330,7 +330,7 @@ The value **$15.78\text{ Nm}$** was retained as the **preliminary design torque 
 
 ### 4.4.5.1 Preliminary Loaded Ground Test {#sec-ground-test}
 
-Preliminary physical validation was conducted on a mobile test chassis operating under an estimated 30 kg payload powered by a laboratory bench power supply ($32\text{ V}$, $10.4\text{ A}$ current limit, `USE_POWER_PRESET_3`, clamped to 25 RPM in firmware). The evaluation confirmed bi-directional ground motion, variable-speed command execution, and synchronous four-wheel coordination via CANopen. Shaft torque measurement, 48 V nominal bus operation, and full 65 kg payload testing will be performed in Semester 2.
+A preliminary physical test used a mobile test chassis carrying an estimated 30 kg payload and powered by a laboratory bench power supply ($32\text{ V}$, $10.4\text{ A}$ current limit, `USE_POWER_PRESET_3`, clamped to 25 RPM in firmware). The test confirmed forward and reverse ground motion, variable-speed commands, and coordinated four-wheel control over CANopen. Shaft torque measurement, operation at the nominal 48 V, and full 65 kg payload testing will be done in Semester 2.
 
 Gabriel implemented the STM32 motor-control firmware and CANopen driver communication; the first-principles motor-sizing derivations and architectural specifications are Hilbert's contribution.
 
@@ -350,11 +350,11 @@ Gabriel implemented the STM32 motor-control firmware and CANopen driver communic
   caption="Video 4.4.1: Preliminary four-motor loaded ground test demonstrating forward and reverse drive under ~30 kg load with a 32 V / 10.4 A DC bench supply."
 />
 
-The bench evaluation confirms low-level CANopen actuator control and four-wheel driving synchronization on a mobile chassis. However, verification of calculated full-load continuous torque, acceleration rates, slope climbing, and 15.0 km/h cruising awaits installation of the 48 V production battery pack.
+The bench test confirms low-level CANopen motor control and synchronized four-wheel driving on a mobile chassis. The calculated full-load continuous torque, acceleration, slope climbing, and 15.0 km/h cruising cannot be verified until the 48 V production battery pack is installed.
 
 ## 4.4.6 Engineering Discussion {#motor-discussion}
 
-Under the Coulomb friction model ($\mu_{\text{skid}} = 0.80$), **zero-radius in-place pivoting constitutes the primary mechanical sizing case** ($15.78\text{ Nm}$ preliminary design torque, $13.42\text{ Nm}$ required shaft torque). Lateral tire scrubbing, driver phase current limits, and stator thermal dissipation govern actuator selection. On reduced-friction surfaces (such as wet asphalt, $\mu \approx 0.55$), required pivoting torque diminishes proportionally.
+Under the Coulomb friction model ($\mu_{\text{skid}} = 0.80$), **zero-radius in-place pivoting is the main mechanical sizing case** ($15.78\text{ Nm}$ preliminary design torque, $13.42\text{ Nm}$ required shaft torque). Actuator selection is therefore driven by lateral tire scrub, driver phase current limits, and stator heating. On lower-friction surfaces (such as wet asphalt, $\mu \approx 0.55$), the required pivot torque falls in proportion.
 
 ### 4.4.6.1 Distinction Between Phase Current and Battery DC Current {#sec-phase-dc-current}
 
@@ -374,7 +374,7 @@ Five different current and power quantities appear in this chapter:
 
 <Badge type="warning" text="48V LiFePO4 Bus" />
 
-The preliminary FOD Hunter electrical architecture uses a shared **48 V-class LiFePO4 bus** ($51.2\text{ V}$ nominal for a 16S pack, $42.0\text{ V}$ cut-off) powered by a $20.0\text{ Ah}$ lithium iron phosphate pack ($960\text{ Wh}$ energy capacity). The bus concurrently feeds two major branches: (1) the **4WD Traction Powertrain** via dual ZLAC8015D servo drives, and (2) the **Airside Auxiliary Subsystems** (~$350\text{ W}$ continuous):
+The preliminary FOD Hunter electrical architecture uses a shared **48 V-class LiFePO4 bus** ($51.2\text{ V}$ nominal for a 16S pack, $42.0\text{ V}$ cut-off) powered by a $20.0\text{ Ah}$ lithium iron phosphate pack ($960\text{ Wh}$ energy capacity). The bus supplies two branches: (1) the **4WD Traction Powertrain** via dual ZLAC8015D servo drives, and (2) the **Airside Auxiliary Subsystems** (~$350\text{ W}$ continuous):
 
 ![48V Power Distribution Architecture](./assets/diagrams/motor-power-distribution.svg)
 
@@ -453,7 +453,7 @@ Peak Bus Estimate (test-curve pivot point): $\mathbf{66.41\text{ A}}$ ($58.99\te
 
 <Badge type="warning" text="Analytical Estimate" />
 
-Analytical stopping distance from the target cruise velocity ($15.0\text{ km/h} = 4.167\text{ m/s}$) is governed by dynamic normal load transfer and tire adhesion limits [\[14\]](./references.md#ref-14):
+The analytical stopping distance from the target cruise speed ($15.0\text{ km/h} = 4.167\text{ m/s}$) is limited by normal load transfer and tire grip [\[14\]](./references.md#ref-14):
 
 Assuming an asphalt friction coefficient $\mu = 0.80$ and regenerative dynamic braking deceleration $a_{\text{brake}} = 3.5\text{ m/s}^2$ (well below the tire skid limit $\mu g \approx 7.85\text{ m/s}^2$):
 
@@ -473,7 +473,7 @@ This is an analytical estimate. The Nav2 simulation configuration uses a 1.20 m 
 
 ## 4.4.7 Limitations & Future Work {#motor-future-work}
 
-While preliminary low-voltage bench trials validated low-level actuator control under partial load, rigorous characterization of the fully integrated FOD Hunter prototype under full design conditions ($65.0\text{ kg}$, $48.0\text{ V}$ nominal bus) constitutes the primary Semester 2 focus. Planned experimental evaluations encompass driver current profiling, empirical wheel-slip calibration, thermal rise during prolonged scrubbing, acceleration response, stopping distance under emergency braking, and verification of the target $15.0\text{ km/h}$ cruise velocity.
+The preliminary low-voltage bench tests validated low-level motor control under partial load. The main Semester 2 task is to test the fully integrated FOD Hunter prototype under full design conditions ($65.0\text{ kg}$, $48.0\text{ V}$ nominal bus). Planned tests cover driver current profiling, wheel-slip calibration, temperature rise during prolonged scrubbing, acceleration response, emergency braking distance, and whether the vehicle reaches the target $15.0\text{ km/h}$ cruise speed.
 
 [Read Hilbert's Semester 2 implementation plan →](./semester-2-plan.md)
 

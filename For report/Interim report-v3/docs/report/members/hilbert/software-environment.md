@@ -9,21 +9,21 @@ outline: [2, 3]
 
 <Badge type="info" text="ROS 2 Jazzy Jalisco • Ubuntu 24.04 LTS • Gazebo Harmonic" />
 
-The autonomous runway navigation and communications software was developed on **Ubuntu 24.04 LTS**, **ROS 2 Jazzy** [\[7\]](./references.md#ref-7), **Gazebo Harmonic**, **Nav2** [\[8\]](./references.md#ref-8), and **Eclipse CycloneDDS**. ROS 2 provides the middleware layer for data exchange across sensing, state estimation, path planning, and actuator control, while Gazebo Harmonic serves as the simulation environment prior to physical vehicle deployment.
+The autonomous runway navigation and communications software was developed on **Ubuntu 24.04 LTS**, **ROS 2 Jazzy** [\[7\]](./references.md#ref-7), **Gazebo Harmonic**, **Nav2** [\[8\]](./references.md#ref-8), and **Eclipse CycloneDDS**. ROS 2 handles data exchange between sensing, state estimation, path planning, and actuator control, and Gazebo Harmonic is used for simulation before the physical vehicle is deployed.
 
 #### 3.1.1 Why ROS 2 Jazzy? {#ros2-selection-rationale}
 
-**ROS 2 Jazzy Jalisco** was selected based on three criteria:
+**ROS 2 Jazzy Jalisco** was selected for three reasons:
 
-1. **Lifecycle Stability:** As a Long-Term Support (LTS) release supported through May 2029 on Ubuntu 24.04 LTS, Jazzy provides binary stability throughout the project development cycle.
-2. **Simulation Integration:** Native compatibility with Gazebo Harmonic via `ros_gz_bridge` enables transport of simulated sensor streams and motion setpoints without intermediate middleware bridges.
-3. **Autonomy Tooling:** Full support for core Nav2 packages, specifically SmacPlannerHybrid [\[15\]](./references.md#ref-15) and Regulated Pure Pursuit [\[18\]](./references.md#ref-18).
+1. **Lifecycle Stability:** Jazzy is a Long-Term Support (LTS) release supported until May 2029 on Ubuntu 24.04 LTS, so its binaries stay stable for the whole project.
+2. **Simulation Integration:** Jazzy works natively with Gazebo Harmonic through `ros_gz_bridge`, which carries simulated sensor data and motion setpoints without additional middleware bridges.
+3. **Autonomy Tooling:** Full support for the core Nav2 packages used in this project: SmacPlannerHybrid [\[15\]](./references.md#ref-15) and Regulated Pure Pursuit [\[18\]](./references.md#ref-18).
 
-Candidate distributions were evaluated against operational support windows and dependency stability (detailed in the comparison below).
+The candidate distributions were compared on support window and dependency stability (see the comparison below).
 
 #### 3.1.2 Development Setup (WSL2) {#wsl2-development-environment}
 
-Ubuntu 24.04 LTS was hosted within **Windows Subsystem for Linux 2 (WSL2)**, leveraging hardware-accelerated rendering through WSLg (yielding an observed 45–60 FPS in Gazebo) to enable compilation and simulation on development hardware.
+Ubuntu 24.04 LTS ran inside **Windows Subsystem for Linux 2 (WSL2)**. WSLg provides hardware-accelerated rendering (45–60 FPS observed in Gazebo), which made it possible to compile and run the simulation on the development hardware.
 
 <Figure
   src="./assets/images/ros2-jazzy-wsl2-runtime.png"
@@ -31,7 +31,7 @@ Ubuntu 24.04 LTS was hosted within **Windows Subsystem for Linux 2 (WSL2)**, lev
   caption="Figure 3.1.1: Terminal verification of Ubuntu 24.04 LTS, ROS 2 Jazzy, runway_sim_ws workspace, and core Nav2 packages in WSL2."
 />
 
-Because default DDS multicast discovery failed across the virtualized Hyper-V network switch between the WSL2 environment and the external companion computer (Raspberry Pi 5), **Eclipse CycloneDDS was configured with static unicast peering** to bypass virtual network multicast filtering. Network architecture and verification tests are documented in [Communications](./communications.md).
+Default DDS multicast discovery failed across the virtualized Hyper-V network switch between WSL2 and the external companion computer (Raspberry Pi 5), so **Eclipse CycloneDDS was configured with static unicast peering** to get around the multicast filtering. The network setup and verification tests are described in [Communications](./communications.md).
 
 ::: details ROS 2 Distribution Comparison
 

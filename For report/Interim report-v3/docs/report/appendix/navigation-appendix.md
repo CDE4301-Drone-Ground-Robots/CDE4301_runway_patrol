@@ -8,11 +8,11 @@ owner: "Hilbert Soh"
 
 <!-- #region nav-sim-appendix -->
 
-This appendix compiles the complete configuration parameters, middleware bridge schemas, physics engine settings, and step-by-step verification procedures for the autonomous navigation and simulation subsystems.
+This appendix gives the configuration parameters, bridge topic schemas, physics settings, and test procedures for the navigation and simulation subsystems.
 
 ### J.1 Master Nav2 Configuration Parameters
 
-The table below documents the production parameter configuration for the Nav2 autonomy stack, established during Stage B2 tuning trials and configured in `runway_navigation/config/nav2_params.yaml`.
+Table J.1 lists the Nav2 autonomy stack parameters established during Stage B2 tuning trials and configured in `runway_navigation/config/nav2_params.yaml`.
 
 **Table J.1: Nav2 Component Parameter Matrix and Configuration Limits**
 
@@ -38,7 +38,7 @@ The table below documents the production parameter configuration for the Nav2 au
 
 #### J.1.1 Hybrid A* Configuration & Tuning Matrix (`SmacPlannerHybrid`)
 
-`SmacPlannerHybrid` parameters were tuned during Gazebo evaluations across both the NUS EA Field and runway maps. Table 3.4.3 distinguishes nominal configurations from runtime observations; recorded timings reflect the heuristic table optimization.
+`SmacPlannerHybrid` parameters were tuned in Gazebo on both the NUS EA Field and runway maps. Table 3.4.3 separates the configured values from what was observed in simulation; the recorded timings are after the heuristic table change.
 
 <Card tag="Global Planner">
 
@@ -138,7 +138,7 @@ The recovery order spin → wait → backup matches the sequence recorded in the
 
 ### J.3 ROS–Gazebo Bridge Topic Schemas & Data Flow
 
-Table J.3 defines the bridge topic mappings configured in `sim_and_nav.launch.py` to interface Gazebo Harmonic physics simulation with ROS 2 Jazzy.
+Table J.3 lists the bridge topic mappings between Gazebo Harmonic and ROS 2 Jazzy, as configured in `sim_and_nav.launch.py`.
 
 **Table J.3: `ros_gz_bridge` Topic Schemas, Directions & Quality of Service (QoS)**
 
@@ -161,7 +161,7 @@ Table J.3 defines the bridge topic mappings configured in `sim_and_nav.launch.py
 
 ### J.4 AgileX Scout 2.0 Simulation Proxy vs Physical Prototype Comparison
 
-Table J.4 outlines the structural, inertial, and kinematic discrepancies between the AgileX Scout 2.0 simulation proxy and the preliminary custom physical FOD Hunter prototype.
+Table J.4 compares the dimensions, mass, and kinematics of the AgileX Scout 2.0 simulation proxy with the preliminary design of the custom FOD Hunter prototype.
 
 **Table J.4: Simulation Proxy Versus Preliminary Physical Design Assumptions**
 
@@ -194,12 +194,12 @@ Table J.4 outlines the structural, inertial, and kinematic discrepancies between
 ### J.6 Detailed Simulation Test Procedures (E1 to E4)
 
 #### Procedure E1 — Planner Initialization & Startup Benchmark
-- **Objective:** Quantify plugin startup latency and heuristic wavefield pre-computation times.
-- **Methodology:** Monitor `planner_server` lifecycle transition logs across varying heuristic lookup table dimensions ($10.0\text{ m}$, $20.0\text{ m}$, and $50.0\text{ m}$).
+- **Objective:** Measure plugin start-up time and heuristic table pre-computation time.
+- **Methodology:** Compare `planner_server` lifecycle transition logs for different heuristic lookup table sizes ($10.0\text{ m}$, $20.0\text{ m}$, and $50.0\text{ m}$).
 - **Result:** Reducing table radius from full-map to $20.0\text{ m}$ reduced startup latency from $38.1\text{ s}$ to **$2.4\text{ s}$** ($93.7\%$ reduction) without compromising path optimality.
 
 #### Procedure E2 — Obstacle Costmap Inflation & Replanning
-- **Objective:** Verify dynamic obstacle marking, inflation boundary clearance, and local replanning reactivity.
+- **Objective:** Check dynamic obstacle marking, clearance from the inflation boundary, and how quickly the local planner replans.
 - **Methodology:** Spawn dynamic cylinder obstacles ($r = 0.30\text{ m}$) directly along the planned centerline path in Gazebo Harmonic. Measure vehicle deceleration distance and lateral avoidance margin.
 - **Result:** Local costmap marked obstacles within 1 control cycle ($50\text{ ms}$ at $20\text{ Hz}$). Vehicle executed smooth lateral deviations maintaining $>0.80\text{ m}$ standoff margin from obstacle perimeter.
 
@@ -215,7 +215,7 @@ Table J.4 outlines the structural, inertial, and kinematic discrepancies between
 - **Result:** EKF filters maintained continuous transform publishing at 30 Hz simulation time without covariance divergence.
 
 #### Procedure E4 — Dynamic Controller Waypoint Tracking
-- **Objective:** Characterize Cross-Track Error (CTE) and angular command acceleration chatter across varying lookahead configurations on Route A.
+- **Objective:** Measure Cross-Track Error (CTE) and angular command acceleration chatter for different lookahead settings on Route A.
 - **Methodology:** Five unsmoothed runs per parameter set on standardized 52 m course with $90^\circ$ and $135^\circ$ turns. Record ground-truth poses from Gazebo physics engine.
 - **Result:** Production configuration ($t_{\text{lookahead}} = 1.20\text{ s}$, max $2.50\text{ m}$) achieved RMS CTE of **$0.061\text{ m}$** with smooth steering commands ($RMS\ \dot{\omega} = 0.44\text{ rad/s}^2$).
 

@@ -13,27 +13,29 @@ outline: [2, 3]
 
 ## 3.4.1 Objectives & Requirements {#sim-objectives}
 
-Gazebo Harmonic was employed to develop and verify autonomous navigation during concurrent physical vehicle fabrication. Evaluations characterized global path planning, local path tracking, obstacle avoidance, and recovery behaviors under repeatable physics. Results establish algorithmic functionality on a kinematic proxy rather than physical chassis performance.
+Gazebo Harmonic was used to develop and verify autonomous navigation while the physical vehicle was being built. The simulations tested global path planning, local path tracking, obstacle avoidance, and recovery behaviors with repeatable physics. The results show that the software works on a kinematic proxy; they do not show how the physical chassis will perform.
 
-Testing focused on a development baseline cruise speed of **8.0 km/h ($2.22\text{ m/s}$)**, with supplementary runs at **10.0 km/h ($2.78\text{ m/s}$)**. The target operational sprint speed of **15.0 km/h ($4.17\text{ m/s}$)** remains a Semester 2 physical objective. Evaluations analyzed real-time factor, tracking error, turning feasibility, and obstacle clearance.
+Testing focused on a baseline cruise speed of **8.0 km/h ($2.22\text{ m/s}$)**, with additional runs at **10.0 km/h ($2.78\text{ m/s}$)**. The target sprint speed of **15.0 km/h ($4.17\text{ m/s}$)** is a Semester 2 goal for the physical vehicle. Tests evaluated real-time factor, tracking error, turning feasibility, and obstacle clearance.
 
 ### 3.4.1.1 Analytical Braking Distance & Obstacle Clearance Limits {#sim-braking-safety}
 
-Airfield corridor navigation introduces dynamic stopping constraints that govern velocity-smoother limits and emergency clearance envelopes. Autonomous cruise velocity was clamped to **8.0 km/h ($2.22\text{ m/s}$)** for the confined NUS EA Field proving ground ($52.2\text{ m} \times 29.1\text{ m}$). Total theoretical stopping distance is governed by kinematic deceleration accounting for sensor-to-actuator latency ($\Delta t_{\text{lat}}$) and controlled braking deceleration ($a_{\text{decel}}$):
+Airfield navigation requires stopping-distance estimates to inform velocity limits and obstacle-clearance planning. Autonomous cruise speed was limited to **8.0 km/h ($2.22\text{ m/s}$)** for the confined NUS EA Field proving ground ($52.2\text{ m} \times 29.1\text{ m}$). The theoretical stopping distance is the distance travelled during the sensor-to-actuator latency ($\Delta t_{\text{lat}}$) plus the braking distance at a constant deceleration ($a_{\text{decel}}$):
 
 $$
 d_{\text{stop}} = v \cdot \Delta t_{\text{lat}} + \frac{v^2}{2|a_{\text{decel}}|}
 $$
 
-Where $\Delta t_{\text{lat}} \approx 0.07\text{ s}$ represents total pipeline latency (assumed $0.05\text{ s}$ controller cycle at $20\text{ Hz}$ plus $0.02\text{ s}$ additional delay), and $a_{\text{decel}} = -2.5\text{ m/s}^2$ is an assumed deceleration, lower than the configured velocity-smoother limit of $3.0\text{ m/s}^2$:
+Where $\Delta t_{\text{lat}} \approx 0.07\text{ s}$ is the total pipeline latency (assumed $0.05\text{ s}$ controller cycle at $20\text{ Hz}$ plus $0.02\text{ s}$ additional delay), and $a_{\text{decel}} = -2.5\text{ m/s}^2$ is an assumed deceleration, lower than the configured velocity-smoother limit of $3.0\text{ m/s}^2$:
 - **Development Cruise Baseline ($8.0\text{ km/h} \approx 2.22\text{ m/s}$):**
   $$d_{\text{stop}} = (2.22\text{ m/s})(0.07\text{ s}) + \frac{(2.22\text{ m/s})^2}{2(2.5\text{ m/s}^2)} = 0.155\text{ m} + 0.986\text{ m} \approx \mathbf{1.14\text{ m}} \le 1.15\text{ m}$$
 - **Sprint Target ($15.0\text{ km/h} \approx 4.17\text{ m/s}$):**
   $$d_{\text{stop, 15km/h}} = (4.17)(0.07) + \frac{4.17^2}{2(2.5)} = 0.292\text{ m} + 3.478\text{ m} \approx \mathbf{3.77\text{ m}}$$
-- **Actuator Lag Sensitivity:** Factoring an estimated physical actuator lag of $0.15\text{–}0.25\text{ s}$ (pending hardware characterization), stopping distance expands to **$\approx 4.1\text{–}4.5\text{ m}$**. High-speed autonomous tracking at $15.0\text{ km/h}$ was not simulated and forms a staged Semester 2 objective.
+- **Actuator Lag Sensitivity:** With an estimated physical actuator lag of $0.15\text{–}0.25\text{ s}$ (not yet measured on hardware), the stopping distance increases to **$\approx 4.1\text{–}4.5\text{ m}$**. Autonomous tracking at $15.0\text{ km/h}$ was not simulated and is a staged Semester 2 objective.
 
 > [!NOTE]
-> **Status Label — Analytical Prediction:** These values provide analytical stopping-distance estimates under controlled deceleration rather than empirically measured braking on physical hardware. The $1.20\text{ m}$ costmap inflation radius provides an obstacle clearance buffer appropriate for the $8.0\text{ km/h}$ cruise baseline ($d_{\text{stop}} \approx 1.14\text{ m}$), but does not guarantee stopping clearance at $15.0\text{ km/h}$ ($3.8\text{–}4.5\text{ m}$), which will require retuning inflation buffers, lookahead horizons, and braking decelerations during physical field trials.
+> **Analytical Stopping Distance:** The calculated stopping distances are theoretical estimates based on the assumed deceleration and response time. They have not been verified through physical testing.
+> 
+> At 8.0 km/h, the estimated stopping distance is 1.14 m. Although the costmap uses a 1.20 m inflation radius, this does not guarantee sufficient stopping clearance. At the target speed of 15.0 km/h, the estimated stopping distance increases to approximately 3.8–4.5 m. Further testing is required to determine suitable obstacle-clearance distances, controller settings and braking performance for the physical UGV.
 
 ::: details Simulation requirements, operating constraints and verification traceability
 
@@ -41,15 +43,15 @@ Where $\Delta t_{\text{lat}} \approx 0.07\text{ s}$ represents total pipeline la
 
 The simulation requirements covered planning, path tracking and recovery:
 
-- **Hybrid A\* Global Path Feasibility:** The planner must compute kinematically feasible Reeds-Shepp trajectory paths respecting a minimum turning radius constraint ($R_{\min} \ge 1.0\text{ m}$). Paths must strongly suppress unnecessary in-place zero-radius turns during normal transit on high-friction tarmac to mitigate tire scrub and peak actuator stress, while preserving in-place rotation for initial heading alignment and emergency Behavior Tree recovery.
+- **Hybrid A\* Global Path Feasibility:** The planner must produce kinematically feasible Reeds-Shepp paths that respect a minimum turning radius ($R_{\min} \ge 1.0\text{ m}$). Paths must avoid unnecessary in-place turns during transit on high-friction tarmac to reduce tire scrub and actuator stress, while preserving in-place rotation for heading alignment and emergency Behavior Tree recovery.
 - **Regulated Pure Pursuit Path Tracking:** The local controller must maintain Cross-Track Error ($\text{CTE} \le 0.15\text{ m}$) along high-speed straightaways at 8 km/h ($2.22\text{ m/s}$), bound centripetal acceleration ($a_c = \frac{v^2}{R} \le 1.8\text{ m/s}^2 < 0.2g$) through curvature regulation, and limit steering chatter ($\dot{\omega}^2 \le 0.50\text{ rad}^2/\text{s}^4$).
-- **Behavior Tree Autonomous Recovery:** The navigation supervisor must detect obstacle deadlock or path planning failure within $10\text{ seconds}$, executing an escalating recovery sequence (costmap clearing → bounded spin → linear backup → pause) up to a 6-retry threshold before reporting mission status back to C2.
+- **Behavior Tree Autonomous Recovery:** The navigation supervisor must detect obstacle deadlock or path planning failure within $10\text{ seconds}$, then run an escalating recovery sequence (costmap clearing → bounded spin → linear backup → pause) for up to 6 retries before reporting the mission status to C2.
 
 #### Software and Computing Constraints
 
-Simulation was executed on an Ubuntu 24.04 WSL2 workstation under two developmental constraints: static unicast DDS peering was required across Hyper-V NAT adapters (`cyclonedds.xml`), and compute contention between Gazebo rendering and Nav2 yielded an observed real-time factor of $0.31\text{–}0.33$.
+Simulation ran on an Ubuntu 24.04 WSL2 workstation with two constraints: static unicast DDS peering was required across Hyper-V NAT adapters (`cyclonedds.xml`), and Gazebo rendering and Nav2 shared the same computer, giving an observed real-time factor of $0.31\text{–}0.33$.
 
-> Complete simulation requirements traceability and verification status (Table J.2) are compiled in **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
+> The full requirements traceability and verification status (Table J.2) are in **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
 
 :::
 
@@ -57,29 +59,29 @@ Simulation was executed on an Ubuntu 24.04 WSL2 workstation under two developmen
 
 ## 3.4.2 Simulation Architecture {#sim-architecture}
 
-The simulation integrates **Gazebo Harmonic** with **ROS 2 Jazzy** [\[7\]](./references.md#ref-7) via `ros_gz_bridge`. Gazebo publishes simulated odometry, 2D LiDAR scans, IMU streams, and GNSS fixes to Nav2 [\[8\]](./references.md#ref-8), receiving smoothed `/cmd_vel` commands. Simulation time synchronization (`/clock`) and consistent TF trees ensure deterministic multi-node execution.
+The simulation connects **Gazebo Harmonic** to **ROS 2 Jazzy** [\[7\]](./references.md#ref-7) through `ros_gz_bridge`. Gazebo publishes simulated odometry, 2D LiDAR scans, IMU data, and GNSS fixes to Nav2 [\[8\]](./references.md#ref-8) and receives smoothed `/cmd_vel` commands. A shared simulation clock (`/clock`) and consistent TF trees keep the nodes synchronized.
 
-**Runtime localization verification:** In WSL2 execution, `ekf_filter_node_odom`, `ekf_filter_node_map`, and `navsat_transform_node` actively published `/odometry/local`, `/odometry/global`, and `/odometry/gps`, maintaining a complete `map → odom → base_footprint` transform chain. This confirms functional execution of the Dual-EKF pipeline, though absolute position accuracy requires evaluation against moving ground truth. Simulated IMU and odometry published at 50 Hz, GNSS and LiDAR at 10 Hz, and EKF state estimates at 30 Hz in simulation time ($RTF \approx 0.31\text{–}0.33$).
+**Runtime localization verification:** In WSL2, `ekf_filter_node_odom`, `ekf_filter_node_map`, and `navsat_transform_node` published `/odometry/local`, `/odometry/global`, and `/odometry/gps` and maintained the full `map → odom → base_footprint` transform chain. This confirms that the Dual-EKF pipeline runs, but its absolute position accuracy still needs to be evaluated against moving ground truth. Simulated IMU and odometry published at 50 Hz, GNSS and LiDAR at 10 Hz, and EKF state estimates at 30 Hz in simulation time ($RTF \approx 0.31\text{–}0.33$).
 
 <Figure src="./assets/diagrams/ros2-gazebo-architecture.svg" alt="ROS 2, Gazebo Harmonic and Nav2 simulation architecture" />
 
 ::: details ROS–Gazebo bridge topic schemas and development workflow
 
-The simulation environment verified kinematic skid-steer yaw dynamics, deterministic parameter benchmarking ($\Delta t = 1.0\text{ ms}$ fixed DART physics step), and software-in-the-loop ROS 2 message compatibility (`geometry_msgs/msg/Twist`, `sensor_msgs/msg/LaserScan`, `nav_msgs/msg/Odometry`) before hardware integration.
+Before hardware integration, the simulation was used to check skid-steer yaw kinematics, run repeatable parameter tests ($\Delta t = 1.0\text{ ms}$ fixed DART physics step), and confirm ROS 2 message compatibility (`geometry_msgs/msg/Twist`, `sensor_msgs/msg/LaserScan`, `nav_msgs/msg/Odometry`).
 
-> Complete middleware bridge topic schemas, QoS configurations (Table J.3), and the closed-loop robotics development lifecycle flowchart (Figure J.1) are documented in **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
+> The bridge topic schemas, QoS settings (Table J.3), and development workflow flowchart (Figure J.1) are in **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
 
 :::
 
 ## 3.4.3 Design Methodology & Selection {#sim-methodology}
 
-The **AgileX Scout 2.0** commercial UGV model was adopted as a software-in-the-loop simulation proxy during concurrent FOD Hunter chassis fabrication. As both platforms utilize four-wheel differential skid steering, the proxy enabled end-to-end validation of ROS 2 communication, global planners, and local controllers. However, structural dimensions, mass, and drivetrain configurations differ from the physical prototype. In parallel, a simulation model of the NUS EA Field courtyard was constructed to evaluate narrow corridor traversal and obstacle negotiation.
+I used the **AgileX Scout 2.0** commercial UGV model as a software-in-the-loop simulation proxy so that navigation development could proceed while the physical FOD Hunter chassis was being fabricated. Because both platforms use four-wheel differential skid steering, the proxy allowed end-to-end testing of ROS 2 communication, global planners, and local controllers. Its dimensions, mass, and drivetrain differ from the physical prototype. In parallel, I constructed a simulation model of the NUS EA Field courtyard to test navigation through narrow corridors and around obstacles.
 
 The viewer below shows the AgileX Scout 2.0 simulation proxy (`scout_v2.glb`) built from the project meshes:
 
 <SimulationWidget1 />
 
-The navigation algorithm selection rationale belongs in [Navigation](./navigation.md), while this document focuses on the simulation assumptions and measured effects of tuning. The software distribution comparison belongs in [Software & Development Environment](/report#software-environment).
+The reasons for choosing the navigation algorithms are in [Navigation](./navigation.md); this page covers the simulation assumptions and the measured effects of tuning. The software distribution comparison is in [Software & Development Environment](/report#software-environment).
 
 ::: details Proxy selection, environment iterations, mapping and simulation assumptions
 
@@ -87,7 +89,7 @@ The navigation algorithm selection rationale belongs in [Navigation](./navigatio
 
 #### AgileX Scout 2.0 Model Selection as Kinematic Proxy
 
-Prior to chassis fabrication, the **AgileX Scout 2.0** served as a kinematic simulation proxy [\[13\]](./references.md#ref-13), enabling development of the Nav2 stack, sensor interfaces, and Command and Control (C2) links.
+Before the chassis was fabricated, the **AgileX Scout 2.0** was used as a kinematic simulation proxy [\[13\]](./references.md#ref-13) to develop the Nav2 stack, sensor interfaces, and Command and Control (C2) links.
 
 <Card>
 
@@ -99,29 +101,29 @@ AgileX Scout 2.0 Kinematic Simulation Proxy
 
 </Card>
 
-**Wheelbase-to-track aspect ratio:** Skid-steer platforms turn through deliberate lateral tire slip [\[13\]](./references.md#ref-13). The ratio of wheelbase $L$ to effective track width $W$ governs maneuverability and tire scrubbing:
+**Wheelbase-to-track aspect ratio:** Skid-steer platforms turn by deliberately slipping their tires sideways [\[13\]](./references.md#ref-13). The ratio of wheelbase $L$ to effective track width $W$ affects maneuverability and tire scrub:
 
 $$
 \text{Ratio} = \frac{L}{W} = \frac{0.498\text{ m}}{0.583\text{ m}} \approx \mathbf{0.854} < 1.0
 $$
 
-An aspect ratio below unity ($L/W < 1.0$) ensures drive wheel moment arms exceed the longitudinal wheelbase, reducing tire scrubbing torque and motor current during turns.
+An aspect ratio below one ($L/W < 1.0$) means the drive wheel moment arms are longer than the longitudinal wheelbase, which reduces tire scrub torque and motor current during turns.
 
 #### Proving Ground Iterations & Corridor Bounding
 
-Testing transitioned from an open airport runway model ($2,702\text{ m} \times 45\text{ m}$) to the confined NUS EA Field courtyard ($52.2\text{ m} \times 29.1\text{ m}$), which provided rich geometric features for obstacle circumnavigation. To eliminate massive memory allocation on embedded computers ($1.2 \times 10^8\text{ cells}$ for a full runway), an analytically bounded operational corridor ($300\text{ m} \times 200\text{ m}$ at $0.10\text{ m/px}$) achieves a **95.0% memory reduction** ($6.0\text{ MB}$ footprint).
+Testing moved from an open airport runway model ($2,702\text{ m} \times 45\text{ m}$) to the smaller NUS EA Field courtyard ($52.2\text{ m} \times 29.1\text{ m}$), which has more geometric features for obstacle avoidance tests. A full runway map would need $1.2 \times 10^8\text{ cells}$, which is too much memory for an embedded computer. Limiting the map to an operational corridor ($300\text{ m} \times 200\text{ m}$ at $0.10\text{ m/px}$) gives a **95.0% memory reduction** ($6.0\text{ MB}$ footprint).
 
-> For detailed tabular comparisons of Scout 2.0 proxy parameters versus physical prototype assumptions (Table J.4), and proving ground environment characteristics (Table J.5), see **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
+> For a comparison of the Scout 2.0 proxy parameters with the physical prototype assumptions (Table J.4), and of the two proving grounds (Table J.5), see **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
 
 :::
 
 ## 3.4.4 Implementation & Prototype {#sim-implementation}
 
-The integrated simulation couples the AgileX Scout 2.0 kinematic model, Gazebo Harmonic physics environments, sensor plugins, `ros_gz_bridge`, and the ROS 2 Nav2 stack. This framework enabled closed-loop evaluation of global path planning, local path tracking, and autonomous recovery under realistic corridor constraints.
+The simulation combines the AgileX Scout 2.0 kinematic model, Gazebo Harmonic worlds, sensor plugins, `ros_gz_bridge`, and the ROS 2 Nav2 stack. This setup enabled closed-loop evaluation of path planning, tracking and recovery in the simulated corridors.
 
 **NUS EA Field Gazebo Demonstration**
 
-Video 3.4.1 demonstrates autonomous multi-waypoint transit across the simulated **NUS EA Field courtyard**, navigating narrow paved passages ($2.2\text{ m}\text{–}4.5\text{ m}$), executing obstacle costmap inflation around building perimeters, and validating collision-free path tracking:
+Video 3.4.1 shows autonomous multi-waypoint navigation across the simulated **NUS EA Field courtyard**, including narrow paved passages ($2.2\text{ m}\text{–}4.5\text{ m}$), costmap inflation around building perimeters, and collision-free path tracking:
 
 <VideoClip
   src="./assets/videos/nus-ea-simulation-demo.mp4"
@@ -149,15 +151,15 @@ Video 3.4.1 demonstrates autonomous multi-waypoint transit across the simulated 
 
 #### Simulation Environment Setup and Architecture Summary
 
-The simulation loads `nus_ea_field.sdf` and spawns the Scout model from `scout_v2.xacro` with DART running at $1,000\text{ Hz}$. Sensor inputs (Dual-EKF state estimation at $50\text{ Hz}$, costmap ingestion with dynamic LiDAR at $10\text{ Hz}$, `SmacPlannerHybrid` at $1\text{ Hz}$, and `RegulatedPurePursuitController` at $20\text{ Hz}$) execute via `bringup_nav2.launch.py`.
+The simulation loads `nus_ea_field.sdf` and spawns the Scout model from `scout_v2.xacro` with DART running at $1,000\text{ Hz}$. `bringup_nav2.launch.py` starts the navigation nodes: Dual-EKF state estimation ($50\text{ Hz}$), costmap updates from LiDAR ($10\text{ Hz}$), `SmacPlannerHybrid` ($1\text{ Hz}$), and `RegulatedPurePursuitController` ($20\text{ Hz}$).
 
-> For complete parameter configuration matrices of `SmacPlannerHybrid` (Table 3.4.3) and `RegulatedPurePursuitController` (Table 3.4.4), behavior tree recovery sequences, and controller turning mechanics, see **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
+> For the full parameter tables for `SmacPlannerHybrid` (Table 3.4.3) and `RegulatedPurePursuitController` (Table 3.4.4), behavior tree recovery sequences, and controller turning mechanics, see **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
 
 :::
 
 ## 3.4.5 Testing & Results {#sim-testing}
 
-Navigation performance was evaluated across the NUS EA Field and airport runway simulation environments using goal inputs dispatched via RViz, automated mission scripts, and the C2 communications bridge. The performance data in Table 3.4.5 summarizes runtime diagnostics extracted from 93 logged Nav2 development sessions. These sessions evaluated functional waypoint execution across varying operational scenarios; controlled quantitative tracking evaluations (measuring Cross-Track Error and angular acceleration chatter) were conducted independently under standardized test conditions ([Navigation §3.2.4.2](./navigation.md#sec-4-5-tuning)).
+Navigation was tested in the NUS EA Field and airport runway simulations, with goals sent from RViz, automated mission scripts, and the C2 communications bridge. Table 3.4.5 summarizes runtime data from 93 logged Nav2 development sessions. These sessions checked waypoint execution in a range of scenarios. The controlled tracking tests, which measured Cross-Track Error and angular acceleration chatter, were run separately under standard test conditions ([Navigation §3.2.4.2](./navigation.md#sec-4-5-tuning)).
 
 **Table 3.4.5: Recorded Simulation Results (ROS 2 logs)**
 
@@ -173,7 +175,7 @@ For dynamic obstacle avoidance demonstrations, see [Autonomous Navigation — Se
 
 **Airport Runway Demonstration (Secondary Proving Ground):**
 
-The simulation recording below demonstrates autonomous navigation within the full-scale **Airport Runway environment (`airport_runway.sdf`)**, modeled after Aarhus Airport Runway 10R/28L ($2,702\text{ m} \times 45\text{ m}$ asphalt runway), executing open corridor sweeps, centerline tracking, and dynamic costmap clearing at the $2.22\text{ m/s}$ baseline:
+The recording below shows autonomous navigation in the full-scale **Airport Runway environment (`airport_runway.sdf`)**, modeled on Aarhus Airport Runway 10R/28L ($2,702\text{ m} \times 45\text{ m}$ asphalt runway). It includes open corridor sweeps, centerline tracking, and dynamic costmap clearing at the $2.22\text{ m/s}$ baseline:
 
 <VideoClip
   src="./assets/videos/simulation-demo.mp4"
@@ -205,19 +207,19 @@ Runway corridor sweep at $2.22\text{ m/s}$ with centreline tracking and obstacle
 
 #### Test Setup and Route Summaries
 
-Four operational scenarios guided functional controller tuning in Gazebo Harmonic:
-- **Route 1 (Runway High-Speed Sprint):** $100.0\text{ m}$ straight corridor sprint evaluating cruise tracking stability at $2.22\text{–}2.78\text{ m/s}$ ($8\text{–}10\text{ km/h}$).
+Four scenarios were used for functional controller tuning in Gazebo Harmonic:
+- **Route 1 (Runway High-Speed Sprint):** $100.0\text{ m}$ straight corridor to test tracking stability at $2.22\text{–}2.78\text{ m/s}$ ($8\text{–}10\text{ km/h}$).
 - **Route 2 (Acute 90° Taxiway Bend):** Traversing a sharp $90^\circ$ corner ($R = 4.0\text{ m}$) bordered by runway edge lighting and berms.
 - **Route 3 (High-Density FOD S-Curve Avoidance):** S-curve circumnavigation around two stationary debris targets and service vehicles.
 - **Route 4 (NUS EA Courtyard Narrow Doorway):** Navigating through a $2.2\text{ m}$ narrow pedestrian passage between concrete columns on the campus map.
 
-> For complete step-by-step test procedures (Procedures E1 to E4), cost-regulated deceleration curves (Figure J.2), and software-in-the-loop functional verification matrix (Table J.6), see **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
+> For the step-by-step test procedures (Procedures E1 to E4), cost-regulated deceleration curves (Figure J.2), and SIL functional verification results (Table J.6), see **[Appendix J: Navigation & Simulation Technical Reference](/report#appendix-j)**.
 
 #### Planner Configuration & Recovery Observations
 
-- **Hybrid A\*:** Replaced 2D grid search with continuous Reeds-Shepp arcs ($R \ge 1.0\text{ m}$). Reducing the heuristic wavefield table size (`lookup_table_size: 10.0 m`) decreased configuration time from 38.1 s to 2.4 s (93.7% reduction).
-- **RPP Speed Regulation:** Regulated Pure Pursuit dynamically scales velocity according to curvature and local obstacle cost decay ($v_{\min} = 0.40\text{ m/s}$, $d_{\text{cost}} = 1.0\text{ m}$).
-- **Recovery Behaviors:** In five logged recovery events, Nav2's default recovery sequence (clear costmap, spin, wait, back up) resolved blocking in two instances, while two aborted due to unmapped obstacles.
+- **Hybrid A\*:** Replaced 2D grid search with continuous Reeds-Shepp arcs ($R \ge 1.0\text{ m}$). Reducing the heuristic lookup table size (`lookup_table_size: 10.0 m`) decreased configuration time from 38.1 s to 2.4 s (93.7% reduction).
+- **RPP Speed Regulation:** Regulated Pure Pursuit scales velocity with path curvature and nearby obstacle cost ($v_{\min} = 0.40\text{ m/s}$, $d_{\text{cost}} = 1.0\text{ m}$).
+- **Recovery Behaviors:** In five logged recovery events, Nav2's default recovery sequence (clear costmap, spin, wait, back up) cleared the blockage in two cases, while two others aborted because of unmapped obstacles.
 
 The following still require validation on the physical prototype:
 - **Goal and localisation accuracy on the physical robot.** In the controlled simulation runs, the robot stopped a median 0.32–0.34 m from the goal (within the 0.35 m goal tolerance, but above the 0.15 m target).
@@ -225,15 +227,15 @@ The following still require validation on the physical prototype:
 - **An active collision-stopping layer.** The Nav2 Collision Monitor node is configured but not launched.
 - **Physical braking, tire slip and actuator performance.**
 
-_Additional Verification Archive:_ Milestone video recordings are preserved in the repository archive: <AssetLink href="./assets/videos/231026-sem1-demo-final-compressed-.mp4">Semester 1 Milestone Demo Final (MP4)</AssetLink> • <AssetLink href="./assets/videos/131026-ugv-dual-ekf-test.mov">Dual-EKF RViz Test (MOV)</AssetLink> • <AssetLink href="./assets/videos/131026-ugv-multiwaypoint.mov">Multi-Waypoint Route Test (MOV)</AssetLink> • <AssetLink href="./assets/videos/131026-ugv-object-avoidance.mov">Reactive Obstacle Avoidance Test (MOV)</AssetLink>.
+_Additional recordings:_ Milestone videos are stored in the repository archive: <AssetLink href="./assets/videos/231026-sem1-demo-final-compressed-.mp4">Semester 1 Milestone Demo Final (MP4)</AssetLink> • <AssetLink href="./assets/videos/131026-ugv-dual-ekf-test.mov">Dual-EKF RViz Test (MOV)</AssetLink> • <AssetLink href="./assets/videos/131026-ugv-multiwaypoint.mov">Multi-Waypoint Route Test (MOV)</AssetLink> • <AssetLink href="./assets/videos/131026-ugv-object-avoidance.mov">Reactive Obstacle Avoidance Test (MOV)</AssetLink>.
 
 :::
 
 ## 3.4.6 Engineering Discussion {#sim-discussion}
 
-Simulation evaluations demonstrate that coupling `SmacPlannerHybrid` with `RegulatedPurePursuitController` achieves reliable multi-waypoint navigation across both airfield and campus environments, while optimizing the heuristic wavefield table significantly reduces planner initialization latency. Generating curvature-constrained Reeds-Shepp paths successfully eliminates zero-radius pivot turns along nominal transit corridors, mitigating anticipated tire scrubbing and powertrain stresses. However, empirical physical validation remains essential to account for mass discrepancies ($52.37\text{ kg}$ proxy vs $65.0\text{ kg}$ prototype), physical CANopen motor actuation delays, and non-ideal tarmac tire friction.
+Simulation results show multi-waypoint navigation in both tested environments using `SmacPlannerHybrid` and `RegulatedPurePursuitController`. Reducing the heuristic lookup table also reduced planner configuration time. Curvature-constrained Reeds-Shepp paths avoid planned zero-radius turns during nominal transit, potentially reducing tire scrub and drivetrain loads. However, physical testing is required to account for mass differences ($52.37\text{ kg}$ proxy vs $65.0\text{ kg}$ prototype), CANopen motor delays, and tarmac tire friction.
 
-For mathematical planner formulations and controller derivations, refer to [Navigation](./navigation.md); physical skid-steer dynamics and tire scrubbing models are detailed in [Steering Kinematics](./steering-kinematics.md); and actuator torque sizing is presented in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md).
+Planner and controller formulations are in [Navigation](./navigation.md), skid-steer dynamics and tire scrub models are in [Steering Kinematics](./steering-kinematics.md), and actuator torque sizing is in [Motor Drivetrain Calculations](./motor-drivetrain-calculation.md).
 
 ::: details Evaluation, lessons learned and further technical analysis
 
@@ -241,7 +243,7 @@ For mathematical planner formulations and controller derivations, refer to [Navi
 
 `SmacPlannerHybrid` generated kinematically feasible trajectories. Constraining paths to continuous Reeds-Shepp arcs ($R \ge 1.0\text{ m}$) replaced planned in-place zero-radius turns with rolling arcs. The added path length and the reduction in tire scrub were not measured.
 
-However, an operational trade-off exists regarding directionality: while `reverse_penalty = 2.5` strongly prefers forward driving, reversing is _not strictly prohibited_ by the planner. Because the local controller (RPP) is configured with `allow_reversing: False`, any plan containing a reverse gear segment cannot be executed, creating an operational limitation that must be monitored in cluttered dead-ends.
+There is also a conflict over driving direction. `reverse_penalty = 2.5` strongly favors forward driving, but the planner does _not strictly prohibit_ reversing. Because the local controller (RPP) is configured with `allow_reversing: False`, it cannot execute a plan that contains a reverse segment. This limitation needs to be watched in cluttered dead-ends.
 
 #### RPP Performance & Limitations
 
@@ -288,17 +290,17 @@ Recovery spin speed is limited to $1.0\text{ rad/s}$ with an acceleration limit 
 
 #### Environment and Computing Challenges
 
-Development resolved two key middleware and computational challenges:
+Two middleware and computing problems were solved during development:
 
 **WSL2 networking:** DDS multicast discovery was unreliable across the virtualized network adapter. CycloneDDS static unicast peering was configured in `cyclonedds.xml` to link the host workstation and companion computer.
 
-**Costmap memory:** Full-scale runway maps were estimated to require over 500 MB of RAM. Refactoring `generate_map.py` to bound active corridors ($300\text{ m} \times 200\text{ m}$ at $0.10\text{ m/px}$) yielded a $6.0 \times 10^6$ cell grid, achieving a 95% reduction in memory footprint.
+**Costmap memory:** Full-scale runway maps were estimated to require over 500 MB of RAM. `generate_map.py` was changed to limit the map to the active corridor ($300\text{ m} \times 200\text{ m}$ at $0.10\text{ m/px}$), giving a $6.0 \times 10^6$ cell grid and a 95% reduction in memory use.
 
 :::
 
 ## 3.4.7 Limitations & Future Work {#sim-future-work}
 
-Hardware transfer requires empirical characterization of the physical FOD Hunter platform, including center-of-mass distribution, effective kinematic track width, CANopen actuator response latency, and sensor noise covariances. Physical deployment will follow a staged progression, beginning with low-speed baseline trials ($8.0\text{ km/h}$) to tune Dual-EKF covariances and RPP lookahead horizons before expanding to high-speed runway sweeps ($15.0\text{ km/h}$) evaluated against quantitative tracking and stopping-distance criteria.
+Transferring to hardware requires testing the physical FOD Hunter platform to measure mass distribution, effective track width, CANopen actuator latency, and sensor noise covariances. Testing will follow a staged progression, starting with baseline trials at $8.0\text{ km/h}$ to tune Dual-EKF covariances and RPP lookahead settings before evaluating higher speeds up to $15.0\text{ km/h}$ against tracking and stopping-distance criteria.
 
 [View Hilbert's Semester 2 Implementation Plan →](./semester-2-plan.md#programming-semester-2)
 
@@ -306,7 +308,7 @@ Hardware transfer requires empirical characterization of the physical FOD Hunter
 
 #### Progressive RPP Tuning Toward 15 km/h
 
-In Semester 2, autonomous trajectory tracking will progress through staged speed evaluations on the physical testbed:
+In Semester 2, path tracking will be tested on the physical testbed at increasing speeds:
 
 8.0 km/h (2.22 m/s, Baseline) → 10.0 km/h (2.78 m/s) → 12.0 km/h (3.33 m/s) → 15.0 km/h (4.17 m/s, Target Sprint)
 
@@ -321,7 +323,7 @@ Each speed tier will require:
 
 I will consider MPPI [\[19\]](./references.md#ref-19) on the NVIDIA Jetson Orin if RPP [\[18\]](./references.md#ref-18) does not meet tracking requirements above $10\text{ km/h}$ and sufficient computing resources are available.
 
-_Technical Clarification on MPPI:_ MPPI does not inherently require GPU acceleration; CPU SIMD multithreading implementations exist in Nav2. However, GPU tensor acceleration allows evaluating thousands of trajectory rollouts per control cycle. If RPP's geometric formulation provides sufficient tracking fidelity at lower computational cost, RPP will be retained as the production controller to preserve CPU cycles for real-time edge vision (YOLO).
+_Technical Clarification on MPPI:_ MPPI does not strictly require GPU acceleration, as CPU multithreaded implementations exist in Nav2. However, GPU acceleration allows evaluating thousands of trajectory rollouts per control cycle. If RPP provides sufficient tracking accuracy at lower computational cost, RPP will be retained as the production controller to preserve CPU cycles for real-time edge vision (YOLO).
 
 #### Physical Hunter Integration
 
@@ -332,16 +334,16 @@ Transferring the simulation setup to FOD Hunter requires four integration steps:
 1. **URDF Calibration:** Update robot description with measured physical parameters (65 kg assumed mass, 263 mm purchased wheel diameter, and measured wheelbase/track width once the chassis is finalized).
 2. **CANopen Actuator Bridge:** Replace Gazebo diff-drive plugin with ROS 2 CANopen driver nodes communicating with dual ZLAC8015D motor controllers via STM32 firmware, implementing deadband compensation and feedforward anti-cogging.
 3. **Sensor Driver Integration:** Interface physical Hesai JT16 3D LiDAR, ArduSimple SimpleRTK2B GPS, and BNO085 9-DOF IMU with calibrated empirical covariance matrices ($Q$ and $R$).
-4. **Impeller Vibration Filtering:** Deploy 4th-order Butterworth low-pass filters on IMU accelerometer topics to isolate $24,000\text{ RPM}$ vacuum impeller vibration from vehicle state estimation.
+4. **Impeller Vibration Filtering:** Apply 4th-order Butterworth low-pass filters to the IMU accelerometer topics to keep $24,000\text{ RPM}$ vacuum impeller vibration out of state estimation.
 
 #### Physical Navigation Validation
 
-Physical deployment on the NUS EA Field proving ground will follow a phased verification protocol:
+Physical testing at the NUS EA Field proving ground will follow four phases:
 
 - **Phase 1:** Manual teleoperation motor current profiling and deadband calibration on dry concrete pavers.
 - **Phase 2:** Open-loop velocity step responses and empirical wheel-slip odometry calibration.
 - **Phase 3:** Single-waypoint trajectory tracking and Cross-Track Error verification at $8.0\text{ km/h}$.
-- **Phase 4:** Full-mission autonomous runway debris inspection sweeping and C2 target interception.
+- **Phase 4:** Full autonomous mission: runway debris inspection sweeps and C2 target interception.
 
 :::
 
