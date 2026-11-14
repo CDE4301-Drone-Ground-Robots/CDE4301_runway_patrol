@@ -471,7 +471,7 @@ This is an analytical estimate. The Nav2 simulation configuration uses a 1.20 m 
 
 :::
 
-## 4.4.7 Limitations & Semester 2 Plan {#motor-future-work}
+## 4.4.7 Limitations & Future Work {#motor-future-work}
 
 While preliminary low-voltage bench trials validated low-level actuator control under partial load, rigorous characterization of the fully integrated FOD Hunter prototype under full design conditions ($65.0\text{ kg}$, $48.0\text{ V}$ nominal bus) constitutes the primary Semester 2 focus. Planned experimental evaluations encompass driver current profiling, empirical wheel-slip calibration, thermal rise during prolonged scrubbing, acceleration response, stopping distance under emergency braking, and verification of the target $15.0\text{ km/h}$ cruise velocity.
 

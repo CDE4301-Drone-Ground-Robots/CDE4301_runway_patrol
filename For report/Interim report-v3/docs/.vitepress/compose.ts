@@ -136,7 +136,7 @@ export function reportHeadings(indexFile: string): OutlineHeading[] {
       const m = heading.exec(line)
       if (m) {
         const level = m[1].length
-        if (level <= 3 || (fromReport && /\.rpt-l3\b/.test(m[4])))
+        if (level <= 3 || (fromReport && /\.rpt-l3\b/.test(m[4])) || (!fromReport && level === 4 && /^\d+\.\d+\.\d+\s+/.test(m[2])))
           out.push({ level, title: m[2].replace(/\\([*_`[\]])/g, '$1'), id: m[3] })
       }
       const note = /<!--\s*toc-note:\s*(.+?)\s*-->/.exec(line)

@@ -14,7 +14,15 @@ outline: [2, 3]
 <!-- Edit your plan between the region markers; the Overview and the Meet the Team page show this text. -->
 <!-- #region plan -->
 
-## Future Work (Semester 2) — Computer Vision & FOD Detection {#cv-semester-2}
+- **Precision-recall tuning & TensorRT:** Confirm sustained full-resolution UVC capture of the ELP camera on JetPack 6.2, fine-tune on hard cases, sweep confidence and IoU thresholds, export to TensorRT, and achieve ≥ 10 FPS on the Jetson.
+- **Weather & illumination:** Collect training data in rain, night, and harsh glare conditions, and integrate onboard regulated LED lighting for uniform fastener contrast.
+- **SAHI tile slicing:** Implement native-resolution frame slicing to increase pixel density on small fasteners (approx. 2.4× more pixels), extending effective detection range past 0.8 m.
+- **Metric FOD localisation:** Convert 2D pixel bounding-box coordinates into metric ground-plane coordinates using camera pitch and height, publishing ROS 2 target coordinates for UGV approach.
+- **STM32 & low-level controller:** Connect Jetson to STM32 over ROS 2 with comms watchdog, fuse IMU with dual-axle wheel odometry, and integrate hardware RF kill switch on custom carrier PCB.
+
+<!-- #endregion plan -->
+
+## Semester 2 Tasks — Computer Vision & FOD Detection {#cv-semester-2}
 
 <Badge type="info" text="Computer Vision & Edge AI • NVIDIA Jetson + ELP 5 MP Camera" />
 
@@ -87,5 +95,3 @@ outline: [2, 3]
 - **Closed-loop speed control:** Use real-time encoder velocity feedback from the motor drivers (`0x606C`) to close the wheel speed and heading loop on the STM32, deployed on the custom KiCad carrier PCB with locking JST connectors.
 
 **Related documentation:** [YOLO Comparison & Training](./yolo-comparison-and-training.md) · [Vision Calculations](./vision-calculations.md) · [STM32 Hardware](./stm32-hardware.md) · [STM32 Firmware](./stm32-firmware.md)
-
-<!-- #endregion plan -->

@@ -507,7 +507,7 @@ The work is divided into three subsystems, each with a named person in charge of
 
 <section class="rpt-chapter">
 
-## References and Appendices {#references}
+## References {#references}
 
 <!--@compose: ./report/references.md{shift=1}-->
 
@@ -557,43 +557,59 @@ The work is divided into three subsystems, each with a named person in charge of
 
 </details>
 
-### Appendix {#appendix}
+</section>
 
-#### Appendix A: Interview with Mr Harry Lim, Industry Partner {#appendix-a .rpt-l3}
+<section class="rpt-chapter">
+
+## Appendix {#appendix}
+
+### Appendix A: Interview with Mr Harry Lim, Industry Partner {#appendix-a}
 
 <!--@compose: ./report/appendix/interviews.md#a-->
 
-#### Appendix B: Interview with 3SG(NS) Prady, Paya Lebar Air Base {#appendix-b .rpt-l3}
+### Appendix B: Interview with 3SG(NS) Prady, Paya Lebar Air Base {#appendix-b}
 
 <!--@compose: ./report/appendix/interviews.md#b-->
 
-#### Appendix C: Interview with LTA(NS) Elnathan, Tengah Air Base {#appendix-c .rpt-l3}
+### Appendix C: Interview with LTA(NS) Elnathan, Tengah Air Base {#appendix-c}
 
 <!--@compose: ./report/appendix/interviews.md#c-->
 
-#### Appendix D: Conversation with Ms Cindy Koh, CAAS {#appendix-d .rpt-l3}
+### Appendix D: Conversation with Ms Cindy Koh, CAAS {#appendix-d}
 
 <!--@compose: ./report/appendix/interviews.md#d-->
 
-#### Appendix E: Who Carries the Problem {#appendix-e .rpt-l3}
+### Appendix E: Who Carries the Problem {#appendix-e}
 
 <!--@compose: ./report/appendix/background.md#e-->
 
-#### Appendix F: Competitive Analysis {#appendix-f .rpt-l3}
+### Appendix F: Competitive Analysis {#appendix-f}
 
 <!--@compose: ./report/appendix/background.md#f-->
 
-#### Appendix G: Problem Statement and Scope {#appendix-g .rpt-l3}
+### Appendix G: Problem Statement and Scope {#appendix-g}
 
 <!--@compose: ./report/appendix/background.md#g-->
 
-#### Appendix H: Why a Multi-Robot Approach {#appendix-h .rpt-l3}
+### Appendix H: Why a Multi-Robot Approach {#appendix-h}
 
 <!--@compose: ./report/appendix/background.md#h-->
 
-#### Appendix I: Proof of the Suspension Motion Ratio {#appendix-i .rpt-l3}
+### Appendix I: Proof of the Suspension Motion Ratio {#appendix-i}
 
 <!--@compose: ./report/appendix/derivations.md#i-->
+
+### Appendix J: Navigation & Simulation Technical Reference {#appendix-j}
+
+<!--@compose: ./report/appendix/navigation-appendix.md#nav-sim-appendix-->
+
+### Appendix K: Communications Protocol & Radio Reference {#appendix-k}
+
+<!--@compose: ./report/appendix/communications-appendix.md#comms-appendix-->
+
+### Appendix L: Drivetrain & Steering Calculations {#appendix-l}
+
+<!--@compose: ./report/appendix/kinematics-appendix.md#kinematics-appendix-->
 
 </section>
 
