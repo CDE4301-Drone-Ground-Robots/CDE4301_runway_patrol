@@ -243,16 +243,16 @@ This arrangement separates high-power and low-power components, allowing individ
 
 <div class="ov-contrib">
 
-#### Component Selection, BOM and Integration {#ov-component-BOM}
+#### Component Selection, List and Integration {#ov-component-list}
 
 Selected electrical components based on their voltage and current requirements, communication interfaces, physical dimensions and cost to ensure compatibility with the overall UGV design.
 
-Compiled a Bill of Materials (BOM) covering the battery, BMS, motor drivers, STM32 microcontroller, DC-DC converters, protection devices and supporting electrical components.
+Compiled a list of electrical components covering the battery, BMS, motor drivers, STM32 microcontroller, DC-DC converters, protection devices and supporting components.
 
 Planned the placement and wiring of electrical components within the chassis, considering space constraints, cable routing, accessibility for maintenance and subsequent hardware integration.
 
 <div class="ov-doc-links">
-  <a class="ovx-more" href="/report#components-bom">Components Selection, BOM &amp; Integration <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#components-list">Component Selection, List &amp; Integration <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>

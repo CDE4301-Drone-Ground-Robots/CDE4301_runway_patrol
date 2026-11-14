@@ -13,8 +13,7 @@ declare const data: ReportOutline
 export { data }
 
 export default {
-  // Project-root-relative patterns: VitePress turns ./-relative patterns into absolute globs, and this
-  // repository's absolute path contains glob characters ("(Robotics)", "&") that would match nothing.
+  // Re-load on report changes
   watch: ['docs/report.md', 'docs/report/**/*.md', 'docs/index.md', 'docs/team.md'],
   load(watchedFiles: string[]): ReportOutline {
     const index = watchedFiles.find((f) => /(^|[\\/])docs[\\/]report\.md$/.test(f))

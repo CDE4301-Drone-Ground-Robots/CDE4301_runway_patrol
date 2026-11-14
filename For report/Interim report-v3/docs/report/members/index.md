@@ -120,7 +120,7 @@ docs/
 │   ├── design-overview/ features, requirements, specifications, subsystem division
 │   ├── members/
 │   │   ├── asuka/      suspension, vacuum module, FOD sweep box
-│   │   ├── bryan/      components & BOM, power calculations
+│   │   ├── bryan/      components list, power calculations
 │   │   ├── gabriel/    sensor fusion, STM32 hardware & firmware, vision calculations & research, YOLO
 │   │   ├── hilbert/    navigation, communications, simulation, motor & drivetrain, steering kinematics
 │   │   └── zacarias/   chassis design, FEA simulation, material selection

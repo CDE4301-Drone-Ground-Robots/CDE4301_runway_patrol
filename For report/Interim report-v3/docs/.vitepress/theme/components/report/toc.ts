@@ -18,7 +18,10 @@ for (const h of data.headings) {
     c.subs.push({ id: h.id, num: `${Number(c.num)}.${c.subs.length + 1}`, title: h.title, leaves: [] })
   } else if (h.level === 4 && chapters.length) {
     const s = chapters[chapters.length - 1].subs.at(-1)
-    if (s) s.leaves.push({ id: h.id, num: `${s.num}.${s.leaves.length + 1}`, title: h.title })
+    if (s) {
+      const cleanTitle = h.title.replace(/^\d+(?:\.\d+)*\s+/, '')
+      s.leaves.push({ id: h.id, num: `${s.num}.${s.leaves.length + 1}`, title: cleanTitle })
+    }
   }
 }
 

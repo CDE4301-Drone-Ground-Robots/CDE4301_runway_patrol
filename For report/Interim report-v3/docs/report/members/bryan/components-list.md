@@ -24,7 +24,7 @@ The selection of electrical components was guided by the following criteria.
 | Physical integration | Dimensions, connector arrangement, cooling and mounting requirements | Supports installation and maintenance within the available chassis space |
 | Cost and availability | Component price, procurement lead time and availability | Supports component selection within the project budget and development schedule |
 
-*Table 5.11: Proposed wiring specifications for the electrical subsystem.*
+*Table 5.12: Proposed wiring specifications for the electrical subsystem.*
 
 ## 5.1.3.2 Electrical Components List
 
@@ -61,12 +61,11 @@ The electrical components are grouped according to their functions within the UG
 #### C. Onboard Computing, Sensors & Imaging
 
 | No. | Component / Hardware Item | Subsystem Category | Key Specifications / Ratings | Operational Function |
-| --- | --- | --- | --- | --- |
-| **21** | **LI-IMX568-GMSL2-050H RGB Camera** | Perception Sensor | Sony IMX568 global-shutter CMOS sensor, GMSL2 interface, IP67-rated camera assembly | Visual detection and confirmation of FOD |
-| **22** | **GMSL2 Deserialiser Board** | Sensor Interface | MAX9296A-based GMSL2 deserialiser; host interface dependent on selected board | Converts camera serial data for the onboard computing system |
+|---|---|---|---|---|
+| **21** | **ELP 5MP 6mm USB Camera** | Perception Sensor | 5MP (2592 × 1944), 6mm M12 lens, USB 2.0 UVC, 5V DC, approximately 0.21A, 1.05W | Visual detection and confirmation of FOD |
+| **22** | **Hesai JT16 LiDAR** | Navigation Sensor | 16-channel 3D LiDAR, 360° horizontal and 40° vertical FOV, 12–16V DC, 4.3W typical, RS485 interface | 3D environmental perception, obstacle detection and navigation |
 | **23** | **Headlights for CV** | Active Illumination | 12V LED floodlights | Provides illumination for visual detection under low-light conditions |
-| **24** | **UM980 GPS Module** | Localisation | Unicore UM980 multi-band, multi-constellation RTK GNSS receiver | Provides high-precision positioning for navigation |
-| **26** | **Fakra 1m Type 7 Cable** | Sensor Cabling | 1m automotive coaxial cable with compatible Fakra connectors | Transmits GMSL2 camera data to the deserialiser |
+| **24** | **UM980 GPS Module** | Localisation | Multi-band, multi-constellation RTK GNSS receiver | High-precision positioning for navigation |
 
 
 #### D. Communication & Electrical Interfaces
@@ -103,7 +102,7 @@ The wiring harness was divided into different conductor sizes according to the e
 | 16–18 AWG wire | DC-DC converter inputs and auxiliary power circuits | Converter input current, cable length and thermal limits |
 | 20–22 AWG shielded twisted pair | CAN communication, encoder feedback and low-current signals | Signal integrity and reduced electromagnetic interference |
 
-*Table 5.12: Proposed wire gauge and interconnect specifications.*
+*Table 5.13: Proposed wire gauge and interconnect specifications.*
 
 The proposed wire sizes remain subject to verification against the installed cable lengths, routing, insulation temperature ratings, connector specifications and measured operating currents. In particular, the 8 AWG main wiring and 100 A protection arrangement must be assessed together to ensure that the selected fuse provides adequate conductor protection.
 
@@ -124,7 +123,7 @@ The electrical components have been identified based on the interim design requi
 | FOD remediation | Finalise the vacuum, stepper motor and IR sensor requirements | Update the collection-system electrical design |
 | Electrical testing | Measure operating currents and verify component behaviour | Validate component selection and update the power budget |
 
-*Table 5.13: Component integration and verification activities planned for Semester 2.*
+*Table 5.14: Component integration and verification activities planned for Semester 2.*
 
 These requirements provide the basis for subsequent hardware integration and testing. Detailed power distribution and electrical protection considerations are discussed in Section 5.1.2.
 

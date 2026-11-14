@@ -53,10 +53,49 @@ $$
 The total system power consumption was estimated by combining the weighted average power of the four hub motors with the average power demand of the remaining electrical components, including the onboard computing system, sensors, communication equipment and auxiliary devices.
 
 $$
-P_{\text{system}}=(4\times P_{\text{motor,weighted}})+P_{\text{components,avg}}=611.36\text{ W}
+P_{\text{system}}=(4\times P_{\text{motor,weighted}})+P_{\text{components,avg}}=602.63\text{ W}
 $$
 
 The power consumption of the individual electrical components is summarised in table below, including their operating voltages, estimated current requirements and operating duty cycles. These values form the basis of the overall system power budget and subsequent battery capacity calculations.
+
+### FOD Remediation Duty Cycle
+
+The FOD remediation system operates intermittently, with the vacuum activated only during debris collection. To estimate its contribution to the overall power consumption, an operating scenario involving 10 FOD objects was considered, with each collection requiring approximately 20 seconds of vacuum operation.
+
+| Parameter | Value |
+|---|---:|
+| Number of FOD objects | 10 |
+| Vacuum operating time per FOD | 20 s |
+| Total vacuum operating time | 200 s |
+| Assumed mission duration | 5,400 s (1.5 h) |
+| Vacuum duty cycle | 3.70% |
+
+*Table 5.3: Estimated vacuum duty cycle during FOD remediation.*
+
+The total vacuum operating time is calculated as:
+
+$$
+t_{\text{vacuum}}=10\times20=200\text{ s}
+$$
+
+The vacuum duty cycle is therefore:
+
+$$
+D_{\text{vacuum}}=\frac{200}{5400}\times100
+=\boxed{3.70\%}
+$$
+
+Assuming the original vacuum operates at its rated electrical power of 2800 W, its average power contribution is:
+
+$$
+P_{\text{vacuum,avg}}=2800\times0.03704
+$$
+
+$$
+\boxed{P_{\text{vacuum,avg}}\approx103.7\text{ W}}
+$$
+
+This average power contribution will be incorporated into the consolidated system load budget to account for the intermittent operation of the FOD remediation system. The assumed collection duration and vacuum power consumption will be reviewed during Semester 2 following integration of the redesigned collection mechanism.
 
 ### Consolidated Subsystem Load Budget
 
@@ -73,10 +112,8 @@ A 48 V-class power bus is used to reduce current relative to a 24 V bus for the 
 | NX Orin | 12.0 | 2.70 | 3.30 | 32.40 | 100.00% | 32.40 | 0.75 | 0.92 |
 | Nucleo F446RE | 5.0 | 0.08 | 0.50 | 0.40 | 100.00% | 0.40 | 0.01 | 0.06 |
 | | | | | <div style="text-align: center;"><strong>SENSORS</strong></div> | | | | |
-| LI-IMX568-GMSL2-050H RGB Camera | 12.0 | 0.15 | 0.25 | 1.80 | 100.00% | 1.80 | 0.04 | 0.07 |
-| Deserialiser/Adapter | 12.0 | 0.20 | 0.40 | 2.40 | 100.00% | 2.40 | 0.06 | 0.11 |
-| Livox Mid-360 | 12.0 | 0.54 | 2.00 | 6.48 | 100.00% | 6.48 | 0.15 | 0.56 |
-| RPLidar S2 | 5.0 | 0.45 | 0.80 | 0.80 | 100.00% | 0.80 | 0.05 | 0.09 |
+| ELP 5MP 6mm USB Camera | 5.0 | 0.21 | TBD | 1.05 | 100.00% | 1.05 | 0.02 | TBD |
+| Hesai JT16 LiDAR | 12.0 | 0.36 | 0.67 | 4.30 | 100.00% | 4.30 | 0.09 | 0.17 |
 | UM980 GPS | 5.0 | 0.12 | 0.20 | 0.60 | 100.00% | 0.60 | 0.01 | 0.02 |
 | | | | | <div style="text-align: center;"><strong>COMMUNICATION</strong></div> | | | | |
 | BMS 6S-22S LiFePO4 100A | 51.2 | 0.02 | 0.05 | 0.77 | 100.00% | 0.77 | 0.02 | 0.05 |
@@ -93,7 +130,7 @@ A 48 V-class power bus is used to reduce current relative to a 24 V bus for the 
 | Headlights for CV | 12.0 | 0.83 | 1.20 | 9.96 | 50.00% | 4.98 | 0.23 | 0.33 |
 | Rear Red Light Strip / Status Light | 12.0 | 0.25 | 0.40 | 3.00 | 100.00% | 3.00 | 0.07 | 0.11 |
 
-*Table 5.3: Total Power Table of Interim System.*
+*Table 5.4: Total Power Table of Interim System.*
 
 The consolidated load budget summarises the estimated electrical requirements of each subsystem, including operating voltage, nominal current, peak current, power consumption and duty cycle. The nominal current and operating voltage are used to determine the power demand of individual components through (P=VI), while the duty cycle accounts for intermittent operation to obtain the average power consumption. These average power values are then combined to estimate the total system load, which forms the basis for the subsequent battery capacity and runtime calculations.
 
@@ -110,7 +147,7 @@ E_{\text{required}}=P_{\text{system}}\times t
 $$
 
 $$
-E_{\text{required}}=611.36\times1.5=917.04\text{ Wh}
+E_{\text{required}}=602.63\times1.5=903.95\text{ Wh}
 $$
 
 The required battery capacity accounts for nominal voltage and the assumed allowable depth of discharge (DoD):
@@ -125,11 +162,11 @@ Assuming a 51.2 V nominal voltage for a 16-series LiFePO4 battery (16 cells at 3
 
 $$
 C_{\text{required}}=
-\frac{917.04}{51.2\times0.8}
-=22.39\text{ Ah}
+\frac{903.95}{51.2\times0.8}
+=22.07\text{ Ah}
 $$
 
-Approximately 22.39 Ah is therefore required for the 1.5-hour design target under the 611.36 W average-load assumption. The battery's actual nominal voltage and cell configuration must be confirmed from its manufacturer documentation.
+Approximately 22.07 Ah is therefore required for the 1.5-hour design target under the 602.63 W average-load assumption. The battery's actual nominal voltage and cell configuration must be confirmed from its manufacturer documentation.
 
 ## 5.1.1.3 Battery Chemistry Comparison
 
@@ -142,7 +179,7 @@ Four chemistries were considered using energy density, cycle life, thermal behav
 | LiPo | 44.4 V (12S) | 300–500 cycles | 180–240 Wh/kg | More sensitive to mechanical damage and swelling; prior estimate reports onset around 150°C | 25C–50C | Lightweight packaging and high discharge capability in suitable designs; greater sensitivity to damage and swelling |
 | Lead-acid (SLA / AGM) | 48 V (four 12 V batteries) | 300–400 cycles | 30–40 Wh/kg | Low thermal-runaway risk in the prior comparison | 1C | Established and relatively low initial cost; high mass and low usable energy density |
 
-*Table 5.4: Preliminary comparison of battery chemistries and reported specifications.*
+*Table 5.5: Preliminary comparison of battery chemistries and reported specifications.*
 
 The numerical ranges above were present in the project comparison, but the project's reference list does not currently identify the sources or exact models behind them. They should be treated as indicative, unverified values—not manufacturer specifications—until supported by cited cell or battery datasheets. Battery characteristics vary by product, configuration and test conditions, so final comparison should use referenced specifications for the actual candidate packs.
 
@@ -165,20 +202,11 @@ $$
 Using the estimated 611.36 W average system power, predicted runtime is:
 
 $$
-t=\frac{819.2}{611.36}\approx1.34\text{ hours}
+t=\frac{819.2}{602.63}\approx1.36\text{ hours}
 $$
 
-The 20 Ah selection is expected to exceed the minimum operating requirement of one hour under the current assumptions, but it does not meet the 1.5-hour design target. Achieving that target at the assumed load requires approximately 22.39 Ah at 51.2 V and 80% DoD. Battery capacity and runtime must be reassessed after measuring actual system consumption, particularly with the drivetrain and FOD collection mechanism operating together.
+The 20 Ah selection is expected to exceed the minimum operating requirement of one hour under the current assumptions, but it does not meet the 1.5-hour design target. Achieving that target at the assumed load requires approximately 22.07 Ah at 51.2 V and 80% DoD. Battery capacity and runtime must be reassessed after measuring actual system consumption, particularly with the drivetrain and FOD collection mechanism operating together.
 
-### Transit-Only Runtime Estimate
-
-An earlier transit-only estimate assumes a 104.6 W average bus load, with the vacuum off and the motors at the assumed transit duty cycle. It uses a 48.0 V, 20 Ah battery assumption (960 Wh nominal and 768 Wh usable at 80% DoD), distinct from the 51.2 V basis used above:
-
-$$
-t_{\text{transit}}=\frac{768}{104.6}=7.34\text{ hours}
-$$
-
-At 10 km/h, that corresponds to an estimated 73.4 km of travel, or more than 18.3 sweeps of a 4 km runway. This is a transit-only estimate, not a prediction for the mixed mission represented by the 611.36 W average-system-power assumption. Confirm the battery's nominal voltage, usable energy and the transit-load estimate against manufacturer specifications and measurements before relying on this runtime.
 
 ### Battery Selection Summary
 
@@ -190,12 +218,12 @@ At 10 km/h, that corresponds to an estimated 73.4 km of travel, or more than 18.
 | Capacity | 20 Ah |
 | Nominal energy | 1024 Wh |
 | Assumed usable energy | 819.2 Wh |
-| Estimated average system power | 611.36 W |
-| Predicted mixed-mission runtime | Approximately 1.34 hours |
+| Estimated average system power | 602.63 W |
+| Predicted mixed-mission runtime | Approximately 1.36 hours |
 | Minimum operating requirement | More than 1 hour |
 | Design target | 1.5 hours |
 
-*Table 5.5: Final Battery Selected.*
+*Table 5.6: Final Battery Selected.*
 
 The selected battery provides a preliminary balance between runtime, mass and electrical safety. Further testing and datasheet verification are required to confirm its discharge capability, usable energy and runtime under representative operating conditions.
 

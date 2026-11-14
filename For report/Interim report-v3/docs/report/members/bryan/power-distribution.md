@@ -50,13 +50,13 @@ The main electrical supply is divided into dedicated branches according to the o
 | Communication and control | STM32, CAN transceiver and communication equipment | STM32 is powered by the Jetson NX while STM32 powers the CAN Transceiver |
 | Lighting and auxiliaries | Indicator lights, headlights and cooling fans | Regulated auxiliary supply |
 
-*Table 5.6: Proposed power distribution branches.*
+*Table 5.7: Proposed power distribution branches.*
 
 The separation of electrical loads allows individual branches to be protected according to their current requirements. It also provides a more organised wiring arrangement for installation, maintenance and future subsystem modifications.
 
 <Card>
 
-<Figure src="../../../shared/assets/diagrams/UGV_Controller_Layer_Interim.svg" alt="FOD Hunter electrical power distribution and wiring diagram" />
+<Figure src="./assets/images/UGV_Controller_Layer_Interim.svg" alt="FOD Hunter electrical power distribution and wiring diagram" />
 
 </Card>
 
@@ -72,7 +72,7 @@ The schematic illustrates the proposed distribution of power from the battery th
 | **Vacuum branch** | 48 V industrial vacuum | Supplies the FOD collection system. |
 | **Regulated branches** | 48 V-to-20 V, 48 V-to-12 V and 48 V-to-5 V DC-DC converters | Provides lower-voltage supplies for computing, auxiliary equipment and logic. |
 
-*Table 5.7: Distribution Branches.*
+*Table 5.8: Distribution Branches.*
 
 ## 5.1.2.2 Low-Voltage Rails
 
@@ -88,7 +88,7 @@ The proposed design includes three regulated voltage rails.
 | **12 V** | Sensors, Ethernet switch, cooling fans, headlights and indicator light tower. |
 | **5 V** | Backup in case STM32 cannot supply enough to connected sensors due to its max current of 500mA. |
 
-*Table 5.8: Proposed DC-DC voltage regulation.*
+*Table 5.9: Proposed DC-DC voltage regulation.*
 
 The low-voltage branches are distributed through a blade-fuse block. Each converter and branch must be wired and fused for its actual input current, output current and conductor rating.
 
@@ -142,7 +142,7 @@ The preliminary design incorporates ANM fuses for higher-current branches and bl
 | **High-current branch fuses** | 50 A ANM fuses | Branch protection for high-current loads. Confirm final branch assignments and ratings against measured load and startup current. |
 | **Low-voltage branch fuses** | 10 A and 15 A automotive blade fuses | Protects the converter-fed computer, auxiliary and logic circuits; confirm each fuse against its wiring and load. |
 
-*Table 5.9: Electrical protection devices and their intended functions.*
+*Table 5.10: Electrical protection devices and their intended functions.*
 
 The branch fuse ratings will be reviewed against the operating current, startup current and cable specifications of the connected loads before physical integration.    
 
@@ -159,7 +159,7 @@ The component inventory specifies 8 AWG wiring for the main battery loop, 12 AWG
 | Converter and auxiliary circuits | 16–18 AWG | DC-DC converters, sensors and auxiliary components |
 | Communication and signal circuits | 20–22 AWG | CAN communication and low-current control signals |
 
-*Table 5.10: Proposed wiring specifications for the electrical subsystem.*
+*Table 5.11: Proposed wiring specifications for the electrical subsystem.*
 
 The wiring arrangement separates high-current power circuits from sensitive communication and control signals to minimise electrical interference. A common electrical reference is required for relevant interfaces, including connections between the STM32 and motor drivers, while high-current return paths are routed separately to reduce noise coupling.
 

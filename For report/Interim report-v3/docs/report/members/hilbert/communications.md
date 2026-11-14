@@ -29,15 +29,9 @@ Active communication interfaces comprise `/c2/target_alert` (event-driven debris
 - **REQ-COM-05 (Infrastructure Independence):** The inter-agent datalink cannot depend on civilian cellular networks (4G/5G) or commercial Wi-Fi due to coverage gaps, aerodrome security rules, and recurring SIM costs.
 - **REQ-COM-06 (Power & Payload Budget):** Onboard transceiver hardware must run on a regulated 12V DC auxiliary bus (&lt;10 W peak draw) with a mass under 100 g for drone mounting.
 
-**Singapore Radio Regulations**
+**Singapore Radio Regulations & Spectrum Compliance**
 
-Radio transmissions in Singapore are governed by the **Infocomm Media Development Authority (IMDA)** under the _Technical Specification for Short Range Devices (IMDA TS SRD)_ [\[3\]](./references.md#ref-3), the _Telecommunications Act 1999_ [\[10\]](./references.md#ref-10), and civil aviation spectrum rules [\[4\]](./references.md#ref-4):
-
-- **North American ISM Band (902–928 MHz):** Standard transceivers like the Microhard P900 hop across 26 MHz of bandwidth (902–928 MHz) at up to 1.0 W (30 dBm) under FCC Part 15.247.
-- **Singapore Permitted Sub-Band (917–925 MHz):** Frequencies below 917 MHz and above 925 MHz are allocated to cellular mobile network operators and public services. Transceiver firmware must be constrained to the 8 MHz window between 917.0 and 925.0 MHz.
-- **IMDA Radiated Power Limits:** Under IMDA TS SRD Table 1 (Item 7b), telemetry devices in 917–925 MHz are restricted to effective radiated power (ERP) limits between $100\text{ mW}$ and $500\text{ mW}$ ($20 - 27\text{ dBm}$), depending on channel bandwidth and duty cycle.
-
-<Figure src="./assets/diagrams/imda-spectrum-allocation.svg" alt="Singapore IMDA 900 MHz Spectrum Allocation and Permitted Sub-Band" caption="Figure 3.3.1: Singapore 900 MHz spectrum comparison and IMDA compliance limits for the candidate Microhard P900 V2 telemetry transceiver." />
+Radio transmissions in Singapore are governed by the **Infocomm Media Development Authority (IMDA)** under *IMDA TS SRD* [\[3\]](./references.md#ref-3) and the *Telecommunications Act 1999* [\[10\]](./references.md#ref-10). Telemetry transceivers must be firmware-constrained to the permitted **917.0–925.0 MHz** sub-band with effective radiated power (ERP) bounded between 100 mW and 500 mW. Extended statutory specifications and spectrum allocations are documented in **[Appendix K: Communications Protocol & Radio Reference](/report#appendix-k)**.
 
 _Regulatory status:_ The proposed Microhard P900 V2 has not yet been procured or submitted for IMDA equipment registration. Frequency configuration, channel spacing, and radiated power must be verified before field transmission.
 
@@ -128,46 +122,9 @@ Telemetry on `/c2/ugv_telemetry` uses the default publisher QoS (reliable, volat
 
 ::: details Alert and telemetry schemas
 
-<Card tag="UAV → UGV Command Stream">
+Structured JSON payloads are exchanged across the inter-agent datalink: `/c2/target_alert` transmits georeferenced coordinates, threat IDs, priority flags, and approach angles from the aerial scanner; `/c2/ugv_telemetry` returns vehicle operational state, active goal progress, filtered pose estimates, and link watchdog heartbeats.
 
-**Table 3.3.1: C2 Target Alert Format (`/c2/target_alert`)**
-
-| JSON Field                                      | Data Type | Example Value                                                     | Role & Semantic Definition                                                                                                          |
-| :---------------------------------------------- | :-------- | :---------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- |
-| `mission_id`                                    | `string`  | `"RUNWAY_PATROL_PHASE1"`                                          | Sortie identifier linking reconnaissance missions to remediation tasks.                                                             |
-| `threat_id`                                     | `string`  | `"FOD_THREAT_001"`                                                | Debris identifier used for task lifecycle tracking.                                                                                 |
-| `source_agent_id`                               | `string`  | `"UAV_ALPHA_01"`                                                  | Sending agent.                                                                                                                      |
-| `anomaly_metadata.primary_class` / `.sub_class` | `string`  | `"FOD"`, `"screw"`                                                | Object classification labels from the UAV detector.                                                                                 |
-| `anomaly_metadata.confidence_score`             | `float`   | `0.96`                                                            | Detection confidence ($0.00 - 1.00$).                                                                                               |
-| `target_metric.x` / `.y`                        | `float`   | `-15.0, 5.0`                                                      | Metric coordinates in the `map` frame (metres). If absent, the bridge falls back to top-level `x` / `y`.                            |
-| `target_metric.z` / `.yaw`                      | `float`   | `0.0, 0.0`                                                        | Height and requested heading (radians). The bridge reads `yaw` but sets the goal heading from the approach direction (Section 3.3.4.3). |
-| `target_georeference`                           | `object`  | `{"latitude_deg": …, "longitude_deg": …, "altitude_msl_m": 15.0}` | WGS84 position; displayed by the receiver, not used for navigation.                                                                 |
-| `priority_level` / `suggested_action`           | `string`  | `"HIGH_ACTIVE_REMEDIATION"`                                       | `IMMEDIATE` replaces the queue; `ABORT`, `CANCEL` or `STOP` triggers the abort handling (Section 3.3.5).                                |
-| `timestamp_utc`                                 | `string`  | ISO 8601                                                          | Message time.                                                                                                                       |
-| `signature`                                     | `string`  | SHA-256 hex                                                       | Hash of the timestamp, ID and coordinates. No key is used, so it does not authenticate the sender.                                  |
-
-_Example values are from `DemoComs_C2.py`._
-
-</Card>
-
-<Card tag="UGV → UAV / Base Telemetry">
-
-**Table 3.3.2: UGV Telemetry Format (`/c2/ugv_telemetry`)**
-
-| JSON Field                                         | Data Type | Example Value                              | Role & Semantic Definition                                                                                                        |
-| :------------------------------------------------- | :-------- | :----------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
-| `target_ack.threat_id`                             | `string`  | `"FOD_THREAT_001"`                         | Active debris threat currently being remediated.                                                                                  |
-| `target_ack.task_state`                            | `string`  | `"EN_ROUTE"`                               | Task state (`IDLE`, `ACKNOWLEDGED`, `EN_ROUTE`, `VERIFIED`, `VACUUMING`, `CONTINUOUS_SWEEP`, `COLLECTED`, `CANCELLED`, `FAILED`). |
-| `target_ack.queued_goals_count`                    | `int`     | `2`                                        | Remaining waypoints in the UGV FIFO queue.                                                                                        |
-| `target_ack.distance_to_target_m` / `.eta_seconds` | `float`   | `6.4`, `5.3`                               | Distance to the active goal and estimated time to arrival.                                                                        |
-| `vehicle_telemetry.pose_metric`                    | `object`  | `{"x": 1.2, "y": 0.8, "heading_deg": 2.9}` | Robot pose from the `map → base_link` transform (supplied by the Dual-EKF when it is running).                                    |
-| `vehicle_telemetry.speed_mps`                      | `float`   | `1.3`                                      | Speed estimated from successive poses.                                                                                            |
-| `vehicle_telemetry.battery_pct`                    | `float`   | `94.5`                                     | Simulated placeholder that decreases while en route; not a battery measurement.                                                   |
-| `link_watchdog.heartbeat_seq` / `.rssi_dbm`        | `int`     | `142`, `-64`                               | Message counter for link monitoring; `rssi_dbm` is a fixed placeholder value.                                                     |
-
-</Card>
-
-<Figure src="./assets/diagrams/c6-json-target-alert-message-flow.svg" alt="JSON Target Alert Message Flow and Queueing Pipeline" caption="Figure 3.3.5: JSON target alert parsing and waypoint dispatch pipeline in ugv_c2_bridge_node (schema validation and de-duplication planned for Semester 2)." />
+> The complete JSON message schemas, semantic field dictionaries, and pipeline dataflow diagrams (Tables K.1 and K.2, Figure K.1) are compiled in **[Appendix K: Communications Protocol & Radio Reference](/report#appendix-k)**.
 
 :::
 
@@ -191,46 +148,9 @@ While local Wi-Fi satisfied indoor benchtop development requirements, airfield d
 
 ::: details Long-range radio comparison, regulatory considerations and selection rationale
 
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 16px 0;">
-  <div>
-    <img src="./assets/images/holybro-p900-v2.png" alt="Holybro Microhard P900 V2 Telemetry Radio" style="border-radius: 8px; border: 1px solid var(--apple-border);" />
-    <p style="font-size: 12px; color: var(--apple-text-tertiary); text-align: center; margin-top: 6px;">Preferred Candidate: Holybro Microhard P900 V2 (900 MHz FHSS Serial)</p>
-  </div>
-  <div>
-    <img src="./assets/images/microhard-pmddl900-detail.png" alt="Microhard pMDDL900 OEM Digital Data Link" style="border-radius: 8px; border: 1px solid var(--apple-border);" />
-    <p style="font-size: 12px; color: var(--apple-text-tertiary); text-align: center; margin-top: 6px;">Alternative Candidate: Microhard pMDDL900 (900 MHz 2×2 MIMO IP)</p>
-  </div>
-</div>
+The Holybro Microhard P900 V2 was shortlisted for the UGV datalink because compact JSON target alerts (~500 bytes) require negligible bandwidth (<20 ms transmission at 276 kbps), eliminating high-power broadband IP modems. Direct UART interfacing minimizes SWaP (42 g, 7–35V DC), while hardware AES-256 point-to-point link encryption eliminates IP network routing vulnerabilities.
 
-**Why P900 V2 Was Shortlisted**
-
-I shortlisted the **Holybro Microhard P900 V2** [\[20\]](./references.md#ref-20) for the UGV datalink:
-
-1. **Sufficient Bandwidth for Metadata:** C2 alerts and telemetry use compact JSON strings (~500 bytes). At 276 kbps nominal throughput, packet transmission takes under 20 ms.
-2. **No Video Streaming on UGV Datalink:** YOLOv8 vision inference runs entirely on the UAV companion computer. Only numerical target coordinates cross the RF link, eliminating high-bandwidth video transmission needs.
-3. **Low SWaP Footprint:** Enclosed in a 42 g aluminum case operating on 7–35V DC, the transceiver connects directly to companion computer UART GPIO pins without external PoE injectors.
-
-**Alternative Candidate: Microhard pMDDL900 vs pMDDL2450**
-
-The **Microhard pMDDL900** [\[21\]](./references.md#ref-21) provides native Ethernet IP routing at up to 25 Mbps, allowing CycloneDDS to operate natively across the RF link without a serial gateway. However, it costs significantly more ($1,200+ USD vs ~$150 USD for P900), consumes 6–12 W, and requires dedicated heatsinks. It remains a backup candidate should project requirements expand to include live sensor streaming.
-
-_Broadband Distinction:_ The ARGUS drone team evaluates the **Microhard pMDDL2450** (2.4 GHz broadband IP) for aerial video streaming to a ground station, whereas the UGV datalink carries only lightweight C2 commands and telemetry.
-
-**Radio Security Considerations**
-
-The radio options have different security requirements:
-
-- **Serial RF (Microhard P900 V2):** Operates an air-gapped point-to-point asynchronous serial connection. The lack of an IP stack eliminates port scanning, SSH brute-force attempts, and network routing vulnerabilities. The transceiver firmware supports AES-256 link-layer encryption and unique Network ID pairing. However, 900 MHz FHSS remains vulnerable to RF jamming, which requires link-loss watchdog timeouts.
-- **Broadband IP (pMDDL2450 / pMDDL900):** Native TCP/IP networking exposes a broader attack surface, requiring firewall protection, SSH connection throttling (`fail2ban`), MAC address filtering, and disabled SSID broadcasts.
-
-**Selection Requirements**
-
-Purchasing P900 V2 hardware depends on four decision gates in Semester 2:
-
-1. **IMDA Channel Masking:** Confirming firmware frequency masking via PicoConfig software to confine hopping strictly within 917.0–925.0 MHz.
-2. **Supplier Procurement:** Securing formal institutional quotes from academic distributors.
-3. **Serial Gateway Benchmarking:** Bench-testing the serial framing gateway to verify latency stays below 100 ms.
-4. **Hardware Flow Control:** Validating UART CTS/RTS hardware handshaking between the transceiver and Raspberry Pi 5 / NVIDIA Jetson GPIO headers.
+> For the comprehensive comparative trade study across all four candidate modems (Microhard P900 V2, RFD900x, Digi XBee-PRO, and pMDDL IP), RF security trade-offs, and procurement decision gates, see **[Appendix K: Communications Protocol & Radio Reference](/report#appendix-k)**.
 
 :::
 
@@ -331,15 +251,9 @@ The candidate Microhard P900 V2 operates via an asynchronous UART serial interfa
 
 ::: details Proposed COBS, CRC-32 and acknowledgement design
 
-When transitioning from indoor Wi-Fi to the long-range P900 V2 datalink, ROS 2 nodes cannot directly publish native DDS packets over a transparent UART connection. The proposed architecture uses a serial framing gateway on each computer:
+When transitioning from local Wi-Fi to a long-range transparent UART datalink, ROS 2 nodes cannot publish native DDS packets over a serial stream. A dedicated serial framing gateway packages JSON payloads with Consistent Overhead Byte Stuffing (COBS) packet delimitation, CRC-32 checksum integrity verification, and Stop-and-Wait ARQ acknowledgements.
 
-<Figure src="./assets/diagrams/uav-ugv-rf-datalink.svg" alt="Proposed Serial Framing Gateway and RF Telemetry Pipeline" caption="Figure 3.3.6: Proposed serial-radio gateway architecture framing JSON messages with COBS encoding and CRC-32 integrity checks over UART." />
-
-_Framing & Reliability Protocol (Design Requirements):_
-
-- **Packet Delimitation:** Uses **Consistent Overhead Byte Stuffing (COBS)** with a zero-byte delimiter (`0x00`) to establish unambiguous packet framing boundaries over the asynchronous serial stream without payload escape bloat.
-- **Integrity Checking:** Appends a hardware-computed **CRC-32 checksum** to the trailer of each packet to detect bit-errors caused by RF fading or multipath interference.
-- **Stop-and-Wait ARQ:** Implements an explicit acknowledgement (ACK/NACK) protocol with a $200\text{ ms}$ timeout and up to 3 retransmissions for critical target alert dispatches.
+> For complete serial framing state transitions, CRC-32 polynomials, timeout retry logic, and architectural pipeline schematics (Figure K.3), see **[Appendix K: Communications Protocol & Radio Reference](/report#appendix-k)**.
 
 :::
 
@@ -401,9 +315,15 @@ Key architectural limitations guide Semester 2 development:
 2. **Serial Gateway Protocol:** Integrating UART-based transceivers (Microhard P900 V2) necessitates implementing a robust serial gateway implementing COBS packet delimitation, CRC-32 integrity validation, and ARQ acknowledgement protocols.
 3. **Cryptographic Authentication:** The current signature is an unkeyed SHA-256 digest, which detects accidental byte corruption but does not authenticate the sender. Semester 2 implementation will incorporate keyed HMAC signatures to prevent spoofed target injection.
 
-## 3.3.7 Limitations & Semester 2 Plan {#com-semester-two}
+### Related Documentation — ARGUS Communication System {#com-argus-reference}
+
+This document covers Stage 3 (C2 alert transmission) and Stage 4 (HUNTER navigation goal dispatch). For Stage 1 (communication setup) and Stage 2 (FOD coordinate generation), see the [ARGUS Communication System](https://cde4301-drone-ground-robots.github.io/CDE4301_runway_drone/report/#report-communication-system).
+
+## 3.3.7 Limitations & Future Work {#com-semester-two}
 
 Semester 2 milestones focus on radio transceiver procurement, firmware frequency masking validation (IMDA 917–925 MHz compliance), serial gateway implementation, and full over-the-air inter-agent field verification:
+
+[View Hilbert's Semester 2 Implementation Plan →](./semester-2-plan.md#programming-semester-2)
 
 ::: details Detailed proposed milestones
 
@@ -413,16 +333,12 @@ Semester 2 milestones focus on radio transceiver procurement, firmware frequency
 4. **Formal Radio Selection Gate:** Review quotations and regulatory feasibility to officially lock the P900 V2 or activate the pMDDL900 alternative backup plan.
 5. **Serial Framing Gateway Development:** Write and unit-test the Python/C++ serial gateway node implementing COBS packet delimitation, CRC-32 integrity validation, and ARQ retransmission timeouts.
 6. **Benchtop Radio-in-the-Loop (RIL) Testing:** Connect physical P900 V2 radios via RF coaxial attenuators (-30 dB) in the lab to validate UART throughput, JSON serialization, and Nav2 dispatch without over-the-air radiation.
-7. **Latency & Reliability Profiling:** Measure end-to-end command dispatch latency ($t_{\text{alert}} \le 100\text{ ms}$) and packet error rates (PER &lt; 0.1%) under controlled simulated channel noise.
+7. **Latency & Reliability Profiling:** Measure end-to-end command dispatch latency ($t_{\text{alert}} \le 100\text{ ms}$) and packet error rates (PER < 0.1%) under controlled simulated channel noise.
 8. **Field Ground-to-Ground Range Testing:** Execute incremental outdoor range sweeps at the NUS EA Field campus proving ground ($50\text{ m}$, $100\text{ m}$, $250\text{ m}$), measuring Received Signal Strength Indication (RSSI) and packet delivery ratios.
 9. **Antenna Elevation & Polarization Optimization:** Evaluate vertical vs horizontal antenna mounting orientations on the UGV chassis to eliminate vehicle body shadowing and ground reflection nulls.
 10. **Full Inter-Agent Closed-Loop Integration:** Execute end-to-end mission verification connecting real UAV flight reconnaissance, RF alert transmission, UGV autonomous trajectory clearance, and telemetry uplink.
 
 :::
-
-### Related Documentation — ARGUS Communication System {#com-argus-reference}
-
-This document covers Stage 3 (C2 alert transmission) and Stage 4 (HUNTER navigation goal dispatch). For Stage 1 (communication setup) and Stage 2 (FOD coordinate generation), see the [ARGUS Communication System](https://cde4301-drone-ground-robots.github.io/CDE4301_runway_drone/report/#report-communication-system).
 
 <!-- #endregion report -->
 

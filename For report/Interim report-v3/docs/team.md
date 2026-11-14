@@ -162,16 +162,16 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 - Programming STM32 and controller
 - Debugging motor driver
 - Creating workflow for motor driver
+- Electrical architecture oversight
 
 </template>
 
 <template #scope>
 
-Also overseeing electrical
-
 - Computer vision optical sizing, camera selection, and close-range FOD detection (YOLO11-S).
 - FOD-A leakage auditing, custom tarmac dataset collection, and multi-seed training evaluation.
 - STM32 NUCLEO-F446RE hardware interfacing and bare-metal firmware for dual-driver CANopen motion control, stepper actuation, and safety watchdogs.
+- Electrical architecture oversight, power distribution coordination, and BMS integration.
 
 </template>
 
