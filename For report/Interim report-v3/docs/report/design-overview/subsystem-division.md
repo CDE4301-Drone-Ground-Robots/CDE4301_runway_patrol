@@ -137,7 +137,7 @@ Developed and fabricated a compact 4040 aluminium extrusion chassis to support t
 
 Performed preliminary structural calculations and SOLIDWORKS FEA to evaluate the chassis under the 65 kg maximum vehicle design load. Following the initial static assessment, developed a lighter 3030 aluminium square-tube configuration and evaluated it under static, skid-steering and uneven-ground conditions.
 
-The redesigned chassis achieved an estimated 53.2% structural mass reduction while maintaining the required factor of safety in the evaluated primary chassis members. The 3030 configuration was selected for further development, with detailed connection design, fabrication and physical validation planned for Semester 2.
+The redesigned chassis achieved an estimated 53.2% structural mass reduction while maintaining the required factor of safety in the evaluated primary chassis members. The 3030 configuration was selected for planned welded construction, with detailed joint design and verification during the vacation, fabrication and assembly extending into Semester 2, and subsequent physical validation.
 
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#chassis-structural-design">Chassis Design Documentation <span aria-hidden="true">↗</span></a>
