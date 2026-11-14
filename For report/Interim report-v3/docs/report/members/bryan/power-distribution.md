@@ -8,9 +8,9 @@ outline: [2,3]
 [← Back to Electrical Subsystem](../../report.md#electrical)
 
 <!-- #region report -->
-The power distribution system was designed to supply the drivetrain, FOD remediation mechanism, onboard computing system, sensors and auxiliary components from a centralised 48 V-class battery. As these subsystems operate at different voltages and current levels, separate power branches and DC-DC converters were incorporated to provide the required supplies while allowing individual circuit protection.
+The power distribution system was designed to supply the drivetrain, FOD remediation mechanism, onboard computing system, sensors and auxiliary components from a centralised 48 V-class LiFePO4 battery. As these subsystems operate at different voltages and current levels, the architecture separates high-current loads from lower-voltage electronics through dedicated power branches and DC-DC converters.
 
-The proposed architecture also incorporates a Battery Management System (BMS), main fuse, emergency kill switch and branch-level fuses to address battery operating faults, overcurrent conditions and emergency isolation.
+The design incorporates battery monitoring, overcurrent protection and emergency isolation to address the electrical risks associated with the drivetrain and FOD collection mechanism. This section presents the distribution architecture, voltage regulation, protection devices and wiring considerations, followed by the limitations identified during the interim design.
 
 ## 5.1.2.1 Power Distribution Architecture
 
@@ -24,7 +24,7 @@ $$
 I=\frac{P}{V}
 $$
 
-For example, at a load of 2800 W:
+For comparison, consider the 2800 W vacuum load operating at 24 V and 48 V:
 
 $$
 I_\text{24 V}= \frac{2800}{24} = 116.67\text{ A}
@@ -35,44 +35,48 @@ I_\text{48 V}= \frac{2800}{48} = 58.33\text{ A}
 $$
 
 
-Doubling the supply voltage from 24 V to 48 V reduces the current by half and was therefore selected to reduce current demand and associated wiring losses while maintaining compatibility with the proposed drivetrain and FOD remediation components.
+Doubling the supply voltage from 24 V to 48 V therefore reduces the current by half and the corresponding resistive losses to approximately one-quarter, assuming equal transmitted power and conductor resistance.
+
+The 48 V-class architecture was selected to reduce current demand while remaining compatible with the proposed drivetrain. Components requiring lower operating voltages are supplied through dedicated DC-DC converters.
 
 ### Power Distribution Branches
 
-The main electrical supply is divided into dedicated branches according to the operating requirements of the connected components.
+The electrical system is divided into separate branches according to the operating voltage and current requirements of the connected components.
 
 | Power branch | Main components | Supply requirement |
 | --- | --- | --- |
 | Drivetrain | Hub motors and ZLAC8015D motor drivers | 48 V class |
-| FOD remediation | Vacuum and collection mechanism | 48 V class and regulated auxiliary supply |
+| FOD remediation | 2800W Vacuum and collection mechanism | 48 V class and regulated auxiliary supply |
 | Computing | Jetson Orin NX | Regulated 20V supply |
-| Sensors | Cameras, LiDAR and UM980 GPS | Camera and GPS are powered by the Jetson while LiDAR is regulated 12V |
+| Sensors | ELP Camera, Hesai JT16 LiDAR and UM980 GPS | Camera and GPS are powered by the Jetson while LiDAR is regulated 12V |
 | Communication and control | STM32, CAN transceiver and communication equipment | STM32 is powered by the Jetson NX while STM32 powers the CAN Transceiver |
 | Lighting and auxiliaries | Indicator lights, headlights and cooling fans | Regulated auxiliary supply |
 
 *Table 5.7: Proposed power distribution branches.*
 
-The separation of electrical loads allows individual branches to be protected according to their current requirements. It also provides a more organised wiring arrangement for installation, maintenance and future subsystem modifications.
+Separating the electrical loads allows the individual circuits to be supplied and protected according to their operating requirements. It also simplifies cable routing and supports future modification of the FOD remediation and sensing systems.
 
 <Card>
 
-<Figure src="./assets/images/UGV_Controller_Layer_Interim.svg" alt="FOD Hunter electrical power distribution and wiring diagram" />
+<Figure src="./assets/images/Overall_schematic.svg" alt="FOD Hunter electrical power distribution and wiring diagram" />
 
 </Card>
 
 *Figure 5.1: Overall Electrical Wiring Schematic.*
 
-The schematic illustrates the proposed distribution of power from the battery through the main protection devices to the individual electrical subsystems.
+The schematic illustrates the distribution of electrical power from the battery through the main protection and isolation devices to the drivetrain, FOD remediation system and regulated auxiliary branches.
 
 | Distribution stage | Components / supply | Purpose |
 | --- | --- | --- |
 | **Battery and master isolation** | 48 V 20 Ah LiFePO₄ battery, 100 A BMS, 100 A main fuse and 100 A kill switch | Stores energy, monitors battery conditions, protects the main output and provides manual isolation. |
 | **48 V distribution** | XT60 power distribution board and branch fuse enclosure | Routes battery power to the high-current loads and converter inputs. |
 | **Motor branch** | ZLAC8015D dual-channel motor driver and two 48 V hub motors | Supplies and controls the drivetrain. |
-| **Vacuum branch** | 48 V industrial vacuum | Supplies the FOD collection system. |
+| **Vacuum branch** | Stepper motors supplied through regulated auxiliary power (2800 W vacuum supplied by a separate external battery) | Supplies the FOD collection system. |
 | **Regulated branches** | 48 V-to-20 V, 48 V-to-12 V and 48 V-to-5 V DC-DC converters | Provides lower-voltage supplies for computing, auxiliary equipment and logic. |
 
 *Table 5.8: Distribution Branches.*
+
+The schematic illustrates the distribution of electrical power from the main 48 V LiFePO4 battery through the protection and isolation devices to the drivetrain, onboard computing system, sensors and auxiliary components. The 2800 W vacuum operates from a separate external battery supply and is therefore electrically independent of the main UGV power distribution system. This arrangement prevents the vacuum's high power demand from loading the main battery, allowing its capacity to be allocated primarily to vehicle propulsion and onboard electronics. However, the stepper motors and other low-voltage components associated with the FOD collection mechanism remain connected to the UGV's regulated power supply.
 
 ## 5.1.2.2 Low-Voltage Rails
 
@@ -90,43 +94,43 @@ The proposed design includes three regulated voltage rails.
 
 *Table 5.9: Proposed DC-DC voltage regulation.*
 
-The low-voltage branches are distributed through a blade-fuse block. Each converter and branch must be wired and fused for its actual input current, output current and conductor rating.
+The converters must operate across the full battery-voltage range rather than at its nominal voltage alone. For a typical 16S LiFePO4 configuration, the nominal voltage is 51.2 V, while the maximum charging voltage is approximately 58.4 V.
+
+The selected converters must therefore tolerate the maximum battery voltage and maintain suitable output regulation throughout the intended discharge range.
 
 ## 5.1.2.3 Electrical Protection
 
-Electrical protection was incorporated into the design to reduce the risk of damage caused by excessive current, battery operating faults and short circuits.
+Electrical protection was incorporated into the proposed architecture to address battery operating faults, excessive current, short circuits and emergency isolation.
 
-The proposed protection architecture consists of a BMS, main fuse, emergency kill switch and individual branch fuses. Each device serves a different purpose within the electrical system.
+The protection system consists of a Battery Management System (BMS), main fuse, emergency kill switch and individual branch fuses. These devices serve different functions and must be selected according to the electrical characteristics of the circuits they protect.   
 
 ### Battery Management System
 
-A 100 A LiFePO4 BMS was selected for the battery system.
+A 100 A LiFePO4 BMS was selected to monitor and protect the battery during charging and discharging.
 
-The BMS is intended to monitor battery operating conditions and provide protection against overcharging, excessive discharge and overcurrent. Cell balancing and temperature monitoring are also considered, subject to the functions supported by the selected BMS.
+The BMS is intended to provide cell-voltage monitoring, overcharge and over-discharge protection, cell balancing and temperature monitoring, subject to the specifications of the selected model.
 
-The BMS must be configured according to the actual battery cell arrangement and operating limits.
+Its continuous and peak discharge ratings must be compatible with the battery cells and the combined electrical demand of the connected loads.
 
-Its continuous and peak current ratings must also be verified against the combined electrical demand of the drivetrain, vacuum and supporting components.
+The BMS does not replace the need for correctly rated fuses, wiring and emergency isolation devices.
 
 ### Main Fuse
 
-A 100 A main fuse was included in the proposed electrical architecture to provide protection against excessive fault current.
+A 100 A main fuse was included in the interim design to protect the main battery output circuit against excessive fault current.
 
-Unlike the BMS, which monitors battery operating conditions, the main fuse provides a dedicated overcurrent protection mechanism.
+The fuse must be selected based on the expected operating current, conductor ampacity, time-current characteristics and prospective short-circuit current.
 
-The final fuse rating must be selected according to the maximum operating current, cable ampacity, expected fault current and fuse time-current characteristics.
+Its DC voltage and interrupting ratings must also be suitable for the battery's maximum operating voltage.
 
-The selected fuse must also have a suitable DC voltage and interrupting rating for the battery system.
+The 100 A rating remains subject to verification against the final electrical load and wiring arrangement.
 
 ### Emergency Kill Switch
 
-A 100 A-rated kill switch was selected to provide manual electrical isolation during maintenance and emergency conditions.
+A 100 A-rated master kill switch was selected to provide manual isolation of the vehicle's electrical supply.
 
-The switch is intended to interrupt the electrical supply to the connected loads when operated.
+The switch must be suitable for DC operation at the maximum battery voltage and expected interruption current.
 
-Its suitability must be verified against the maximum battery voltage and the expected DC interruption current.
-
-The final emergency-stop arrangement will also consider how the drivetrain and vacuum system enter a safe state during an emergency.
+The emergency-stop design must also consider the behaviour of the motor drivers and vacuum system when power is interrupted. A controlled stopping response and complete electrical isolation serve different purposes and will be assessed separately during integration.
 
 ### Branch-Level Fuse Protection
 
@@ -155,7 +159,7 @@ The component inventory specifies 8 AWG wiring for the main battery loop, 12 AWG
 | Circuit | Proposed wire size | Application |
 | --- | --- | --- |
 | Main battery loop | 8 AWG | Battery connection and primary power distribution |
-| Motor-driver circuits | 12 AWG | Power supply to the drivetrain motor drivers |
+| Motor-driver circuits | 12 AWG | Power supply to the ZLAC8015D motor drivers |
 | Converter and auxiliary circuits | 16–18 AWG | DC-DC converters, sensors and auxiliary components |
 | Communication and signal circuits | 20–22 AWG | CAN communication and low-current control signals |
 
@@ -169,13 +173,8 @@ The proposed conductor sizes provide the basis for physical integration. Their s
 
 The proposed 48 V power distribution architecture incorporates a Battery Management System (BMS), main fuse, branch fuses and emergency kill switch. However, these protection devices have not yet been fully implemented or validated under the expected operating loads. The final conductor and fuse ratings must be verified against continuous and startup currents, cable routing, insulation temperature ratings and connector current limits. Voltage drop, resistive heating and thermal performance also require assessment during physical integration.
 
-Particular attention is required for the vacuum branch. The interim design specifies a 50 A ANM fuse for selected high-current circuits, while the original 2800 W vacuum corresponds to an estimated current of:
+The FOD remediation system will undergo further development during Semester 2, with the original 2800 W vacuum replaced by a lower-power 24 V DC vacuum motor (AMETEK LAMB 116514-13). This change is intended to reduce the electrical power demand of the collection mechanism while maintaining sufficient suction performance. As the revised vacuum operates at a different voltage from the main 48 V battery, a dedicated 48 V-to-24 V DC-DC converter will be required if it is powered by the UGV's main battery. The converter capacity, vacuum startup current, wiring and protection ratings must be reassessed to ensure compatibility with the updated electrical architecture.
 
-$$
-I_{\text{vacuum}}=\frac{2800}{48}=58.33\text{ A}
-$$
+During Semester 2, the BMS, fuse protection and emergency isolation system will be implemented and tested alongside the power distribution network. Further work will include verifying conductor suitability, measuring voltage drop and temperature under representative loads, refining cable routing and confirming the grounding arrangement. The electrical designs of the UGV charging dock and UAV charging platform will also be explored, including their power supply, charging requirements and integration considerations, to support future autonomous UAV–UGV operations.
 
-This estimated current exceeds the nominal 50 A fuse rating. The vacuum's actual operating and startup currents must therefore be verified against the manufacturer's specifications, and the corresponding fuse, wiring and connector ratings must be reassessed before the circuit is energised.
-
-During Semester 2, the BMS, fuse protection and emergency isolation system will be implemented and tested alongside the power distribution network. Further work will include verifying conductor suitability, measuring voltage drop and temperature under representative loads, refining cable routing and confirming the grounding arrangement. The electrical design of a UAV charging platform will also be explored, including its power supply and charging requirements, to support future UAV–UGV integration.
 <!-- #endregion report -->

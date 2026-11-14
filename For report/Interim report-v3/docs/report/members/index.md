@@ -58,10 +58,10 @@ docs/report/members/asuka/
 docs/report/members/zacarias/
 
 - [▸ Chassis Design](./zacarias/chassis-design.md)
-- [▸ Material Selection](./zacarias/material-selection.md)
+- [▸ Material Selection](./zacarias/chassis-design.md#chassis-material-selection)
 - [▸ FEA Simulation](./zacarias/fea-simulation.md)
 
-[Chassis →](./zacarias/chassis-design.md) [Materials →](./zacarias/material-selection.md) [FEA →](./zacarias/fea-simulation.md)
+[Chassis →](./zacarias/chassis-design.md) [Materials →](./zacarias/chassis-design.md#chassis-material-selection) [FEA →](./zacarias/fea-simulation.md)
 
 </Card>
 
