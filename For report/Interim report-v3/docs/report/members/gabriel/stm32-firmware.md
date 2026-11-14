@@ -123,19 +123,17 @@ Driving the TB6600 stepper driver directly from the NUCLEO-F446RE required solvi
 
 <p style="margin-top: -10px; margin-bottom: 24px; font-size: 13.5px; line-height: 1.55; color: var(--vp-c-text-2, #9CA3AF);">Table 5.2.4: Stage 2 stepper driver electrical and timing problems and the firmware solutions implemented in Steppermotor_w_user_input.c.</p>
 
-<div class="fig-row">
+<div class="fig-row stepper-row">
   <Figure
     src="./assets/stm32-stepper-open-drain.png"
     alt="Open-drain 5 V current-sinking circuit on PC2 driving the TB6600 optocoupler LED: closed to ground turns the LED on, open-circuit turns it off"
     caption="Figure 5.2.3a: Open-drain 5 V sinking on PC2 (PUL−). Pulling the pin low sinks current from the 5 V rail through the TB6600 optocoupler LED (ON); releasing it to high-Z breaks the path (OFF)."
   />
-  <div class="gif-vertical">
-    <Figure
-      src="./assets/videos/Stepper motor.gif"
-      alt="Bench test of the stepper motor linear actuator driven from the STM32 NUCLEO-F446RE via the TB6600 driver"
-      caption="Figure 5.2.3b: Stage 2 verification of the TB6600 stepper motor drive and DWT microsecond pulse timing across the 110 mm linear actuator stroke."
-    />
-  </div>
+  <Figure
+    src="./assets/videos/Stepper motor.gif"
+    alt="Bench test of the stepper motor linear actuator driven from the STM32 NUCLEO-F446RE via the TB6600 driver"
+    caption="Figure 5.2.3b: Stage 2 verification of the TB6600 stepper motor drive and DWT microsecond pulse timing across the 110 mm linear actuator stroke."
+  />
 </div>
 
 - **Verification:** Swept pulse widths `w` from 5,000 µs down to 200 µs in 100 µs steps over the `USART2` CLI (`W`/`S` to jog ±400 steps, `+`/`-` to adjust delay), achieving the full 110 mm vacuum actuator stroke with zero missed steps. Any active pulse train is aborted immediately if E-stop is triggered.
@@ -312,6 +310,44 @@ Spot turn (vx = 0): left wheels = −ΔRPM, right wheels = +ΔRPM
 .gif-compact .fh-figure {
   max-width: 520px !important;
   margin: 18px auto !important;
+}
+
+.stepper-row {
+  display: grid !important;
+  grid-template-columns: 1.55fr 1fr !important;
+  gap: 16px !important;
+  align-items: start !important;
+  margin: 18px 0 !important;
+}
+
+.stepper-row .fh-figure {
+  margin: 0 !important;
+  max-width: 100% !important;
+}
+
+.stepper-row .fh-figure__wrapper {
+  height: 300px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+.stepper-row .fh-figure__img {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+.stepper-row > :first-child .fh-figure__img {
+  object-fit: contain !important;
+}
+
+@media (max-width: 768px) {
+  .stepper-row {
+    grid-template-columns: 1fr !important;
+  }
 }
 </style>
 

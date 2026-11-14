@@ -92,7 +92,7 @@ With **θ = 33°**, the view spans from **x_near = 0.33 m** to **x_far = 2.12 m*
 | **33° (Chosen)** | **0.33 m** | **0.69 m** | **2.12 m** |
 
 <Figure
-  src="./assets/diagrams/vision-tilt-tradeoff.svg"
+  src="./assets/images/figure 3.5.1.png"
   alt="Tilt analysis graphs showing front-to-back squash at image centre, pixels across a 3 cm and 1 cm object at image centre, and far-edge look-ahead across tilt angles"
   caption="Figure 3.5.1: Tilt trade-off at h = 0.40–0.50 m. Front-to-back squash at image centre, pixels across a 3 cm (solid) and 1 cm (dashed) object at image centre, and far-edge look-ahead. At 33°: 3 cm = 87 px, 1 cm = 29 px, look-ahead 2.12 m."
 />
