@@ -122,19 +122,3 @@ Provides the classification framework for FOD Hunter's runway structural defect 
 
 </Card>
 :::
-
-<!-- Mechanical references. -->
-
-## Mechanical References & Standards {#mechanical-references}
-
-<Badge type="info" text="Academic Citations" />
-
-1. Gillespie, T. D. (1992). *Fundamentals of Vehicle Dynamics*. SAE International. \[DOI: 10.4271/R-114\]
-2. El-Sayed, A. F. (2022). *Foreign Object Debris and Damage in Aviation*. Academic Press / Elsevier.
-3. Lamerton Simulation Ltd. *Kinematic Modeling and Simulation of MacPherson Strut Suspensions*.
-4. Kojima, M. (2012). *The Ultimate Guide to Suspension and Handling: Roll Center Geometry*. MotoIQ.
-5. Siegwart, R., Nourbakhsh, I. R., & Scaramuzza, D. (2011). *Introduction to Autonomous Mobile Robots* (2nd ed.). MIT Press. \[DOI: 10.7551/mitpress/8971.001.0001\]
-6. NUS CDE4301 Project Group. (2026). *FOD Vacuum Motor Design & Fluid Dynamics Calculations*. Technical Report.
-7. Wikipedia. *Scrub Radius and Steering Axis Geometry*.
-8. Rao, S. S. (2017). *Mechanical Vibrations* (6th ed.). Pearson.
-9. Auto-Z. *Roll Centre and Roll Moment: How To Adjust and Tune Suspension Geometry*.
