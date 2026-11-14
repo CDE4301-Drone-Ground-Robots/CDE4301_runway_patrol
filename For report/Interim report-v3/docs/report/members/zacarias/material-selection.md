@@ -10,16 +10,6 @@ Structural material evaluations, alloy trade-offs, extrusion profiles, and faste
 
 <!-- #region report -->
 
-## Material Comparison & Property Evaluation
-
-\[To Be Filled\]
-
-## Extrusion Profiles, Plates & Fasteners
-
-\[To Be Filled\]
-
-## Environmental, Weather & Corrosion Resistance
-
-\[To Be Filled\]
+Material selection and justification are incorporated into [Chassis Design, Section 4.1.1.3.3](./chassis-design.md#chassis-material-selection), including the material comparison, extrusion and square-tube selection, and environmental considerations.
 
 <!-- #endregion report -->

@@ -372,12 +372,6 @@ The work is divided into three subsystems, each with a named person in charge of
 
 <!--@compose: ./report/members/zacarias/fea-simulation.md#report{shift=3,prefix=fea}-->
 
-#### Material Selection {#material-selection .rpt-l3}
-
-<!--@compose: ./report/lead/zacarias-lead.md-->
-
-<!--@compose: ./report/members/zacarias/material-selection.md#report{shift=3,prefix=materials}-->
-
 ### Suspension {#suspension}
 
 <!--@compose: ./report/lead/asuka-lead.md-->

@@ -148,19 +148,108 @@ These additional supports were included to reduce the unsupported regions of the
 
 ### 4.1.1.3.2 Decision to Fabricate the 4040 Prototype {#chassis-fabrication-decision}
 
-The 4040 extrusion frame was retained for the initial prototype because it offered adequate preliminary strength and adjustable mounting interfaces. Completing fabrication early allowed the electrical and mechanical teams to install their components while detailed structural evaluation continued.
+The 4040 extrusion frame was selected and fabricated as a conservative initial prototype because it offered adequate preliminary strength, material availability, ease of fabrication and adjustable mounting interfaces. Completing fabrication early allowed the electrical and mechanical teams to install their components while detailed structural evaluation continued.
 
-The 4040 configuration was initially considered a potential final chassis. Its suitability and opportunities for weight reduction were subsequently investigated using SolidWorks FEA.
+After fabrication, the structural capacity of the 4040 configuration and opportunities for weight reduction were investigated using SolidWorks FEA.
+
+### 4.1.1.3.3 Material Selection & Justification {#chassis-material-selection}
+
+**Material Comparison & Property Evaluation**
+
+Material selection for the UGV chassis considered structural strength, stiffness, weight, component mounting, material availability and fabrication requirements.
+
+Three main material categories were evaluated: aluminium alloys, structural steel and carbon-fibre-reinforced polymer (CFRP).
+
+**Table 4.1.4: Qualitative comparison of candidate chassis materials.**
+
+| Material | Advantages | Disadvantages |
+|---|---|---|
+| Aluminium alloys | Low density, good corrosion resistance, readily available profiles, easy machining and mechanical assembly | Lower elastic stiffness than steel for equivalent geometry |
+| Structural steel | High elastic stiffness, relatively low material cost, widespread availability | Higher density increases chassis weight; corrosion protection may be required |
+| Carbon-fibre composite (CFRP) | High potential specific strength and stiffness; suitable for lightweight load-bearing composite structures | Higher material and fabrication costs, specialised manufacturing processes and more complex mounting interfaces |
+
+Carbon-fibre composites were considered because of their potential for high strength-to-weight and stiffness-to-weight performance. They are used as load-bearing chassis structures in specialised automotive applications, including Formula Student monocoque chassis [\[7\]](./references.md#ref-7).
+
+However, CFRP would require a substantially different manufacturing approach, including laminate design, composite fabrication and reinforced mounting interfaces. These requirements would increase fabrication complexity, cost and dependence on specialised facilities.
+
+Given the project's emphasis on rapid prototyping, modular assembly and reuse of existing components, aluminium was selected as the more practical material for the UGV chassis.
+
+For a more detailed quantitative comparison, two representative aluminium alloys and structural steel S235 were evaluated.
+
+**Table 4.1.5: Representative mechanical properties of candidate metallic materials [\[3\]](./references.md#ref-3)–[\[5\]](./references.md#ref-5).**
+
+| Property | Al 6063-T5 [\[3\]](./references.md#ref-3) | Al 6061-T6 [\[4\]](./references.md#ref-4) | Steel S235 [\[5\]](./references.md#ref-5) |
+|---|---:|---:|---:|
+| Density (kg/m³) | 2,700 | 2,700 | 7,850 |
+| Young's modulus (GPa) | 68.9 | 68.9 | 210 |
+| Yield strength (MPa) | 145 | 276 | 235 |
+| Specific yield strength (kN·m/kg) | 53.7 | 102.2 | 29.9 |
+
+These are representative material properties rather than certified properties of the final manufactured products. The S235 reference yield strength applies to material thicknesses up to 16 mm.
+
+CFRP is deliberately excluded from this numerical table because its mechanical properties depend strongly on fibre orientation, resin system, laminate stacking and manufacturing method. It does not have a single isotropic yield-strength value directly comparable with the metallic materials.
+
+Both aluminium alloys offer substantially lower density than structural steel. Although steel provides greater elastic stiffness for the same geometry, its higher density increases the mass supported by the vehicle's drivetrain and suspension.
+
+Aluminium 6061-T6 offers greater yield strength than 6063-T5, while both have similar elastic moduli and densities. For the initial prototype, material selection also prioritised the availability and suitability of commercially manufactured profiles, rather than maximum yield strength alone.
+
+**Extrusion Profiles, Plates & Fasteners**
+
+The initial chassis was fabricated using Prestech PTP-4040-8 aluminium extrusions, which the manufacturer specifies as 6063-T5 aluminium [\[1\]](./references.md#ref-1). The profile has a nominal mass of 1.86 kg/m and a section modulus of 4.69 cm³.
+
+The 4040 T-slot profile was selected for its standardised mounting interfaces, suitable preliminary structural capacity and ease of assembly. Compatible brackets, M6 fasteners and T-slot nuts allowed the chassis to be fabricated without welding and enabled adjustments during subsystem integration.
+
+The prototype electronics mounting plate was manufactured from 3 mm aluminium 6061 and supported by transverse extrusion members and mechanical brackets. Changes to the electrical subsystem, including an increase in the number of components, motivated a revised mounting-plate layout for the subsequent chassis development stage.
+
+Following the structural assessment, a lighter 30 × 30 × 2 mm aluminium square-tube configuration was selected for further development.
+
+The nominal cross-sectional area of this tube is:
+
+$$
+A = 30^2 - 26^2 = 224\text{ mm}^2
+$$
+
+Using an aluminium density of 2,700 kg/m³:
+
+$$
+m = 2700 \times 224 \times 10^{-6} = 0.605\text{ kg/m}
+$$
+
+This represents approximately 67.5% less nominal mass per metre than the original PTP-4040-8 profile. The calculation assumes ideal square corners; actual manufactured tube mass may differ slightly.
+
+The previously determined 53.2% overall structural mass reduction is based on the respective chassis CAD assemblies and includes differences in the complete structural arrangements.
+
+Mechanical brackets and bolts were chosen as the preferred joining approach for the 3030 development because they allow reuse of suitable existing project hardware, avoid dependence on outsourced welding services and simplify assembly logistics.
+
+The closed square-tube geometry requires its own mounting-hole and connection arrangement. Existing T-slot nuts are not assumed to be directly compatible with the hollow square-tube sections.
+
+Detailed mounting and connection design forms part of the Semester 2 development.
+
+**Environmental, Weather & Corrosion Resistance**
+
+Aluminium was also selected for its resistance to general atmospheric corrosion. The naturally occurring oxide layer provides a degree of environmental protection without the immediate need for additional surface treatment.
+
+The prototype uses untreated aluminium. Outdoor runway conditions may expose the chassis to moisture and contaminants. Galvanic corrosion is also possible at connections involving dissimilar metals when an electrolyte is present [\[6\]](./references.md#ref-6).
+
+The mechanically fastened structure facilitates inspection, maintenance and replacement of individual components. Further environmental protection and connection-level precautions will be incorporated into the Semester 2 chassis development.
+
+**Material Selection Summary**
+
+The PTP-4040-8 aluminium extrusion was selected for the Semester 1 prototype because its structural properties, commercial availability and modular fastening system provided a suitable foundation for early subsystem integration.
+
+Although steel and CFRP offer potential structural advantages, their respective mass and manufacturing considerations made them less suitable for the project's prototype development requirements.
+
+The subsequent mass and structural evaluations supported the selection of a lighter 3030 aluminium square-tube configuration for continued development.
+
+The structural FEA used a generic SOLIDWORKS 6061 Alloy model with an assigned yield strength of 55.15 MPa. The reported safety factors remain based on that simulation input and must not be recalculated using the higher reference yield strengths of other aluminium grades or tempers.
 
 ## 4.1.1.4 Implementation & Prototype {#chassis-implementation}
 
-The 4040 aluminium extrusion chassis was fabricated using profiles. The frame was assembled using mechanical brackets, T-slot nuts and fasteners. The electronics mounting plate was installed using brackets with central mounting holes and the two additional transverse support beams.
+The 4040 aluminium extrusion chassis was fabricated using the selected 4040 profiles. The frame was assembled using mechanical brackets, T-slot nuts and fasteners. The electronics mounting plate was installed using brackets with central mounting holes and the two additional transverse support beams.
 
 The assembled prototype has since been fitted with the wheel and suspension assemblies and major electrical components, allowing subsystem integration to proceed. The modular construction proved useful during this stage, as mounting arrangements could be adjusted without modifying the main frame.
 
-<!-- TODO Figure 4.1.5: Add the physical prototype photograph to ./assets/images/ when available. Do not substitute a CAD image. Caption: Fabricated 4040 prototype showing the assembled structure and installed components. -->
-
-*Figure 4.1.5: Fabricated 4040 prototype showing the assembled structure and installed components (photograph pending).*
+<!-- TODO: Add the physical prototype photograph to ./assets/images/ when available, then assign a figure number and caption. Do not substitute a CAD image. -->
 
 ## 4.1.1.5 Testing & Results {#chassis-results}
 
@@ -170,7 +259,7 @@ Following fabrication, a static FEA study was conducted to assess whether the 40
 
 ### 4.1.1.5.2 Selection of the 3030 Square-Tube Chassis {#chassis-3030-selection}
 
-The proposed 3030 configuration was evaluated under static, skid-steering and uneven-ground loading. The preliminary member-level results indicated acceptable factors of safety under the investigated conditions, although localized stress concentrations require further verification.
+The 3030 configuration was evaluated under static, skid-steering and uneven-ground loading. The preliminary member-level results indicated acceptable factors of safety under the investigated conditions, although localized stress concentrations require further verification.
 
 The estimated structural mass decreased from **11.00 kg** for the 4040 chassis to **5.15 kg** for the 3030 chassis:
 
@@ -179,34 +268,34 @@ $$
 = \boxed{53.2\%}
 $$
 
-Based on the estimated mass reduction and preliminary structural evaluation, the **30 × 30 × 2 mm square-tube configuration** was selected as the proposed final chassis (Figure 4.1.6). Detailed FEA methodology, loading assumptions, stress distributions and numerical results belong in the separate [FEA Simulation report (Section 4.1.2)](./fea-simulation.md).
+Based on the estimated mass reduction and preliminary structural evaluation, the **30 × 30 × 2 mm square-tube configuration** was selected as the design direction for further development (Figure 4.1.5). Detailed FEA methodology, loading assumptions, stress distributions and numerical results belong in the separate [FEA Simulation report (Section 4.1.2)](./fea-simulation.md).
 
 <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
   <img src="./assets/images/chassis-comparison-4040-extrusion.png" alt="4040 extrusion chassis CAD model" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
-  <img src="./assets/images/chassis-comparison-3030-square-tube.png" alt="Proposed 3030 square-tube chassis CAD model" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
+  <img src="./assets/images/chassis-comparison-3030-square-tube.png" alt="Selected 3030 square-tube chassis CAD model" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
 </div>
 
-*Figure 4.1.6: Side-by-side CAD comparison of the 4040 extrusion chassis (left) and proposed 3030 square-tube chassis (right; below when wrapped).*
+*Figure 4.1.5: Side-by-side CAD comparison of the 4040 extrusion chassis (left) and selected 3030 square-tube chassis (right; below when wrapped).*
 
 ## 4.1.1.6 Engineering Discussion {#chassis-discussion}
 
 The initial 4040 extrusion chassis prioritized rapid fabrication and mounting flexibility, allowing subsystem integration to proceed before the final component arrangement was established.
 
-Subsequent structural evaluation showed that the initial configuration had considerable potential for weight reduction. The proposed 3030 square-tube design reduces the estimated structural mass by 53.2%, while the more permanent construction becomes practical as component positions are finalized.
+Subsequent structural evaluation showed that the initial configuration had considerable potential for weight reduction. The selected 3030 square-tube design reduces the estimated structural mass by 53.2%, with bolted connections chosen to support reuse of existing hardware and practical assembly.
 
 The main trade-off is reduced mounting flexibility in exchange for lower structural mass. The selected 3030 design therefore provides a suitable baseline for the final chassis, subject to verification of critical structural connections and local stresses.
 
 ## 4.1.1.7 Limitations & Semester 2 Plan {#chassis-limitations}
 
-The main remaining tasks are final material selection, verification of mounting stresses and fabrication of the optimized chassis.
+The main remaining tasks are detailed 3030 square-tube mounting and bolted-connection design, supplier confirmation of the final tube alloy and temper, structural verification of the connections, and fabrication and physical testing of the revised chassis. The electronics mounting plate will also be redesigned to accommodate the increased component count.
 
-The initial FEA used an aluminium 6061 material model with an assigned yield strength of 55.15 MPa. The final square-tube alloy and temper must be confirmed so that the simulations use the actual material properties. This work will be documented in the separate [Material Selection report (Section 4.1.3)](./material-selection.md), which is still being completed.
+The initial FEA used an aluminium 6061 material model with an assigned yield strength of 55.15 MPa. The final square-tube alloy and temper must be confirmed so that the simulations use the actual material properties. The material-selection rationale is documented in [Section 4.1.1.3.3](#chassis-material-selection); the existing reported safety factors remain based on the assigned simulation properties.
 
 Localized stress concentrations will be investigated through targeted mesh refinement, convergence checks and improved modelling of mounting holes, contacts and fasteners. Local reinforcement or changes to the 2 mm wall thickness will be considered if the verified stresses exceed the allowable limits. The completed chassis will also be reassessed against the full **65 kg design-load requirement** before fabrication.
 
 Following verification, the final chassis CAD will be updated with the required mounting holes, protective-shell interfaces and component arrangements. The optimized structure will then be fabricated and tested under representative static and operational loads. Physical testing will include deformation measurements and inspection of structural connections, with results compared against the numerical predictions.
 
-Additional Semester 2 mechanical work includes waterproofing and protective-shell development, as well as coordination of chassis interfaces for the proposed charging dock and hot-swappable battery system.
+Additional Semester 2 mechanical work includes environmental protection and connection-level corrosion precautions, waterproofing and protective-shell development, as well as coordination of chassis interfaces for the proposed charging dock and hot-swappable battery system.
 
 **Reference**
 
