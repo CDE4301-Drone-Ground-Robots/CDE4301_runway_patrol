@@ -125,6 +125,7 @@ export default defineConfig({
         image: ['xlink:href', 'href'],
         Figure: ['src'],
         VideoClip: ['src', 'poster'],
+        ModelViewer: ['src'],
         AssetLink: ['href']
       }
     }

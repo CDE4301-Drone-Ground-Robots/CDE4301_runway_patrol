@@ -112,6 +112,8 @@ export default {
     for (const [file, load] of Object.entries(widgets)) {
       app.component(file.replace(/^.*\/|\.vue$/g, ''), defineAsyncComponent(load as () => Promise<{ default: object }>))
     }
+    // 3D CAD viewer (three.js) — its own chunk, so pages without a model never download it
+    app.component('ModelViewer', defineAsyncComponent(() => import('./components/content/ModelViewer.vue')))
     // Page-specific sections load as separate chunks (still server-rendered).
     app.component('FodOverview', defineAsyncComponent(() => import('./components/overview/FodOverview.vue')))
     app.component('MilestoneTracker', defineAsyncComponent(() => import('./components/overview/MilestoneTracker.vue')))

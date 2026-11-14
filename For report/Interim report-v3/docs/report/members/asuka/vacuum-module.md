@@ -240,4 +240,6 @@ In the vacation break and semester 2, I will work towards a detailed design and 
 
 Therefore, my other objective is to make two types of FOD remediation "tools". One is dedicated to smaller inanimate objects like screws, bolts, smaller stones and such. The other is for bigger and bulkier items that can go up to the size of a bird carcass. The fact that a vacuum cannot realistically be a one-size-fits-all solution has already been demonstrated through my analysis. To conclude, the future version of the FOD Remediation system will feature two tools.
 
+<ModelViewer src="./assets/models/vacuum-v5.glb" alt="Interactive CAD model of the vacuum module V5 assembly" caption="Figure 4.3.11: Future development in progress." />
+
 <!-- #endregion s6 -->

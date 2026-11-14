@@ -241,9 +241,9 @@ Table 4.2.1 evaluates commercially available spring rates from 30 lbf/in to 750 
 
 <table class="data-table fit-table"><tbody>
 <tr><th></th><th>Suspension type</th><th>Advantages</th><th>Disadvantages</th><th>Remarks</th><th>Final decision</th></tr>
-<tr><td><img src="./assets/images/suspension-trailing-arm.jpg" alt="Trailing arm suspension CAD"></td><td><strong>Trailing arm</strong></td><td>Constant track width and zero camber change.<br>Most compact layout, keeping the track to a minimum.<br>Low vertical profile.</td><td>Resists the lateral load of skid steering through a single pivot, concentrating transverse bending on the main pivot shaft.</td><td>Used as rear suspension on vehicles; suits the FOD Hunter if width is constrained.</td><td>Back-up plan if width is an issue</td></tr>
-<tr><td><img src="./assets/images/suspension-macpherson-strut.jpg" alt="MacPherson strut suspension CAD"></td><td><strong>MacPherson strut</strong></td><td>Lower part count.<br>Leaves space at the upper arm assembly.</td><td>Its key advantage, integrating the steering pivot into the strut, only benefits Ackermann axles.<br>Adds strut height and tends to bind under side load.</td><td>Usually used on Ackermann-steered vehicles, which the FOD Hunter is not.</td><td>Reject</td></tr>
-<tr><td><img src="./assets/images/suspension-double-wishbone.jpg" alt="Double wishbone suspension CAD"></td><td><strong>Double wishbone</strong></td><td>Shares the lateral load of skid-steer turns between the upper and lower arms.<br>Maintains a stable tyre contact patch across the full stroke.</td><td>Extends the track, so the wheelbase-to-track-width ratio must stay within 0.8–1.<br>Mechanically complex.</td><td>Typically used in performance vehicles; the chassis can be re-made to fit it.</td><td><strong>Selected</strong></td></tr>
+<tr><td><Figure src="./assets/images/suspension-trailing-arm-v2.jpg" alt="Trailing arm suspension CAD" /></td><td><strong>Trailing arm</strong></td><td>Constant track width and zero camber change.<br>Most compact layout, keeping the track to a minimum.<br>Low vertical profile.</td><td>Resists the lateral load of skid steering through a single pivot, concentrating transverse bending on the main pivot shaft.</td><td>Used as rear suspension on vehicles; suits the FOD Hunter if width is constrained.</td><td>Back-up plan if width is an issue</td></tr>
+<tr><td><Figure src="./assets/images/suspension-macpherson-strut.jpg" alt="MacPherson strut suspension CAD" /></td><td><strong>MacPherson strut</strong></td><td>Lower part count.<br>Leaves space at the upper arm assembly.</td><td>Its key advantage, integrating the steering pivot into the strut, only benefits Ackermann axles.<br>Adds strut height and tends to bind under side load.</td><td>Usually used on Ackermann-steered vehicles, which the FOD Hunter is not.</td><td>Reject</td></tr>
+<tr><td><Figure src="./assets/images/suspension-double-wishbone.jpg" alt="Double wishbone suspension CAD" /></td><td><strong>Double wishbone</strong></td><td>Shares the lateral load of skid-steer turns between the upper and lower arms.<br>Maintains a stable tyre contact patch across the full stroke.</td><td>Extends the track, so the wheelbase-to-track-width ratio must stay within 0.8–1.<br>Mechanically complex.</td><td>Typically used in performance vehicles; the chassis can be re-made to fit it.</td><td><strong>Selected</strong></td></tr>
 </tbody></table>
 
 I selected the double wishbone for its two-arm layout. Skid steering drags the wheels sideways during turns, placing a large lateral load on the suspension. The double wishbone shares this load between the upper and lower arms, whereas the trailing arm resists it through a single pivot. I rejected the MacPherson strut because its key advantage, integrating the steering pivot into the strut, only benefits Ackermann-steered axles. The FOD Hunter uses skid steering, so it would gain nothing from this whilst still incurring the strut’s height and its tendency to bind under side load.
@@ -257,9 +257,19 @@ The drawback of the double wishbone is width: it extends the track, and the whee
 <!-- #region s4 -->
 For the prototype, the 100 lbf/in spring was purchased and integrated with the design of the suspension system. Sheet metal was chosen as the prototype material as it is cheap to manufacture and it is able to demonstrate the benefit of the dual-arm set-up during skid steering. It is imperative to keep all four wheels on the ground at all times to prevent any current spike in the motors, so that the electrical system is protected. Fewer wheels in contact means that the torque on each wheel for the same function will be greatly increased. This is hazardous and might cause the current to surge.
 
-<div style="max-width:230px;margin:0 auto">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:24px">
+
+<div style="flex:0 0 230px;max-width:230px">
 
 <Figure src="./assets/images/suspension-prototype-photo.png" alt="Hand holding the sheet metal suspension prototype, showing the spring and damper, the dual arms and the mounting bracket" caption="Figure 4.2.4: Sheet metal prototype of the suspension." />
+
+</div>
+
+<div style="flex:1 1 320px;min-width:0">
+
+<ModelViewer src="./assets/models/suspension-v2.glb" :height="380" alt="Interactive CAD model of the double wishbone suspension assembly" caption="Figure 4.2.5: CAD model of the double wishbone suspension assembly (interactive)." />
+
+</div>
 
 </div>
 
@@ -279,7 +289,7 @@ In an engineering control theory class (that I am reading this semester), I lear
 
 <SuspensionWidget2 />
 
-*Figure 4.2.5: Unit step response with adjustable natural frequency and damping ratio, set to critical damping by default.*
+*Figure 4.2.6: Unit step response with adjustable natural frequency and damping ratio, set to critical damping by default.*
 
 However, achieving this in real life may be extremely costly. The difference between cheap and expensive shock absorbers is the adjustability, the range of adjustability and the precision of the damping value. The orifices inside a shock absorber allow the damping constant to change, giving some degree of adjustability in the damping value. However, such components are extremely costly and can cost up to \$980 per shock absorber, while I could find non-adjustable ones at a significantly cheaper price of \$2.50 each. Therefore, I decided to purchase the lower-end shock absorber and focus the budget on the key function of the FOD Hunter, which is FOD remediation.
 

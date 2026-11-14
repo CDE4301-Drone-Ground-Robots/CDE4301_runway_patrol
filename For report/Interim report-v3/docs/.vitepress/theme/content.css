@@ -552,6 +552,18 @@ table.data-table.fit-table img {
   height: auto;
   margin: 0;
 }
+/* <Figure> inside a table cell: click to enlarge, without figure spacing; the badge shrinks to its icon */
+table.data-table .fh-figure {
+  margin: 0;
+}
+table.data-table .fh-figure__expand-hint {
+  bottom: 4px;
+  right: 4px;
+  padding: 3px;
+}
+table.data-table .fh-figure__expand-hint span {
+  display: none;
+}
 
 /* highlighted passages in the interview transcripts */
 .rpt mark {
