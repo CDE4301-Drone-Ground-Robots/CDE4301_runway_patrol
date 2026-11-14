@@ -124,7 +124,7 @@ These values were conservative design allowances rather than the actual componen
 
 :::: details Preliminary 4040 support-beam bending calculation
 
-The beam was modelled as simply supported over $L = 220\text{ mm}$, with a midpoint load $P = 186.39\text{ N}$, as shown in Figure 4.1.4(a). The manufacturer's section modulus for the PTP-4040-8 profile is $Z = 4690\text{ mm}^3$ ([1](#chassis-ref-1)).
+The beam was modelled as simply supported over $L = 220\text{ mm}$, with a midpoint load $P = 186.39\text{ N}$, as shown in Figure 4.1.4(a). The manufacturer's section modulus for the PTP-4040-8 profile is $Z = 4690\text{ mm}^3$ ([1](./references.md#ref-1)).
 
 $$
 M_{\max} = \frac{PL}{4}
@@ -321,11 +321,5 @@ Localized stress concentrations will be investigated through targeted mesh refin
 Following verification, the final chassis CAD will be updated with the required mounting holes, protective-shell interfaces and component arrangements. The optimized structure will then be fabricated and tested under representative static and operational loads. Physical testing will include deformation measurements and inspection of structural connections, with results compared against the numerical predictions.
 
 Additional Semester 2 mechanical work includes environmental protection and connection-level corrosion precautions, waterproofing and protective-shell development, as well as coordination of chassis interfaces for the proposed charging dock and hot-swappable battery system.
-
-**Reference**
-
-<span id="chassis-ref-1"></span>
-
-[1] Prestech Industrial Automation, *PTP-4040-8 Aluminium Profile Specifications*. Available: [Prestech PTP-4040-8](https://www.prestech.com.sg/house-products/aluminium-profiles/40series/product/product/33-PTP-4040-8).
 
 <!-- #endregion report -->
