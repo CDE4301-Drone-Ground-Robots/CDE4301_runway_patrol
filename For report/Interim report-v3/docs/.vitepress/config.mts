@@ -59,6 +59,8 @@ function memberSidebar() {
       items: fs
         .readdirSync(path.join(DOCS, 'report/members', m))
         .filter((f) => f.endsWith('.md') && f !== 'README.md' && f !== 'index.md' && !NON_STANDALONE.includes(f))
+        // Keep Zacarias's legacy material page accessible, but not in the sidebar.
+        .filter((f) => m !== 'zacarias' || f !== 'material-selection.md')
         .sort((a, b) => {
           if (a === 'references.md') return 1
           if (b === 'references.md') return -1
@@ -66,7 +68,12 @@ function memberSidebar() {
           if (b === 'semester-2-plan.md') return -1
           return a.localeCompare(b)
         })
-        .map((f) => ({ text: title(path.join(DOCS, 'report/members', m, f)), link: `/members/${m}/${f.replace(/\.md$/, '')}` }))
+        .map((f) => ({
+          text: m === 'zacarias' && f === 'semester-2-plan.md'
+            ? 'Semester 2 Plan'
+            : title(path.join(DOCS, 'report/members', m, f)),
+          link: `/members/${m}/${f.replace(/\.md$/, '')}`
+        }))
     }))
   ]
 }
