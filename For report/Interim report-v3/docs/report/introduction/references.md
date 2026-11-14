@@ -28,7 +28,7 @@ Bureau d'Enquêtes et d'Analyses pour la sécurité de l'aviation civile, "Accid
 ::: info
 <Badge type="info" text="[2]" />
 
-Mentour Pilot, "\[video title\]," YouTube, 2021. [Online]. Available: \[URL\]
+Mentour Pilot, "The crash that KILLED Concorde | Air France flight 4590," YouTube, Sep. 24, 2021. [Online]. Available: <https://www.youtube.com/watch?v=C-nALYF73hU&t=125s>
 :::
 
 <span id="ref-3"></span>
@@ -92,7 +92,7 @@ J. C. Tay, "Smaller NS pool due to S'pore's low fertility rates will not comprom
 ::: info
 <Badge type="info" text="[10]" />
 
-Ministry of Defence Singapore, "Preparing a stout defence for generations to come," *Pioneer*, Aug. 2019.
+Ministry of Defence Singapore, "Preparing a stout defence for generations to come," *Pioneer*, Aug. 1, 2019. [Online]. Available: <https://defencepioneer.sg/pioneer-articles/preparing-a-stout-defence-for-generations-to-come>
 :::
 
 <span id="ref-11"></span>
@@ -100,7 +100,7 @@ Ministry of Defence Singapore, "Preparing a stout defence for generations to com
 ::: info
 <Badge type="info" text="[11]" />
 
-Republic of Singapore Air Force, \[post title\], Facebook, 2024. [Online]. Available: \[URL\]
+Republic of Singapore Air Force, "Exercise Pitch Black (XPB) 2024 is well underway," Facebook, 2024. [Online]. Available: <https://www.facebook.com/TheRSAF/posts/exercise-pitch-black-xpb-2024-is-well-underway-our-airmen-and-women-have-been-tr/918534286970505/>
 :::
 
 <span id="ref-12"></span>
@@ -108,7 +108,7 @@ Republic of Singapore Air Force, \[post title\], Facebook, 2024. [Online]. Avail
 ::: info
 <Badge type="info" text="[12]" />
 
-Civil Aviation Authority of Singapore, \[page title\], 2026. [Online]. Available: \[URL\]
+Civil Aviation Authority of Singapore, "Training at Singapore Aviation Academy." [Online]. Available: <https://www.caas.gov.sg/training/training-at-saa/> (accessed Nov. 14, 2026).
 :::
 
 <span id="ref-13"></span>
