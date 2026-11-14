@@ -121,11 +121,13 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 
 <template #contributions>
 
-- Chassis design
-- Material choice
-- FEA calculations
-- Component plate
-- Prototype assembly
+- UGV chassis concept development and CAD design
+- Structural material and profile selection
+- 4040 aluminium chassis prototype fabrication and assembly
+- Electronics mounting plate design and component integration
+- Preliminary structural calculations and centre-of-mass analysis
+- SOLIDWORKS FEA and structural assessment
+- Lightweight 3030 chassis redesign
 
 </template>
 
@@ -139,7 +141,13 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 
 <template #s1>
 
-(To Be Filled)
+- Evaluated three chassis concepts and developed a compact rectangular 4040 aluminium extrusion design for the initial UGV prototype.
+- Fabricated and assembled the 4040 chassis using mechanical brackets and fasteners, providing a structural platform for the installation of the suspension, drivetrain and electrical components.
+- Designed the aluminium electronics mounting plate and performed preliminary structural calculations and centre-of-mass analysis to assess the chassis arrangement.
+- Evaluated aluminium alloys, structural steel and carbon-fibre composites to justify the prototype's material selection.
+- Conducted four SOLIDWORKS FEA studies covering the 4040 static configuration and the redesigned 3030 chassis under static, skid-steering and uneven-ground loading.
+- Developed a lighter 3030 square-tube chassis design, reducing the estimated structural mass from 11.00 kg to 5.15 kg (53.2%), while maintaining a factor of safety above 2.0 in the evaluated primary chassis members.
+- Documented the chassis design process, simulation methodology, structural results and engineering considerations for subsequent development.
 
 </template>
 

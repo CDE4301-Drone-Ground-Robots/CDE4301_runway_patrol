@@ -150,7 +150,7 @@ const roadmap = [
   index="03"
   name="Zacarias Eleazar Ng Han En"
   role="CHASSIS DESIGN & DIFFERENTIAL DRIVE KINEMATICS"
-  preview="(To Be Filled)"
+  preview="Final 3030 chassis refinement, structural FEA and dynamic simulations, updated electronics mounting plate, waterproofing, charging dock and hot-swappable battery enclosure design."
   docs="/members/zacarias/chassis-design"
   plan="/members/zacarias/semester-2-plan"
 >
