@@ -138,7 +138,7 @@ Diagnosed small-hardware detection failure modes using confusion matrix analysis
 <div class="ov-doc-links">
   <a class="ovx-more" href="/report#chassis-structural-design">Chassis Design Documentation <span aria-hidden="true">↗</span></a>
   <a class="ovx-more" href="/report#fea-simulation">FEA Structural Simulation <span aria-hidden="true">↗</span></a>
-  <a class="ovx-more" href="/report#material-selection">Material Selection &amp; DFM <span aria-hidden="true">↗</span></a>
+  <a class="ovx-more" href="/report#chassis-design-chassis-material-selection">Material Selection &amp; DFM <span aria-hidden="true">↗</span></a>
 </div>
 
 </div>

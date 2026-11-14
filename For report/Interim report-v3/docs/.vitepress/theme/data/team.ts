@@ -98,7 +98,7 @@ export const team: Member[] = [
     docs: [
       { label: 'Chassis Design', route: '/members/zacarias/chassis-design' },
       { label: 'FEA Simulation', route: '/members/zacarias/fea-simulation' },
-      { label: 'Material Selection', route: '/members/zacarias/material-selection' },
+      { label: 'Material Selection', route: '/members/zacarias/chassis-design#chassis-material-selection' },
       { label: 'Semester 2 Plan', route: '/members/zacarias/semester-2-plan' }
     ],
     // LinkedIn left out until Zacarias's own profile URL is known.
