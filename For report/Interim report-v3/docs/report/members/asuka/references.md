@@ -9,7 +9,7 @@ outline: [2,3]
 Mechanical
 
 :::: info
-📚 Asuka's Reference Catalogue
+Asuka's Reference Catalogue
 
 <Badge type="info" text="Mechanical" />
 
