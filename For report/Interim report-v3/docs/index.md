@@ -150,7 +150,7 @@ const roadmap = [
   index="03"
   name="Zacarias Eleazar Ng Han En"
   role="CHASSIS DESIGN & DIFFERENTIAL DRIVE KINEMATICS"
-  preview="(To Be Filled)"
+  preview="Final 3030 chassis refinement, structural FEA and dynamic simulations, updated electronics mounting plate, waterproofing, charging dock and hot-swappable battery enclosure design."
   docs="/members/zacarias/chassis-design"
   plan="/members/zacarias/semester-2-plan"
 >
@@ -176,7 +176,7 @@ const roadmap = [
   index="05"
   name="Bryan Ng Rui Jie"
   role="ELECTRICAL SYSTEM & CHARGING DOCK"
-  preview="(To Be Filled)"
+  preview="Updated power budget and battery validation, JT16 LiDAR/ELP camera/IMU integration, BMS and E-Stop implementation, custom STM32  breakout PCB, and UAV charging platform development."
   docs="/members/bryan/components-list"
   plan="/members/bryan/semester-2-plan"
 >

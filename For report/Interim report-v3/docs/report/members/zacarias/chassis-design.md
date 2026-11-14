@@ -47,13 +47,30 @@ Three chassis concepts were considered before prototype fabrication (Figure 4.1.
 
 The **compact rectangular extrusion frame** was selected because it provided sufficient component space while allowing mounting positions to be adjusted. This was important as several electrical and mechanical components had not yet been finalized.
 
-<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
-  <img src="./assets/images/chassis-concept-sheet-metal-monocoque.png" alt="Figure 4.1.1(a): Sheet-metal monocoque concept" style="width: 220px; max-width: 100%; height: auto; flex: 1 1 220px; min-width: 0;">
-  <img src="./assets/images/chassis-concept-expanded-extrusion.png" alt="Figure 4.1.1(b): Expanded aluminium extrusion frame concept" style="width: 220px; max-width: 100%; height: auto; flex: 1 1 220px; min-width: 0;">
-  <img src="./assets/images/chassis-concept-compact-extrusion.png" alt="Figure 4.1.1(c): Compact rectangular extrusion frame concept" style="width: 220px; max-width: 100%; height: auto; flex: 1 1 220px; min-width: 0;">
+<div class="zacarias-concept-comparison" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; align-items: stretch;">
+  <figure style="min-width: 0; margin: 0; display: flex; flex-direction: column;">
+    <div style="min-height: 304px; min-width: 0;">
+      <img src="./assets/images/chassis-concept-sheet-metal-monocoque.png" alt="Figure 4.1.1(a): Folded sheet-metal chassis concept" style="display: block; width: 100%; height: 260px; object-fit: contain; margin: 0;">
+    </div>
+    <figcaption style="margin-top: auto; text-align: center;">(a) Folded sheet-metal concept.</figcaption>
+  </figure>
+  <figure style="min-width: 0; margin: 0; display: flex; flex-direction: column;">
+    <div style="min-height: 304px; min-width: 0;">
+      <ModelViewer src="./assets/models/chassis-expanded-concept.glb" :height="260" alt="Figure 4.1.1(b): Interactive expanded aluminium extrusion chassis concept" style="margin: 0; min-width: 0;" />
+    </div>
+    <figcaption style="margin-top: auto; text-align: center;">(b) Expanded aluminium extrusion concept.</figcaption>
+  </figure>
+  <figure style="min-width: 0; margin: 0; display: flex; flex-direction: column;">
+    <div style="min-height: 304px; min-width: 0;">
+      <ModelViewer src="./assets/models/chassis-4040.glb" :height="260" alt="Figure 4.1.1(c): Interactive compact rectangular 4040 extrusion chassis concept" style="margin: 0; min-width: 0;" />
+    </div>
+    <figcaption style="margin-top: auto; text-align: center;">(c) Compact rectangular 4040 extrusion concept.</figcaption>
+  </figure>
 </div>
 
-*Figure 4.1.1: Preliminary chassis concepts: (a) sheet-metal monocoque, (b) expanded aluminium extrusion frame and (c) compact rectangular extrusion frame (left to right; top to bottom when wrapped).*
+*Figure 4.1.1: Three chassis design concepts: (a) folded sheet-metal, (b) expanded aluminium extrusion and (c) compact rectangular 4040 extrusion (left to right; top to bottom when wrapped). Panels (b) and (c) are interactive CAD models.*
+
+The expanded concept provided additional space for external components but was not selected for fabrication. The folded sheet-metal option remained a concept comparison.
 
 ### 4.1.1.2.2 Selected Prototype Architecture {#chassis-prototype-architecture}
 
@@ -74,7 +91,7 @@ This arrangement provided multiple load paths from the plate to the surrounding 
 
 The battery was positioned toward the front of the chassis, while the vacuum module was positioned toward the rear. This arrangement was intended to distribute the major component masses more evenly along the vehicle.
 
-A preliminary centre-of-mass check was performed in SolidWorks using the assembled chassis and major components. The battery was assigned its actual mass of 6.8 kg, while a simplified vacuum placeholder with an estimated mass of 7 kg was included.
+A preliminary centre-of-mass check was performed in SolidWorks using the assembled chassis and major components. The battery was assigned its actual mass of 6.8 kg, while a simplified vacuum model with an estimated mass of 7 kg was included.
 
 **Table 4.1.3: SolidWorks centre-of-mass results**
 
@@ -219,11 +236,11 @@ This represents approximately 67.5% less nominal mass per metre than the origina
 
 The previously determined 53.2% overall structural mass reduction is based on the respective chassis CAD assemblies and includes differences in the complete structural arrangements.
 
-Mechanical brackets and bolts were chosen as the preferred joining approach for the 3030 development because they allow reuse of suitable existing project hardware, avoid dependence on outsourced welding services and simplify assembly logistics.
+Welded construction has been selected for the final 3030 aluminium square-tube frame. The welded joint configuration, fabrication drawings and connection-level verification form part of the planned final chassis development; fabrication and weld validation have not yet been completed.
 
 The closed square-tube geometry requires its own mounting-hole and connection arrangement. Existing T-slot nuts are not assumed to be directly compatible with the hollow square-tube sections.
 
-Detailed mounting and connection design forms part of the Semester 2 development.
+Detailed mounting and welded-connection design is planned during the vacation, with fabrication and assembly continuing into Semester 2.
 
 **Environmental, Weather & Corrosion Resistance**
 
@@ -231,7 +248,7 @@ Aluminium was also selected for its resistance to general atmospheric corrosion.
 
 The prototype uses untreated aluminium. Outdoor runway conditions may expose the chassis to moisture and contaminants. Galvanic corrosion is also possible at connections involving dissimilar metals when an electrolyte is present [\[6\]](./references.md#ref-6).
 
-The mechanically fastened structure facilitates inspection, maintenance and replacement of individual components. Further environmental protection and connection-level precautions will be incorporated into the Semester 2 chassis development.
+The mechanically fastened 4040 prototype facilitates inspection, maintenance and replacement of individual components. Further environmental protection and connection-level precautions will be incorporated into the Semester 2 chassis development.
 
 **Material Selection Summary**
 
@@ -249,7 +266,9 @@ The 4040 aluminium extrusion chassis was fabricated using the selected 4040 prof
 
 The assembled prototype has since been fitted with the wheel and suspension assemblies and major electrical components, allowing subsystem integration to proceed. The modular construction proved useful during this stage, as mounting arrangements could be adjusted without modifying the main frame.
 
-<!-- TODO: Add the physical prototype photograph to ./assets/images/ when available, then assign a figure number and caption. Do not substitute a CAD image. -->
+Video 4.1.1 demonstrates the assembled 4040 prototype with its installed components and basic vehicle motion. It documents prototype integration and mobility, rather than validation of structural strength, waterproofing, durability or full-system performance.
+
+<VideoClip src="./assets/videos/chassis-4040-prototype-driving.mp4" preload="metadata" title="4040 prototype driving demonstration" caption="Video 4.1.1: Assembled 4040 extrusion prototype demonstrating basic vehicle motion." />
 
 ## 4.1.1.5 Testing & Results {#chassis-results}
 
@@ -270,28 +289,34 @@ $$
 
 Based on the estimated mass reduction and preliminary structural evaluation, the **30 × 30 × 2 mm square-tube configuration** was selected as the design direction for further development (Figure 4.1.5). Detailed FEA methodology, loading assumptions, stress distributions and numerical results belong in the separate [FEA Simulation report (Section 4.1.2)](./fea-simulation.md).
 
-<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
-  <img src="./assets/images/chassis-comparison-4040-extrusion.png" alt="4040 extrusion chassis CAD model" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
-  <img src="./assets/images/chassis-comparison-3030-square-tube.png" alt="Selected 3030 square-tube chassis CAD model" style="width: 280px; max-width: 100%; height: auto; flex: 1 1 280px; min-width: 0;">
+The models compare the fabricated prototype architecture with the selected redesign evaluated numerically. The 3030 model does not demonstrate completed weld fabrication or weld-strength validation.
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: start;">
+  <div style="flex: 1 1 320px; min-width: 0;">
+    <ModelViewer src="./assets/models/chassis-4040.glb" :height="360" alt="Interactive 4040 bolted extrusion prototype CAD model" caption="(a) Initial 4040 bolted extrusion prototype architecture." />
+  </div>
+  <div style="flex: 1 1 320px; min-width: 0;">
+    <ModelViewer src="./assets/models/chassis-3030.glb" :height="360" alt="Interactive 3030 square-tube redesign CAD model intended for welded fabrication" caption="(b) Selected 3030 square-tube redesign, planned for welded fabrication." />
+  </div>
 </div>
 
-*Figure 4.1.5: Side-by-side CAD comparison of the 4040 extrusion chassis (left) and selected 3030 square-tube chassis (right; below when wrapped).*
+*Figure 4.1.5: Interactive CAD comparison of (a) the 4040 prototype architecture and (b) the lighter 3030 redesign (left to right; top to bottom when wrapped).*
 
 ## 4.1.1.6 Engineering Discussion {#chassis-discussion}
 
 The initial 4040 extrusion chassis prioritized rapid fabrication and mounting flexibility, allowing subsystem integration to proceed before the final component arrangement was established.
 
-Subsequent structural evaluation showed that the initial configuration had considerable potential for weight reduction. The selected 3030 square-tube design reduces the estimated structural mass by 53.2%, with bolted connections chosen to support reuse of existing hardware and practical assembly.
+Subsequent structural evaluation showed that the initial configuration had considerable potential for weight reduction. The selected 3030 square-tube design reduces the estimated structural mass by 53.2%, with welded construction selected for the final structural frame.
 
 The main trade-off is reduced mounting flexibility in exchange for lower structural mass. The selected 3030 design therefore provides a suitable baseline for the final chassis, subject to verification of critical structural connections and local stresses.
 
 ## 4.1.1.7 Limitations & Semester 2 Plan {#chassis-limitations}
 
-The main remaining tasks are detailed 3030 square-tube mounting and bolted-connection design, supplier confirmation of the final tube alloy and temper, structural verification of the connections, and fabrication and physical testing of the revised chassis. The electronics mounting plate will also be redesigned to accommodate the increased component count.
+The main remaining tasks are detailed 3030 square-tube mounting and welded-joint design, supplier confirmation of the final tube alloy and temper, structural verification of the connections, and fabrication and physical testing of the revised chassis. The electronics mounting plate will also be redesigned to accommodate the increased component count.
 
 The initial FEA used an aluminium 6061 material model with an assigned yield strength of 55.15 MPa. The final square-tube alloy and temper must be confirmed so that the simulations use the actual material properties. The material-selection rationale is documented in [Section 4.1.1.3.3](#chassis-material-selection); the existing reported safety factors remain based on the assigned simulation properties.
 
-Localized stress concentrations will be investigated through targeted mesh refinement, convergence checks and improved modelling of mounting holes, contacts and fasteners. Local reinforcement or changes to the 2 mm wall thickness will be considered if the verified stresses exceed the allowable limits. The completed chassis will also be reassessed against the full **65 kg design-load requirement** before fabrication.
+Localized stress concentrations will be investigated through targeted mesh refinement, convergence checks and improved modelling of mounting holes, contacts, fasteners and planned welded interfaces. Simplified bonded contacts alone do not establish weld strength. Local reinforcement or changes to the 2 mm wall thickness will be considered if the verified stresses exceed the allowable limits. The completed chassis will also be reassessed against the full **65 kg design-load requirement** before fabrication.
 
 Following verification, the final chassis CAD will be updated with the required mounting holes, protective-shell interfaces and component arrangements. The optimized structure will then be fabricated and tested under representative static and operational loads. Physical testing will include deformation measurements and inspection of structural connections, with results compared against the numerical predictions.
 

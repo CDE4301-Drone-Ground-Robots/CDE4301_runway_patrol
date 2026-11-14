@@ -74,7 +74,7 @@ const milestones: Milestone[] = [
     period: 'Weeks 8 – 12',
     completion: 100,
     description: 'Established the primary high-voltage battery architecture, multi-rail DC-DC regulators, and microcontroller pinout.',
-    deliverables: ['25.6V 20Ah LiFePO4 battery pack sizing & power budget analysis', 'Regulated buck power distribution schematic (24V, 12V, 5V)', 'STM32 microcontroller hardware & firmware actuation interfaces']
+    deliverables: ['48V 20Ah LiFePO4 battery pack sizing & power budget analysis', 'Regulated buck power distribution schematic (20V, 12V, 5V)', 'STM32 microcontroller hardware & firmware actuation interfaces']
   },
   {
     id: 6,
