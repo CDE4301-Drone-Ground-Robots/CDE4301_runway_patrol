@@ -86,7 +86,7 @@ $$\Delta P_{total} = \tfrac{1}{2}\rho V^2 + \Delta P_{entry} + \Delta P_{frictio
 
 $$\Delta P_{entry} = K_{entry}\left(\tfrac{1}{2}\rho V^2\right), \quad \Delta P_{friction} = f\frac{L}{D}\left(\tfrac{1}{2}\rho V^2\right), \quad \Delta P_{elbow} = K_{bend}\left(\tfrac{1}{2}\rho V^2\right)$$
 
-I took $\rho_{air}$ = 1.2 kg/m³, $C_D$ = 0.8, $K_{entry}$ = 0.35, $K_{bend}$ = 0.4, a friction factor $f$ = 0.022, a duct length of 0.4 m and an assumed filter loss of 300 Pa. I assumed a blower efficiency of 50% and a motor efficiency of 80%, giving $\eta_{total}$ = 40%.<!-- TODO: cite a source for both efficiencies, e.g. a blower or vacuum motor datasheet --> Table 4.3.3 applies the model to the two limiting cases set in Section 4.3.1.
+I took $\rho_{air}$ = 1.2 kg/m³, $C_D$ = 0.8, $K_{entry}$ = 0.35, $K_{bend}$ = 0.4, a friction factor $f$ = 0.022, a duct length of 0.4 m and an assumed filter loss of 300 Pa. I assumed a blower efficiency of 50% and a motor efficiency of 80%, giving $\eta_{total}$ = 40%. These are typical textbook estimates, as the manufacturer of the off-the-shelf vacuum does not publish efficiency data. Table 4.3.3 applies the model to the two limiting cases set in Section 4.3.1.
 
 *Table 4.3.3: Vacuum sizing for the two limiting cases (no safety factor applied).*
 

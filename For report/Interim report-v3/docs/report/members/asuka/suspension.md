@@ -200,7 +200,13 @@ $$
 y(t)=1-e^{-at}\cos pt+\frac{a}{p}e^{-at}\sin pt,\qquad a=\frac{b}{2m},\quad p=\sqrt{\omega_n^2-a^2}
 $$
 
-The value of $b$ has to be an assumed value, as manufacturers do not usually tell consumers the damping constant. I searched online and asked Gemini AI to estimate the closest value, and eventually settled on $b = 400\ \text{Ns/m}$. I acknowledge that it may not be best practice to use a rough number for something as important as the suspension system. However, this value can be verified in testing when I perform a frequency response analysis.
+The value of $b$ has to be an estimated value, as manufacturers of low-cost shock absorbers do not publish the damping constant. I searched online, with the help of Gemini AI, for the closest comparable figure, and settled on $b = 400\ \text{Ns/m}$. This estimate is reasonable because the shock absorbers fitted to electric scooters are the closest commercial equivalent: they are small, non-adjustable units of a similar size to the one purchased for the FOD Hunter. As a check, $b = 400\ \text{Ns/m}$ with the selected spring gives a damping ratio of
+
+$$
+\xi=\frac{b}{2\sqrt{K_w m}}=\frac{400}{2\sqrt{14378\times16.25}}\approx0.41,
+$$
+
+which is underdamped and within the range typical of road vehicle suspensions, where some overshoot is accepted in exchange for a softer ride. I acknowledge that an estimated value is not ideal for a parameter this important, so $b$ will be measured with a bounce test ([Section 4.2.5](/report#susp-testing)).
 
 System mass = 65 kg, corner mass = 16.25 kg, $F_{corner}$ = 159.4125 N. Angle of installation = 25°, motion ratio = 0.821 ($K_w = K_s \times 0.821$; see [Appendix I](/report#appendix-i) for the proof), stroke length = 20 mm (a commercially available length).
 
@@ -278,7 +284,7 @@ For the prototype, the 100 lbf/in spring was purchased and integrated with the d
 ### 4.2.5 Testing and Analysis
 
 <!-- #region s5 -->
-<!-- TODO: add the real-life test (video analysis of all four wheels staying in contact over obstacles) and the bounce test results. -->
+<!-- TODO: add the bounce test results once the test is done. -->
 Attached here is a video demonstration of the suspension system working over extremely undulating terrain.
 
 <VideoClip src="./assets/videos/suspension-terrain-test.mp4" poster="./assets/images/suspension-terrain-test-poster.jpg" caption="Video 4.2.1: Suspension prototype over undulating terrain." />
@@ -293,11 +299,36 @@ In an engineering control theory class (that I am reading this semester), I lear
 
 However, achieving this in real life may be extremely costly. The difference between cheap and expensive shock absorbers is the adjustability, the range of adjustability and the precision of the damping value. The orifices inside a shock absorber allow the damping constant to change, giving some degree of adjustability in the damping value. However, such components are extremely costly and can cost up to \$980 per shock absorber, while I could find non-adjustable ones at a significantly cheaper price of \$2.50 each. Therefore, I decided to purchase the lower-end shock absorber and focus the budget on the key function of the FOD Hunter, which is FOD remediation.
 
+**Planned bounce test**
+
+The terrain test shows that the suspension keeps all four wheels in contact, but it does not measure the parameters that the model depends on. The damping constant $b = 400\ \text{Ns/m}$ is an estimate (Section 4.2.2), so a bounce test will be carried out on the assembled FOD Hunter to measure it, together with the static sag and natural frequency.
+
+*Purpose:* to measure $b$, the damping ratio $\xi$ and the natural frequency $f_n$ of one corner, and to check the static sag and natural frequency requirements with measured rather than modelled values.
+
+*Procedure:*
+
+1. With the FOD Hunter at its full 65 kg, measure the height of one corner above the ground, then with that corner lifted clear, to obtain the static sag.
+2. Fix a scale behind the corner and set up a phone camera recording in slow motion (240 fps).
+3. Push the corner down by about 10 mm and release it, letting it oscillate freely.
+4. Repeat three times per corner for all four corners, and average the results.
+
+*Analysis:* from the video, read the initial displacement $x_0$ and the first overshoot past the rest position $x_1$, along with the time $T_d$ between successive peaks. With the estimated $\xi \approx 0.41$, the oscillation is expected to die out within about one cycle, so the half-cycle ratio is used rather than two full peaks:
+
+$$
+\xi=\frac{\ln(x_0/x_1)}{\sqrt{\pi^2+\ln^2(x_0/x_1)}},\qquad
+f_n=\frac{1}{T_d\sqrt{1-\xi^2}},\qquad
+b=2\xi\sqrt{K_w m}
+$$
+
+If $b = 400\ \text{Ns/m}$ is correct, the first overshoot should be about 24% of the initial push ($e^{-\pi\xi/\sqrt{1-\xi^2}}$ with $\xi = 0.41$), and the damped period about 0.23 s, which the 240 fps recording resolves in roughly 55 frames.
+
+*Pass criteria:* measured static sag within 8–12 mm (40–60% of the 20 mm stroke) and measured natural frequency below 10 Hz. The measured $b$ then replaces the estimate in the model, and the step response in Figure 4.2.3 is recalculated.
+
 <!-- #endregion s5 -->
 
 ### 4.2.6 Future Work
 
 <!-- #region s6 -->
-For future work, I plan to do a frequency response analysis to verify the transfer function that I derived in section 4.2.2. I also plan to remake the double wishbone geometry for manufacture by CNC machining, using relevant bearings and rubber dampers to minimise vibration transfer to the chassis. The details of this timeline will be elaborated in the Gantt chart at the end of the report.
+For future work, the first task is the bounce test planned in Section 4.2.5, which replaces the estimated damping constant with a measured value and checks the static sag and natural frequency requirements on the real vehicle. I also plan to do a frequency response analysis to verify the transfer function that I derived in Section 4.2.2. I also plan to remake the double wishbone geometry for manufacture by CNC machining, using relevant bearings and rubber dampers to minimise vibration transfer to the chassis. The details of this timeline will be elaborated in the Gantt chart at the end of the report.
 
 <!-- #endregion s6 -->
