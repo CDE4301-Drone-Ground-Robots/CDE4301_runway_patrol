@@ -176,7 +176,7 @@ const roadmap = [
   index="05"
   name="Bryan Ng Rui Jie"
   role="ELECTRICAL SYSTEM & CHARGING DOCK"
-  preview="(To Be Filled)"
+  preview="Updated power budget and battery validation, JT16 LiDAR/ELP camera/IMU integration, BMS and E-Stop implementation, custom STM32  breakout PCB, and UAV charging platform development."
   docs="/members/bryan/components-list"
   plan="/members/bryan/semester-2-plan"
 >

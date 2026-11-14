@@ -128,15 +128,16 @@ export const team: Member[] = [
     id: 'bryan',
     name: 'Bryan Ng Rui Jie',
     shortName: 'Bryan Ng',
-    role: 'Electrical',
-    subsystem: '48V power distribution & electrical architecture',
+    role: 'Electrical Lead',
+    subsystem: 'Power management & Electrical architecture',
     discipline: 'Mechanical Engineering (Robotics Specialisation)',
     matric: 'A0301661R',
     portrait: bryanPortrait,
     focus: '48% 50%',
     docs: [
-      { label: 'Components List', route: '/members/bryan/components-list' },
       { label: 'Power Calculations', route: '/members/bryan/power-calculations' },
+      { label: 'Power Distribution', route: '/members/bryan/power-distribution' },
+      { label: 'Components List', route: '/members/bryan/components-list' },
       { label: 'Semester 2 Plan', route: '/members/bryan/semester-2-plan' }
     ],
     social: [

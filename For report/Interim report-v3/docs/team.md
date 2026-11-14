@@ -203,10 +203,12 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 
 <template #contributions>
 
-- Component and battery selection
-- Wiring diagram
-- Power distribution calculations
-- Assist with STM32
+- Electrical system architecture and component selection.
+- Power consumption calculations and battery sizing.
+- Battery chemistry comparison and selection.
+- Power distribution and electrical protection design.
+- Overall electrical wiring schematic and component integration.
+- Assisted with STM32 programming.
 
 </template>
 
@@ -220,7 +222,13 @@ import TeamProfile from '@theme/components/team/TeamProfile.vue'
 
 <template #s1>
 
-(To Be Filled)
+- Established electrical requirements for power, runtime and safety.
+- Calculated drivetrain and component power consumption.
+- Compared battery chemistries and selected a 48 V 20 Ah LiFePO4 battery.
+- Designed the 48 V power distribution and protection architecture.
+- Developed the overall electrical wiring schematic.
+- Selected electrical components and compiled the components list.
+- Assisted with STM32 programming.
 
 </template>
 
