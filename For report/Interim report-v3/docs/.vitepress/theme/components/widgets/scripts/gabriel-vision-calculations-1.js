@@ -61,21 +61,15 @@ export default function init() {
       const valTilt = document.getElementById('val-tilt');
       const valDebris = document.getElementById('val-debris');
 
-      const hudDnear = document.getElementById('hud-dnear');
-      const hudDcenter = document.getElementById('hud-dcenter');
+      const hudBand = document.getElementById('hud-band');
+      const hudBandSub = document.getElementById('hud-band-sub');
       const hudGsdh = document.getElementById('hud-gsdh');
       const hudGsdv = document.getElementById('hud-gsdv');
       const hudNativePx = document.getElementById('hud-native-px');
-      const hudYolo640Px = document.getElementById('hud-yolo640-px');
-      const hudStatus640 = document.getElementById('hud-status-640');
-      const hudSub640 = document.getElementById('hud-sub-640');
-
+      const hudStatusNative = document.getElementById('hud-status-native');
+      const hudNativeSub = document.getElementById('hud-native-sub');
       const hudYolo1088Px = document.getElementById('hud-yolo1088-px');
       const hudStatus1088 = document.getElementById('hud-status-1088');
-      const hudSub1088 = document.getElementById('hud-sub-1088');
-
-      const hudTexp = document.getElementById('hud-texp');
-      const hudTexpSub = document.getElementById('hud-texp-sub');
 
       const canvas = document.getElementById('sim-canvas');
       const ctx = canvas.getContext('2d');
@@ -161,63 +155,87 @@ export default function init() {
         const tExpNear = (gsdAlongNear / 1000) / V_SPEED * 1e6; // in microseconds
 
         // Update HUD Telemetry DOM
-        hudDnear.textContent = (dNear > 0 ? dNear.toFixed(2) : '0.00') + ' m';
-        hudDcenter.textContent = (dCenter < 50 ? dCenter.toFixed(2) : '> 50') + ' m';
-        hudGsdh.textContent = gsdAcrossCenter.toFixed(2) + ' mm/px';
-        hudGsdv.textContent = 'Along: ' + gsdAlongCenter.toFixed(2) + ' mm/px';
-        hudNativePx.textContent = nativeW.toFixed(1) + ' \u00d7 ' + nativeL.toFixed(1) + ' px';
+        if (hudBand) {
+          hudBand.textContent = dNear.toFixed(2) + ' \u2192 ' + (!isAboveHorizon ? dFar.toFixed(2) + ' m' : '\u221e');
+        }
+        if (hudBandSub) {
+          hudBandSub.textContent = 'Centre: ' + (dCenter < 50 ? dCenter.toFixed(2) : '>50') + ' m \u00b7 \u0394x ' + (!isAboveHorizon ? (dFar - dNear).toFixed(2) + ' m' : 'Unbounded');
+        }
+        if (hudGsdh) hudGsdh.textContent = gsdAcrossCenter.toFixed(2) + ' mm/px';
+        if (hudGsdv) hudGsdv.textContent = 'Along: ' + gsdAlongCenter.toFixed(2) + ' mm/px';
+        if (hudNativePx) hudNativePx.textContent = nativeW.toFixed(1) + ' \u00d7 ' + nativeL.toFixed(1) + ' px';
+        if (hudNativeSub) hudNativeSub.textContent = preset.width + ' \u00d7 ' + preset.height + ' sensor';
+        if (hudYolo1088Px) hudYolo1088Px.textContent = yolo1088W.toFixed(1) + ' / ' + yolo640W.toFixed(1) + ' px';
 
-        hudYolo640Px.textContent = yolo640W.toFixed(1) + ' \u00d7 ' + yolo640L.toFixed(1) + ' px';
-        hudSub640.textContent = 'Width: ' + yolo640W.toFixed(1) + ' px, Length: ' + yolo640L.toFixed(1) + ' px';
-
-        hudYolo1088Px.textContent = yolo1088W.toFixed(1) + ' \u00d7 ' + yolo1088L.toFixed(1) + ' px';
-        hudSub1088.textContent = 'Width: ' + yolo1088W.toFixed(1) + ' px, Length: ' + yolo1088L.toFixed(1) + ' px';
-
-        // Status Pills based on item's WIDTH vs sheet's 32 px rule (>=32 pass, 16-32 marginal, <16 fail)
-        function getStatusPillHtml(widthPx) {
+        // Status Pill based on item's WIDTH vs 32 px rule
+        function getStatusPillHtml(widthPx, label) {
           if (widthPx >= 32.0) {
-            return '<span class="status-pill status-pass">🟢 PASS (&ge;32px)</span>';
+            return '<span class="status-pill status-pass">PASS (\u226532 px @ ' + label + ')</span>';
           } else if (widthPx >= 16.0) {
-            return '<span class="status-pill status-marginal">🟡 MARGINAL (16–32px)</span>';
+            return '<span class="status-pill status-marginal">MARGINAL (16\u201332 px @ ' + label + ')</span>';
           } else {
-            return '<span class="status-pill status-fail">🔴 FAIL (&lt;16px)</span>';
+            return '<span class="status-pill status-fail">FAIL (&lt;16 px @ ' + label + ')</span>';
           }
         }
 
-        hudStatus640.innerHTML = getStatusPillHtml(yolo640W);
-        hudStatus1088.innerHTML = getStatusPillHtml(yolo1088W);
-
-        if (hudTexp) hudTexp.textContent = Math.round(tExpCentre) + ' \u00b5s / ' + Math.round(tExpNear) + ' \u00b5s';
-        if (hudTexpSub) hudTexpSub.textContent = 'Centre: ' + Math.round(tExpCentre) + ' \u00b5s \u2022 Near: ' + Math.round(tExpNear) + ' \u00b5s (binding)';
+        if (hudStatusNative) hudStatusNative.innerHTML = getStatusPillHtml(nativeW, 'Native');
+        if (hudStatus1088) hudStatus1088.innerHTML = getStatusPillHtml(yolo1088W, '1088');
 
         // Render Canvas
         renderCanvas(H, thetaRad, vfovRad, dNear, dCenter, dFar, isAboveHorizon, debrisMm);
       }
 
       function renderCanvas(H, theta, vfov, dNear, dCenter, dFar, isAboveHorizon, debrisMm) {
-        const W = canvas.width;
-        const H_canv = canvas.height;
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, 3);
+        const logicalW = Math.max(640, Math.round(rect.width || 880));
+        const logicalH = Math.round(logicalW * (230 / 800));
+
+        if (canvas.width !== Math.round(logicalW * dpr) || canvas.height !== Math.round(logicalH * dpr)) {
+          canvas.width = Math.round(logicalW * dpr);
+          canvas.height = Math.round(logicalH * dpr);
+        }
+
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const W = logicalW;
+        const H_canv = logicalH;
         const isLight = document.documentElement.getAttribute('data-theme') === 'light';
 
         ctx.clearRect(0, 0, W, H_canv);
 
-        // Ground line at y = 330
-        const groundY = 330;
-        // UGV bumper & camera mount reference at x = 110 (0.0 m runway mark)
-        const originX = 110;
+        // Ground line leaving 46 px at bottom for scale ticks & Near label
+        const groundY = H_canv - 46;
+        // UGV bumper & camera mast reference at x = 115 (0.0 m runway mark)
+        const originX = 115;
 
-        // Scale factors: ONE scale for both axes (120 px per metre) so drawn angles match real angles
-        const scale = 120;
-        const scaleX = scale;
-        const scaleY = scale;
+        // Equal X/Y scale so drawn angles match real angles; auto-fits tall mast heights
+        const scale = Math.min(145, (groundY - 36) / Math.max(H, 0.35));
+        const maxMeters = (W - originX) / scale;
 
-        const maxMeters = 5.5;
+        // Subtle engineering grid (0.25 m step)
+        ctx.save();
+        const gridStep = scale * 0.25;
+        ctx.strokeStyle = isLight ? 'rgba(15, 23, 42, 0.05)' : 'rgba(255, 255, 255, 0.04)';
+        ctx.lineWidth = 1;
+        for (let gx = originX % gridStep; gx < W; gx += gridStep) {
+          ctx.beginPath();
+          ctx.moveTo(gx, 0);
+          ctx.lineTo(gx, groundY);
+          ctx.stroke();
+        }
+        for (let gy = groundY; gy > 0; gy -= gridStep) {
+          ctx.beginPath();
+          ctx.moveTo(0, gy);
+          ctx.lineTo(W, gy);
+          ctx.stroke();
+        }
+        ctx.restore();
 
         // 1. Draw Runway Ground Plane
         ctx.save();
         ctx.beginPath();
         ctx.strokeStyle = isLight ? '#cbd5e1' : '#334155';
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2.5;
         ctx.moveTo(0, groundY);
         ctx.lineTo(W, groundY);
         ctx.stroke();
@@ -226,90 +244,126 @@ export default function init() {
         ctx.fillStyle = isLight ? '#f1f5f9' : '#0a0e17';
         ctx.fillRect(0, groundY, W, H_canv - groundY);
 
-        // Runway distance scale tick markers (every 0.5m)
+        // Runway distance scale tick markers (every 0.5 m)
         ctx.font = '10px -apple-system, BlinkMacSystemFont, "SF Pro Text", monospace';
         ctx.textAlign = 'center';
         ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
-        ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+        ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)';
         ctx.lineWidth = 1;
 
         for (let m = 0; m <= maxMeters; m += 0.5) {
           const tx = originX + m * scale;
-          if (tx > W) break;
+          if (tx > W - 10) break;
 
           ctx.beginPath();
-          ctx.moveTo(tx, groundY - (m % 1 === 0 ? 8 : 4));
-          ctx.lineTo(tx, groundY + (m % 1 === 0 ? 8 : 4));
+          ctx.moveTo(tx, groundY - (m % 1 === 0 ? 6 : 3));
+          ctx.lineTo(tx, groundY + (m % 1 === 0 ? 6 : 3));
           ctx.stroke();
 
           if (m % 1 === 0) {
-            ctx.fillText(m.toFixed(1) + ' m', tx, groundY + 20);
+            ctx.fillText(m.toFixed(1) + ' m', tx, groundY + 17);
           }
-        }
-
-        // Tarmac expansion seam texture
-        ctx.fillStyle = isLight ? '#94a3b8' : '#1e293b';
-        for (let x = 30; x < W; x += 130) {
-          ctx.fillRect(x, groundY + 1, 2, 50);
         }
         ctx.restore();
 
         // 2. Draw 4WD Robotic Patrol UGV Silhouette
         ctx.save();
-        const wheelRadius = 0.10 * scale; // 100 mm radius = 12 px (wheel diameter = 200 mm)
+        const wheelRadius = Math.max(8, Math.min(12, 0.09 * scale));
         const wheelY = groundY - wheelRadius;
 
         ctx.fillStyle = isLight ? '#475569' : '#1e293b';
         ctx.strokeStyle = isLight ? '#0284c7' : '#38bdf8';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.8;
 
         // Rear wheel
         ctx.beginPath();
-        ctx.arc(originX - 65, wheelY, wheelRadius, 0, Math.PI * 2);
+        ctx.arc(originX - 58, wheelY, wheelRadius, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
 
         // Front wheel
         ctx.beginPath();
-        ctx.arc(originX - 15, wheelY, wheelRadius, 0, Math.PI * 2);
+        ctx.arc(originX - 14, wheelY, wheelRadius, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
 
         // Chassis body box
+        const chassisTopY = wheelY - 22;
         ctx.fillStyle = isLight ? '#e2e8f0' : '#1e293b';
         ctx.strokeStyle = isLight ? '#94a3b8' : '#475569';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        ctx.roundRect(originX - 80, wheelY - 26, 80, 24, 4);
+        ctx.roundRect(originX - 72, chassisTopY, 72, 20, 4);
         ctx.fill();
         ctx.stroke();
 
-        // Mast mounting post for camera at x = originX (aligned with 0.0m mark)
+        // Mast / neck mounting post for camera at x = originX (0.0 m mark)
         const camX = originX;
         const camY = groundY - H * scale;
 
-        ctx.strokeStyle = isLight ? '#64748b' : '#64748b';
+        ctx.strokeStyle = isLight ? '#475569' : '#94a3b8';
         ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
         ctx.beginPath();
-        ctx.moveTo(camX, wheelY - 24);
-        ctx.lineTo(camX, camY);
+        if (camY < chassisTopY) {
+          // Vertical mast from top of UGV chassis up to camera pivot
+          ctx.moveTo(camX - 8, chassisTopY);
+          ctx.lineTo(camX - 8, camY);
+          ctx.lineTo(camX, camY);
+        } else {
+          // Low bumper bracket when h is below chassis deck
+          ctx.moveTo(originX, chassisTopY + 10);
+          ctx.lineTo(camX, camY);
+        }
         ctx.stroke();
+        ctx.lineCap = 'butt';
+
+        // Mast base flange & pivot joint
+        ctx.fillStyle = '#38bdf8';
+        if (camY < chassisTopY) {
+          ctx.fillRect(camX - 13, chassisTopY - 3, 10, 4);
+        }
+        ctx.beginPath();
+        ctx.arc(camX, camY, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Vertical height dimension line (groundY to camY)
+        const dimX = originX - 84;
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.55)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 2]);
+        ctx.beginPath();
+        ctx.moveTo(dimX, groundY);
+        ctx.lineTo(dimX, camY);
+        ctx.moveTo(dimX - 4, camY);
+        ctx.lineTo(camX - 10, camY);
+        ctx.moveTo(dimX - 4, groundY);
+        ctx.lineTo(dimX + 4, groundY);
+        ctx.stroke();
+        ctx.setLineDash([]);
 
         // Mast height dimension label
-        ctx.font = '10px -apple-system, BlinkMacSystemFont, monospace';
+        ctx.font = 'bold 10.5px -apple-system, BlinkMacSystemFont, monospace';
         ctx.fillStyle = isLight ? '#2563eb' : '#38bdf8';
-        ctx.textAlign = 'right';
-        ctx.fillText('H = ' + H.toFixed(2) + 'm', camX - 8, camY + (groundY - camY) / 2);
+        ctx.textAlign = 'left';
+        ctx.fillText('h = ' + H.toFixed(2) + ' m', dimX, Math.max(14, camY - 8));
 
-        // Height dotted guideline
-        ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
-        ctx.setLineDash([2, 2]);
+        // Horizon reference dotted guideline
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+        ctx.setLineDash([3, 3]);
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(camX, camY);
-        ctx.lineTo(originX + 25, camY);
+        ctx.lineTo(camX + 42, camY);
         ctx.stroke();
         ctx.setLineDash([]);
+
+        // Tilt angle arc
+        ctx.strokeStyle = 'rgba(255, 159, 10, 0.7)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(camX, camY, 24, 0, theta);
+        ctx.stroke();
 
         // Camera Sensor Body
         ctx.save();
@@ -319,16 +373,14 @@ export default function init() {
         ctx.fillStyle = isLight ? '#0f172a' : '#0284c7';
         ctx.strokeStyle = '#38bdf8';
         ctx.lineWidth = 1.5;
-        // Camera enclosure
-        ctx.fillRect(-12, -7, 18, 14);
-        ctx.strokeRect(-12, -7, 18, 14);
-        // Lens snout
+        ctx.fillRect(-10, -6, 15, 12);
+        ctx.strokeRect(-10, -6, 15, 12);
         ctx.fillStyle = '#38bdf8';
         ctx.beginPath();
-        ctx.moveTo(6, -5);
-        ctx.lineTo(12, -7);
-        ctx.lineTo(12, 7);
-        ctx.lineTo(6, 5);
+        ctx.moveTo(5, -4);
+        ctx.lineTo(10, -6);
+        ctx.lineTo(10, 6);
+        ctx.lineTo(5, 4);
         ctx.closePath();
         ctx.fill();
         ctx.restore();
@@ -344,8 +396,7 @@ export default function init() {
         let hitsTopEdge = false;
 
         if (isAboveHorizon) {
-          // Ray points above horizon: intersect right or top edge of canvas
-          const topAngle = theta - vfov / 2; // <= 0
+          const topAngle = theta - vfov / 2;
           const tanTop = Math.tan(topAngle);
           const yAtRight = camY + (W - camX) * tanTop;
           if (yAtRight < 0 && Math.abs(tanTop) > 1e-4) {
@@ -378,93 +429,118 @@ export default function init() {
         ctx.closePath();
 
         const frustumGrad = ctx.createLinearGradient(camX, camY, Math.min(centerCanvasX, W), groundY);
-        frustumGrad.addColorStop(0, 'rgba(41, 151, 255, 0.45)');
-        frustumGrad.addColorStop(0.6, 'rgba(41, 151, 255, 0.16)');
+        frustumGrad.addColorStop(0, 'rgba(41, 151, 255, 0.42)');
+        frustumGrad.addColorStop(0.65, 'rgba(41, 151, 255, 0.16)');
         frustumGrad.addColorStop(1, 'rgba(41, 151, 255, 0.03)');
         ctx.fillStyle = frustumGrad;
         ctx.fill();
 
-        // Outer FOV rays
-        ctx.lineWidth = 1.5;
-        ctx.strokeStyle = 'rgba(41, 151, 255, 0.7)';
+        // Ground detection band highlight
+        ctx.strokeStyle = '#30d158';
+        ctx.lineWidth = 3;
         ctx.beginPath();
-        // Near ray
+        ctx.moveTo(nearCanvasX, groundY);
+        ctx.lineTo(isAboveHorizon ? W : Math.min(farCanvasX, W), groundY);
+        ctx.stroke();
+
+        // Outer FOV rays
+        ctx.lineWidth = 1.4;
+        ctx.strokeStyle = 'rgba(41, 151, 255, 0.75)';
+        ctx.beginPath();
         ctx.moveTo(camX, camY);
         ctx.lineTo(nearCanvasX, groundY);
-        // Far ray
         ctx.moveTo(camX, camY);
         ctx.lineTo(farCanvasX, farCanvasY);
         ctx.stroke();
 
         // Center Optical Axis (Boresight)
         ctx.strokeStyle = '#ff9f0a';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([6, 4]);
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([5, 4]);
         ctx.beginPath();
         ctx.moveTo(camX, camY);
         ctx.lineTo(centerCanvasX, groundY);
         ctx.stroke();
         ctx.setLineDash([]);
 
-        // Cutoff Marker Lines & Points
-        // 1. Near cutoff point
+        // 1. Near cutoff point & label (placed below ground line so it never collides with Centre)
         ctx.fillStyle = '#30d158';
         ctx.beginPath();
-        ctx.arc(nearCanvasX, groundY, 4.5, 0, Math.PI * 2);
+        ctx.arc(nearCanvasX, groundY, 4, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.font = '10px -apple-system, BlinkMacSystemFont, monospace';
+        ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, monospace';
         ctx.fillStyle = isLight ? '#15803d' : '#4ade80';
         ctx.textAlign = 'center';
-        ctx.fillText('d_near (' + dNear.toFixed(2) + 'm)', nearCanvasX, groundY - 12);
+        ctx.fillText('Near: ' + dNear.toFixed(2) + ' m', nearCanvasX, groundY + 34);
 
-        // 2. Boresight Center hit point
-        if (centerCanvasX <= W - 20) {
+        // 2. Boresight Center hit point & target FOD
+        if (centerCanvasX <= W - 30) {
           ctx.fillStyle = '#ff9f0a';
           ctx.beginPath();
-          ctx.arc(centerCanvasX, groundY, 5, 0, Math.PI * 2);
+          ctx.arc(centerCanvasX, groundY, 4.5, 0, Math.PI * 2);
           ctx.fill();
 
-          ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, monospace';
+          ctx.font = 'bold 10.5px -apple-system, BlinkMacSystemFont, monospace';
           ctx.fillStyle = isLight ? '#b45309' : '#fbbf24';
-          ctx.fillText('Image Centre (' + dCenter.toFixed(2) + 'm)', centerCanvasX, groundY - 26);
+          ctx.fillText('Centre: ' + dCenter.toFixed(2) + ' m', centerCanvasX, groundY - 22);
 
-          // 3. Draw Target Debris (Bolt icon) at Boresight Hit
+          // Target Debris icon at Boresight Hit
           ctx.save();
           ctx.translate(centerCanvasX, groundY);
           ctx.fillStyle = '#e2e8f0';
           ctx.strokeStyle = '#0f172a';
           ctx.lineWidth = 1;
-          ctx.fillRect(-5, -6, 10, 6);
-          ctx.strokeRect(-5, -6, 10, 6);
+          ctx.fillRect(-4, -5, 8, 5);
+          ctx.strokeRect(-4, -5, 8, 5);
           ctx.fillStyle = '#94a3b8';
-          ctx.fillRect(-2.5, -12, 5, 6);
-          ctx.strokeRect(-2.5, -12, 5, 6);
+          ctx.fillRect(-2, -10, 4, 5);
+          ctx.strokeRect(-2, -10, 4, 5);
           ctx.restore();
 
           ctx.font = '10px -apple-system, BlinkMacSystemFont, monospace';
           ctx.fillStyle = isLight ? '#0f172a' : '#f8fafc';
-          ctx.fillText(debrisMm + 'mm bolt', centerCanvasX, groundY - 42);
+          ctx.fillText(debrisMm + ' mm FOD', centerCanvasX, groundY - 36);
         }
 
-        // Far edge label
+        // 3. Far edge label
         if (isAboveHorizon) {
           const topAngleDeg = Math.abs((theta - vfov / 2) * 180 / Math.PI);
           ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, monospace';
           ctx.fillStyle = isLight ? '#b45309' : '#fbbf24';
           ctx.textAlign = 'right';
           const labelText = 'Top ray: ' + topAngleDeg.toFixed(1) + '° above horizon';
-          if (hitsTopEdge) {
-            ctx.fillText(labelText, Math.min(W - 14, farCanvasX + 110), 18);
-          } else {
-            ctx.fillText(labelText, W - 14, Math.max(20, Math.min(groundY - 15, farCanvasY + 14)));
-          }
-        } else if (farCanvasX <= W - 10) {
-          ctx.font = '10px -apple-system, BlinkMacSystemFont, monospace';
-          ctx.fillStyle = isLight ? '#64748b' : '#94a3b8';
+          ctx.fillText(labelText, W - 12, hitsTopEdge ? 16 : Math.max(18, Math.min(groundY - 12, farCanvasY + 14)));
+        } else if (farCanvasX <= W - 18) {
+          ctx.fillStyle = '#38bdf8';
+          ctx.beginPath();
+          ctx.arc(farCanvasX, groundY, 4, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.font = 'bold 10px -apple-system, BlinkMacSystemFont, monospace';
+          ctx.fillStyle = isLight ? '#0284c7' : '#7dd3fc';
           ctx.textAlign = 'center';
-          ctx.fillText('d_far (' + dFar.toFixed(2) + 'm)', farCanvasX, groundY - 12);
+          const farLabelY = (farCanvasX - centerCanvasX < 85) ? groundY + 34 : groundY - 12;
+          ctx.fillText('Far: ' + dFar.toFixed(2) + ' m', farCanvasX, farLabelY);
         }
+
+        // Top-right compact geometry summary badge on canvas
+        const slantCenter = Math.sqrt(H * H + dCenter * dCenter);
+        const summaryText = !isAboveHorizon
+          ? 'Slant: ' + slantCenter.toFixed(2) + ' m  |  Band Δx: ' + (dFar - dNear).toFixed(2) + ' m'
+          : 'Slant: ' + slantCenter.toFixed(2) + ' m  |  Band Δx: Unbounded';
+        ctx.font = '10.5px -apple-system, BlinkMacSystemFont, monospace';
+        const badgeW = ctx.measureText(summaryText).width + 18;
+        ctx.fillStyle = isLight ? 'rgba(255,255,255,0.88)' : 'rgba(15, 23, 42, 0.85)';
+        ctx.strokeStyle = isLight ? 'rgba(15,23,42,0.12)' : 'rgba(56, 189, 248, 0.25)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(W - badgeW - 10, 10, badgeW, 22, 6);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = isLight ? '#0f172a' : '#e2e8f0';
+        ctx.textAlign = 'right';
+        ctx.fillText(summaryText, W - 19, 25);
 
         ctx.restore();
       }

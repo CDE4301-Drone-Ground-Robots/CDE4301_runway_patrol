@@ -10,7 +10,7 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 <template>
   <div class="vp-raw wgt wgt-gabriel-vision-calculations">
 <div class="canvas-container">
-              <canvas id="sim-canvas" width="800" height="400"></canvas>
+              <canvas id="sim-canvas" width="800" height="230"></canvas>
             </div>
   </div>
 </template>
@@ -140,16 +140,16 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
     .wgt-gabriel-vision-calculations .sim-controls-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-bottom: 18px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
     .wgt-gabriel-vision-calculations .sim-control-group {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--apple-border);
-      border-radius: 12px;
-      padding: 14px 16px;
+      border-radius: 10px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -261,16 +261,16 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
     .wgt-gabriel-vision-calculations .preset-selector {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
 
     .wgt-gabriel-vision-calculations .preset-btn {
       cursor: pointer;
-      padding: 7px 14px;
+      padding: 5px 11px;
       border-radius: 980px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 500;
       border: 1px solid var(--apple-border);
       background: rgba(255, 255, 255, 0.04);
@@ -297,9 +297,9 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
       width: 100%;
       background: radial-gradient(circle at 15% 30%, rgba(41, 151, 255, 0.06), transparent 50%), #070a12;
       border: 1px solid var(--apple-border);
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 18px;
+      margin-bottom: 10px;
       box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
@@ -307,21 +307,21 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 16 / 8;
+      aspect-ratio: 800 / 230;
     }
 
     .wgt-gabriel-vision-calculations .hud-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 14px;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     .wgt-gabriel-vision-calculations .hud-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--apple-border);
       border-radius: 10px;
-      padding: 12px 14px;
+      padding: 9px 11px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;

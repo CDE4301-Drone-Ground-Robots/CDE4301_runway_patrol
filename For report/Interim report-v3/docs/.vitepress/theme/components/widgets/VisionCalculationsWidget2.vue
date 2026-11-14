@@ -13,7 +13,7 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
               <!-- Slider 1: Camera Height -->
               <div class="sim-control-group">
                 <div class="sim-label-row">
-                  <span class="sim-label">Camera Height ($H$)</span>
+                  <span class="sim-label">Camera Height (h)</span>
                   <span class="sim-val-badge" id="val-height">0.45 m</span>
                 </div>
                 <input type="range" class="sim-slider" id="slider-height" min="0.15" max="1.50" step="0.05" value="0.45" aria-label="Camera Mounting Height">
@@ -27,13 +27,13 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
               <!-- Slider 2: Camera Tilt Angle -->
               <div class="sim-control-group">
                 <div class="sim-label-row">
-                  <span class="sim-label">Camera Tilt ($\theta$)</span>
-                  <span class="sim-val-badge" id="val-tilt">38.0°</span>
+                  <span class="sim-label">Camera Tilt (θ)</span>
+                  <span class="sim-val-badge" id="val-tilt">33.0°</span>
                 </div>
-                <input type="range" class="sim-slider" id="slider-tilt" min="5" max="90" step="1" value="38" aria-label="Camera Downward Tilt">
+                <input type="range" class="sim-slider" id="slider-tilt" min="5" max="90" step="1" value="33" aria-label="Camera Downward Tilt">
                 <div class="sim-hint">
                   <span>5° (Horizon)</span>
-                  <span>Default: 38°</span>
+                  <span>Default: 33°</span>
                   <span>90° (Nadir)</span>
                 </div>
               </div>
@@ -42,12 +42,12 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
               <div class="sim-control-group">
                 <div class="sim-label-row">
                   <span class="sim-label">Target Debris Size</span>
-                  <span class="sim-val-badge" id="val-debris">10 mm</span>
+                  <span class="sim-val-badge" id="val-debris">30 mm</span>
                 </div>
-                <input type="range" class="sim-slider" id="slider-debris" min="10" max="100" step="1" value="10" aria-label="Target Debris Dimension">
+                <input type="range" class="sim-slider" id="slider-debris" min="10" max="100" step="1" value="30" aria-label="Target Debris Dimension">
                 <div class="sim-hint">
                   <span>10 mm</span>
-                  <span>Default: 10 mm</span>
+                  <span>Default: 30 mm</span>
                   <span>100 mm</span>
                 </div>
               </div>
@@ -180,16 +180,16 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
     .wgt-gabriel-vision-calculations .sim-controls-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-bottom: 18px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
     .wgt-gabriel-vision-calculations .sim-control-group {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--apple-border);
-      border-radius: 12px;
-      padding: 14px 16px;
+      border-radius: 10px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -301,16 +301,16 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
     .wgt-gabriel-vision-calculations .preset-selector {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
 
     .wgt-gabriel-vision-calculations .preset-btn {
       cursor: pointer;
-      padding: 7px 14px;
+      padding: 5px 11px;
       border-radius: 980px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 500;
       border: 1px solid var(--apple-border);
       background: rgba(255, 255, 255, 0.04);
@@ -337,9 +337,9 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
       width: 100%;
       background: radial-gradient(circle at 15% 30%, rgba(41, 151, 255, 0.06), transparent 50%), #070a12;
       border: 1px solid var(--apple-border);
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 18px;
+      margin-bottom: 10px;
       box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
@@ -347,21 +347,21 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 16 / 8;
+      aspect-ratio: 800 / 230;
     }
 
     .wgt-gabriel-vision-calculations .hud-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 14px;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     .wgt-gabriel-vision-calculations .hud-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--apple-border);
       border-radius: 10px;
-      padding: 12px 14px;
+      padding: 9px 11px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;

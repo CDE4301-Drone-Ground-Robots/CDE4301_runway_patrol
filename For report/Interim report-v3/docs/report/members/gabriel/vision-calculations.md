@@ -70,7 +70,7 @@ Each candidate camera is checked against Table 3.5.1: **≥ 29 px/°**, **≥ 10
 <tr><td><strong>UGREEN CM831</strong></td><td>1920 × 1080</td><td>62° / 37°</td><td>31</td><td>Rolling (60)</td><td><Badge type="warning" text="Interim (Sem 1)" /> Cheap and available for Sem 1 tests; rolling shutter fails at 15 km/h</td></tr>
 <tr><td><strong>Leopard Imaging LI-IMX568-GMSL2-050H</strong></td><td>2472 × 2064</td><td>50° / 43°</td><td>49</td><td>Global (60)</td><td><Badge type="danger" text="Rejected" /> High cost; GMSL2 not supported natively on the Orin Nano Super</td></tr>
 <tr><td><strong>e-con Systems e-CAM56_CUOAGX (IMX568)</strong></td><td>2472 × 2064</td><td>104.8° / 95°</td><td>24</td><td>Global (79)</td><td><Badge type="danger" text="Rejected" /> Wide 104.8° HFOV gives only 24 px/° (coarse GSD, below 29 px/°)</td></tr>
-<tr><td><strong>ELP-USBGS5MP01-L601 (OX05B1S, 6 mm lens)</strong></td><td><strong>2592 × 1944</strong></td><td><strong>57° / 42°</strong></td><td><strong>45</strong></td><td><strong>Global (50)</strong></td><td><Badge type="tip" text="Selected" /> Meets every requirement at student-project cost (US142 + US35 shipping)</td></tr>
+<tr><td><strong>ELP-USBGS5MP01-L601 (OX05B1S, 6 mm lens)</strong></td><td><strong>2592 × 1944</strong></td><td><strong>57° / 42°</strong></td><td><strong>45</strong></td><td><strong>Global (50)</strong></td><td><Badge type="tip" text="Selected" /> Meets every requirement at student-project cost (USD 142 + USD 35 shipping)</td></tr>
 </tbody></table>
 
 **Selection Rationale & Verification Plan:**  

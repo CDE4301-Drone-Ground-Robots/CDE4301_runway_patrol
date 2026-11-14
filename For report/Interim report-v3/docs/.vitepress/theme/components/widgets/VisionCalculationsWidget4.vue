@@ -9,61 +9,35 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
 <template>
   <div class="vp-raw wgt wgt-gabriel-vision-calculations">
-<div class="hud-grid">
+<div class="hud-grid hud-grid-4">
               <div class="hud-card">
-                <div>
-                  <div class="hud-card-title">Near cutoff</div>
-                  <div class="hud-card-value" id="hud-dnear">0.51 m</div>
-                </div>
-                <div class="hud-card-sub">Closest ground in view</div>
+                <div class="hud-card-title">Ground Band</div>
+                <div class="hud-card-value" id="hud-band" style="color: var(--apple-blue);">0.33 → 2.12 m</div>
+                <div class="hud-card-sub" id="hud-band-sub">Centre: 0.69 m · Δx 1.79 m</div>
               </div>
 
               <div class="hud-card">
-                <div>
-                  <div class="hud-card-title">Image centre</div>
-                  <div class="hud-card-value" id="hud-dcenter" style="color: var(--apple-blue);">1.24 m</div>
-                </div>
-                <div class="hud-card-sub">Boresight intersection</div>
+                <div class="hud-card-title">GSD at Centre</div>
+                <div class="hud-card-value" id="hud-gsdh">0.35 mm/px</div>
+                <div class="hud-card-sub" id="hud-gsdv">Along: 0.64 mm/px</div>
               </div>
 
               <div class="hud-card">
-                <div>
-                  <div class="hud-card-title">GSD at Image Centre</div>
-                  <div class="hud-card-value" id="hud-gsdh">0.50 mm/px</div>
+                <div class="hud-card-title">Native Footprint (Full Res)</div>
+                <div class="hud-card-value" id="hud-native-px">86.6 × 47.2 px</div>
+                <div style="margin-top: 4px;" id="hud-status-native">
+                  <span class="status-pill status-pass">PASS (≥32 px @ Native)</span>
                 </div>
-                <div class="hud-card-sub" id="hud-gsdv">Along: 1.45 mm/px</div>
+                <div class="hud-card-sub" id="hud-native-sub">2592 × 1944 sensor</div>
               </div>
 
               <div class="hud-card">
-                <div>
-                  <div class="hud-card-title">Native Footprint</div>
-                  <div class="hud-card-value" id="hud-native-px">60.4 × 20.7 px</div>
+                <div class="hud-card-title">YOLO Width (1088 / 640)</div>
+                <div class="hud-card-value" id="hud-yolo1088-px">36.3 / 21.4 px</div>
+                <div style="margin-top: 4px;" id="hud-status-1088">
+                  <span class="status-pill status-pass">PASS (≥32px @ 1088)</span>
                 </div>
-                <div class="hud-card-sub">Full sensor (W × L)</div>
               </div>
-
-              <div class="hud-card">
-                <div>
-                  <div class="hud-card-title">Pixels at 640 input</div>
-                  <div class="hud-card-value" id="hud-yolo640-px">15.6 × 5.4 px</div>
-                </div>
-                <div style="margin-top: 5px;" id="hud-status-640">
-                  <span class="status-pill status-fail">🔴 FAIL (&lt;16px)</span>
-                </div>
-                <div class="hud-card-sub" id="hud-sub-640">Width: 15.6 px, Length: 5.4 px</div>
-              </div>
-
-              <div class="hud-card">
-                <div>
-                  <div class="hud-card-title">Pixels at 1088 input</div>
-                  <div class="hud-card-value" id="hud-yolo1088-px">26.6 × 9.1 px</div>
-                </div>
-                <div style="margin-top: 5px;" id="hud-status-1088">
-                  <span class="status-pill status-marginal">🟡 MARGINAL (16–32px)</span>
-                </div>
-                <div class="hud-card-sub" id="hud-sub-1088">Width: 26.6 px, Length: 9.1 px</div>
-              </div>
-
             </div>
   </div>
 </template>
@@ -193,16 +167,16 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
     .wgt-gabriel-vision-calculations .sim-controls-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-bottom: 18px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
     .wgt-gabriel-vision-calculations .sim-control-group {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--apple-border);
-      border-radius: 12px;
-      padding: 14px 16px;
+      border-radius: 10px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -314,16 +288,16 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
     .wgt-gabriel-vision-calculations .preset-selector {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
 
     .wgt-gabriel-vision-calculations .preset-btn {
       cursor: pointer;
-      padding: 7px 14px;
+      padding: 5px 11px;
       border-radius: 980px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 500;
       border: 1px solid var(--apple-border);
       background: rgba(255, 255, 255, 0.04);
@@ -350,9 +324,9 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
       width: 100%;
       background: radial-gradient(circle at 15% 30%, rgba(41, 151, 255, 0.06), transparent 50%), #070a12;
       border: 1px solid var(--apple-border);
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 18px;
+      margin-bottom: 10px;
       box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
@@ -360,21 +334,31 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 16 / 8;
+      aspect-ratio: 800 / 230;
     }
 
     .wgt-gabriel-vision-calculations .hud-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 14px;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .wgt-gabriel-vision-calculations .hud-grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 760px) {
+      .wgt-gabriel-vision-calculations .hud-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .wgt-gabriel-vision-calculations .hud-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--apple-border);
       border-radius: 10px;
-      padding: 12px 14px;
+      padding: 9px 11px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;

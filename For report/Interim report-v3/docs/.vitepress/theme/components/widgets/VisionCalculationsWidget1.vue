@@ -9,22 +9,22 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
 <template>
   <div class="vp-raw wgt wgt-gabriel-vision-calculations">
-<div style="margin-bottom: 14px;">
-              <div style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 8px;">
+<div style="margin-bottom: 8px;">
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-tertiary); font-weight: 600; margin-bottom: 6px;">
                 Select Sensor &amp; Lens Configuration:
               </div>
               <div class="preset-selector" role="radiogroup" aria-label="Camera Presets">
                 <button type="button" class="preset-btn active" data-preset="elp5mp" aria-checked="true">
-                  📷 ELP-USBGS5MP01-L601 (57.0° HFOV, 5 MP Global · 50 fps)
+                  ELP-USBGS5MP01-L601 (57° HFOV, 5 MP Global · 50 fps)
                 </button>
                 <button type="button" class="preset-btn" data-preset="imx568" aria-checked="false">
-                  📷 Leopard LI-IMX568 (50.0° HFOV, Global Shutter · 60 fps)
+                  Leopard LI-IMX568 (50° HFOV, Global · 60 fps)
                 </button>
                 <button type="button" class="preset-btn" data-preset="ugreen" aria-checked="false">
-                  📹 UGREEN CM831 (62.0° HFOV, 1080p Rolling · 60 fps)
+                  UGREEN CM831 (62° HFOV, 1080p Rolling · 60 fps)
                 </button>
                 <button type="button" class="preset-btn" data-preset="ecam56" aria-checked="false">
-                  📷 e-con e-CAM56 (104.8° HFOV, Wide Angle · 79 fps)
+                  e-con e-CAM56 (104.8° HFOV, Wide Global · 79 fps)
                 </button>
               </div>
             </div>
@@ -156,16 +156,16 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
     .wgt-gabriel-vision-calculations .sim-controls-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-bottom: 18px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
     .wgt-gabriel-vision-calculations .sim-control-group {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--apple-border);
-      border-radius: 12px;
-      padding: 14px 16px;
+      border-radius: 10px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -277,16 +277,16 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
 
     .wgt-gabriel-vision-calculations .preset-selector {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      margin-bottom: 10px;
     }
 
     .wgt-gabriel-vision-calculations .preset-btn {
       cursor: pointer;
-      padding: 7px 14px;
+      padding: 5px 11px;
       border-radius: 980px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 500;
       border: 1px solid var(--apple-border);
       background: rgba(255, 255, 255, 0.04);
@@ -313,9 +313,9 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
       width: 100%;
       background: radial-gradient(circle at 15% 30%, rgba(41, 151, 255, 0.06), transparent 50%), #070a12;
       border: 1px solid var(--apple-border);
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 18px;
+      margin-bottom: 10px;
       box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
@@ -323,21 +323,21 @@ useWidgetScript([['gabriel-vision-calculations-1', s0]])
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 16 / 8;
+      aspect-ratio: 800 / 230;
     }
 
     .wgt-gabriel-vision-calculations .hud-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 14px;
+      gap: 8px;
+      margin-top: 8px;
     }
 
     .wgt-gabriel-vision-calculations .hud-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--apple-border);
       border-radius: 10px;
-      padding: 12px 14px;
+      padding: 9px 11px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
