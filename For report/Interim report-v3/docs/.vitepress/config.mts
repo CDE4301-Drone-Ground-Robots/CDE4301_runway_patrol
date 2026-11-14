@@ -66,7 +66,12 @@ function memberSidebar() {
           if (b === 'semester-2-plan.md') return -1
           return a.localeCompare(b)
         })
-        .map((f) => ({ text: title(path.join(DOCS, 'report/members', m, f)), link: `/members/${m}/${f.replace(/\.md$/, '')}` }))
+        .map((f) => ({
+          text: title(path.join(DOCS, 'report/members', m, f)),
+          link: m === 'zacarias' && f === 'material-selection.md'
+            ? '/members/zacarias/chassis-design#chassis-material-selection'
+            : `/members/${m}/${f.replace(/\.md$/, '')}`
+        }))
     }))
   ]
 }
